@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -114,12 +114,12 @@ void GuardedDualScaledChainCopy(void) {
     g_walkCallback = (void (*)(void))*(unsigned int *)(g_cj_0054205c * 4 + 0x30);
     SetJmp_Thunk_LinkedListBitMaskSearch();
     if (g_framePauseFlag != 0) return;
-    v = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->child_b;
+    v = ((ScenegraphNode *)(g_currentNodeIdx * 4))->child_b;
     g_xformEntityIdx = v;
     v = *(unsigned int *)(v * 4);
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(g_baseSel * 4 + 0x6c) = v;
-    v = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->child_c;
+    v = ((ScenegraphNode *)(g_currentNodeIdx * 4))->child_c;
     g_xformEntityIdx = v;
     v = *(unsigned int *)(v * 4);
     g_walkCallback = (void (*)(void))v;

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 
 /* @addr 0x004463b0 (75b)
@@ -16,11 +16,11 @@ void SlotFieldSwap3c(void) {
     unsigned int idx;
     unsigned int v;
     idx = *(unsigned int *)(g_baseSel * 4 + 0x4c);
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_a;
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(idx * 4))->child_a = v;
     v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_a;
     g_walkCallback = (void (*)(void))v;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->child_a = v;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->child_a = v;
 }

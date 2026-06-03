@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00422fc0 (237b game) - 4-call guarded sequence ending with cj field set.
  *   call DownloadPlayerChar with g_eventQueueCurrent=2; if pause? ret.
  *   call GuardedDualPushTailJmp; if pause? ret.
- *   mstack-push g_scaledInit_00542044, call ScaledOr4DirtyClear, mstack-pop.
+ *   mstack-push g_currentNodeIdx, call ScaledOr4DirtyClear, mstack-pop.
  *   cj[+0x30]=3, cj[+0x34] |= 0x1c0000.
  *   call TwoStateLookupDirty; if !pause: cj[+0x3c] = g_bootHeavyState; ret.
  */
@@ -155,17 +155,17 @@ void QuadGuardedCjSet_00422fc0(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    ScaledOr4DirtyClear
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, 3
@@ -199,7 +199,7 @@ void QuadGuardedCjSet_00422fc0(void) {
 /* @addr 0x004230b0 (246b game) - 4-call guarded sequence (sibling of 0x00422fc0).
  *   Set up locals (g_eventQueueCurrent=3, g_walkCallback=g_dlNalt4); call DownloadPlayerChar.
  *   If pause? ret. Reload then call GuardedDualPushTailJmp. If pause? ret.
- *   mstack-push g_scaledInit_00542044; call ScaledOr4DirtyClear; mstack-pop;
+ *   mstack-push g_currentNodeIdx; call ScaledOr4DirtyClear; mstack-pop;
  *   set cj[+0x30]=4 + cj[+0x34] |= 0x1c0001; call TwoStateLookupDirty;
  *   if pause? ret; else cj[+0x3c] = g_particleInitState; ret.
  */
@@ -232,17 +232,17 @@ void QuadGuardedCjSet_004230b0(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    ScaledOr4DirtyClear
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, 4

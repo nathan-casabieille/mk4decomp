@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00486510 (25b)
  *   mov     [g_walkCallback], 0x20c

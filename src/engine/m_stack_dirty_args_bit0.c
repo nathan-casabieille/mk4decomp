@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -129,7 +129,7 @@ extern unsigned int g_matrixStack_arr;
 __declspec(naked) void MStackDirtyArgsBit0(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         push    ebx
         mov     dword ptr [g_matrixStackTop], eax
@@ -191,7 +191,7 @@ __declspec(naked) void MStackDirtyArgsBit0(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         pop     ebx
         ret

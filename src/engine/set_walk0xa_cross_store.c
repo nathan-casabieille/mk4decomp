@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00445fb0 (70b)
  *   load g_eventQueueIdx; set walk=0xa, store eax → g_fightGroupHead;
@@ -19,7 +19,7 @@ void SetWalk0xaCrossStore(void) {
     g_walkCallback = (void (*)(void))0xa;
     DirtyDoubleDeref();
     if (g_framePauseFlag != 0) return;
-    g_xformEntityIdx = g_scaledInit_00542044;
-    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel * 4 + 0x5c);
+    g_xformEntityIdx = g_currentNodeIdx;
+    g_currentNodeIdx = *(unsigned int *)(g_baseSel * 4 + 0x5c);
     PushPopScaled1cDoubleCall();
 }

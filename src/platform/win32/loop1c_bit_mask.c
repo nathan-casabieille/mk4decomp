@@ -3,7 +3,7 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004c4450 (24b)
  *   mov     eax, 0x00f8fade

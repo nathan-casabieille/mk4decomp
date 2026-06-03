@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -122,12 +122,12 @@ void PushSetAddCallPop(void) {
     unsigned int sc;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
-    sc = g_scaledInit_00542044;
+    sc = g_currentNodeIdx;
     g_xformEntityIdx = sc + 0x1b;
-    g_scaledInit_00542044 = sc + 0x18;
+    g_currentNodeIdx = sc + 0x18;
     Mul10TailPairMidChain();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 -= 0x18;
+    g_currentNodeIdx -= 0x18;
     g_xformEntityIdx = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
 }

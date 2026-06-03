@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -141,5 +141,5 @@ void TripleArgScaledShiftCall(void) {
     Push70CallScaleArith();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x19999;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = 0x19999;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x5c) = 0x19999;
 }

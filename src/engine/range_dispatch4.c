@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00434ec0 (74b)
  *   push lit; call F; if pause → ret;

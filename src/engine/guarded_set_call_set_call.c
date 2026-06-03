@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0047dee0 (67b)
  *   if g_xformScratch2088 == 1, jmp T0; else set walk=2; call F1;

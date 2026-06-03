@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -114,18 +114,18 @@ extern unsigned int g_fightAxisPosY;
 void PushSearchToggleBit0(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     ecx, 0x004e83d0
         shr     ecx, 2
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     eax, dword ptr [ecx*4 + 0]
         inc     ecx
         test    eax, eax
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   74h
         _emit   21h
         mov     edx, dword ptr [g_walkCallback]
@@ -136,7 +136,7 @@ void PushSearchToggleBit0(void) {
         inc     ecx
         test    eax, eax
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   75h
         _emit   0e5h
         mov     eax, dword ptr [g_xformDirtyFlags]
@@ -149,7 +149,7 @@ void PushSearchToggleBit0(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

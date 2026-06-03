@@ -23,7 +23,7 @@ extern unsigned int g_primary_0053a774;   /* 0x0053a774 */
 extern unsigned int g_secondary_00535d04; /* 0x00535d04 */
 extern unsigned int g_primary_0052d74c;   /* 0x0052d74c */
 extern unsigned int g_secondary_00538068; /* 0x00538068 */
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048f270 */
 void CondPlayerLookup_0048f270(void) {
@@ -43,8 +43,8 @@ void CondPlayerLookup_0048f950(void) {
 
 /* @addr 0x004ac120 */
 void CondPlayerLookup_004ac120(void) {
-    g_scaledInit_00542044 = g_gtPlayerProbe2;
+    g_currentNodeIdx = g_gtPlayerProbe2;
     if (g_fightGroupHead != g_player1NodeIdx) {
-        g_scaledInit_00542044 = g_gtPlayerProbe1;
+        g_currentNodeIdx = g_gtPlayerProbe1;
     }
 }

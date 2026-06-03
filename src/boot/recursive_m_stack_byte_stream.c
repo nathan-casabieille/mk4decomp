@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -113,13 +113,13 @@ extern void DispatchSetDirtyToggle(void);
 extern void RecursiveMStackByteStream(void);
 
 /* @addr 0x0048ce60 (237b game) - mstack-push pair + 3 guarded calls.
- *   push g_scaledInit_00542044 and g_xformEntityIdx onto mstack (2x inc g_matrixStackTop).
+ *   push g_currentNodeIdx and g_xformEntityIdx onto mstack (2x inc g_matrixStackTop).
  *   cj[+0x34] |= 0x0800 (or ch,8). Select dispatch arg: if cj == g_player1NodeIdx
  *     use g_dlNalt1 else use g_dlNalt2; store to g_walkCallback.
  *   call Helper_DownloadSetup; if pause? ret.
  *   load scaledInit[+0x14] -> g_xformEntityIdx; call DispatchSetDirtyToggle; if pause? ret.
  *   if bit2 of g_xformDirtyFlags clear: load scaledInit[+0x18] -> g_xformEntityIdx.
- *   call RecursiveMStackByteStream; if pause? ret. pop pair: g_xformEntityIdx, g_scaledInit_00542044; ret.
+ *   call RecursiveMStackByteStream; if pause? ret. pop pair: g_xformEntityIdx, g_currentNodeIdx; ret.
  */
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
@@ -127,7 +127,7 @@ extern s32 g_dlNalt2;
 void MStackPushPairTriCall(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
@@ -153,7 +153,7 @@ void MStackPushPairTriCall(void) {
         test    eax, eax
         _emit   75h
         _emit   74h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x14]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    DispatchSetDirtyToggle
@@ -164,7 +164,7 @@ void MStackPushPairTriCall(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   12h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x18]
         mov     dword ptr [g_xformEntityIdx], eax
         call    RecursiveMStackByteStream
@@ -179,7 +179,7 @@ void MStackPushPairTriCall(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

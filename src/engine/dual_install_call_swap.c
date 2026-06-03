@@ -22,10 +22,10 @@
 #include "game/tick.h"
 
 extern packed_ptr g_xformEntityIdx;     /* 0x00542048 */
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 
-extern unsigned int g_dualA_00542044;     /* alias of g_scaledInit_00542044 */
+extern unsigned int g_dualA_00542044;     /* alias of g_currentNodeIdx */
 extern unsigned int g_dualB_00542020;
 extern unsigned int g_dualC;     /* alias of g_pendingNodeType */
 extern unsigned int g_dualD;     /* alias of g_eventQueueTotal */
@@ -41,7 +41,7 @@ extern void CjChainResetThreshold(void);
 
 /* @addr 0x00489cd0 */
 void DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThresholdRevertAdvance(void) {
-    g_pendingNodeType = g_scaledInit_00542044;
+    g_pendingNodeType = g_currentNodeIdx;
     g_eventQueueTotal = g_dualB_00542020;
     SqDistThresholdRevertAdvance();
     if (g_framePauseFlag) return;

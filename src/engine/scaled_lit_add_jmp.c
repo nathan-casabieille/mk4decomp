@@ -5,14 +5,14 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00480fb0 (38b)
  *   mov     ecx, [g_walkCallback]
  *   mov     eax, 0x004ef4d0
  *   shr     eax, 2
  *   add     eax, ecx
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   mov     eax, [eax*4 + 0]
  *   mov     [g_xformEntityIdx], eax
  *   jmp     T
@@ -21,7 +21,7 @@ extern void ScaledChainCallPauseSetJmp(void);
 extern int g_dispatchSave1315;
 void ScaledLitAddJmp(void) {
     unsigned int v = (((unsigned int)&g_dispatchSave1315) >> 2) + (unsigned int)g_walkCallback;
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     g_xformEntityIdx = *(unsigned int *)(v * 4);
     ScaledChainCallPauseSetJmp();
 }

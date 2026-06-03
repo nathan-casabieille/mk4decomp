@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_acc_00542078;
 
 /* @addr 0x0047c5e0 (57b)
@@ -15,7 +15,7 @@ extern unsigned int g_acc_00542078;
  *   mov     [g_walkCallback], eax
  *   shr     edx, 2
  *   mov     [ecx*4 + 0x74], eax
- *   mov     [g_scaledInit_00542044], edx
+ *   mov     [g_currentNodeIdx], edx
  *   call    F
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
@@ -29,7 +29,7 @@ extern int g_dispatchSave1304;
 void Set200dCallPauseJmp(void) {
     g_walkCallback = (void (*)(void))0x200d;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x200d;
-    g_scaledInit_00542044 = ((unsigned int)&g_dispatchSave1304) >> 2;
+    g_currentNodeIdx = ((unsigned int)&g_dispatchSave1304) >> 2;
     GuardedDirtyXformFromTable();
     if (g_framePauseFlag != 0) return;
     OneSetCmpJmpLoadCall();

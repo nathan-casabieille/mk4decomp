@@ -5,12 +5,12 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00480d20 (44b)
  *   mov     eax, [g_baseSel]
  *   mov     eax, [eax*4 + 0x38]
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   mov     ecx, [eax*4 + 0x54]
  *   mov     [g_walkCallback], ecx
  *   mov     edx, [eax*4 + 0x5c]
@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 void ScaledChainTwoStores(void) {
     unsigned int v = *(unsigned int *)(g_baseSel * 4 + 0x38);
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     g_walkCallback = (void (*)(void))((ScenegraphNode *)(v * 4))->position_x;
     g_eventQueueCurrent = ((ScenegraphNode *)(v * 4))->position_z;
 }

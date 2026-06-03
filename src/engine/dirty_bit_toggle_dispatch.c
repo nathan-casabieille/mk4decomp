@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -138,7 +138,7 @@ void DirtyBitToggleDispatch(void) {
         mov     dword ptr [g_walkCallback], ecx
         shr     eax, 2
         add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, [eax*4 + g_arr_463390]
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_FramePauseScaledStore
@@ -149,7 +149,7 @@ void DirtyBitToggleDispatch(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   25h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x26d
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + g_chain_disp_30_463390], eax
@@ -159,7 +159,7 @@ void DirtyBitToggleDispatch(void) {
         _emit   75h
         _emit   22h
         mov     ecx, dword ptr [g_xformDirtyFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         or      ecx, 4
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], ecx

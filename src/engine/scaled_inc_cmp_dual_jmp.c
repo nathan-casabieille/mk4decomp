@@ -5,12 +5,12 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00429800 (52b)
  *   mov     eax, [g_fightGroupHead]
  *   mov     ecx, [eax*4 + 0x24]
- *   mov     [g_scaledInit_00542044], ecx
+ *   mov     [g_currentNodeIdx], ecx
  *   mov     eax, [eax*4 + 0x28]
  *   inc     eax
  *   mov     [g_walkCallback], eax
@@ -29,7 +29,7 @@ void ScaledIncCmpDualJmp(void) {
     int cmp_val;
     idx = g_fightGroupHead;
     scaled = ((ScenegraphNode *)(idx * 4))->queue_end;
-    g_scaledInit_00542044 = scaled;
+    g_currentNodeIdx = scaled;
     v = ((ScenegraphNode *)(idx * 4))->queue_idx + 1;
     g_walkCallback = (void (*)(void))v;
     cmp_val = *(int *)(scaled * 4 + 4);

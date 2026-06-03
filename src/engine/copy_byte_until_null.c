@@ -5,11 +5,11 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004265a0 (41b): copy/set 4-stride
  *   mov     eax, [g_xformEntityIdx]
- *   mov     edx, [g_scaledInit_00542044]
+ *   mov     edx, [g_currentNodeIdx]
  *   lea     ecx, [eax*4 + 0]
  *   lea     eax, [edx*4 + 0]
  * .loop:
@@ -29,7 +29,7 @@ extern unsigned int g_scaledInit_00542044;
 void CopyByteUntilNull(void) {
     __asm {
         mov     eax, dword ptr [g_xformEntityIdx]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         lea     ecx, [eax*4 + 0]
         lea     eax, [edx*4 + 0]
         mov     dl, byte ptr [eax]

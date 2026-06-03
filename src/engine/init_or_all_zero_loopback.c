@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004bdb00 (79b)
  *   Two-entry: [4bdb00 +30b] init g_scaledInit slot
@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
 extern void NodeApplyTransform_A(void);
 __declspec(naked) void InitOrAllZeroLoopback(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, 0x1000
         shl     eax, 2
         xor     ecx, ecx

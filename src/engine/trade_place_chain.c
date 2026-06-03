@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -123,7 +123,7 @@ void GateDispatch6c(void) {
     v = *(unsigned int *)(g_baseSel * 4 + 0x30);
     g_walkCallback = (void (*)(void))v;
     if (v == 0) return;
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     v = *(unsigned int *)(v * 4);
     g_walkCallback = (void (*)(void))v;
     if (v != 0x6c) {
@@ -135,6 +135,6 @@ void GateDispatch6c(void) {
     }
     TradePlaceChain();
     if (g_framePauseFlag != 0) return;
-    g_eventQueueEnd = g_scaledInit_00542044;
+    g_eventQueueEnd = g_currentNodeIdx;
     StoreTwoCall(0x004945f0, 0x60);
 }

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -121,7 +121,7 @@ extern unsigned int g_matrixStack_arr;
 void MStackChainSwapTraversal(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
@@ -133,9 +133,9 @@ void MStackChainSwapTraversal(void) {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [eax*4 + 0x18]
         mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0x44], 0
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [ecx*4 + 0x1c]
         cmp     eax, 0xfffffff6
         mov     dword ptr [g_walkCallback], eax
@@ -147,7 +147,7 @@ void MStackChainSwapTraversal(void) {
         _emit   00h
         mov     ecx, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_xformEntityIdx], 4
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackBracket5_LinkedListUnlink
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -157,11 +157,11 @@ void MStackChainSwapTraversal(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [edx*4 + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     edx, dword ptr [eax*4 + 0x34]
         mov     ecx, dword ptr [ecx*4 + 0x34]
         add     edx, ecx
@@ -187,7 +187,7 @@ void MStackChainSwapTraversal(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

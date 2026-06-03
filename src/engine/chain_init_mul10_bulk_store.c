@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -150,11 +150,11 @@ void ChainInitMul10BulkStore(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x94
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x64]
         sub     eax, 0x5b333
         mov     dword ptr [g_eventQueueWorkType], eax
@@ -190,7 +190,7 @@ void ChainInitMul10BulkStore(void) {
         _emit   08h
         neg     ecx
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         shl     eax, 2
         mov     dword ptr [eax + 0x6c], ecx
         mov     ecx, dword ptr [g_walkCallback]

@@ -9,14 +9,14 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;   /* 0x00542060 */
 extern void InstallSelfMagicShift(void);
 extern void LoadCmpAddrJmp(void);
 
 /* @addr 0x00472fc0 */
 void ScaledLoadJmp30_set_g_scaledInit_00542044_then_InstallSelfMagicShift(void) {
-    g_scaledInit_00542044 = *(unsigned int *)(g_eventQueueEnd * 4 + 0x30);
+    g_currentNodeIdx = *(unsigned int *)(g_eventQueueEnd * 4 + 0x30);
     InstallSelfMagicShift();
 }
 

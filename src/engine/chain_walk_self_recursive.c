@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -123,7 +123,7 @@ int ChainWalkSelfRecursive(void) {
     unsigned int link = *(unsigned int *)(g_pendingNodeType * 4 + 0x40);
     g_eventQueueWorkType = link;
     if ((unsigned int)g_walkCallback != 0) {
-        ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->not_mask = (unsigned int)g_walkCallback;
+        ((ScenegraphNode *)(g_currentNodeIdx * 4))->not_mask = (unsigned int)g_walkCallback;
         g_xformEntityIdx = (unsigned int)&HitReactionDispatcher;
         Thunk_ChainNodeInit();
         return g_framePauseFlag;

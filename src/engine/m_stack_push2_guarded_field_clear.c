@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0044d0c0 (276b game) - mstack-push 2, 2 calls, conditional field clear.
  *   mstack-push g_xformEntityIdx. call DirtyDoubleDeref; if pause? final-ret.
- *   esi=0. mstack-push g_scaledInit_00542044; load scaledInit[+0x24] -> g_xformEntityIdx.
+ *   esi=0. mstack-push g_currentNodeIdx; load scaledInit[+0x24] -> g_xformEntityIdx.
  *   Call FramePauseScaledStore; if pause? final-ret.
  *   g_pendingNodeType = mstack-top (peek scaledInit before pop).
  *   If bit2 of g_xformDirtyFlags clear: mstack-pop scaledInit + g_xformEntityIdx; pop esi; ret.
@@ -139,11 +139,11 @@ __declspec(naked) void MStackPush2GuardedFieldClear(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x24]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    FramePauseScaledStore
@@ -171,15 +171,15 @@ __declspec(naked) void MStackPush2GuardedFieldClear(void) {
         dec     eax
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_matrixStackTop], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x30], esi
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x34], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x38], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [edx*4 + 0x1c], esi
         mov     eax, dword ptr [g_matrixStackTop]

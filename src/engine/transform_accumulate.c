@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -127,7 +127,7 @@ void TransformAccumulate(void) {
         mov     ecx, [eax*4 + g_arr_4bddf0_src]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, [eax*4 + g_arr_4bddf0_src + 0x04]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     eax, [eax*4 + g_arr_4bddf0_src + 0x08]
         mov     dword ptr [g_xformEntityIdx], eax
@@ -137,18 +137,18 @@ void TransformAccumulate(void) {
         push    edx
         push    ecx
         call    Mat3x3VecMul6Bit
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_walkCallback]
         add     esp, 8
         mov     ecx, [eax*4 + g_arr_4bddf0_a]
         add     ecx, edx
         mov     [eax*4 + g_arr_4bddf0_a], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     edx, [eax*4 + g_arr_4bddf0_a + 0x04]
         add     edx, ecx
         mov     [eax*4 + g_arr_4bddf0_a + 0x04], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_xformEntityIdx]
         add     [eax*4 + g_arr_4bddf0_a + 0x08], edx
         }

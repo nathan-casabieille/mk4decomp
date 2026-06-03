@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -123,7 +123,7 @@ extern unsigned int g_matrixStack_arr;
 void MStackPushNegMul10(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
@@ -131,7 +131,7 @@ void MStackPushNegMul10(void) {
         mov     eax, dword ptr [g_load_0052ab10]
         neg     edx
         mov     dword ptr [g_acc_00542078], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, [eax*4 + g_chain_disp_64_40a690]
         mov     dword ptr [g_eventQueueWorkType], eax
         call    MStackPush1MagicMod2
@@ -156,7 +156,7 @@ void MStackPushNegMul10(void) {
         add     esp, 8
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

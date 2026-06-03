@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -153,7 +153,7 @@ void TagDispatchPairedPacked(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         _emit   75h
         _emit   31h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     edx, 0x004e28c8
         mov     dword ptr [g_matrixStackTop], eax
@@ -167,7 +167,7 @@ void TagDispatchPairedPacked(void) {
         _emit   48h
         _emit   0ebh
         _emit   2eh
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], edx
@@ -182,7 +182,7 @@ void TagDispatchPairedPacked(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -117,13 +117,13 @@ extern unsigned int g_fightAxisPosY;
  */
 void DualPackedStoreCallSubBack(void) {
     unsigned int val;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->fsm_state = 0xffffcccd;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->fsm_state = 0xffffcccd;
     val = 0xffffd70b;
     g_walkCallback = (void (*)(void))val;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x70) = val;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x70) = val;
     g_eventQueueWorkType = 0x3333;
-    g_scaledInit_00542044 = g_scaledInit_00542044 + 0x1b;
+    g_currentNodeIdx = g_currentNodeIdx + 0x1b;
     TripleVecAccCallStore();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 -= 0x1b;
+    g_currentNodeIdx -= 0x1b;
 }

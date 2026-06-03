@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -131,7 +131,7 @@ void DualPickDecJmp(void) {
     cj = g_cj_0054205c;
     idx = g_dualB_00538038;
     g_xformEntityIdx = idx;
-    g_scaledInit_00542044 = state;
+    g_currentNodeIdx = state;
     if (cj != state) {
         idx = g_dualB_0053803c;
         g_xformEntityIdx = idx;

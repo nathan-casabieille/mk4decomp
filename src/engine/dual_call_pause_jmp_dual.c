@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00439190 (20b): call F1; if pause, ret; else tail-jmp T1.
  *   Originally a 52-byte slot covering this 20-byte entry plus a 12-byte

@@ -12,7 +12,7 @@
  *   test    byte ptr [g_xformDirtyFlags], 4
  *   jne     .ret
  *   mov     ecx, [g_baseSel]
- *   mov     edx, [g_scaledInit_00542044]
+ *   mov     edx, [g_currentNodeIdx]
  *   mov     [ecx*4 + 0x5c], edx
  * .ret:
  *   ret
@@ -21,7 +21,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_phase4ThreePackedBase;
 
 extern void MStackBracket1_TreeWalkRecursive2(void);
@@ -38,7 +38,7 @@ void ScaledInitPauseDirtyStore_00445f00(void) {
     if ((g_xformDirtyFlags & 4) != 0) {
         return;
     }
-    *(unsigned int *)(g_baseSel * 4 + 0x5c) = g_scaledInit_00542044;
+    *(unsigned int *)(g_baseSel * 4 + 0x5c) = g_currentNodeIdx;
 }
 
 /* @addr 0x00446240 */
@@ -47,5 +47,5 @@ void ScaledInitPauseDirtyStore_00446240(void) {
     FramePauseScaledStore();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
-    *(unsigned int*)(g_baseSel * 4 + 0x5c) = g_scaledInit_00542044;
+    *(unsigned int*)(g_baseSel * 4 + 0x5c) = g_currentNodeIdx;
 }

@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00482740 (62b)
  *   3-level scaled chain (0x3c, 0x30, 0); cmp 0x61 → jmp T1; cmp 0x69 → jmp T2.
@@ -15,9 +15,9 @@ extern void Wrapper_ScaledChainPushCall_004ef868(void);
 void ScaledChainCmp61(void) {
     unsigned int v;
     v = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     v = *(unsigned int *)(v * 4 + 0x30);
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     v = *(unsigned int *)(v * 4);
     g_walkCallback = (void (*)(void))v;
     if (v == 0x61) {

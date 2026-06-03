@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -151,11 +151,11 @@ __declspec(naked) void InstallSelfPushArg(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0

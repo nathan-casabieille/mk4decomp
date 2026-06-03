@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004925d0 (266b game) - mstack-push scaledInit + multi-call dispatch with 5-field init.
- *   mstack-push g_scaledInit_00542044; g_xformEntityIdx = 0x0050f4e8 >> 2.
+ *   mstack-push g_currentNodeIdx; g_xformEntityIdx = 0x0050f4e8 >> 2.
  *   call DispatcherComplex260_FramePauseScaledStore; if pause? final-ret.
  *   If bit2 of g_xformDirtyFlags set, skip to final-ret.
  *   Else: scaledInit[+0x54]=0, scaledInit[+0x58]=0xff920000, scaledInit[+0x30]=0x1c.
@@ -128,7 +128,7 @@ extern void StoreIncrMStackPush6(void);
 void MStackPushChainDispatchInit5(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     edx, 0x0050f4e8
         mov     dword ptr [g_matrixStackTop], eax
@@ -151,12 +151,12 @@ void MStackPushChainDispatchInit5(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x54], 0
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x1c
         mov     dword ptr [ecx*4 + 0x58], 0xff920000
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
         call    MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
@@ -189,7 +189,7 @@ void MStackPushChainDispatchInit5(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

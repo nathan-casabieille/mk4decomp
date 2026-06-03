@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -152,7 +152,7 @@ __declspec(naked) void GatedChainInit(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         shl     eax, 2
         mov     dword ptr [eax + 0x54], 0
         mov     dword ptr [eax + 0x58], 0
@@ -172,7 +172,7 @@ __declspec(naked) void GatedChainInit(void) {
         test    eax, eax
         _emit   75h
         _emit   3fh
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x54], 0x0000b333
         mov     dword ptr [ecx*4 + 0x58], 0x00003333
         mov     dword ptr [ecx*4 + 0x5c], 0x00003333

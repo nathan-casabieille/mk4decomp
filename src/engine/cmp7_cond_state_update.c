@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -135,7 +135,7 @@ __declspec(naked) void Cmp7CondStateUpdate(void) {
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         jne     tailCall
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], ecx
         cmp     dword ptr [eax*4 + 0], ecx
         jne     tailCall

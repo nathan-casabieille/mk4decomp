@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -197,7 +197,7 @@ extern unsigned int g_matrixStack_arr;
 
 void LinkedListSwapHead(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     eax, [eax*4 + g_arr_chain_4348f0_2c]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -230,7 +230,7 @@ loopWalk:
         mov     eax, dword ptr [g_bootLongChainState]
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + g_arr_chain_4348f0_main], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, [edx*4 + g_arr_chain_4348f0_2c]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [g_bootLongChainState], eax

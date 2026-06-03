@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048e630 (75b)
  *   eax = arg0 >> 2 → g_eventQueueTotal; ecx = [eax*4+0];

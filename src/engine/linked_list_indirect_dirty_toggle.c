@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -134,16 +134,16 @@ __declspec(naked) void LinkedListIndirectDirtyToggle(void) {
         call    SaveStateSnapshot
         mov     eax, offset g_dispatchSave579
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_xformEntityIdx], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   7ch
         _emit   5bh
         mov     esi, dword ptr [g_walkCallback]
@@ -154,12 +154,12 @@ __declspec(naked) void LinkedListIndirectDirtyToggle(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_xformEntityIdx], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   7dh
         _emit   0d2h
         call    MStackRestore27

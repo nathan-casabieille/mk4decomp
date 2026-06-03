@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -128,8 +128,8 @@ void GuardedBitChainCmpJmp(void) {
     v &= 0x200;
     g_xformScratch94 = v;
     if (v == 0) return;
-    g_scaledInit_00542044 = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
-    v = *(int *)(g_scaledInit_00542044 * 4 + 0x7c);
+    g_currentNodeIdx = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
+    v = *(int *)(g_currentNodeIdx * 4 + 0x7c);
     g_walkCallback = (void (*)(void))v;
     if (v < 2) return;
     g_walkCallback = (void (*)(void))0x1f4;

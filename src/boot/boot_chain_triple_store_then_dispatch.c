@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -129,7 +129,7 @@ void MStackChainDecodeCall(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], edx
@@ -139,7 +139,7 @@ void MStackChainDecodeCall(void) {
         test    eax, eax
         _emit   75h
         _emit   74h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 1
         mov     eax, [ecx*4 + 8]
         shr     eax, 0x10
@@ -152,7 +152,7 @@ void MStackChainDecodeCall(void) {
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         call    BootChainTripleStoreThenDispatch
         mov     eax, dword ptr [g_framePauseFlag]

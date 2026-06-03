@@ -3,11 +3,11 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004297d0 (45b)
  *   mov     eax, [g_fightGroupHead]
- *   mov     ecx, [g_scaledInit_00542044]
+ *   mov     ecx, [g_currentNodeIdx]
  *   mov     eax, [eax*4 + 0x28]
  *   inc     eax
  *   mov     [g_eventQueueCurrent], eax
@@ -25,7 +25,7 @@ void ScaledIncCmpJmp(void) {
     unsigned int v;
     int cmp_val;
     idx = g_fightGroupHead;
-    scaled = g_scaledInit_00542044;
+    scaled = g_currentNodeIdx;
     v = ((ScenegraphNode *)(idx * 4))->queue_idx + 1;
     g_eventQueueCurrent = v;
     cmp_val = *(int *)(scaled * 4 + 4);

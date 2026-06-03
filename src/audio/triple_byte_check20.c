@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004a1c80 (45b)
  *   test    byte ptr [g_byte_004d50b8], 0x10

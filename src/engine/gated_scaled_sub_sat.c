@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -139,7 +139,7 @@ void GatedScaledSubSat(void) {
         test    eax, eax
         _emit   75h
         _emit   52h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         push    offset g_str_00542fa8
         mov     [eax*4 + g_arr_005d83a4], ecx
@@ -149,7 +149,7 @@ void GatedScaledSubSat(void) {
         test    eax, eax
         _emit   75h
         _emit   2ah
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_walkCallback]
         mov     eax, [ecx*4 + g_arr_005d8208]
         sub     eax, edx

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004ba0e0 (66b)
  *   eax = g_xformEntityIdx[+0x14] * [0xab4e6c]; sar 8;

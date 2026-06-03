@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -130,40 +130,40 @@ __declspec(naked) void PackedSelectLoad6(void) {
         shr     eax, 2
         shr     ecx, 2
         cmp     edx, esi
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], ecx
         _emit   74h
         _emit   07h
         mov     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueNotMask], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueChild], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_currentNodeFlags], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_xformScratch2088], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueEnd], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [g_eventQueueIdx], edx
         pop     esi
         mov     eax, [eax*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + 0x74]
         mov     dword ptr [g_walkCallback], ecx
         ret

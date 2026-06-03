@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -127,7 +127,7 @@ __declspec(naked) void ChainWalkSelfRecursive(void) {
         test    eax, eax
         mov     dword ptr [g_eventQueueWorkType], ecx
         je      walkChain
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [edx*4 + 0x14], eax
         mov     dword ptr [g_xformEntityIdx], 0x0045f650
         call    Thunk_ChainNodeInit

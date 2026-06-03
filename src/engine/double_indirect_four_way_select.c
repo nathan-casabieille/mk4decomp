@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -109,12 +109,12 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0049ec00 (252b game) - 2-step indirect lookup + 4-way edx select.
- *   mstack-push g_scaledInit_00542044, g_dispatchArg.
+ *   mstack-push g_currentNodeIdx, g_dispatchArg.
  *   ecx = g_audioBitField; eax = g_walkCallback; g_xformEntityIdx=ecx; edx=eax;
  *   ecx += eax (sum index); g_dispatchArg=edx (original eax).
- *   eax = [ecx*4]; g_xformEntityIdx=eax. ecx = [eax*4]; g_scaledInit_00542044=ecx;
+ *   eax = [ecx*4]; g_xformEntityIdx=eax. ecx = [eax*4]; g_currentNodeIdx=ecx;
  *   ecx = [ecx*4]; g_walkCallback=ecx. cmp ecx, 0xf;
- *   ecx = [eax*4 + 0x40]; g_scaledInit_00542044=ecx; ecx = [ecx*4];
+ *   ecx = [eax*4 + 0x40]; g_currentNodeIdx=ecx; ecx = [ecx*4];
  *   g_walkCallback=ecx. jbe block_8or10 (ecx<=0xf).
  *   block_c_or_e (ecx>0xf): edx = (ecx!=0 ? 0xe : 0xc).
  *   block_8_or_a: edx = (ecx!=0 ? 0xa : 8).
@@ -127,7 +127,7 @@ extern unsigned int g_audioBitField;
 void DoubleIndirectFourWaySelect(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
@@ -145,12 +145,12 @@ void DoubleIndirectFourWaySelect(void) {
         mov     eax, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     ecx, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_walkCallback], ecx
         cmp     ecx, 0x0f
         mov     ecx, dword ptr [eax*4 + 0x40]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     ecx, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_walkCallback], ecx
         _emit   76h
@@ -185,7 +185,7 @@ void DoubleIndirectFourWaySelect(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

@@ -5,10 +5,10 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00424b70 (42b)
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   mov     ecx, 0x10000
  *   shl     eax, 2
  *   mov     [eax], ecx
@@ -24,7 +24,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void IdentityMatrix(void) {
-    int *base = (int *)(g_scaledInit_00542044 * 4);
+    int *base = (int *)(g_currentNodeIdx * 4);
     base[0] = 0x10000;
     base[4] = 0x10000;
     base[8] = 0x10000;

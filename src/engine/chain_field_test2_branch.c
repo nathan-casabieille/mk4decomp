@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -125,7 +125,7 @@ extern void SubCmpCallPauseJmp(void);
 
 __declspec(naked) void ChainFieldTest2Branch(void) {
     __asm {
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [ecx*4 + 0x40]
         mov     dword ptr [g_walkCallback], eax
         and     eax, 0x40
@@ -135,10 +135,10 @@ __declspec(naked) void ChainFieldTest2Branch(void) {
         mov     ecx, dword ptr [g_player1NodeIdx]
         cmp     eax, ecx
         mov     dword ptr [g_xformEntityIdx], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         jne     L_notEqual
         mov     eax, dword ptr [g_player2NodeIdx]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
     L_notEqual:
         call    MStackSignedMod
         mov     eax, dword ptr [g_framePauseFlag]

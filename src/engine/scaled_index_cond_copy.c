@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048e590 (69b)
  *   eax = arg0 >> 2 → g_eventQueueTotal; ecx = [eax*4+0] → scaled;
@@ -16,10 +16,10 @@ void ScaledIndexCondCopy(int arg) {
     unsigned int v;
     g_eventQueueTotal = packed;
     v = *(unsigned int *)(packed * 4 + 0);
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     if (g_fightGroupHead != g_player1NodeIdx) {
         v = *(unsigned int *)(packed * 4 + 4);
-        g_scaledInit_00542044 = v;
+        g_currentNodeIdx = v;
     }
     g_walkCallback = (void (*)(void))(*(unsigned int *)(v * 4 + 0));
 }

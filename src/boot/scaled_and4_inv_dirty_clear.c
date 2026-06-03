@@ -5,10 +5,10 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00409350 (35b)
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   mov     ecx, [eax*4 + 0x34]
  *   and     ecx, 0xfffffffb
  *   mov     [eax*4 + 0x34], ecx
@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void ScaledAnd4InvDirtyClear(void) {
-    ScenegraphNode *n = (ScenegraphNode *)(g_scaledInit_00542044 * 4);
+    ScenegraphNode *n = (ScenegraphNode *)(g_currentNodeIdx * 4);
     n->state_mask &= 0xFFFFFFFBu;
     g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }

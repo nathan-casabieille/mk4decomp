@@ -10,11 +10,11 @@
  *   shr     eax, 2
  *   shr     ecx, 2
  *   cmp     edx, esi
- *   mov     [g_scaledInit_00542044], eax
- *   mov     [g_scaledInit_00542048], ecx
+ *   mov     [g_currentNodeIdx], eax
+ *   mov     [g_xformEntityIdx], ecx
  *   je      .same
  *   mov     eax, ecx                     ; not p1: A = B
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  * .same:
  *   mov     ecx, [g_walkCallback]
  *   pop     esi
@@ -24,8 +24,8 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
-extern unsigned int g_scaledInit_00542048;
+extern unsigned int g_currentNodeIdx;
+extern unsigned int g_xformEntityIdx;
 extern unsigned int g_phaseThunkArr3;
 extern unsigned int g_phaseThunkArr2;
 extern unsigned int g_roundResetSlot;
@@ -47,11 +47,11 @@ __declspec(naked) void CmpP1DualInitStore_00433d30(void) {
         shr     eax, 2
         shr     ecx, 2
         cmp     edx, esi
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_scaledInit_00542048], ecx
+        mov     dword ptr [g_currentNodeIdx], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
         je      short L_p1same_a
         mov     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
     L_p1same_a:
         mov     ecx, dword ptr [g_walkCallback]
         pop     esi
@@ -74,11 +74,11 @@ __declspec(naked) void CmpP1DualInitStore_00482ab0(void) {
         shr     eax, 2
         shr     ecx, 2
         cmp     edx, esi
-        mov     dword ptr [g_scaledInit_00542044], eax
-        mov     dword ptr [g_scaledInit_00542048], ecx
+        mov     dword ptr [g_currentNodeIdx], eax
+        mov     dword ptr [g_xformEntityIdx], ecx
         je      short L_p1same_b
         mov     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
     L_p1same_b:
         mov     ecx, dword ptr [g_walkCallback]
         pop     esi

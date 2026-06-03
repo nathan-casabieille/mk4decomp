@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0049fa20 (36b): same shape as 0x0042ee10 / 0x00464320 - cmp 3 / dirty manip */
 extern unsigned int g_tickFlagF;

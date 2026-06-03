@@ -5,12 +5,12 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048e2f0 (60b)
  *   push lit; call F; pause-test → ret;
  *   load g_baseSel; copy [eax*4+0x7c]→g_walkCallback, [eax*4+0x80]→g_currentNodeFlags;
- *   jmp [g_scaledInit_00542044]; ret.
+ *   jmp [g_currentNodeIdx]; ret.
  */
 extern void *g_dispatchSave1316;
 extern int ArgScaledLoadCmpP1(void *);
@@ -21,5 +21,5 @@ void PushCallPauseScaledJmpInd(void) {
     base = g_baseSel;
     g_walkCallback = (void (*)(void))*(unsigned int *)(base * 4 + 0x7c);
     g_currentNodeFlags = *(unsigned int *)(base * 4 + 0x80);
-    (*(void (**)(void))&g_scaledInit_00542044)();
+    (*(void (**)(void))&g_currentNodeIdx)();
 }

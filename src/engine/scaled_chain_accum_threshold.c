@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -124,7 +124,7 @@ __declspec(naked) void DualSeqLoopDispatch(void) {
         push    ebx
         push    esi
         mov     esi, 0x94
-        mov     dword ptr [g_scaledInit_00542044], 0
+        mov     dword ptr [g_currentNodeIdx], 0
         mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -154,7 +154,7 @@ __declspec(naked) void DualSeqLoopDispatch(void) {
         pop     ebx
         ret
         mov     esi, 0x7e
-        mov     dword ptr [g_scaledInit_00542044], 0
+        mov     dword ptr [g_currentNodeIdx], 0
         mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
         mov     eax, dword ptr [g_framePauseFlag]

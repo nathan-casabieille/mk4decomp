@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -121,11 +121,11 @@ void DeltaAbsCompareBitToggle(void) {
         mov     ecx, dword ptr [g_player1NodeIdx]
         mov     eax, dword ptr [g_cj_0054205c]
         cmp     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   75h
         _emit   0ch
         mov     ecx, dword ptr [g_player2NodeIdx]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     edx, [ecx*4 + g_arr_chain_54_48ea90]
         mov     dword ptr [g_walkCallback], edx
         mov     ecx, [eax*4 + g_arr_chain_54_48ea90]

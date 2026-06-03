@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -125,7 +125,7 @@ void GuardedDoubleIncCmpJmp(void) {
     GuardedChainCmpDualBitXor();
     if (g_framePauseFlag != 0) return;
     idx_cj = g_cj_0054205c;
-    idx_scaled = g_scaledInit_00542044;
+    idx_scaled = g_currentNodeIdx;
     val = ((ScenegraphNode *)(idx_cj * 4))->queue_idx + 1;
     g_eventQueueCurrent = val;
     cmp_val = *(int *)(idx_scaled * 4 + 4);

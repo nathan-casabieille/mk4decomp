@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004314f0 (53b): same shape as 0x0041f1b0 with different ptr/value */
 void ScaledInitWithCounterAndType_004314f0(void) {

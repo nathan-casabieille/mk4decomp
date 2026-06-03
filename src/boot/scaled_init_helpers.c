@@ -8,7 +8,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004084b0 (81b)
  *   load scaled, eventQueueCurrent; load scaled[+0x1c] into eax;
@@ -22,7 +22,7 @@ extern void SlotInitAndChainLink(void);
 
 void ScaledLoadCallSet1c(void) {
     __asm {
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_eventQueueCurrent]
         mov     eax, dword ptr [ecx*4 + 0x1c]
         cmp     edx, eax
@@ -57,7 +57,7 @@ void SetDirty4XorScaledLoad(void) {
         mov     ecx, 4
         or      eax, ecx
         mov     dword ptr [g_xformDirtyFlags], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         test    eax, eax
         _emit   74h
         _emit   3ch
@@ -69,10 +69,10 @@ void SetDirty4XorScaledLoad(void) {
         _emit   2ah
         mov     eax, dword ptr [eax*4 + 0x18]
         mov     ecx, 0x00414600
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x28]
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0x10], ecx
         }
 }
@@ -90,7 +90,7 @@ void CallPauseDirty4ScaledSet_tag_0x81(void) {
     ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x81;
     g_walkCallback = (void(*)(void))0x14ccc;
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x14ccc;
-    g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
+    g_currentNodeIdx = g_eventQueueEnd + 0x15;
     BootGatedInitInstallPair();
 }
 

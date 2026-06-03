@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   if bit2 of g_xformDirtyFlags set: copy g_cj_00542058 to g_dispatchCopyField, ret.
  *   else: scaledInit[+0x30] = 0x78; call MStackCall; if pause? ret.
  *   else: copy fields +0x54/+0x58/+0x5c (via g_walkCallback temp) and +0x64 from
- *   g_cj_00542058<<2 to g_scaledInit_00542044<<2; zero +0x60/+0x68; copy
+ *   g_cj_00542058<<2 to g_currentNodeIdx<<2; zero +0x60/+0x68; copy
  *   scaledInit to g_dispatchCopyField; merge low bit of [+0x34]; ret.
  */
 extern unsigned int g_dispatchCopyField;
@@ -139,7 +139,7 @@ void DispatchCopyFields(void) {
         mov     ecx, dword ptr [g_cj_00542058]
         mov     dword ptr [g_dispatchCopyField], ecx
         ret
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x78
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
@@ -153,7 +153,7 @@ void DispatchCopyFields(void) {
         _emit   00h
         _emit   00h
         mov     ecx, dword ptr [g_cj_00542058]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         shl     ecx, 2
         shl     eax, 2
         mov     edx, dword ptr [ecx + 0x54]
@@ -171,7 +171,7 @@ void DispatchCopyFields(void) {
         mov     dword ptr [eax + 0x60], 0
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x68], edx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_dispatchCopyField], edx
         mov     edx, dword ptr [eax + 0x34]
         mov     dword ptr [g_walkCallback], edx

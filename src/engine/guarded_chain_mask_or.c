@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -125,7 +125,7 @@ void GuardedChainMaskOr(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [eax*4 + 0x4c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackBracket4_ListInsertZeroFill
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -160,32 +160,32 @@ void GuardedChainMaskOr(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x1c]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   7fh
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x08]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   6ah
         mov     ecx, 0xf0ffffff
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x20]
         and     edx, ecx
         mov     dword ptr [eax*4 + 0x20], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 0x0b000000
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      eax, 0x0b000000
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         mov     ecx, dword ptr [g_xformDirtyFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         or      ecx, 4
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], ecx

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  */
 __declspec(naked) void EsiTripleMul10Vec(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         push    esi
         lea     esi, [eax*4 + 0]

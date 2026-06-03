@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -125,9 +125,9 @@ void GuardedSetupTailMStackJmp(void) {
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;
     v = 0x1b;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_x = 0;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_y = 0x760000;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_x = 0;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_y = 0x760000;
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x30) = v;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x30) = v;
     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
 }

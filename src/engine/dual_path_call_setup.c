@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -136,5 +136,5 @@ void DualPathCallSetup(void) {
     MStackCall_MStackPush2ChainPrepend_00406340();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x1b333;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_y = 0x1b333;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_y = 0x1b333;
 }

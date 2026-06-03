@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -133,7 +133,7 @@ __declspec(naked) void IndirectStateDispatcher(void) {
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [eax*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    eax
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -155,7 +155,7 @@ __declspec(naked) void IndirectStateDispatcher(void) {
         _emit   00h
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [edx*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
     retry:
         cmp     eax, 5
@@ -196,7 +196,7 @@ __declspec(naked) void IndirectStateDispatcher(void) {
         call    CallSetPause
         pop     ebx
         ret
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_dispatchArg]

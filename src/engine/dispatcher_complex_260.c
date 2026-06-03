@@ -18,10 +18,10 @@
  *   test    bl, al
  *   jne     .skip_first_path           ; long jne (rel32=0x8d)
  *   ; First sub-path
- *   mov     edx, [g_scaledInit_00542044]
+ *   mov     edx, [g_currentNodeIdx]
  *   mov     eax, [g_xformEntityIdx]
  *   mov     [edx*4 + 0x38], eax
- *   mov     ecx, [g_scaledInit_00542044]
+ *   mov     ecx, [g_currentNodeIdx]
  *   mov     [g_pendingNodeType], ecx
  *   call    Worker                     ; per-helper
  *   mov     eax, [g_framePauseFlag]
@@ -30,24 +30,24 @@
  *   test    [g_xformDirtyFlags], bl
  *   jne     .second_init               ; short
  *   mov     edx, [g_pendingNodeType]
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   mov     [edx*4 + 0x18], eax
- *   mov     edx, [g_scaledInit_00542044]
+ *   mov     edx, [g_currentNodeIdx]
  *   mov     ecx, [g_pendingNodeType]
  *   mov     [edx*4 + 0x18], ecx
  *   mov     eax, [g_pendingNodeType]
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   jmp     .after_init
  * .second_init:
  *   mov     ecx, [g_pendingNodeType]
- *   mov     [g_scaledInit_00542044], ecx
+ *   mov     [g_currentNodeIdx], ecx
  * .after_init:
  * .skip_first_path:
  *   call    SetupB
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
  *   jne     .late_pop                  ; (skip pop+xor, just ret)
- *   mov     [g_scaledInit_00542044], 0
+ *   mov     [g_currentNodeIdx], 0
  * .late_pop:
  *   mov     eax, [g_matrixStackTop]
  *   mov     ecx, [g_xformDirtyFlags]
@@ -55,7 +55,7 @@
  *   mov     edx, [eax*4 + 0]
  *   dec     eax
  *   mov     [g_matrixStackTop], eax
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   test    eax, eax
  *   mov     [g_pendingNodeType], edx
  *   mov     [g_xformDirtyFlags], ecx
@@ -70,7 +70,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 extern void BootPhaseGateBracketedInit(void);
 extern void MStackBracket1_TreeWalkRecursive2(void);
@@ -104,10 +104,10 @@ extern void MStackPush2ChainLLInsert(void);
         __asm _emit   00h                                                      \
         __asm _emit   00h                                                      \
         __asm _emit   00h                                                      \
-        __asm mov     edx, dword ptr [g_scaledInit_00542044]                   \
+        __asm mov     edx, dword ptr [g_currentNodeIdx]                   \
         __asm mov     eax, dword ptr [g_xformEntityIdx]                        \
         __asm mov     dword ptr [edx*4 + 0x38], eax                            \
-        __asm mov     ecx, dword ptr [g_scaledInit_00542044]                   \
+        __asm mov     ecx, dword ptr [g_currentNodeIdx]                   \
         __asm mov     dword ptr [g_pendingNodeType], ecx                       \
         __asm call    WORKER_FN                                                \
         __asm mov     eax, dword ptr [g_framePauseFlag]                        \
@@ -122,30 +122,30 @@ extern void MStackPush2ChainLLInsert(void);
         __asm _emit   75h                                                      \
         __asm _emit   31h                                                      \
         __asm mov     edx, dword ptr [g_pendingNodeType]                       \
-        __asm mov     eax, dword ptr [g_scaledInit_00542044]                   \
+        __asm mov     eax, dword ptr [g_currentNodeIdx]                   \
         __asm mov     dword ptr [edx*4 + 0x18], eax                            \
-        __asm mov     edx, dword ptr [g_scaledInit_00542044]                   \
+        __asm mov     edx, dword ptr [g_currentNodeIdx]                   \
         __asm mov     ecx, dword ptr [g_pendingNodeType]                       \
         __asm mov     dword ptr [edx*4 + 0x18], ecx                            \
         __asm mov     eax, dword ptr [g_pendingNodeType]                       \
-        __asm mov     dword ptr [g_scaledInit_00542044], eax                   \
+        __asm mov     dword ptr [g_currentNodeIdx], eax                   \
         __asm _emit   0ebh                                                     \
         __asm _emit   24h                                                      \
         __asm mov     ecx, dword ptr [g_pendingNodeType]                       \
-        __asm mov     dword ptr [g_scaledInit_00542044], ecx                   \
+        __asm mov     dword ptr [g_currentNodeIdx], ecx                   \
         __asm call    MStackPush2ChainLLInsert                                            \
         __asm mov     eax, dword ptr [g_framePauseFlag]                        \
         __asm test    eax, eax                                                 \
         __asm _emit   75h                                                      \
         __asm _emit   42h                                                      \
-        __asm mov     dword ptr [g_scaledInit_00542044], 0                     \
+        __asm mov     dword ptr [g_currentNodeIdx], 0                     \
         __asm mov     eax, dword ptr [g_matrixStackTop]                        \
         __asm mov     ecx, dword ptr [g_xformDirtyFlags]                       \
         __asm or      ecx, ebx                                                 \
         __asm mov     edx, dword ptr [eax*4 + 0]                               \
         __asm dec     eax                                                      \
         __asm mov     dword ptr [g_matrixStackTop], eax                        \
-        __asm mov     eax, dword ptr [g_scaledInit_00542044]                   \
+        __asm mov     eax, dword ptr [g_currentNodeIdx]                   \
         __asm test    eax, eax                                                 \
         __asm mov     dword ptr [g_pendingNodeType], edx                       \
         __asm mov     dword ptr [g_xformDirtyFlags], ecx                       \

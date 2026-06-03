@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -191,7 +191,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect(void) {
         _emit   16h
         mov     eax, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [eax*4 + 8]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    eax
         pop     esi
         pop     ebx
@@ -201,7 +201,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect(void) {
         mov     eax, dword ptr [ecx*4 + 4]
         mov     ecx, 4
         or      edx, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], edx
         _emit   74h

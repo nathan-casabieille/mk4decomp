@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -146,7 +146,7 @@ __declspec(naked) void AudioInstallSelfStatePush(void) {
         push    0x00640000
         push    offset g_dispatchSave883
         call    GuardedSetupCallTailJmp
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, offset AudioInstallSelfStatePush
         mov     dword ptr [g_audioInitScaled], ecx
         mov     dword ptr [g_tickW1], 0x100

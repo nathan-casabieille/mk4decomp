@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -123,7 +123,7 @@ extern unsigned int g_arr_407620_mstack;
 
 void InstallSelfDispatch(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         lea     ecx, [eax + 0xf]
         mov     dword ptr [g_pendingNodeType], ecx
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -147,7 +147,7 @@ void InstallSelfDispatch(void) {
         test    eax, eax
         _emit   75h
         _emit   39h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], offset InstallSelfDispatch
         mov     eax, [eax*4 + g_arr_407620_final]
         test    eax, eax

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -168,12 +168,12 @@ __declspec(naked) void InstallSelfMStackPushDispatch(void) {
         mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_eventQueueEnd], eax
         mov     edx, dword ptr [ecx]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [edx*4 + 0], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [ecx], eax
         call    IncStoreCallIATDec
         mov     eax, dword ptr [g_framePauseFlag]

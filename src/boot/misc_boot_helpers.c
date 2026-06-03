@@ -10,7 +10,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0040a7e0 (69b)
  *   push g_eventQueueEnd, add 0x15, restore at end after call.
@@ -38,7 +38,7 @@ extern void BootMStackBracketedScaledStores(void);
 void PushCallScaledClearJmp(void) {
     ThreeChanPackClamp(&g_dispatchSave1131);
     CopyThreeFields(g_fightGroupHead);
-    g_scaledInit_00542044 = 0;
+    g_currentNodeIdx = 0;
     func_00405420_ii();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) {

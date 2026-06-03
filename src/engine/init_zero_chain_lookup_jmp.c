@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -132,11 +132,11 @@ void InitZeroChainLookupJmp(void) {
     *(unsigned int *)(idx + 0x64) = (unsigned int)g_walkCallback;
     *(unsigned int *)(idx + 0x68) = (unsigned int)g_walkCallback;
     eax_val = (unsigned int)&g_dispatchSave422 >> 2;
-    g_scaledInit_00542044 = eax_val;
+    g_currentNodeIdx = eax_val;
     adj = ((FightGroupNode *)(g_cj_0054205c * 4))->tag - 0x60;
     eax_val += adj;
     g_walkCallback = (void (*)(void))adj;
-    g_scaledInit_00542044 = eax_val;
+    g_currentNodeIdx = eax_val;
     eax_val = *(unsigned int *)(eax_val * 4);
     g_eventQueueEnd = eax_val;
     g_currentNodeFlags = *(unsigned int *)(eax_val * 4);

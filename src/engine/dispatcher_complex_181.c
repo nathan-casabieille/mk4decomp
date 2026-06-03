@@ -18,7 +18,7 @@
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
  *   jne     .late_pop
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   mov     ecx, [g_eventQueueWorkType]
  *   mov     [g_xformEntityIdx], eax
  *   mov     [g_walkCallback], ecx
@@ -36,7 +36,7 @@
  *   mov     ecx, [eax*4 + 0]
  *   dec     eax
  *   mov     [g_currentNodeFlags], ecx
- *   mov     ecx, [g_scaledInit_00542044]
+ *   mov     ecx, [g_currentNodeIdx]
  *   mov     [g_matrixStackTop], eax
  *   mov     eax, 4
  *   or      edx, eax
@@ -52,7 +52,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern void Sprintf2WaySelect(void);
 extern void StreamChainStringInstall(void);
 extern void Push70CallScaleArith(void);
@@ -75,7 +75,7 @@ extern void Push70CallScaleArith2(void);
         __asm test    eax, eax                                                \
         __asm _emit   75h                                                     \
         __asm _emit   76h                                                     \
-        __asm mov     eax, dword ptr [g_scaledInit_00542044]                  \
+        __asm mov     eax, dword ptr [g_currentNodeIdx]                  \
         __asm mov     ecx, dword ptr [g_eventQueueWorkType]                   \
         __asm mov     dword ptr [g_xformEntityIdx], eax                       \
         __asm mov     dword ptr [g_walkCallback], ecx                         \
@@ -93,7 +93,7 @@ extern void Push70CallScaleArith2(void);
         __asm mov     ecx, dword ptr [eax*4 + 0]                              \
         __asm dec     eax                                                     \
         __asm mov     dword ptr [g_currentNodeFlags], ecx                     \
-        __asm mov     ecx, dword ptr [g_scaledInit_00542044]                  \
+        __asm mov     ecx, dword ptr [g_currentNodeIdx]                  \
         __asm mov     dword ptr [g_matrixStackTop], eax                       \
         __asm mov     eax, 4                                                  \
         __asm or      edx, eax                                                \

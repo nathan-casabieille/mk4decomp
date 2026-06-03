@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -141,7 +141,7 @@ void MStackPush4IndirectCall(void) {
         mov     dword ptr [g_fightGroupHead], ecx
         mov     edx, dword ptr [eax*4 + 0x3c]
         mov     dword ptr [g_baseSel], edx
-        call    dword ptr [g_scaledInit_00542044]
+        call    dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

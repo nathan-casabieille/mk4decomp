@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 void StrSearchCall(char *arg1, int arg2) {
     if (arg2 == 0) return;

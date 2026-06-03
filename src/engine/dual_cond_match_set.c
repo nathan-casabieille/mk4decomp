@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -163,7 +163,7 @@ __declspec(naked) void DualCondMatchSet(void) {
         mov     ecx, 4
         or      eax, ecx
         mov     dword ptr [g_xformDirtyFlags], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         test    eax, eax
         _emit   74h
         _emit   39h

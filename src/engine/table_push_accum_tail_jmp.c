@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -123,7 +123,7 @@ extern void ScenePostInitSequencer(void);
 /* @addr 0x004236a0 (125b) - if any of {g_dlNalt1, g_dlNalt2,
  *   g_dlNalt3, g_dlNalt4} == 0xf: clear g_counter_0053a51c & g_walkCallback,
  *   call F1. Then v3 = (data_4dfd48 >> 2) + g_counter_0053a51c;
- *   g_scaledInit_00542044 = v3; arg = arr[v3];
+ *   g_currentNodeIdx = v3; arg = arr[v3];
  *   push arg twice; g_rangeBase = arg; call Mul10Tail; g_rangeSqLimit = res; jmp F3.
  */
 __declspec(naked) void FourGlobalsEqualFInitTail(void) {
@@ -151,7 +151,7 @@ __declspec(naked) void FourGlobalsEqualFInitTail(void) {
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, [eax*4 + g_matrixStack_arr]
         push    eax
         push    eax

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -131,7 +131,7 @@ void WtSnapshotPushCall(void) {
         mov     dword ptr [g_mat3x3_007af994], eax
         mov     edx, dword ptr [ecx + 8]
         mov     dword ptr [g_mat3x3_007af998], edx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [ecx + 0xc]
         mov     dword ptr [g_mat3x3_007af99c], eax
         lea     eax, [edx*4 + 0]

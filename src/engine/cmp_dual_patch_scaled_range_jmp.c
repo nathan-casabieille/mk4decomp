@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -123,7 +123,7 @@ void CmpDualPatchScaledRangeJmp(int arg) {
     unsigned int idx = (unsigned int)(arg >> 2);
     unsigned int walk;
     unsigned int chain;
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     walk = ((ScenegraphNode *)(g_baseSel * 4))->state_mask;
     g_walkCallback = (void (*)(void))walk;
     if (walk == 0x10) {
@@ -143,7 +143,7 @@ void CmpDualPatchScaledRangeJmp(int arg) {
         return;
     }
     idx += walk;
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     chain = *(unsigned int *)(idx * 4);
     g_eventQueueNotMask = chain;
     if (chain == 0) {

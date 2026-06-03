@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004460c0 (85b)
  *   clear walk and scaled[+0x1c]; load scaled[+0x0c]; if non-zero,
@@ -16,8 +16,8 @@ extern void func_004bae90_nn(void);
 void ScaledClear1cTestWalkCall(void) {
     unsigned int cb;
     g_walkCallback = (void (*)(void))0;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->alloc_flags = 0;
-    cb = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->alloc_work_type;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->alloc_flags = 0;
+    cb = ((ScenegraphNode *)(g_currentNodeIdx * 4))->alloc_work_type;
     g_walkCallback = (void (*)(void))cb;
     if (cb != 0) {
         g_walkCallback = (void (*)(void))ScaledClear1cTestWalkCall;

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -130,7 +130,7 @@ __declspec(naked) void GuardedCascadeBaseSelBit(void) {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
         mov     ecx, dword ptr [eax*4 + 0x30]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     edx, dword ptr [eax*4 + 0x60]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     eax, dword ptr [eax*4 + 0x4c]
@@ -193,7 +193,7 @@ __declspec(naked) void GuardedCascadeBaseSelBit(void) {
         _emit   75h
         _emit   20h
         mov     ecx, dword ptr [g_xformDirtyFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         or      ecx, ebx
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], ecx

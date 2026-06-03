@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern void Mul10Tail(void);
 
 /* @addr 0x0041f230 (49b): same shape, no `sub`, esp adjust earlier */

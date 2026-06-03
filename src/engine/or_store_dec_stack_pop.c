@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00490290 (55b)
  *   load g_fightGroupHead, g_eventQueueNotMask; or eax with [ecx*4+0x40];

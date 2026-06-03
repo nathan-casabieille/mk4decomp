@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -131,7 +131,7 @@ void DualConstMaskFlagToggle8(void) {
         mov     eax, dword ptr [g_player1NodeIdx]
         mov     ecx, dword ptr [g_cj_0054205c]
         cmp     ecx, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   74h
         _emit   0ch
         mov     eax, dword ptr [g_eventQueueWorkType]

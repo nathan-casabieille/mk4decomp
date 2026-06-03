@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -131,7 +131,7 @@ void TwoStateLookupDirty(void) {
         mov     ecx, offset g_dispatchSave1199
         shr     eax, 2
         shr     ecx, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], ecx
         call    Cmp2DirtyToggle
         mov     eax, dword ptr [g_framePauseFlag]
@@ -142,17 +142,17 @@ void TwoStateLookupDirty(void) {
         _emit   74h
         _emit   0ch
         mov     edx, dword ptr [g_xformEntityIdx]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     eax, dword ptr [g_cj_0054205c]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, [eax*4 + g_chain_arr_4348f0 + 0x30]
         lea     ecx, [ecx + ecx - 2]
         add     edx, ecx
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     edx, [edx*4 + g_arr_4237d0]
         mov     [eax*4 + g_chain_arr_4348f0 + 0x54], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_cj_0054205c]
         mov     ecx, [eax*4 + g_chain_arr_4348f0 + 0x04]
         mov     [edx*4 + g_chain_arr_4348f0 + 0x5c], ecx

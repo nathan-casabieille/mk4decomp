@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -115,7 +115,7 @@ extern unsigned int g_load_0052ab10;
 
 /* @addr 0x00431260 (256b game) - 5-field copy from indexed table to chain.
  *   eax = g_load_0052ab10 (chain base); ecx = g_xformEntityIdxSrc (table idx).
- *   g_scaledInit_00542044 = eax; g_xformEntityIdx = ecx.
+ *   g_currentNodeIdx = eax; g_xformEntityIdx = ecx.
  *   Initial: chain[+0x54] = table[+0]. Then 4 more iterations:
  *     idx++; chain[+0x58/+0x5c/+0x60/+0x64] = table[+idx]; g_walkCallback=value.
  *   Then idx++; chain[+0x68] = table[+idx] (no g_walkCallback set).
@@ -124,24 +124,24 @@ extern unsigned int g_load_0052ab10;
  *   g_walkBoundsLimit=0xffff0000; ret.
  */
 void FiveFieldChainCopyTableWalk(void) {
-    g_scaledInit_00542044 = g_load_0052ab10;
+    g_currentNodeIdx = g_load_0052ab10;
     g_xformEntityIdx = g_xformEntityIdxSrc;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_x = g_walkCallback;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_x = g_walkCallback;
     g_xformEntityIdx++;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_y = g_walkCallback;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_y = g_walkCallback;
     g_xformEntityIdx++;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_z = g_walkCallback;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_z = g_walkCallback;
     g_xformEntityIdx++;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x60) = g_walkCallback;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x60) = g_walkCallback;
     g_xformEntityIdx++;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x64) = g_walkCallback;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x64) = g_walkCallback;
     g_xformEntityIdx++;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x68) = *(unsigned int *)(g_xformEntityIdx * 4);
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x68) = *(unsigned int *)(g_xformEntityIdx * 4);
     g_xformEntityIdx++;
     g_pendingClear = 0;
     g_walkBoundsSlot = 0;

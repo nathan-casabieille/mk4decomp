@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00473450 (44b)
  *   mov     eax, [g_fightGroupHead]
@@ -17,7 +17,7 @@ extern unsigned int g_scaledInit_00542044;
  *   and     al, 0xfe
  *   mov     [g_xformDirtyFlags], eax
  *   ret
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   jmp     +4
  */
 extern void SizeGateInstallSelfThenSubMul10(void);
@@ -28,6 +28,6 @@ void ScaledLoadDirtyOrSetJmp(void) {
         g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffeu;
         return;
     }
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     SizeGateInstallSelfThenSubMul10();
 }

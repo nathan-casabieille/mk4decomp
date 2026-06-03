@@ -3,13 +3,13 @@
  *
  * Three related "push global on mstack, call helper, restore global" wrappers
  * that bracket various scaled-init operations. Each pushes either
- * g_scaledInit_00542044 or g_xformEntityIdx onto the mstack, performs a
+ * g_currentNodeIdx or g_xformEntityIdx onto the mstack, performs a
  * conditional update + callback dispatch, then pops the saved value back.
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004059a0 (90b)
  *   Push g_scaledInit on stack[idx*4]; load scaled[+0x18];
@@ -20,17 +20,17 @@ extern void ScaledAndMaskInitJmp(void);
 void PushPopScaled18(void) {
     unsigned int v;
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
-    v = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->child_chain;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
+    v = ((ScenegraphNode *)(g_currentNodeIdx * 4))->child_chain;
     g_walkCallback = (void (*)(void))v;
     if (v != 0) {
-        g_scaledInit_00542044 = v;
+        g_currentNodeIdx = v;
         ScaledAndMaskInitJmp();
         if (g_framePauseFlag != 0) {
             return;
         }
     }
-    g_scaledInit_00542044 = *(unsigned int *)(g_matrixStackTop * 4);
+    g_currentNodeIdx = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
 }
 

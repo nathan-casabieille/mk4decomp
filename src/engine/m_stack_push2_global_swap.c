@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -122,7 +122,7 @@ extern void FiveCallGuardSetTail(void);
 void MStackPush2GlobalSwap(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
@@ -136,11 +136,11 @@ void MStackPush2GlobalSwap(void) {
         mov     eax, [eax*4 + 0x64]
         mov     dword ptr [g_xformEntityIdx], ecx
         cmp     ecx, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   75h
         _emit   0eh
         xor     eax, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_player1NodeIdx], eax
         _emit   0ebh
         _emit   1ch
@@ -150,7 +150,7 @@ void MStackPush2GlobalSwap(void) {
         _emit   75h
         _emit   0ch
         xor     eax, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_player2NodeIdx], eax
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, [eax*4 + g_matrixStack_arr]
@@ -159,7 +159,7 @@ void MStackPush2GlobalSwap(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

@@ -9,13 +9,13 @@
  *   mov     [g_matrixStackTop], eax
  *   mov     [eax*4 + 0], ecx
  *   ; OR bit-set on scaled slot
- *   mov     ecx, [g_scaledInit_00542044]
+ *   mov     ecx, [g_currentNodeIdx]
  *   mov     eax, [ecx*4 + 0x34]
  *   or      al, 0xa2
  *   mov     [g_walkCallback], eax
  *   mov     [ecx*4 + 0x34], eax
  *   ; Init secondary scaled slot
- *   mov     edx, [g_scaledInit_00542044]    ; reload (matches orig codegen)
+ *   mov     edx, [g_currentNodeIdx]    ; reload (matches orig codegen)
  *   mov     [edx*4 + 0x5c], 0x00010000
  *   mov     eax, [g_lit]
  *   mov     [g_xformEntityIdx], eax
@@ -35,7 +35,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_lit_00541e90;
 extern unsigned int g_lit_00541e94;
 extern void MStackPush2ChainPrepend(void);
@@ -47,12 +47,12 @@ void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void) {
     unsigned int top;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
-    idx = g_scaledInit_00542044;
+    idx = g_currentNodeIdx;
     v = ((ScenegraphNode *)(idx * 4))->state_mask;
     v |= 0xa2;
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(idx * 4))->state_mask = v;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = 0x00010000;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x5c) = 0x00010000;
     g_xformEntityIdx = g_lit_00541e90;
     MStackPush2ChainPrepend();
     if (g_framePauseFlag != 0) return;
@@ -68,12 +68,12 @@ void MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0(void) {
     unsigned int top;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
-    idx = g_scaledInit_00542044;
+    idx = g_currentNodeIdx;
     v = ((ScenegraphNode *)(idx * 4))->state_mask;
     v |= 0xa2;
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(idx * 4))->state_mask = v;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = 0x00010000;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x5c) = 0x00010000;
     g_xformEntityIdx = g_lit_00541e94;
     MStackPush2ChainPrepend();
     if (g_framePauseFlag != 0) return;

@@ -19,8 +19,8 @@
 #include "engine/scenegraph.h"
 
 /* New globals. */
-extern unsigned int g_scaledInit_00542044;   /* 0x00542044 */
-extern unsigned int g_scaledInit_00542048;   /* 0x00542048 */
+extern unsigned int g_currentNodeIdx;   /* 0x00542044 */
+extern unsigned int g_xformEntityIdx;   /* 0x00542048 */
 
 /* Table address externs - referenced only by `&` to force a
  * relocation; the linker fills the imm32 with the table's VA. */
@@ -77,42 +77,42 @@ void ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ef0(void) {
 
 /* @addr 0x0048d430 */
 void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430(void) {
-    g_scaledInit_00542044 = (unsigned int)&g_table_00542ea8 >> 2;
+    g_currentNodeIdx = (unsigned int)&g_table_00542ea8 >> 2;
     MStackChainInstallDispatch();
 }
 
 /* @addr 0x0048d450 */
 void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450(void) {
-    g_scaledInit_00542044 = (unsigned int)&g_table_00542ef8 >> 2;
+    g_currentNodeIdx = (unsigned int)&g_table_00542ef8 >> 2;
     MStackChainInstallDispatch();
 }
 
 /* @addr 0x0048d470 */
 void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d470(void) {
-    g_scaledInit_00542044 = (unsigned int)&g_table_00542e48 >> 2;
+    g_currentNodeIdx = (unsigned int)&g_table_00542e48 >> 2;
     MStackChainInstallDispatch();
 }
 
 /* @addr 0x0048d490 */
 void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490(void) {
-    g_scaledInit_00542044 = (unsigned int)&g_table_00542d00 >> 2;
+    g_currentNodeIdx = (unsigned int)&g_table_00542d00 >> 2;
     MStackChainInstallDispatch();
 }
 
 /* @addr 0x0048f720 */
 void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void) {
-    g_scaledInit_00542044 = (unsigned int)&g_table_00542fb0 >> 2;
+    g_currentNodeIdx = (unsigned int)&g_table_00542fb0 >> 2;
     GuardedDirtyXformFromTable();
 }
 
 /* @addr 0x00495590 */
 void ScaledInit_GameModeHandlerCluster_g_scaledInit_00495590(void) {
-    g_scaledInit_00542048 = (unsigned int)&g_table_004f1ba0 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_table_004f1ba0 >> 2;
     GameModeHandlerCluster();
 }
 
 /* @addr 0x004955b0 */
 void ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0(void) {
-    g_scaledInit_00542048 = (unsigned int)&g_table_004f1be8 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_table_004f1be8 >> 2;
     GameModeHandlerCluster();
 }

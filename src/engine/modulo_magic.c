@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0042afc0 (64b)
  *   modulo using 32x32->64 magic-number division: ecx %= 0x6487e (range modulus).

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -120,12 +120,12 @@ extern void Thunk_ScaledNeg1SetPause(void);
 
 __declspec(naked) void InstallSelfMagicShift(void) {
     __asm {
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x00538158
         shr     eax, 2
         mov     dword ptr [g_walkCallback], 0
         lea     eax, [ecx + eax - 1]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], 0
         ret
         _emit   90h

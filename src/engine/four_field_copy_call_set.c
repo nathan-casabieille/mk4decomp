@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -114,8 +114,8 @@ void FourFieldCopyCallSet(void) {
     unsigned char *dst;
     unsigned int v;
     src = (unsigned char *)(g_baseSel * 4);
-    g_scaledInit_00542044 = *(unsigned int *)(src + 0x5c);
-    dst = (unsigned char *)(g_scaledInit_00542044 * 4);
+    g_currentNodeIdx = *(unsigned int *)(src + 0x5c);
+    dst = (unsigned char *)(g_currentNodeIdx * 4);
     v = *(unsigned int *)(src + 0x3c);
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(dst + 0x30) = v;
@@ -130,7 +130,7 @@ void FourFieldCopyCallSet(void) {
     *(unsigned int *)(dst + 0x20) = v;
     ScaledClear1cTestWalkCall();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel * 4 + 0x5c);
+    g_currentNodeIdx = *(unsigned int *)(g_baseSel * 4 + 0x5c);
     g_walkCallback = (void (*)(void))2;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->alloc_flags = 2;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->alloc_flags = 2;
 }

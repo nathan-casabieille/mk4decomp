@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern void Mul10Tail(void);
 
 /* @addr 0x00425130 (61b)
@@ -22,7 +22,7 @@ __declspec(naked) void TripleAddVec3(void) {
     __asm {
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     edx, dword ptr [g_pendingNodeType]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         shl     ecx, 2
         shl     edx, 2

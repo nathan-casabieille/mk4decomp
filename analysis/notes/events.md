@@ -56,7 +56,7 @@ scenegraph ([scenegraph.md](scenegraph.md)) feed work into each frame.
      if (!dirty) -> IncJmp                          ; advance + re-decode
 
    IncJmp                      0x0045e1d0
-     g_decodeCursor++                               ; (g_scaledInit_00542044)
+     g_decodeCursor++                               ; (g_currentNodeIdx)
      -> EventGateCluster                            ; re-enter the decoder
 ```
 
@@ -71,7 +71,7 @@ scenegraph ([scenegraph.md](scenegraph.md)) feed work into each frame.
 | 0x0045e0b0 | `ConditionalAcc4or3`     |       30 | `g_acc = 4; if (g_xformScratch2088) g_acc = 3;` - opcode `0xdd` helper. |
 | 0x0045e0d0 | `ConditionalAcc3or4`     |       30 | Mirror: default 3, override 4 - opcode `0xaa` helper. |
 | 0x0045e100 | `Event_InvokeHandler`    |      201 | Saves the 3 live decoder-state words on the matrix stack, indirect-calls the per-opcode handler from `g_eventHandlerTable_004e9ea8[g_eventQueueCurrent]`, restores them, and (unless the frame went dirty) tail-jumps to `IncJmp` to advance. (Was `MStackPush3IndirectCall_0045e100`.) |
-| 0x0045e1d0 | `IncJmp`                  |       11 | Increments the decode cursor (`g_scaledInit_00542044`) and re-enters `EventGateCluster`. The decoder's per-opcode 'advance and continue'. |
+| 0x0045e1d0 | `IncJmp`                  |       11 | Increments the decode cursor (`g_currentNodeIdx`) and re-enters `EventGateCluster`. The decoder's per-opcode 'advance and continue'. |
 | 0x0045e1e0 | `EventGateCluster`       |      942 | Packed cluster of event-driven sub-functions. Anchor: loads the current entity's script cursor pair from `entity[+0x64]/[+0x68]` into `g_eventQueueTotal/End` and jumps into `EventPacketDecoder`. Following sub-functions (NOP-separated) are `TripleEntryGate` + frame-pause + fight-tick gates that arm per-frame fighter state. (Was the misnamed `InputCheckCluster_0045e1e0`.) |
 
 ## Globals
@@ -89,7 +89,7 @@ scenegraph ([scenegraph.md](scenegraph.md)) feed work into each frame.
 | (state)      | `g_eventQueueWorkType`              | Node-kind tag written before `AllocNode` (0x11 = event node). |
 | (state)      | `g_eventQueueChild`                 | Set to 0x1c20 by some opcode handlers (child node / channel id). |
 | `0x004e9ea8` | `g_eventHandlerTable_004e9ea8`      | Function-pointer table indexed by `g_eventQueueCurrent`; entries are packed pointers (`base>>2 + cursor`). The per-opcode handler set. |
-| `0x00542044` | `g_scaledInit_00542044`             | The decoder's packed read cursor into the `(op, arg)` stream. Incremented by `IncJmp`. |
+| `0x00542044` | `g_currentNodeIdx`             | The decoder's packed read cursor into the `(op, arg)` stream. Incremented by `IncJmp`. |
 | `0x00542078` | `g_acc_00542078`                    | Decoder accumulator preset by the `0xdd`/`0xaa` opcode helpers. |
 | `0x00542060` | `g_baseSel`                | Selected entity base used by `EventGateCluster`'s anchor to fetch the per-entity script cursor. |
 

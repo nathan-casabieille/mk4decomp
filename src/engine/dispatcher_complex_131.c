@@ -25,13 +25,13 @@
  *   jne     .ret
  *   ; POP into walkCallback + propagate
  *   mov     eax, [g_matrixStackTop]
- *   mov     edx, [g_scaledInit_00542044]
+ *   mov     edx, [g_currentNodeIdx]
  *   mov     ecx, [eax*4 + 0]
  *   dec     eax
  *   mov     [g_walkCallback], ecx
  *   mov     [g_matrixStackTop], eax
  *   mov     [edx*4 + 0x18], ecx
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   mov     ecx, [g_fightGroupHead]
  *   mov     [eax*4 + 0x24], ecx
  * .ret:
@@ -40,7 +40,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_audioStreamState;
 extern unsigned int g_tickFlagF;
 extern void *g_lit_004e39d8;
@@ -66,13 +66,13 @@ void DispatcherComplex131_00431530(void) {
     PackedAdvanceCallContinue(&g_lit_004e39d8);
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    scaled = g_scaledInit_00542044;
+    scaled = g_currentNodeIdx;
     popped = *(unsigned int *)(top * 4);
     g_walkCallback = (void (*)(void))popped;
     g_matrixStackTop = top - 1;
     ((ScenegraphNode *)(scaled * 4))->child_chain = popped;
     {
-        unsigned int s2 = g_scaledInit_00542044;
+        unsigned int s2 = g_currentNodeIdx;
         unsigned int fg = g_fightGroupHead;
         ((ScenegraphNode *)(s2 * 4))->queue_end = fg;
     }
@@ -97,13 +97,13 @@ void DispatcherComplex131_004315c0(void) {
     PackedAdvanceCallContinue(&g_lit_004e3a28);
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    scaled = g_scaledInit_00542044;
+    scaled = g_currentNodeIdx;
     popped = *(unsigned int *)(top * 4);
     g_walkCallback = (void (*)(void))popped;
     g_matrixStackTop = top - 1;
     ((ScenegraphNode *)(scaled * 4))->child_chain = popped;
     {
-        unsigned int s2 = g_scaledInit_00542044;
+        unsigned int s2 = g_currentNodeIdx;
         unsigned int fg = g_fightGroupHead;
         ((ScenegraphNode *)(s2 * 4))->queue_end = fg;
     }

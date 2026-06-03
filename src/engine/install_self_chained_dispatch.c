@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -195,7 +195,7 @@ __declspec(naked) void InstallSelfChainedDispatch(void) {
         _emit   3dh
         mov     edx, 0x004ec0a8
         shr     edx, 2
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    GuardedDirtyXformFromTable
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

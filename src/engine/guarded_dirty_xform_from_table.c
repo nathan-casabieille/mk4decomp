@@ -4,13 +4,13 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048f6d0 (73b)
  *   call F; pause → ret; if (dirty & 4) → ret;
  *   ecx = fightGroupHead; edx = [0x538158]; eax = [0x542038];
  *   xformEntityIdx = eax; cmp ecx,edx; if !=, eax = [0x54203c],
- *   xformEntityIdx = eax; edx = g_scaledInit_00542044;
+ *   xformEntityIdx = eax; edx = g_currentNodeIdx;
  *   [eax*4+0] = edx; ret.
  */
 extern unsigned int g_dispatchSave416;
@@ -27,5 +27,5 @@ void GuardedDirtyXformFromTable(void) {
         v = g_dispatchSave417;
         g_xformEntityIdx = v;
     }
-    *(unsigned int *)(v * 4) = g_scaledInit_00542044;
+    *(unsigned int *)(v * 4) = g_currentNodeIdx;
 }

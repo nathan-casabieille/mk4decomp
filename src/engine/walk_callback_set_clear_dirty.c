@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048e7d0 (66b)
  *   Switch on g_walkCallback: if it equals one of {0x2001, 0x2010,

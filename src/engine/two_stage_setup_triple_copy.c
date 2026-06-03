@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -136,7 +136,7 @@ void TwoStageSetupTripleCopy(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x91
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + g_chain_arr_4348f0 + 0x30], eax
@@ -146,17 +146,17 @@ void TwoStageSetupTripleCopy(void) {
         _emit   75h
         _emit   5dh
         mov     edx, dword ptr [g_xformEntityIdx]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, [edx*4 + g_chain_arr_4348f0 + 0x3c]
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + g_chain_arr_4348f0 + 0x54], eax
         mov     edx, dword ptr [g_xformEntityIdx]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, [edx*4 + g_chain_arr_4348f0 + 0x40]
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + g_chain_arr_4348f0 + 0x58], eax
         mov     edx, dword ptr [g_xformEntityIdx]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, [edx*4 + g_chain_arr_4348f0 + 0x44]
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + g_chain_arr_4348f0 + 0x5c], eax

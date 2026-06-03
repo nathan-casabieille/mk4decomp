@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -128,10 +128,10 @@ void GuardedChainDispatch(void) {
     val = (unsigned int)g_walkCallback;
     if (val != g_loaded) goto maskOut;
     a = g_gtPlayerProbe2;
-    g_scaledInit_00542044 = a;
+    g_currentNodeIdx = a;
     if (g_eventQueueTotal == a) {
         a = g_gtPlayerProbe1;
-        g_scaledInit_00542044 = a;
+        g_currentNodeIdx = a;
     }
     field = ((ScenegraphNode *)(a * 4))->state_mask;
     g_walkCallback = (void (*)(void))field;

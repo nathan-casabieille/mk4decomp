@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -120,15 +120,15 @@ void PushBitFieldMergePop(void) {
     unsigned int cj;
     unsigned int merged;
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
     shifted = ((unsigned int)g_walkCallback & 3) << 0xc;
     cj = g_cj_0054205c;
     g_walkCallback = (void (*)(void))shifted;
     merged = ((FightGroupNode *)(cj * 4))->bits;
     merged &= 0xffffcfff;
     merged |= shifted;
-    g_scaledInit_00542044 = merged;
+    g_currentNodeIdx = merged;
     ((FightGroupNode *)(cj * 4))->bits = merged;
-    g_scaledInit_00542044 = *(unsigned int *)(g_matrixStackTop * 4);
+    g_currentNodeIdx = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
 }

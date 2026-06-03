@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048e710 (40b)
  *   mov     eax, [esp+4]
@@ -13,9 +13,9 @@ extern unsigned int g_scaledInit_00542044;
  *   sar     eax, 2
  *   add     eax, ecx
  *   mov     [g_walkCallback], ecx
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   mov     eax, [eax*4 + 0]
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   jmp     eax
  */
 extern unsigned int g_tickFlagF;
@@ -23,8 +23,8 @@ void ArgSarAddDerefJmp(int arg) {
     unsigned int c = g_tickFlagF;
     unsigned int v = (unsigned int)(arg >> 2) + c;
     g_walkCallback = (void (*)(void))c;
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     v = *(unsigned int *)(v * 4);
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     ((void (*)(void))v)();
 }

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -123,7 +123,7 @@ void MStackPushSearchLoop(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], edx
@@ -133,15 +133,15 @@ void MStackPushSearchLoop(void) {
         shl     eax, 2
         mov     dword ptr [g_walkCallback], eax
         add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x0c]
         mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   74h
         _emit   24h
         mov     ecx, dword ptr [g_walkCallback]
@@ -151,13 +151,13 @@ void MStackPushSearchLoop(void) {
         mov     ecx, dword ptr [eax*4 - 4]
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   75h
         _emit   0dch
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax

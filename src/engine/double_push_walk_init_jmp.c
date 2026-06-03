@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -111,16 +111,16 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004776b0 (81b)
  *   Push g_scaledInit and g_cj_0054205c onto mstack;
  *   set g_walkCallback=0x63, g_gameCountdown=0x63;
- *   set g_scaledInit_00542044 = 0x4ece68>>2; jmp SpawnListBatchLoader.
+ *   set g_currentNodeIdx = 0x4ece68>>2; jmp SpawnListBatchLoader.
  */
 extern unsigned int g_dispatchSave1303;
 void DoublePushWalkInitJmp(void) {
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_cj_0054205c;
     g_walkCallback = (void (*)(void))0x63;
     g_gameCountdown = 0x63;
-    g_scaledInit_00542044 = (unsigned int)&g_dispatchSave1303 >> 2;
+    g_currentNodeIdx = (unsigned int)&g_dispatchSave1303 >> 2;
     SpawnListBatchLoader();
 }

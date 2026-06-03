@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004a30f0 (48b)
  *   table-walk: esi iterates over 0x004f3260..0x004f33c8 step 0x24;
@@ -23,7 +23,7 @@ loop_start2:
         mov     ecx, dword ptr [g_baseSel]
         add     ecx, eax
         mov     edx, dword ptr [ecx*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    MStackPush2ChainLLInsert
         add     esi, 0x24
         cmp     esi, 0x004f33c8

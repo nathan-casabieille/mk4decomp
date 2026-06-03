@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -212,7 +212,7 @@ __declspec(naked) void StateCascadeDualThunkContin(void) {
         _emit   0ffh
         _emit   0ffh
         _emit   0ffh
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_dispatchArg]

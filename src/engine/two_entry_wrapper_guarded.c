@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004826f0 (14b): mini-wrapper - push lit + call + cleanup + ret.
  * Entry A of the original 72-byte packed block; entry B (the main 56-byte

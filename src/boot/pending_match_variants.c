@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -522,7 +522,7 @@ loop413ea0:
 __declspec(naked) void DualMul10AndDispatchChain(void) {
     __asm {
         mov     edx, dword ptr [g_currentNodeFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_baseSel]
         push    esi
         push    edi
@@ -542,7 +542,7 @@ __declspec(naked) void DualMul10AndDispatchChain(void) {
         mov     dword ptr [esi + 0x6c], ecx
         mov     edx, dword ptr [g_xformScratch2088]
         mov     dword ptr [esi + 0x74], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_cj_0054205c], eax
         mov     eax, 1
         add     esp, 8
@@ -689,11 +689,11 @@ __declspec(naked) void QuadBlockInstallChainThunks(void) {
         mov     dword ptr [ecx*4 + 0x84], ebx
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0

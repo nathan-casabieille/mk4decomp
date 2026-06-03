@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -135,7 +135,7 @@ void CdeclArgScaledLookupAndStore(void) {
         mov     ecx, dword ptr [g_player1NodeIdx]
         mov     dword ptr [g_eventQueueChild], edx
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         cmp     edx, ecx
         _emit   74h
         _emit   34h

@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00406b20 (34b)
  *   mov     ecx, [g_fightGroupHead]
@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  *   test    eax, eax
  *   mov     [g_walkCallback], eax
  *   jne     +0xb
- *   mov     [g_scaledInit_00542044], ecx
+ *   mov     [g_currentNodeIdx], ecx
  *   jmp     +0xf
  *   ret
  */
@@ -23,6 +23,6 @@ void ScaledLoadOrSetJmp(void) {
     unsigned int v = *(unsigned int *)(idx * 4 + 0x10);
     g_walkCallback = (void (*)(void))v;
     if (v) return;
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     MStackCall_MStackPush2ChainInsert_00406b50();
 }

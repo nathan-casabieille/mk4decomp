@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -126,7 +126,7 @@ extern void Atan2QuadrantLookup(void);
 __declspec(naked) void DualChainSubCallSubLoad(void) {
     __asm {
         mov     eax, dword ptr [g_load_0052ab10]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_xformEntityIdx], eax
         push    esi
         mov     ecx, dword ptr [eax*4 + 0x54]

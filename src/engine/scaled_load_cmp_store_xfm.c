@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048f2a0 (63b)
  *   load 3 globals; push esi (saving callee reg); cmp/conditional store dance;
@@ -20,7 +20,7 @@ void ScaledLoadCmpStoreXfm(void) {
     unsigned int s3 = g_primary_0053a774;
     g_walkCallback = (void (*)(void))s3;
     g_eventQueueCurrent = s2;
-    g_scaledInit_00542044 = s1;
+    g_currentNodeIdx = s1;
     if (fg != s1) {
         g_walkCallback = (void (*)(void))s2;
     }

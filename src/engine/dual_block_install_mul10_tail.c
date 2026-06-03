@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -149,11 +149,11 @@ __declspec(naked) void DualBlockInstallMul10Tail(void) {
         add     edi, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], esi
         mov     ecx, dword ptr [eax + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -181,7 +181,7 @@ __declspec(naked) void DualBlockInstallMul10Tail(void) {
         _emit   00h
         _emit   00h
         mov     ecx, dword ptr [g_currentNodeFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         push    ecx
         push    0x3333
@@ -199,7 +199,7 @@ __declspec(naked) void DualBlockInstallMul10Tail(void) {
         mov     ecx, dword ptr [g_xformScratch2088]
         add     esp, 8
         mov     dword ptr [esi + 0x74], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         push    0x23fb23
         mov     dword ptr [g_cj_0054205c], edx
         call    ThreeChanPackClamp

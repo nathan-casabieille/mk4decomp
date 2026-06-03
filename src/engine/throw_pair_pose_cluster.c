@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -135,7 +135,7 @@ void Chain2AxisDiffStoreTailJmp(void) {
     a -= b;
     g_walkCallback = a;
     ((ScenegraphNode *)(g_baseSel * 4))->child_c = a;
-    g_scaledInit_00542044 = g_baseSel + 0x0f;
+    g_currentNodeIdx = g_baseSel + 0x0f;
     Triple3VecMul10Tail();
     if (g_framePauseFlag) return;
     ThrowPairPoseCluster();

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -147,7 +147,7 @@ __declspec(naked) void StateChainIndirect(void) {
         shr     ecx, 2
         shr     eax, 2
         cmp     edx, esi
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], eax
         _emit   74h
         _emit   07h
@@ -157,7 +157,7 @@ __declspec(naked) void StateChainIndirect(void) {
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [edx*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     edx, dword ptr [edx*4 + 0x7c]
         cmp     edx, 3
         mov     dword ptr [g_eventQueueCurrent], edx
@@ -168,16 +168,16 @@ __declspec(naked) void StateChainIndirect(void) {
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x30]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         mov     eax, 0x004f1b28
         sub     ecx, 0x60
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    eax
         pop     esi
         ret

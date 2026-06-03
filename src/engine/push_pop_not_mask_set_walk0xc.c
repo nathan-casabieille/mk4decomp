@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0047d510 (73b)
  *   Push g_eventQueueNotMask on stack[idx*4]; set g_walkCallback = 0xc;

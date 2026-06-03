@@ -5,12 +5,12 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00404e50 (52b)
  *   mov     eax, [g_fightGroupHead]
  *   mov     eax, [eax*4 + 0x18]
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   mov     ecx, [eax*4 + 0x28]
  *   mov     [g_xformEntityIdx], ecx
  *   mov     eax, [ecx*4 + 0]
@@ -24,7 +24,7 @@ void ScaledChainOr8(void) {
     unsigned int e;
     unsigned int v;
     s = ((ScenegraphNode *)(g_fightGroupHead * 4))->child_chain;
-    g_scaledInit_00542044 = s;
+    g_currentNodeIdx = s;
     e = ((ScenegraphNode *)(s * 4))->queue_idx;
     g_xformEntityIdx = e;
     v = *(unsigned int *)(e * 4) | 8;

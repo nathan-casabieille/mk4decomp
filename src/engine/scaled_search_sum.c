@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -185,10 +185,10 @@ __declspec(naked) void ScaledSearchSum(void) {
         mov     eax, [esi*4 + 8]
         pop     esi
         mov     dword ptr [g_xformEntityIdx], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         pop     ebp
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         pop     ebx
         pop     ecx
         ret

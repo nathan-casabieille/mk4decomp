@@ -5,7 +5,7 @@
 #include "game/tick.h"
 #include "audio/sound.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -124,7 +124,7 @@ void AuxAudio_Teardown(void) {
         cb = (void (__stdcall *)(unsigned int, unsigned int))g_iat_auxSetVolume;
         p = (struct AuxChannel *)&g_auxChannels;
         do {
-            cb(p->deviceId, p->_pad);
+            cb(p->deviceId, p->pad_04);
             i++;
             p++;
         } while (i < g_auxCount);

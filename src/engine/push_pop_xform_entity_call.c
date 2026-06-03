@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0044d1e0 (66b)
  *   Save g_xformEntityIdx (0x542048) on matrix stack, replace it

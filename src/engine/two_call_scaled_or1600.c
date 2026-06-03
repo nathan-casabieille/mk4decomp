@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -151,19 +151,19 @@ void TwoCallScaledOr1600(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x76
         mov     dword ptr [g_walkCallback], eax
         push    0x00fb43fb
         mov     [ecx*4 + 0x30], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, [edx*4 + 0x18]
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     eax, [ecx*4 + 0x20]
         or      ah, 0x16
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x20], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_fightGroupHead], eax
         call    ThreeChanPackClamp
         mov     ecx, dword ptr [g_fightGroupHead]
@@ -171,7 +171,7 @@ void TwoCallScaledOr1600(void) {
         push    ecx
         call    CopyThreeFields
         mov     ecx, dword ptr [g_xformDirtyFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         add     esp, 4
         or      ecx, 4
         test    eax, eax

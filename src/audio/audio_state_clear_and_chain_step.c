@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -151,14 +151,14 @@ __declspec(naked) void FiveTableWalkInit(void) {
         _emit   7fh
         mov     eax, 0x00506c20
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    LoadGeoAsset_Default
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   65h
         mov     ecx, 0x00506c20
         shr     ecx, 2
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    LoadGeoAsset_Default
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
@@ -174,7 +174,7 @@ __declspec(naked) void FiveTableWalkInit(void) {
         _emit   2ah
         mov     eax, dword ptr [g_load_0052ab10]
         mov     ecx, 0xfff88000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         shl     eax, 2
         mov     [eax + 0x60], esi
         mov     [eax + 0x64], esi

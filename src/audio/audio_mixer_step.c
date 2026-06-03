@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004ab700 (73b)
  *   Audio mixer step: load d0/d4/walk, sum=d0+d4, sign=sar 31,

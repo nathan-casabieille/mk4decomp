@@ -5,11 +5,11 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0040a870 (52b)
  *   mov     eax, [g_eventQueueEnd]
- *   mov     ecx, [g_scaledInit_00542044]
+ *   mov     ecx, [g_currentNodeIdx]
  *   shl     eax, 2
  *   shl     ecx, 2
  *   mov     edx, [eax]
@@ -25,7 +25,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 void Copy3Fields38(void) {
     unsigned char *src = (unsigned char *)(g_eventQueueEnd * 4);
-    unsigned char *dst = (unsigned char *)(g_scaledInit_00542044 * 4);
+    unsigned char *dst = (unsigned char *)(g_currentNodeIdx * 4);
     unsigned int v;
     v = *(unsigned int *)(src);
     g_walkCallback = (void (*)(void))v;

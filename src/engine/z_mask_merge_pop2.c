@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -123,7 +123,7 @@ void ZMaskMergePop2(void) {
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_eventQueueCurrent;
-    walk = g_scaledInit_00542044;
+    walk = g_currentNodeIdx;
     slot = ((ScenegraphNode *)(walk * 4))->flags;
     g_eventQueueCurrent = 0x0f000000;
     slot = (slot & 0xf0ffffff) | g_eventQueueWorkType;

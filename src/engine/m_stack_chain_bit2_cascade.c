@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -170,7 +170,7 @@ __declspec(naked) void DualEntryBitFlagDispatch(void) {
         mov     eax, 0x00000200
         cmp     edx, ecx
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   74h
         _emit   0ah
         mov     eax, 2

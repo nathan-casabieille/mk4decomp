@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00446580 (56b)
  *   mov     eax, 0x004ec8f8
@@ -18,7 +18,7 @@ extern unsigned int g_scaledInit_00542044;
  *   test    byte [g_xformDirtyFlags], 4
  *   jne     +0x13
  *   mov     ecx, [g_baseSel]
- *   mov     edx, [g_scaledInit_00542044]
+ *   mov     edx, [g_currentNodeIdx]
  *   mov     [ecx*4 + 0x60], edx
  *   ret
  */
@@ -29,5 +29,5 @@ void Const4ec8f8DirtyScaledStore(void) {
     FramePauseScaledStore();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;
-    *(unsigned int *)(g_baseSel * 4 + 0x60) = g_scaledInit_00542044;
+    *(unsigned int *)(g_baseSel * 4 + 0x60) = g_currentNodeIdx;
 }

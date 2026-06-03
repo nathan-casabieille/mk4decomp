@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00408860 (68b)
  *   load scaled+0x28 into walk; if non-zero clear dirty bit 4 and ret;
@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void MStackPush2Burst6Init(void);
 void ScaledTestPauseStore(void) {
-    unsigned int v = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->queue_idx;
+    unsigned int v = ((ScenegraphNode *)(g_currentNodeIdx * 4))->queue_idx;
     g_walkCallback = (void(*)(void))v;
     if (v) {
         g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFBu;
@@ -22,5 +22,5 @@ void ScaledTestPauseStore(void) {
     }
     MStackPush2Burst6Init();
     if (g_framePauseFlag) return;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->queue_idx = g_xformEntityIdx;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->queue_idx = g_xformEntityIdx;
 }

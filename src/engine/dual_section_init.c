@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -139,10 +139,10 @@ __declspec(naked) void DualSectionInit(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     esi, 0x0000001f
         mov     dword ptr [ecx*4 + 0x54], 0xff9c0000
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [edx*4 + 0x30], esi
         call    PushSetCallPop
@@ -166,9 +166,9 @@ __declspec(naked) void DualSectionInit(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   37h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x54], 0x00630000
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [edx*4 + 0x30], esi
         call    PushSetCallPop

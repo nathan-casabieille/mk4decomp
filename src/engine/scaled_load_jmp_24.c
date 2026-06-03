@@ -4,16 +4,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00429790 (23b)
  *   mov     eax, [g_fightGroupHead]
  *   mov     ecx, [eax*4 + 0x24]
- *   mov     [g_scaledInit_00542044], ecx
+ *   mov     [g_currentNodeIdx], ecx
  *   jmp     +0x29
  */
 extern void ScaledIncCmpJmp(void);
 void ScaledLoadJmp_24(void) {
-    g_scaledInit_00542044 = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
+    g_currentNodeIdx = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
     ScaledIncCmpJmp();
 }

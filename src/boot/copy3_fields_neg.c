@@ -5,11 +5,11 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0041aa40 (60b)
  *   mov     ecx, [g_xformEntityIdx]
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   shl     ecx, 2
  *   shl     eax, 2
  *   mov     edx, [ecx + 0x30]
@@ -30,7 +30,7 @@ void Copy3FieldsNeg(void) {
     unsigned char *src;
     unsigned char *dst;
     int v;
-    dst = (unsigned char *)g_scaledInit_00542044;
+    dst = (unsigned char *)g_currentNodeIdx;
     src = (unsigned char *)g_xformEntityIdx;
     src = (unsigned char *)((unsigned int)src << 2);
     dst = (unsigned char *)((unsigned int)dst << 2);

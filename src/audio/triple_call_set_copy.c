@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave407;
 extern unsigned int g_dispatchSave408;
 void TripleCallSetCopy(void) {
-    g_scaledInit_00542044 = (unsigned int)&g_dispatchSave407 >> 2;
+    g_currentNodeIdx = (unsigned int)&g_dispatchSave407 >> 2;
     LoadGeoAsset_Default();
     if (g_framePauseFlag != 0) return;
     g_xformEntityIdx = (unsigned int)&g_dispatchSave408 >> 2;
@@ -127,5 +127,5 @@ void TripleCallSetCopy(void) {
     PushSetCallPop();
     if (g_framePauseFlag != 0) return;
     g_cj_00542058 = 0;
-    g_eventQueueEnd = g_scaledInit_00542044;
+    g_eventQueueEnd = g_currentNodeIdx;
 }

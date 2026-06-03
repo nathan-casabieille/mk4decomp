@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -132,14 +132,14 @@ void TripleMul10TailIndexed(void) {
         _emit   00h
         mov     eax, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_eventQueueCurrent]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         add     eax, edx
         mov     dword ptr [g_walkCallback], eax
         push    eax
         mov     edx, dword ptr [ecx*4 + 0]
         push    edx
         call    Mul10Tail
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         add     esp, 8
         mov     dword ptr [ecx*4 + 0], eax
         mov     edx, dword ptr [g_eventQueueWorkType]
@@ -159,11 +159,11 @@ void TripleMul10TailIndexed(void) {
         add     eax, edx
         mov     dword ptr [g_walkCallback], eax
         push    eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 4]
         push    ecx
         call    Mul10Tail
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         add     esp, 8
         mov     dword ptr [edx*4 + 4], eax
         mov     eax, dword ptr [g_eventQueueWorkType]
@@ -176,14 +176,14 @@ void TripleMul10TailIndexed(void) {
         _emit   3bh
         mov     eax, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_eventQueueCurrent]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         add     eax, edx
         mov     dword ptr [g_walkCallback], eax
         push    eax
         mov     edx, dword ptr [ecx*4 + 8]
         push    edx
         call    Mul10Tail
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [ecx*4 + 8], eax

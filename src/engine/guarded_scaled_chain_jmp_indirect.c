@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -128,7 +128,7 @@ void GuardedScaledChainJmpIndirect(int arg) {
     if ((g_xformDirtyFlags & 4) != 0) return;
     idx = (unsigned int)(arg >> 2);
     g_eventQueueTotal = idx;
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     NotShrCmp1Store();
     if (g_framePauseFlag != 0) return;
     walk = (unsigned int)g_walkCallback & 0xf;

@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00438b90 (91b)
  *   push g_currentNodeFlags onto stack[idx*4]; 3-call pause chain;

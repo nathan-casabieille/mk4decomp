@@ -47,7 +47,7 @@
  *   mov     eax, [ecx*4 + 0x28]
  *   mov     [g_walkCallback], eax
  *   mov     ecx, [ecx*4 + 0x24]
- *   mov     [g_scaledInit_00542044], ecx
+ *   mov     [g_currentNodeIdx], ecx
  * .ret:
  *   ret
  */
@@ -55,7 +55,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void CallPauseScaledDecJmp(void);
@@ -80,7 +80,7 @@ extern void CallPauseScaledDecJmp(void);
         g_eventQueueIdx = *(unsigned int *)(g_matrixStackTop * 4);            \
         g_matrixStackTop--;                                                   \
         g_walkCallback = (void (*)(void))(((ScenegraphNode *)(saved_fg * 4))->queue_idx); \
-        g_scaledInit_00542044 = ((ScenegraphNode *)(saved_fg * 4))->queue_end;       \
+        g_currentNodeIdx = ((ScenegraphNode *)(saved_fg * 4))->queue_end;       \
     } while (0)
 
 /* @addr 0x0045be40 */

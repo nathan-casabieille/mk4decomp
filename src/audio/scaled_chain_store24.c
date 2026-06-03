@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004a7d40 (80b)
  *   Scaled-base table walk: ecx = walk + (0x50a0f0>>2); load
@@ -21,7 +21,7 @@ void ScaledChainStore24(void) {
     p = (unsigned int)g_walkCallback;
     p += (unsigned int)&g_audioVoiceTrioBase >> 2;
     g_xformEntityIdx = (unsigned int)&g_audioVoiceTrioBase >> 2;
-    sc = g_scaledInit_00542044;
+    sc = g_currentNodeIdx;
     v = *(int *)(p * 4) & 0xffffff;
     g_xformEntityIdx = (unsigned int)v;
     v = *(int *)v;

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -118,23 +118,23 @@ void ScaledChainAccumLoop(void) {
         mov     eax, 0x0052d718
         mov     dword ptr [g_dispatchArg], 0xfffffff9
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [g_savedNode]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [eax*4 + 0], 0xfffffff9
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         add     eax, dword ptr [g_dispatchArg]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], 0
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, eax
         mov     dword ptr [g_xformLoopCounter], 0x0000018e
         mov     dword ptr [g_walkCallback], ecx
         _emit   0ebh
         _emit   05h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         add     eax, dword ptr [g_dispatchArg]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [g_walkCallback]

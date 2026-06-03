@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  */
 void DualPushCallCjPop(void) {
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_cj_0054205c;
     ScaledIncLoopState3();
@@ -124,6 +124,6 @@ void DualPushCallCjPop(void) {
     g_cj_0054205c = g_player2NodeIdx;
     g_cj_0054205c = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
-    g_scaledInit_00542044 = *(unsigned int *)(g_matrixStackTop * 4);
+    g_currentNodeIdx = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
 }

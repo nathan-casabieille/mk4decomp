@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048c210 (73b)
  *   mov eax = 0x00541d70 >> 2 → g_scaledInit; clear walk;
@@ -16,11 +16,11 @@ extern unsigned int g_scaledIncLoopBase;
 void ScaledIncLoopState3(void) {
     unsigned int p = (unsigned int)&g_scaledIncLoopBase >> 2;
     g_walkCallback = (void (*)(void))0;
-    g_scaledInit_00542044 = p;
+    g_currentNodeIdx = p;
     g_xformLoopCounter = 3;
     *(unsigned int *)(p * 4) = (unsigned int)g_walkCallback;
     do {
-        g_scaledInit_00542044++;
+        g_currentNodeIdx++;
         g_xformLoopCounter--;
     } while ((int)g_xformLoopCounter >= 0);
 }

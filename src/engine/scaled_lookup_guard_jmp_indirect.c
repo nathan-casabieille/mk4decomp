@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -127,7 +127,7 @@ __declspec(naked) void ScaledLookupGuardJmpIndirect(void) {
         sar     eax, 2
         mov     dword ptr [g_eventQueueEnd], eax
         add     eax, 4
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [ecx*4 + 0x6c], eax
         mov     edx, dword ptr [g_eventQueueEnd]

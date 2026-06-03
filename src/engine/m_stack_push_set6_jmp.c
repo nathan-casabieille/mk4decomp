@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00438470 (37b main + 11 nop pad + 5b sub-entry at +0x30):
  *   set walk=6, mstack-push func_004384a0, tail-jmp MstackPopScaledChainPlusThunks.

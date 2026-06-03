@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00428730 (48b)
  *   mov     eax, [esp+4]
@@ -15,7 +15,7 @@ extern unsigned int g_scaledInit_00542044;
  *   inc     eax
  *   mov     [g_eventQueueTotal], eax
  *   mov     eax, [g_fightGroupHead]
- *   mov     [g_scaledInit_00542044], ecx
+ *   mov     [g_currentNodeIdx], ecx
  *   mov     [eax*4 + 0x24], ecx
  *   jmp     T
  */
@@ -27,7 +27,7 @@ void IterStepScaledStore24(int arg) {
     v = *(unsigned int *)(packed * 4);
     packed++;
     g_eventQueueTotal = packed;
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = v;
     ScaledChainJmp_004298e0();
 }

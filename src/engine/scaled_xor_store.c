@@ -15,11 +15,11 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004900f0 */
 void ScaledXorStore_004900f0(void) {
-    ScenegraphNode *n = (ScenegraphNode *)(g_scaledInit_00542044 * 4);
+    ScenegraphNode *n = (ScenegraphNode *)(g_currentNodeIdx * 4);
     unsigned int v = n->state_mask ^ 1;
     g_walkCallback = (void (*)(void))v;
     n->state_mask = v;

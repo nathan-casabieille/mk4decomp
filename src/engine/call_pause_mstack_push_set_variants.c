@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_acc_00542078;
 extern void SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30(void);
 extern void LeaPlus22StoreSelf(void);

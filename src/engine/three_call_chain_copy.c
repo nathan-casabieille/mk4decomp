@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -121,14 +121,14 @@ void ThreeCallChainCopy(void) {
     if (g_framePauseFlag != 0) return;
     v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_a;
     g_walkCallback = v;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_x = v;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_x = v;
     v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_b;
     g_walkCallback = v;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_y = v;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_y = v;
     v = ((ScenegraphNode *)(g_eventQueueIdx * 4))->child_c;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_z = v;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_z = v;
     g_walkCallback = 0x74;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x30) = 0x74;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x30) = 0x74;
     MStackCall_MStackPush2ChainPrepend_00406340();
     if (g_framePauseFlag != 0) return;
     MStackPushTwoEntryChainCall();

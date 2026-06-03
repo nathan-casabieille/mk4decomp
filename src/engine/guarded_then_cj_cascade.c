@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -163,11 +163,11 @@ __declspec(naked) void GuardedThenCjCascade(void) {
         mov     ecx, dword ptr [g_player1NodeIdx]
         mov     eax, dword ptr [g_gtPlayerProbe2]
         cmp     edx, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   74h
         _emit   0ah
         mov     eax, dword ptr [g_gtPlayerProbe1]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x5c]
         mov     dword ptr [g_walkCallback], ecx
         mov     eax, dword ptr [eax*4 + 0x60]

@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00461220 (50b)
  *   call    F
@@ -26,6 +26,6 @@ void CallPauseScaledStoreCopyJmp(void) {
     StateDispatchTable();
     if (g_framePauseFlag != 0) return;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = (unsigned int)g_walkCallback;
-    g_scaledInit_00542044 = g_fightGroupHead;
+    g_currentNodeIdx = g_fightGroupHead;
     ScaledLoadOrSetJmp();
 }

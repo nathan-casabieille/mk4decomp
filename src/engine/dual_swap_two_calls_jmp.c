@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0045d960 (78b)
  *   Dual-scaled-init helper: copies g_xformEntityIdx →
@@ -19,7 +19,7 @@ void DualSwapTwoCallsJmp(void) {
     g_eventQueueWorkType = g_gtFightTickCounter;
     ChainShiftRight8();
     if (g_framePauseFlag) return;
-    g_eventQueueTotal = g_scaledInit_00542044;
+    g_eventQueueTotal = g_currentNodeIdx;
     g_eventQueueWorkType = (unsigned int)g_walkCallback;
     ChainShiftRight8();
     if (g_framePauseFlag) return;

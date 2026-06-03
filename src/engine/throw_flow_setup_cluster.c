@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -147,9 +147,9 @@ void DualGuardStateMachine(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_audioBitField]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x28]
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
@@ -165,9 +165,9 @@ void DualGuardStateMachine(void) {
         test    eax, eax
         _emit   75h
         _emit   4ch
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x30], 0x00000266
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_walkCallback], 2
         call    ThrowFlowSetupCluster

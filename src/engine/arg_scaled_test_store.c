@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00494140 (61b)
  *   arg sar 2 → g_eventQueueTotal; scaled load [baseSel*4 + 0x30] → g_walkCallback

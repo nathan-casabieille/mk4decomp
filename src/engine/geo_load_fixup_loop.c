@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -132,7 +132,7 @@ __declspec(naked) void GeoLoadFixupLoop(void) {
     __asm {
         push    esi
         push    edi
-        mov     edi, dword ptr [g_scaledInit_00542044]
+        mov     edi, dword ptr [g_currentNodeIdx]
         xor     esi, esi
         mov     eax, dword ptr [edi*4 + 4]
         cmp     eax, esi

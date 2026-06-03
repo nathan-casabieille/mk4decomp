@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -120,24 +120,24 @@ extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 
 __declspec(naked) void ScaledChainInit2Phase(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         xor     esi, esi
         mov     dword ptr [eax*4 + 0x54], esi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [ecx*4 + 0x58], esi
         mov     edx, dword ptr [g_cj_00542054]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x5c]
         add     eax, 0x00041999
         mov     dword ptr [ecx*4 + 0x5c], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [edx*4 + 0x68], 0x00062978
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x74], 0xffffaaab
         mov     eax, dword ptr [esp + 8]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         call    MStackCall_MStackPush2ChainPrepend_00406340
@@ -152,7 +152,7 @@ __declspec(naked) void ScaledChainInit2Phase(void) {
         mov     eax, dword ptr [g_pendingNodeType]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [eax*4 + 0x5c], esi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_pendingNodeType]
         mov     dword ptr [ecx*4 + 0x3c], edx
         pop     esi

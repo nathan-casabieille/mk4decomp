@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004b5c90 (80b)
  *   Walks a packed list at 0x7b41a0 (entries 12+ bytes each):

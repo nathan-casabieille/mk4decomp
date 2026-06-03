@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0043cb00 (262b game) - guarded cascade then 4-field cj copy with bit-OR.
  *   g_xformEntityIdx = 0x0050d434>>2; call MStackPushDispatchBitGate; if pause? final-ret.
  *   if bit2 of g_xformDirtyFlags set: tail-jmp ScaledInitWithCounterAndType_004314f0.
- *   g_cj_0054205c = g_scaledInit_00542044. call MStackPushTwoEntryChainCall; if pause? final-ret.
+ *   g_cj_0054205c = g_currentNodeIdx. call MStackPushTwoEntryChainCall; if pause? final-ret.
  *   call MStackCall_MStackPush2ChainPrepend_00406340; if pause? final-ret.
  *   Clear cj[+0x5c] and g_eventQueueNotMask. cj[+0x64] = g_eventQueueIdx[+0x64].
  *   cj[+0x34] = (cj[+0x34] & 0xfe) | (g_eventQueueIdx[+0x34] & 1) | 0x81000.
@@ -141,7 +141,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr(void) {
         _emit   74h
         _emit   05h
         jmp     ScaledInitWithCounterAndType_004314f0
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_cj_0054205c], ecx
         call    MStackPushTwoEntryChainCall
         mov     eax, dword ptr [g_framePauseFlag]

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -122,10 +122,10 @@ extern unsigned int g_fightAxisPosY;
 void ChainStoreCmpJmp(void) {
     unsigned int v;
     unsigned int delta;
-    v = *(unsigned int *)(g_scaledInit_00542044 * 4);
+    v = *(unsigned int *)(g_currentNodeIdx * 4);
     g_walkCallback = (void (*)(void))v;
     if (v == 0) return;
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     g_walkCallback = (void (*)(void))0xffffb334;
     g_eventQueueCurrent = *(unsigned int *)(v * 4 + 0x38);
     *(unsigned int *)(v * 4 + 0x38) = 0xffffb334;

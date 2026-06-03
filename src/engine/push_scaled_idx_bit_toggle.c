@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -124,9 +124,9 @@ void PushScaledIdxBitToggle(void) {
     unsigned int dirty;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_scaledInit_00542044;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
     p = ((unsigned int)&g_scaledIncLoopBase >> 2) + (unsigned int)g_walkCallback;
-    g_scaledInit_00542044 = p;
+    g_currentNodeIdx = p;
     dirty = g_xformDirtyFlags | 4;
     v = *(unsigned int *)(p * 4);
     g_xformDirtyFlags = dirty;
@@ -135,6 +135,6 @@ void PushScaledIdxBitToggle(void) {
         g_xformDirtyFlags = dirty ^ 4;
     }
     top = g_matrixStackTop;
-    g_scaledInit_00542044 = *(unsigned int *)(top * 4);
+    g_currentNodeIdx = *(unsigned int *)(top * 4);
     g_matrixStackTop = top - 1;
 }

@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00446120 (46b)
  *   mov     eax, [g_eventQueueIdx]
@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     ecx, [eax*4 + 0x78]
  *   mov     [g_eventQueueEnd], ecx
  *   mov     edx, [eax*4 + 0x5c]
- *   mov     [g_scaledInit_00542044], edx
+ *   mov     [g_currentNodeIdx], edx
  *   jmp     T
  */
 extern void PushPopScaled1cDoubleCall(void);
@@ -23,7 +23,7 @@ void CopyScaledTriple_00446120(void) {
     g_fightGroupHead = g_eventQueueIdx;
     base = g_baseSel;
     g_xformEntityIdx = *(unsigned int *)(base * 4 + 0x78);
-    g_scaledInit_00542044 = *(unsigned int *)(base * 4 + 0x5c);
+    g_currentNodeIdx = *(unsigned int *)(base * 4 + 0x5c);
     PushPopScaled1cDoubleCall();
 }
 
@@ -31,7 +31,7 @@ void CopyScaledTriple_00446120(void) {
 extern void PushPopScaled1cDoubleCall(void);
 void CopyScaledTriple_00446350(void) {
     unsigned int base = g_baseSel;
-    g_scaledInit_00542044 = *(unsigned int *)(base * 4 + 0x5c);
+    g_currentNodeIdx = *(unsigned int *)(base * 4 + 0x5c);
     g_xformEntityIdx = *(unsigned int *)(base * 4 + 0x78);
     g_fightGroupHead = g_eventQueueEnd;
     PushPopScaled1cDoubleCall();

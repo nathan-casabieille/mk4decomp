@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -112,11 +112,11 @@ extern void MStackPush3LinkedListZeroWalk(void);
 
 /* @addr 0x0049cf70 (259b game) - mstack-push triple, call helper, conditional cj update + bit toggle.
  *   mstack-push g_xformEntityIdx, g_pendingNodeType, g_eventQueueTotal.
- *   g_eventQueueTotal = g_scaledInit_00542044.
+ *   g_eventQueueTotal = g_currentNodeIdx.
  *   call MStackPush3LinkedListZeroWalk; if pause? final-ret.
  *   if bit2 of g_xformDirtyFlags set, skip middle block.
  *   else: g_pendingNodeType=[g_eventQueueTotal*4 + 0x2c]; [g_xformEntityIdx*4]=g_pendingNodeType;
- *     [g_eventQueueTotal*4 + 0x2c]=g_scaledInit_00542044.
+ *     [g_eventQueueTotal*4 + 0x2c]=g_currentNodeIdx.
  *   mstack-pop triple. g_xformDirtyFlags |= 4; if scaledInit==0 ret;
  *   else g_xformDirtyFlags ^= 4 (clear bit2); ret.
  */
@@ -138,7 +138,7 @@ void MStackPush3HelperCondToggle(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_eventQueueTotal], edx
         call    MStackPush3LinkedListZeroWalk
         mov     eax, dword ptr [g_framePauseFlag]
@@ -161,7 +161,7 @@ void MStackPush3HelperCondToggle(void) {
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [edx*4 + 0], eax
         mov     eax, dword ptr [g_eventQueueTotal]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x2c], edx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [eax*4 + 0]
@@ -177,7 +177,7 @@ void MStackPush3HelperCondToggle(void) {
         mov     dword ptr [g_xformEntityIdx], edx
         mov     edx, dword ptr [g_xformDirtyFlags]
         mov     dword ptr [g_matrixStackTop], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         or      edx, ecx
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], edx

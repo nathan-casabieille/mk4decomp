@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -123,7 +123,7 @@ __declspec(naked) void DualEntryInitCmp(void) {
     __asm {
         mov     eax, dword ptr [g_vertexInitFlagAlt]
         mov     ecx, dword ptr [g_vertexInitFlag]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], 0
         mov     dword ptr [g_pendingNodeType], 0x00000800
         mov     dword ptr [g_eventQueueTotal], ecx
@@ -135,7 +135,7 @@ __declspec(naked) void DualEntryInitCmp(void) {
         _emit   37h
         mov     eax, dword ptr [g_vertexInitFlagAlt]
         mov     ecx, 0x000007fc
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x0c], ecx
         mov     edx, dword ptr [g_vertexInitVar]
@@ -149,7 +149,7 @@ __declspec(naked) void DualEntryInitCmp(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     eax, dword ptr [eax*4 + 0x0c]
         inc     eax

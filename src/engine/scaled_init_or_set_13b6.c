@@ -5,14 +5,14 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00446600 (58b)
  *   mov     eax, [g_baseSel]
  *   mov     ecx, 1
  *   mov     eax, [eax*4 + 0x60]
  *   mov     [g_walkCallback], ecx
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   shl     eax, 2
  *   mov     [eax + 0x1c], ecx
  *   mov     ecx, [eax + 0x20]
@@ -31,7 +31,7 @@ void ScaledInitOrSet13b6(void) {
     idx = *(unsigned int *)(g_baseSel * 4 + 0x60);
     one = 1;
     g_walkCallback = (void (*)(void))one;
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     idx <<= 2;
     *(unsigned int *)(idx + 0x1c) = one;
     field = *(unsigned int *)(idx + 0x20);

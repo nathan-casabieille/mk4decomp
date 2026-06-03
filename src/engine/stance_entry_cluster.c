@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -145,7 +145,7 @@ __declspec(naked) void FiveBlockDispatch_ScaledCmp200eCallBool(void) {
         _emit   90h
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x30]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax

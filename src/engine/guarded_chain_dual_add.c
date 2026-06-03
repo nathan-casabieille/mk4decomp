@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
 void GuardedChainDualAdd(void) {
     MStackPushVec3Mul10();
     if (g_framePauseFlag) return;
-    g_scaledInit_00542044 = g_installOwnerNode;
+    g_currentNodeIdx = g_installOwnerNode;
     g_eventQueueCurrent = ((ScenegraphNode *)(g_cj_00542058 * 4))->position_x;
     g_eventQueueCurrent += ((ScenegraphNode *)(g_baseSel * 4))->child_a;
     g_eventQueueWorkType = ((ScenegraphNode *)(g_cj_00542058 * 4))->position_z;

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -130,7 +130,7 @@ void OneSetCmpJmpLoadCall(void) {
         mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [edx*4 + 0x24]
         cmp     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   75h
         _emit   05h
         _emit   0e9h

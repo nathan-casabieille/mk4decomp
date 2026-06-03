@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -116,7 +116,7 @@ void TripleFieldCopyBitMerge(void) {
         mov     ecx, dword ptr [g_cj_00542058]
         shl     ecx, 2
         mov     eax, dword ptr [eax*4 + 0x4c]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [ecx + 0x60]
         shl     eax, 2
         mov     dword ptr [g_walkCallback], edx
@@ -129,7 +129,7 @@ void TripleFieldCopyBitMerge(void) {
         mov     dword ptr [eax + 0x68], ecx
         mov     edx, dword ptr [g_eventQueueEnd]
         mov     ecx, dword ptr [edx*4 + 0x34]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         and     ecx, 1
         mov     dword ptr [g_walkCallback], ecx
         mov     eax, dword ptr [edx*4 + 0x34]

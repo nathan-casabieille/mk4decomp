@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -119,7 +119,7 @@ extern void StoreDoubleNegPauseSubStore(void);
 
 __declspec(naked) void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         test    eax, eax
         push    edi
@@ -173,7 +173,7 @@ __declspec(naked) void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void) {
         mov     eax, esi
         mov     dword ptr [g_walkCallback], esi
         test    esi, esi
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   0fh
         _emit   85h
         _emit   69h
@@ -187,7 +187,7 @@ __declspec(naked) void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void) {
 }
 
 /* @addr 0x0049d450 (248b game) - linked-list traverse adding 3 fields per node.
- *   eax = [g_scaledInit_00542044]; if 0 ret.
+ *   eax = [g_currentNodeIdx]; if 0 ret.
  *   ecx = [g_xformEntityIdx]<<2 (table base, byte address).
  *   For each node: node[+4/+8/+0xc] += table[+0/+4/+8] (g_walkCallback temp).
  *   eax = node[+0] (next link). Loop while eax != 0.
@@ -195,7 +195,7 @@ __declspec(naked) void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void) {
  */
 __declspec(naked) void LinkedListFieldAdd(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         test    eax, eax
         mov     dword ptr [g_eventQueueCurrent], eax
@@ -233,7 +233,7 @@ __declspec(naked) void LinkedListFieldAdd(void) {
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_eq], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   74h
         _emit   76h
         mov     edx, dword ptr [g_xformEntityIdx]
@@ -264,7 +264,7 @@ __declspec(naked) void LinkedListFieldAdd(void) {
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_eq], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   75h
         _emit   8ah
         pop     esi

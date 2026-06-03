@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -112,7 +112,7 @@ extern void AerialKickComboCluster(void);
 
 /* @addr 0x0048ae50 (263b game) - mstack-push pair + indirect dispatch + cj copy.
  *   mstack-push g_currentNodeFlags and g_xformScratch2088. g_eventQueueCurrent = g_currentNodeFlags.
- *   g_scaledInit_00542044 = g_eventQueueEnd; g_xformEntityIdx = g_eventQueueIdx.
+ *   g_currentNodeIdx = g_eventQueueEnd; g_xformEntityIdx = g_eventQueueIdx.
  *   g_walkCallback = 0; indirect call [g_eventQueueChild] (cdecl callback).
  *   If pause? final-ret. call AerialKickComboCluster; if pause? final-ret.
  *   cj[+0x58] = g_walkCallback; cj[+0x54] = g_currentNodeFlags; cj[+0x5c] = g_xformScratch2088.
@@ -135,7 +135,7 @@ __declspec(naked) void IndirectDispatchCjStore(void) {
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [g_eventQueueIdx]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_walkCallback], 0
         call    dword ptr [g_eventQueueChild]

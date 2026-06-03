@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00428560 (85b)
  *   inc fightGroupHead[+0x28]; load fightGroupHead[+0x24] → scaled;
@@ -18,7 +18,7 @@ void ScaledStoreOrFlagXor(void) {
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = v;
     s = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
-    g_scaledInit_00542044 = s;
+    g_currentNodeIdx = s;
     g_xformDirtyFlags = g_xformDirtyFlags | 4;
     if (*(unsigned int *)(s * 4 + 4) != (unsigned int)g_walkCallback) {
         g_xformDirtyFlags = g_xformDirtyFlags ^ 4;

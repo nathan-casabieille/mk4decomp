@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -143,7 +143,7 @@ __declspec(naked) void SequencedInit3Call(void) {
         _emit   00h
         mov     eax, dword ptr [g_load_0052ab10]
         mov     dword ptr [g_dispatchSave40], esi
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_dispatchSave42], esi
         shl     eax, 2
         mov     dword ptr [eax + 0x54], esi
@@ -162,14 +162,14 @@ __declspec(naked) void SequencedInit3Call(void) {
         _emit   2dh
         mov     eax, 0x0050b124
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    LoadGeoAsset_Default
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   13h
         mov     ecx, 0x0050b124
         shr     ecx, 2
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    LoadGeoAsset_Default
         pop     esi
         ret

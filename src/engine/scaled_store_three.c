@@ -5,10 +5,10 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0049d310 (42b)
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   mov     ecx, [g_walkCallback]
  *   shl     eax, 2
  *   mov     [eax + 4], ecx
@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void ScaledStoreThree_0049d310(void) {
-    unsigned char *base = (unsigned char *)(g_scaledInit_00542044 * 4);
+    unsigned char *base = (unsigned char *)(g_currentNodeIdx * 4);
     unsigned int v;
     *(unsigned int *)(base + 4) = (unsigned int)g_walkCallback;
     *(unsigned int *)(base + 8) = g_eventQueueCurrent;

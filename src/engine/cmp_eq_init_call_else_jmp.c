@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048d4b0 (78b)
  *   if walk == 8: g_scaledInit = 0x542db8>>2; call F; pause → ret;
@@ -16,13 +16,13 @@ extern void TableHitOrSchedule(int);
 extern unsigned char g_dispatchSave421;
 void CmpEqInitCallElseJmp(void) {
     if ((unsigned int)g_walkCallback == 8) {
-        g_scaledInit_00542044 = (unsigned int)&g_dispatchSave421 >> 2;
+        g_currentNodeIdx = (unsigned int)&g_dispatchSave421 >> 2;
         MStackChainInstallDispatch();
         if (g_framePauseFlag != 0) return;
         if ((g_xformDirtyFlags & 1) != 0) return;
         TableHitOrSchedule(0x1392);
         return;
     }
-    g_scaledInit_00542044 = (unsigned int)&g_dispatchSave421 >> 2;
+    g_currentNodeIdx = (unsigned int)&g_dispatchSave421 >> 2;
     MStackChainInstallDispatch();
 }

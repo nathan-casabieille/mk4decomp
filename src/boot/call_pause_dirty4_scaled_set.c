@@ -10,7 +10,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern void SlotInitAndChainLink(void);
 extern void BootGatedInitInstallPair(void);
 
@@ -22,7 +22,7 @@ void CallPauseDirty4ScaledSet_tag_0x83(void) {
     ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x83;
     g_walkCallback = (void(*)(void))0x11999;
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x11999;
-    g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
+    g_currentNodeIdx = g_eventQueueEnd + 0x15;
     BootGatedInitInstallPair();
 }
 
@@ -34,7 +34,7 @@ void CallPauseDirty4ScaledSet_tag_0x86(void) {
     ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x86;
     g_walkCallback = (void(*)(void))0x11999;
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x11999;
-    g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
+    g_currentNodeIdx = g_eventQueueEnd + 0x15;
     BootGatedInitInstallPair();
 }
 
@@ -46,7 +46,7 @@ void CallPauseDirty4ScaledSet_tag_0x87(void) {
     ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x87;
     g_walkCallback = (void(*)(void))0x11999;
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x11999;
-    g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
+    g_currentNodeIdx = g_eventQueueEnd + 0x15;
     BootGatedInitInstallPair();
 }
 
@@ -58,7 +58,7 @@ void CallPauseDirty4ScaledSet_tag_0x82(void) {
     ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x82;
     g_walkCallback = (void(*)(void))0x11999;
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x11999;
-    g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
+    g_currentNodeIdx = g_eventQueueEnd + 0x15;
     BootGatedInitInstallPair();
 }
 
@@ -70,6 +70,6 @@ void CallPauseDirty4ScaledSet_tag_0x88(void) {
     ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x88;
     g_walkCallback = (void(*)(void))0x13333;
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x13333;
-    g_scaledInit_00542044 = g_eventQueueEnd + 0x15;
+    g_currentNodeIdx = g_eventQueueEnd + 0x15;
     BootGatedInitInstallPair();
 }

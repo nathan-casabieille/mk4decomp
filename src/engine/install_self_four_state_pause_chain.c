@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -143,7 +143,7 @@ __declspec(naked) void InstallSelfFourStatePauseChain(void) {
         _emit   74h
         _emit   25h
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackPush2ChainLLInsert
         cmp     dword ptr [g_framePauseFlag], edi
         _emit   0fh
@@ -161,7 +161,7 @@ __declspec(naked) void InstallSelfFourStatePauseChain(void) {
         mov     ecx, 0x0049b000
         mov     dword ptr [edx*4 + 0x84], 3
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     ecx, 0x03000000
         _emit   0ebh
         _emit   63h
@@ -170,7 +170,7 @@ __declspec(naked) void InstallSelfFourStatePauseChain(void) {
         mov     ecx, 0x0049b000
         mov     dword ptr [eax*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     ecx, 0x02000000
         _emit   0ebh
         _emit   37h
@@ -183,12 +183,12 @@ __declspec(naked) void InstallSelfFourStatePauseChain(void) {
         mov     ecx, 0x0049b000
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], edi

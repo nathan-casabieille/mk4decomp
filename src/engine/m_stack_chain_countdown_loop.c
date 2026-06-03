@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -122,7 +122,7 @@ extern void MStackPushSearchLoop(void);
 __declspec(naked) void MStackChainCountdownLoop(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
@@ -151,7 +151,7 @@ __declspec(naked) void MStackChainCountdownLoop(void) {
         mov     dword ptr [g_eventQueueCurrent], 4
         mov     dword ptr [g_walkCallback], ecx
         lea     esi, [edx + ecx]
-        mov     dword ptr [g_scaledInit_00542044], esi
+        mov     dword ptr [g_currentNodeIdx], esi
         mov     ecx, dword ptr [esi*4 + 4]
         test    eax, eax
         mov     dword ptr [g_eventQueueCurrent], ecx
@@ -178,7 +178,7 @@ __declspec(naked) void MStackChainCountdownLoop(void) {
         pop     esi
         mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         ret
     }

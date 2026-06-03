@@ -5,26 +5,26 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048f8e0 (48b)
  *   mov     eax, [g_baseSel]
  *   mov     ecx, [eax*4 + 0x3c]
- *   mov     [g_scaledInit_00542044], ecx
+ *   mov     [g_currentNodeIdx], ecx
  *   call    F
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
  *   jne     +0x0f
- *   mov     [g_scaledInit_00542044], 0x0048fa20
+ *   mov     [g_currentNodeIdx], 0x0048fa20
  *   jmp     T
  *   ret
  */
 extern void Thunk_ChainNodeInit(void);
 extern void MStackPush4IndirectCall(void);
 void ScaledChainCallPauseSetJmp(void) {
-    g_scaledInit_00542044 = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
+    g_currentNodeIdx = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
     Thunk_ChainNodeInit();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = 0x0048fa20;
+    g_currentNodeIdx = 0x0048fa20;
     MStackPush4IndirectCall();
 }

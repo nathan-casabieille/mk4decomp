@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -129,11 +129,11 @@ void ScaledByteIdxDualCopy(void) {
         mov     edx, dword ptr [g_audioBoundNode]
         add     eax, ecx
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x58]
         sub     ecx, 0x50000
         mov     dword ptr [edx*4 + 0x58], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_audioBoundNode]
         mov     ecx, dword ptr [eax*4 + 0x5c]
         mov     dword ptr [edx*4 + 0x5c], ecx

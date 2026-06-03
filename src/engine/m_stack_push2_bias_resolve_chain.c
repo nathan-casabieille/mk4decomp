@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -129,7 +129,7 @@ void TripleStateSwapCall(void) {
     g_walkCallback = (void (*)(void))save_70;
     PushBitFieldMergePop();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_cj_0054205c;
+    g_currentNodeIdx = g_cj_0054205c;
     g_walkCallback = (void (*)(void))save_walk;
     g_eventQueueWorkType = save_74;
     PushCallPopScaledJmpIndirect();

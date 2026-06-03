@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -121,7 +121,7 @@ extern void DualEntry4002Chain(void);
 void CmpDualPatchCallJmp(void) {
     unsigned int field;
     field = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
-    g_scaledInit_00542044 = field;
+    g_currentNodeIdx = field;
     field = *(unsigned int *)(field * 4 + 0x34);
     g_walkCallback = (void (*)(void))field;
     if (field == 0x10) {

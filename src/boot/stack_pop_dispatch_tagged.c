@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 
 /* @addr 0x0041f780 (77b)
@@ -19,7 +19,7 @@ void StackPopDispatchTagged(void) {
     unsigned int base = g_baseSel;
     unsigned int top = *(unsigned int *)(base * 4 + 4) - 1;
     unsigned int walk;
-    g_scaledInit_00542044 = top;
+    g_currentNodeIdx = top;
     g_walkCallback = (void (*)(void))*(unsigned int *)(top * 4);
     *(unsigned int *)(base * 4 + 4) = top;
     ((ScenegraphNode *)(g_baseSel * 4))->install_flag = (unsigned int)((int)g_walkCallback >> 24);

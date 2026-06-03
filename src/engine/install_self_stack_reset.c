@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -150,7 +150,7 @@ __declspec(naked) void InstallSelfStackReset(void) {
         mov     eax, offset g_dispatchSave1203
         shr     eax, 2
         add     eax, edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, [eax*4 + g_arr_421f40]
         mov     eax, 1
         mov     dword ptr [g_pendingNodeType], edx

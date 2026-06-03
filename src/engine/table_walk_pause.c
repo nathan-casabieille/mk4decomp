@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004b5a80 (52b)
  *   rep stos zero-fill 0xc0000 dwords starting at 0x007b41a0;
@@ -38,16 +38,16 @@ __declspec(naked) void AppInit_Misc2(void) {
 /* @addr 0x004bd850 (57b)
  *   walk table 0x00ab4e78..0x00ab5034 step 4;
  *   each entry's high bit triggers a call after clearing it
- *   into g_scaledInit_00542044; pause-test breaks the loop.
+ *   into g_currentNodeIdx; pause-test breaks the loop.
  */
 void TableWalkPause(void) {
     unsigned int *p = &g_table_004ab4e78;
     do {
         unsigned int v = *p;
-        g_scaledInit_00542044 = v;
+        g_currentNodeIdx = v;
         if ((v & 0x80000000) != 0) {
             v &= 0x7fffffff;
-            g_scaledInit_00542044 = v;
+            g_currentNodeIdx = v;
             LoadGeoAsset_Default();
             if (g_framePauseFlag != 0) return;
         }

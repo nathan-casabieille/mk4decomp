@@ -7,7 +7,7 @@
 /* @addr 0x0048bc40 (174b game) - mstack-push 2, table-search nonzero, mstack-pop 2. */
 extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchArg;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 void Helper_DownloadSetup(void) {
     __asm {
@@ -26,7 +26,7 @@ void Helper_DownloadSetup(void) {
         lea     ecx, [eax*8 + 0]
         shr     edx, 2
         mov     dword ptr [g_dispatchArg], ecx
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         lea     eax, [edx + ecx]
         mov     eax, dword ptr [eax*4 + 0]
         test    eax, eax
@@ -45,7 +45,7 @@ void Helper_DownloadSetup(void) {
         _emit   0d6h
         mov     eax, dword ptr [g_matrixStackTop]
         add     edx, ecx
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_dispatchArg], ecx

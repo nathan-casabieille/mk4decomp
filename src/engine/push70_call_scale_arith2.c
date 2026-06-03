@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -123,7 +123,7 @@ void Push70CallScaleArith2(void) {
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueCurrent;
     StreamChainStringInstall();
     if ((g_xformDirtyFlags & 4) == 0) {
-        sc = g_scaledInit_00542044;
+        sc = g_currentNodeIdx;
         neg_data = (unsigned int)(-(int)g_eventQueueCurrent);
         g_walkCallback = (void (*)(void))((ScenegraphNode *)(sc * 4))->position_x;
         ((ScenegraphNode *)(sc * 4))->position_x += neg_data << 9;

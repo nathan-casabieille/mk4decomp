@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048e740 (62b)
  *   scaled chain 0x3c → 0x74; and 0xf000; cmp 0x4000;
@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
 void ScaledChainAndF000DirtyToggle(void) {
     unsigned int v;
     v = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     v = ((ScenegraphNode *)(v * 4))->fsm_state & 0xf000;
     g_walkCallback = (void(*)(void))v;
     if (v == 0x4000) {

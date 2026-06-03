@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* === Five 78b clones: dispatch at 0x004926e0 / 30 / 80 / d0 / 20 ===
  *

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -135,7 +135,7 @@ __declspec(naked) void DualEntryInstallSelfScaled(void) {
         push    offset body_bb0
         mov     dword ptr [g_eventQueueNotMask], eax
         call    StoreTwoCall
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_eventQueueNotMask]
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x14], eax
@@ -175,7 +175,7 @@ __declspec(naked) void DualEntryInstallSelfScaled(void) {
         mov     eax, offset g_installScaledArrBase
         shr     eax, 2
         add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], 0x5f
         mov     dword ptr [g_xformEntityIdx], ecx
@@ -187,11 +187,11 @@ __declspec(naked) void DualEntryInstallSelfScaled(void) {
         test    eax, eax
         _emit   75h
         _emit   42h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x1b333
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x5c], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_cj_0054205c], eax
         mov     eax, 1
         mov     dword ptr [esi + 8], offset body_bb0

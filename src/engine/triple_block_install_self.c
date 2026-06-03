@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -163,7 +163,7 @@ __declspec(naked) void TripleBlockInstallSelf(void) {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [ecx*4 + 4], eax
@@ -181,11 +181,11 @@ __declspec(naked) void TripleBlockInstallSelf(void) {
         mov     edx, dword ptr [g_walkCallback]
         lea     eax, [ecx*4 + 4]
         mov     ecx, dword ptr [ecx*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x00465f30

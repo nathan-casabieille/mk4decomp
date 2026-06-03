@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -119,16 +119,16 @@ void ScaledFromArgDualSibStore(int arg0) {
     unsigned int p;
     unsigned int v;
     p = (unsigned int)(arg0 >> 2);
-    g_scaledInit_00542044 = p;
+    g_currentNodeIdx = p;
     v = *(unsigned int *)(p * 4);
     p++;
-    g_scaledInit_00542044 = p;
+    g_currentNodeIdx = p;
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(g_cj_0054205c * 4 + 0x70) = v;
-    p = g_scaledInit_00542044;
+    p = g_currentNodeIdx;
     v = *(unsigned int *)(p * 4);
     p++;
     g_walkCallback = (void (*)(void))v;
-    g_scaledInit_00542044 = p;
+    g_currentNodeIdx = p;
     *(unsigned int *)(g_cj_0054205c * 4 + 0x4c) = v;
 }

@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004b5a80 (52b)
  *   rep stos zero-fill 0xc0000 dwords starting at 0x007b41a0;
@@ -40,7 +40,7 @@ void ScaledNegThreeWords(void) {
     short a;
     short b;
     short c;
-    idx = g_scaledInit_00542044 * 4;
+    idx = g_currentNodeIdx * 4;
     a = *(short *)(idx);
     b = *(short *)(idx + 2);
     a = (short)-(int)a;

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -126,7 +126,7 @@ void MStackPush2ClampLookup(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], edx
@@ -134,7 +134,7 @@ void MStackPush2ClampLookup(void) {
         mov     eax, offset g_dispatchSave1264
         shr     eax, 2
         add     eax, edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, [eax*4 + g_arr_459160_main]
         cmp     eax, 0x19
         mov     dword ptr [g_eventQueueWorkType], eax
@@ -150,7 +150,7 @@ void MStackPush2ClampLookup(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax

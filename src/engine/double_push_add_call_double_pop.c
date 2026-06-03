@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -113,11 +113,11 @@ void DoublePushAddCallDoublePop(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_cj_0054205c;
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
-    g_scaledInit_00542044 = g_cj_0054205c + 0x18;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
+    g_currentNodeIdx = g_cj_0054205c + 0x18;
     Mul10TailPairMidChain();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = *(unsigned int *)(g_matrixStackTop * 4);
+    g_currentNodeIdx = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
     g_cj_0054205c = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;

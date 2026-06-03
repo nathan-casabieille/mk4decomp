@@ -12,7 +12,7 @@
  *   mov     eax, [g_gtPlayerProbe*]
  *   mov     [g_eventQueueIdx], edx
  *   mov     edx, [esp+4]
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   shr     ecx, 2
  *   mov     [g_eventQueueEnd], ecx
  *   mov     ecx, [eax*4 + 0x34]
@@ -25,7 +25,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_acc_00542078;
 
 extern void ChainPickArgScaledInit(int);
@@ -45,7 +45,7 @@ __declspec(naked) void DualPlayerSetupCall_ChainPickArgScaledInit_0045dcd0(void)
         mov     eax, dword ptr [g_gtPlayerProbe2]
         mov     dword ptr [g_eventQueueIdx], edx
         mov     edx, dword ptr [esp + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         shr     ecx, 2
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     ecx, dword ptr [eax*4 + 0x34]
@@ -70,7 +70,7 @@ __declspec(naked) void DualPlayerSetupCall_ChainPickArgScaledInit_0045dd30(void)
         mov     eax, dword ptr [g_gtPlayerProbe1]
         mov     dword ptr [g_eventQueueIdx], edx
         mov     edx, dword ptr [esp + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         shr     ecx, 2
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     ecx, dword ptr [eax*4 + 0x34]

@@ -5,11 +5,11 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048fa20 (44b)
  *   mov     eax, [g_fightGroupHead]
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   call    F
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
@@ -25,7 +25,7 @@ extern void GuardedChainPushSetCallPop(void);
 extern void ScaledZeroFour(void);
 extern void MStackPushSet0004(void);
 void StoreCallPauseCallPauseJmp(void) {
-    g_scaledInit_00542044 = g_fightGroupHead;
+    g_currentNodeIdx = g_fightGroupHead;
     GuardedChainPushSetCallPop();
     if (g_framePauseFlag != 0) return;
     ScaledZeroFour();

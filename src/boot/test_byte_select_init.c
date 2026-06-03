@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004111d0 (28b): byte-gate + set g_eventQueueIdx = (0x004d5c38>>2);
  * tail-jmp PendingMatch_StoreTwoCall_00411210 (= PendingMatch_StoreTwoCall_00411210 via extras_map). Entry A

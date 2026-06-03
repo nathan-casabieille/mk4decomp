@@ -5,12 +5,12 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00446150 (44b)
  *   mov     eax, [g_eventQueueIdx]
  *   mov     [g_fightGroupHead], eax
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   call    F
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
@@ -25,7 +25,7 @@ extern void MStackPushTwoEntryChainCall(void);
 void TripleSetCallPauseDirtyJmp(void) {
     unsigned int v = g_eventQueueIdx;
     g_fightGroupHead = v;
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     MStackBracket4_ListInsertZeroFill();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;

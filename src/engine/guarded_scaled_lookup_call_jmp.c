@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -129,7 +129,7 @@ int GuardedScaledLookupCallJmp(void) {
     idx = g_counter_0053a51c;
     scaled = ((unsigned int)&g_dispatchSave605 >> 2) + idx;
     g_walkCallback = (void (*)(void))idx;
-    g_scaledInit_00542044 = scaled;
+    g_currentNodeIdx = scaled;
     g_eventQueueWorkType = *(unsigned int *)(scaled * 4);
     st = g_tickFlagF;
     g_walkCallback = (void (*)(void))st;

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -145,12 +145,12 @@ __declspec(naked) void InstallChainInitTailJmp(void) {
         _emit   00h
         _emit   00h
         mov     ecx, dword ptr [g_matrixStackTop]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     ecx
         mov     dword ptr [g_installChainTailSlot], eax
         mov     dword ptr [g_matrixStackTop], ecx
         mov     [ecx*4 + g_matrixStack_arr], eax
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x40], 0x00006487
         mov     dword ptr [ecx*4 + 0x3c], 0
         lea     eax, [ecx*4 + g_matrixStack_arr]
@@ -162,12 +162,12 @@ __declspec(naked) void InstallChainInitTailJmp(void) {
         test    eax, eax
         _emit   75h
         _emit   29h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         jmp     PushPopScaled1cDoubleCall
         ret

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004a19c0 (74b)
  *   walk = g_eventQueueEnd; if non-zero: push 0x25b, call F1;
@@ -28,6 +28,6 @@ void GuardedCallDirtyJmpInit(void) {
         return;
     }
     g_walkCallback = (void (*)(void))0x00050000;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x6c) = 0x00050000;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x6c) = 0x00050000;
     InstallSelfPauseGate();
 }

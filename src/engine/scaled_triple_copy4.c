@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0049d2d0 (52b)
  *   triple copy from a[0..8] into b[4..0xc] with each pass
@@ -13,7 +13,7 @@ extern unsigned int g_scaledInit_00542044;
  */
 void ScaledTripleCopy4(void) {
     unsigned int *src = (unsigned int *)(g_xformEntityIdx * 4);
-    unsigned int *dst = (unsigned int *)(g_scaledInit_00542044 * 4);
+    unsigned int *dst = (unsigned int *)(g_currentNodeIdx * 4);
     unsigned int v;
     v = src[0]; g_walkCallback = (void(*)(void))v; dst[1] = v;
     v = src[1]; g_walkCallback = (void(*)(void))v; dst[2] = v;

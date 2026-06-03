@@ -5,13 +5,13 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00446280 (56b)
  *   mov     eax, [g_baseSel]
  *   shl     eax, 2
  *   mov     ecx, [eax + 0x5c]
- *   mov     [g_scaledInit_00542044], ecx
+ *   mov     [g_currentNodeIdx], ecx
  *   mov     edx, [eax + 0x3c]
  *   shl     ecx, 2
  *   mov     [g_walkCallback], edx
@@ -29,8 +29,8 @@ void ScaledChainCopyTriple(void) {
     unsigned char *dst;
     unsigned int v;
     src = (unsigned char *)(g_baseSel * 4);
-    g_scaledInit_00542044 = *(unsigned int *)(src + 0x5c);
-    dst = (unsigned char *)(g_scaledInit_00542044 * 4);
+    g_currentNodeIdx = *(unsigned int *)(src + 0x5c);
+    dst = (unsigned char *)(g_currentNodeIdx * 4);
     v = *(unsigned int *)(src + 0x3c);
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(dst + 0x30) = v;

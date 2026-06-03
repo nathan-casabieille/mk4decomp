@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -123,20 +123,20 @@ extern unsigned int g_arr_476f30_disp_38;
 
 void ChainSlotSetupInstallSelf(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, [eax*4 + g_arr_476f30_disp_20]
         or      edx, 4
         mov     [eax*4 + g_arr_476f30_disp_20], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 0
         mov     [eax*4 + g_arr_476f30_disp_30], 0
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     [edx*4 + g_arr_476f30_disp_34], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     [eax*4 + g_arr_476f30_disp_38], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, [edx*4 + g_arr_476f30_disp_0c]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax

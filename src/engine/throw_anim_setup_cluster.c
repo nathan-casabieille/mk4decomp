@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -165,11 +165,11 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy(void) {
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -189,7 +189,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy(void) {
         test    eax, eax
         _emit   75h
         _emit   69h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         test    eax, eax
         mov     dword ptr [g_eventQueueEnd], eax
         _emit   75h
@@ -199,7 +199,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy(void) {
         push    offset ThrowAnimSetupCluster + 0x10
         call    StoreTwoCall
         mov     eax, dword ptr [g_baseSel]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         add     esp, 8
         mov     eax, dword ptr [eax*4 + 0x3c]
         mov     dword ptr [g_xformEntityIdx], eax

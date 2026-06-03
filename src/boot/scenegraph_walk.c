@@ -5,11 +5,11 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0041f7d0 (61b)
  *   walk a fixed-stride scenegraph chain from 0x0053e368 to 0x00541d68 step 0xe8;
- *   for each entry whose [+0xd8] != 0, set g_scaledInit_00542044 to (esi >> 2)
+ *   for each entry whose [+0xd8] != 0, set g_currentNodeIdx to (esi >> 2)
  *   and call F if it differs from g_baseSel.
  */
 extern void NodeUnlink(void *p);
@@ -20,7 +20,7 @@ void ScenegraphWalk(void) {
         unsigned int v;
         if (((ScenegraphNode *)p)->ptr_field == 0) goto advance;
         v = (unsigned int)((int)(unsigned int)p >> 2);
-        g_scaledInit_00542044 = v;
+        g_currentNodeIdx = v;
         if (v == g_baseSel) goto advance;
         NodeUnlink(p);
     advance:

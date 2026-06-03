@@ -4,7 +4,7 @@
  * Pattern:
  *   mov     eax, [g_fightGroupHead]
  *   mov     eax, [eax*4 + 0x24]
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   mov     ecx, [eax*4 + 4]
  *   dec     ecx
  *   mov     [g_walkCallback], ecx
@@ -17,7 +17,7 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 extern void ScaledArrStore_EsiInstallBitCallChain_004293b0(void);
 extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429960(void);
@@ -25,7 +25,7 @@ extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429960(void);
 /* @addr 0x00429470 */
 void ScaledChainJmp_00429470(void) {
     unsigned int p = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
-    g_scaledInit_00542044 = p;
+    g_currentNodeIdx = p;
     g_walkCallback = (void (*)(void))(*(unsigned int *)(p * 4 + 4) - 1);
     ScaledArrStore_EsiInstallBitCallChain_004293b0();
 }
@@ -33,7 +33,7 @@ void ScaledChainJmp_00429470(void) {
 /* @addr 0x004298e0 */
 void ScaledChainJmp_004298e0(void) {
     unsigned int p = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
-    g_scaledInit_00542044 = p;
+    g_currentNodeIdx = p;
     g_walkCallback = (void (*)(void))(*(unsigned int *)(p * 4 + 4) - 1);
     ScaledArrStore_GuardedChainCmpDualBitXor_00429960();
 }

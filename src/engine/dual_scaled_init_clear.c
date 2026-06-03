@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00433c10 (74b)
  *   Dual scaled-init helper: stores 0x53a1a0>>2 into g_scaledInit
@@ -23,12 +23,12 @@ __declspec(naked) void DualScaledInitClear(void) {
         shr     eax, 2
         shr     ecx, 2
         cmp     edx, esi
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], ecx
         _emit   74h
         _emit   07h
         mov     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [eax*4 + 0], 0
         pop     esi

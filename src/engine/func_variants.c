@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00428390 (19b naked): Block B - reached only via external
  * jmp from a different call site. Uses _emit jne for the back-jump

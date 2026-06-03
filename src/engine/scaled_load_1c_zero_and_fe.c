@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_phaseTimer;
 
 /* @addr 0x00446640 (61b)
@@ -13,9 +13,9 @@ extern unsigned int g_phaseTimer;
  *   xor     ecx, ecx
  *   mov     eax, [eax*4 + 0x30]
  *   mov     [g_walkCallback], ecx
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   mov     [eax*4 + 0x1c], ecx
- *   mov     ecx, [g_scaledInit_00542044]
+ *   mov     ecx, [g_currentNodeIdx]
  *   mov     eax, [ecx*4 + 0x20]
  *   and     ah, 0xfe
  *   mov     [g_walkCallback], eax
@@ -27,9 +27,9 @@ void ScaledLoad1cZeroAndFE(void) {
     unsigned int v;
     s = *(unsigned int *)(g_baseSel * 4 + 0x30);
     g_walkCallback = 0;
-    g_scaledInit_00542044 = s;
+    g_currentNodeIdx = s;
     ((ScenegraphNode *)(s * 4))->alloc_flags = 0;
-    s = g_scaledInit_00542044;
+    s = g_currentNodeIdx;
     v = ((ScenegraphNode *)(s * 4))->flags & 0xFFFFFEFFu;
     g_walkCallback = (void(*)(void))v;
     ((ScenegraphNode *)(s * 4))->flags = v;

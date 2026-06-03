@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -113,13 +113,13 @@ extern unsigned int g_fightAxisPosY;
 void PushChainAddCallPop(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [ecx*4 + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x44]
         mov     dword ptr [g_walkCallback], eax
         mov     edx, dword ptr [ecx*4 + 0x4c]
@@ -130,13 +130,13 @@ void PushChainAddCallPop(void) {
         test    eax, eax
         _emit   75h
         _emit   2ah
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x44], eax
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

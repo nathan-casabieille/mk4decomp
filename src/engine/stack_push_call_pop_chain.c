@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -125,16 +125,16 @@ void StackPushCallPopChain(void) {
     int r;
     unsigned int slot;
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
     diff = (int)g_throwEventTime - (int)g_pendingMatchVar3;
     g_walkCallback = (void (*)(void))diff;
     r = ((int (*)(int))WorldCellSetupCluster)(diff);
     slot = g_dispatchCopyField;
     g_walkCallback = (void (*)(void))r;
-    g_scaledInit_00542044 = slot;
+    g_currentNodeIdx = slot;
     *(unsigned int *)(slot * 4 + 0x64) = r;
     ThrowEventCluster();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = *(unsigned int *)(g_matrixStackTop * 4);
+    g_currentNodeIdx = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
 }

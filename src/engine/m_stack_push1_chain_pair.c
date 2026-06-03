@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -152,12 +152,12 @@ void MStackPush1ChainPair(void) {
         mov     eax, dword ptr [ecx*4 + 0]
         inc     ecx
         mov     dword ptr [g_cj_00542058], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         shl     eax, 0x10
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x54], eax
         mov     ecx, dword ptr [g_cj_00542058]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [ecx*4 + 0]
         inc     ecx
         shl     eax, 0x10
@@ -168,7 +168,7 @@ void MStackPush1ChainPair(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_cj_00542058], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x5c], ecx
         mov     eax, dword ptr [g_matrixStackTop]

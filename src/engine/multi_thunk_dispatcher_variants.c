@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -214,16 +214,16 @@ __declspec(naked) void MultiThunkDispatcher_MStackCall(void) {
         push    ecx
         push    0x3333
         call    Mul10Tail
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_xformScratch2088], eax
         mov     eax, dword ptr [g_currentNodeFlags]
         add     esp, 8
         mov     dword ptr [edx*4 + 0x6c], eax
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_xformScratch2088]
         push    0x004f20b0
         mov     dword ptr [ecx*4 + 0x74], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_cj_0054205c], eax
         call    ArgSar_Set0_Jmp
         add     esp, 4

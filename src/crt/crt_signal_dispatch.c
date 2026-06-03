@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004c9750 (77b)
  *   CRT signal/setjmp dispatch: arg = -2 → IAT[0x4d2118],

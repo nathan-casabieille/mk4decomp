@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -128,7 +128,7 @@ __declspec(naked) void MStackCjChainSwapDualCall(void) {
         mov     [eax*4 + g_matrixStack_arr], ecx
         mov     edx, dword ptr [g_baseSel]
         mov     eax, dword ptr [edx*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x54]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x5c]
@@ -139,7 +139,7 @@ __declspec(naked) void MStackCjChainSwapDualCall(void) {
         mov     ecx, dword ptr [ecx*4 + 0x5c]
         mov     dword ptr [g_acc_00542078], ecx
         mov     dword ptr [eax*4 + 0x54], edx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_acc_00542078]
         mov     dword ptr [edx*4 + 0x5c], eax
         mov     ecx, dword ptr [g_cj_0054205c]

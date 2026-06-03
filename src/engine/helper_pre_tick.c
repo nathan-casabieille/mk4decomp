@@ -13,7 +13,7 @@
  *   ecx = [0x52ab10] + 0x15 (packed_ptr ofs); g_xformEntityIdx = ecx;
  *   [0xab4d18..0x20] = chain[ecx+0..+8]; [0xab4e24] = chain[ecx+0x58].
  */
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_dispatchSave1551;
 extern unsigned int g_dispatchSave1552;
@@ -31,7 +31,7 @@ void Helper_PreTick(void) {
         mov     eax, 0x00ab4878
         sar     eax, 2
         add     ecx, 0x18
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], ecx
         call    NodeApplyTransform_C
         mov     eax, dword ptr [g_framePauseFlag]

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -124,16 +124,16 @@ extern unsigned int g_load_0052ab10;
 
 void ChainInitDoublePushCall(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [eax*4 + 0x54], 0
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     [edx*4 + 0x58], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_walkCallback]
         mov     [ecx*4 + 0x5c], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 9
         mov     dword ptr [g_walkCallback], eax
         mov     [edx*4 + 0x30], eax
@@ -142,20 +142,20 @@ void ChainInitDoublePushCall(void) {
         test    eax, eax
         _emit   75h
         _emit   52h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, 0x0000e666
         mov     dword ptr [g_fightGroupHead], eax
         mov     eax, dword ptr [g_particleEmitterNode]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 0x3c], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         push    0x004f3030
         push    ecx
         call    Title_PressStartScreen
         mov     eax, dword ptr [g_load_0052ab10]
         add     esp, 8
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         push    0x004f3040
         push    eax
         call    Title_PressStartScreen

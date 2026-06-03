@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -121,7 +121,7 @@ extern unsigned int g_matrixStack_arr;
 
 void ChainNodeInit(void) {
     __asm {
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         test    ecx, ecx
         lea     eax, [ecx*4 + g_matrixStack_arr]
         _emit   0fh
@@ -135,21 +135,21 @@ void ChainNodeInit(void) {
         inc     ecx
         mov     dword ptr [g_matrixStackTop], ecx
         mov     [ecx*4 + g_matrixStack_arr], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x84], 0
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     [edx*4 + 8], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, [edx*4 + 8]
         mov     [eax + 0xd8], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, 1
         mov     dword ptr [g_walkCallback], ecx
         mov     [edx*4 + 0x10], ecx
         mov     cx, word ptr [g_walkCallback]
         mov     word ptr [eax + 0xdc], cx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         lea     ecx, [eax + 0x22]
         mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 4], ecx

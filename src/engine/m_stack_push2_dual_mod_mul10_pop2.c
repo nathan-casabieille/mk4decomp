@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -137,11 +137,11 @@ __declspec(naked) void StoreTailJmpSigned(void) {
         push    0x004109b0
         mov     dword ptr [g_eventQueueIdx], eax
         call    StoreTwoCall
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_load_0052ab10]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_baseSel], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + 0x64]
         neg     ecx
         mov     dword ptr [g_walkCallback], ecx
@@ -173,7 +173,7 @@ __declspec(naked) void StoreTailJmpSigned(void) {
         mov     eax, dword ptr [g_pendingNodeType]
         add     edx, 0x0c
         add     ecx, 9
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_pendingNodeType], ecx
         jmp     QuadInterpolator

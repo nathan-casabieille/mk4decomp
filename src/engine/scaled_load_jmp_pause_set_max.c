@@ -5,13 +5,13 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_phaseTimer;
 
 /* @addr 0x00446880 (62b)
  *   mov     eax, [g_baseSel]
  *   mov     ecx, [eax*4 + 0x4c]
- *   mov     [g_scaledInit_00542044], ecx
+ *   mov     [g_currentNodeIdx], ecx
  *   jmp     T
  *   nop * 9
  *   call    F
@@ -29,7 +29,7 @@ extern void Cmp2OrSet0b(void);
  * tail-jmp MStackCall_MStackPush2ChainPrepend_00406340. Entry B (sub-entry at +0x20) lives in
  * func_004468a0. The 9-byte nop gap is filled by 0x90-fill. */
 void ScaledLoadJmpPauseSetMax(void) {
-    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel * 4 + 0x4c);
+    g_currentNodeIdx = *(unsigned int *)(g_baseSel * 4 + 0x4c);
     MStackCall_MStackPush2ChainPrepend_00406340();
 }
 

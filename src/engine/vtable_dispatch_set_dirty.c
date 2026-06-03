@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -135,13 +135,13 @@ void VtableDispatchSetDirty(void) {
         sar     ecx, 2
         add     eax, ecx
         mov     ecx, offset g_dispatchSave1525
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     edx, 0x0f
         mov     eax, [eax*4 + g_arr_4ba040]
         mov     dword ptr [g_xformEntityIdx], edx
         sar     ecx, 2
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_pendingNodeType], ecx
         call    eax
         mov     eax, dword ptr [g_framePauseFlag]

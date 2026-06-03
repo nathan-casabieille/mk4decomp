@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -121,7 +121,7 @@ void DualPushCallBitDispatch(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
@@ -134,7 +134,7 @@ void DualPushCallBitDispatch(void) {
         mov     ecx, 4
         or      eax, ecx
         mov     dword ptr [g_xformDirtyFlags], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         test    eax, eax
         _emit   74h
         _emit   20h
@@ -152,7 +152,7 @@ void DualPushCallBitDispatch(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax

@@ -19,7 +19,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 extern void TierBranchChain(void);
 extern void MStackPush3TripleMul10WithAbs(void);
@@ -36,7 +36,7 @@ void CopyCallPauseJmp_TierBranchChain_then_MStackPush3TripleMul10WithAbs(void) {
 
 /* @addr 0x004a19a0 */
 void CopyCallPauseJmp_MStackPush2ChainLLInsert_then_StackPopDispatchTagged(void) {
-    g_scaledInit_00542044 = g_fightGroupHead;
+    g_currentNodeIdx = g_fightGroupHead;
     MStackPush2ChainLLInsert();
     if (g_framePauseFlag) return;
     StackPopDispatchTagged();

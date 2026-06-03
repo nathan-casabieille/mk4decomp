@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00413560 (19b): push 0x8e; push DATA_PTR; call F; add esp,8; ret */
 extern void *g_dispatchSave1133;

@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00489e90 (70b)
  *   copy g_scaledInit → g_pendingNodeType; load g_primary_0052d74c;
@@ -18,7 +18,7 @@ extern void DualSubFromField(void);
 extern void DualSubFromField(void);
 void ScaledStateNegCallPauseLoad(void) {
     int v;
-    g_pendingNodeType = g_scaledInit_00542044;
+    g_pendingNodeType = g_currentNodeIdx;
     v = (int)g_primary_0052d74c;
     g_walkCallback = (void (*)(void))v;
     if (v < 0) {

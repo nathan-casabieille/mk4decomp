@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -125,7 +125,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush(void) {
         neg     eax
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     eax, dword ptr [ecx*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_eventQueueWorkType], eax
         and     eax, 1

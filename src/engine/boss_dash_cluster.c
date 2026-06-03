@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -160,7 +160,7 @@ __declspec(naked) void InstallSelfMStackIndirect(void) {
         ret
         mov     edx, dword ptr [g_baseSel]
         mov     ecx, [edx*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     ecx, [ecx*4 + 0x74]
         cmp     ecx, eax
         mov     dword ptr [g_walkCallback], ecx

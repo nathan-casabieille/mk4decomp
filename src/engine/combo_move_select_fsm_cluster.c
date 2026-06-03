@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -199,7 +199,7 @@ __declspec(naked) void DualEntryStateMachine(void) {
         pop     esi
         ret
         mov     ecx, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         lea     eax, [ecx + 1]
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     ecx, dword ptr [edx*4 + 4]

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -141,7 +141,7 @@ __declspec(naked) void FourCallBitGateChain(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     ecx, dword ptr [eax*4 + 4]
@@ -158,7 +158,7 @@ __declspec(naked) void FourCallBitGateChain(void) {
         test    byte ptr [g_xformDirtyFlags], bl
         _emit   75h
         _emit   68h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_pendingNodeType], edx
         mov     ecx, dword ptr [eax*4 + 8]
@@ -171,7 +171,7 @@ __declspec(naked) void FourCallBitGateChain(void) {
         test    byte ptr [g_xformDirtyFlags], bl
         _emit   75h
         _emit   34h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_eventQueueTotal], edx
         mov     ecx, dword ptr [eax*4 + 0x0c]
@@ -190,7 +190,7 @@ __declspec(naked) void FourCallBitGateChain(void) {
         pop     ebx
         ret
         mov     eax, dword ptr [g_xformDirtyFlags]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         or      al, 1
         mov     dword ptr [g_eventQueueEnd], edx
         mov     dword ptr [g_xformDirtyFlags], eax

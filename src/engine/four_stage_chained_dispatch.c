@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -134,7 +134,7 @@ __declspec(naked) void FourStageChainedDispatch(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, [eax*4 + g_chain_arr_4348f0 + 0x24]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    DispatcherComplex260_FramePauseScaledStore
@@ -145,14 +145,14 @@ __declspec(naked) void FourStageChainedDispatch(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   59h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, 1
         mov     dword ptr [g_cj_0054205c], eax
         mov     eax, [eax*4 + g_chain_arr_4348f0 + 0x18]
         mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + g_chain_arr_4348f0 + 0x30], ecx
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    GDispatch4
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

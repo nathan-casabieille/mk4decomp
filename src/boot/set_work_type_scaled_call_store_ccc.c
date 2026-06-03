@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0041aa80 (70b)
  *   set workType = 2; pendingNodeType = 0x4d7b28>>2; call F;

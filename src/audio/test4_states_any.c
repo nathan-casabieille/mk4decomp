@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004a1d20 (45b)
  *   mov     eax, [0x004d50b4]

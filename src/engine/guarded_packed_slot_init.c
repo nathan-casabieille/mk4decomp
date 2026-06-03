@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00428760 (79b)
  *   call F1; if !pause: load arg0>>2 → g_eventQueueTotal;
@@ -21,7 +21,7 @@ void GuardedPackedSlotInit(int arg0) {
     g_eventQueueTotal = packed;
     v = *(unsigned int *)(packed * 4);
     g_eventQueueTotal = packed + 1;
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = v;
     g_walkCallback = (void (*)(void))0;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = 0;

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -140,7 +140,7 @@ __declspec(naked) void MStackPush2DispatchChain(void) {
         _emit   75h
         _emit   50h
         mov     eax, dword ptr [g_xformEntityIdx]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_pendingNodeType], eax
         mov     edx, [ecx*4 + g_chain_disp_24_4096b0]
         mov     dword ptr [g_xformEntityIdx], edx

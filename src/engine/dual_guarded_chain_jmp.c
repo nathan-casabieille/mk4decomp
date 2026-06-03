@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -124,9 +124,9 @@ void DualGuardedChainJmp(void) {
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag != 0) return;
     idx = ((ScenegraphNode *)(g_cj_0054205c * 4))->child_chain;
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     idx = ((ScenegraphNode *)(idx * 4))->queue_idx;
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     g_walkCallback = (void (*)(void))((ScenegraphNode *)(idx * 4))->child_a;
     g_eventQueueCurrent = ((ScenegraphNode *)(idx * 4))->child_c;
     MStackBracketed3StoreCall();

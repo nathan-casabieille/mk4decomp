@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -130,7 +130,7 @@ __declspec(naked) void LazyAllocOrPush(void) {
         add     edx, 0x15
         lea     ecx, [eax + 0x18]
         add     eax, 0x15
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_pendingNodeType], eax
         jmp     PushStackAllocCall

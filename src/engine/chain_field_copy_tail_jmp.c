@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -135,7 +135,7 @@ __declspec(naked) void ChainFieldCopyTailJmp(void) {
         _emit   01h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x24]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    MStackPushDispatchBitGate
@@ -204,13 +204,13 @@ __declspec(naked) void ChainFieldCopyTailJmp(void) {
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [edx*4 + 0x3c], ecx
         mov     eax, dword ptr [eax + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [eax*4 + 0x30], 0
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x34], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x38], edx
         jmp     SetupVecFsmCluster

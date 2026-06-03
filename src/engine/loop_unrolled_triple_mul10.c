@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0049d550 (299b game) - linked-list walk: 2 unrolled iterations with triple Mul10Tail per node.
- *   Init: g_eventQueueCurrent=eax=g_scaledInit_00542044; if zero ret.
+ *   Init: g_eventQueueCurrent=eax=g_currentNodeIdx; if zero ret.
  *   Each iteration: esi=eax*4 (node), edi=ecx*4 (chain ptr, ecx=g_xformEntityIdx).
  *     mul10[node+0x10] with [chain*4]; mul10[node+0x14] with [chain+4]; mul10[node+0x18] with [chain+8].
  *     Advance scaledInit via [scaledInit*4]; if zero ret.
@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
 
 __declspec(naked) void LoopUnrolledTripleMul10(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         test    eax, eax
         push    edi
@@ -159,11 +159,11 @@ __declspec(naked) void LoopUnrolledTripleMul10(void) {
         call    Mul10Tail
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi + 0x18], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         add     esp, 8
         mov     eax, dword ptr [edx*4 + 0]
         test    eax, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   0fh
         _emit   84h
         _emit   8ah
@@ -199,11 +199,11 @@ __declspec(naked) void LoopUnrolledTripleMul10(void) {
         call    Mul10Tail
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi + 0x18], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         add     esp, 8
         mov     eax, dword ptr [edx*4 + 0]
         test    eax, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   0fh
         _emit   85h
         _emit   76h

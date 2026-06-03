@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -125,7 +125,7 @@ __declspec(naked) void TripleStageRollback(void) {
         push    ecx
         mov     eax, dword ptr [g_pendingNodeType]
         push    ebx
-        mov     ebx, dword ptr [g_scaledInit_00542044]
+        mov     ebx, dword ptr [g_currentNodeIdx]
         push    ebp
         mov     ebp, dword ptr [g_eventQueueCurrent]
         push    esi
@@ -143,7 +143,7 @@ __declspec(naked) void TripleStageRollback(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   74h
         _emit   3ah
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_pendingNodeType], ecx
         call    Thunk_LoadShlDerefCallSkip
         mov     eax, dword ptr [g_framePauseFlag]
@@ -164,7 +164,7 @@ __declspec(naked) void TripleStageRollback(void) {
         pop     ecx
         ret
         mov     edx, dword ptr [esp + 0x10]
-        mov     dword ptr [g_scaledInit_00542044], ebx
+        mov     dword ptr [g_currentNodeIdx], ebx
         mov     dword ptr [g_pendingNodeType], edx
         mov     dword ptr [g_eventQueueCurrent], ebp
         pop     edi

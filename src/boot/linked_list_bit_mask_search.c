@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -144,7 +144,7 @@ void LinkedListBitMaskSearch(void) {
         _emit   1ah
         mov     eax, ecx
         sar     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, [eax*4 + 0x0c]
         cmp     eax, edx
         mov     dword ptr [g_eventQueueWorkType], eax
@@ -156,7 +156,7 @@ void LinkedListBitMaskSearch(void) {
         _emit   0d2h
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_xformDirtyFlags]
-        mov     dword ptr [g_scaledInit_00542044], 0
+        mov     dword ptr [g_currentNodeIdx], 0
         and     edx, 0xfffffffe
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax

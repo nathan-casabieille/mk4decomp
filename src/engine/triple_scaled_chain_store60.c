@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -116,19 +116,19 @@ void TripleScaledChainStore60(int arg) {
     unsigned int v;
     idx = (unsigned int)(arg >> 2);
     g_cj_0054205c = cj;
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     v = *(unsigned int *)(idx * 4);
     g_walkCallback = (void (*)(void))v;
-    g_scaledInit_00542044 = idx + 1;
+    g_currentNodeIdx = idx + 1;
     *(unsigned int *)(cj * 4 + 0x60) = v;
-    idx = g_scaledInit_00542044;
+    idx = g_currentNodeIdx;
     v = *(unsigned int *)(idx * 4);
     g_walkCallback = (void (*)(void))v;
-    g_scaledInit_00542044 = idx + 1;
+    g_currentNodeIdx = idx + 1;
     *(unsigned int *)(g_cj_0054205c * 4 + 0x64) = v;
-    idx = g_scaledInit_00542044;
+    idx = g_currentNodeIdx;
     v = *(unsigned int *)(idx * 4);
     g_walkCallback = (void (*)(void))v;
-    g_scaledInit_00542044 = idx + 1;
+    g_currentNodeIdx = idx + 1;
     *(unsigned int *)(g_cj_0054205c * 4 + 0x68) = v;
 }

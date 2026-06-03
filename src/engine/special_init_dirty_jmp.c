@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00446000 (61b)
  *   set g_xformEntityIdx = 0x51140c >> 2; call F; pause → ret;
@@ -23,6 +23,6 @@ void SpecialInitDirtyJmp(void) {
     if ((g_xformDirtyFlags & 4) != 0) {
         return;
     }
-    *(unsigned int *)(g_baseSel * 4 + 0x5c) = g_scaledInit_00542044;
+    *(unsigned int *)(g_baseSel * 4 + 0x5c) = g_currentNodeIdx;
     ScaledTestPauseStore();
 }

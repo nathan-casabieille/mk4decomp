@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00439c40 (29b): same as above but mask=1, jne */
 extern void CmpEqWalkSetCallToggleDirty(void);

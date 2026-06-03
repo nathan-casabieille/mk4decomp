@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -120,7 +120,7 @@ void InitSlotsWithTag(void) {
     unsigned int idx;
     idx = *(unsigned int *)(g_baseSel * 4 + 0x30);
     g_walkCallback = 0;
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     idx <<= 2;
     *(unsigned int *)(idx + 0x30) = 0;
     *(unsigned int *)(idx + 0x34) = (unsigned int)g_walkCallback;

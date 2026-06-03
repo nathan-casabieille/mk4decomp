@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -129,12 +129,12 @@ __declspec(naked) void TripleBlockInstallSelfThunk(void) {
         push    0x30
         push    offset tail_a00
         call    StoreTwoCall
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         xor     eax, eax
         mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x1c], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x20], edx
         mov     eax, 1

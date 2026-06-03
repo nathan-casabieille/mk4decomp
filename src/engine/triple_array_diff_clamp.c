@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -160,13 +160,13 @@ loop_004251fd:
         _emit   07h
         add     eax, ecx
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     edx
         dec     esi
         dec     edi
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         jne     loop_004251fd
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [g_pendingNodeType]
@@ -176,7 +176,7 @@ loop_004251fd:
         sub     eax, 3
         pop     edi
         pop     esi
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_pendingNodeType], eax
         pop     ebx

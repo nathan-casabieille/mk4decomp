@@ -5,10 +5,10 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048ee90 (39b)
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   mov     ecx, [eax*4 + 0x48]
  *   mov     [g_walkCallback], ecx
  *   mov     eax, [eax*4 + 0x58]
@@ -20,7 +20,7 @@ extern unsigned int g_scaledInit_00542044;
 
 void ScaledSubStore(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x48]
         mov     dword ptr [g_walkCallback], ecx
         mov     eax, dword ptr [eax*4 + 0x58]

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00428bd0 (77b)
  *   call F1; pause → ret;
@@ -19,7 +19,7 @@ void GuardedClampStoreJmp(void) {
     CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
     if (g_framePauseFlag) return;
     scaled = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
-    g_scaledInit_00542044 = scaled;
+    g_currentNodeIdx = scaled;
     walk = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx;
     g_walkCallback = (void (*)(void))walk;
     scaled = *(unsigned int *)(scaled * 4 + 4);

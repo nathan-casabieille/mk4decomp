@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -140,7 +140,7 @@ void FramePauseScaledStore(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     [ecx*4 + 0x24], eax
         mov     eax, dword ptr [g_xformEntityIdx]
@@ -151,7 +151,7 @@ void FramePauseScaledStore(void) {
         mov     dword ptr [g_matrixStackTop], ecx
         mov     [ecx*4 + g_matrixStack_arr], eax
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         sar     eax, 0x14
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x1c], eax
@@ -160,12 +160,12 @@ void FramePauseScaledStore(void) {
         dec     ecx
         and     eax, 0x000fffff
         mov     dword ptr [g_matrixStackTop], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         or      eax, 0x08000000
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x20], eax
         mov     ecx, dword ptr [g_xformDirtyFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         or      ecx, edx
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], ecx

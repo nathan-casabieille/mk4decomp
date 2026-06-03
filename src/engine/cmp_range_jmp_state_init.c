@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00436250 (85b)
  *   load g_table_00535ddc; if <= 0x30000 jmp T1 else jmp T2;

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -122,7 +122,7 @@ void GatedDoubleSetupJmp(void) {
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueWorkType;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_cj_0054205c;
-    _set_eqwt(g_scaledInit_00542044);
+    _set_eqwt(g_currentNodeIdx);
     _set_x74(g_walkCallback);
     _set_wc(((unsigned int)&g_dispatchSave1179) >> 2);
     BootChainBuildAndStep();

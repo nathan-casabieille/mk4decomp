@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -128,10 +128,10 @@ void EsiInstallSetCbChainExtend_0048a810(void) {
     ((ScenegraphNode *)(g_baseSel * 4))->install_flag = 1;
     {
         unsigned int t = *(unsigned int *)(base + 4);
-        g_scaledInit_00542044 = t;
+        g_currentNodeIdx = t;
         *(unsigned int *)(t * 4) = (unsigned int)&EsiInstallSetCbChainExtend_0048a810 + 0x01000000;
-        g_scaledInit_00542044 = g_scaledInit_00542044 + 1;
-        *(unsigned int *)(base + 4) = g_scaledInit_00542044;
+        g_currentNodeIdx = g_currentNodeIdx + 1;
+        *(unsigned int *)(base + 4) = g_currentNodeIdx;
     }
     ((ScenegraphNode *)(g_baseSel * 4))->install_flag = 0;
     SetJmp_Phase3InstallTableCheck();
@@ -155,10 +155,10 @@ void EsiInstallSetCbChainExtend_0048a8c0(void) {
     ((ScenegraphNode *)(g_baseSel * 4))->install_flag = 1;
     {
         unsigned int t = *(unsigned int *)(base + 4);
-        g_scaledInit_00542044 = t;
+        g_currentNodeIdx = t;
         *(unsigned int *)(t * 4) = (unsigned int)&EsiInstallSetCbChainExtend_0048a8c0 + 0x01000000;
-        g_scaledInit_00542044 = g_scaledInit_00542044 + 1;
-        *(unsigned int *)(base + 4) = g_scaledInit_00542044;
+        g_currentNodeIdx = g_currentNodeIdx + 1;
+        *(unsigned int *)(base + 4) = g_currentNodeIdx;
     }
     ((ScenegraphNode *)(g_baseSel * 4))->install_flag = 0;
     SetJmp_Phase3InstallTableCheck();
@@ -182,10 +182,10 @@ void EsiInstallSetCbChainExtend_0048a970(void) {
     ((ScenegraphNode *)(g_baseSel * 4))->install_flag = 1;
     {
         unsigned int t = *(unsigned int *)(base + 4);
-        g_scaledInit_00542044 = t;
+        g_currentNodeIdx = t;
         *(unsigned int *)(t * 4) = (unsigned int)&EsiInstallSetCbChainExtend_0048a970 + 0x01000000;
-        g_scaledInit_00542044 = g_scaledInit_00542044 + 1;
-        *(unsigned int *)(base + 4) = g_scaledInit_00542044;
+        g_currentNodeIdx = g_currentNodeIdx + 1;
+        *(unsigned int *)(base + 4) = g_currentNodeIdx;
     }
     ((ScenegraphNode *)(g_baseSel * 4))->install_flag = 0;
     SetJmp_Phase3InstallTableCheck();

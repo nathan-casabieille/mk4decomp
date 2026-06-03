@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -127,7 +127,7 @@ __declspec(naked) void Vec3AddViaHelper(void) {
     __asm {
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     edx, dword ptr [g_pendingNodeType]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    ebx
         push    esi
         push    edi

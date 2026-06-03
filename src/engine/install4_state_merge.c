@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -162,7 +162,7 @@ __declspec(naked) void Install4StateMerge(void) {
         mov     edx, offset Install4StateMerge
         mov     dword ptr [ecx*4 + 0x84], 3
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     edx, 0x03000000
         _emit   0e9h
         _emit   84h
@@ -183,7 +183,7 @@ __declspec(naked) void Install4StateMerge(void) {
         mov     edx, offset Install4StateMerge
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     edx, 0x02000000
         _emit   0ebh
         _emit   3ch
@@ -199,12 +199,12 @@ __declspec(naked) void Install4StateMerge(void) {
         mov     edx, offset Install4StateMerge
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     edx, 0x01000000
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edi

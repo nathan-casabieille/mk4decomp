@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -126,7 +126,7 @@ __declspec(naked) void DispatchThroughBaseSel6c(void) {
         test    eax, eax
         jne     done
         mov     edx, dword ptr [g_xformDirtyFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         and     edx, 0xfffffffe
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_xformDirtyFlags], edx
@@ -136,14 +136,14 @@ __declspec(naked) void DispatchThroughBaseSel6c(void) {
         je      done
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, 0x0048ed70
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], 0x0048ede0
         mov     eax, dword ptr [eax*4 + 0x6c]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         jne     gotIt
         mov     ecx, 0x0048ede0
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
 gotIt:
         jmp     ecx
 done:

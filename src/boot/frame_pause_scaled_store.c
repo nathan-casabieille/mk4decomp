@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -162,7 +162,7 @@ walkNext:
         _emit   0ah
         mov     eax, 0xffff6667
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     [edx*4 + g_chain_disp_38_49b7c0], eax
         jmp     MStackPush2ChainPrepend
         ret

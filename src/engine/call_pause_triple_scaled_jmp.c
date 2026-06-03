@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_acc_00542078;
 
 /* @addr 0x0046c520 (51b)
@@ -14,11 +14,11 @@ extern unsigned int g_acc_00542078;
  *   test    eax, eax
  *   jne     +0x24
  *   mov     eax, [g_eventQueueNotMask]
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   mov     eax, [eax*4 + 0x0c]
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   mov     eax, [eax*4 + 0]
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   jmp     eax
  *   ret
  */
@@ -28,10 +28,10 @@ void CallPauseTripleScaledJmp(void) {
     MStackBitFlagDispatch();
     if (g_framePauseFlag) return;
     v = g_eventQueueNotMask;
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     v = ((ScenegraphNode *)(v * 4))->alloc_work_type;
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     v = *(unsigned int *)(v * 4);
-    g_scaledInit_00542044 = v;
+    g_currentNodeIdx = v;
     ((void (*)(void))v)();
 }

@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004c6510 (45b)
  *   call F; mul-by-N pattern via lea/shl on [eax + 0x14];
@@ -49,7 +49,7 @@ void TableWalkBoundedCmp(int arg) {
     unsigned int *p = g_table_004ab4e78_ee;
     do {
         unsigned int v = *p;
-        g_scaledInit_00542044 = v;
+        g_currentNodeIdx = v;
         if ((int)v > 0) {
             unsigned int slot = *(unsigned int *)(v * 4);
             unsigned int w = (unsigned int)*(unsigned short *)(slot + 4);

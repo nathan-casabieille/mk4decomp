@@ -5,10 +5,10 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00405880 (49b)
- *   mov     ecx, [g_scaledInit_00542044]
+ *   mov     ecx, [g_currentNodeIdx]
  *   mov     edx, [g_walkCallback]
  *   mov     [g_eventQueueCurrent], 0xfffffff0
  *   mov     eax, [ecx*4 + 0x20]
@@ -19,7 +19,7 @@ extern unsigned int g_scaledInit_00542044;
  *   ret
  */
 void ScaledMaskOrStore(void) {
-    unsigned int idx = g_scaledInit_00542044;
+    unsigned int idx = g_currentNodeIdx;
     unsigned int walk = (unsigned int)g_walkCallback;
     unsigned int v;
     g_eventQueueCurrent = 0xf0ffffff;

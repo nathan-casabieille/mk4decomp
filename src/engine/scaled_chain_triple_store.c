@@ -8,16 +8,16 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004465c0 (56b)
  *   mov     eax, [g_baseSel]
  *   mov     ecx, [eax*4 + 0x60]
- *   mov     [g_scaledInit_00542044], ecx
+ *   mov     [g_currentNodeIdx], ecx
  *   mov     eax, [eax*4 + 0x4c]
  *   mov     [g_xformEntityIdx], eax
  *   mov     [ecx*4 + 0x18], eax
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   mov     ecx, [g_xformEntityIdx]
  *   mov     [eax*4 + 0x18], ecx
  *   ret
@@ -26,9 +26,9 @@ void ScaledChainTripleStore(void) {
     unsigned int base = g_baseSel;
     unsigned int s = *(unsigned int *)(base * 4 + 0x60);
     unsigned int e;
-    g_scaledInit_00542044 = s;
+    g_currentNodeIdx = s;
     e = *(unsigned int *)(base * 4 + 0x4c);
     g_xformEntityIdx = e;
     ((ScenegraphNode *)(e * 4))->child_chain = s;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->child_chain = g_xformEntityIdx;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->child_chain = g_xformEntityIdx;
 }

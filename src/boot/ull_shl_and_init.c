@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004c5740 (65b): __aullshl 64-bit shift-left + fnclex init helper
  *   joined with int3 + nop padding. Whole stub is 65b.

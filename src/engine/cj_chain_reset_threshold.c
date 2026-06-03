@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -134,7 +134,7 @@ __declspec(naked) void CjChainResetThreshold(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   19h
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    eax
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   0fh
@@ -164,7 +164,7 @@ __declspec(naked) void CjChainResetThreshold(void) {
         _emit   00h
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [ecx*4 + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_acc_00542078], edx
         mov     edi, dword ptr [ecx*4 + 0x48]
@@ -195,7 +195,7 @@ __declspec(naked) void CjChainResetThreshold(void) {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_eventQueueCurrent], esi
         mov     eax, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x34], esi

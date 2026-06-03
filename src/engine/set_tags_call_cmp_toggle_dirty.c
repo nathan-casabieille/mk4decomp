@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00458c70 (77b)
  *   eventQueueCurrent = walk; pendingNodeType = (0x53a53c >> 2) + 0x3b;

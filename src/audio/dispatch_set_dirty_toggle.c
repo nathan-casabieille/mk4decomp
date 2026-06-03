@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004ac150 (69b)
  *   ecx = g_fightGroupHead; edx = [0x538158]; eax = [0x53a510];

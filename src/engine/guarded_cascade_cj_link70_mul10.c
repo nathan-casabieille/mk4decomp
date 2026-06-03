@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -143,7 +143,7 @@ void GuardedCascadeCjLink70Mul10(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x28f
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x4c], eax
@@ -173,7 +173,7 @@ void GuardedCascadeCjLink70Mul10(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
         mov     dword ptr [g_eventQueueCurrent], ecx
@@ -189,20 +189,20 @@ void GuardedCascadeCjLink70Mul10(void) {
         _emit   75h
         _emit   4ch
         mov     eax, dword ptr [g_baseSel]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [eax*4 + 0x70]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_eventQueueWorkType], 0x3333
         add     ecx, 0x1b
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackPushVec3Mul10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   07h
-        sub     dword ptr [g_scaledInit_00542044], 0x1b
+        sub     dword ptr [g_currentNodeIdx], 0x1b
         }
 }
 

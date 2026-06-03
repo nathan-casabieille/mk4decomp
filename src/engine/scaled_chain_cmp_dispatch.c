@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_phaseTimer;
 
 /* @addr 0x0048e4f0 (84b)
@@ -17,7 +17,7 @@ void ScaledChainCmpDispatch(int arg) {
     unsigned int idx = (unsigned int)(arg >> 2);
     unsigned int walk;
     unsigned int target;
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     walk = ((ScenegraphNode *)(g_baseSel * 4))->state_mask;
     g_walkCallback = (void (*)(void))walk;
     if (walk == 0x10) {
@@ -29,8 +29,8 @@ void ScaledChainCmpDispatch(int arg) {
         g_walkCallback = (void (*)(void))walk;
     }
     idx += walk;
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     target = *(unsigned int *)(idx * 4);
-    g_scaledInit_00542044 = target;
+    g_currentNodeIdx = target;
     ((void (*)(void))target)();
 }

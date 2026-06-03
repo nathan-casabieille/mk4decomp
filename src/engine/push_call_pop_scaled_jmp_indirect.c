@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -122,15 +122,15 @@ void PushCallPopScaledJmpIndirect(void) {
     unsigned int target;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_scaledInit_00542044;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
     Helper_DownloadSetup();
     if (g_framePauseFlag != 0) return;
-    saved_scaled = g_scaledInit_00542044;
+    saved_scaled = g_currentNodeIdx;
     top = g_matrixStackTop;
     g_xformEntityIdx = saved_scaled;
     popped = *(unsigned int *)(top * 4);
     top--;
-    g_scaledInit_00542044 = popped;
+    g_currentNodeIdx = popped;
     g_matrixStackTop = top;
     target = *(unsigned int *)(saved_scaled * 4 + 8);
     g_walkCallback = (void (*)(void))target;

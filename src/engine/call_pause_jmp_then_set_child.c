@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00497b10 (20b): MStackCall + pause-gated tail-jmp to CallSetPause.
  * Entry A of the original 63-byte packed block; entries B (set child=1) and

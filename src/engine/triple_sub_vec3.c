@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern void Mul10Tail(void);
 
 /* @addr 0x004250f0 (61b)
@@ -14,7 +14,7 @@ extern void Mul10Tail(void);
  *   out = [g_currentNodeIdx*4]
  */
 void TripleSubVec3(void) {
-    unsigned int op = g_scaledInit_00542044;
+    unsigned int op = g_currentNodeIdx;
     unsigned int ap = g_xformEntityIdx;
     unsigned int bp = g_pendingNodeType;
     ap <<= 2;

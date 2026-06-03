@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00482eb0 (36b): push F1-arg + call + pause + push F2-arg + call.
  * Entry A of the original 53-byte packed block; the 5-byte tail-jmp

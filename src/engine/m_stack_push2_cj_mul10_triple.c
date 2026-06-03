@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -109,17 +109,17 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00474170 (282b game) - mstack-push pair + 3 Mul10Tail for cj fields.
- *   mstack-push g_scaledInit_00542044 and g_cj_0054205c. g_scaledInit_00542044 = 0x7d.
+ *   mstack-push g_currentNodeIdx and g_cj_0054205c. g_currentNodeIdx = 0x7d.
  *   Call PreFightInstallCluster; if pause? final-ret. If bit2 of g_xformDirtyFlags set? skip 3 Mul10Tails.
  *   For each cj field (+0x6c/+0x70/+0x74): push value + 0x1c000, Mul10Tail, store back.
- *   mstack-pop pair (g_cj_0054205c, g_scaledInit_00542044); ret.
+ *   mstack-pop pair (g_cj_0054205c, g_currentNodeIdx); ret.
  */
 extern void PreFightInstallCluster(void);
 
 void MStackPush2CjMul10Triple(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
@@ -128,7 +128,7 @@ void MStackPush2CjMul10Triple(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     dword ptr [g_scaledInit_00542044], 0x7d
+        mov     dword ptr [g_currentNodeIdx], 0x7d
         call    PreFightInstallCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -182,7 +182,7 @@ void MStackPush2CjMul10Triple(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

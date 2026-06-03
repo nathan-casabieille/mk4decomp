@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -123,7 +123,7 @@ void InstallSelfChainCmpDispatch(void) {
     if (v != 0) {
         cj = g_cj_0054205c;
         new_si = ((ScenegraphNode *)(cj * 4))->queue_end;
-        g_scaledInit_00542044 = new_si;
+        g_currentNodeIdx = new_si;
         cb = ((ScenegraphNode *)(cj * 4))->queue_idx + 1;
         g_walkCallback = (void (*)(void))cb;
         if ((int)cb < (int)(*(unsigned int *)(new_si * 4 + 4))) {

@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004949b0 (55b)
  *   arg sar 2 → g_eventQueueEnd; +3 → g_eventQueueTotal;

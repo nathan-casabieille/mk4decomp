@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -117,7 +117,7 @@ extern s32 g_dlNalt2;
 void DualPushCmp12Dispatch(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
@@ -131,7 +131,7 @@ void DualPushCmp12Dispatch(void) {
         mov     dword ptr [g_eventQueueEnd], eax
         mov     ecx, dword ptr [eax*4 + 0x30]
         cmp     ecx, 1
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   75h
         _emit   07h
         mov     eax, dword ptr [g_dlNalt1]
@@ -150,7 +150,7 @@ void DualPushCmp12Dispatch(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -173,7 +173,7 @@ __declspec(naked) void TripleEntryStateCascade(void) {
         ret
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0x54]
         mov     dword ptr [g_walkCallback], edx
         mov     esi, dword ptr [eax*4 + 0x58]

@@ -3,7 +3,7 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* Table-base extern: &-reference defeats MSVC's constant-folding of
  * `addr >> 2` so the runtime shift survives, matching orig encoding. */
@@ -20,11 +20,11 @@ void MStackPackedInit(void) {
 }
 
 /* @addr 0x00406ce0 (19b)
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   mov     ecx, [g_walkCallback]
  *   mov     [eax*4 + 0x24], ecx
  *   ret
  */
 void ScaledStoreIdx24(void) {
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->queue_end = (unsigned int)g_walkCallback;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->queue_end = (unsigned int)g_walkCallback;
 }

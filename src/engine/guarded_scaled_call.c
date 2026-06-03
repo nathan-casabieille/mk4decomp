@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0048a020 (45b)
  *   mov     eax, [g_dispatchVar9]
@@ -14,7 +14,7 @@ extern unsigned int g_scaledInit_00542044;
  *   mov     eax, [g_walkCallback]
  *   test    eax, eax
  *   jl      +0x1a
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   mov     eax, [eax*4 + 0]
  *   push    eax
  *   mov     [g_walkCallback], eax
@@ -30,7 +30,7 @@ void GuardedScaledCall(void) {
     if ((int)g_dispatchVar9 < 0) return;
     walk = (unsigned int)g_walkCallback;
     if ((int)walk < 0) return;
-    g_scaledInit_00542044 = walk;
+    g_currentNodeIdx = walk;
     v = *(int *)(walk * 4);
     g_walkCallback = (void (*)(void))v;
     TaggedSceneDispatch(v);

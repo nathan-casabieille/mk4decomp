@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004392c0 (78b)
  *   Tail-dispatch on packed table. eax = arg0>>2 → g_scaledInit;
@@ -14,12 +14,12 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void StorePauseImulShr16(void);
 void PackedAdvanceCallTailJmp(packed_ptr arg) {
-    g_scaledInit_00542044 = (unsigned int)((int)arg >> 2);
-    g_walkCallback = *(void (**)(void))(g_scaledInit_00542044 * 4);
-    g_scaledInit_00542044++;
+    g_currentNodeIdx = (unsigned int)((int)arg >> 2);
+    g_walkCallback = *(void (**)(void))(g_currentNodeIdx * 4);
+    g_currentNodeIdx++;
     StorePauseImulShr16();
     if (g_framePauseFlag) return;
-    g_scaledInit_00542044 += (unsigned int)g_walkCallback;
-    g_scaledInit_00542044 = *(unsigned int *)(g_scaledInit_00542044 * 4);
-    ((void (*)(void))g_scaledInit_00542044)();
+    g_currentNodeIdx += (unsigned int)g_walkCallback;
+    g_currentNodeIdx = *(unsigned int *)(g_currentNodeIdx * 4);
+    ((void (*)(void))g_currentNodeIdx)();
 }

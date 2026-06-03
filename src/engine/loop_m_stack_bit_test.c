@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -125,14 +125,14 @@ extern unsigned int g_matrixStack_arr;
 __declspec(naked) void LoopMStackBitTest(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         push    ebx
         inc     eax
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
         mov     esi, 0x91
         mov     [eax*4 + g_matrixStack_arr], ecx
-        mov     dword ptr [g_scaledInit_00542044], 0
+        mov     dword ptr [g_currentNodeIdx], 0
         mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -148,13 +148,13 @@ __declspec(naked) void LoopMStackBitTest(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         _emit   75h
         _emit   62h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, [eax*4 + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    ScaledAndFBJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -163,7 +163,7 @@ __declspec(naked) void LoopMStackBitTest(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
@@ -176,7 +176,7 @@ __declspec(naked) void LoopMStackBitTest(void) {
         ret
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         pop     esi
         pop     ebx

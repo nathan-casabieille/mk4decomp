@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00404a00 (77b)
  *   save g_walkCallback into esi, write arg → walk; call F; pause-test → ret;
@@ -20,7 +20,7 @@ void SaveCallRestoreOrXor(int arg) {
     if (g_framePauseFlag != 0) return;
     g_walkCallback = save;
     g_xformDirtyFlags |= 4;
-    if (g_scaledInit_00542044 != 0) {
+    if (g_currentNodeIdx != 0) {
         g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
     }
 }

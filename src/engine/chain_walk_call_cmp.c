@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -125,13 +125,13 @@ void ChainWalkCallCmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x60]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   15h
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -143,7 +143,7 @@ void ChainWalkCallCmp(void) {
         _emit   75h
         _emit   1ah
         mov     edx, dword ptr [g_baseSel]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         cmp     ecx, dword ptr [edx*4 + 0x60]
         _emit   75h
         _emit   05h

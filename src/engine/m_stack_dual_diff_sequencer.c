@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -112,7 +112,7 @@ extern void SetupVecFsmCluster(void);
 extern void MStackDualDiffSequencer(void);
 
 /* @addr 0x0043e2d0 (259b game) - mstack-push cj, then helper call + 3 Mul10Tail.
- *   mstack-push g_cj_0054205c; g_cj_0054205c = g_scaledInit_00542044;
+ *   mstack-push g_cj_0054205c; g_cj_0054205c = g_currentNodeIdx;
  *   g_eventQueueEnd = baseSel[+0x64]; call SetupVecFsmCluster; if pause? final-ret.
  *   esi = scaledInit*4 base. 3x Mul10Tail for fields +0x78/+0x7c/+0x80 with 0x9999 mod;
  *   then g_xformEntityIdx = g_load_0052ab10 + 0x15; g_eventQueueCurrent = 0x2b85;
@@ -129,7 +129,7 @@ __declspec(naked) void HelperCallTripleMul10(void) {
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [g_cj_0054205c], edx
         mov     ecx, dword ptr [eax*4 + 0x64]
@@ -143,7 +143,7 @@ __declspec(naked) void HelperCallTripleMul10(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x78]
         lea     esi, [edx*4 + 0]
         push    eax

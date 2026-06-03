@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -122,14 +122,14 @@ void TripleFieldChainSub(void) {
     unsigned int scaled;
     unsigned int val;
     scaled = *(unsigned int *)(g_baseSel * 4 + 0x4c);
-    g_scaledInit_00542044 = scaled;
+    g_currentNodeIdx = scaled;
     val = ((ScenegraphNode *)(g_cj_00542058 * 4))->position_x;
     g_walkCallback = (void (*)(void))val;
     ((ScenegraphNode *)(scaled * 4))->position_x = val;
     val = ((ScenegraphNode *)(g_cj_00542058 * 4))->position_y - 0xccc;
     g_walkCallback = (void (*)(void))val;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_y = val;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_y = val;
     val = ((ScenegraphNode *)(g_cj_00542058 * 4))->position_z;
     g_walkCallback = (void (*)(void))val;
-    ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_z = val;
+    ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_z = val;
 }

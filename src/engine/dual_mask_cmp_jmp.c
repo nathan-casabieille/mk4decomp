@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -124,10 +124,10 @@ void DualMaskCmpJmp(void) {
     unsigned int c;
     v = *(unsigned int *)(g_cj_0054205c * 4 + 0x64);
     g_walkCallback = (void (*)(void))v;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x64) = v;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x64) = v;
     a = ((ScenegraphNode *)(g_cj_0054205c * 4))->state_mask;
     g_walkCallback = (void (*)(void))a;
-    c = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->state_mask;
+    c = ((ScenegraphNode *)(g_currentNodeIdx * 4))->state_mask;
     a &= 1;
     c &= 1;
     g_walkCallback = (void (*)(void))a;

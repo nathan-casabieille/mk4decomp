@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -139,7 +139,7 @@ void AudioBridgeMStackChainCopy(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
@@ -154,7 +154,7 @@ void AudioBridgeMStackChainCopy(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, offset g_audioBridgeSlot
         mov     [eax*4 + g_matrixStack_arr], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         shr     edx, 2
         mov     ecx, dword ptr [eax*4 + 0x6c]
         mov     dword ptr [g_walkCallback], ecx
@@ -194,7 +194,7 @@ void AudioBridgeMStackChainCopy(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

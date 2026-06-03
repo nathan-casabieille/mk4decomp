@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004b5a80 (52b)
  *   rep stos zero-fill 0xc0000 dwords starting at 0x007b41a0;
@@ -42,10 +42,10 @@ __declspec(naked) void AppInit_Misc2(void) {
  */
 void LoadSetCallPauseStoreJmp(void) {
     g_eventQueueWorkType = 0x4ccc;
-    g_scaledInit_00542044 = g_player2NodeIdx;
+    g_currentNodeIdx = g_player2NodeIdx;
     MStackSignedMod();
     if (g_framePauseFlag) return;
     g_eventQueueCurrent = (unsigned int)g_walkCallback;
-    g_scaledInit_00542044 = g_player1NodeIdx;
+    g_currentNodeIdx = g_player1NodeIdx;
     MStackSignedMod();
 }

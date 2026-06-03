@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
 __declspec(naked) void TripleMod411262(void) {
     __asm {
         push    esi
-        mov     esi, dword ptr [g_scaledInit_00542044]
+        mov     esi, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [esi*4 + 0]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
@@ -145,7 +145,7 @@ __declspec(naked) void TripleMod411262(void) {
         _emit   0f7h
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [esi*4 + 0], ecx
-        mov     esi, dword ptr [g_scaledInit_00542044]
+        mov     esi, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [esi*4 + 4]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
@@ -171,7 +171,7 @@ __declspec(naked) void TripleMod411262(void) {
         _emit   0f7h
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [esi*4 + 4], ecx
-        mov     esi, dword ptr [g_scaledInit_00542044]
+        mov     esi, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [esi*4 + 8]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx

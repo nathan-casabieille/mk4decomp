@@ -9,14 +9,14 @@
  *   mov     [g_matrixStackTop], eax
  *   mov     [eax*4 + 0], ecx
  *   ; Load scaled + walkCallback
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   mov     edx, [g_walkCallback]
  *   test    eax, eax
  *   jne     .pop                         ; if scaled non-zero, skip walk
  *   ; State walk loop
  *   mov     eax, [g_state]               ; per-helper
  *   test    eax, eax
- *   mov     [g_scaledInit_00542044], eax
+ *   mov     [g_currentNodeIdx], eax
  *   je      .pop
  * .loop:
  *   mov     ecx, [eax*4 + 0x30]          ; next field
@@ -45,7 +45,7 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_dispatchSave_0053a2c0;
 extern unsigned int g_cj_00535df0;
 
@@ -58,14 +58,14 @@ __declspec(naked) void DispatcherComplex138_00476060(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_walkCallback]
         test    eax, eax
         _emit   75h
         _emit   1fh
         mov     eax, dword ptr [g_dispatchSave_0053a2c0]
         test    eax, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   74h
         _emit   1ah
         mov     ecx, dword ptr [eax*4 + 0x30]
@@ -103,14 +103,14 @@ __declspec(naked) void DispatcherComplex138_004760f0(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_walkCallback]
         test    eax, eax
         _emit   75h
         _emit   1fh
         mov     eax, dword ptr [g_cj_00535df0]
         test    eax, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   74h
         _emit   1ah
         mov     ecx, dword ptr [eax*4 + 0x30]

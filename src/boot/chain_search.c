@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -122,7 +122,7 @@ extern unsigned int g_chain_disp_2c_41f9c0;
 
 __declspec(naked) void ChainSearch(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         push    edi
         lea     ecx, [eax*4 + g_chain_arr_41f9c0]
@@ -138,7 +138,7 @@ loop41f9c0:
         _emit   24h
         mov     eax, ecx
         sar     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, [eax*4 + g_chain_disp_0c_41f9c0]
         cmp     edx, esi
         mov     dword ptr [g_eventQueueWorkType], edx
@@ -152,7 +152,7 @@ loop41f9c0:
         _emit   75h
         _emit   0c8h
         mov     edx, dword ptr [g_xformDirtyFlags]
-        mov     dword ptr [g_scaledInit_00542044], 0
+        mov     dword ptr [g_currentNodeIdx], 0
         and     edx, 0xfffffffe
         or      edx, 4
         mov     dword ptr [g_xformDirtyFlags], edx

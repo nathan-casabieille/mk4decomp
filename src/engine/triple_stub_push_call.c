@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_dispatchSave1233;
 extern unsigned int g_dispatchSave1234;
 extern unsigned int g_dispatchSave1235;

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00426550 (75b)
  *   eax = 0x53a1c0 >> 2 → g_scaledInit; eax = g_currentNodeFlags;
@@ -16,7 +16,7 @@ extern unsigned int g_dispatchSave1178;
 extern unsigned int g_dispatchSave_0053a1c0;
 extern void Helper_Sprintf(void *buf, void *fmt, unsigned int arg);
 void Sprintf2WaySelect(void) {
-    g_scaledInit_00542044 = (unsigned int)&g_dispatchSave_0053a1c0 >> 2;
+    g_currentNodeIdx = (unsigned int)&g_dispatchSave_0053a1c0 >> 2;
     if (g_currentNodeFlags == 2) {
         Helper_Sprintf(&g_dispatchSave_0053a1c0, &g_dispatchSave1177, (unsigned int)g_walkCallback);
         return;

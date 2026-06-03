@@ -4,10 +4,10 @@
 #include "engine/scenegraph.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004bdae0 (22b)
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   mov     ecx, [g_pendingNodeType]
  *   push    eax
  *   push    ecx
@@ -17,5 +17,5 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern int __cdecl MatrixTransform3x3Q12(unsigned int, unsigned int);
 void Push2GlobalsCall(void) {
-    MatrixTransform3x3Q12(g_pendingNodeType, g_scaledInit_00542044);
+    MatrixTransform3x3Q12(g_pendingNodeType, g_currentNodeIdx);
 }

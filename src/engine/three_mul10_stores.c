@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -135,10 +135,10 @@ void ThreeMul10Stores(void) {
         call    Mul10Tail
         mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [g_eventQueueWorkType], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         add     esp, 8
         mov     [eax*4 + g_arr_4252c0_4_dst], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_eventQueueWorkType]
         mov     [edx*4 + g_arr_4252c0_4_dst + 0x04], eax
         mov     edx, dword ptr [g_xformEntityIdx]
@@ -147,7 +147,7 @@ void ThreeMul10Stores(void) {
         push    ecx
         push    eax
         call    Mul10Tail
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     [ecx*4 + g_arr_4252c0_4_dst + 0x08], eax

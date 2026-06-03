@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -133,12 +133,12 @@ __declspec(naked) void LinearSearchByEsi(void) {
         push    esi
         mov     esi, dword ptr [g_walkCallback]
         mov     dword ptr [g_eventQueueWorkType], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         cmp     ecx, esi
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         je      short L_lsbe_done
 L_lsbe_loop:
         inc     edx
@@ -147,7 +147,7 @@ L_lsbe_loop:
         mov     ecx, dword ptr [eax*4 - 4]
         cmp     ecx, esi
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         jne     short L_lsbe_loop
 L_lsbe_done:
         mov     dword ptr [g_walkCallback], edx

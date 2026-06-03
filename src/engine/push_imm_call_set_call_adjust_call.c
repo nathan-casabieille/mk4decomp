@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00446bf0 (85b)
  *   push g_eventQueueCurrent, push 0x6666; call F; add esp 8; store eax → eventQueueCurrent;

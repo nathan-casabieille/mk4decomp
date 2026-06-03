@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -127,7 +127,7 @@ __declspec(naked) void TableWalkMatchInsert(void) {
         mov     edx, offset g_stateChangeBase
         shr     eax, 2
         shr     edx, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], edx
         mov     ecx, dword ptr [eax*4 + 0]
         push    esi
@@ -156,7 +156,7 @@ __declspec(naked) void TableWalkMatchInsert(void) {
         _emit   74h
         _emit   1bh
         add     eax, 3
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
@@ -180,24 +180,24 @@ __declspec(naked) void TableWalkMatchInsert(void) {
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [edx*4 + 4], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 8], ecx

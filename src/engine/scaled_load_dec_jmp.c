@@ -4,10 +4,10 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00429710 (24b)
- *   mov     eax, [g_scaledInit_00542044]
+ *   mov     eax, [g_currentNodeIdx]
  *   mov     ecx, [eax*4 + 4]
  *   dec     ecx
  *   mov     [g_eventQueueCurrent], ecx
@@ -15,6 +15,6 @@ extern unsigned int g_scaledInit_00542044;
  */
 extern void ScaledStoreCurDirtyOr1(void);
 void ScaledLoadDecJmp(void) {
-    g_eventQueueCurrent = *(unsigned int*)(g_scaledInit_00542044 * 4 + 4) - 1;
+    g_eventQueueCurrent = *(unsigned int*)(g_currentNodeIdx * 4 + 4) - 1;
     ScaledStoreCurDirtyOr1();
 }

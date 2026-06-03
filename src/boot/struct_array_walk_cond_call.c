@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -133,7 +133,7 @@ loop41fc50:
         mov     ecx, dword ptr [g_walkCallback]
         mov     eax, esi
         sar     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, [eax*4 + g_arr_41fc50_disp_0c]
         and     eax, edx
         cmp     eax, ecx

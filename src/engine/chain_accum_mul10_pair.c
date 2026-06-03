@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -123,12 +123,12 @@ void ChainAccumMul10Pair(void) {
     v = g_walkCallback + ((ScenegraphNode *)(g_fightGroupHead * 4))->position_y;
     g_eventQueueWorkType = v;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->position_y = v;
-    g_scaledInit_00542044 = ((ScenegraphNode *)(g_baseSel * 4))->child_b;
-    g_walkCallback = (&g_matrixStack_arr)[g_scaledInit_00542044];
+    g_currentNodeIdx = ((ScenegraphNode *)(g_baseSel * 4))->child_b;
+    g_walkCallback = (&g_matrixStack_arr)[g_currentNodeIdx];
     g_walkCallback = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(
         g_eventQueueCurrent, g_walkCallback);
-    g_scaledInit_00542044 = ((ScenegraphNode *)(g_baseSel * 4))->child_c;
-    g_eventQueueWorkType = (&g_matrixStack_arr)[g_scaledInit_00542044];
+    g_currentNodeIdx = ((ScenegraphNode *)(g_baseSel * 4))->child_c;
+    g_eventQueueWorkType = (&g_matrixStack_arr)[g_currentNodeIdx];
     g_eventQueueWorkType = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(
         g_eventQueueCurrent, g_eventQueueWorkType);
     v = g_walkCallback + ((ScenegraphNode *)(g_fightGroupHead * 4))->position_x;

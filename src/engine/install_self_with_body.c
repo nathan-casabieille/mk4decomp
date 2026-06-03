@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -153,7 +153,7 @@ __declspec(naked) void StateGateMStackOverlap(void) {
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, dword ptr [edx*4 + 0x24]
         cmp     eax, edx
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         _emit   75h
         _emit   07h
         call    InstallSelfMultiCascade

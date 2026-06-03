@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00464090 (250b game) - bit-shift extraction sequence.
- *   mstack-push g_eventQueueCurrent and g_scaledInit_00542044. g_eventQueueCurrent=4.
+ *   mstack-push g_eventQueueCurrent and g_currentNodeIdx. g_eventQueueCurrent=4.
  *   eax = g_phaseCounter*4 -> g_walkCallback; eax += g_dispatchAcc.
  *   edx = g_stateCountdown - 1; eax = [eax+0x0c]; eax += edx.
  *   ecx = g_phaseCounter + g_phaseThunkVar; esi = [ecx*4]; edx = eax;
@@ -133,7 +133,7 @@ __declspec(naked) void BitShiftExtract(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
@@ -144,17 +144,17 @@ __declspec(naked) void BitShiftExtract(void) {
         mov     dword ptr [g_walkCallback], eax
         add     eax, edx
         mov     edx, dword ptr [g_stateCountdown]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x0c]
         dec     edx
         mov     dword ptr [g_walkCallback], edx
         add     eax, edx
         mov     edx, dword ptr [g_phaseThunkVar]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
         add     ecx, edx
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     esi, dword ptr [ecx*4 + 0]
         mov     edx, eax
         lea     ecx, [esi - 2]
@@ -173,7 +173,7 @@ __declspec(naked) void BitShiftExtract(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax

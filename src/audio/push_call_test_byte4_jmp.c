@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004a1a10 (55b)
  *   push 0x25a; call F; load dirty al; add esp; test al,4;
@@ -22,6 +22,6 @@ void PushCallTestByte4Jmp(void) {
         return;
     }
     g_walkCallback = (void (*)(void))0xfffb0000;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x6c) = 0xfffb0000;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x6c) = 0xfffb0000;
     InstallSelfPauseGate();
 }

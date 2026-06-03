@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -118,22 +118,22 @@ void PushClampZeroOneCallPop(void) {
     int val;
     int walk;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_scaledInit_00542044;
+    *(unsigned int *)(top * 4) = g_currentNodeIdx;
     idx = *(unsigned int *)(g_xformEntityIdx * 4 + 4);
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     val = *(int *)(idx * 4);
     g_walkCallback = (void (*)(void))val;
     if (val <= 0) {
         g_walkCallback = 0;
         *(unsigned int *)(idx * 4) = 0;
     }
-    idx = g_scaledInit_00542044;
+    idx = g_currentNodeIdx;
     walk = (int)(unsigned int)g_walkCallback;
     if (walk > 0x10000) {
         g_walkCallback = (void (*)(void))1;
         *(unsigned int *)(idx * 4) = 1;
     }
     top = g_matrixStackTop;
-    g_scaledInit_00542044 = *(unsigned int *)(top * 4);
+    g_currentNodeIdx = *(unsigned int *)(top * 4);
     g_matrixStackTop = top - 1;
 }

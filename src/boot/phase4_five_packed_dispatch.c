@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -119,7 +119,7 @@ extern void PendingMatch_MStackCall(void);
 __declspec(naked) void TripleEntry3Block(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         push    ecx
         push    0x00003333
@@ -137,7 +137,7 @@ __declspec(naked) void TripleEntry3Block(void) {
         mov     ecx, dword ptr [g_xformScratch2088]
         add     esp, 8
         mov     dword ptr [esi + 0x74], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_fightGroupHead], edx
         pop     esi
         ret

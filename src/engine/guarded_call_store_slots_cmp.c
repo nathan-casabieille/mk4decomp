@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00440990 (71b)
  *   call F1; if !pause: load g_scaledInit; copy [+0x24]→g_xformEntityIdx,
@@ -18,7 +18,7 @@ int GuardedCallStoreSlotsCmp(void) {
     unsigned int s;
     DirtyDoubleDeref();
     if (g_framePauseFlag != 0) return g_framePauseFlag;
-    s = g_scaledInit_00542044;
+    s = g_currentNodeIdx;
     g_xformEntityIdx = ((ScenegraphNode *)(s * 4))->queue_end;
     g_eventQueueIdx = ((ScenegraphNode *)(s * 4))->queue_idx;
     if ((unsigned int)g_walkCallback != 2) {

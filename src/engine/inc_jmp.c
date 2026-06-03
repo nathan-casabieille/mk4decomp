@@ -3,14 +3,14 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0045e1d0 (11b)
- *   inc     dword ptr [g_scaledInit_00542044]
+ *   inc     dword ptr [g_currentNodeIdx]
  *   jmp     +5
  */
 extern void EventGateCluster(void);
 void IncJmp(void) {
-    g_scaledInit_00542044++;
+    g_currentNodeIdx++;
     EventGateCluster();
 }

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -121,9 +121,9 @@ void DualMul10AccCj(void) {
     unsigned int v2;
     unsigned int r1;
     unsigned int r2;
-    v1 = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_x;
+    v1 = ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_x;
     g_walkCallback = (void (*)(void))v1;
-    v2 = ((ScenegraphNode *)(g_scaledInit_00542044 * 4))->position_z;
+    v2 = ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_z;
     g_eventQueueCurrent = v2;
     r1 = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(v1, v1);
     g_walkCallback = (void (*)(void))r1;

@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -4488,7 +4488,7 @@ __declspec(naked) void AudioInstallSelfStatePush(void) {
         push    0x00640000
         push    offset g_dispatchSave883
         call    GuardedSetupCallTailJmp
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, offset AudioInstallSelfStatePush
         mov     dword ptr [g_audioInitScaled], ecx
         mov     dword ptr [g_tickW1], 0x100
@@ -4770,11 +4770,11 @@ __declspec(naked) void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalk
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [ecx*4 + g_chain_arr_4348f0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
@@ -4809,11 +4809,11 @@ __declspec(naked) void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalk
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [ecx*4 + g_chain_arr_4348f0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
@@ -4851,11 +4851,11 @@ __declspec(naked) void InstallSelfStatePush_InstallSelf3StateDualBody_004348f0(v
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [ecx*4 + g_chain_arr_4348f0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
@@ -5263,13 +5263,13 @@ void VtableDispatchSetDirty(void) {
         sar     ecx, 2
         add     eax, ecx
         mov     ecx, offset g_dispatchSave1525
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     edx, 0x0f
         mov     eax, [eax*4 + g_arr_4ba040]
         mov     dword ptr [g_xformEntityIdx], edx
         sar     ecx, 2
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_pendingNodeType], ecx
         call    eax
         mov     eax, dword ptr [g_framePauseFlag]
@@ -5339,7 +5339,7 @@ walkNext:
         _emit   0ah
         mov     eax, 0xffff6667
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     [edx*4 + g_chain_disp_38_49b7c0], eax
         jmp     MStackPush2ChainPrepend
         ret
@@ -5547,7 +5547,7 @@ __declspec(naked) void MStackPush2DispatchChain(void) {
         _emit   75h
         _emit   50h
         mov     eax, dword ptr [g_xformEntityIdx]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_pendingNodeType], eax
         mov     edx, [ecx*4 + g_chain_disp_24_4096b0]
         mov     dword ptr [g_xformEntityIdx], edx
@@ -5595,7 +5595,7 @@ __declspec(naked) void SwapOrPassSet(void) {
         shr     ecx, 2
         cmp     edx, 1
         mov     dword ptr [g_xformEntityIdx], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_walkCallback], edx
         _emit   74h
         _emit   29h
@@ -5807,7 +5807,7 @@ void DirtyBitTripleWriteOrCall(void) {
  */
 void InstallSelfDispatch(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         lea     ecx, [eax + 0xf]
         mov     dword ptr [g_pendingNodeType], ecx
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -5831,7 +5831,7 @@ void InstallSelfDispatch(void) {
         test    eax, eax
         _emit   75h
         _emit   39h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], offset InstallSelfDispatch
         mov     eax, [eax*4 + g_arr_407620_final]
         test    eax, eax
@@ -6052,7 +6052,7 @@ __declspec(naked) unsigned int EncodeModeFlags(void) {
  */
 __declspec(naked) void ChainSearch(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         push    edi
         lea     ecx, [eax*4 + g_chain_arr_41f9c0]
@@ -6068,7 +6068,7 @@ loop41f9c0:
         _emit   24h
         mov     eax, ecx
         sar     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, [eax*4 + g_chain_disp_0c_41f9c0]
         cmp     edx, esi
         mov     dword ptr [g_eventQueueWorkType], edx
@@ -6082,7 +6082,7 @@ loop41f9c0:
         _emit   75h
         _emit   0c8h
         mov     edx, dword ptr [g_xformDirtyFlags]
-        mov     dword ptr [g_scaledInit_00542044], 0
+        mov     dword ptr [g_currentNodeIdx], 0
         and     edx, 0xfffffffe
         or      edx, 4
         mov     dword ptr [g_xformDirtyFlags], edx
@@ -6329,24 +6329,24 @@ loop4a28d0:
         add     ecx, edi
         cmp     esi, edx
         mov     ecx, [ecx*4 + g_arr_voice_4a28d0]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     edi, [ecx*4 + g_arr_voice_disp_58]
         mov     dword ptr [g_walkCallback], edi
         mov     edi, dword ptr [eax]
         mov     [ecx*4 + g_arr_voice_disp_54], edi
         _emit   74h
         _emit   10h
-        mov     edi, dword ptr [g_scaledInit_00542044]
+        mov     edi, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax + 4]
         mov     [edi*4 + g_arr_voice_disp_58], ecx
-        mov     edi, dword ptr [g_scaledInit_00542044]
+        mov     edi, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax + 8]
         add     eax, 0x1c
         mov     [edi*4 + g_arr_voice_disp_5c], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         cmp     eax, 0x4f31a8
         mov     [ecx*4 + g_arr_voice_disp_6c], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     [ecx*4 + g_arr_voice_disp_70], edx
         _emit   72h
         _emit   89h
@@ -6377,7 +6377,7 @@ void StateDispatchTable(void) {
         test    eax, eax
         _emit   75h
         _emit   5fh
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         ret
         mov     edx, dword ptr [g_gtPlayerProbe2]
@@ -6400,7 +6400,7 @@ void StateDispatchTable(void) {
         mov     eax, 7
         mov     dword ptr [g_walkCallback], eax
         add     ecx, eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     ecx, [ecx*4 + g_arr_490fc0_final]
         mov     dword ptr [g_walkCallback], ecx
         }
@@ -6430,7 +6430,7 @@ __declspec(naked) void InstallSelfDecrement(void) {
         mov     ecx, dword ptr [g_baseSel]
         mov     edx, [ecx*4 + 0x5c]
         dec     edx
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         _emit   78h
         _emit   2eh
         call    ChainPathMul25
@@ -7039,7 +7039,7 @@ loop41fc50:
         mov     ecx, dword ptr [g_walkCallback]
         mov     eax, esi
         sar     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, [eax*4 + g_arr_41fc50_disp_0c]
         and     eax, edx
         cmp     eax, ecx
@@ -7193,7 +7193,7 @@ void MStackPushInstall(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
@@ -7202,12 +7202,12 @@ void MStackPushInstall(void) {
         mov     dword ptr [g_walkCallback], 1
         shr     eax, 2
         add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], 1
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
@@ -7220,7 +7220,7 @@ void MStackPushInstall(void) {
 /* @addr 0x004236a0 (125b) - if any of {g_dlNalt1, g_dlNalt2,
  *   g_dlNalt3, g_dlNalt4} == 0xf: clear g_counter_0053a51c & g_walkCallback,
  *   call F1. Then v3 = (data_4dfd48 >> 2) + g_counter_0053a51c;
- *   g_scaledInit_00542044 = v3; arg = arr[v3];
+ *   g_currentNodeIdx = v3; arg = arr[v3];
  *   push arg twice; g_rangeBase = arg; call Mul10Tail; g_rangeSqLimit = res; jmp F3.
  */
 __declspec(naked) void FourGlobalsEqualFInitTail(void) {
@@ -7248,7 +7248,7 @@ __declspec(naked) void FourGlobalsEqualFInitTail(void) {
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, [eax*4 + g_matrixStack_arr]
         push    eax
         push    eax
@@ -7272,11 +7272,11 @@ void DeltaAbsCompareBitToggle(void) {
         mov     ecx, dword ptr [g_player1NodeIdx]
         mov     eax, dword ptr [g_cj_0054205c]
         cmp     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   75h
         _emit   0ch
         mov     ecx, dword ptr [g_player2NodeIdx]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     edx, [ecx*4 + g_arr_chain_54_48ea90]
         mov     dword ptr [g_walkCallback], edx
         mov     ecx, [eax*4 + g_arr_chain_54_48ea90]
@@ -7414,7 +7414,7 @@ void GatedScaledSubSat(void) {
         test    eax, eax
         _emit   75h
         _emit   52h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         push    offset g_str_00542fa8
         mov     [eax*4 + g_arr_005d83a4], ecx
@@ -7424,7 +7424,7 @@ void GatedScaledSubSat(void) {
         test    eax, eax
         _emit   75h
         _emit   2ah
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_walkCallback]
         mov     eax, [ecx*4 + g_arr_005d8208]
         sub     eax, edx
@@ -7547,7 +7547,7 @@ __declspec(naked) void MStackPush2GatedTail(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, [edx*4 + g_chain_disp_24_409420]
         mov     dword ptr [g_xformEntityIdx], eax
         call    MStackPushDispatchBitGate
@@ -7597,7 +7597,7 @@ void FramePauseScaledStore(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     [ecx*4 + 0x24], eax
         mov     eax, dword ptr [g_xformEntityIdx]
@@ -7608,7 +7608,7 @@ void FramePauseScaledStore(void) {
         mov     dword ptr [g_matrixStackTop], ecx
         mov     [ecx*4 + g_matrixStack_arr], eax
         mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         sar     eax, 0x14
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x1c], eax
@@ -7617,12 +7617,12 @@ void FramePauseScaledStore(void) {
         dec     ecx
         and     eax, 0x000fffff
         mov     dword ptr [g_matrixStackTop], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         or      eax, 0x08000000
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x20], eax
         mov     ecx, dword ptr [g_xformDirtyFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         or      ecx, edx
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], ecx
@@ -7673,19 +7673,19 @@ void TwoCallScaledOr1600(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x76
         mov     dword ptr [g_walkCallback], eax
         push    0x00fb43fb
         mov     [ecx*4 + 0x30], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, [edx*4 + 0x18]
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     eax, [ecx*4 + 0x20]
         or      ah, 0x16
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + 0x20], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_fightGroupHead], eax
         call    ThreeChanPackClamp
         mov     ecx, dword ptr [g_fightGroupHead]
@@ -7693,7 +7693,7 @@ void TwoCallScaledOr1600(void) {
         push    ecx
         call    CopyThreeFields
         mov     ecx, dword ptr [g_xformDirtyFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         add     esp, 4
         or      ecx, 4
         test    eax, eax
@@ -7718,11 +7718,11 @@ void StoreIncrMStackPush6(void) {
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     ecx, [eax*4 + 4]
         lea     eax, [eax*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [ecx*4 + g_matrixStack_arr], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [eax], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_walkCallback]
@@ -7769,7 +7769,7 @@ void StoreIncrMStackPush6(void) {
 void MStackFrameCdeclDouble(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
@@ -7814,7 +7814,7 @@ void MStackFrameCdeclDouble(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -7850,10 +7850,10 @@ __declspec(naked) void DoublePackedPtrInstall(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     esi, 0x1f
         mov     dword ptr [ecx*4 + 0x54], 0xffba0000
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     [edx*4 + 0x30], esi
         call    PushSetCallPop
@@ -7874,9 +7874,9 @@ __declspec(naked) void DoublePackedPtrInstall(void) {
         test    eax, eax
         _emit   75h
         _emit   37h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x54], 0x00810000
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     [edx*4 + 0x30], esi
         call    PushSetCallPop
@@ -7911,11 +7911,11 @@ __declspec(naked) void StoreTailJmpSigned(void) {
         push    0x004109b0
         mov     dword ptr [g_eventQueueIdx], eax
         call    StoreTwoCall
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_load_0052ab10]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_baseSel], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + 0x64]
         neg     ecx
         mov     dword ptr [g_walkCallback], ecx
@@ -7947,7 +7947,7 @@ __declspec(naked) void StoreTailJmpSigned(void) {
         mov     eax, dword ptr [g_pendingNodeType]
         add     edx, 0x0c
         add     ecx, 9
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_pendingNodeType], ecx
         jmp     QuadInterpolator
@@ -7984,7 +7984,7 @@ void Mul10SumSqrt(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     [eax*4 + 4], ecx
         mov     eax, dword ptr [g_eventQueueWorkType]
@@ -8018,7 +8018,7 @@ void Mul10SumSqrt(void) {
         test    eax, eax
         _emit   75h
         _emit   12h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_walkCallback]
         mov     [edx*4 + g_matrixStack_arr], eax
         }
@@ -8280,14 +8280,14 @@ __declspec(naked) void TripleBranchInstall(void) {
 __declspec(naked) void LoopMStackBitTest(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         push    ebx
         inc     eax
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
         mov     esi, 0x91
         mov     [eax*4 + g_matrixStack_arr], ecx
-        mov     dword ptr [g_scaledInit_00542044], 0
+        mov     dword ptr [g_currentNodeIdx], 0
         mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -8303,13 +8303,13 @@ __declspec(naked) void LoopMStackBitTest(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         _emit   75h
         _emit   62h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, [eax*4 + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    ScaledAndFBJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -8318,7 +8318,7 @@ __declspec(naked) void LoopMStackBitTest(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
@@ -8331,7 +8331,7 @@ __declspec(naked) void LoopMStackBitTest(void) {
         ret
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         pop     esi
         pop     ebx
@@ -8449,11 +8449,11 @@ __declspec(naked) void InstallSelfPacked0x2005(void) {
         add     ecx, 0x01000000
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -8514,11 +8514,11 @@ __declspec(naked) void InstallSelfTableWalk(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     [edx*4 + 0x84], edi
@@ -8585,40 +8585,40 @@ __declspec(naked) void PackedSelectLoad6(void) {
         shr     eax, 2
         shr     ecx, 2
         cmp     edx, esi
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], ecx
         _emit   74h
         _emit   07h
         mov     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueNotMask], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueChild], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_currentNodeFlags], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_xformScratch2088], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueEnd], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [g_eventQueueIdx], edx
         pop     esi
         mov     eax, [eax*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + 0x74]
         mov     dword ptr [g_walkCallback], ecx
         ret
@@ -8646,7 +8646,7 @@ void LinkedListInsert(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_pendingNodeType], ecx
         mov     eax, [edx*4 + 4]
@@ -8659,7 +8659,7 @@ void LinkedListInsert(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     [ecx*4 + g_matrixStack_arr], eax
         mov     edx, dword ptr [g_xformEntityIdx]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     [edx*4 + g_matrixStack_arr], eax
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     ecx, [eax*4 + 8]
@@ -8722,11 +8722,11 @@ __declspec(naked) void InstallSelf3WayState(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -8840,14 +8840,14 @@ __declspec(naked) void FiveTableWalkInit(void) {
         _emit   7fh
         mov     eax, 0x00506c20
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    LoadGeoAsset_Default
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   65h
         mov     ecx, 0x00506c20
         shr     ecx, 2
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    LoadGeoAsset_Default
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
@@ -8863,7 +8863,7 @@ __declspec(naked) void FiveTableWalkInit(void) {
         _emit   2ah
         mov     eax, dword ptr [g_load_0052ab10]
         mov     ecx, 0xfff88000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         shl     eax, 2
         mov     [eax + 0x60], esi
         mov     [eax + 0x64], esi
@@ -8948,7 +8948,7 @@ void Helper_PreTick(void) {
         mov     eax, 0x00ab4878
         sar     eax, 2
         add     ecx, 0x18
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], ecx
         call    NodeApplyTransform_C
         mov     eax, dword ptr [g_framePauseFlag]
@@ -9331,11 +9331,11 @@ __declspec(naked) void InstallSelfTwoTailJmp(void) {
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [ecx*4 + g_matrixStack_arr], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -9489,7 +9489,7 @@ void LinkedListBitMaskSearch(void) {
         _emit   1ah
         mov     eax, ecx
         sar     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, [eax*4 + 0x0c]
         cmp     eax, edx
         mov     dword ptr [g_eventQueueWorkType], eax
@@ -9501,7 +9501,7 @@ void LinkedListBitMaskSearch(void) {
         _emit   0d2h
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_xformDirtyFlags]
-        mov     dword ptr [g_scaledInit_00542044], 0
+        mov     dword ptr [g_currentNodeIdx], 0
         and     edx, 0xfffffffe
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
@@ -9528,7 +9528,7 @@ void LinkedListBitMaskSearch(void) {
 void MStackPush8(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
@@ -9672,12 +9672,12 @@ void InstallSelfStoreTwoCall(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         mov     edx, 0x0049a410
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         add     edx, 0x01000000
         mov     [ecx*4 + g_matrixStack_arr], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -9797,11 +9797,11 @@ __declspec(naked) void MStackJmpInstallSelf(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -9837,7 +9837,7 @@ void MStackInitCallToggle(void) {
         mov     edx, dword ptr [g_walkCallback]
         mov     ecx, [eax*4 + 0x18]
         mov     dword ptr [g_eventQueueCurrent], edx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], 0
         call    DirtyToggleInstall
         mov     eax, dword ptr [g_framePauseFlag]
@@ -9846,7 +9846,7 @@ void MStackInitCallToggle(void) {
         _emit   58h
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], edx
@@ -9884,7 +9884,7 @@ void MStackChainDecodeCall(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], edx
@@ -9894,7 +9894,7 @@ void MStackChainDecodeCall(void) {
         test    eax, eax
         _emit   75h
         _emit   74h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 1
         mov     eax, [ecx*4 + 8]
         shr     eax, 0x10
@@ -9907,7 +9907,7 @@ void MStackChainDecodeCall(void) {
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         call    BootChainTripleStoreThenDispatch
         mov     eax, dword ptr [g_framePauseFlag]
@@ -9953,12 +9953,12 @@ __declspec(naked) void InstallChainInitTailJmp(void) {
         _emit   00h
         _emit   00h
         mov     ecx, dword ptr [g_matrixStackTop]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     ecx
         mov     dword ptr [g_installChainTailSlot], eax
         mov     dword ptr [g_matrixStackTop], ecx
         mov     [ecx*4 + g_matrixStack_arr], eax
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x40], 0x00006487
         mov     dword ptr [ecx*4 + 0x3c], 0
         lea     eax, [ecx*4 + g_matrixStack_arr]
@@ -9970,12 +9970,12 @@ __declspec(naked) void InstallChainInitTailJmp(void) {
         test    eax, eax
         _emit   75h
         _emit   29h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         jmp     PushPopScaled1cDoubleCall
         ret
@@ -9998,7 +9998,7 @@ __declspec(naked) void InstallChainInitTailJmp(void) {
 void ModMagicMul10Index(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
@@ -10037,13 +10037,13 @@ void ModMagicMul10Index(void) {
         add     esp, 8
         and     eax, 0x000007ff
         add     eax, edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -10087,7 +10087,7 @@ void TagDispatchPairedPacked(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         _emit   75h
         _emit   31h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     edx, 0x004e28c8
         mov     dword ptr [g_matrixStackTop], eax
@@ -10101,7 +10101,7 @@ void TagDispatchPairedPacked(void) {
         _emit   48h
         _emit   0ebh
         _emit   2eh
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], edx
@@ -10116,7 +10116,7 @@ void TagDispatchPairedPacked(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -10153,7 +10153,7 @@ __declspec(naked) void LinkedListBuilder(void) {
         test    eax, eax
         _emit   74h
         _emit   79h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     [esi*4 + g_matrixStack_arr], edx
         lea     eax, [ebx + edx + 1]
         mov     [eax*4 + g_matrixStack_arr], esi
@@ -10527,11 +10527,11 @@ __declspec(naked) void InstallSelfPackedF190(void) {
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x02000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -10564,7 +10564,7 @@ __declspec(naked) void InstallSelfPackedF190(void) {
  */
 void ChainNodeInit(void) {
     __asm {
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         test    ecx, ecx
         lea     eax, [ecx*4 + g_matrixStack_arr]
         _emit   0fh
@@ -10578,21 +10578,21 @@ void ChainNodeInit(void) {
         inc     ecx
         mov     dword ptr [g_matrixStackTop], ecx
         mov     [ecx*4 + g_matrixStack_arr], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x84], 0
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     [edx*4 + 8], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, [edx*4 + 8]
         mov     [eax + 0xd8], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, 1
         mov     dword ptr [g_walkCallback], ecx
         mov     [edx*4 + 0x10], ecx
         mov     cx, word ptr [g_walkCallback]
         mov     word ptr [eax + 0xdc], cx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         lea     ecx, [eax + 0x22]
         mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 4], ecx
@@ -10639,12 +10639,12 @@ __declspec(naked) void DualGuardedTableSearch(void) {
         call    CmpP1GTSetup
         mov     eax, 0x004ebe90
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_eventQueueWorkType], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   7ch
         _emit   41h
         mov     esi, dword ptr [g_xformEntityIdx]
@@ -10656,12 +10656,12 @@ __declspec(naked) void DualGuardedTableSearch(void) {
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueWorkType], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_eventQueueWorkType], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   7dh
         _emit   0c5h
         xor     eax, eax
@@ -10670,7 +10670,7 @@ __declspec(naked) void DualGuardedTableSearch(void) {
         mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    SnapshotDispatchMStack
         call    ScaledZeroFour
         mov     eax, 1
@@ -10878,11 +10878,11 @@ __declspec(naked) void InstallSelfBitGated(void) {
         mov     [ecx*4 + 0x84], ebx
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -10972,14 +10972,14 @@ void ThreeCallChainCopy(void) {
     if (g_framePauseFlag != 0) return;
     v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x3c);
     g_walkCallback = v;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x54) = v;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x54) = v;
     v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x40);
     g_walkCallback = v;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x58) = v;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x58) = v;
     v = *(unsigned int *)(g_eventQueueIdx * 4 + 0x44);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = v;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x5c) = v;
     g_walkCallback = 0x74;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x30) = 0x74;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x30) = 0x74;
     MStackCall_MStackPush2ChainPrepend_00406340();
     if (g_framePauseFlag != 0) return;
     MStackPushTwoEntryChainCall();
@@ -11024,11 +11024,11 @@ __declspec(naked) void InstallSelfPushArg(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -11050,16 +11050,16 @@ __declspec(naked) void InstallSelfPushArg(void) {
  */
 void ChainInitDoublePushCall(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [eax*4 + 0x54], 0
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     [edx*4 + 0x58], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_walkCallback]
         mov     [ecx*4 + 0x5c], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 9
         mov     dword ptr [g_walkCallback], eax
         mov     [edx*4 + 0x30], eax
@@ -11068,20 +11068,20 @@ void ChainInitDoublePushCall(void) {
         test    eax, eax
         _emit   75h
         _emit   52h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, 0x0000e666
         mov     dword ptr [g_fightGroupHead], eax
         mov     eax, dword ptr [g_particleEmitterNode]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     [eax*4 + 0x3c], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         push    0x004f3030
         push    ecx
         call    Title_PressStartScreen
         mov     eax, dword ptr [g_load_0052ab10]
         add     esp, 8
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         push    0x004f3040
         push    eax
         call    Title_PressStartScreen
@@ -11223,11 +11223,11 @@ __declspec(naked) void InstallSelfAbsDiff(void) {
         add     edi, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, [eax + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [ecx*4 + g_matrixStack_arr], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
@@ -11255,7 +11255,7 @@ __declspec(naked) void InstallSelfAbsDiff(void) {
 __declspec(naked) void ChainPathMul25(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     [eax*4 + 0x5c], ecx
         mov     eax, dword ptr [g_eventQueueEnd]
         test    eax, eax
@@ -11337,12 +11337,12 @@ __declspec(naked) void InstallSelfPackedTailJmp(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         mov     edx, 0x004751f0
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         add     edx, 0x01000000
         mov     [ecx*4 + g_matrixStack_arr], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -11374,11 +11374,11 @@ __declspec(naked) void ChainSetupBitToggle(void) {
         mov     eax, dword ptr [g_fightGroupHead]
         cmp     eax, ecx
         push    esi
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   75h
         _emit   0ch
         mov     ecx, dword ptr [g_player2NodeIdx]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     edx, [eax*4 + 0x54]
         mov     dword ptr [g_walkCallback], edx
         mov     esi, [eax*4 + 0x5c]
@@ -11467,7 +11467,7 @@ __declspec(naked) void InstallSelfMStackIndirect(void) {
         ret
         mov     edx, dword ptr [g_baseSel]
         mov     ecx, [edx*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     ecx, [ecx*4 + 0x74]
         cmp     ecx, eax
         mov     dword ptr [g_walkCallback], ecx
@@ -11502,7 +11502,7 @@ __declspec(naked) void InstallSelfMStackIndirect(void) {
 __declspec(naked) void MStackDirtyArgsBit0(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         push    ebx
         mov     dword ptr [g_matrixStackTop], eax
@@ -11564,7 +11564,7 @@ __declspec(naked) void MStackDirtyArgsBit0(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         pop     ebx
         ret
@@ -11605,11 +11605,11 @@ __declspec(naked) void InstallSelfMidPush(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [ecx*4 + g_matrixStack_arr], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
@@ -11792,7 +11792,7 @@ __declspec(naked) void TablePushAccumTailJmp(void) {
         shr     ecx, 2
         mov     eax, [edx*4 + g_matrixStack_arr]
         mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    TailJmpRetNops
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -11803,7 +11803,7 @@ __declspec(naked) void TablePushAccumTailJmp(void) {
         shr     ecx, 2
         mov     eax, [edx*4 + 4]
         mov     dword ptr [g_pendingNodeType], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    TailJmpRetNops
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -11992,7 +11992,7 @@ void AudioInitSequence(void) {
  */
 void ChainGatedNegAccum(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         test    eax, eax
         _emit   0fh
         _emit   84h
@@ -12005,7 +12005,7 @@ void ChainGatedNegAccum(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, [eax*4 + 0x64]
         sub     edx, 0x0004b65f
         mov     dword ptr [g_eventQueueWorkType], edx
@@ -12029,7 +12029,7 @@ void ChainGatedNegAccum(void) {
         test    eax, eax
         _emit   75h
         _emit   45h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_acc_00542078]
         mov     ecx, [eax*4 + 0x54]
         add     edx, ecx
@@ -12060,12 +12060,12 @@ void ChainAccumMul10Pair(void) {
     v = g_walkCallback + *(unsigned int *)(g_fightGroupHead * 4 + 0x58);
     g_eventQueueWorkType = v;
     *(unsigned int *)(g_fightGroupHead * 4 + 0x58) = v;
-    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel * 4 + 0x40);
-    g_walkCallback = (&g_matrixStack_arr)[g_scaledInit_00542044];
+    g_currentNodeIdx = *(unsigned int *)(g_baseSel * 4 + 0x40);
+    g_walkCallback = (&g_matrixStack_arr)[g_currentNodeIdx];
     g_walkCallback = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(
         g_eventQueueCurrent, g_walkCallback);
-    g_scaledInit_00542044 = *(unsigned int *)(g_baseSel * 4 + 0x44);
-    g_eventQueueWorkType = (&g_matrixStack_arr)[g_scaledInit_00542044];
+    g_currentNodeIdx = *(unsigned int *)(g_baseSel * 4 + 0x44);
+    g_eventQueueWorkType = (&g_matrixStack_arr)[g_currentNodeIdx];
     g_eventQueueWorkType = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(
         g_eventQueueCurrent, g_eventQueueWorkType);
     v = g_walkCallback + *(unsigned int *)(g_fightGroupHead * 4 + 0x54);
@@ -12136,11 +12136,11 @@ __declspec(naked) void StateDispatchYield(void) {
         shr     eax, 2
         add     eax, ecx
         mov     ecx, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         inc     ecx
         mov     eax, [eax*4 + g_matrixStack_arr]
         mov     dword ptr [g_matrixStackTop], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [ecx*4 + g_matrixStack_arr], eax
         mov     eax, dword ptr [g_walkCallback]
         cmp     eax, 4
@@ -12168,7 +12168,7 @@ __declspec(naked) void StateDispatchYield(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         jmp     ecx
         call    ScaledZeroFour
@@ -12184,7 +12184,7 @@ __declspec(naked) void StateDispatchYield(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         jmp     ecx
         ret
@@ -12793,19 +12793,19 @@ void PackedTableWalkChainStore(void) {
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_xformEntityIdx], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_acc_00542078], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueNotMask], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], 0x26f
         mov     dword ptr [g_eventQueueCurrent], 4
         call    Push70CallScaleArith
@@ -12816,7 +12816,7 @@ void PackedTableWalkChainStore(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   17h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x00014000
         mov     dword ptr [g_walkCallback], eax
         mov     [edx*4 + 0x5c], eax
@@ -12896,7 +12896,7 @@ void MStackBitFlagDispatch(void) {
         xor     ecx, ecx
         mov     dword ptr [g_eventQueueChild], ecx
         mov     eax, [eax*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, [eax*4 + 0x40]
         mov     dword ptr [g_walkCallback], eax
         and     eax, 8
@@ -13005,7 +13005,7 @@ void Chain2AxisDiffStoreTailJmp(void) {
     a -= b;
     g_walkCallback = a;
     *(unsigned int *)(g_baseSel * 4 + 0x44) = a;
-    g_scaledInit_00542044 = g_baseSel + 0x0f;
+    g_currentNodeIdx = g_baseSel + 0x0f;
     Triple3VecMul10Tail();
     if (g_framePauseFlag) return;
     ThrowPairPoseCluster();
@@ -13036,7 +13036,7 @@ void DualGatedStateYield(void) {
         xor     eax, eax
         ret
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
@@ -13048,7 +13048,7 @@ void DualGatedStateYield(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     eax, dword ptr [g_fightGroupHead]
         cmp     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_walkCallback], 0x3f
         _emit   75h
         _emit   27h
@@ -13183,11 +13183,11 @@ __declspec(naked) void InstallSelf3WaySubDec(void) {
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     ecx, [eax + 4]
         add     esi, 0x02000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [ecx*4 + g_matrixStack_arr], esi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
@@ -13410,14 +13410,14 @@ __declspec(naked) void DoubleCallChainInit(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   51h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     [eax*4 + 0x30], ebp
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     [ecx*4 + 0x70], edi
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     [edx*4 + 0x6c], esi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_walkCallback]
         mov     [ecx*4 + 0x74], eax
         mov     dword ptr [g_walkCallback], ebx
@@ -13507,10 +13507,10 @@ __declspec(naked) void ScaledSearchSum(void) {
         mov     eax, [esi*4 + 8]
         pop     esi
         mov     dword ptr [g_xformEntityIdx], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         pop     ebp
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         pop     ebx
         pop     ecx
         ret
@@ -13870,7 +13870,7 @@ void ChainInit3CallTailJmp(void) {
     Push70CallScaleArith();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0x10000;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = 0x10000;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x5c) = 0x10000;
     g_eventQueueIdx = (unsigned int)&g_dispatchSave667 >> 2;
     OpcodeStreamDispatch();
 }
@@ -14012,11 +14012,11 @@ __declspec(naked) void InstallSelfChainSet2011(void) {
         add     edi, 0x01000000
         mov     [ecx*4 + 0x84], esi
         mov     ecx, [eax + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [ecx*4 + g_matrixStack_arr], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     [eax*4 + 0x84], edx
@@ -14062,11 +14062,11 @@ __declspec(naked) void InstallSelfChainSet13333(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -14106,11 +14106,11 @@ __declspec(naked) void InstallSelfChainSet13333Alt(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -14150,11 +14150,11 @@ __declspec(naked) void InstallSelfChainSetB333(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -14193,11 +14193,11 @@ __declspec(naked) void InstallSelfChainSetB333v2(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -14235,11 +14235,11 @@ __declspec(naked) void InstallSelfChainSetB333v3(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [eax*4 + g_matrixStack_arr], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -14293,7 +14293,7 @@ void State208cBit0Flag(void) {
         mov     eax, dword ptr [g_secondary_00535d04]
         cmp     edx, ecx
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   74h
         _emit   0ah
         mov     eax, dword ptr [g_primary_0053a774]
@@ -14338,7 +14338,7 @@ void ChainListVecAdd(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     eax, [eax*4 + 0x2c]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -14707,7 +14707,7 @@ __declspec(naked) void DirtyOrFlagDispatch(void) {
         test    eax, eax
         _emit   75h
         _emit   20h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      al, 4
         mov     dword ptr [g_walkCallback], eax
@@ -14715,7 +14715,7 @@ __declspec(naked) void DirtyOrFlagDispatch(void) {
         jmp     CondInstallDispatch_00476ed0
         ret
         _emit   90h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [ecx*4 + 0x1c]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -15023,7 +15023,7 @@ __declspec(naked) void TripleEntryBitsetMStack(void) {
         _emit   90h
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x74]
         mov     dword ptr [g_eventQueueNotMask], ecx
         jmp     SetJmp_InstallSelfMStackIndirect
@@ -15495,12 +15495,12 @@ __declspec(naked) void DualEntry5WayThreshold(void) {
  */
 __declspec(naked) void InstallSelfMagicShift(void) {
     __asm {
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x00538158
         shr     eax, 2
         mov     dword ptr [g_walkCallback], 0
         lea     eax, [ecx + eax - 1]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], 0
         ret
         _emit   90h
@@ -15652,11 +15652,11 @@ __declspec(naked) void DualScaledChainPush(void) {
         push    0x004ea978
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
         call    ArgSarStoreJmp
         add     esp, 4
@@ -15679,7 +15679,7 @@ __declspec(naked) void DualScaledChainPush(void) {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [ecx*4 + 4], eax
@@ -15895,11 +15895,11 @@ __declspec(naked) void DualEntryInstallScaledChain_ArgSarStoreJmp_0047ef60(void)
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -16050,11 +16050,11 @@ __declspec(naked) void DualEntryInstallScaledChain_ArgSarStoreJmp_00486580(void)
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -16618,7 +16618,7 @@ void DualMul10Tail(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x6c]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x74]
@@ -17070,7 +17070,7 @@ __declspec(naked) void SequencedInit3Call(void) {
         _emit   00h
         mov     eax, dword ptr [g_load_0052ab10]
         mov     dword ptr [g_dispatchSave40], esi
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_dispatchSave42], esi
         shl     eax, 2
         mov     dword ptr [eax + 0x54], esi
@@ -17089,14 +17089,14 @@ __declspec(naked) void SequencedInit3Call(void) {
         _emit   2dh
         mov     eax, 0x0050b124
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    LoadGeoAsset_Default
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   13h
         mov     ecx, 0x0050b124
         shr     ecx, 2
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    LoadGeoAsset_Default
         pop     esi
         ret
@@ -17110,7 +17110,7 @@ __declspec(naked) void SequencedInit3Call(void) {
 void MStackPushTableWalk(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
@@ -17123,18 +17123,18 @@ void MStackPushTableWalk(void) {
         mov     eax, 0x00543200
         mov     dword ptr [g_pendingNodeType], edx
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_xformEntityIdx], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         cmp     edx, dword ptr [ecx*4 + 0]
         _emit   74h
         _emit   1ch
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_xformEntityIdx], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         cmp     edx, dword ptr [ecx*4 + 0]
         _emit   75h
         _emit   0e4h
@@ -17145,7 +17145,7 @@ void MStackPushTableWalk(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -17188,11 +17188,11 @@ __declspec(naked) void InstallSelfFullPath(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -17296,7 +17296,7 @@ void Helper_DownloadSetup(void) {
         lea     ecx, [eax*8 + 0]
         shr     edx, 2
         mov     dword ptr [g_dispatchArg], ecx
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         lea     eax, [edx + ecx]
         mov     eax, dword ptr [eax*4 + 0]
         test    eax, eax
@@ -17315,7 +17315,7 @@ void Helper_DownloadSetup(void) {
         _emit   0d6h
         mov     eax, dword ptr [g_matrixStackTop]
         add     edx, ecx
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_dispatchArg], ecx
@@ -17336,7 +17336,7 @@ void Helper_DownloadSetup(void) {
  */
 __declspec(naked) void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         test    eax, eax
         push    edi
@@ -17390,7 +17390,7 @@ __declspec(naked) void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void) {
         mov     eax, esi
         mov     dword ptr [g_walkCallback], esi
         test    esi, esi
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   0fh
         _emit   85h
         _emit   69h
@@ -17479,7 +17479,7 @@ __declspec(naked) void DualSeqLoopDispatch(void) {
         push    ebx
         push    esi
         mov     esi, 0x94
-        mov     dword ptr [g_scaledInit_00542044], 0
+        mov     dword ptr [g_currentNodeIdx], 0
         mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -17509,7 +17509,7 @@ __declspec(naked) void DualSeqLoopDispatch(void) {
         pop     ebx
         ret
         mov     esi, 0x7e
-        mov     dword ptr [g_scaledInit_00542044], 0
+        mov     dword ptr [g_currentNodeIdx], 0
         mov     dword ptr [g_walkCallback], esi
         call    DispatcherComplex138_004760f0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -17629,7 +17629,7 @@ __declspec(naked) void DualEntryInitCmp(void) {
     __asm {
         mov     eax, dword ptr [g_vertexInitFlagAlt]
         mov     ecx, dword ptr [g_vertexInitFlag]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], 0
         mov     dword ptr [g_pendingNodeType], 0x00000800
         mov     dword ptr [g_eventQueueTotal], ecx
@@ -17641,7 +17641,7 @@ __declspec(naked) void DualEntryInitCmp(void) {
         _emit   37h
         mov     eax, dword ptr [g_vertexInitFlagAlt]
         mov     ecx, 0x000007fc
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x0c], ecx
         mov     edx, dword ptr [g_vertexInitVar]
@@ -17655,7 +17655,7 @@ __declspec(naked) void DualEntryInitCmp(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     eax, dword ptr [eax*4 + 0x0c]
         inc     eax
@@ -17793,7 +17793,7 @@ void MStackClampMul10(void) {
 void MStackMagicModMul10(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
@@ -17830,13 +17830,13 @@ void MStackMagicModMul10(void) {
         sar     eax, 0x10
         add     eax, edx
         add     esp, 8
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -17929,11 +17929,11 @@ __declspec(naked) void InstallSelfStdChain(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -17975,11 +17975,11 @@ __declspec(naked) void InstallSelfChain494d60(void) {
         mov     ecx, dword ptr [g_baseSel]
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -17996,23 +17996,23 @@ void ScaledChainAccumLoop(void) {
         mov     eax, 0x0052d718
         mov     dword ptr [g_dispatchArg], 0xfffffff9
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [g_savedNode]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [eax*4 + 0], 0xfffffff9
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         add     eax, dword ptr [g_dispatchArg]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], 0
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, eax
         mov     dword ptr [g_xformLoopCounter], 0x0000018e
         mov     dword ptr [g_walkCallback], ecx
         _emit   0ebh
         _emit   05h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         add     eax, dword ptr [g_dispatchArg]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [g_walkCallback]
@@ -18182,11 +18182,11 @@ __declspec(naked) void InstallSelfCountdownStr(void) {
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -18202,7 +18202,7 @@ __declspec(naked) void InstallSelfCountdownStr(void) {
 __declspec(naked) void TripleEntry3Block(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         push    ecx
         push    0x00003333
@@ -18220,7 +18220,7 @@ __declspec(naked) void TripleEntry3Block(void) {
         mov     ecx, dword ptr [g_xformScratch2088]
         add     esp, 8
         mov     dword ptr [esi + 0x74], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_fightGroupHead], edx
         pop     esi
         ret
@@ -18276,7 +18276,7 @@ __declspec(naked) void SequencedInit3CallB(void) {
         _emit   00h
         mov     eax, 0x0050b130
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    LoadGeoAsset_Default
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   0fh
@@ -18292,7 +18292,7 @@ __declspec(naked) void SequencedInit3CallB(void) {
         _emit   6dh
         mov     eax, dword ptr [g_load_0052ab10]
         mov     dword ptr [g_walkCallback], esi
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         shl     eax, 2
         mov     dword ptr [eax + 0x60], esi
         mov     ecx, dword ptr [g_walkCallback]
@@ -18346,7 +18346,7 @@ __declspec(naked) void FiveBlockDispatch_ScaledCmp200eCallBool(void) {
         _emit   90h
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x30]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
@@ -18655,11 +18655,11 @@ __declspec(naked) void DualEntryInstall00471920(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -18681,9 +18681,9 @@ __declspec(naked) void JumpTableDispatch(void) {
         mov     ecx, dword ptr [g_walkCallback]
         sar     eax, 2
         add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         jmp     eax
         _emit   90h
         _emit   90h
@@ -18701,7 +18701,7 @@ __declspec(naked) void JumpTableDispatch(void) {
         _emit   90h
         mov     eax, 0x00542ea8
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         jmp     PendingMatch_DirtyFlagsManip
         _emit   90h
         _emit   90h
@@ -18719,7 +18719,7 @@ __declspec(naked) void JumpTableDispatch(void) {
         _emit   90h
         mov     eax, 0x00542ef8
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         jmp     PendingMatch_DirtyFlagsManip
         _emit   90h
         _emit   90h
@@ -18737,7 +18737,7 @@ __declspec(naked) void JumpTableDispatch(void) {
         _emit   90h
         mov     eax, 0x00542e48
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         jmp     PendingMatch_DirtyFlagsManip
         _emit   90h
         _emit   90h
@@ -18755,7 +18755,7 @@ __declspec(naked) void JumpTableDispatch(void) {
         _emit   90h
         mov     eax, 0x00542d00
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         jmp     PendingMatch_DirtyFlagsManip
         _emit   90h
         _emit   90h
@@ -18773,7 +18773,7 @@ __declspec(naked) void JumpTableDispatch(void) {
         _emit   90h
         mov     eax, 0x00542db8
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         jmp     PendingMatch_DirtyFlagsManip
     }
 }
@@ -18945,7 +18945,7 @@ __declspec(naked) void InstallSelfCountdownLong(void) {
 __declspec(naked) void Event_InvokeHandler(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
@@ -18963,9 +18963,9 @@ __declspec(naked) void Event_InvokeHandler(void) {
         mov     eax, 0x004e9ea8
         shr     eax, 2
         add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    eax
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -18985,12 +18985,12 @@ __declspec(naked) void Event_InvokeHandler(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     al, byte ptr [g_xformDirtyFlags]
         test    al, 1
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         _emit   75h
         _emit   0dh
         mov     eax, edx
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         jmp     IncJmp
         ret
     }
@@ -19050,9 +19050,9 @@ __declspec(naked) void ChainPickArgScaledInit(void) {
         mov     dword ptr [g_pendingNodeType], ecx
         mov     ecx, dword ptr [g_acc_00542078]
         add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         jmp     EventPacketDecoder
     }
 }
@@ -19084,7 +19084,7 @@ void Mul10TailPairMidChain(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 4], ecx
         mov     eax, dword ptr [g_eventQueueWorkType]
@@ -19118,7 +19118,7 @@ void Mul10TailPairMidChain(void) {
         test    eax, eax
         _emit   75h
         _emit   12h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0], eax
         }
@@ -19153,12 +19153,12 @@ __declspec(naked) void InstallSelfDualPath(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         mov     edx, 0x00435260
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -19208,16 +19208,16 @@ void MStackPush3SideStore(void) {
         _emit   75h
         _emit   74h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [edx*4 + 0x58], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [eax*4 + 0x54], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_eventQueueWorkType]
         mov     dword ptr [eax*4 + 0x5c], edx
         mov     eax, dword ptr [g_matrixStackTop]
@@ -19290,7 +19290,7 @@ __declspec(naked) void GatedScaledChainSetup(void) {
         mov     ecx, 0x00018000
         mov     eax, dword ptr [edx*4 + 0x18]
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0x3c], ecx
         call    MStackCall_MStackPush2ChainPrepend_004062f0
         mov     eax, dword ptr [g_framePauseFlag]
@@ -19342,11 +19342,11 @@ __declspec(naked) void InstallSelfDualStateDispatch(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -19560,7 +19560,7 @@ __declspec(naked) void DualEntryBitFlagDispatch(void) {
         mov     eax, 0x00000200
         cmp     edx, ecx
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   74h
         _emit   0ah
         mov     eax, 2
@@ -19664,24 +19664,24 @@ __declspec(naked) void Cascade5StageInit(void) {
  */
 __declspec(naked) void ScaledChainInit2Phase(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         xor     esi, esi
         mov     dword ptr [eax*4 + 0x54], esi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [ecx*4 + 0x58], esi
         mov     edx, dword ptr [g_cj_00542054]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x5c]
         add     eax, 0x00041999
         mov     dword ptr [ecx*4 + 0x5c], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [edx*4 + 0x68], 0x00062978
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x74], 0xffffaaab
         mov     eax, dword ptr [esp + 8]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
         call    MStackCall_MStackPush2ChainPrepend_00406340
@@ -19696,7 +19696,7 @@ __declspec(naked) void ScaledChainInit2Phase(void) {
         mov     eax, dword ptr [g_pendingNodeType]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [eax*4 + 0x5c], esi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_pendingNodeType]
         mov     dword ptr [ecx*4 + 0x3c], edx
         pop     esi
@@ -19780,12 +19780,12 @@ __declspec(naked) void InstallSelfMStackOverwrite(void) {
 }
 
 /* @addr 0x0048f090 (203b game) - mstack-push 2, chain[*4+0x38] load and swap, mstack-pop 2 into
- *   esi/edx (final state: g_scaledInit_00542044=last esi); bit-0 toggle based on cmp result.
+ *   esi/edx (final state: g_currentNodeIdx=last esi); bit-0 toggle based on cmp result.
  */
 __declspec(naked) void MStackPush2ChainSwap(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
@@ -19822,7 +19822,7 @@ __declspec(naked) void MStackPush2ChainSwap(void) {
         dec     edx
         cmp     eax, ecx
         mov     eax, dword ptr [g_xformDirtyFlags]
-        mov     dword ptr [g_scaledInit_00542044], esi
+        mov     dword ptr [g_currentNodeIdx], esi
         mov     dword ptr [g_matrixStackTop], edx
         _emit   7dh
         _emit   09h
@@ -19887,11 +19887,11 @@ __declspec(naked) void InstallSelfChain4Call(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -19932,10 +19932,10 @@ __declspec(naked) void DualSectionInit(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     esi, 0x0000001f
         mov     dword ptr [ecx*4 + 0x54], 0xff9c0000
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [edx*4 + 0x30], esi
         call    PushSetCallPop
@@ -19959,9 +19959,9 @@ __declspec(naked) void DualSectionInit(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   37h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x54], 0x00630000
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [edx*4 + 0x30], esi
         call    PushSetCallPop
@@ -19996,14 +19996,14 @@ void MStackPop4Rewrite(void) {
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [ecx*4 + 4], eax
@@ -20014,7 +20014,7 @@ void MStackPop4Rewrite(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     eax, 4
         or      edx, eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         test    ecx, ecx
         mov     dword ptr [g_xformDirtyFlags], edx
         _emit   74h
@@ -20154,7 +20154,7 @@ __declspec(naked) void DualCondMatchSet(void) {
         mov     ecx, 4
         or      eax, ecx
         mov     dword ptr [g_xformDirtyFlags], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         test    eax, eax
         _emit   74h
         _emit   39h
@@ -20192,7 +20192,7 @@ __declspec(naked) void DualCondMatchSet(void) {
 void MStackPush3CmpCall(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
@@ -20210,7 +20210,7 @@ void MStackPush3CmpCall(void) {
         mov     ecx, dword ptr [g_player1NodeIdx]
         mov     eax, dword ptr [edx*4 + 0x38]
         cmp     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   74h
         _emit   1fh
         mov     edx, dword ptr [g_player2NodeIdx]
@@ -20218,11 +20218,11 @@ void MStackPush3CmpCall(void) {
         _emit   74h
         _emit   15h
         mov     eax, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         cmp     eax, ecx
         _emit   74h
         _emit   06h
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    SlotCmp3way
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -20239,7 +20239,7 @@ void MStackPush3CmpCall(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -20350,7 +20350,7 @@ void MStackPushSearchLoop(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], edx
@@ -20360,15 +20360,15 @@ void MStackPushSearchLoop(void) {
         shl     eax, 2
         mov     dword ptr [g_walkCallback], eax
         add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x0c]
         mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   74h
         _emit   24h
         mov     ecx, dword ptr [g_walkCallback]
@@ -20378,13 +20378,13 @@ void MStackPushSearchLoop(void) {
         mov     ecx, dword ptr [eax*4 - 4]
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   75h
         _emit   0dch
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
@@ -20624,7 +20624,7 @@ __declspec(naked) void Install3WayChainStateAdvance(void) {
 void MStackPushTableMatch(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
@@ -20642,7 +20642,7 @@ void MStackPushTableMatch(void) {
         mov     dword ptr [g_xformEntityIdx], eax
         _emit   74h
         _emit   57h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         cmp     ecx, edx
         mov     ecx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], ecx
@@ -20677,7 +20677,7 @@ void MStackPushTableMatch(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -20822,11 +20822,11 @@ __declspec(naked) void InstallSelfWithDispatch(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -20915,7 +20915,7 @@ __declspec(naked) void ChainDispatcher4Call(void) {
 __declspec(naked) void MStackPush2BitLoop(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
@@ -20936,7 +20936,7 @@ __declspec(naked) void MStackPush2BitLoop(void) {
         _emit   00h
         mov     esi, 4
         mov     edx, dword ptr [g_xformDirtyFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         or      edx, esi
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], edx
@@ -20972,7 +20972,7 @@ __declspec(naked) void MStackPush2BitLoop(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         pop     esi
         ret
@@ -20986,7 +20986,7 @@ __declspec(naked) void MStackPush2BitLoop(void) {
 __declspec(naked) void MStackPush1MagicMod2(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
@@ -21026,18 +21026,18 @@ __declspec(naked) void MStackPush1MagicMod2(void) {
         lea     eax, [ecx + 0x200]
         and     eax, 0x7ff
         add     eax, edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     eax, dword ptr [g_dispatchVar10]
         add     eax, ecx
         mov     dword ptr [g_eventQueueCurrent], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         ret
     }
@@ -21055,13 +21055,13 @@ void MStackPush2TableNot(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     eax, 0x004d50a4
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_acc_00542078], 0x0000ffff
         not     eax
@@ -21070,7 +21070,7 @@ void MStackPush2TableNot(void) {
         mov     eax, 0x004d50a8
         shr     eax, 2
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
         and     ecx, 0x0000ffff
         not     eax
@@ -21078,7 +21078,7 @@ void MStackPush2TableNot(void) {
         mov     eax, 0x004d50b0
         shr     eax, 2
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     eax, dword ptr [g_matrixStackTop]
         not     edx
@@ -21087,7 +21087,7 @@ void MStackPush2TableNot(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
@@ -21127,7 +21127,7 @@ __declspec(naked) void InstallSelfDualCountdown(void) {
         ret
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [ecx*4 + 0x24]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    ScaledLoadJmp_24
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -21146,11 +21146,11 @@ __declspec(naked) void InstallSelfDualCountdown(void) {
         mov     dword ptr [eax*4 + 0x84], ebx
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -21262,9 +21262,9 @@ void DualGuardStateMachine(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_audioBitField]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x28]
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
@@ -21280,9 +21280,9 @@ void DualGuardStateMachine(void) {
         test    eax, eax
         _emit   75h
         _emit   4ch
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x30], 0x00000266
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_walkCallback], 2
         call    ThrowFlowSetupCluster
@@ -21329,9 +21329,9 @@ __declspec(naked) void DualGuardStateMachine_SaveCallRestore(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_audioBitField]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x28]
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2
@@ -21347,9 +21347,9 @@ __declspec(naked) void DualGuardStateMachine_SaveCallRestore(void) {
         test    eax, eax
         _emit   75h
         _emit   4ch
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x30], 0x00000267
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_walkCallback], 4
         call    ThrowFlowSetupCluster
@@ -21424,7 +21424,7 @@ __declspec(naked) void TripleEntryStateCascade(void) {
         ret
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0x54]
         mov     dword ptr [g_walkCallback], edx
         mov     esi, dword ptr [eax*4 + 0x58]
@@ -21481,7 +21481,7 @@ __declspec(naked) void StateChainIndirect(void) {
         shr     ecx, 2
         shr     eax, 2
         cmp     edx, esi
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], eax
         _emit   74h
         _emit   07h
@@ -21491,7 +21491,7 @@ __declspec(naked) void StateChainIndirect(void) {
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [edx*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     edx, dword ptr [edx*4 + 0x7c]
         cmp     edx, 3
         mov     dword ptr [g_eventQueueCurrent], edx
@@ -21502,16 +21502,16 @@ __declspec(naked) void StateChainIndirect(void) {
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x30]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         mov     eax, 0x004f1b28
         sub     ecx, 0x60
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    eax
         pop     esi
         ret
@@ -21546,9 +21546,9 @@ __declspec(naked) void ByteWordTableTaggedDispatch(void) {
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_eventQueueCurrent], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     esi, dword ptr [eax*4 + 0]
         lea     ecx, [eax*4 + 0]
         test    esi, esi
@@ -21556,9 +21556,9 @@ __declspec(naked) void ByteWordTableTaggedDispatch(void) {
         _emit   75h
         _emit   60h
         lea     eax, [eax + edx + 1]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         shl     eax, 2
         test    eax, eax
         _emit   74h
@@ -21570,7 +21570,7 @@ __declspec(naked) void ByteWordTableTaggedDispatch(void) {
         test    eax, eax
         _emit   75h
         _emit   3fh
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_walkCallback]
         dec     eax
         lea     ecx, [edx*4 + 0]
@@ -21617,7 +21617,7 @@ __declspec(naked) void ByteWordTableTaggedDispatch(void) {
 __declspec(naked) void MStackChainCountdownLoop(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
@@ -21646,7 +21646,7 @@ __declspec(naked) void MStackChainCountdownLoop(void) {
         mov     dword ptr [g_eventQueueCurrent], 4
         mov     dword ptr [g_walkCallback], ecx
         lea     esi, [edx + ecx]
-        mov     dword ptr [g_scaledInit_00542044], esi
+        mov     dword ptr [g_currentNodeIdx], esi
         mov     ecx, dword ptr [esi*4 + 4]
         test    eax, eax
         mov     dword ptr [g_eventQueueCurrent], ecx
@@ -21673,7 +21673,7 @@ __declspec(naked) void MStackChainCountdownLoop(void) {
         pop     esi
         mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         ret
     }
@@ -21719,7 +21719,7 @@ __declspec(naked) void GatedChainInit(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         shl     eax, 2
         mov     dword ptr [eax + 0x54], 0
         mov     dword ptr [eax + 0x58], 0
@@ -21739,7 +21739,7 @@ __declspec(naked) void GatedChainInit(void) {
         test    eax, eax
         _emit   75h
         _emit   3fh
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x54], 0x0000b333
         mov     dword ptr [ecx*4 + 0x58], 0x00003333
         mov     dword ptr [ecx*4 + 0x5c], 0x00003333
@@ -21849,11 +21849,11 @@ __declspec(naked) void InstallSelfChainEsi(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -22043,7 +22043,7 @@ __declspec(naked) void MStackPushMul10TailSqrt(void) {
         mov     dword ptr [eax*4 + g_matrixStack_arr], edx
         mov     ecx, dword ptr [g_eventQueueWorkType]
         mov     edx, dword ptr [g_pendingNodeType]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     eax, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_acc_00542078], eax
         mov     esi, dword ptr [edx*4 + 0]
@@ -22128,11 +22128,11 @@ __declspec(naked) void InstallSelfChainStateInit(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -22175,11 +22175,11 @@ __declspec(naked) void QuadInstallSelfChainStr(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -22305,7 +22305,7 @@ void MStackPush4IndirectCall(void) {
         mov     dword ptr [g_fightGroupHead], ecx
         mov     edx, dword ptr [eax*4 + 0x3c]
         mov     dword ptr [g_baseSel], edx
-        call    dword ptr [g_scaledInit_00542044]
+        call    dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
@@ -22511,7 +22511,7 @@ __declspec(naked) void StateGateMStackOverlap(void) {
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, dword ptr [edx*4 + 0x24]
         cmp     eax, edx
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         _emit   75h
         _emit   07h
         call    InstallSelfMultiCascade
@@ -22582,12 +22582,12 @@ void MStackPush1ChainPair(void) {
         mov     eax, dword ptr [ecx*4 + 0]
         inc     ecx
         mov     dword ptr [g_cj_00542058], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         shl     eax, 0x10
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x54], eax
         mov     ecx, dword ptr [g_cj_00542058]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [ecx*4 + 0]
         inc     ecx
         shl     eax, 0x10
@@ -22598,7 +22598,7 @@ void MStackPush1ChainPair(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_cj_00542058], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x5c], ecx
         mov     eax, dword ptr [g_matrixStackTop]
@@ -22618,7 +22618,7 @@ void MStackPush1ChainPair(void) {
 void MStackPush3CallChain(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
@@ -22671,7 +22671,7 @@ void MStackPush3CallChain(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -22711,11 +22711,11 @@ __declspec(naked) void InstallSelfChainAccumPath(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     edx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [edx*4 + 0], edi
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     edx
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [eax + 4], edx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], ecx
@@ -22734,7 +22734,7 @@ __declspec(naked) void InstallSelfChainAccumPath(void) {
 __declspec(naked) void MStackPush2VolumeCascade(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + g_matrixStack_arr], ecx
@@ -22850,11 +22850,11 @@ __declspec(naked) void InstallSelfCountdownChain(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -22886,7 +22886,7 @@ __declspec(naked) void Mul10TailPairChain(void) {
         shr     ecx, 2
         cmp     edx, esi
         mov     dword ptr [g_xformEntityIdx], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   74h
         _emit   07h
         mov     eax, ecx
@@ -22981,11 +22981,11 @@ __declspec(naked) void InstallSelfFullChainInit(void) {
         mov     dword ptr [eax*4 + 0x84], edi
         mov     eax, dword ptr [ecx + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [ecx + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], esi
@@ -23113,7 +23113,7 @@ void Cascade3ChainInit(void) {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     edx, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     eax, dword ptr [edx*4 + 0x34]
         mov     dword ptr [g_walkCallback], eax
         mov     ecx, dword ptr [ecx*4 + 0x34]
@@ -23396,13 +23396,13 @@ loop_004251fd:
         _emit   07h
         add     eax, ecx
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     edx
         dec     esi
         dec     edi
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         jne     loop_004251fd
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [g_pendingNodeType]
@@ -23412,7 +23412,7 @@ loop_004251fd:
         sub     eax, 3
         pop     edi
         pop     esi
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_pendingNodeType], eax
         pop     ebx
@@ -23495,11 +23495,11 @@ __declspec(naked) void QuadStateHandler(void) {
         _emit   75h
         _emit   24h
         mov     eax, dword ptr [g_eventQueueNotMask]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x0c]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x04]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         jmp     eax
         ret
         nop
@@ -23536,7 +23536,7 @@ __declspec(naked) void InstallSelfBranchCascade(void) {
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [ecx*4 + 0x18]
         test    eax, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   75h
         _emit   07h
         call    GuardedSeq_MStackCall_then_CallSetPause_00471670
@@ -23567,7 +23567,7 @@ __declspec(naked) void InstallSelfBranchCascade(void) {
         ret
         mov     edx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [edx*4 + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    ChainListVecAdd
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -23589,7 +23589,7 @@ __declspec(naked) void InstallSelfBranchCascade(void) {
  *   if bit2 of g_xformDirtyFlags set: copy g_cj_00542058 to g_dispatchCopyField, ret.
  *   else: scaledInit[+0x30] = 0x78; call MStackCall; if pause? ret.
  *   else: copy fields +0x54/+0x58/+0x5c (via g_walkCallback temp) and +0x64 from
- *   g_cj_00542058<<2 to g_scaledInit_00542044<<2; zero +0x60/+0x68; copy
+ *   g_cj_00542058<<2 to g_currentNodeIdx<<2; zero +0x60/+0x68; copy
  *   scaledInit to g_dispatchCopyField; merge low bit of [+0x34]; ret.
  */
 void DispatchCopyFields(void) {
@@ -23612,7 +23612,7 @@ void DispatchCopyFields(void) {
         mov     ecx, dword ptr [g_cj_00542058]
         mov     dword ptr [g_dispatchCopyField], ecx
         ret
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x78
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
@@ -23626,7 +23626,7 @@ void DispatchCopyFields(void) {
         _emit   00h
         _emit   00h
         mov     ecx, dword ptr [g_cj_00542058]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         shl     ecx, 2
         shl     eax, 2
         mov     edx, dword ptr [ecx + 0x54]
@@ -23644,7 +23644,7 @@ void DispatchCopyFields(void) {
         mov     dword ptr [eax + 0x60], 0
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax + 0x68], edx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_dispatchCopyField], edx
         mov     edx, dword ptr [eax + 0x34]
         mov     dword ptr [g_walkCallback], edx
@@ -23706,9 +23706,9 @@ L_isw_walk:
 L_isw_after_thunk:
         mov     ecx, dword ptr [g_eventQueueChild]
         add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    eax
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -23787,11 +23787,11 @@ __declspec(naked) void GuardedThenCjCascade(void) {
         mov     ecx, dword ptr [g_player1NodeIdx]
         mov     eax, dword ptr [g_gtPlayerProbe2]
         cmp     edx, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   74h
         _emit   0ah
         mov     eax, dword ptr [g_gtPlayerProbe1]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x5c]
         mov     dword ptr [g_walkCallback], ecx
         mov     eax, dword ptr [eax*4 + 0x60]
@@ -23835,7 +23835,7 @@ void GuardedChainMaskOr(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [eax*4 + 0x4c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackBracket4_ListInsertZeroFill
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -23870,32 +23870,32 @@ void GuardedChainMaskOr(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x1c]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   7fh
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x08]
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   6ah
         mov     ecx, 0xf0ffffff
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x20]
         and     edx, ecx
         mov     dword ptr [eax*4 + 0x20], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 0x0b000000
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      eax, 0x0b000000
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         mov     ecx, dword ptr [g_xformDirtyFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         or      ecx, 4
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], ecx
@@ -23911,7 +23911,7 @@ void GuardedChainMaskOr(void) {
 /* @addr 0x00422fc0 (237b game) - 4-call guarded sequence ending with cj field set.
  *   call DownloadPlayerChar with g_eventQueueCurrent=2; if pause? ret.
  *   call GuardedDualPushTailJmp; if pause? ret.
- *   mstack-push g_scaledInit_00542044, call ScaledOr4DirtyClear, mstack-pop.
+ *   mstack-push g_currentNodeIdx, call ScaledOr4DirtyClear, mstack-pop.
  *   cj[+0x30]=3, cj[+0x34] |= 0x1c0000.
  *   call TwoStateLookupDirty; if !pause: cj[+0x3c] = g_bootHeavyState; ret.
  */
@@ -23944,17 +23944,17 @@ void QuadGuardedCjSet_00422fc0(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    ScaledOr4DirtyClear
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, 3
@@ -24067,18 +24067,18 @@ __declspec(naked) void InstallSelfStateMachine_ScaledArrStore_GuardedChainCmpDua
 
 
 /* @addr 0x0048ce60 (237b game) - mstack-push pair + 3 guarded calls.
- *   push g_scaledInit_00542044 and g_xformEntityIdx onto mstack (2x inc g_matrixStackTop).
+ *   push g_currentNodeIdx and g_xformEntityIdx onto mstack (2x inc g_matrixStackTop).
  *   cj[+0x34] |= 0x0800 (or ch,8). Select dispatch arg: if cj == g_player1NodeIdx
  *     use g_dlNalt1 else use g_dlNalt2; store to g_walkCallback.
  *   call Helper_DownloadSetup; if pause? ret.
  *   load scaledInit[+0x14] -> g_xformEntityIdx; call DispatchSetDirtyToggle; if pause? ret.
  *   if bit2 of g_xformDirtyFlags clear: load scaledInit[+0x18] -> g_xformEntityIdx.
- *   call RecursiveMStackByteStream; if pause? ret. pop pair: g_xformEntityIdx, g_scaledInit_00542044; ret.
+ *   call RecursiveMStackByteStream; if pause? ret. pop pair: g_xformEntityIdx, g_currentNodeIdx; ret.
  */
 void MStackPushPairTriCall(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
@@ -24104,7 +24104,7 @@ void MStackPushPairTriCall(void) {
         test    eax, eax
         _emit   75h
         _emit   74h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x14]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    DispatchSetDirtyToggle
@@ -24115,7 +24115,7 @@ void MStackPushPairTriCall(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   12h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x18]
         mov     dword ptr [g_xformEntityIdx], eax
         call    RecursiveMStackByteStream
@@ -24130,7 +24130,7 @@ void MStackPushPairTriCall(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -24282,11 +24282,11 @@ __declspec(naked) void InstallSelfScaledChain(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -24318,11 +24318,11 @@ __declspec(naked) void MstackPopScaledChainPlusThunks(void) {
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     edx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [edx*4 + 0], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_walkCallback]
@@ -24347,9 +24347,9 @@ __declspec(naked) void MstackPopScaledChainPlusThunks(void) {
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         jmp     eax
         ret
         nop
@@ -24390,7 +24390,7 @@ __declspec(naked) void DualHelperCallStoreCjFields(void) {
         test    edx, edx
         mov     ecx, dword ptr [eax*4 + 0x38]
         push    esi
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   74h
         _emit   1fh
         mov     eax, dword ptr [g_cj_0054205c]
@@ -24434,12 +24434,12 @@ __declspec(naked) void DualHelperCallStoreCjFields(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [edx*4 + 0x5c]
         add     edx, eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         add     ecx, esi
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x54], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_eventQueueCurrent]
         pop     esi
         mov     dword ptr [ecx*4 + 0x5c], edx
@@ -24483,11 +24483,11 @@ __declspec(naked) void InstallSelfThreeStateDispatch(void) {
         add     esi, 0x02000000
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     ecx, dword ptr [eax + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], esi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -24503,11 +24503,11 @@ __declspec(naked) void InstallSelfThreeStateDispatch(void) {
         mov     dword ptr [ecx*4 + 0x84], esi
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -24594,25 +24594,25 @@ __declspec(naked) void CjFieldCopyCascade(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [edx*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [ecx*4 + 0]
         or      al, 4
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0], eax
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [ecx*4 + 0x30]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x34], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [edx*4 + 0x38]
         mov     dword ptr [g_walkCallback], eax
@@ -24737,7 +24737,7 @@ __declspec(naked) void InstallSelfStateCountdown(void) {
         ret
         mov     ecx, dword ptr [g_baseSel]
         mov     ecx, dword ptr [ecx*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     ecx, dword ptr [ecx*4 + 0x58]
         cmp     ecx, 0xffff0000
         mov     dword ptr [g_walkCallback], ecx
@@ -24759,11 +24759,11 @@ __declspec(naked) void InstallSelfStateCountdown(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -24778,7 +24778,7 @@ __declspec(naked) void InstallSelfStateCountdown(void) {
 /* @addr 0x004230b0 (246b game) - 4-call guarded sequence (sibling of 0x00422fc0).
  *   Set up locals (g_eventQueueCurrent=3, g_walkCallback=g_dlNalt4); call DownloadPlayerChar.
  *   If pause? ret. Reload then call GuardedDualPushTailJmp. If pause? ret.
- *   mstack-push g_scaledInit_00542044; call ScaledOr4DirtyClear; mstack-pop;
+ *   mstack-push g_currentNodeIdx; call ScaledOr4DirtyClear; mstack-pop;
  *   set cj[+0x30]=4 + cj[+0x34] |= 0x1c0001; call TwoStateLookupDirty;
  *   if pause? ret; else cj[+0x3c] = g_particleInitState; ret.
  */
@@ -24811,17 +24811,17 @@ void QuadGuardedCjSet_004230b0(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    ScaledOr4DirtyClear
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, 4
@@ -24900,7 +24900,7 @@ __declspec(naked) void TripleBlockCjCopy(void) {
         ret
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     edx, dword ptr [eax*4 + 0x5c]
         mov     dword ptr [g_walkCallback], edx
         mov     esi, dword ptr [eax*4 + 0x60]
@@ -24908,17 +24908,17 @@ __declspec(naked) void TripleBlockCjCopy(void) {
         mov     eax, dword ptr [eax*4 + 0x64]
         mov     dword ptr [g_eventQueueWorkType], eax
         mov     dword ptr [ecx*4 + 0x54], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_eventQueueCurrent]
         mov     dword ptr [ecx*4 + 0x58], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_eventQueueWorkType]
         mov     dword ptr [eax*4 + 0x5c], ecx
         mov     edx, dword ptr [g_cj_0054205c]
         mov     eax, 0x37
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x28], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x28], ecx
         call    TripleBlockCjCopy
@@ -25037,7 +25037,7 @@ __declspec(naked) void DispatcherChainRampClamp(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x274
         _emit   0c7h
         _emit   04h
@@ -25050,11 +25050,11 @@ __declspec(naked) void DispatcherChainRampClamp(void) {
         _emit   00h
         _emit   30h
         _emit   0f8h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     ecx, 1
         mov     dword ptr [edx*4 + 0x30], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [eax*4 + 0x18]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_pendingNodeType], eax
@@ -25156,12 +25156,12 @@ __declspec(naked) void InstallSelfMStackPushDispatch(void) {
         mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_eventQueueEnd], eax
         mov     edx, dword ptr [ecx]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [edx*4 + 0], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [ecx], eax
         call    IncStoreCallIATDec
         mov     eax, dword ptr [g_framePauseFlag]
@@ -25270,11 +25270,11 @@ __declspec(naked) void DualBlockInstallSelfWithSibling(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -25286,7 +25286,7 @@ __declspec(naked) void DualBlockInstallSelfWithSibling(void) {
 }
 
 /* @addr 0x0049d450 (248b game) - linked-list traverse adding 3 fields per node.
- *   eax = [g_scaledInit_00542044]; if 0 ret.
+ *   eax = [g_currentNodeIdx]; if 0 ret.
  *   ecx = [g_xformEntityIdx]<<2 (table base, byte address).
  *   For each node: node[+4/+8/+0xc] += table[+0/+4/+8] (g_walkCallback temp).
  *   eax = node[+0] (next link). Loop while eax != 0.
@@ -25294,7 +25294,7 @@ __declspec(naked) void DualBlockInstallSelfWithSibling(void) {
  */
 __declspec(naked) void LinkedListFieldAdd(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         test    eax, eax
         mov     dword ptr [g_eventQueueCurrent], eax
@@ -25332,7 +25332,7 @@ __declspec(naked) void LinkedListFieldAdd(void) {
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_eq], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   74h
         _emit   76h
         mov     edx, dword ptr [g_xformEntityIdx]
@@ -25363,7 +25363,7 @@ __declspec(naked) void LinkedListFieldAdd(void) {
         test    ecx, ecx
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_eq], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   75h
         _emit   8ah
         pop     esi
@@ -25503,11 +25503,11 @@ __declspec(naked) void InstallSelfWithStateInit(void) {
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -25520,7 +25520,7 @@ __declspec(naked) void InstallSelfWithStateInit(void) {
 
 
 /* @addr 0x00464090 (250b game) - bit-shift extraction sequence.
- *   mstack-push g_eventQueueCurrent and g_scaledInit_00542044. g_eventQueueCurrent=4.
+ *   mstack-push g_eventQueueCurrent and g_currentNodeIdx. g_eventQueueCurrent=4.
  *   eax = g_phaseCounter*4 -> g_walkCallback; eax += g_dispatchAcc.
  *   edx = g_stateCountdown - 1; eax = [eax+0x0c]; eax += edx.
  *   ecx = g_phaseCounter + g_phaseThunkVar; esi = [ecx*4]; edx = eax;
@@ -25538,7 +25538,7 @@ __declspec(naked) void BitShiftExtract(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
@@ -25549,17 +25549,17 @@ __declspec(naked) void BitShiftExtract(void) {
         mov     dword ptr [g_walkCallback], eax
         add     eax, edx
         mov     edx, dword ptr [g_stateCountdown]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x0c]
         dec     edx
         mov     dword ptr [g_walkCallback], edx
         add     eax, edx
         mov     edx, dword ptr [g_phaseThunkVar]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
         add     ecx, edx
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     esi, dword ptr [ecx*4 + 0]
         mov     edx, eax
         lea     ecx, [esi - 2]
@@ -25578,7 +25578,7 @@ __declspec(naked) void BitShiftExtract(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
@@ -25631,11 +25631,11 @@ __declspec(naked) void InstallSelfWithSibling(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -25678,7 +25678,7 @@ void CdeclArgScaledLookupAndStore(void) {
         mov     ecx, dword ptr [g_player1NodeIdx]
         mov     dword ptr [g_eventQueueChild], edx
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         cmp     edx, ecx
         _emit   74h
         _emit   34h
@@ -25758,7 +25758,7 @@ __declspec(naked) void FourCallBitGateChain(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     ecx, dword ptr [eax*4 + 4]
@@ -25775,7 +25775,7 @@ __declspec(naked) void FourCallBitGateChain(void) {
         test    byte ptr [g_xformDirtyFlags], bl
         _emit   75h
         _emit   68h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_pendingNodeType], edx
         mov     ecx, dword ptr [eax*4 + 8]
@@ -25788,7 +25788,7 @@ __declspec(naked) void FourCallBitGateChain(void) {
         test    byte ptr [g_xformDirtyFlags], bl
         _emit   75h
         _emit   34h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_eventQueueTotal], edx
         mov     ecx, dword ptr [eax*4 + 0x0c]
@@ -25807,7 +25807,7 @@ __declspec(naked) void FourCallBitGateChain(void) {
         pop     ebx
         ret
         mov     eax, dword ptr [g_xformDirtyFlags]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         or      al, 1
         mov     dword ptr [g_eventQueueEnd], edx
         mov     dword ptr [g_xformDirtyFlags], eax
@@ -25817,12 +25817,12 @@ __declspec(naked) void FourCallBitGateChain(void) {
 }
 
 /* @addr 0x0049ec00 (252b game) - 2-step indirect lookup + 4-way edx select.
- *   mstack-push g_scaledInit_00542044, g_dispatchArg.
+ *   mstack-push g_currentNodeIdx, g_dispatchArg.
  *   ecx = g_audioBitField; eax = g_walkCallback; g_xformEntityIdx=ecx; edx=eax;
  *   ecx += eax (sum index); g_dispatchArg=edx (original eax).
- *   eax = [ecx*4]; g_xformEntityIdx=eax. ecx = [eax*4]; g_scaledInit_00542044=ecx;
+ *   eax = [ecx*4]; g_xformEntityIdx=eax. ecx = [eax*4]; g_currentNodeIdx=ecx;
  *   ecx = [ecx*4]; g_walkCallback=ecx. cmp ecx, 0xf;
- *   ecx = [eax*4 + 0x40]; g_scaledInit_00542044=ecx; ecx = [ecx*4];
+ *   ecx = [eax*4 + 0x40]; g_currentNodeIdx=ecx; ecx = [ecx*4];
  *   g_walkCallback=ecx. jbe block_8or10 (ecx<=0xf).
  *   block_c_or_e (ecx>0xf): edx = (ecx!=0 ? 0xe : 0xc).
  *   block_8_or_a: edx = (ecx!=0 ? 0xa : 8).
@@ -25832,7 +25832,7 @@ __declspec(naked) void FourCallBitGateChain(void) {
 void DoubleIndirectFourWaySelect(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
@@ -25850,12 +25850,12 @@ void DoubleIndirectFourWaySelect(void) {
         mov     eax, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     ecx, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_walkCallback], ecx
         cmp     ecx, 0x0f
         mov     ecx, dword ptr [eax*4 + 0x40]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     ecx, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_walkCallback], ecx
         _emit   76h
@@ -25890,7 +25890,7 @@ void DoubleIndirectFourWaySelect(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -26034,7 +26034,7 @@ __declspec(naked) void SevenThunks(void) {
 
 /* @addr 0x00431260 (256b game) - 5-field copy from indexed table to chain.
  *   eax = g_load_0052ab10 (chain base); ecx = g_xformEntityIdxSrc (table idx).
- *   g_scaledInit_00542044 = eax; g_xformEntityIdx = ecx.
+ *   g_currentNodeIdx = eax; g_xformEntityIdx = ecx.
  *   Initial: chain[+0x54] = table[+0]. Then 4 more iterations:
  *     idx++; chain[+0x58/+0x5c/+0x60/+0x64] = table[+idx]; g_walkCallback=value.
  *   Then idx++; chain[+0x68] = table[+idx] (no g_walkCallback set).
@@ -26043,24 +26043,24 @@ __declspec(naked) void SevenThunks(void) {
  *   g_walkBoundsLimit=0xffff0000; ret.
  */
 void FiveFieldChainCopyTableWalk(void) {
-    g_scaledInit_00542044 = g_load_0052ab10;
+    g_currentNodeIdx = g_load_0052ab10;
     g_xformEntityIdx = g_xformEntityIdxSrc;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x54) = g_walkCallback;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x54) = g_walkCallback;
     g_xformEntityIdx++;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x58) = g_walkCallback;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x58) = g_walkCallback;
     g_xformEntityIdx++;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x5c) = g_walkCallback;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x5c) = g_walkCallback;
     g_xformEntityIdx++;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x60) = g_walkCallback;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x60) = g_walkCallback;
     g_xformEntityIdx++;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x64) = g_walkCallback;
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x64) = g_walkCallback;
     g_xformEntityIdx++;
-    *(unsigned int *)(g_scaledInit_00542044 * 4 + 0x68) = *(unsigned int *)(g_xformEntityIdx * 4);
+    *(unsigned int *)(g_currentNodeIdx * 4 + 0x68) = *(unsigned int *)(g_xformEntityIdx * 4);
     g_xformEntityIdx++;
     g_pendingClear = 0;
     g_walkBoundsSlot = 0;
@@ -26232,11 +26232,11 @@ __declspec(naked) void InstallSelfChainPlusGuardedTail(void) {
         add     ecx, 0x01000000
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -26324,11 +26324,11 @@ __declspec(naked) void InstallSelfPlusThresholdJmpChain(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -26396,7 +26396,7 @@ void GuardedCascadeCjSetMul10(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x106
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x4c], eax
@@ -26426,7 +26426,7 @@ void GuardedCascadeCjSetMul10(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
         mov     dword ptr [g_eventQueueCurrent], ecx
@@ -26441,20 +26441,20 @@ void GuardedCascadeCjSetMul10(void) {
         test    eax, eax
         _emit   75h
         _emit   45h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0xffffdc6b
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         add     ecx, 0x1b
         mov     dword ptr [g_eventQueueWorkType], 0x3333
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackPushVec3Mul10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   07h
-        sub     dword ptr [g_scaledInit_00542044], 0x1b
+        sub     dword ptr [g_currentNodeIdx], 0x1b
         }
 }
 
@@ -26508,7 +26508,7 @@ __declspec(naked) void TripleBlockInstallSelf(void) {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [ecx*4 + 4], eax
@@ -26526,11 +26526,11 @@ __declspec(naked) void TripleBlockInstallSelf(void) {
         mov     edx, dword ptr [g_walkCallback]
         lea     eax, [ecx*4 + 4]
         mov     ecx, dword ptr [ecx*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x00465f30
@@ -26610,11 +26610,11 @@ __declspec(naked) void InstallSelfPlusTrampoline(void) {
         mov     dword ptr [ecx*4 + 0x84], ebx
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -26647,7 +26647,7 @@ __declspec(naked) void InstallSelfPlusTrampoline(void) {
 
 
 /* @addr 0x0043e2d0 (259b game) - mstack-push cj, then helper call + 3 Mul10Tail.
- *   mstack-push g_cj_0054205c; g_cj_0054205c = g_scaledInit_00542044;
+ *   mstack-push g_cj_0054205c; g_cj_0054205c = g_currentNodeIdx;
  *   g_eventQueueEnd = baseSel[+0x64]; call SetupVecFsmCluster; if pause? final-ret.
  *   esi = scaledInit*4 base. 3x Mul10Tail for fields +0x78/+0x7c/+0x80 with 0x9999 mod;
  *   then g_xformEntityIdx = g_load_0052ab10 + 0x15; g_eventQueueCurrent = 0x2b85;
@@ -26662,7 +26662,7 @@ __declspec(naked) void HelperCallTripleMul10(void) {
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [g_cj_0054205c], edx
         mov     ecx, dword ptr [eax*4 + 0x64]
@@ -26676,7 +26676,7 @@ __declspec(naked) void HelperCallTripleMul10(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x78]
         lea     esi, [edx*4 + 0]
         push    eax
@@ -26883,7 +26883,7 @@ __declspec(naked) void InstallSelfChainedDispatch(void) {
         _emit   3dh
         mov     edx, 0x004ec0a8
         shr     edx, 2
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    GuardedDirtyXformFromTable
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -26902,11 +26902,11 @@ __declspec(naked) void InstallSelfChainedDispatch(void) {
 
 /* @addr 0x0049cf70 (259b game) - mstack-push triple, call helper, conditional cj update + bit toggle.
  *   mstack-push g_xformEntityIdx, g_pendingNodeType, g_eventQueueTotal.
- *   g_eventQueueTotal = g_scaledInit_00542044.
+ *   g_eventQueueTotal = g_currentNodeIdx.
  *   call MStackPush3LinkedListZeroWalk; if pause? final-ret.
  *   if bit2 of g_xformDirtyFlags set, skip middle block.
  *   else: g_pendingNodeType=[g_eventQueueTotal*4 + 0x2c]; [g_xformEntityIdx*4]=g_pendingNodeType;
- *     [g_eventQueueTotal*4 + 0x2c]=g_scaledInit_00542044.
+ *     [g_eventQueueTotal*4 + 0x2c]=g_currentNodeIdx.
  *   mstack-pop triple. g_xformDirtyFlags |= 4; if scaledInit==0 ret;
  *   else g_xformDirtyFlags ^= 4 (clear bit2); ret.
  */
@@ -26927,7 +26927,7 @@ void MStackPush3HelperCondToggle(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_eventQueueTotal], edx
         call    MStackPush3LinkedListZeroWalk
         mov     eax, dword ptr [g_framePauseFlag]
@@ -26950,7 +26950,7 @@ void MStackPush3HelperCondToggle(void) {
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [edx*4 + 0], eax
         mov     eax, dword ptr [g_eventQueueTotal]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x2c], edx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [eax*4 + 0]
@@ -26966,7 +26966,7 @@ void MStackPush3HelperCondToggle(void) {
         mov     dword ptr [g_xformEntityIdx], edx
         mov     edx, dword ptr [g_xformDirtyFlags]
         mov     dword ptr [g_matrixStackTop], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         or      edx, ecx
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], edx
@@ -27027,7 +27027,7 @@ __declspec(naked) void InstallSelfThreeStateBranch(void) {
         mov     edx, 0x00439d20
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     edx, 0x02000000
         _emit   0ebh
         _emit   3fh
@@ -27038,12 +27038,12 @@ __declspec(naked) void InstallSelfThreeStateBranch(void) {
         mov     edx, 0x00439d20
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     edx, 0x01000000
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -27058,7 +27058,7 @@ __declspec(naked) void InstallSelfThreeStateBranch(void) {
 /* @addr 0x0043cb00 (262b game) - guarded cascade then 4-field cj copy with bit-OR.
  *   g_xformEntityIdx = 0x0050d434>>2; call MStackPushDispatchBitGate; if pause? final-ret.
  *   if bit2 of g_xformDirtyFlags set: tail-jmp ScaledInitWithCounterAndType_004314f0.
- *   g_cj_0054205c = g_scaledInit_00542044. call MStackPushTwoEntryChainCall; if pause? final-ret.
+ *   g_cj_0054205c = g_currentNodeIdx. call MStackPushTwoEntryChainCall; if pause? final-ret.
  *   call MStackCall_MStackPush2ChainPrepend_00406340; if pause? final-ret.
  *   Clear cj[+0x5c] and g_eventQueueNotMask. cj[+0x64] = g_eventQueueIdx[+0x64].
  *   cj[+0x34] = (cj[+0x34] & 0xfe) | (g_eventQueueIdx[+0x34] & 1) | 0x81000.
@@ -27082,7 +27082,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr(void) {
         _emit   74h
         _emit   05h
         jmp     ScaledInitWithCounterAndType_004314f0
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_cj_0054205c], ecx
         call    MStackPushTwoEntryChainCall
         mov     eax, dword ptr [g_framePauseFlag]
@@ -27137,7 +27137,7 @@ __declspec(naked) void GuardedCascadeCjCopyFieldsBitOr(void) {
 
 /* @addr 0x0048ae50 (263b game) - mstack-push pair + indirect dispatch + cj copy.
  *   mstack-push g_currentNodeFlags and g_xformScratch2088. g_eventQueueCurrent = g_currentNodeFlags.
- *   g_scaledInit_00542044 = g_eventQueueEnd; g_xformEntityIdx = g_eventQueueIdx.
+ *   g_currentNodeIdx = g_eventQueueEnd; g_xformEntityIdx = g_eventQueueIdx.
  *   g_walkCallback = 0; indirect call [g_eventQueueChild] (cdecl callback).
  *   If pause? final-ret. call AerialKickComboCluster; if pause? final-ret.
  *   cj[+0x58] = g_walkCallback; cj[+0x54] = g_currentNodeFlags; cj[+0x5c] = g_xformScratch2088.
@@ -27159,7 +27159,7 @@ __declspec(naked) void IndirectDispatchCjStore(void) {
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [g_eventQueueIdx]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_xformEntityIdx], eax
         mov     dword ptr [g_walkCallback], 0
         call    dword ptr [g_eventQueueChild]
@@ -27262,12 +27262,12 @@ __declspec(naked) void DiffMul10Loop(void) {
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_xformLoopCounter], 2
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         inc     edx
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [edx*4 + 0]
         push    eax
@@ -27283,11 +27283,11 @@ __declspec(naked) void DiffMul10Loop(void) {
         mov     dword ptr [g_xformLoopCounter], ecx
         _emit   79h
         _emit   0a8h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, edx
         sub     ecx, 3
         sub     eax, 4
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], eax
         pop     esi
         ret
@@ -27324,7 +27324,7 @@ void GuardedCascadeCjLink70Mul10(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x28f
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x4c], eax
@@ -27354,7 +27354,7 @@ void GuardedCascadeCjLink70Mul10(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
         mov     dword ptr [g_eventQueueCurrent], ecx
@@ -27370,20 +27370,20 @@ void GuardedCascadeCjLink70Mul10(void) {
         _emit   75h
         _emit   4ch
         mov     eax, dword ptr [g_baseSel]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [eax*4 + 0x70]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_eventQueueWorkType], 0x3333
         add     ecx, 0x1b
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackPushVec3Mul10
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   07h
-        sub     dword ptr [g_scaledInit_00542044], 0x1b
+        sub     dword ptr [g_currentNodeIdx], 0x1b
         }
 }
 
@@ -27525,7 +27525,7 @@ __declspec(naked) void InstallSelfBootInit(void) {
         call    InstallSelfTableWalk
         pop     esi
         ret
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 2
         mov     dword ptr [edx*4 + 0], 0
         mov     dword ptr [g_scaledChainLoop], 1
@@ -27546,11 +27546,11 @@ __declspec(naked) void InstallSelfBootInit(void) {
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -27563,7 +27563,7 @@ __declspec(naked) void InstallSelfBootInit(void) {
 
 
 /* @addr 0x004925d0 (266b game) - mstack-push scaledInit + multi-call dispatch with 5-field init.
- *   mstack-push g_scaledInit_00542044; g_xformEntityIdx = 0x0050f4e8 >> 2.
+ *   mstack-push g_currentNodeIdx; g_xformEntityIdx = 0x0050f4e8 >> 2.
  *   call DispatcherComplex260_FramePauseScaledStore; if pause? final-ret.
  *   If bit2 of g_xformDirtyFlags set, skip to final-ret.
  *   Else: scaledInit[+0x54]=0, scaledInit[+0x58]=0xff920000, scaledInit[+0x30]=0x1c.
@@ -27576,7 +27576,7 @@ __declspec(naked) void InstallSelfBootInit(void) {
 void MStackPushChainDispatchInit5(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     edx, 0x0050f4e8
         mov     dword ptr [g_matrixStackTop], eax
@@ -27599,12 +27599,12 @@ void MStackPushChainDispatchInit5(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x54], 0
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x1c
         mov     dword ptr [ecx*4 + 0x58], 0xff920000
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
         call    MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
@@ -27637,7 +27637,7 @@ void MStackPushChainDispatchInit5(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -27680,11 +27680,11 @@ __declspec(naked) void InstallSelfThreeStateScaledLoad(void) {
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x02000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -27699,11 +27699,11 @@ __declspec(naked) void InstallSelfThreeStateScaledLoad(void) {
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -27719,7 +27719,7 @@ __declspec(naked) void InstallSelfThreeStateScaledLoad(void) {
 __declspec(naked) void MStackBitLoopTripleCall(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         push    ebx
         mov     dword ptr [g_matrixStackTop], eax
@@ -27745,7 +27745,7 @@ __declspec(naked) void MStackBitLoopTripleCall(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_cj_0054205c]
         cmp     ecx, dword ptr [eax*4 + 0x2c]
         _emit   74h
@@ -27773,7 +27773,7 @@ __declspec(naked) void MStackBitLoopTripleCall(void) {
         test    byte ptr [g_xformDirtyFlags], bl
         _emit   75h
         _emit   48h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_cj_0054205c]
         cmp     ecx, dword ptr [eax*4 + 0x2c]
         _emit   75h
@@ -27801,7 +27801,7 @@ __declspec(naked) void MStackBitLoopTripleCall(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         pop     esi
         pop     ebx
@@ -27837,9 +27837,9 @@ __declspec(naked) void InstallSelfTableDispatch(void) {
         mov     eax, 0x00543200
         shr     eax, 2
         add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 4]
@@ -27870,11 +27870,11 @@ __declspec(naked) void InstallSelfTableDispatch(void) {
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -27962,11 +27962,11 @@ __declspec(naked) void InstallSelfThresholdDispatch(void) {
         add     ecx, 0x02000000
         mov     dword ptr [eax*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -28007,14 +28007,14 @@ void TripleMul10TailIndexed(void) {
         _emit   00h
         mov     eax, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_eventQueueCurrent]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         add     eax, edx
         mov     dword ptr [g_walkCallback], eax
         push    eax
         mov     edx, dword ptr [ecx*4 + 0]
         push    edx
         call    Mul10Tail
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         add     esp, 8
         mov     dword ptr [ecx*4 + 0], eax
         mov     edx, dword ptr [g_eventQueueWorkType]
@@ -28034,11 +28034,11 @@ void TripleMul10TailIndexed(void) {
         add     eax, edx
         mov     dword ptr [g_walkCallback], eax
         push    eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 4]
         push    ecx
         call    Mul10Tail
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         add     esp, 8
         mov     dword ptr [edx*4 + 4], eax
         mov     eax, dword ptr [g_eventQueueWorkType]
@@ -28051,14 +28051,14 @@ void TripleMul10TailIndexed(void) {
         _emit   3bh
         mov     eax, dword ptr [g_walkCallback]
         mov     edx, dword ptr [g_eventQueueCurrent]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         add     eax, edx
         mov     dword ptr [g_walkCallback], eax
         push    eax
         mov     edx, dword ptr [ecx*4 + 8]
         push    edx
         call    Mul10Tail
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [ecx*4 + 8], eax
@@ -28077,14 +28077,14 @@ void TripleMul10TailIndexed(void) {
  */
 __declspec(naked) void ScaledChainAccumThreshold(void) {
     __asm {
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [ecx*4 + 0x70]
         mov     dword ptr [g_walkCallback], eax
         mov     edx, dword ptr [ecx*4 + 0x4c]
         add     eax, edx
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x70], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x58]
         cmp     ecx, 0x00000ccc
         mov     dword ptr [g_walkCallback], ecx
@@ -28267,11 +28267,11 @@ __declspec(naked) void InstallSelfThreeStateSiblingPair(void) {
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x02000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -28290,11 +28290,11 @@ __declspec(naked) void InstallSelfThreeStateSiblingPair(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -28327,7 +28327,7 @@ __declspec(naked) void InstallSelfBranchIndirect(void) {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [ecx*4 + 4], eax
@@ -28353,7 +28353,7 @@ __declspec(naked) void InstallSelfBranchIndirect(void) {
         _emit   00h
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x74]
         cmp     eax, 0x2001
         mov     dword ptr [g_walkCallback], eax
@@ -28372,11 +28372,11 @@ __declspec(naked) void InstallSelfBranchIndirect(void) {
         mov     edx, dword ptr [g_xformEntityIdx]
         lea     eax, [ecx*4 + 4]
         mov     ecx, dword ptr [ecx*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
         mov     eax, 1
         mov     dword ptr [esi + 8], 0x00470d10
@@ -28484,7 +28484,7 @@ __declspec(naked) void GuardedCascadeBaseSelBit(void) {
         mov     eax, dword ptr [g_baseSel]
         push    ebx
         mov     ecx, dword ptr [eax*4 + 0x30]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     edx, dword ptr [eax*4 + 0x60]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     eax, dword ptr [eax*4 + 0x4c]
@@ -28547,7 +28547,7 @@ __declspec(naked) void GuardedCascadeBaseSelBit(void) {
         _emit   75h
         _emit   20h
         mov     ecx, dword ptr [g_xformDirtyFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         or      ecx, ebx
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], ecx
@@ -28638,12 +28638,12 @@ __declspec(naked) void InstallSelfChainCascade(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         mov     edx, 0x0045feb0
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -28684,11 +28684,11 @@ __declspec(naked) void InstallSelfThreeStateLeaPlus22(void) {
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x02000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -28709,11 +28709,11 @@ __declspec(naked) void InstallSelfThreeStateLeaPlus22(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -28739,7 +28739,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush(void) {
         neg     eax
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     eax, dword ptr [ecx*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_eventQueueWorkType], eax
         and     eax, 1
@@ -28828,7 +28828,7 @@ __declspec(naked) void BitDispatchDualCallMStackPush(void) {
 __declspec(naked) void DualMul10AndDispatchChain(void) {
     __asm {
         mov     edx, dword ptr [g_currentNodeFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_baseSel]
         push    esi
         push    edi
@@ -28848,7 +28848,7 @@ __declspec(naked) void DualMul10AndDispatchChain(void) {
         mov     dword ptr [esi + 0x6c], ecx
         mov     edx, dword ptr [g_xformScratch2088]
         mov     dword ptr [esi + 0x74], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_cj_0054205c], eax
         mov     eax, 1
         add     esp, 8
@@ -29054,7 +29054,7 @@ __declspec(naked) void FiveBlockDispatchChain_ScaledAndAlfe(void) {
 
 /* @addr 0x0044d0c0 (276b game) - mstack-push 2, 2 calls, conditional field clear.
  *   mstack-push g_xformEntityIdx. call DirtyDoubleDeref; if pause? final-ret.
- *   esi=0. mstack-push g_scaledInit_00542044; load scaledInit[+0x24] -> g_xformEntityIdx.
+ *   esi=0. mstack-push g_currentNodeIdx; load scaledInit[+0x24] -> g_xformEntityIdx.
  *   Call FramePauseScaledStore; if pause? final-ret.
  *   g_pendingNodeType = mstack-top (peek scaledInit before pop).
  *   If bit2 of g_xformDirtyFlags clear: mstack-pop scaledInit + g_xformEntityIdx; pop esi; ret.
@@ -29080,11 +29080,11 @@ __declspec(naked) void MStackPush2GuardedFieldClear(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x24]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    FramePauseScaledStore
@@ -29112,15 +29112,15 @@ __declspec(naked) void MStackPush2GuardedFieldClear(void) {
         dec     eax
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [g_matrixStackTop], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x30], esi
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [edx*4 + 0x34], ecx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x38], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], esi
         mov     dword ptr [edx*4 + 0x1c], esi
         mov     eax, dword ptr [g_matrixStackTop]
@@ -29154,7 +29154,7 @@ void CjTableThresholdDispatch(void) {
         mov     ecx, dword ptr [g_primary_0053a774]
         cmp     edx, eax
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   74h
         _emit   0ch
         mov     ecx, dword ptr [g_secondary_00535d04]
@@ -29198,14 +29198,14 @@ void CjTableThresholdDispatch(void) {
         _emit   00h
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [eax*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     ecx, dword ptr [ecx*4 + 0x34]
         cmp     ecx, 0x0a
         mov     dword ptr [g_walkCallback], ecx
         _emit   75h
         _emit   22h
         mov     eax, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_walkCallback], eax
         and     eax, 4
@@ -29223,7 +29223,7 @@ void CjTableThresholdDispatch(void) {
         _emit   28h
         mov     edx, dword ptr [g_baseSel]
         mov     ecx, dword ptr [edx*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     eax, dword ptr [ecx*4 + 0x34]
         or      al, 4
         mov     dword ptr [g_walkCallback], eax
@@ -29263,7 +29263,7 @@ __declspec(naked) void InstallSelfFourStatePauseChain(void) {
         _emit   74h
         _emit   25h
         mov     ecx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackPush2ChainLLInsert
         cmp     dword ptr [g_framePauseFlag], edi
         _emit   0fh
@@ -29281,7 +29281,7 @@ __declspec(naked) void InstallSelfFourStatePauseChain(void) {
         mov     ecx, 0x0049b000
         mov     dword ptr [edx*4 + 0x84], 3
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     ecx, 0x03000000
         _emit   0ebh
         _emit   63h
@@ -29290,7 +29290,7 @@ __declspec(naked) void InstallSelfFourStatePauseChain(void) {
         mov     ecx, 0x0049b000
         mov     dword ptr [eax*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     ecx, 0x02000000
         _emit   0ebh
         _emit   37h
@@ -29303,12 +29303,12 @@ __declspec(naked) void InstallSelfFourStatePauseChain(void) {
         mov     ecx, 0x0049b000
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], edi
@@ -29322,7 +29322,7 @@ __declspec(naked) void InstallSelfFourStatePauseChain(void) {
 
 
 /* @addr 0x0048cf50 (278b game) - sibling of 0x0048ce60, mstack-push 2 + 3 calls.
- *   mstack-push g_scaledInit_00542044 and g_xformEntityIdx.
+ *   mstack-push g_currentNodeIdx and g_xformEntityIdx.
  *   cj[+0x34] &= ~0x800 (clear bit 11 via `and ch, 0xf7`).
  *   Select dispatch arg: if cj == g_player1NodeIdx use g_dlNalt1 else g_dlNalt2;
  *   store to g_walkCallback. Call Helper_DownloadSetup; if pause? ret.
@@ -29330,12 +29330,12 @@ __declspec(naked) void InstallSelfFourStatePauseChain(void) {
  *   If bit2 of g_xformDirtyFlags clear: load scaledInit[+0x10] -> g_xformEntityIdx.
  *   Call PushSarCallBitToggle; if pause? ret.
  *   If bit2 clear: g_xformEntityIdx = 0x005114b4 >> 2. call RecursiveMStackByteStream; if pause? ret.
- *   mstack-pop pair to g_xformEntityIdx, g_scaledInit_00542044. ret.
+ *   mstack-pop pair to g_xformEntityIdx, g_currentNodeIdx. ret.
  */
 void MStackPush2TripleCallChain(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
@@ -29365,7 +29365,7 @@ void MStackPush2TripleCallChain(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x0c]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    DispatchSetDirtyToggle
@@ -29376,7 +29376,7 @@ void MStackPush2TripleCallChain(void) {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
         _emit   12h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x10]
         mov     dword ptr [g_xformEntityIdx], eax
         call    PushSarCallBitToggle
@@ -29402,7 +29402,7 @@ void MStackPush2TripleCallChain(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -29461,12 +29461,12 @@ __declspec(naked) void InstallSelfDualBranchInit(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         mov     edx, 0x004201a0
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     edx, 0x01000000
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -29477,12 +29477,12 @@ __declspec(naked) void InstallSelfDualBranchInit(void) {
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         mov     edx, 0x004201a0
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     edx, 0x02000000
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -29645,11 +29645,11 @@ __declspec(naked) void InstallSelfDualPathInit(void) {
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -29741,11 +29741,11 @@ __declspec(naked) void DualBlockThunkPlus3State(void) {
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     ecx, dword ptr [eax + 4]
         add     esi, 0x02000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], esi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -29763,11 +29763,11 @@ __declspec(naked) void DualBlockThunkPlus3State(void) {
         mov     dword ptr [ecx*4 + 0x84], esi
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -29781,15 +29781,15 @@ __declspec(naked) void DualBlockThunkPlus3State(void) {
 
 
 /* @addr 0x00474170 (282b game) - mstack-push pair + 3 Mul10Tail for cj fields.
- *   mstack-push g_scaledInit_00542044 and g_cj_0054205c. g_scaledInit_00542044 = 0x7d.
+ *   mstack-push g_currentNodeIdx and g_cj_0054205c. g_currentNodeIdx = 0x7d.
  *   Call PreFightInstallCluster; if pause? final-ret. If bit2 of g_xformDirtyFlags set? skip 3 Mul10Tails.
  *   For each cj field (+0x6c/+0x70/+0x74): push value + 0x1c000, Mul10Tail, store back.
- *   mstack-pop pair (g_cj_0054205c, g_scaledInit_00542044); ret.
+ *   mstack-pop pair (g_cj_0054205c, g_currentNodeIdx); ret.
  */
 void MStackPush2CjMul10Triple(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
@@ -29798,7 +29798,7 @@ void MStackPush2CjMul10Triple(void) {
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     dword ptr [g_scaledInit_00542044], 0x7d
+        mov     dword ptr [g_currentNodeIdx], 0x7d
         call    PreFightInstallCluster
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -29852,7 +29852,7 @@ void MStackPush2CjMul10Triple(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -29910,12 +29910,12 @@ __declspec(naked) void InstallSelfPlusTailThunk(void) {
         mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_eventQueueEnd], eax
         mov     edx, dword ptr [ecx]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [edx*4 + 0], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [ecx], eax
         call    IncStoreCallIATDec
         mov     eax, dword ptr [g_framePauseFlag]
@@ -30110,7 +30110,7 @@ __declspec(naked) void FiveBlockDispatchChain_ScaledAndAl7f(void) {
 __declspec(naked) void TripleMod411262(void) {
     __asm {
         push    esi
-        mov     esi, dword ptr [g_scaledInit_00542044]
+        mov     esi, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [esi*4 + 0]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
@@ -30136,7 +30136,7 @@ __declspec(naked) void TripleMod411262(void) {
         _emit   0f7h
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [esi*4 + 0], ecx
-        mov     esi, dword ptr [g_scaledInit_00542044]
+        mov     esi, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [esi*4 + 4]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
@@ -30162,7 +30162,7 @@ __declspec(naked) void TripleMod411262(void) {
         _emit   0f7h
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [esi*4 + 4], ecx
-        mov     esi, dword ptr [g_scaledInit_00542044]
+        mov     esi, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [esi*4 + 8]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
@@ -30229,19 +30229,19 @@ __declspec(naked) void ThunkPlus4FieldCjCopy(void) {
         mov     ecx, dword ptr [eax*4 + 0x38]
         mov     dword ptr [g_eventQueueIdx], ecx
         mov     eax, dword ptr [edx*4 + 0x58]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x3c]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x3c], eax
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x64]
         mov     dword ptr [ecx*4 + 0x64], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x7e
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x30], eax
@@ -30250,7 +30250,7 @@ __declspec(naked) void ThunkPlus4FieldCjCopy(void) {
         test    eax, eax
         _emit   75h
         _emit   5dh
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_baseSel]
         mov     dword ptr [g_eventQueueEnd], eax
         mov     eax, 2
@@ -30301,11 +30301,11 @@ __declspec(naked) void InstallSelf3StateDualChain(void) {
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x02000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -30331,11 +30331,11 @@ __declspec(naked) void InstallSelf3StateDualChain(void) {
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -30421,7 +30421,7 @@ __declspec(naked) void InstallSelfScaledAdv3d7Cmp(void) {
  *     call MStackPush2ScaledChainLoop, pause-check; push (word)[0x004e2858], call TaggedSceneDispatch.
  *     Fall-through to jmp CallSetPause.
  *   Block B (+0x70): call Cmp9DirtyToggle; if pause? ret. If !bit0(0054208c): jmp CallSetPause.
- *     Set g_walkCallback=g_active_0053a408, g_scaledInit_00542044=0x0053a3e0>>2;
+ *     Set g_walkCallback=g_active_0053a408, g_currentNodeIdx=0x0053a3e0>>2;
  *     if nonzero: jmp InstallSelfBootInit; else jmp PendingMatch_SetWalkCurCallPauseDirty; ret.
  *   Block C (+0xc0): same as B but with g_active_00537e88 and 0x0053a700>>2.
  */
@@ -30487,7 +30487,7 @@ __declspec(naked) void TripleEntryWordChainInc5(void) {
         shr     ecx, 2
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   75h
         _emit   05h
         jmp     InstallSelfBootInit
@@ -30520,7 +30520,7 @@ __declspec(naked) void TripleEntryWordChainInc5(void) {
         shr     ecx, 2
         test    eax, eax
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   75h
         _emit   05h
         jmp     InstallSelfBootInit
@@ -30548,7 +30548,7 @@ __declspec(naked) void IndirectStateDispatcher(void) {
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     eax, dword ptr [eax*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    eax
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -30570,7 +30570,7 @@ __declspec(naked) void IndirectStateDispatcher(void) {
         _emit   00h
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     eax, dword ptr [edx*4 + 0]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
     retry:
         cmp     eax, 5
@@ -30611,7 +30611,7 @@ __declspec(naked) void IndirectStateDispatcher(void) {
         call    CallSetPause
         pop     ebx
         ret
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_dispatchArg]
@@ -30856,7 +30856,7 @@ __declspec(naked) void QuadBlockArgInstallChain(void) {
         inc     eax
         mov     dword ptr [g_eventQueueTotal], eax
         mov     eax, dword ptr [g_baseSel]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     eax, dword ptr [eax*4 + 0x34]
         cmp     eax, 0xf
         mov     dword ptr [g_walkCallback], eax
@@ -30903,11 +30903,11 @@ __declspec(naked) void QuadBlockArgInstallChain(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -30935,18 +30935,18 @@ __declspec(naked) void QuadBlockArgInstallChain(void) {
 
 
 /* @addr 0x004635a0 (291b game) - mstack-push 2 + chain calls + or-bit loop + mstack-pop 2.
- *   Push g_scaledInit_00542044 and g_xformEntityIdx to mstack.
+ *   Push g_currentNodeIdx and g_xformEntityIdx to mstack.
  *   Compute eax=g_phaseCounter*4+g_dispatchAcc; load chain[eax]; call MStackPush2LLWalkCompare.
  *   Chain: if pause? ret. If bit2 of g_xformDirtyFlags set: branch out.
  *   Else call MStackPushSearchLoop, pause-check; call MStackChainCountdownLoop, pause-check;
  *   load [g_eventQueueWorkType]>>1, [g_load_0052ab10] (-> g_xformEntityIdx).
  *   Loop: copy scaledInit field [+0x3c]=g_xformEntityIdx; load next; or-bit and re-test until zero.
- *   Pop 2 entries: g_xformEntityIdx, g_scaledInit_00542044; pop ebx; ret.
+ *   Pop 2 entries: g_xformEntityIdx, g_currentNodeIdx; pop ebx; ret.
  */
 __declspec(naked) void MStackChainOrBitLoop(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         push    ebx
         mov     dword ptr [g_matrixStackTop], eax
@@ -30961,7 +30961,7 @@ __declspec(naked) void MStackChainOrBitLoop(void) {
         shl     eax, 2
         mov     dword ptr [g_walkCallback], eax
         add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], edx
         call    MStackPush2LLWalkCompare
@@ -31003,14 +31003,14 @@ __declspec(naked) void MStackChainOrBitLoop(void) {
         mov     eax, dword ptr [g_load_0052ab10]
         mov     dword ptr [g_xformEntityIdx], eax
     or_loop:
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_xformEntityIdx]
         mov     dword ptr [eax*4 + 0x3c], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x40]
         mov     edx, dword ptr [g_xformDirtyFlags]
         or      edx, ebx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], edx
         _emit   74h
@@ -31028,7 +31028,7 @@ __declspec(naked) void MStackChainOrBitLoop(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax
         pop     ebx
         ret
@@ -31056,7 +31056,7 @@ __declspec(naked) void InstallSelfMStackBranchIndirect(void) {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [ecx*4 + 4], eax
@@ -31102,11 +31102,11 @@ __declspec(naked) void InstallSelfMStackBranchIndirect(void) {
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
         mov     eax, 1
         mov     dword ptr [esi + 8], offset InstallSelfMStackBranchIndirect
@@ -31170,20 +31170,20 @@ __declspec(naked) void TripleChainSetupDualCall(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_xformEntityIdx]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [eax*4 + 0x3c]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x54], eax
         mov     edx, dword ptr [g_xformEntityIdx]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x40]
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x58], eax
         mov     edx, dword ptr [g_xformEntityIdx]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x44]
         mov     dword ptr [ecx*4 + 0x5c], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [edx*4 + 0x70], 0xfffff47b
         mov     dword ptr [g_walkCallback], 0x560
         call    StoreDoubleNegPauseSubStore
@@ -31191,7 +31191,7 @@ __declspec(naked) void TripleChainSetupDualCall(void) {
         test    eax, eax
         _emit   75h
         _emit   41h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x6c], eax
         mov     dword ptr [g_walkCallback], 0x560
@@ -31200,7 +31200,7 @@ __declspec(naked) void TripleChainSetupDualCall(void) {
         test    eax, eax
         _emit   75h
         _emit   17h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x74], edx
         jmp     ScaledLoadStore
@@ -31293,11 +31293,11 @@ __declspec(naked) void TripleBlockInstallSelfMidBody(void) {
         mov     ecx, dword ptr [g_baseSel]
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -31320,12 +31320,12 @@ __declspec(naked) void DualEntryRecursiveInstall(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     eax, dword ptr [ecx*4 + 0x20]
         or      ah, 6
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_eventQueueCurrent]
         mov     eax, dword ptr [ecx*4 + 0x28]
         mov     dword ptr [g_xformEntityIdx], eax
@@ -31372,11 +31372,11 @@ __declspec(naked) void DualEntryRecursiveInstall(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -31402,7 +31402,7 @@ __declspec(naked) void MStackCjChainSwapDualCall(void) {
         mov     [eax*4 + g_matrixStack_arr], ecx
         mov     edx, dword ptr [g_baseSel]
         mov     eax, dword ptr [edx*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x54]
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x5c]
@@ -31413,7 +31413,7 @@ __declspec(naked) void MStackCjChainSwapDualCall(void) {
         mov     ecx, dword ptr [ecx*4 + 0x5c]
         mov     dword ptr [g_acc_00542078], ecx
         mov     dword ptr [eax*4 + 0x54], edx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_acc_00542078]
         mov     dword ptr [edx*4 + 0x5c], eax
         mov     ecx, dword ptr [g_cj_0054205c]
@@ -31481,7 +31481,7 @@ __declspec(naked) void DualEntryInstallSelfScaled(void) {
         push    offset body_bb0
         mov     dword ptr [g_eventQueueNotMask], eax
         call    StoreTwoCall
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_eventQueueNotMask]
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x14], eax
@@ -31521,7 +31521,7 @@ __declspec(naked) void DualEntryInstallSelfScaled(void) {
         mov     eax, offset g_installScaledArrBase
         shr     eax, 2
         add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], 0x5f
         mov     dword ptr [g_xformEntityIdx], ecx
@@ -31533,11 +31533,11 @@ __declspec(naked) void DualEntryInstallSelfScaled(void) {
         test    eax, eax
         _emit   75h
         _emit   42h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x1b333
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x5c], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_cj_0054205c], eax
         mov     eax, 1
         mov     dword ptr [esi + 8], offset body_bb0
@@ -31575,7 +31575,7 @@ __declspec(naked) void TableWalkMatchInsert(void) {
         mov     edx, offset g_stateChangeBase
         shr     eax, 2
         shr     edx, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], edx
         mov     ecx, dword ptr [eax*4 + 0]
         push    esi
@@ -31604,7 +31604,7 @@ __declspec(naked) void TableWalkMatchInsert(void) {
         _emit   74h
         _emit   1bh
         add     eax, 3
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         test    ecx, ecx
         mov     dword ptr [g_walkCallback], ecx
@@ -31628,24 +31628,24 @@ __declspec(naked) void TableWalkMatchInsert(void) {
         shr     eax, 2
         add     eax, ecx
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_xformEntityIdx]
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [edx*4 + 4], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [g_xformEntityIdx]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 8], ecx
@@ -31699,7 +31699,7 @@ __declspec(naked) void MStackLoopFieldInit(void) {
         mov     ecx, esi
         mov     dword ptr [g_dispatchArg], eax
         add     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_xformEntityIdx], eax
         call    DispatcherComplex260_FramePauseScaledStore
@@ -31723,13 +31723,13 @@ __declspec(naked) void MStackLoopFieldInit(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_eventQueueWorkType]
         mov     dword ptr [ecx*4 + 0x54], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_acc_00542078]
         mov     dword ptr [eax*4 + 0x58], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], edi
         mov     dword ptr [edx*4 + 0x30], edi
         call    MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430
@@ -31809,9 +31809,9 @@ __declspec(naked) void FlagInitTableSelector(void) {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
         mov     dword ptr [eax], ecx
         mov     edx, dword ptr [g_eventQueueCurrent]
@@ -31820,12 +31820,12 @@ __declspec(naked) void FlagInitTableSelector(void) {
         shr     eax, 2
         shr     ecx, 2
         test    edx, edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], ecx
         _emit   74h
         _emit   07h
         mov     eax, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [g_baseSel]
         mov     ecx, dword ptr [edx*4 + 0x34]
         cmp     ecx, 0xf
@@ -31841,7 +31841,7 @@ __declspec(naked) void FlagInitTableSelector(void) {
         mov     dword ptr [g_walkCallback], ecx
         add     eax, ecx
         mov     ecx, dword ptr [g_table_00535ddc]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], ecx
         cmp     ecx, eax
@@ -31901,11 +31901,11 @@ __declspec(naked) void InstallSelf3StateDualEntry(void) {
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x02000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -31929,11 +31929,11 @@ __declspec(naked) void InstallSelf3StateDualEntry(void) {
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -31945,7 +31945,7 @@ __declspec(naked) void InstallSelf3StateDualEntry(void) {
 }
 
 /* @addr 0x0049d550 (299b game) - linked-list walk: 2 unrolled iterations with triple Mul10Tail per node.
- *   Init: g_eventQueueCurrent=eax=g_scaledInit_00542044; if zero ret.
+ *   Init: g_eventQueueCurrent=eax=g_currentNodeIdx; if zero ret.
  *   Each iteration: esi=eax*4 (node), edi=ecx*4 (chain ptr, ecx=g_xformEntityIdx).
  *     mul10[node+0x10] with [chain*4]; mul10[node+0x14] with [chain+4]; mul10[node+0x18] with [chain+8].
  *     Advance scaledInit via [scaledInit*4]; if zero ret.
@@ -31954,7 +31954,7 @@ __declspec(naked) void InstallSelf3StateDualEntry(void) {
  */
 __declspec(naked) void LoopUnrolledTripleMul10(void) {
     __asm {
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         test    eax, eax
         push    edi
@@ -31994,11 +31994,11 @@ __declspec(naked) void LoopUnrolledTripleMul10(void) {
         call    Mul10Tail
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi + 0x18], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         add     esp, 8
         mov     eax, dword ptr [edx*4 + 0]
         test    eax, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   0fh
         _emit   84h
         _emit   8ah
@@ -32034,11 +32034,11 @@ __declspec(naked) void LoopUnrolledTripleMul10(void) {
         call    Mul10Tail
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi + 0x18], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         add     esp, 8
         mov     eax, dword ptr [edx*4 + 0]
         test    eax, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   0fh
         _emit   85h
         _emit   76h
@@ -32069,12 +32069,12 @@ __declspec(naked) void TripleBlockInstallSelfThunk(void) {
         push    0x30
         push    offset tail_a00
         call    StoreTwoCall
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         xor     eax, eax
         mov     dword ptr [g_walkCallback], eax
         add     esp, 8
         mov     dword ptr [ecx*4 + 0x1c], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x20], edx
         mov     eax, 1
@@ -32304,7 +32304,7 @@ __declspec(naked) void InstallSelf3StateFieldSet(void) {
         mov     ecx, offset InstallSelf3StateFieldSet
         mov     dword ptr [edx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     ecx, 0x02000000
         _emit   0ebh
         _emit   48h
@@ -32324,12 +32324,12 @@ __declspec(naked) void InstallSelf3StateFieldSet(void) {
         mov     ecx, offset InstallSelf3StateFieldSet
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -32454,15 +32454,15 @@ __declspec(naked) void Bit2GatedChainInit(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [ecx*4 + 0x1c], 0
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [edx*4 + 0x30], 0
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x38], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, 0xffff0000
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x34], eax
@@ -32496,7 +32496,7 @@ __declspec(naked) void Bit2GatedChainInit(void) {
         _emit   75h
         _emit   66h
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x1c]
         mov     dword ptr [g_pendingNodeType], eax
         mov     eax, dword ptr [eax*4 + 0]
@@ -32504,14 +32504,14 @@ __declspec(naked) void Bit2GatedChainInit(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x1c], eax
         mov     edx, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    MStackBracket4_ListInsertZeroFill
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   20h
         mov     ecx, dword ptr [g_xformDirtyFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         or      ecx, ebx
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], ecx
@@ -32557,11 +32557,11 @@ __declspec(naked) void TripleBlockInstallThresholdMasked(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -32606,7 +32606,7 @@ __declspec(naked) void TripleBlockInstallThresholdMasked(void) {
         _emit   90h
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, dword ptr [eax*4 + 0x40]
         mov     dword ptr [g_eventQueueCurrent], eax
         and     eax, 0x200
@@ -32646,7 +32646,7 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks(void) {
         mov     edx, dword ptr [g_baseSel]
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [edx*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [ecx*4 + 0x54]
         mov     dword ptr [g_walkCallback], edx
         mov     ecx, dword ptr [ecx*4 + 0x5c]
@@ -32773,11 +32773,11 @@ __declspec(naked) void InstallSelf3StateDualBody(void) {
         add     edx, 0x02000000
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     ecx, dword ptr [eax + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -32792,11 +32792,11 @@ __declspec(naked) void InstallSelf3StateDualBody(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -32848,7 +32848,7 @@ void ArgIndexedBitmaskInit(void) {
         inc     eax
         cmp     edx, ecx
         mov     dword ptr [g_eventQueueTotal], eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         _emit   74h
         _emit   4ch
         mov     ecx, dword ptr [eax*4 + 0]
@@ -32993,16 +32993,16 @@ __declspec(naked) void MultiThunkDispatcher_MStackCall(void) {
         push    ecx
         push    0x3333
         call    Mul10Tail
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_xformScratch2088], eax
         mov     eax, dword ptr [g_currentNodeFlags]
         add     esp, 8
         mov     dword ptr [edx*4 + 0x6c], eax
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_xformScratch2088]
         push    0x004f20b0
         mov     dword ptr [ecx*4 + 0x74], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_cj_0054205c], eax
         call    ArgSar_Set0_Jmp
         add     esp, 4
@@ -33188,11 +33188,11 @@ __declspec(naked) void PrefixThunkInstallSelf3State(void) {
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     ecx, dword ptr [eax + 4]
         add     esi, 0x02000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], esi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -33209,11 +33209,11 @@ __declspec(naked) void PrefixThunkInstallSelf3State(void) {
         mov     dword ptr [ecx*4 + 0x84], esi
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -33272,7 +33272,7 @@ void MStackPush6OpPop6(void) {
 void ChainTableWalkStore(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    ScaledLoadOrSetJmp
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -33452,7 +33452,7 @@ __declspec(naked) void StateCascadeDualThunkContin(void) {
         _emit   0ffh
         _emit   0ffh
         _emit   0ffh
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_dispatchArg]
@@ -33540,7 +33540,7 @@ __declspec(naked) void StateMachineSharedTail(void) {
         _emit   62h
         mov     ecx, dword ptr [g_baseSel]
         mov     ecx, dword ptr [ecx*4 + 0x3c]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     eax, dword ptr [ecx*4 + 0x7c]
         inc     eax
         mov     dword ptr [g_walkCallback], eax
@@ -33611,11 +33611,11 @@ __declspec(naked) void StateMachineSharedTail(void) {
         add     ecx, 0x01000000
         mov     dword ptr [edx*4 + 0x84], ebx
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], edi
@@ -33706,7 +33706,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect(void) {
         _emit   16h
         mov     eax, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [eax*4 + 8]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    eax
         pop     esi
         pop     ebx
@@ -33716,7 +33716,7 @@ __declspec(naked) void InstallSelfBit2LoopIndirect(void) {
         mov     eax, dword ptr [ecx*4 + 4]
         mov     ecx, 4
         or      edx, ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], edx
         _emit   74h
@@ -33982,11 +33982,11 @@ __declspec(naked) void DualBlockChainCallInstall(void) {
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -34148,7 +34148,7 @@ __declspec(naked) void Install4StateMerge(void) {
         mov     edx, offset Install4StateMerge
         mov     dword ptr [ecx*4 + 0x84], 3
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     edx, 0x03000000
         _emit   0e9h
         _emit   84h
@@ -34169,7 +34169,7 @@ __declspec(naked) void Install4StateMerge(void) {
         mov     edx, offset Install4StateMerge
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     edx, 0x02000000
         _emit   0ebh
         _emit   3ch
@@ -34185,12 +34185,12 @@ __declspec(naked) void Install4StateMerge(void) {
         mov     edx, offset Install4StateMerge
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         add     edx, 0x01000000
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edi
@@ -34241,11 +34241,11 @@ void ChainInitMul10BulkStore(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, 0x94
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x30], eax
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [edx*4 + 0x64]
         sub     eax, 0x5b333
         mov     dword ptr [g_eventQueueWorkType], eax
@@ -34281,7 +34281,7 @@ void ChainInitMul10BulkStore(void) {
         _emit   08h
         neg     ecx
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         shl     eax, 2
         mov     dword ptr [eax + 0x6c], ecx
         mov     ecx, dword ptr [g_walkCallback]
@@ -34342,7 +34342,7 @@ __declspec(naked) void Distance2DSaturationClamp(void) {
         _emit   41h
         mov     eax, dword ptr [g_player1NodeIdx]
         mov     ecx, dword ptr [g_player2NodeIdx]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     eax, dword ptr [eax*4 + 0x58]
         mov     dword ptr [g_walkCallback], eax
@@ -34425,11 +34425,11 @@ __declspec(naked) void DualBlockInstallMul10Tail(void) {
         add     edi, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], esi
         mov     ecx, dword ptr [eax + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -34457,7 +34457,7 @@ __declspec(naked) void DualBlockInstallMul10Tail(void) {
         _emit   00h
         _emit   00h
         mov     ecx, dword ptr [g_currentNodeFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         push    esi
         push    ecx
         push    0x3333
@@ -34475,7 +34475,7 @@ __declspec(naked) void DualBlockInstallMul10Tail(void) {
         mov     ecx, dword ptr [g_xformScratch2088]
         add     esp, 8
         mov     dword ptr [esi + 0x74], ecx
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         push    0x23fb23
         mov     dword ptr [g_cj_0054205c], edx
         call    ThreeChanPackClamp
@@ -34704,7 +34704,7 @@ __declspec(naked) void DualEntryStateMachine(void) {
         pop     esi
         ret
         mov     ecx, dword ptr [g_walkCallback]
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         lea     eax, [ecx + 1]
         mov     dword ptr [g_eventQueueCurrent], eax
         mov     ecx, dword ptr [edx*4 + 4]
@@ -34750,7 +34750,7 @@ __declspec(naked) void LinkedListDistanceWalker(void) {
     __asm {
         mov     eax, dword ptr [g_cj_00535df0]
         push    esi
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     esi, 4
         mov     ecx, dword ptr [eax*4 + 0x30]
         cmp     ecx, 0x60
@@ -34804,7 +34804,7 @@ __declspec(naked) void LinkedListDistanceWalker(void) {
         push    eax
         mov     dword ptr [g_eventQueueCurrent], eax
         call    Mul10Tail
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_eventQueueCurrent], eax
         add     esp, 8
@@ -34824,11 +34824,11 @@ __declspec(naked) void LinkedListDistanceWalker(void) {
         mov     dword ptr [g_eventQueueCurrent], ecx
         _emit   7eh
         _emit   43h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_xformDirtyFlags]
         mov     eax, dword ptr [eax*4 + 0]
         or      edx, esi
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], edx
         _emit   74h
@@ -34881,7 +34881,7 @@ __declspec(naked) void CjChainResetThreshold(void) {
         mov     dword ptr [g_walkCallback], eax
         _emit   74h
         _emit   19h
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    eax
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   0fh
@@ -34911,7 +34911,7 @@ __declspec(naked) void CjChainResetThreshold(void) {
         _emit   00h
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [ecx*4 + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_acc_00542078], edx
         mov     edi, dword ptr [ecx*4 + 0x48]
@@ -34942,7 +34942,7 @@ __declspec(naked) void CjChainResetThreshold(void) {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_eventQueueCurrent], esi
         mov     eax, dword ptr [eax*4 + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x34]
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [eax*4 + 0x34], esi
@@ -35018,7 +35018,7 @@ void MStackPush3CallChainBit2(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_eventQueueCurrent], 0
         mov     eax, dword ptr [edx*4 + 0x18]
         test    eax, eax
@@ -35108,11 +35108,11 @@ __declspec(naked) void Install3StateSiblingTail(void) {
         add     edx, 0x02000000
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edi
@@ -35130,11 +35130,11 @@ __declspec(naked) void Install3StateSiblingTail(void) {
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], edi
@@ -35262,7 +35262,7 @@ __declspec(naked) void RecordListIterMStack(void) {
 void MStackChainSwapTraversal(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
@@ -35274,9 +35274,9 @@ void MStackChainSwapTraversal(void) {
         mov     eax, dword ptr [g_cj_0054205c]
         mov     eax, dword ptr [eax*4 + 0x18]
         mov     dword ptr [g_walkCallback], 0
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0x44], 0
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [ecx*4 + 0x1c]
         cmp     eax, 0xfffffff6
         mov     dword ptr [g_walkCallback], eax
@@ -35288,7 +35288,7 @@ void MStackChainSwapTraversal(void) {
         _emit   00h
         mov     ecx, dword ptr [ecx*4 + 0]
         mov     dword ptr [g_xformEntityIdx], 4
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         call    MStackBracket5_LinkedListUnlink
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -35298,11 +35298,11 @@ void MStackChainSwapTraversal(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     ecx, dword ptr [edx*4 + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     edx, dword ptr [eax*4 + 0x34]
         mov     ecx, dword ptr [ecx*4 + 0x34]
         add     edx, ecx
@@ -35328,7 +35328,7 @@ void MStackChainSwapTraversal(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -35357,7 +35357,7 @@ __declspec(naked) void Install3StateAudioChain(void) {
         push    1
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_eventQueueNotMask], edx
         mov     dword ptr [ecx*4 + 4], eax
@@ -35385,11 +35385,11 @@ __declspec(naked) void Install3StateAudioChain(void) {
         mov     dword ptr [g_tickW1], 0x100
         lea     eax, [ecx*4 + 4]
         mov     ecx, dword ptr [ecx*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
         call    PushPopScaledInit343c
         mov     dword ptr [esi + 8], offset Install3StateAudioChain
@@ -35398,11 +35398,11 @@ __declspec(naked) void Install3StateAudioChain(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -35419,7 +35419,7 @@ void ChainMul10DotProd(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     eax, dword ptr [eax*4 + 0x38]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0x54]
         mov     dword ptr [g_eventQueueCurrent], ecx
         mov     edx, dword ptr [eax*4 + 0x5c]
@@ -35490,12 +35490,12 @@ void ChainMul10DotProd(void) {
         push    eax
         push    ecx
         call    Mul10Tail
-        mov     edx, dword ptr [g_scaledInit_00542044]
+        mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_eventQueueNotMask], eax
         mov     eax, dword ptr [g_acc_00542078]
         add     esp, 8
         mov     dword ptr [edx*4 + 0x6c], eax
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_eventQueueNotMask]
         mov     dword ptr [ecx*4 + 0x74], edx
         }
@@ -35572,11 +35572,11 @@ __declspec(naked) void Install3StateDualArmQuad(void) {
         mov     dword ptr [ecx*4 + 0x84], 2
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x02000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -35650,7 +35650,7 @@ void AudioBridgeMStackChainCopy(void) {
         _emit   00h
         _emit   00h
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
@@ -35665,7 +35665,7 @@ void AudioBridgeMStackChainCopy(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, offset g_audioBridgeSlot
         mov     [eax*4 + g_matrixStack_arr], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         shr     edx, 2
         mov     ecx, dword ptr [eax*4 + 0x6c]
         mov     dword ptr [g_walkCallback], ecx
@@ -35705,7 +35705,7 @@ void AudioBridgeMStackChainCopy(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }
@@ -35739,11 +35739,11 @@ __declspec(naked) void TripleBlockChainScaledInits(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_eventQueueIdx]
         mov     dword ptr [g_cj_0054205c], eax
         mov     eax, dword ptr [g_eventQueueEnd]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     edx, dword ptr [eax*4 + 4]
         mov     dword ptr [g_acc_00542078], edx
         mov     eax, dword ptr [eax*4 + 8]
@@ -35771,14 +35771,14 @@ __declspec(naked) void TripleBlockChainScaledInits(void) {
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_eventQueueWorkType], 0x1999
         add     edx, 0x15
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         call    TripleVecAccCallStore
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h
         _emit   22h
         mov     ecx, dword ptr [g_xformDirtyFlags]
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         or      ecx, 4
         test    eax, eax
         mov     dword ptr [g_xformDirtyFlags], ecx
@@ -35882,11 +35882,11 @@ __declspec(naked) void InstallSelfCascadeSequence(void) {
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -36092,7 +36092,7 @@ __declspec(naked) void ChainFieldCopyTailJmp(void) {
         _emit   01h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [eax*4 + 0x24]
         mov     dword ptr [g_xformEntityIdx], ecx
         call    MStackPushDispatchBitGate
@@ -36161,13 +36161,13 @@ __declspec(naked) void ChainFieldCopyTailJmp(void) {
         mov     edx, dword ptr [g_cj_0054205c]
         mov     dword ptr [edx*4 + 0x3c], ecx
         mov     eax, dword ptr [eax + 0x18]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_walkCallback], 0
         mov     dword ptr [eax*4 + 0x30], 0
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_walkCallback]
         mov     dword ptr [ecx*4 + 0x34], eax
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_walkCallback]
         mov     dword ptr [eax*4 + 0x38], edx
         jmp     SetupVecFsmCluster
@@ -36251,11 +36251,11 @@ __declspec(naked) void Install3StateRouterTail(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -36299,7 +36299,7 @@ __declspec(naked) void Install3StateMStackPopDispatch(void) {
         mov     ecx, dword ptr [g_baseSel]
         mov     eax, dword ptr [ecx*4 + 4]
         dec     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_xformScratch2088], edx
         mov     dword ptr [ecx*4 + 4], eax
@@ -36337,11 +36337,11 @@ __declspec(naked) void Install3StateMStackPopDispatch(void) {
         mov     edx, dword ptr [g_xformScratch2088]
         mov     ecx, dword ptr [eax*4 + 4]
         lea     eax, [eax*4 + 4]
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax], ecx
         mov     dword ptr [esi + 8], offset Install3StateMStackPopDispatch
         mov     eax, dword ptr [g_baseSel]
@@ -36349,11 +36349,11 @@ __declspec(naked) void Install3StateMStackPopDispatch(void) {
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -36699,11 +36699,11 @@ __declspec(naked) void Install3StateMStackCounterDispatch(void) {
         mov     dword ptr [eax*4 + 0x84], ebx
         mov     eax, dword ptr [esi + 4]
         add     ecx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -36730,7 +36730,7 @@ __declspec(naked) void Install3StateMStackCounterDispatch(void) {
 __declspec(naked) void MStackChainBit2Cascade(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
@@ -36749,7 +36749,7 @@ __declspec(naked) void MStackChainBit2Cascade(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     al, byte ptr [g_xformDirtyFlags]
         test    al, 1
-        mov     dword ptr [g_scaledInit_00542044], edx
+        mov     dword ptr [g_currentNodeIdx], edx
         _emit   74h
         _emit   0dh
         mov     eax, dword ptr [g_xformDirtyFlags]
@@ -36783,7 +36783,7 @@ __declspec(naked) void MStackChainBit2Cascade(void) {
         mov     dword ptr [g_xformDirtyFlags], eax
         ret
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
@@ -36793,7 +36793,7 @@ __declspec(naked) void MStackChainBit2Cascade(void) {
         mov     eax, dword ptr [edx*4 + 0x38]
         mov     dword ptr [g_xformEntityIdx], ecx
         cmp     ecx, eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   74h
         _emit   0ah
         mov     dword ptr [g_acc_00542078], 0x2000
@@ -36809,7 +36809,7 @@ __declspec(naked) void MStackChainBit2Cascade(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     eax, dword ptr [g_walkCallback]
         and     eax, edx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_walkCallback], eax
         mov     eax, dword ptr [g_xformDirtyFlags]
         _emit   75h
@@ -36888,12 +36888,12 @@ void TripleThunkInstallBody(void) {
         mov     dword ptr [edx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         mov     edx, offset body_290
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         add     edx, 0x01000000
         mov     dword ptr [ecx*4 + 0], edx
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -36933,11 +36933,11 @@ __declspec(naked) void InstallSelfMultiThunkDispatch(void) {
         mov     dword ptr [ecx*4 + 0x84], 1
         mov     ecx, dword ptr [eax + 4]
         add     edi, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [ecx*4 + 0], edi
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         inc     ecx
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [eax + 4], ecx
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], edx
@@ -37138,16 +37138,16 @@ __declspec(naked) void LinkedListIndirectDirtyToggle(void) {
         call    SaveStateSnapshot
         mov     eax, offset g_dispatchSave579
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_xformEntityIdx], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   7ch
         _emit   5bh
         mov     esi, dword ptr [g_walkCallback]
@@ -37158,12 +37158,12 @@ __declspec(naked) void LinkedListIndirectDirtyToggle(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
         mov     dword ptr [g_eventQueueCurrent], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_xformEntityIdx], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   7dh
         _emit   0d2h
         call    MStackRestore27
@@ -37333,11 +37333,11 @@ __declspec(naked) void QuadBlockInstallChainThunks(void) {
         mov     dword ptr [ecx*4 + 0x84], ebx
         mov     eax, dword ptr [esi + 4]
         add     edx, 0x01000000
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], edx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     eax, dword ptr [g_baseSel]
         mov     dword ptr [eax*4 + 0x84], 0
@@ -37415,11 +37415,11 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy(void) {
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -37439,7 +37439,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy(void) {
         test    eax, eax
         _emit   75h
         _emit   69h
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         test    eax, eax
         mov     dword ptr [g_eventQueueEnd], eax
         _emit   75h
@@ -37449,7 +37449,7 @@ __declspec(naked) void InstallSelfMultiCascadeChainCopy(void) {
         push    offset ThrowAnimSetupCluster + 0x10
         call    StoreTwoCall
         mov     eax, dword ptr [g_baseSel]
-        mov     ecx, dword ptr [g_scaledInit_00542044]
+        mov     ecx, dword ptr [g_currentNodeIdx]
         add     esp, 8
         mov     eax, dword ptr [eax*4 + 0x3c]
         mov     dword ptr [g_xformEntityIdx], eax
@@ -37792,7 +37792,7 @@ __declspec(naked) void EntryThunkBodyStateMachine(void) {
         shr     eax, 2
         add     eax, edx
         mov     dword ptr [g_eventQueueNotMask], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_eventQueueChild], edx
         mov     edx, dword ptr [eax*4 + 4]
@@ -37846,7 +37846,7 @@ __declspec(naked) void InstallSelfCmdStreamInterp(void) {
         sub     ecx, 0x60
         add     eax, ecx
         mov     dword ptr [g_walkCallback], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], edx
         call    TableLookupCall_g_table_004efa00
@@ -37871,7 +37871,7 @@ __declspec(naked) void InstallSelfCmdStreamInterp(void) {
         _emit   75h
         _emit   42h
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], ecx
+        mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_eventQueueEnd], eax
         call    ecx
         mov     eax, dword ptr [g_framePauseFlag]
@@ -37906,11 +37906,11 @@ __declspec(naked) void InstallSelfCmdStreamInterp(void) {
         add     ecx, 0x01000000
         mov     dword ptr [eax*4 + 0x84], 1
         mov     eax, dword ptr [esi + 4]
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [eax*4 + 0], ecx
-        mov     eax, dword ptr [g_scaledInit_00542044]
+        mov     eax, dword ptr [g_currentNodeIdx]
         inc     eax
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [esi + 4], eax
         mov     edx, dword ptr [g_baseSel]
         mov     dword ptr [edx*4 + 0x84], 0
@@ -68016,59 +68016,59 @@ void MStackBracket3_ChainSwapAdvance(void) {
 
 void Helper_TickFrameTail(void)
 {
-    g_scaledInit_00542044 = g_bootChainState3;
+    g_currentNodeIdx = g_bootChainState3;
     g_walkCallback = g_tickFrameTailVar;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_bootChainScaled4;
+    g_currentNodeIdx = g_bootChainScaled4;
     g_walkCallback = g_tickFrameTailVar;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_bootChainScaled1;
+    g_currentNodeIdx = g_bootChainScaled1;
     g_walkCallback = g_tickFrameTailVar;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_bootChainPair1;
+    g_currentNodeIdx = g_bootChainPair1;
     g_walkCallback = g_tickFrameTailVar;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_bootChainScaled2;
+    g_currentNodeIdx = g_bootChainScaled2;
     g_walkCallback = g_tickFrameTailVar;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_lit_00541e90;
+    g_currentNodeIdx = g_lit_00541e90;
     g_walkCallback = g_tickFrameTailVar;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_lit_00541e94;
+    g_currentNodeIdx = g_lit_00541e94;
     g_walkCallback = g_tickFrameTailVar;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_bootChainScaled3;
+    g_currentNodeIdx = g_bootChainScaled3;
     g_walkCallback = g_dispatchSave894;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_bootChainState3;
+    g_currentNodeIdx = g_bootChainState3;
     g_walkCallback = g_tickFrameTailVar2;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_bootChainPair1;
+    g_currentNodeIdx = g_bootChainPair1;
     g_walkCallback = g_tickFrameTailVar2;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_bootChainScaled1;
+    g_currentNodeIdx = g_bootChainScaled1;
     g_walkCallback = g_tickFrameTailVar2;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_bootChainScaled2;
+    g_currentNodeIdx = g_bootChainScaled2;
     g_walkCallback = g_tickFrameTailVar2;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_lit_00541e90;
+    g_currentNodeIdx = g_lit_00541e90;
     g_walkCallback = g_tickFrameTailVar2;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_scaledInit_00542044 = g_lit_00541e94;
+    g_currentNodeIdx = g_lit_00541e94;
     g_walkCallback = g_tickFrameTailVar2;
     Helper_TickAlt();
 }
@@ -123496,7 +123496,7 @@ void SaveStateSnapshot(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_dispatchSave44;
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_scaledInit_00542044;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
     g_matrixStackTop++;

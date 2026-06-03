@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -148,12 +148,12 @@ __declspec(naked) void DualGuardedTableSearch(void) {
         call    CmpP1GTSetup
         mov     eax, 0x004ebe90
         shr     eax, 2
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_eventQueueWorkType], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   7ch
         _emit   41h
         mov     esi, dword ptr [g_xformEntityIdx]
@@ -165,12 +165,12 @@ __declspec(naked) void DualGuardedTableSearch(void) {
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_eventQueueWorkType], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         mov     ecx, [eax*4 + g_matrixStack_arr]
         inc     eax
         test    ecx, ecx
         mov     dword ptr [g_eventQueueWorkType], ecx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         _emit   7dh
         _emit   0c5h
         xor     eax, eax
@@ -179,7 +179,7 @@ __declspec(naked) void DualGuardedTableSearch(void) {
         mov     edx, [eax*4 + g_matrixStack_arr]
         inc     eax
         mov     dword ptr [g_walkCallback], edx
-        mov     dword ptr [g_scaledInit_00542044], eax
+        mov     dword ptr [g_currentNodeIdx], eax
         call    SnapshotDispatchMStack
         call    ScaledZeroFour
         mov     eax, 1

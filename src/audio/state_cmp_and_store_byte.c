@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x004a98f0 (70b)
  *   load g_audioBankSel; cmp 1; if !=, load g_dlNalt1 → walk;

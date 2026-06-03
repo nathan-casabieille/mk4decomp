@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -127,9 +127,9 @@ void GuardedSixFieldCopy(void) {
     g_walkCallback = (void (*)(void))2;
     DirtyDoubleDeref();
     if (g_framePauseFlag != 0) return;
-    src = (unsigned char *)(g_scaledInit_00542044 * 4);
+    src = (unsigned char *)(g_currentNodeIdx * 4);
     base = (unsigned char *)(g_baseSel * 4);
-    *(unsigned int *)(base + 0x30) = g_scaledInit_00542044;
+    *(unsigned int *)(base + 0x30) = g_currentNodeIdx;
     v = *(unsigned int *)(src + 0x14);
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(base + 0x78) = v;

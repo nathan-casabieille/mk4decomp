@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_scaledInit_00542044;
+extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
@@ -130,7 +130,7 @@ void CmpCondIdxArrLookup(void) {
         g_walkCallback = (void(*)(void))1;
     }
     idx += adj;
-    g_scaledInit_00542044 = idx;
+    g_currentNodeIdx = idx;
     v = *(unsigned int *)(idx * 4);
     g_eventQueueCurrent = v;
     g_walkCallback = (void(*)(void))(g_gtFightTickCounter - v);
