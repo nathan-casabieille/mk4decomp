@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_004d2998;
-extern unsigned int g_const_004d29a0;
-extern unsigned int g_const_004d29a8;
-extern unsigned int g_const_004d29b0;
+extern unsigned int g_fpMsPerSec;
+extern unsigned int g_fpEcmInvFps15;
+extern unsigned int g_fpRoundHalfEcm;
+extern unsigned int g_fpRoundNegHalfEcm;
 extern u32 g_ecmFrameIdx;
 extern u32 g_ecmFrameTotal;
 extern u8 g_ecmAudioSlots[];
@@ -169,9 +169,9 @@ __declspec(naked) void EcmStreamTickAdvance(void)
         mov      dword ptr [esp + 0x10], ecx
         mov      esi, eax
         fild     qword ptr [esp + 0x10]
-        fmul     qword ptr [g_const_004d2998]
-        fmul     qword ptr [g_const_004d29a0]
-        fadd     qword ptr [g_const_004d29a8]
+        fmul     qword ptr [g_fpMsPerSec]
+        fmul     qword ptr [g_fpEcmInvFps15]
+        fadd     qword ptr [g_fpRoundHalfEcm]
         call     DoubleToInt64
         sub      esi, eax
         mov      dword ptr [g_dispatchSave1605], ebx
@@ -329,9 +329,9 @@ __declspec(naked) void EcmStreamTickAdvance(void)
         mov      dword ptr [esp + 0x14], ebx
         mov      dword ptr [esp + 0x10], esi
         fild     qword ptr [esp + 0x10]
-        fmul     qword ptr [g_const_004d2998]
-        fmul     qword ptr [g_const_004d29a0]
-        fsubr    qword ptr [g_const_004d29b0]
+        fmul     qword ptr [g_fpMsPerSec]
+        fmul     qword ptr [g_fpEcmInvFps15]
+        fsubr    qword ptr [g_fpRoundNegHalfEcm]
         call     DoubleToInt64
         sub      edi, eax
         mov      eax, dword ptr [g_dispatchSave1603]

@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_004d2c00;
-extern unsigned int g_const_004d2c08;
-extern unsigned int g_const_004d2c10;
-extern unsigned int g_const_004d2c18;
-extern unsigned int g_const_004d2c20;
-extern unsigned int g_const_004d2c28;
+extern unsigned int g_fpDblMax2;
+extern unsigned int g_fpDblMin2;
+extern unsigned int g_fpExpClampNeg2;
+extern unsigned int g_fpExpClampPos2;
+extern unsigned int g_fpInfinity2;
+extern unsigned int g_fpZeroPow;
 extern unsigned int g_crtFpuExceptionMask;
 extern unsigned int g_dispatchSave1422;
 extern void Crt_fpieee_flt(void);
@@ -237,33 +237,33 @@ __declspec(naked) void CrtFtolMatherrCluster(void)
         jmp      short L_a7fd
     L_a83f:
         mov      dword ptr [ebp - 0x8e], 4
-        fld      qword ptr [g_const_004d2c18]
+        fld      qword ptr [g_fpExpClampPos2]
         fxch     st(1)
         fscale
         fstp     st(1)
         fld      st(0)
         fabs
-        fcomp    qword ptr [g_const_004d2c08]
+        fcomp    qword ptr [g_fpDblMin2]
         wait
         fnstsw   ax
         sahf
         jae      short L_a899
-        fmul     qword ptr [g_const_004d2c28]
+        fmul     qword ptr [g_fpZeroPow]
         jmp      short L_a899
     L_a86d:
         mov      dword ptr [ebp - 0x8e], 3
-        fld      qword ptr [g_const_004d2c10]
+        fld      qword ptr [g_fpExpClampNeg2]
         fxch     st(1)
         fscale
         fstp     st(1)
         fld      st(0)
         fabs
-        fcomp    qword ptr [g_const_004d2c00]
+        fcomp    qword ptr [g_fpDblMax2]
         wait
         fnstsw   ax
         sahf
         jbe      short L_a899
-        fmul     qword ptr [g_const_004d2c20]
+        fmul     qword ptr [g_fpInfinity2]
     L_a899:
         push     esi
         push     edi

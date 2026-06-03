@@ -18,8 +18,8 @@ extern unsigned int g_currentNodeIdx;
  *   mov     [g_walkCallback], eax
  *   ret
  */
-extern double g_const_004d27b0;
-extern double g_const_004d27b8;
+extern double g_fpInvFixed16;
+extern double g_fpFixed16Scale;
 extern int DoubleToInt64(void);
 
 void FpuSqrtMul(void) {
@@ -29,9 +29,9 @@ void FpuSqrtMul(void) {
         _emit   7eh
         _emit   19h
         fild    dword ptr [g_eventQueueWorkType]
-        fmul    qword ptr [g_const_004d27b0]
+        fmul    qword ptr [g_fpInvFixed16]
         fsqrt
-        fmul    qword ptr [g_const_004d27b8]
+        fmul    qword ptr [g_fpFixed16Scale]
         call    DoubleToInt64
         mov     dword ptr [g_walkCallback], eax
         }

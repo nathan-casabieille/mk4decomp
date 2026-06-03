@@ -108,11 +108,11 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_004d2ebc;
-extern unsigned int g_const_004d2ee4;
-extern unsigned int g_const_004d2ee8;
-extern unsigned int g_const_004d2f04;
-extern unsigned int g_const_004d2f08;
+extern unsigned int g_crtMsg_Microsoft;
+extern unsigned int g_crtMsg_LineBreak;
+extern unsigned int g_crtMsg_Runtime;
+extern unsigned int g_crtMsg_Ellipsis;
+extern unsigned int g_crtMsg_ProgramTag;
 extern unsigned int g_crtFdCloseSlot;
 extern unsigned int g_crtAbortBase;
 extern unsigned int g_crtFpuSlot1;
@@ -164,7 +164,7 @@ __declspec(naked) void RaiseAbortLocalized(void)
         test     eax, eax
         jne      short L_c0fb
         mov      ecx, 5
-        mov      esi, OFFSET g_const_004d2f08
+        mov      esi, OFFSET g_crtMsg_ProgramTag
         lea      edi, [esp + 0xb4]
         rep movsd
         movsw
@@ -187,14 +187,14 @@ __declspec(naked) void RaiseAbortLocalized(void)
         mov      ebx, ecx
         lea      ecx, [esp + 0xb8]
         sub      ecx, 0x3b
-        push     OFFSET g_const_004d2f04
+        push     OFFSET g_crtMsg_Ellipsis
         add      ebx, ecx
         push     ebx
         call     Strncpy
         add      esp, 0xc
     L_c144:
         mov      ecx, 6
-        mov      esi, OFFSET g_const_004d2ee8
+        mov      esi, OFFSET g_crtMsg_Runtime
         lea      edi, [esp + 0x14]
         xor      eax, eax
         rep movsd
@@ -219,12 +219,12 @@ __declspec(naked) void RaiseAbortLocalized(void)
         and      ecx, 3
         push     0x12010
         rep movsb
-        mov      edi, OFFSET g_const_004d2ee4
+        mov      edi, OFFSET g_crtMsg_LineBreak
         or       ecx, 0xffffffff
         repne scasb
         not      ecx
         sub      edi, ecx
-        push     OFFSET g_const_004d2ebc
+        push     OFFSET g_crtMsg_Microsoft
         mov      esi, edi
         mov      ebx, ecx
         mov      edi, edx

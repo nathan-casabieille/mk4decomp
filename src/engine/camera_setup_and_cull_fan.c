@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_const_004d2a20;
-extern unsigned int g_const_004d2a28;
+extern unsigned int g_fpBam2PiScale;
 extern s16 g_vtxMat[];
 extern unsigned int g_mat3x3_007af994;
 extern unsigned int g_mat3x3_007af998;
@@ -273,7 +273,7 @@ __declspec(naked) void CameraSetupAndCullFan(void)
         fnstsw   ax
         test     ah, 0x40
         jne      L_9bca
-        fdivr    qword ptr [g_const_004d2a28]
+        fdivr    qword ptr [g_fpBam2PiScale]
         fild     dword ptr [esp + 0x10]
         fmul     st, st(1)
         call     DoubleToInt64
@@ -381,7 +381,7 @@ __declspec(naked) void CameraSetupAndCullFan(void)
         fnstsw   ax
         test     ah, 0x40
         jne      L_9d42
-        fdivr    qword ptr [g_const_004d2a28]
+        fdivr    qword ptr [g_fpBam2PiScale]
         fild     dword ptr [esp + 0x10]
         fmul     st, st(1)
         call     DoubleToInt64

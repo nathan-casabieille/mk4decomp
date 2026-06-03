@@ -389,37 +389,37 @@ extern unsigned int g_const_004a0060;
 extern unsigned int g_const_004a0b00;
 extern unsigned int g_const_004a0dc0;
 extern unsigned int g_const_004a10d0;
-extern unsigned int g_const_004d2964;
-extern unsigned int g_const_004d2968;
-extern unsigned int g_const_004d296c;
-extern unsigned int g_const_004d2998;
-extern unsigned int g_const_004d29a0;
-extern unsigned int g_const_004d29a8;
-extern unsigned int g_const_004d29b0;
-extern unsigned int g_const_004d29f0;
+extern unsigned int g_fpClipZeroF32;
+extern unsigned int g_fpScreenW640;
+extern unsigned int g_fpScreenH480;
+extern unsigned int g_fpMsPerSec;
+extern unsigned int g_fpEcmInvFps15;
+extern unsigned int g_fpRoundHalfEcm;
+extern unsigned int g_fpRoundNegHalfEcm;
+extern unsigned int g_fpRoundNegHalfCam;
 extern unsigned int g_const_004d2a20;
-extern unsigned int g_const_004d2a28;
+extern unsigned int g_fpBam2PiScale;
 extern unsigned int g_const_004d2b88;
-extern unsigned int g_const_004d2ba0;
-extern unsigned int g_const_004d2bb4;
-extern unsigned int g_const_004d2bbc;
-extern unsigned int g_const_004d2bc4;
-extern unsigned int g_const_004d2bcc;
-extern unsigned int g_const_004d2bd4;
+extern unsigned int g_fpOneMath;
+extern unsigned int g_fpDblMax;
+extern unsigned int g_fpDblMin;
+extern unsigned int g_fpExpClampNeg;
+extern unsigned int g_fpExpClampPos;
+extern unsigned int g_fpInfinity;
 extern unsigned int g_const_004d2bdc;
 extern unsigned int g_const_004d2be8;
-extern unsigned int g_const_004d2bf0;
-extern unsigned int g_const_004d2c00;
-extern unsigned int g_const_004d2c08;
-extern unsigned int g_const_004d2c10;
-extern unsigned int g_const_004d2c18;
-extern unsigned int g_const_004d2c20;
-extern unsigned int g_const_004d2c28;
-extern unsigned int g_const_004d2ebc;
-extern unsigned int g_const_004d2ee4;
-extern unsigned int g_const_004d2ee8;
-extern unsigned int g_const_004d2f04;
-extern unsigned int g_const_004d2f08;
+extern unsigned int g_fpOnePow;
+extern unsigned int g_fpDblMax2;
+extern unsigned int g_fpDblMin2;
+extern unsigned int g_fpExpClampNeg2;
+extern unsigned int g_fpExpClampPos2;
+extern unsigned int g_fpInfinity2;
+extern unsigned int g_fpZeroPow;
+extern unsigned int g_crtMsg_Microsoft;
+extern unsigned int g_crtMsg_LineBreak;
+extern unsigned int g_crtMsg_Runtime;
+extern unsigned int g_crtMsg_Ellipsis;
+extern unsigned int g_crtMsg_ProgramTag;
 extern unsigned int g_dispatchSave880;
 extern unsigned int g_dispatchSave1140;
 extern unsigned int g_dispatchSave650;
@@ -80426,9 +80426,9 @@ __declspec(naked) void EcmStreamTickAdvance(void)
         mov      dword ptr [esp + 0x10], ecx
         mov      esi, eax
         fild     qword ptr [esp + 0x10]
-        fmul     qword ptr [g_const_004d2998]
-        fmul     qword ptr [g_const_004d29a0]
-        fadd     qword ptr [g_const_004d29a8]
+        fmul     qword ptr [g_fpMsPerSec]
+        fmul     qword ptr [g_fpEcmInvFps15]
+        fadd     qword ptr [g_fpRoundHalfEcm]
         call     DoubleToInt64
         sub      esi, eax
         mov      dword ptr [g_dispatchSave1605], ebx
@@ -80586,9 +80586,9 @@ __declspec(naked) void EcmStreamTickAdvance(void)
         mov      dword ptr [esp + 0x14], ebx
         mov      dword ptr [esp + 0x10], esi
         fild     qword ptr [esp + 0x10]
-        fmul     qword ptr [g_const_004d2998]
-        fmul     qword ptr [g_const_004d29a0]
-        fsubr    qword ptr [g_const_004d29b0]
+        fmul     qword ptr [g_fpMsPerSec]
+        fmul     qword ptr [g_fpEcmInvFps15]
+        fsubr    qword ptr [g_fpRoundNegHalfEcm]
         call     DoubleToInt64
         sub      edi, eax
         mov      eax, dword ptr [g_dispatchSave1603]
@@ -82646,16 +82646,16 @@ __declspec(naked) void PaletteFillLineHybrid(void)
         mov      dword ptr [esp + 0x54], eax
         jne      L_5deb
         fld      st(0)
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         call     DoubleToInt64
         fld      st(1)
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         mov      bp, ax
         and      ebp, 0x1f
         shl      ebp, 5
         call     DoubleToInt64
         fld      st(2)
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         and      eax, 0x1f
         or       ebp, eax
         shl      ebp, 5
@@ -82673,16 +82673,16 @@ __declspec(naked) void PaletteFillLineHybrid(void)
         mov      dword ptr [esp + 0x54], eax
         jne      L_5e4d
         fld      st(0)
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         call     DoubleToInt64
         fld      st(1)
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         mov      bp, ax
         and      ebp, 0x1f
         shl      ebp, 5
         call     DoubleToInt64
         fld      st(2)
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         and      eax, 0x1f
         or       ebp, eax
         shl      ebp, 5
@@ -82698,16 +82698,16 @@ __declspec(naked) void PaletteFillLineHybrid(void)
         lea      esi, [esi*2 + g_texStripeBuf]
         jne      L_5ea5
         fld      st(0)
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         call     DoubleToInt64
         fld      st(1)
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         mov      bp, ax
         and      ebp, 0x1f
         shl      ebp, 5
         call     DoubleToInt64
         fld      st(2)
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         and      eax, 0x1f
         or       ebp, eax
         shl      ebp, 5
@@ -82726,16 +82726,16 @@ __declspec(naked) void PaletteFillLineHybrid(void)
         mov      dword ptr [esp + 0x54], eax
         jne      L_5f15
         fld      dword ptr [esp + 0x58]
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         call     DoubleToInt64
         fld      dword ptr [esp + 0x5c]
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         mov      bp, ax
         and      ebp, 0x1f
         shl      ebp, 5
         call     DoubleToInt64
         fld      dword ptr [esp + 0x60]
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         and      eax, 0x1f
         or       ebp, eax
         shl      ebp, 5
@@ -82753,16 +82753,16 @@ __declspec(naked) void PaletteFillLineHybrid(void)
         mov      dword ptr [esp + 0x54], eax
         jne      L_5f7d
         fld      dword ptr [esp + 0x58]
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         call     DoubleToInt64
         fld      dword ptr [esp + 0x5c]
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         mov      bp, ax
         and      ebp, 0x1f
         shl      ebp, 5
         call     DoubleToInt64
         fld      dword ptr [esp + 0x60]
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         and      eax, 0x1f
         or       ebp, eax
         shl      ebp, 5
@@ -82778,16 +82778,16 @@ __declspec(naked) void PaletteFillLineHybrid(void)
         lea      esi, [esi*2 + g_texStripeBuf]
         jne      L_5fdb
         fld      dword ptr [esp + 0x58]
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         call     DoubleToInt64
         fld      dword ptr [esp + 0x5c]
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         mov      bp, ax
         and      ebp, 0x1f
         shl      ebp, 5
         call     DoubleToInt64
         fld      dword ptr [esp + 0x60]
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         and      eax, 0x1f
         or       ebp, eax
         shl      ebp, 5
@@ -82844,16 +82844,16 @@ __declspec(naked) void PaletteFillLineHybrid(void)
         mov      dword ptr [esp + 0x44], ecx
     L_6077:
         fld      st(0)
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         call     DoubleToInt64
         fld      st(1)
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         mov      si, ax
         and      esi, 0x1f
         shl      esi, 5
         call     DoubleToInt64
         fld      st(2)
-        fsub     qword ptr [g_const_004d29f0]
+        fsub     qword ptr [g_fpRoundNegHalfCam]
         and      eax, 0x1f
         or       esi, eax
         shl      esi, 5
@@ -83056,7 +83056,7 @@ __declspec(naked) void CameraSetupAndCullFan(void)
         fnstsw   ax
         test     ah, 0x40
         jne      L_9bca
-        fdivr    qword ptr [g_const_004d2a28]
+        fdivr    qword ptr [g_fpBam2PiScale]
         fild     dword ptr [esp + 0x10]
         fmul     st, st(1)
         call     DoubleToInt64
@@ -83164,7 +83164,7 @@ __declspec(naked) void CameraSetupAndCullFan(void)
         fnstsw   ax
         test     ah, 0x40
         jne      L_9d42
-        fdivr    qword ptr [g_const_004d2a28]
+        fdivr    qword ptr [g_fpBam2PiScale]
         fild     dword ptr [esp + 0x10]
         fmul     st, st(1)
         call     DoubleToInt64
@@ -86769,7 +86769,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      byte ptr [g_renderer2_d3dByte], bl
     L_de14:
         fld      dword ptr [esp + 0x1c]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         xor      di, di
         xor      si, si
         xor      dx, dx
@@ -86786,7 +86786,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         jmp      L_de76
     L_de5a:
         fld      dword ptr [esp + 0x1c]
-        fcomp    dword ptr [g_const_004d2968]
+        fcomp    dword ptr [g_fpScreenW640]
         fnstsw   ax
         test     ah, 0x41
         jne      L_de76
@@ -86794,7 +86794,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      word ptr [g_glideTriBatchB], dx
     L_de76:
         fld      dword ptr [esp + 0x20]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         fnstsw   ax
         test     ah, 1
         je       L_de94
@@ -86803,7 +86803,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         jmp      L_deb0
     L_de94:
         fld      dword ptr [esp + 0x20]
-        fcomp    dword ptr [g_const_004d296c]
+        fcomp    dword ptr [g_fpScreenH480]
         fnstsw   ax
         test     ah, 0x41
         jne      L_deb0
@@ -86811,7 +86811,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      word ptr [g_glideTriBatchC], si
     L_deb0:
         fld      dword ptr [esp + 0x30]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         fnstsw   ax
         test     ah, 1
         je       L_decc
@@ -86820,7 +86820,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         jmp      L_dee6
     L_decc:
         fld      dword ptr [esp + 0x30]
-        fcomp    dword ptr [g_const_004d2968]
+        fcomp    dword ptr [g_fpScreenW640]
         fnstsw   ax
         test     ah, 0x41
         jne      L_dee6
@@ -86828,7 +86828,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      word ptr [g_glideTriBatchB], dx
     L_dee6:
         fld      dword ptr [esp + 0x34]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         fnstsw   ax
         test     ah, 1
         je       L_df02
@@ -86837,7 +86837,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         jmp      L_df1c
     L_df02:
         fld      dword ptr [esp + 0x34]
-        fcomp    dword ptr [g_const_004d296c]
+        fcomp    dword ptr [g_fpScreenH480]
         fnstsw   ax
         test     ah, 0x41
         jne      L_df1c
@@ -86845,7 +86845,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      word ptr [g_glideTriBatchC], si
     L_df1c:
         fld      dword ptr [esp + 0x44]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         fnstsw   ax
         test     ah, 1
         je       L_df38
@@ -86854,7 +86854,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         jmp      L_df52
     L_df38:
         fld      dword ptr [esp + 0x44]
-        fcomp    dword ptr [g_const_004d2968]
+        fcomp    dword ptr [g_fpScreenW640]
         fnstsw   ax
         test     ah, 0x41
         jne      L_df52
@@ -86862,7 +86862,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      word ptr [g_glideTriBatchB], dx
     L_df52:
         fld      dword ptr [esp + 0x48]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         fnstsw   ax
         test     ah, 1
         je       L_df6e
@@ -86871,7 +86871,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         jmp      L_df88
     L_df6e:
         fld      dword ptr [esp + 0x48]
-        fcomp    dword ptr [g_const_004d296c]
+        fcomp    dword ptr [g_fpScreenH480]
         fnstsw   ax
         test     ah, 0x41
         jne      L_df88
@@ -89442,7 +89442,7 @@ __declspec(naked) void GlidePolyClip(void)
         cmp      word ptr [g_glideTriBatch], 0
         je       L_e8ff
         fstp     st(0)
-        fld      dword ptr [g_const_004d2964]
+        fld      dword ptr [g_fpClipZeroF32]
         test     dx, dx
         lea      ecx, [esp + 0x24]
         mov      dword ptr [g_dispatchAcc3], esi
@@ -89450,7 +89450,7 @@ __declspec(naked) void GlidePolyClip(void)
         and      edx, 0xffff
     L_e5e5:
         fld      dword ptr [esi + 4]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         fnstsw   ax
         test     ah, 1
         je       L_e5fc
@@ -89470,7 +89470,7 @@ __declspec(naked) void GlidePolyClip(void)
         cmp      word ptr [g_glideTriBatchB], 0
         je       L_e8ff
         fstp     st(0)
-        fld      dword ptr [g_const_004d2968]
+        fld      dword ptr [g_fpScreenW640]
         test     dx, dx
         lea      ecx, [esp + 0x24]
         mov      dword ptr [g_dispatchAcc3], esi
@@ -89478,7 +89478,7 @@ __declspec(naked) void GlidePolyClip(void)
         and      edx, 0xffff
     L_e641:
         fld      dword ptr [esi]
-        fcomp    dword ptr [g_const_004d2968]
+        fcomp    dword ptr [g_fpScreenW640]
         fnstsw   ax
         test     ah, 0x41
         jne      L_e657
@@ -89498,7 +89498,7 @@ __declspec(naked) void GlidePolyClip(void)
         cmp      word ptr [g_glideTriBatchC], 0
         je       L_e8ff
         fstp     st(0)
-        fld      dword ptr [g_const_004d296c]
+        fld      dword ptr [g_fpScreenH480]
         test     dx, dx
         lea      ecx, [esp + 0x24]
         mov      dword ptr [g_dispatchAcc3], esi
@@ -89506,7 +89506,7 @@ __declspec(naked) void GlidePolyClip(void)
         and      edx, 0xffff
     L_e69c:
         fld      dword ptr [esi + 4]
-        fcomp    dword ptr [g_const_004d296c]
+        fcomp    dword ptr [g_fpScreenH480]
         fnstsw   ax
         test     ah, 0x41
         jne      L_e6b3
@@ -89526,7 +89526,7 @@ __declspec(naked) void GlidePolyClip(void)
         cmp      word ptr [g_glideTriBatchD], 0
         je       L_e8ff
         fstp     st(0)
-        fld      dword ptr [g_const_004d2964]
+        fld      dword ptr [g_fpClipZeroF32]
         test     dx, dx
         lea      ecx, [esp + 0x24]
         mov      dword ptr [g_dispatchAcc3], esi
@@ -89534,7 +89534,7 @@ __declspec(naked) void GlidePolyClip(void)
         and      edx, 0xffff
     L_e6f1:
         fld      dword ptr [esi]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         fnstsw   ax
         test     ah, 1
         je       L_e707
@@ -91501,7 +91501,7 @@ __declspec(naked) void LocaleNumericHelpers(void)
  *      bits, sets rounding to nearest, writes via word at
  *      [esp+6] then fldcw.
  *   3. 0x4ca2dc (12b): denormal-input classifier - bit 0x80000
- *      → ret 7, else fadd qword [g_const_004d2ba0] then ret 1.
+ *      → ret 7, else fadd qword [g_fpOneMath] then ret 1.
  *   4. 0x4ca2f4 (~38b): __extract_unbiased_exp_xword.
  *   5. 0x4ca337 (~22b): nan-passthrough probe.
  *   6. 0x4ca34d (~15b): conditional restore fpcw if not 0x27f.
@@ -91510,9 +91510,9 @@ __declspec(naked) void LocaleNumericHelpers(void)
  *      has bit 0x20 set.
  *   8. 0x4ca387 (~16b): inf/nan check path A (and 0x7ff00000).
  *   9. 0x4ca397 (~83b): inf/nan check path B + recovery legs
- *      that scale by qword [g_const_004d2bcc] / [g_const_004d2bdc]
- *      for underflow and qword [g_const_004d2bc4] /
- *      [g_const_004d2bd4] for overflow, dispatching to either
+ *      that scale by qword [g_fpExpClampPos] / [g_const_004d2bdc]
+ *      for underflow and qword [g_fpExpClampNeg] /
+ *      [g_fpInfinity] for overflow, dispatching to either
  *      TwinEntryFpHelper or func_004ca267 based on edx==0x1d.
  *
  * Tail filled with int3-padding (0xcc cc cc cc) to size 400.
@@ -91548,7 +91548,7 @@ __declspec(naked) void FloatTransientHelpers(void)
         mov      eax, 7
         ret
     L_a2e9:
-        fadd     qword ptr [g_const_004d2ba0]
+        fadd     qword ptr [g_fpOneMath]
         mov      eax, 1
         ret
         /* H4: __extract_unbiased_exp_xword */
@@ -91664,13 +91664,13 @@ __declspec(naked) void FloatTransientHelpers(void)
         pop      edx
         ret
     L_a3ea:
-        fld      qword ptr [g_const_004d2bcc]
+        fld      qword ptr [g_fpExpClampPos]
         fxch     st(1)
         fscale
         fstp     st(1)
         fld      st(0)
         fabs
-        fcomp    qword ptr [g_const_004d2bbc]
+        fcomp    qword ptr [g_fpDblMin]
         wait
         fnstsw   ax
         sahf
@@ -91679,19 +91679,19 @@ __declspec(naked) void FloatTransientHelpers(void)
         fmul     qword ptr [g_const_004d2bdc]
         jmp      short L_a3d2
     L_a413:
-        fld      qword ptr [g_const_004d2bc4]
+        fld      qword ptr [g_fpExpClampNeg]
         fxch     st(1)
         fscale
         fstp     st(1)
         fld      st(0)
         fabs
-        fcomp    qword ptr [g_const_004d2bb4]
+        fcomp    qword ptr [g_fpDblMax]
         wait
         fnstsw   ax
         sahf
         mov      eax, 3
         jbe      short L_a3d2
-        fmul     qword ptr [g_const_004d2bd4]
+        fmul     qword ptr [g_fpInfinity]
         jmp      short L_a3d2
         int      3
         int      3
@@ -94444,11 +94444,11 @@ __declspec(naked) void FpExceptionFilter(void)
  *        - else: take the dialog branch.
  *   3. Console branch (L_c0c0..L_c1fd):
  *      - GetModuleFileNameA([0x4d20a0]) into [esp+0xb4]; on
- *        failure copy fallback string at OFFSET g_const_004d2f08.
+ *        failure copy fallback string at OFFSET g_crtMsg_ProgramTag.
  *      - Trim leading path components if the basename exceeds
  *        0x3c bytes via Strncpy.
  *      - Build the dialog format from three concatenated chunks
- *        at OFFSET g_const_004d2ee8 / 004d2ee4 / 004d2ebc plus
+ *        at OFFSET g_crtMsg_Runtime / 004d2ee4 / 004d2ebc plus
  *        the per-code message string at [ebp*8+g_crtFpuSlot1].
  *      - Call LazyLoadInvoke(format, flags=0x12010) and return.
  *   4. Dialog branch (L_c1fd..L_c218): get stderr from
@@ -94501,7 +94501,7 @@ __declspec(naked) void RaiseAbortLocalized(void)
         test     eax, eax
         jne      short L_c0fb
         mov      ecx, 5
-        mov      esi, OFFSET g_const_004d2f08
+        mov      esi, OFFSET g_crtMsg_ProgramTag
         lea      edi, [esp + 0xb4]
         rep movsd
         movsw
@@ -94524,14 +94524,14 @@ __declspec(naked) void RaiseAbortLocalized(void)
         mov      ebx, ecx
         lea      ecx, [esp + 0xb8]
         sub      ecx, 0x3b
-        push     OFFSET g_const_004d2f04
+        push     OFFSET g_crtMsg_Ellipsis
         add      ebx, ecx
         push     ebx
         call     Strncpy
         add      esp, 0xc
     L_c144:
         mov      ecx, 6
-        mov      esi, OFFSET g_const_004d2ee8
+        mov      esi, OFFSET g_crtMsg_Runtime
         lea      edi, [esp + 0x14]
         xor      eax, eax
         rep movsd
@@ -94556,12 +94556,12 @@ __declspec(naked) void RaiseAbortLocalized(void)
         and      ecx, 3
         push     0x12010
         rep movsb
-        mov      edi, OFFSET g_const_004d2ee4
+        mov      edi, OFFSET g_crtMsg_LineBreak
         or       ecx, 0xffffffff
         repne scasb
         not      ecx
         sub      edi, ecx
-        push     OFFSET g_const_004d2ebc
+        push     OFFSET g_crtMsg_Microsoft
         mov      esi, edi
         mov      ebx, ecx
         mov      edi, edx
@@ -103427,7 +103427,7 @@ __declspec(naked) void CrtPowSpecialCases(void)
         cmp      ecx, edi
         jne      short L_a4ce
         fld      qword ptr [esp + 0xc]
-        fcomp    qword ptr [g_const_004d2bf0]
+        fcomp    qword ptr [g_fpOnePow]
         fnstsw   ax
         test     ah, 0x41
         jne      short L_a4af
@@ -103442,7 +103442,7 @@ __declspec(naked) void CrtPowSpecialCases(void)
         ret
     L_a4af:
         fld      qword ptr [esp + 0xc]
-        fcomp    qword ptr [g_const_004d2bf0]
+        fcomp    qword ptr [g_fpOnePow]
         fnstsw   ax
         test     ah, 1
         je       L_a523
@@ -103459,7 +103459,7 @@ __declspec(naked) void CrtPowSpecialCases(void)
         cmp      ecx, edi
         jne      L_a542
         fld      qword ptr [esp + 0xc]
-        fcomp    qword ptr [g_const_004d2bf0]
+        fcomp    qword ptr [g_fpOnePow]
         fnstsw   ax
         test     ah, 0x41
         jne      short L_a4f8
@@ -103472,7 +103472,7 @@ __declspec(naked) void CrtPowSpecialCases(void)
         ret
     L_a4f8:
         fld      qword ptr [esp + 0xc]
-        fcomp    qword ptr [g_const_004d2bf0]
+        fcomp    qword ptr [g_fpOnePow]
         fnstsw   ax
         test     ah, 1
         je       short L_a523
@@ -116518,33 +116518,33 @@ __declspec(naked) void CrtFtolMatherrCluster(void)
         jmp      short L_a7fd
     L_a83f:
         mov      dword ptr [ebp - 0x8e], 4
-        fld      qword ptr [g_const_004d2c18]
+        fld      qword ptr [g_fpExpClampPos2]
         fxch     st(1)
         fscale
         fstp     st(1)
         fld      st(0)
         fabs
-        fcomp    qword ptr [g_const_004d2c08]
+        fcomp    qword ptr [g_fpDblMin2]
         wait
         fnstsw   ax
         sahf
         jae      short L_a899
-        fmul     qword ptr [g_const_004d2c28]
+        fmul     qword ptr [g_fpZeroPow]
         jmp      short L_a899
     L_a86d:
         mov      dword ptr [ebp - 0x8e], 3
-        fld      qword ptr [g_const_004d2c10]
+        fld      qword ptr [g_fpExpClampNeg2]
         fxch     st(1)
         fscale
         fstp     st(1)
         fld      st(0)
         fabs
-        fcomp    qword ptr [g_const_004d2c00]
+        fcomp    qword ptr [g_fpDblMax2]
         wait
         fnstsw   ax
         sahf
         jbe      short L_a899
-        fmul     qword ptr [g_const_004d2c20]
+        fmul     qword ptr [g_fpInfinity2]
     L_a899:
         push     esi
         push     edi

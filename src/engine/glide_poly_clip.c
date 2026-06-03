@@ -110,9 +110,9 @@ extern unsigned int g_fightAxisPosY;
 
 extern void Renderer2_FlushBatch_D3D(void);
 extern void GlidePolyClip(void);
-extern unsigned int g_const_004d2964;
-extern unsigned int g_const_004d2968;
-extern unsigned int g_const_004d296c;
+extern unsigned int g_fpClipZeroF32;
+extern unsigned int g_fpScreenW640;
+extern unsigned int g_fpScreenH480;
 extern unsigned int g_renderer2_d3dInitByte;
 extern unsigned int g_renderer2_d3dByte;
 extern int g_renderer2_active;
@@ -312,7 +312,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      byte ptr [g_renderer2_d3dByte], bl
     L_de14:
         fld      dword ptr [esp + 0x1c]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         xor      di, di
         xor      si, si
         xor      dx, dx
@@ -329,7 +329,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         jmp      L_de76
     L_de5a:
         fld      dword ptr [esp + 0x1c]
-        fcomp    dword ptr [g_const_004d2968]
+        fcomp    dword ptr [g_fpScreenW640]
         fnstsw   ax
         test     ah, 0x41
         jne      L_de76
@@ -337,7 +337,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      word ptr [g_glideTriBatchB], dx
     L_de76:
         fld      dword ptr [esp + 0x20]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         fnstsw   ax
         test     ah, 1
         je       L_de94
@@ -346,7 +346,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         jmp      L_deb0
     L_de94:
         fld      dword ptr [esp + 0x20]
-        fcomp    dword ptr [g_const_004d296c]
+        fcomp    dword ptr [g_fpScreenH480]
         fnstsw   ax
         test     ah, 0x41
         jne      L_deb0
@@ -354,7 +354,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      word ptr [g_glideTriBatchC], si
     L_deb0:
         fld      dword ptr [esp + 0x30]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         fnstsw   ax
         test     ah, 1
         je       L_decc
@@ -363,7 +363,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         jmp      L_dee6
     L_decc:
         fld      dword ptr [esp + 0x30]
-        fcomp    dword ptr [g_const_004d2968]
+        fcomp    dword ptr [g_fpScreenW640]
         fnstsw   ax
         test     ah, 0x41
         jne      L_dee6
@@ -371,7 +371,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      word ptr [g_glideTriBatchB], dx
     L_dee6:
         fld      dword ptr [esp + 0x34]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         fnstsw   ax
         test     ah, 1
         je       L_df02
@@ -380,7 +380,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         jmp      L_df1c
     L_df02:
         fld      dword ptr [esp + 0x34]
-        fcomp    dword ptr [g_const_004d296c]
+        fcomp    dword ptr [g_fpScreenH480]
         fnstsw   ax
         test     ah, 0x41
         jne      L_df1c
@@ -388,7 +388,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      word ptr [g_glideTriBatchC], si
     L_df1c:
         fld      dword ptr [esp + 0x44]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         fnstsw   ax
         test     ah, 1
         je       L_df38
@@ -397,7 +397,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         jmp      L_df52
     L_df38:
         fld      dword ptr [esp + 0x44]
-        fcomp    dword ptr [g_const_004d2968]
+        fcomp    dword ptr [g_fpScreenW640]
         fnstsw   ax
         test     ah, 0x41
         jne      L_df52
@@ -405,7 +405,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         mov      word ptr [g_glideTriBatchB], dx
     L_df52:
         fld      dword ptr [esp + 0x48]
-        fcomp    dword ptr [g_const_004d2964]
+        fcomp    dword ptr [g_fpClipZeroF32]
         fnstsw   ax
         test     ah, 1
         je       L_df6e
@@ -414,7 +414,7 @@ __declspec(naked) void GlideTriBatchEmit(void)
         jmp      L_df88
     L_df6e:
         fld      dword ptr [esp + 0x48]
-        fcomp    dword ptr [g_const_004d296c]
+        fcomp    dword ptr [g_fpScreenH480]
         fnstsw   ax
         test     ah, 0x41
         jne      L_df88

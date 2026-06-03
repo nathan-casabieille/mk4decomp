@@ -108,12 +108,12 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_004d2ba0;
-extern unsigned int g_const_004d2bb4;
-extern unsigned int g_const_004d2bbc;
-extern unsigned int g_const_004d2bc4;
-extern unsigned int g_const_004d2bcc;
-extern unsigned int g_const_004d2bd4;
+extern unsigned int g_fpOneMath;
+extern unsigned int g_fpDblMax;
+extern unsigned int g_fpDblMin;
+extern unsigned int g_fpExpClampNeg;
+extern unsigned int g_fpExpClampPos;
+extern unsigned int g_fpInfinity;
 extern unsigned int g_const_004d2bdc;
 extern void TwinEntryFpHelper(void);
 extern void func_004ca267(void);
@@ -146,7 +146,7 @@ __declspec(naked) void FloatTransientHelpers(void)
         mov      eax, 7
         ret
     L_a2e9:
-        fadd     qword ptr [g_const_004d2ba0]
+        fadd     qword ptr [g_fpOneMath]
         mov      eax, 1
         ret
         /* H4: __extract_unbiased_exp_xword */
@@ -262,13 +262,13 @@ __declspec(naked) void FloatTransientHelpers(void)
         pop      edx
         ret
     L_a3ea:
-        fld      qword ptr [g_const_004d2bcc]
+        fld      qword ptr [g_fpExpClampPos]
         fxch     st(1)
         fscale
         fstp     st(1)
         fld      st(0)
         fabs
-        fcomp    qword ptr [g_const_004d2bbc]
+        fcomp    qword ptr [g_fpDblMin]
         wait
         fnstsw   ax
         sahf
@@ -277,19 +277,19 @@ __declspec(naked) void FloatTransientHelpers(void)
         fmul     qword ptr [g_const_004d2bdc]
         jmp      short L_a3d2
     L_a413:
-        fld      qword ptr [g_const_004d2bc4]
+        fld      qword ptr [g_fpExpClampNeg]
         fxch     st(1)
         fscale
         fstp     st(1)
         fld      st(0)
         fabs
-        fcomp    qword ptr [g_const_004d2bb4]
+        fcomp    qword ptr [g_fpDblMax]
         wait
         fnstsw   ax
         sahf
         mov      eax, 3
         jbe      short L_a3d2
-        fmul     qword ptr [g_const_004d2bd4]
+        fmul     qword ptr [g_fpInfinity]
         jmp      short L_a3d2
         int      3
         int      3
