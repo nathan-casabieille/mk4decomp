@@ -94,7 +94,12 @@ typedef struct ScenegraphNode {
     u32 fsm_state;          /* +0x74 0x501 = special / fatality       */
     u32 _78[3];             /* +0x78..+0x83 user state                */
     u32 install_flag;       /* +0x84 0/1 install state flag           */
-    u32 _88[19];            /* +0x88..+0xD3 user state                */
+    u32 unused_88[19];      /* +0x88..+0xD3 confirmed dead region.
+                             * Zero `[reg*4 + 0xNN]` accesses across the
+                             * whole corpus for any offset in this range,
+                             * no writes either. The allocator may clear
+                             * it via a bulk-DWORD scan but nothing
+                             * else touches the 19 dwords. */
     u32 magic;              /* +0xD4 = NODE_LIVE_MAGIC when live      */
 
     /* === Header (+0xD8 .. +0xE7) ============================== */
@@ -143,7 +148,11 @@ typedef struct FightGroupNode {
                              * +0x70 vel_y term. Linear vs angular
                              * velocity unconfirmed but the uniform-decay
                              * pattern is verified.                       */
-    u32 _84[25];            /* +0x84..+0xE7 rest (matches 232 total)  */
+    u32 _84;                /* +0x84 install_flag in ScenegraphNode view */
+    u32 unused_88[19];      /* +0x88..+0xD3 same confirmed dead region
+                             * as ScenegraphNode.unused_88 (sister view) */
+    u32 _D4[5];             /* +0xD4..+0xE7 header (magic + ptr_field +
+                             * type_word + work_type + next_link) */
 } FightGroupNode;
 
 /* Sister view of the same 232-byte slot when used as a node carrying
@@ -175,7 +184,11 @@ typedef struct AuxVec3Node {
     s32 aux_x;              /* +0x60 secondary vec3 X component       */
     s32 aux_y;              /* +0x64 secondary vec3 Y component       */
     s32 aux_z;              /* +0x68 secondary vec3 Z component       */
-    u32 _6C[31];            /* +0x6C..+0xE7 rest (matches 232 total)  */
+    u32 _6C[6];             /* +0x6C..+0x83 polymorphic user state    */
+    u32 _84;                /* +0x84 install_flag in ScenegraphNode view */
+    u32 unused_88[19];      /* +0x88..+0xD3 same confirmed dead region
+                             * as ScenegraphNode.unused_88              */
+    u32 _D4[5];             /* +0xD4..+0xE7 header                     */
 } AuxVec3Node;
 
 /* === Allocator ============================================== */
