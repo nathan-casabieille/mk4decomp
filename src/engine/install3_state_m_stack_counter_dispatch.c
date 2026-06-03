@@ -40115,7 +40115,7 @@ extern unsigned char g_byte_0053a498;
  *   Switch on base[+0x30] - 3: case 0 → g_walkCallback = g_counter_0054359c+0xd; edx=base[+0x7c].
  *                              case 1 → g_walkCallback = g_counter_005433c8+0x12; edx=base[+0x80].
  *                              default → ret.
- *   g_cj_00542058 = edx. If g_byte_0053a498 & 8: chain3 = base[g_walkCallback]; g_currentNodeIdx=chain3;
+ *   g_cj_00542058 = edx. If g_gtFightTickCounter & 8: chain3 = base[g_walkCallback]; g_currentNodeIdx=chain3;
  *   copy chain3[+0x54/+0x58/+0x5c] → g_walkCallback/g_eventQueueCurrent/g_eventQueueWorkType → chain2[+0x54/+0x58/+0x5c].
  *   Pop+ret.
  */
@@ -171235,7 +171235,7 @@ __declspec(naked) void Match_TeamOutcomeScreen(void)
         mov      edx, dword ptr [g_counter_005433c8]
         add      edx, 0x12
         lea      eax, [ecx + 0xd]
-        mov      cl, byte ptr [g_gtFightTickCounter]
+        mov      cl, byte ptr [g_byte_0053a498]
         test     cl, 8
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_eventQueueCurrent], edx
@@ -174238,7 +174238,7 @@ __declspec(naked) void PendingMatch_AudioInitArgs3(void)
         mov      ecx, dword ptr [g_counter_0054359c]
         add      ecx, 0xd
     L_8f03:
-        mov      dl, byte ptr [g_gtFightTickCounter]
+        mov      dl, byte ptr [g_byte_0053a498]
         mov      dword ptr [g_walkCallback], ecx
         test     dl, 8
         je       L_8f79
@@ -174276,7 +174276,7 @@ __declspec(naked) void PendingMatch_AudioInitArgs3(void)
         mov      ecx, dword ptr [g_counter_0054359c]
         add      ecx, 0xd
     L_8fb9:
-        mov      dl, byte ptr [g_gtFightTickCounter]
+        mov      dl, byte ptr [g_byte_0053a498]
         mov      dword ptr [g_walkCallback], ecx
         test     dl, 8
         je       L_902a
@@ -180087,7 +180087,7 @@ __declspec(naked) void PendingMatch_MStackPush2ChainLLInsert_004a56c0(void)
         mov      eax, dword ptr [edx*4 + 0x5c]
         mov      dword ptr [ecx*4 + 0x5c], eax
     L_5938:
-        test     byte ptr [g_gtFightTickCounter], 8
+        test     byte ptr [g_byte_0053a498], 8
         je       L_5948
         call     ScaledOr4DirtyClear
         jmp      L_594d
@@ -182900,7 +182900,7 @@ __declspec(naked) void PendingMatch_FiveTableWalkInit(void)
         mov      edx, dword ptr [g_baseSel]
         mov      eax, dword ptr [edx*4 + 0x7c]
         mov      dword ptr [g_currentNodeIdx], eax
-        mov      al, byte ptr [g_gtFightTickCounter]
+        mov      al, byte ptr [g_byte_0053a498]
         test     al, 8
         jne      L_add8
         call     ScaledOr4DirtyClear
@@ -222756,7 +222756,7 @@ __declspec(naked) void PendingMatch_Test4StatesAny(void)
         mov      ebx, dword ptr [esp + 0x10]
         xor      ebp, ebp
         mov      esi, 1
-        test     byte ptr [g_gtFightTickCounter], 8
+        test     byte ptr [g_byte_0053a498], 8
         je       L_692f
         mov      eax, dword ptr [g_eventQueueEnd]
         cmp      eax, ebp

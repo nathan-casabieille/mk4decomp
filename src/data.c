@@ -2168,7 +2168,7 @@ unsigned int g_audioFlagAgg50d8 = 0xffffffff;
 unsigned int g_byte_004d5714 = 0x00000001;
 unsigned int g_audioRestoreByte10 = 0x00000001;
 unsigned int g_bootOnceCallByte;
-unsigned int g_byte_0053a498;
+unsigned int g_gtFightTickCounter;
 unsigned int g_audioInitSeqByte;
 unsigned int g_pauseTestCmp2Byte;
 unsigned int g_byte_00543590;
