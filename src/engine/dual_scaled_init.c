@@ -23,39 +23,39 @@ extern unsigned int g_xformEntityIdx;
 extern void DualSwapTwoCallsJmp(void);
 
 /* Table-base externs - &-references defeat constant-folding of `>> 2`. */
-extern unsigned int g_table_0052ab18;   /* 0x0052ab18 */
-extern unsigned int g_table_0053a2a0;   /* 0x0053a2a0 */
-extern unsigned int g_table_0053a330;   /* 0x0053a330 */
-extern unsigned int g_table_0053a258;   /* 0x0053a258 */
-extern unsigned int g_table_00541e00;   /* 0x00541e00 */
-extern unsigned int g_table_0053a2f8;   /* 0x0053a2f8 */
-extern unsigned int g_table_0053a750;   /* 0x0053a750 */
-extern unsigned int g_table_00538048;   /* 0x00538048 */
+extern unsigned int g_orphanTbl_0052ab18;   /* 0x0052ab18 */
+extern unsigned int g_orphanTbl_0053a2a0;   /* 0x0053a2a0 */
+extern unsigned int g_orphanTbl_0053a330;   /* 0x0053a330 */
+extern unsigned int g_orphanTbl_0053a258;   /* 0x0053a258 */
+extern unsigned int g_orphanTbl_00541e00;   /* 0x00541e00 */
+extern unsigned int g_orphanTbl_0053a2f8;   /* 0x0053a2f8 */
+extern unsigned int g_orphanTbl_0053a750;   /* 0x0053a750 */
+extern unsigned int g_orphanTbl_00538048;   /* 0x00538048 */
 
 /* @addr 0x0045d8e0 */
 void DualScaledInit_g_table_0052ab18_g_table_0053a2a0(void) {
-    g_currentNodeIdx = (unsigned int)&g_table_0052ab18 >> 2;
-    g_xformEntityIdx = (unsigned int)&g_table_0053a2a0 >> 2;
+    g_currentNodeIdx = (unsigned int)&g_orphanTbl_0052ab18 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_orphanTbl_0053a2a0 >> 2;
     DualSwapTwoCallsJmp();
 }
 
 /* @addr 0x0045d900 */
 void DualScaledInit_g_table_0053a330_g_table_0053a258(void) {
-    g_currentNodeIdx = (unsigned int)&g_table_0053a330 >> 2;
-    g_xformEntityIdx = (unsigned int)&g_table_0053a258 >> 2;
+    g_currentNodeIdx = (unsigned int)&g_orphanTbl_0053a330 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_orphanTbl_0053a258 >> 2;
     DualSwapTwoCallsJmp();
 }
 
 /* @addr 0x0045d920 */
 void DualScaledInit_g_table_00541e00_g_table_0053a2f8(void) {
-    g_currentNodeIdx = (unsigned int)&g_table_00541e00 >> 2;
-    g_xformEntityIdx = (unsigned int)&g_table_0053a2f8 >> 2;
+    g_currentNodeIdx = (unsigned int)&g_orphanTbl_00541e00 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_orphanTbl_0053a2f8 >> 2;
     DualSwapTwoCallsJmp();
 }
 
 /* @addr 0x0045d940 */
 void DualScaledInit_g_table_0053a750_g_table_00538048(void) {
-    g_currentNodeIdx = (unsigned int)&g_table_0053a750 >> 2;
-    g_xformEntityIdx = (unsigned int)&g_table_00538048 >> 2;
+    g_currentNodeIdx = (unsigned int)&g_orphanTbl_0053a750 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_orphanTbl_00538048 >> 2;
     DualSwapTwoCallsJmp();
 }

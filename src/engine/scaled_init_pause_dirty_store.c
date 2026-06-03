@@ -28,9 +28,9 @@ extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void FramePauseScaledStore(void);
 
 /* @addr 0x00445f00 */
-extern unsigned int g_table_00511444;
+extern unsigned int g_orphanTbl_00511444;
 void ScaledInitPauseDirtyStore_00445f00(void) {
-    g_xformEntityIdx = (unsigned int)&g_table_00511444 >> 2;
+    g_xformEntityIdx = (unsigned int)&g_orphanTbl_00511444 >> 2;
     MStackBracket1_TreeWalkRecursive2();
     if (g_framePauseFlag != 0) {
         return;

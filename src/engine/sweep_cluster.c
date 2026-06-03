@@ -115,7 +115,6 @@ extern void SweepCluster(void);
 extern void CondPickDualStore(void);
 extern void StoreTwoCall(void);
 extern unsigned int g_or;
-extern unsigned int g_const_004985b0;
 extern unsigned int g_sweepClusterBase;
 
 extern void FiveCallGuardSetTail(void);
@@ -152,7 +151,7 @@ __declspec(naked) void StageEventState4Way(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_84da
         push     0x4d
-        push     OFFSET g_const_004985b0
+        push     OFFSET SweepCluster + 0xd0
         call     StoreTwoCall
         mov      ecx, dword ptr [g_currentNodeIdx]
         mov      edx, dword ptr [g_fightGroupHead]

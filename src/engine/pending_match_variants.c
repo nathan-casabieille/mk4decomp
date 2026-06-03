@@ -426,7 +426,6 @@ extern void TripleCallBitJmp(void);
 extern void TripleCallPauseJmp(void);
 extern void ZeroAndDirty4(void);
 
-extern unsigned int g_const_0044d820;
 extern unsigned int g_dispatchSave656;
 extern unsigned int g_dispatchSave657;
 extern unsigned int g_dispatchSave658;
@@ -2648,7 +2647,7 @@ __declspec(naked) void IntroFsmCluster(void)
         nop
         /* H4 */
         mov      eax, dword ptr [g_baseSel]
-        push     OFFSET g_const_0044d820
+        push     OFFSET PendingMatch_ArgSarStoreJmp_0044d7a0 + 0x80
         mov      ecx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      edx, dword ptr [eax*4 + 0x68]

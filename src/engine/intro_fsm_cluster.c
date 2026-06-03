@@ -108,7 +108,6 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_0044d820;
 extern unsigned int g_dispatchSave543;
 extern unsigned int g_dispatchSave542;
 extern unsigned int g_dispatchTableArr5;
@@ -247,7 +246,7 @@ __declspec(naked) void IntroFsmCluster(void)
         nop
         /* H4 */
         mov      eax, dword ptr [g_baseSel]
-        push     OFFSET g_const_0044d820
+        push     OFFSET PendingMatch_ArgSarStoreJmp_0044d7a0 + 0x80
         mov      ecx, dword ptr [eax*4 + 0x64]
         mov      dword ptr [g_eventQueueEnd], ecx
         mov      edx, dword ptr [eax*4 + 0x68]

@@ -13,9 +13,9 @@ extern unsigned int g_currentNodeIdx;
  */
 extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledTestPauseStore(void);
-extern unsigned int g_table_0051140c;
+extern unsigned int g_orphanTbl_0051140c;
 void SpecialInitDirtyJmp(void) {
-    g_xformEntityIdx = (unsigned int)&g_table_0051140c >> 2;
+    g_xformEntityIdx = (unsigned int)&g_orphanTbl_0051140c >> 2;
     MStackBracket1_TreeWalkRecursive2();
     if (g_framePauseFlag != 0) {
         return;

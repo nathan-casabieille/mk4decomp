@@ -108,8 +108,6 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_00481a10;
-extern unsigned int g_const_00481a80;
 extern unsigned int g_dispatchSave540;
 extern unsigned int g_dispatchSave539;
 extern unsigned int g_load_0052ab10;
@@ -153,11 +151,11 @@ __declspec(naked) void BlockedCounterCluster(void)
         test     eax, eax
         jne      short L_1749
         push     0x26
-        push     OFFSET g_const_00481a10
+        push     OFFSET BossArrivalSequence + 0xc0
         call     StoreTwoCall
         add      esp, 8
         push     0x26
-        push     OFFSET g_const_00481a80
+        push     OFFSET BossArrivalSequence + 0x130
         call     StoreTwoCall
         add      esp, 8
         push     OFFSET g_dispatchSave539

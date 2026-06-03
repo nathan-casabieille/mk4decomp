@@ -28,7 +28,7 @@ extern unsigned int g_currentNodeIdx;
  *   xor     eax, eax
  *   ret
  */
-extern int g_table_004f7d40[16];
+extern int g_orphanTbl_004f7d40[16];
 void TableSearch(void) {
     __asm {
         mov     ax, word ptr [esp + 4]

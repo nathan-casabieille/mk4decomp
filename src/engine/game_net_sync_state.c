@@ -15,6 +15,8 @@ extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
 
+extern void AudioVoiceSequencerCluster(void);
+extern void AudioStateClearAndChainStep(void);
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
 extern void Thunk_ChainNodeInit(void);
@@ -109,9 +111,6 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_orphanConst_004a0060;
-extern unsigned int g_const_004a0b00;
-extern unsigned int g_const_004a0dc0;
-extern unsigned int g_const_004a10d0;
 extern unsigned int g_audioSceneTag_004e2860;
 extern unsigned int g_audioInitPeriodic;
 extern unsigned int g_audioInstall2State;
@@ -208,7 +207,7 @@ __declspec(naked) void GameNetSyncState(void)
         jne      short L_fd46
         mov      eax, dword ptr [g_acc_00542078]
         push     0x238
-        push     OFFSET g_const_004a0b00
+        push     OFFSET MStackDualPushSaveRestore + 0x140
         mov      dword ptr [g_eventQueueChild], eax
         call     SetWalkCurCallPauseDirty
         add      esp, 8
@@ -219,7 +218,7 @@ __declspec(naked) void GameNetSyncState(void)
         cmp      eax, 0x10
         jne      short L_fd00
         push     0x23d
-        push     OFFSET g_const_004a0dc0
+        push     OFFSET AudioVoiceSequencerCluster + 0x60
         mov      dword ptr [g_eventQueueEnd], esi
         call     SetWalkCurCallPauseDirty
         add      esp, 8
@@ -237,7 +236,7 @@ __declspec(naked) void GameNetSyncState(void)
         call     TaggedSceneDispatch
         add      esp, 4
         push     0x242
-        push     OFFSET g_const_004a10d0
+        push     OFFSET AudioStateClearAndChainStep + 0x20
         call     SetWalkCurCallPauseDirty
         add      esp, 8
         mov      dword ptr [g_walkCallback], ebx

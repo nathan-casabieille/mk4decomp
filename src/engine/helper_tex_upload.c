@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 /* @addr 0x004bf370 (237b engine.scenegraph) - sprite-blit dispatcher.
- *   arg0 = sprite_id (esp+4); ecx = id & 0xf. Mark g_table_00f6e058[id]=1.
+ *   arg0 = sprite_id (esp+4); ecx = id & 0xf. Mark g_orphanTbl_00f6e058[id]=1.
  *   If g_texturedTriVar != 0: per-row bit-encoded blit:
  *     For each of [esp+0x20] rows × outer count [esp+0x24]:
  *       read u16 from [0xf4d050 + offset], split bits (lo6 + hi shifted), or together,

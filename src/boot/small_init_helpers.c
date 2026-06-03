@@ -7,7 +7,7 @@ extern unsigned int g_currentNodeIdx;
 
 /* Table-base extern: &-reference defeats MSVC's constant-folding of
  * `addr >> 2` so the runtime shift survives, matching orig encoding. */
-extern unsigned int g_table_00538168;   /* 0x00538168 (uninit .data) */
+extern unsigned int g_orphanTbl_00538168;   /* 0x00538168 (uninit .data) */
 
 /* @addr 0x004049c0 (14b)
  *   mov     eax, 0x00538168
@@ -16,7 +16,7 @@ extern unsigned int g_table_00538168;   /* 0x00538168 (uninit .data) */
  *   ret
  */
 void MStackPackedInit(void) {
-    g_matrixStackTop = (int)((unsigned int)&g_table_00538168 >> 2);
+    g_matrixStackTop = (int)((unsigned int)&g_orphanTbl_00538168 >> 2);
 }
 
 /* @addr 0x00406ce0 (19b)

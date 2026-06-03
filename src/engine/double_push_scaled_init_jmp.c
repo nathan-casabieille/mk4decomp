@@ -12,12 +12,12 @@ extern unsigned int g_currentNodeIdx;
  *   sets g_walkCallback (0x54206c) = 0x4e5e28 >> 2, then jmp T.
  */
 extern void PendingMatch_PushSetXfmMaskCallPop_00444ef0(void);
-extern unsigned int g_table_004e5e28;
+extern unsigned int g_orphanTbl_004e5e28;
 void DoublePushScaledInitJmp(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueWorkType;
-    g_walkCallback = (void (*)(void))((unsigned int)&g_table_004e5e28 >> 2);
+    g_walkCallback = (void (*)(void))((unsigned int)&g_orphanTbl_004e5e28 >> 2);
     PendingMatch_PushSetXfmMaskCallPop_00444ef0();
 }

@@ -14,7 +14,7 @@ extern unsigned int g_currentNodeIdx;
 extern void SetJmp_ZeroAndDirty4(void);
 extern void ScaledLoadStore(void);
 extern void TripleChainSetupDualCall(void);
-extern unsigned int g_table_004ec9e8;
+extern unsigned int g_orphanTbl_004ec9e8;
 void GuardedDirty4ScaledJmp(void) {
     SetJmp_ZeroAndDirty4();
     if (g_framePauseFlag != 0) {
@@ -32,6 +32,6 @@ void GuardedDirty4ScaledJmp(void) {
     if (g_framePauseFlag != 0) {
         return;
     }
-    g_walkCallback = (void (*)(void))((unsigned int)&g_table_004ec9e8 >> 2);
+    g_walkCallback = (void (*)(void))((unsigned int)&g_orphanTbl_004ec9e8 >> 2);
     TripleChainSetupDualCall();
 }

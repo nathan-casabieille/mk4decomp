@@ -19,9 +19,9 @@ extern unsigned int g_currentNodeIdx;
  */
 extern unsigned int g_bootInitSaveSlot;
 extern void AnimEventUpdateCluster(void);
-extern unsigned int g_table_004f1e20;
+extern unsigned int g_orphanTbl_004f1e20;
 void LoadCmpAddrJmp(void) {
-    unsigned int packed = (unsigned int)((int)&g_table_004f1e20 >> 2);
+    unsigned int packed = (unsigned int)((int)&g_orphanTbl_004f1e20 >> 2);
     g_bootInitSaveSlot = packed;
     if ((unsigned int)g_walkCallback == packed) {
         AnimEventUpdateCluster();

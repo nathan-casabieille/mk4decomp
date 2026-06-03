@@ -108,7 +108,6 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_byte_004d5714;
 extern unsigned int g_dispatchSave613;
 extern unsigned int g_dispatchSave612;
 extern unsigned int g_dispatchSave611;
@@ -302,7 +301,7 @@ __declspec(naked) void Phase4MultiHelperInit(void)
         pop     esi
         ret
     L_p4mh_C_phase0:
-        mov     byte ptr [g_byte_004d5714], 0
+        mov     byte ptr [g_gtPlayerEnabled], 0
         call    Helper_MenuStub_8EB0
         push    7
         call    TableWalkBoundedCmp

@@ -20,12 +20,12 @@ extern void IntroComboFsmCluster(void);
 /* Table-base externs - referenced only by `&` so the linker emits a
  * DIR32 reloc into the imm32 slot; that keeps `addr >> 2` from being
  * constant-folded and lets MSVC SP3 /O2 emit the runtime shift. */
-extern unsigned int g_table_004e4780;   /* 0x004e4780 */
+extern unsigned int g_orphanTbl_004e4780;   /* 0x004e4780 */
 extern unsigned int g_sceneInitBlob_004e56d8;   /* 0x004e56d8 */
 
 /* @addr 0x004368f0 */
 void ScaledAddrInit_InstallSelfMStackPushDispatch(void) {
-    g_eventQueueEnd = (unsigned int)((int)&g_table_004e4780 >> 2);
+    g_eventQueueEnd = (unsigned int)((int)&g_orphanTbl_004e4780 >> 2);
     InstallSelfMStackPushDispatch();
 }
 

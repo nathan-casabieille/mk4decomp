@@ -117,7 +117,6 @@ extern unsigned int g_stateFlag;
 extern s32 g_dlNalt1;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_stateChangePair;
-extern unsigned int g_const_00427780;
 extern void func_00427780(void);
 
 extern s32 g_dlNalt2;

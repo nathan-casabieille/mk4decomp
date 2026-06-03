@@ -531,14 +531,6 @@ g_configBuffer: 5519656
 g_configChecksum: 5519660
 g_configInitGate: 5521276
 g_configValidationCounter: 5519660
-g_const_0044d820: 4511776
-g_const_004664a0: 4613280
-g_const_00481a10: 4725264
-g_const_00481a80: 4725376
-g_const_004985b0: 4818352
-g_const_004a0b00: 4852480
-g_const_004a0dc0: 4853184
-g_const_004a10d0: 4853968
 g_count: 5518264
 g_count_005433b8: 5518264
 g_counter_0053a51c: 5481756

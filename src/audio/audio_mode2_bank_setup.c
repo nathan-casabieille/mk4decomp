@@ -126,7 +126,7 @@ extern unsigned int g_audioBankCounterArr;
  *     Inc g_audioStateByte840; g_audioPathFlag=1; g_audioModeBankFlag=1;
  *     if hit 0xf: inc g_audioStateByte83c; if also equal to (post-inc) al: zero it.
  *     Stash to g_audioBank2Base; push (&g_audioByteCounterChainSt, &g_audioBank2Base);
- *     g_audioByteCounterChainSt = g_audioStateByte83c; zero g_byte_005435a3 / g_byte_005435bb;
+ *     g_audioByteCounterChainSt = g_audioStateByte83c; zero byte at +3 of both buffers;
  *     call AudioMode2BankSetup; call TwoStageAudioInit.
  */
 extern s32 g_dlNalt1;

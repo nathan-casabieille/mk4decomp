@@ -24,13 +24,13 @@
 extern unsigned int g_gs;   /* 0x00542048 */
 
 /* Table-base externs - &-references defeat constant-folding of `>> 2`. */
-extern unsigned int g_table_004d7238;   /* 0x004d7238 */
-extern unsigned int g_table_004ecaf0;   /* 0x004ecaf0 */
-extern unsigned int g_table_004ecb10;   /* 0x004ecb10 */
-extern unsigned int g_table_004ecb20;   /* 0x004ecb20 */
-extern unsigned int g_table_004ecb28;   /* 0x004ecb28 */
-extern unsigned int g_table_004ecb40;   /* 0x004ecb40 */
-extern unsigned int g_table_004ecb48;   /* 0x004ecb48 */
+extern unsigned int g_orphanTbl_004d7238;   /* 0x004d7238 */
+extern unsigned int g_orphanTbl_004ecaf0;   /* 0x004ecaf0 */
+extern unsigned int g_orphanTbl_004ecb10;   /* 0x004ecb10 */
+extern unsigned int g_orphanTbl_004ecb20;   /* 0x004ecb20 */
+extern unsigned int g_orphanTbl_004ecb28;   /* 0x004ecb28 */
+extern unsigned int g_orphanTbl_004ecb40;   /* 0x004ecb40 */
+extern unsigned int g_orphanTbl_004ecb48;   /* 0x004ecb48 */
 
 /* Externs for call/jump targets. */
 extern void PendingMatch_MStackPush2RunCountdown_0040cd50(void);   /* 0x0040cd50 */
@@ -43,7 +43,7 @@ extern void MStackPush8(void);   /* 0x004ab790 */
 void GuardedScaled_MStackPush8_then_PendingMatch(void) {
     MStackPush8();
     if (g_framePauseFlag == 0) {
-        g_eventQueueTotal = (unsigned int)&g_table_004d7238 >> 2;
+        g_eventQueueTotal = (unsigned int)&g_orphanTbl_004d7238 >> 2;
         PendingMatch_MStackPush2RunCountdown_0040cd50();
     }
 }
@@ -52,7 +52,7 @@ void GuardedScaled_MStackPush8_then_PendingMatch(void) {
 void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00474fd0(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs = (unsigned int)&g_table_004ecaf0 >> 2;
+        g_gs = (unsigned int)&g_orphanTbl_004ecaf0 >> 2;
         LinkedListSearch();
     }
 }
@@ -61,7 +61,7 @@ void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00474fd0(void) {
 void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475000(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs = (unsigned int)&g_table_004ecb10 >> 2;
+        g_gs = (unsigned int)&g_orphanTbl_004ecb10 >> 2;
         LinkedListSearch();
     }
 }
@@ -70,7 +70,7 @@ void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475000(void) {
 void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475030(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs = (unsigned int)&g_table_004ecb20 >> 2;
+        g_gs = (unsigned int)&g_orphanTbl_004ecb20 >> 2;
         LinkedListSearch();
     }
 }
@@ -79,7 +79,7 @@ void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475030(void) {
 void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475060(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs = (unsigned int)&g_table_004ecb28 >> 2;
+        g_gs = (unsigned int)&g_orphanTbl_004ecb28 >> 2;
         LinkedListSearch();
     }
 }
@@ -88,7 +88,7 @@ void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475060(void) {
 void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475090(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs = (unsigned int)&g_table_004ecb40 >> 2;
+        g_gs = (unsigned int)&g_orphanTbl_004ecb40 >> 2;
         LinkedListSearch();
     }
 }
@@ -97,7 +97,7 @@ void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475090(void) {
 void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_004750c0(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs = (unsigned int)&g_table_004ecb48 >> 2;
+        g_gs = (unsigned int)&g_orphanTbl_004ecb48 >> 2;
         LinkedListSearch();
     }
 }
