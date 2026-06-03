@@ -113,12 +113,12 @@ extern unsigned int g_fightAxisPosY;
  *   add corresponding word at 0xab4e44/48/4c, clamp each to <=0xfe00, store back.
  *   Clear 3 dword globals.
  */
-extern unsigned int g_word_00ab4e44;
-extern unsigned int g_word_00ab4e48;
-extern unsigned int g_word_00ab4e4c;
-extern unsigned int g_struct_00ab4e50;
-extern unsigned int g_struct_00ab4e54;
-extern unsigned int g_struct_00ab4e58;
+extern unsigned int g_pointColorR;
+extern unsigned int g_pointColorG;
+extern unsigned int g_pointColorB;
+extern unsigned int g_pointPosX;
+extern unsigned int g_pointPosY;
+extern unsigned int g_pointPosZ;
 
 __declspec(naked) void ScaledThreeChanPack(void) {
     __asm {
@@ -130,7 +130,7 @@ __declspec(naked) void ScaledThreeChanPack(void) {
         imul    ecx, esi
         xor     edx, edx
         push    edi
-        mov     dx, word ptr [g_word_00ab4e44]
+        mov     dx, word ptr [g_pointColorR]
         xor     edi, edi
         add     ecx, edx
         xor     edx, edx
@@ -138,9 +138,9 @@ __declspec(naked) void ScaledThreeChanPack(void) {
         and     eax, 0xff
         imul    edx, esi
         imul    eax, esi
-        mov     di, word ptr [g_word_00ab4e48]
+        mov     di, word ptr [g_pointColorG]
         xor     esi, esi
-        mov     si, word ptr [g_word_00ab4e4c]
+        mov     si, word ptr [g_pointColorB]
         add     edx, edi
         add     eax, esi
         cmp     ecx, 0xfe00
@@ -155,14 +155,14 @@ __declspec(naked) void ScaledThreeChanPack(void) {
         _emit   76h
         _emit   05h
         mov     eax, 0xfe00
-        mov     word ptr [g_word_00ab4e4c], ax
+        mov     word ptr [g_pointColorB], ax
         xor     eax, eax
         pop     edi
-        mov     word ptr [g_word_00ab4e44], cx
-        mov     word ptr [g_word_00ab4e48], dx
-        mov     dword ptr [g_struct_00ab4e58], eax
-        mov     dword ptr [g_struct_00ab4e54], eax
-        mov     dword ptr [g_struct_00ab4e50], eax
+        mov     word ptr [g_pointColorR], cx
+        mov     word ptr [g_pointColorG], dx
+        mov     dword ptr [g_pointPosZ], eax
+        mov     dword ptr [g_pointPosY], eax
+        mov     dword ptr [g_pointPosX], eax
         pop     esi
         ret
     }

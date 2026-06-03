@@ -11,10 +11,10 @@
  *   at 0x00f9eb70 (PCM, 2 channels, freq, 16-bit, 4-byte block) and
  *   call IDirectSound::CreateSoundBuffer (vt+0x38).
  */
-extern unsigned int g_word_00f9eb70;
-extern unsigned int g_word_00f9eb72;
-extern unsigned int g_word_00f9eb7c;
-extern unsigned int g_word_00f9eb7e;
+extern unsigned int g_wavFmtTag;
+extern unsigned int g_wavFmtChannels;
+extern unsigned int g_wavFmtBlockAlign;
+extern unsigned int g_wavFmtBitsPerSample;
 extern unsigned int g_dispatchSave1410;
 extern unsigned int g_dispatchSave1411;
 extern void * g_dsoundPrimary;
@@ -28,18 +28,18 @@ __declspec(naked) void Helper_DSI_post2(void) {
         je      doneRet
         mov     esi, dword ptr [g_dispatchSave1410]
         xor     ecx, ecx
-        mov     dword ptr [g_word_00f9eb70], ecx
-        mov     word ptr [g_word_00f9eb70], 1
+        mov     dword ptr [g_wavFmtTag], ecx
+        mov     word ptr [g_wavFmtTag], 1
         mov     dword ptr [g_dispatchSave1410], ecx
-        mov     word ptr [g_word_00f9eb72], 2
+        mov     word ptr [g_wavFmtChannels], 2
         mov     dword ptr [g_dispatchSave1411], ecx
-        push    offset g_word_00f9eb70
-        mov     dword ptr [g_word_00f9eb7c], ecx
+        push    offset g_wavFmtTag
+        mov     dword ptr [g_wavFmtBlockAlign], ecx
         mov     ecx, dword ptr [esp + 0xc]
         mov     dword ptr [g_dispatchSave1410], ecx
-        mov     word ptr [g_word_00f9eb7e], 0x10
+        mov     word ptr [g_wavFmtBitsPerSample], 0x10
         lea     edx, [ecx*4 + 0]
-        mov     word ptr [g_word_00f9eb7c], 4
+        mov     word ptr [g_wavFmtBlockAlign], 4
         mov     dword ptr [g_dispatchSave1411], edx
         mov     ecx, dword ptr [eax]
         push    eax

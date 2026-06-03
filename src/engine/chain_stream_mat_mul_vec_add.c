@@ -112,11 +112,11 @@ extern unsigned int g_fightAxisPosY;
  * ChainStreamMatMulVecAdd - 208b engine.geo chain-stream MatMul+Vec3Add.
  *   stream = g_eventQueueTotal; advance: g_walkCallback = stream[0]; g_eventQueueCurrent = stream[1];
  *   g_eventQueueTotal = stream[2] (next stream ptr). Unpack g_xformEntityIdx base:
- *   load 4 dwords + 1 word into g_vtxMat..g_word_007af9a0.
+ *   load 4 dwords + 1 word into g_vtxMat..g_wtMatExtraWord.
  *   Push (g_pendingNodeType<<2, g_currentNodeIdx<<2); call Mat3x3VecMul6Bit; restore.
  *   Add g_walkCallback into target[0], g_eventQueueCurrent into target[1], g_eventQueueTotal into target[2].
  */
-extern unsigned int g_word_007af9a0;
+extern unsigned int g_wtMatExtraWord;
 extern s16 g_vtxMat[];
 extern unsigned int g_mat3x3_007af994;
 extern unsigned int g_mat3x3_007af998;
@@ -146,7 +146,7 @@ void ChainStreamMatMulVecAdd(void) {
         lea     ecx, [eax*4]
         mov     dx, word ptr [edx + 0x10]
         push    ecx
-        mov     word ptr [g_word_007af9a0], dx
+        mov     word ptr [g_wtMatExtraWord], dx
         mov     edx, dword ptr [g_pendingNodeType]
         lea     eax, [edx*4]
         push    eax

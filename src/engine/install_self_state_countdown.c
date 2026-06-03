@@ -257,7 +257,7 @@ extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_bootInitSaveSlot;
-extern unsigned int g_word_007af9a0;
+extern unsigned int g_wtMatExtraWord;
 extern unsigned int g_byte_004f360c;
 extern unsigned int g_audioStateMachine0;
 extern unsigned int g_audioStateMachine1;
@@ -557,7 +557,7 @@ extern unsigned int g_dispatchSave1207;
 extern unsigned int g_dispatchSave1208;
 extern unsigned int g_dispatchSave1209;
 extern unsigned int g_dispatchSave1210;
-extern unsigned int g_word_004e2860;
+extern unsigned int g_audioSceneTag_004e2860;
 extern unsigned int g_poseGridGenVar;
 extern unsigned int g_dispatchSave669;
 extern unsigned int g_lit16_004e286c;
@@ -2015,9 +2015,9 @@ extern s16 g_vtxScreenP2X;
 extern s16 g_vtxScreenP2Y;
 extern s16 g_vtxScreenX;
 extern s16 g_vtxScreenY;
-extern unsigned int g_arr_007af9c0;
-extern unsigned int g_arr_007af9c4;
-extern unsigned int g_arr_007af9c8;
+extern unsigned int g_lightMat00;
+extern unsigned int g_lightMat01;
+extern unsigned int g_lightMat02;
 extern unsigned int g_dispatchSave1627;
 extern unsigned int g_dispatchSave1628;
 extern unsigned int g_dispatchSave1629;
@@ -2163,9 +2163,9 @@ extern unsigned int g_dispatchSave1570;
 extern unsigned int g_dispatchSave1572;
 extern unsigned int g_dispatchSave1573;
 extern unsigned int g_dispatchSave1574;
-extern unsigned int g_struct_00ab4e50;
-extern unsigned int g_struct_00ab4e54;
-extern unsigned int g_struct_00ab4e58;
+extern unsigned int g_pointPosX;
+extern unsigned int g_pointPosY;
+extern unsigned int g_pointPosZ;
 extern unsigned int g_dispatchSave1575;
 extern unsigned int g_dispatchSave1576;
 extern unsigned int g_dispatchSave1577;
@@ -2338,10 +2338,10 @@ extern unsigned int g_dispatchSave1469;
 extern unsigned int g_dispatchSave1470;
 extern unsigned int g_dispatchSave1471;
 extern unsigned int g_dispatchSave1472;
-extern unsigned int g_fp_004d29d0;
-extern unsigned int g_fp_004d29d8;
-extern unsigned int g_fp_004d29e0;
-extern unsigned int g_fp_004d29e8;
+extern unsigned int g_fpSinTableBaseTwo;
+extern unsigned int g_fpSinTableExp28;
+extern unsigned int g_fpRadianPerBam;
+extern unsigned int g_fpRoundBiasNegHalf;
 extern unsigned int g_iat_GetAsyncKeyState;
 extern unsigned int g_iid;
 extern unsigned int g_mat3x3_007af990;
@@ -2390,9 +2390,9 @@ extern unsigned int g_table_007b0088;
 extern unsigned int g_table_007b00c8;
 extern unsigned int g_table_007b0108;
 extern unsigned int g_table_007b0148;
-extern unsigned int g_word_00ab4e44;
-extern unsigned int g_word_00ab4e48;
-extern unsigned int g_word_00ab4e4c;
+extern unsigned int g_pointColorR;
+extern unsigned int g_pointColorG;
+extern unsigned int g_pointColorB;
 extern unsigned int g_dispatchSave589;
 extern unsigned int g_pendingMatchVar4;
 extern unsigned int g_pendingMatchVar3;
@@ -5435,7 +5435,7 @@ __declspec(naked) void ScaledThreeChanPack(void) {
         imul    ecx, esi
         xor     edx, edx
         push    edi
-        mov     dx, word ptr [g_word_00ab4e44]
+        mov     dx, word ptr [g_pointColorR]
         xor     edi, edi
         add     ecx, edx
         xor     edx, edx
@@ -5443,9 +5443,9 @@ __declspec(naked) void ScaledThreeChanPack(void) {
         and     eax, 0xff
         imul    edx, esi
         imul    eax, esi
-        mov     di, word ptr [g_word_00ab4e48]
+        mov     di, word ptr [g_pointColorG]
         xor     esi, esi
-        mov     si, word ptr [g_word_00ab4e4c]
+        mov     si, word ptr [g_pointColorB]
         add     edx, edi
         add     eax, esi
         cmp     ecx, 0xfe00
@@ -5460,14 +5460,14 @@ __declspec(naked) void ScaledThreeChanPack(void) {
         _emit   76h
         _emit   05h
         mov     eax, 0xfe00
-        mov     word ptr [g_word_00ab4e4c], ax
+        mov     word ptr [g_pointColorB], ax
         xor     eax, eax
         pop     edi
-        mov     word ptr [g_word_00ab4e44], cx
-        mov     word ptr [g_word_00ab4e48], dx
-        mov     dword ptr [g_struct_00ab4e58], eax
-        mov     dword ptr [g_struct_00ab4e54], eax
-        mov     dword ptr [g_struct_00ab4e50], eax
+        mov     word ptr [g_pointColorR], cx
+        mov     word ptr [g_pointColorG], dx
+        mov     dword ptr [g_pointPosZ], eax
+        mov     dword ptr [g_pointPosY], eax
+        mov     dword ptr [g_pointPosX], eax
         pop     esi
         ret
     }
@@ -5484,7 +5484,7 @@ __declspec(naked) void ThreeChanPackClamp(void) {
         push    esi
         mov     eax, ecx
         xor     esi, esi
-        mov     si, word ptr [g_word_00ab4e44]
+        mov     si, word ptr [g_pointColorR]
         and     ecx, 0xff
         sar     eax, 8
         mov     edx, eax
@@ -5492,11 +5492,11 @@ __declspec(naked) void ThreeChanPackClamp(void) {
         and     dl, 0x00
         add     edx, esi
         xor     esi, esi
-        mov     si, word ptr [g_word_00ab4e48]
+        mov     si, word ptr [g_pointColorG]
         shl     eax, 8
         add     eax, esi
         xor     esi, esi
-        mov     si, word ptr [g_word_00ab4e4c]
+        mov     si, word ptr [g_pointColorB]
         shl     ecx, 8
         add     ecx, esi
         cmp     edx, 0xfe00
@@ -5511,13 +5511,13 @@ __declspec(naked) void ThreeChanPackClamp(void) {
         _emit   76h
         _emit   05h
         mov     ecx, 0xfe00
-        mov     word ptr [g_word_00ab4e48], ax
+        mov     word ptr [g_pointColorG], ax
         xor     eax, eax
-        mov     word ptr [g_word_00ab4e44], dx
-        mov     word ptr [g_word_00ab4e4c], cx
-        mov     dword ptr [g_struct_00ab4e58], eax
-        mov     dword ptr [g_struct_00ab4e54], eax
-        mov     dword ptr [g_struct_00ab4e50], eax
+        mov     word ptr [g_pointColorR], dx
+        mov     word ptr [g_pointColorB], cx
+        mov     dword ptr [g_pointPosZ], eax
+        mov     dword ptr [g_pointPosY], eax
+        mov     dword ptr [g_pointPosX], eax
         pop     esi
         ret
     }
@@ -6939,18 +6939,18 @@ extern int DoubleToInt64(void);
 __declspec(naked) void AppInit_PostJoy(void) {
     __asm {
         push    ecx
-        fld     qword ptr [g_fp_004d29d0]
-        fld     qword ptr [g_fp_004d29d8]
+        fld     qword ptr [g_fpSinTableBaseTwo]
+        fld     qword ptr [g_fpSinTableExp28]
         push    esi
         mov     dword ptr [esp + 4], 0
         call    CrtPowCluster
         mov     esi, offset g_buf_007b01a0
 loop4b5a10:
         fild    dword ptr [esp + 4]
-        fmul    qword ptr [g_fp_004d29e0]
+        fmul    qword ptr [g_fpRadianPerBam]
         fcos
         fmul    st(0), st(1)
-        fsub    qword ptr [g_fp_004d29e8]
+        fsub    qword ptr [g_fpRoundBiasNegHalf]
         call    DoubleToInt64
         mov     ecx, dword ptr [esp + 4]
         mov     dword ptr [esi], eax
@@ -23269,7 +23269,7 @@ void func_GuardedTripleCallSwapJmp_then_SetJmp_Distance3DMul10Chain_then_CjInsta
 /* @addr 0x00439f70 (44b): store 0x1f4 at g_walkCallback; call AudioVolumeRescale;
  * if !pause, bit-test state_208c: if set jmp QuadGuardBitGateJmp, else jmp
  * CallPauseTestByteJmpCalls. Entry A of the original 83-byte packed block;
- * entry B at +0x30 lives in func_00439fa0. The 4-byte nop gap is filled
+ * entry B at +0x30 lives in Cmp13333_IdCascadeBitSet_00439fa0. The 4-byte nop gap is filled
  * by 0x90-fill. */
 void StoreCallPauseTestByte_DualCmpStoreClear(void) {
     g_walkCallback = 0x1f4;
@@ -23285,7 +23285,7 @@ void StoreCallPauseTestByte_DualCmpStoreClear(void) {
 /* @addr 0x00439fa0 (35b): cmp state_ddc with 0x13333, store at g_walkCallback;
  * if < clear bit 0 of state_208c and ret; if >= tail-jmp IdCascadeBitSet.
  * Orphan sub-entry of the original packed block. */
-void func_00439fa0(void) {
+void Cmp13333_IdCascadeBitSet_00439fa0(void) {
     unsigned int v = g_table_00535ddc;
     g_walkCallback = v;
     if ((int)v < 0x13333) {
@@ -39110,7 +39110,7 @@ __declspec(naked) void AudioTriEntryFlagPairInit(void)
  * ChainStreamMatMulVecAdd - 208b engine.geo chain-stream MatMul+Vec3Add.
  *   stream = g_eventQueueTotal; advance: g_walkCallback = stream[0]; g_eventQueueCurrent = stream[1];
  *   g_eventQueueTotal = stream[2] (next stream ptr). Unpack g_xformEntityIdx base:
- *   load 4 dwords + 1 word into g_vtxMat..g_word_007af9a0.
+ *   load 4 dwords + 1 word into g_vtxMat..g_wtMatExtraWord.
  *   Push (g_pendingNodeType<<2, g_currentNodeIdx<<2); call Mat3x3VecMul6Bit; restore.
  *   Add g_walkCallback into target[0], g_eventQueueCurrent into target[1], g_eventQueueTotal into target[2].
  */
@@ -39137,7 +39137,7 @@ void ChainStreamMatMulVecAdd(void) {
         lea     ecx, [eax*4]
         mov     dx, word ptr [edx + 0x10]
         push    ecx
-        mov     word ptr [g_word_007af9a0], dx
+        mov     word ptr [g_wtMatExtraWord], dx
         mov     edx, dword ptr [g_pendingNodeType]
         lea     eax, [edx*4]
         push    eax
@@ -44366,7 +44366,7 @@ __declspec(naked) void WcToMbDispatcher(void) {
  *     out[0..2] = M_row0 . v0,  M_row0 . v1
  *     out[3..5] = M_row1 . v0,  M_row1 . v1
  *   (where v0 is words at +0x18, v1 at +0x1c). Matrix is in
- *   g_arr_007af9c0..d4. Results stored to g_vtxLight0_x..ec.
+ *   g_lightMat00..d4. Results stored to g_vtxLight0_x..ec.
  */
 __declspec(naked) void MatVec2Multiply(void) {
     __asm {
@@ -44384,14 +44384,14 @@ __declspec(naked) void MatVec2Multiply(void) {
         call    Word9Reorder
         movsx   esi, word ptr [esp + 0x18]
         movsx   edx, word ptr [esp + 0x1a]
-        mov     eax, dword ptr [g_arr_007af9c0]
-        mov     ecx, dword ptr [g_arr_007af9c4]
+        mov     eax, dword ptr [g_lightMat00]
+        mov     ecx, dword ptr [g_lightMat01]
         mov     ebx, eax
         mov     ebp, ecx
         imul    ebx, esi
         imul    ebp, edx
         movsx   edi, word ptr [esp + 0x1c]
-        mov     edx, dword ptr [g_arr_007af9c8]
+        mov     edx, dword ptr [g_lightMat02]
         add     ebx, ebp
         mov     ebp, edx
         add     esp, 8
@@ -66085,7 +66085,7 @@ __declspec(naked) void AudioMStackPushHandlerPair(void)
         jne     short L_amspp_else
         push    0x22f
         call    TripleStageRollback
-        mov     dx, word ptr [g_word_004e2860]
+        mov     dx, word ptr [g_audioSceneTag_004e2860]
         add     esp, 4
         push    edx
         jmp     short L_amspp_callBe690
@@ -83106,12 +83106,12 @@ __declspec(naked) void CameraSetupAndCullFan(void)
         push     0
         call     PackColor
         mov      eax, dword ptr [g_xformEntityIdx]
-        mov      ecx, dword ptr [g_struct_00ab4e50]
-        mov      esi, dword ptr [g_struct_00ab4e54]
+        mov      ecx, dword ptr [g_pointPosX]
+        mov      esi, dword ptr [g_pointPosY]
         add      esp, 0x10
         mov      edi, dword ptr [eax*4]
         sub      ecx, edi
-        mov      edi, dword ptr [g_struct_00ab4e58]
+        mov      edi, dword ptr [g_pointPosZ]
         sar      ecx, 8
         mov      dword ptr [g_dispatchSave1525], ecx
         mov      edx, dword ptr [eax*4 + 4]
@@ -94723,7 +94723,7 @@ __declspec(naked) void GameNetSyncState(void)
         jne      short L_fd46
         push     0x22f
         call     TripleStageRollback
-        mov      cx, word ptr [g_word_004e2860]
+        mov      cx, word ptr [g_audioSceneTag_004e2860]
         add      esp, 4
         push     ecx
         call     TaggedSceneDispatch
@@ -94777,7 +94777,7 @@ __declspec(naked) void GameNetSyncState(void)
     L_fd00:
         cmp      eax, 0x11
         jne      short L_fd3c
-        mov      cx, word ptr [g_word_004e2860]
+        mov      cx, word ptr [g_audioSceneTag_004e2860]
         mov      dword ptr [g_eventQueueEnd], esi
         push     ecx
         call     TaggedSceneDispatch
@@ -128561,7 +128561,7 @@ void func_SfxAttenuateAndApply_then_PendingMatch(void) {
 /* h6 @ 0x0047c530 (64b naked): swap-side pose [+0x70] add 0x51e on
  * both sides. Keep naked: redundant `mov [g_walkCallback], reg`
  * stores before final indexed-store. */
-__declspec(naked) void func_0047c530(void)
+__declspec(naked) void SwapSidePoseAdd51e_0047c530(void)
 {
     __asm {
         /* === h6 (0x47c530): swap-side pose [+0x70] add 0x51e === */
@@ -128587,7 +128587,7 @@ __declspec(naked) void func_0047c530(void)
 /* h7 @ 0x0047c580 (93b): event 004ed308 via 3-call chain w/ 0x200d
  * store + bit-1 fail-first dispatch to SevenThunks.
  * (Source comment had stale "0x47c570" address - real is 0x47c580.) */
-void func_0047c580(void) {
+void ScaledAndAh_Phase200d_SevenThunks_0047c580(void) {
     unsigned int v;
     ScaledAndAh();
     if (g_framePauseFlag) return;
@@ -212283,19 +212283,19 @@ __declspec(naked) void PendingMatch_ArgSarStoreJmp_00452770(void)
 
 // === EXTERNS ===
 
-/* h1 @ 0x00416e20 (48b): bootstrap wrapper - install func_00416e50
+/* h1 @ 0x00416e20 (48b): bootstrap wrapper - install PoseFsmCluster_PendingMatch_00416e50
  * as state callback w/ priority 0xb6, then store packed_ptr into
  * scaled-state slot. */
-extern void func_00416e50(void);
+extern void PoseFsmCluster_PendingMatch_00416e50(void);
 void PendingMatch_00416e20(void) {
-    StoreTwoCall((unsigned int)&func_00416e50, 0xb6);
+    StoreTwoCall((unsigned int)&PoseFsmCluster_PendingMatch_00416e50, 0xb6);
     *(unsigned int *)(g_currentNodeIdx * 4 + 0x2c) = g_fightGroupHead;
 }
 
 /* h2-h6 packed @ 0x00416e50 (2542b naked): combined pose-fn state
  * machine with multiple internal cross-references via dec+je
  * dispatch and shared cleanup labels. Kept as one block. */
-__declspec(naked) void func_00416e50(void)
+__declspec(naked) void PoseFsmCluster_PendingMatch_00416e50(void)
 {
     __asm {
         push     ecx

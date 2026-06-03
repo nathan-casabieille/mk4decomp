@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   prior alpha/MSB preserved at 0x007af9f0; final XOR-blends B
  *   with the previously-stored value's low byte.
  */
-extern unsigned int g_word_007af9f0;
+extern unsigned int g_colorPackerPrev;
 extern u32 g_vtxColorPrev;
 
 void Color15BitPacker(void) {
@@ -156,13 +156,13 @@ bDone:
         shl     eax, 5
         and     ecx, 0x0000801f
         or      eax, ecx
-        mov     word ptr [g_word_007af9f0], ax
+        mov     word ptr [g_colorPackerPrev], ax
         mov     cl, byte ptr [g_vtxColorPrev]
         sar     edx, 3
         xor     dl, cl
         and     edx, 0x1f
         xor     ax, dx
-        mov     word ptr [g_word_007af9f0], ax
+        mov     word ptr [g_colorPackerPrev], ax
         }
 }
 

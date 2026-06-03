@@ -18,17 +18,17 @@ extern unsigned int g_currentNodeIdx;
  *   mov     [0x00ab4e4c], ax
  *   ret
  */
-extern unsigned int g_struct_00ab4e44;
-extern unsigned int g_struct_00ab4e48;
-extern unsigned int g_struct_00ab4e4c;
-extern unsigned int g_struct_00ab4e50;
-extern unsigned int g_struct_00ab4e54;
-extern unsigned int g_struct_00ab4e58;
+extern unsigned int g_pointColorR;
+extern unsigned int g_pointColorG;
+extern unsigned int g_pointColorB;
+extern unsigned int g_pointPosX;
+extern unsigned int g_pointPosY;
+extern unsigned int g_pointPosZ;
 void Init6Struct(void) {
-    g_struct_00ab4e50 = 0;
-    g_struct_00ab4e54 = 0;
-    g_struct_00ab4e58 = 0;
-    *(unsigned short *)&g_struct_00ab4e44 = 0x8000;
-    *(unsigned short *)&g_struct_00ab4e48 = 0x8000;
-    *(unsigned short *)&g_struct_00ab4e4c = 0x8000;
+    g_pointPosX = 0;
+    g_pointPosY = 0;
+    g_pointPosZ = 0;
+    *(unsigned short *)&g_pointColorR = 0x8000;
+    *(unsigned short *)&g_pointColorG = 0x8000;
+    *(unsigned short *)&g_pointColorB = 0x8000;
 }

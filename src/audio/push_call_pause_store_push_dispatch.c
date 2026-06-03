@@ -17,13 +17,13 @@ extern void RoundWinTransition(void);
 extern int StoreTwoCall(void *, int);
 extern int TaggedSceneDispatch(unsigned short);
 extern void *g_const_004a0060;
-extern unsigned short g_word_004e2860;
+extern unsigned short g_audioSceneTag_004e2860;
 extern void InstallSelf3WaySubDec(void);
 void PushCallPauseStorePushDispatch(void) {
     TripleStageRollback(0x22f);
     RoundWinTransition();
     if (g_framePauseFlag) return;
     StoreTwoCall(&g_const_004a0060, 0x15);
-    TaggedSceneDispatch(g_word_004e2860);
+    TaggedSceneDispatch(g_audioSceneTag_004e2860);
     ((int (*)(void))InstallSelf3WaySubDec)();
 }

@@ -108,10 +108,10 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern double g_fp_004d29d0;
-extern double g_fp_004d29d8;
-extern double g_fp_004d29e0;
-extern double g_fp_004d29e8;
+extern double g_fpSinTableBaseTwo;
+extern double g_fpSinTableExp28;
+extern double g_fpRadianPerBam;
+extern double g_fpRoundBiasNegHalf;
 extern int g_buf_007b01a0;
 extern void CrtPowCluster(void);
 extern int DoubleToInt64(void);
@@ -123,18 +123,18 @@ extern int DoubleToInt64(void);
 __declspec(naked) void AppInit_PostJoy(void) {
     __asm {
         push    ecx
-        fld     qword ptr [g_fp_004d29d0]
-        fld     qword ptr [g_fp_004d29d8]
+        fld     qword ptr [g_fpSinTableBaseTwo]
+        fld     qword ptr [g_fpSinTableExp28]
         push    esi
         mov     dword ptr [esp + 4], 0
         call    CrtPowCluster
         mov     esi, offset g_buf_007b01a0
 loop4b5a10:
         fild    dword ptr [esp + 4]
-        fmul    qword ptr [g_fp_004d29e0]
+        fmul    qword ptr [g_fpRadianPerBam]
         fcos
         fmul    st(0), st(1)
-        fsub    qword ptr [g_fp_004d29e8]
+        fsub    qword ptr [g_fpRoundBiasNegHalf]
         call    DoubleToInt64
         mov     ecx, dword ptr [esp + 4]
         mov     dword ptr [esi], eax

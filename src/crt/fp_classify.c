@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern double g_fp_004d2f38;
+extern double g_fpClassifyZero;
 extern int FpClassify(void);
 
 /* @addr 0x004ce010 (155b crt) - _fpclass: classify a double:
@@ -171,7 +171,7 @@ int Fpclass(void) {
         _emit   00h
         ret
         fld     qword ptr [esp + 4]
-        fcomp   qword ptr [g_fp_004d2f38]
+        fcomp   qword ptr [g_fpClassifyZero]
         fnstsw  ax
         test    ah, 0x40
         mov     eax, edx

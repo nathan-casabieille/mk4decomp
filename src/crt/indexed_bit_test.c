@@ -6,10 +6,10 @@
 
 /* @addr 0x004cbaf0 (58b)
  *   indexed-bit test: returns true if a bit is set in g_byte_00f9f8c1[eax]
- *   masked by cl, OR if (g_word_005229a2[eax*2] & arg2) != 0; else false.
+ *   masked by cl, OR if (g_ctypeWordTable[eax*2] & arg2) != 0; else false.
  */
 extern unsigned char g_byte_00f9f8c1[];
-extern unsigned short g_word_005229a2[];
+extern unsigned short g_ctypeWordTable[];
 void IndexedBitTest(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -23,7 +23,7 @@ void IndexedBitTest(void) {
         _emit   74h
         _emit   10h
         xor     edx, edx
-        mov     dx,  word  ptr [eax*2 + g_word_005229a2]
+        mov     dx,  word  ptr [eax*2 + g_ctypeWordTable]
         mov     eax, edx
         and     eax, ecx
         _emit   0ebh

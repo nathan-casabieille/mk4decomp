@@ -1380,7 +1380,7 @@ functions:
     status: matched
     file: src/boot/pending_match_variants.c
   - addr: 0x00416e50
-    name: func_00416e50
+    name: PoseFsmCluster_PendingMatch_00416e50
     size: 2542
     group: boot
     status: matched
@@ -2520,7 +2520,7 @@ functions:
     status: matched
     file: src/engine/m_stack_push_dual_jmp.c
   - addr: 0x00428390
-    name: func_00428390
+    name: Dirty4Branch_MStackPushDual_StackPop_00428390
     size: 19
     group: game
     status: matched
@@ -2544,7 +2544,7 @@ functions:
     status: matched
     file: src/engine/guarded_loop_with_callback.c
   - addr: 0x004284c0
-    name: func_004284c0
+    name: GuardedLoopWithCallback_Callback_004284c0
     size: 37
     group: game
     status: matched
@@ -3048,7 +3048,7 @@ functions:
     status: matched
     file: src/engine/store_lit_ret_set2.c
   - addr: 0x0042c3d0
-    name: func_0042c3d0
+    name: StoreLitRetSet2_EntryB_SetWalk2Phase2_0042c3d0
     size: 16
     group: game
     status: matched
@@ -3090,7 +3090,7 @@ functions:
     status: matched
     file: src/engine/loop_guarded_dec_jmp.c
   - addr: 0x0042c7c0
-    name: func_0042c7c0
+    name: LoopGuardedDecJmp_Body_0042c7c0
     size: 31
     group: game
     status: matched
@@ -4722,7 +4722,7 @@ functions:
     status: matched
     file: src/engine/store_call_pause_test_byte_dual_cmp_store_clear.c
   - addr: 0x00439fa0
-    name: func_00439fa0
+    name: Cmp13333_IdCascadeBitSet_00439fa0
     size: 35
     group: game
     status: matched
@@ -5490,7 +5490,7 @@ functions:
     status: matched
     file: src/engine/scaled_load_jmp_pause_set_max.c
   - addr: 0x004468a0
-    name: func_004468a0
+    name: Cmp2OrSet0b_then_SetWalkPhaseFff_004468a0
     size: 30
     group: game
     status: matched
@@ -6474,7 +6474,7 @@ functions:
     status: matched
     file: src/engine/guarded_twice_loopback.c
   - addr: 0x00459fe0
-    name: func_00459fe0
+    name: GuardedTwiceLoopback_Body_00459fe0
     size: 41
     group: game
     status: matched
@@ -9000,13 +9000,13 @@ functions:
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x0047c530
-    name: func_0047c530
+    name: SwapSidePoseAdd51e_0047c530
     size: 80
     group: game
     status: matched
     file: src/engine/func_variants.c
   - addr: 0x0047c580
-    name: func_0047c580
+    name: ScaledAndAh_Phase200d_SevenThunks_0047c580
     size: 93
     group: game
     status: matched
@@ -15612,7 +15612,7 @@ functions:
     status: matched
     file: src/engine/tail_jmp_ret_nops.c
   - addr: 0x004bd5e0
-    name: func_004bd5e0
+    name: EmptyRetStub_004bd5e0
     size: 1
     group: engine.geo
     status: matched

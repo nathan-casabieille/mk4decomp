@@ -20,20 +20,20 @@ extern unsigned int g_currentNodeIdx;
  *   ret
  */
 extern unsigned int g_phaseTimer;
-extern void func_0042c3d0(void);
+extern void StoreLitRetSet2_EntryB_SetWalk2Phase2_0042c3d0(void);
 
-/* @addr 0x0042c3b0 (24b): store OFFSET func_0042c3d0 (entry B at +0x20)
+/* @addr 0x0042c3b0 (24b): store OFFSET StoreLitRetSet2_EntryB_SetWalk2Phase2_0042c3d0 (entry B at +0x20)
  * to g_currentNodeIdx and fightGroupHead chain[+0x44]. Entry A of
  * the original 48-byte packed block; entry B at +0x20 lives in
- * func_0042c3d0. The 8-byte nop gap is filled by 0x90-fill. */
+ * StoreLitRetSet2_EntryB_SetWalk2Phase2_0042c3d0. The 8-byte nop gap is filled by 0x90-fill. */
 void StoreLitRetSet2(void) {
-    unsigned int addr = (unsigned int)&func_0042c3d0;
+    unsigned int addr = (unsigned int)&StoreLitRetSet2_EntryB_SetWalk2Phase2_0042c3d0;
     g_currentNodeIdx = addr;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->child_c = addr;
 }
 
 /* @addr 0x004bd5e0 (1b) one-byte ret stub packed after the wrapper. */
-void func_004bd5e0(void) {}
+void EmptyRetStub_004bd5e0(void) {}
 
 extern void OrDualStore_0048e4b0(void);
 

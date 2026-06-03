@@ -9,28 +9,28 @@
  *   loaded once before loop; one call to CrtPowCluster in prologue.
  */
 extern unsigned int g_buf_007b01a0;
-extern unsigned int g_fp_004d29d0;
-extern unsigned int g_fp_004d29d8;
-extern unsigned int g_fp_004d29e0;
-extern unsigned int g_fp_004d29e8;
+extern unsigned int g_fpSinTableBaseTwo;
+extern unsigned int g_fpSinTableExp28;
+extern unsigned int g_fpRadianPerBam;
+extern unsigned int g_fpRoundBiasNegHalf;
 extern void CrtPowCluster(void);
 extern void DoubleToInt64(void);
 
 __declspec(naked) void AppInit_PostJoy(void) {
     __asm {
         push    ecx
-        fld     qword ptr [g_fp_004d29d0]
-        fld     qword ptr [g_fp_004d29d8]
+        fld     qword ptr [g_fpSinTableBaseTwo]
+        fld     qword ptr [g_fpSinTableExp28]
         push    esi
         mov     dword ptr [esp + 4], 0
         call    CrtPowCluster
         mov     esi, offset g_buf_007b01a0
 loop4b5a10:
         fild    dword ptr [esp + 4]
-        fmul    qword ptr [g_fp_004d29e0]
+        fmul    qword ptr [g_fpRadianPerBam]
         fcos
         fmul    st(0), st(1)
-        fsub    qword ptr [g_fp_004d29e8]
+        fsub    qword ptr [g_fpRoundBiasNegHalf]
         call    DoubleToInt64
         mov     ecx, dword ptr [esp + 4]
         mov     dword ptr [esi], eax

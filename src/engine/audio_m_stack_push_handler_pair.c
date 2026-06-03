@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_word_004e2860;
+extern unsigned int g_audioSceneTag_004e2860;
 extern unsigned int g_poseGridGenVar;
 extern unsigned int g_dispatchArg;
 extern unsigned int g_audioInitPeriodic;
@@ -158,7 +158,7 @@ __declspec(naked) void AudioMStackPushHandlerPair(void)
         jne     short L_amspp_else
         push    0x22f
         call    TripleStageRollback
-        mov     dx, word ptr [g_word_004e2860]
+        mov     dx, word ptr [g_audioSceneTag_004e2860]
         add     esp, 4
         push    edx
         jmp     short L_amspp_callBe690

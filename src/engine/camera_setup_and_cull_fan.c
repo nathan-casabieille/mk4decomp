@@ -144,9 +144,9 @@ extern unsigned int g_dispatchSave1557;
 extern unsigned int g_dispatchSave1558;
 extern unsigned int g_dispatchSave1567;
 extern unsigned int g_dispatchSave1574;
-extern unsigned int g_struct_00ab4e50;
-extern unsigned int g_struct_00ab4e54;
-extern unsigned int g_struct_00ab4e58;
+extern unsigned int g_pointPosX;
+extern unsigned int g_pointPosY;
+extern unsigned int g_pointPosZ;
 extern unsigned int g_dispatchSave1575;
 extern unsigned int g_dispatchSave1576;
 extern unsigned int g_dispatchSave1577;
@@ -323,12 +323,12 @@ __declspec(naked) void CameraSetupAndCullFan(void)
         push     0
         call     PackColor
         mov      eax, dword ptr [g_xformEntityIdx]
-        mov      ecx, dword ptr [g_struct_00ab4e50]
-        mov      esi, dword ptr [g_struct_00ab4e54]
+        mov      ecx, dword ptr [g_pointPosX]
+        mov      esi, dword ptr [g_pointPosY]
         add      esp, 0x10
         mov      edi, dword ptr [eax*4]
         sub      ecx, edi
-        mov      edi, dword ptr [g_struct_00ab4e58]
+        mov      edi, dword ptr [g_pointPosZ]
         sar      ecx, 8
         mov      dword ptr [g_dispatchSave1525], ecx
         mov      edx, dword ptr [eax*4 + 4]

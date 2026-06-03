@@ -19,12 +19,12 @@ extern unsigned int g_currentNodeIdx;
  *   mov     [0x00ab4e58], eax
  *   ret
  */
-extern unsigned int g_struct_00ab4e50;
-extern unsigned int g_struct_00ab4e54;
-extern unsigned int g_struct_00ab4e58;
+extern unsigned int g_pointPosX;
+extern unsigned int g_pointPosY;
+extern unsigned int g_pointPosZ;
 void CopyThreeFields(unsigned int arg) {
     if (arg == 0) return;
-    g_struct_00ab4e50 = ((ScenegraphNode *)(arg * 4))->position_x;
-    g_struct_00ab4e54 = ((ScenegraphNode *)(arg * 4))->position_y;
-    g_struct_00ab4e58 = ((ScenegraphNode *)(arg * 4))->position_z;
+    g_pointPosX = ((ScenegraphNode *)(arg * 4))->position_x;
+    g_pointPosY = ((ScenegraphNode *)(arg * 4))->position_y;
+    g_pointPosZ = ((ScenegraphNode *)(arg * 4))->position_z;
 }

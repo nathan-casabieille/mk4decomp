@@ -112,7 +112,7 @@ extern s16 g_vtxMat[];
 extern unsigned int g_mat3x3_007af994;
 extern unsigned int g_mat3x3_007af998;
 extern unsigned int g_mat3x3_007af99c;
-extern unsigned short g_word_007af9a0;
+extern unsigned short g_wtMatExtraWord;
 extern void MatrixTransform3x3Q12(int, int);
 
 /*
@@ -138,7 +138,7 @@ void WtSnapshotPushCall(void) {
         lea     eax, [edx*4 + 0]
         mov     cx, word ptr [ecx + 0x10]
         push    eax
-        mov     word ptr [g_word_007af9a0], cx
+        mov     word ptr [g_wtMatExtraWord], cx
         mov     ecx, dword ptr [g_pendingNodeType]
         lea     edx, [ecx*4 + 0]
         push    edx

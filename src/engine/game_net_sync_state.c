@@ -112,7 +112,7 @@ extern unsigned int g_const_004a0060;
 extern unsigned int g_const_004a0b00;
 extern unsigned int g_const_004a0dc0;
 extern unsigned int g_const_004a10d0;
-extern unsigned int g_word_004e2860;
+extern unsigned int g_audioSceneTag_004e2860;
 extern unsigned int g_audioInitPeriodic;
 extern unsigned int g_audioInstall2State;
 extern unsigned int g_state2_00541d88;
@@ -177,7 +177,7 @@ __declspec(naked) void GameNetSyncState(void)
         jne      short L_fd46
         push     0x22f
         call     TripleStageRollback
-        mov      cx, word ptr [g_word_004e2860]
+        mov      cx, word ptr [g_audioSceneTag_004e2860]
         add      esp, 4
         push     ecx
         call     TaggedSceneDispatch
@@ -231,7 +231,7 @@ __declspec(naked) void GameNetSyncState(void)
     L_fd00:
         cmp      eax, 0x11
         jne      short L_fd3c
-        mov      cx, word ptr [g_word_004e2860]
+        mov      cx, word ptr [g_audioSceneTag_004e2860]
         mov      dword ptr [g_eventQueueEnd], esi
         push     ecx
         call     TaggedSceneDispatch

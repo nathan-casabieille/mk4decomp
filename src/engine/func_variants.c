@@ -100,7 +100,7 @@ extern void PendingMatch_00459510(void);
 extern void Phase3IndirectInstallChain(void);
 extern void PushChainAddCallPop(void);
 
-__declspec(naked) void func_00428390(void) {
+__declspec(naked) void Dirty4Branch_MStackPushDual_StackPop_00428390(void) {
     __asm {
         test    byte ptr [g_xformDirtyFlags], 4
         _emit   75h
@@ -181,14 +181,14 @@ void func_AddStore(void) {
     AddStore();
 }
 
-/* @addr 0x004284a0 (27b): mstack-push the chain callback at +0x20 (func_004284c0)
+/* @addr 0x004284a0 (27b): mstack-push the chain callback at +0x20 (GuardedLoopWithCallback_Callback_004284c0)
  * and tail-jmp into the indirect-call dispatcher. Entry A of the original
  * 69-byte packed block; the 5-byte nop gap to entry B is filled by 0x90-fill. */
 extern void func_0041f780_pp(void);
-extern void func_004284c0(void);
+extern void GuardedLoopWithCallback_Callback_004284c0(void);
 void GuardedLoopWithCallback(void) {
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)&func_004284c0;
+    *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)&GuardedLoopWithCallback_Callback_004284c0;
     EsiInstallChainCallIndirect();
 }
 
@@ -209,13 +209,13 @@ void func_GateDispatch6c_then_ScaledChainCmp61_then_ArgSarStoreJmp_then_LiteralP
     LiteralPushCallEntZero();
 }
 
-/* @addr 0x00459fc0 (27b): mstack-push func_00459fe0 onto stack[idx*4], tail-jmp
+/* @addr 0x00459fc0 (27b): mstack-push GuardedTwiceLoopback_Body_00459fe0 onto stack[idx*4], tail-jmp
  * Phase3IndirectInstallChain. Entry A of the original 73-byte packed
- * block; entry B (loop body) lives in func_00459fe0. */
-extern void func_00459fe0(void);
+ * block; entry B (loop body) lives in GuardedTwiceLoopback_Body_00459fe0. */
+extern void GuardedTwiceLoopback_Body_00459fe0(void);
 void GuardedTwiceLoopback(void) {
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)&func_00459fe0;
+    *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)&GuardedTwiceLoopback_Body_00459fe0;
     Phase3IndirectInstallChain();
 }
 
@@ -224,7 +224,7 @@ void GuardedTwiceLoopback(void) {
  * TripleEntryStateCascade, else loop back to LoopGuardedDecJmp
  * (e9 b6 ff ff ff = rel32 -0x4a). The 2-byte nop gap before this entry is
  * filled by 0x90-fill. */
-__declspec(naked) void func_0042c7c0(void) {
+__declspec(naked) void LoopGuardedDecJmp_Body_0042c7c0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
         mov     ecx, dword ptr [eax*4 + 0x5c]
@@ -282,7 +282,7 @@ void func_GuardedTripleCallSwapJmp_then_SetJmp_Distance3DMul10Chain_then_CjInsta
 /* @addr 0x00439fa0 (35b): cmp state_ddc with 0x13333, store at g_walkCallback;
  * if < clear bit 0 of state_208c and ret; if >= tail-jmp IdCascadeBitSet.
  * Orphan sub-entry of the original packed block. */
-void func_00439fa0(void) {
+void Cmp13333_IdCascadeBitSet_00439fa0(void) {
     unsigned int v = g_table_00535ddc;
     g_walkCallback = v;
     if ((int)v < 0x13333) {
@@ -663,7 +663,7 @@ __declspec(naked) void func_ScaledZero44(void)
 /* h6 @ 0x0047c530 (64b naked): swap-side pose [+0x70] add 0x51e on
  * both sides. Keep naked: redundant `mov [g_walkCallback], reg`
  * stores before final indexed-store. */
-__declspec(naked) void func_0047c530(void)
+__declspec(naked) void SwapSidePoseAdd51e_0047c530(void)
 {
     __asm {
         /* === h6 (0x47c530): swap-side pose [+0x70] add 0x51e === */
@@ -689,7 +689,7 @@ __declspec(naked) void func_0047c530(void)
 /* h7 @ 0x0047c580 (93b): event 004ed308 via 3-call chain w/ 0x200d
  * store + bit-1 fail-first dispatch to SevenThunks.
  * (Source comment had stale "0x47c570" address - real is 0x47c580.) */
-void func_0047c580(void) {
+void ScaledAndAh_Phase200d_SevenThunks_0047c580(void) {
     unsigned int v;
     ScaledAndAh();
     if (g_framePauseFlag) return;

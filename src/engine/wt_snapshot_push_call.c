@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   at 0x7af990 then push (walk_arr, eq_end_arr) and call
  *   MatrixTransform3x3Q12.
  */
-extern unsigned int g_word_007af9a0;
+extern unsigned int g_wtMatExtraWord;
 extern s16 g_vtxMat[];
 extern unsigned int g_mat3x3_007af994;
 extern unsigned int g_mat3x3_007af998;
@@ -137,7 +137,7 @@ void WtSnapshotPushCall(void) {
         lea     eax, [edx*4 + 0]
         mov     cx, word ptr [ecx + 0x10]
         push    eax
-        mov     word ptr [g_word_007af9a0], cx
+        mov     word ptr [g_wtMatExtraWord], cx
         mov     ecx, dword ptr [g_pendingNodeType]
         lea     edx, [ecx*4 + 0]
         push    edx

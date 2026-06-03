@@ -114,12 +114,12 @@ extern unsigned int g_fightAxisPosY;
  *     out[0..2] = M_row0 . v0,  M_row0 . v1
  *     out[3..5] = M_row1 . v0,  M_row1 . v1
  *   (where v0 is words at +0x18, v1 at +0x1c). Matrix is in
- *   g_arr_007af9c0..d4. Results stored to g_vtxLight0_x..ec.
+ *   g_lightMat00..d4. Results stored to g_vtxLight0_x..ec.
  */
 extern s16 g_vtxMat[];
-extern unsigned int g_arr_007af9c0;
-extern unsigned int g_arr_007af9c4;
-extern unsigned int g_arr_007af9c8;
+extern unsigned int g_lightMat00;
+extern unsigned int g_lightMat01;
+extern unsigned int g_lightMat02;
 extern unsigned int g_dispatchSave1627;
 extern unsigned int g_dispatchSave1628;
 extern unsigned int g_dispatchSave1629;
@@ -147,14 +147,14 @@ __declspec(naked) void MatVec2Multiply(void) {
         call    Word9Reorder
         movsx   esi, word ptr [esp + 0x18]
         movsx   edx, word ptr [esp + 0x1a]
-        mov     eax, dword ptr [g_arr_007af9c0]
-        mov     ecx, dword ptr [g_arr_007af9c4]
+        mov     eax, dword ptr [g_lightMat00]
+        mov     ecx, dword ptr [g_lightMat01]
         mov     ebx, eax
         mov     ebp, ecx
         imul    ebx, esi
         imul    ebp, edx
         movsx   edi, word ptr [esp + 0x1c]
-        mov     edx, dword ptr [g_arr_007af9c8]
+        mov     edx, dword ptr [g_lightMat02]
         add     ebx, ebp
         mov     ebp, edx
         add     esp, 8

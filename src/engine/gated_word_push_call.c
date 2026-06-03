@@ -115,7 +115,7 @@ extern unsigned int g_fightAxisPosY;
  *   snapshot the current pair. If walk >= 0, push word[walk*2 +
  *   0x4ec7a0] and call TaggedSceneDispatch.
  */
-extern unsigned int g_word_004ec7a0;
+extern unsigned int g_walkTagTable;
 extern unsigned int g_lastGatedTick;
 extern unsigned int g_lastGatedValue;
 
@@ -146,7 +146,7 @@ snapshot:
 after:
         test    eax, eax
         jl      done
-        mov     ax, word ptr [eax*2 + g_word_004ec7a0]
+        mov     ax, word ptr [eax*2 + g_walkTagTable]
         push    eax
         call    TaggedSceneDispatch
         add     esp, 4

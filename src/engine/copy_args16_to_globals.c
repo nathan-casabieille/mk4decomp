@@ -43,13 +43,13 @@ extern unsigned int g_vtxScreenX;
 extern s32 g_vtxOut_z;
 extern unsigned int g_vtxScreenP2X;
 extern s32 g_vtxOut2_z;
-extern unsigned short g_word_007af95c;
-extern unsigned short g_word_007af962;
-extern unsigned short g_word_007af968;
+extern unsigned short g_vtxSaved16_a;
+extern unsigned short g_vtxSaved16_b;
+extern unsigned short g_vtxSaved16_c;
 void CopyArgs16ToGlobals(unsigned short a, unsigned short b, unsigned short c) {
     g_vtxScreenP2X = g_vtxScreenX;
     g_vtxOut2_z = g_vtxOut_z;
-    g_word_007af95c = a;
-    g_word_007af962 = b;
-    g_word_007af968 = c;
+    g_vtxSaved16_a = a;
+    g_vtxSaved16_b = b;
+    g_vtxSaved16_c = c;
 }

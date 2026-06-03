@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00439f70 (44b): store 0x1f4 at g_walkCallback; call AudioVolumeRescale;
  * if !pause, bit-test state_208c: if set jmp QuadGuardBitGateJmp, else jmp
  * CallPauseTestByteJmpCalls. Entry A of the original 83-byte packed block;
- * entry B at +0x30 lives in func_00439fa0. The 4-byte nop gap is filled
+ * entry B at +0x30 lives in Cmp13333_IdCascadeBitSet_00439fa0. The 4-byte nop gap is filled
  * by 0x90-fill. */
 void StoreCallPauseTestByte_DualCmpStoreClear(void) {
     g_walkCallback = 0x1f4;

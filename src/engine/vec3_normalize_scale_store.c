@@ -115,14 +115,14 @@ extern unsigned int g_fightAxisPosY;
  *   Store esi/edi/ecx (each int result) to 6 slots at 0x7af9c0/c4/c8/d8/dc/e0
  *   indexed by 12*idx0.
  */
-extern unsigned int g_arr_007af9c0;
-extern unsigned int g_arr_007af9c4;
-extern unsigned int g_arr_007af9c8;
-extern unsigned int g_arr_007af9d8;
-extern unsigned int g_arr_007af9dc;
-extern unsigned int g_arr_007af9e0;
-extern unsigned int g_fp_004d29b8;
-extern unsigned int g_fp_004d29c0;
+extern unsigned int g_lightMat00;
+extern unsigned int g_lightMat01;
+extern unsigned int g_lightMat02;
+extern unsigned int g_lightMat20;
+extern unsigned int g_lightMat21;
+extern unsigned int g_lightMat22;
+extern unsigned int g_fpNormalizeZero;
+extern unsigned int g_fpNormalizeScale4096;
 extern void DoubleToInt64(void);
 
 __declspec(naked) void Vec3NormalizeScaleStore(void) {
@@ -144,12 +144,12 @@ __declspec(naked) void Vec3NormalizeScaleStore(void) {
         mov     dword ptr [esp + 8], eax
         fild    dword ptr [esp + 8]
         fsqrt
-        fcom    qword ptr [g_fp_004d29b8]
+        fcom    qword ptr [g_fpNormalizeZero]
         fnstsw  ax
         test    ah, 0x40
         _emit   75h
         _emit   34h
-        fdivr   qword ptr [g_fp_004d29c0]
+        fdivr   qword ptr [g_fpNormalizeScale4096]
         fild    dword ptr [esp + 0x14]
         fmul    st(0), st(1)
         call    DoubleToInt64
@@ -169,13 +169,13 @@ __declspec(naked) void Vec3NormalizeScaleStore(void) {
         mov     eax, dword ptr [esp + 0x10]
         lea     eax, [eax + eax*2]
         shl     eax, 2
-        mov     dword ptr [eax + g_arr_007af9c0], esi
-        mov     dword ptr [eax + g_arr_007af9d8], esi
-        mov     dword ptr [eax + g_arr_007af9c4], edi
-        mov     dword ptr [eax + g_arr_007af9dc], edi
-        mov     dword ptr [eax + g_arr_007af9c8], ecx
+        mov     dword ptr [eax + g_lightMat00], esi
+        mov     dword ptr [eax + g_lightMat20], esi
+        mov     dword ptr [eax + g_lightMat01], edi
+        mov     dword ptr [eax + g_lightMat21], edi
+        mov     dword ptr [eax + g_lightMat02], ecx
         pop     edi
-        mov     dword ptr [eax + g_arr_007af9e0], ecx
+        mov     dword ptr [eax + g_lightMat22], ecx
         pop     esi
         pop     ecx
         ret

@@ -16,7 +16,7 @@ extern s16 g_vtxMat[];
 extern unsigned int g_mat3x3_007af994;
 extern unsigned int g_mat3x3_007af998;
 extern unsigned int g_mat3x3_007af99c;
-extern unsigned short g_word_007af9a0;
+extern unsigned short g_wtMatExtraWord;
 void DirtyTestScaledCopy(void) {
     __asm {
         test    byte ptr [g_xformDirtyFlags], 0x10
@@ -35,7 +35,7 @@ void DirtyTestScaledCopy(void) {
         mov     eax, dword ptr [g_xformDirtyFlags]
         mov     cx,  word  ptr [ecx + 0x10]
         and     al,  0xef
-        mov     word  ptr [g_word_007af9a0], cx
+        mov     word  ptr [g_wtMatExtraWord], cx
         mov     dword ptr [g_xformDirtyFlags], eax
         xor     eax, eax
         }
