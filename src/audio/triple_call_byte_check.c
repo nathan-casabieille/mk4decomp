@@ -39,18 +39,18 @@ void AppShutdown(void) {
 extern int TestQueueGateState(void);
 extern int InputPollFlagBits(void);
 extern int InputPollFlagBitsHalf(void);
-extern unsigned char g_byte_00543590;
+extern unsigned char g_gtModeFlag;
 int TripleCallByteCheck(void) {
     if (TestQueueGateState() != 0) {
-        g_byte_00543590 = 1;
+        g_gtModeFlag = 1;
         return 1;
     }
     if (InputPollFlagBits() != 0) {
-        g_byte_00543590 = 1;
+        g_gtModeFlag = 1;
         return 1;
     }
     if (InputPollFlagBitsHalf() != 0) {
-        g_byte_00543590 = 2;
+        g_gtModeFlag = 2;
         return 1;
     }
     return 0;

@@ -42,11 +42,11 @@ void _init_premain(void) {
  *   each non-zero entry's deref [eax*4+0] yields word at +4;
  *   if word == arg call F.
  */
-extern unsigned int g_table_004ab4e78_ee[];
+extern unsigned int g_texAssetIds_ee[];
 extern void GeoLoadFixupLoop(void);
 extern unsigned int g_dispatchSave1579;
 void TableWalkBoundedCmp(int arg) {
-    unsigned int *p = g_table_004ab4e78_ee;
+    unsigned int *p = g_texAssetIds_ee;
     do {
         unsigned int v = *p;
         g_currentNodeIdx = v;

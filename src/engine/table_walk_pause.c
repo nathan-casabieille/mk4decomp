@@ -14,7 +14,7 @@ extern unsigned int g_currentNodeIdx;
 extern u8 g_memHeapStart[];
 extern unsigned int g_dispatchSave1654;
 extern unsigned int g_dispatchSave1579;
-extern unsigned int g_table_004ab4e78;
+extern unsigned int g_texAssetIds;
 extern void LoadGeoAsset_Default(void);
 
 __declspec(naked) void AppInit_Misc2(void) {
@@ -41,7 +41,7 @@ __declspec(naked) void AppInit_Misc2(void) {
  *   into g_currentNodeIdx; pause-test breaks the loop.
  */
 void TableWalkPause(void) {
-    unsigned int *p = &g_table_004ab4e78;
+    unsigned int *p = &g_texAssetIds;
     do {
         unsigned int v = *p;
         g_currentNodeIdx = v;

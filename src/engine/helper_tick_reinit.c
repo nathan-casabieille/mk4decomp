@@ -36,7 +36,7 @@ extern s16 g_vtxScreenY;
 extern unsigned int g_dispatchSave1513;
 extern unsigned int g_word_00ab47f8;
 extern unsigned int g_word_00ab47fc;
-extern unsigned int g_table_00ab4878;
+extern unsigned int g_vtxMatBase;
 extern unsigned int g_dispatchSave1530;
 extern unsigned int g_dispatchSave1531;
 extern unsigned int g_dispatchSave1532;
@@ -69,7 +69,7 @@ __declspec(naked) void Helper_TickReinit(void)
         je       L_cc3c
         call     Init16BitFields
         mov      eax, dword ptr [g_tickX2]
-        mov      ecx, dword ptr [g_table_00ab4878]
+        mov      ecx, dword ptr [g_vtxMatBase]
         cdq
         mov      dword ptr [g_vtxMat], ecx
         mov      ecx, dword ptr [g_dispatchSave1531]
@@ -219,7 +219,7 @@ __declspec(naked) void Helper_TickReinit(void)
         mov      edx, dword ptr [esp + 0x14]
         sub      ecx, eax
         mov      word ptr [g_triStripX0], cx
-        mov      ecx, dword ptr [g_table_00ab4878]
+        mov      ecx, dword ptr [g_vtxMatBase]
         lea      eax, [ebp + edx]
         mov      edx, dword ptr [g_dispatchSave1530]
         mov      word ptr [g_triStripX2], ax

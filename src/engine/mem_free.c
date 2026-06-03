@@ -112,7 +112,7 @@ extern void Mem_Free(void *);
 extern void Helper_GeoLoadPost(void);
 extern u32 g_curTexSlot;
 extern u16 g_texSlots[];
-extern unsigned int g_table_004ab4e78;
+extern unsigned int g_texAssetIds;
 extern u32 g_texCount[];
 
 /*
@@ -155,7 +155,7 @@ skipInner:
         xor     edx, edx
         xor     ecx, ecx
         mov     dx, word ptr [eax + 6]
-        mov     dword ptr [edx*4 + g_table_004ab4e78], esi
+        mov     dword ptr [edx*4 + g_texAssetIds], esi
         mov     cx, word ptr [eax + 6]
         mov     dword ptr [ecx*4 + g_texCount], esi
         mov     edx, dword ptr [edi*4 + 4]

@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /*
  * @addr 0x004bd8e0 (127b engine.geo) - geometry-unload fixup loop, the
  * teardown counterpart of LoadGeoAsset_Textures: it frees the texture
- * slots a .geo asset claimed (g_texSlots[0x00ab4e00], g_table_004ab4e78,
+ * slots a .geo asset claimed (g_texSlots[0x00ab4e00], g_texAssetIds,
  * g_texCount) before Mem_Free'ing the buffer.
  *
  *   mov ecx,[eax+4]; lea ecx,[ecx+eax+4]
@@ -123,7 +123,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern u16 g_texSlots[];
 extern u32 g_curTexSlot;
-extern unsigned int g_table_004ab4e78;
+extern unsigned int g_texAssetIds;
 extern u32 g_texCount[];
 extern void Helper_GeoLoadPost(void);
 extern void Mem_Free(void);
@@ -159,7 +159,7 @@ skipInner:
         xor     edx, edx
         xor     ecx, ecx
         mov     dx, word ptr [eax + 6]
-        mov     dword ptr [edx*4 + g_table_004ab4e78], esi
+        mov     dword ptr [edx*4 + g_texAssetIds], esi
         mov     cx, word ptr [eax + 6]
         mov     dword ptr [ecx*4 + g_texCount], esi
         mov     edx, dword ptr [edi*4 + 4]

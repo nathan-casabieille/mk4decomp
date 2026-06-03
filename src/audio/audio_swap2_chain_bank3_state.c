@@ -114,11 +114,11 @@ extern unsigned int g_fightAxisPosY;
  *   Switch on base[+0x30] - 3: case 0 → g_walkCallback = g_counter_0054359c+0xd; edx=base[+0x7c].
  *                              case 1 → g_walkCallback = g_counter_005433c8+0x12; edx=base[+0x80].
  *                              default → ret.
- *   g_cj_00542058 = edx. If g_byte_0053a498 & 8: chain3 = base[g_walkCallback]; g_currentNodeIdx=chain3;
+ *   g_cj_00542058 = edx. If g_gtFightTickCounter & 8: chain3 = base[g_walkCallback]; g_currentNodeIdx=chain3;
  *   copy chain3[+0x54/+0x58/+0x5c] → g_walkCallback/g_eventQueueCurrent/g_eventQueueWorkType → chain2[+0x54/+0x58/+0x5c].
  *   Pop+ret.
  */
-extern unsigned int g_byte_0053a498;
+extern unsigned int g_gtFightTickCounter;
 extern unsigned int g_counter_005433c8;
 extern unsigned int g_counter_0054359c;
 
@@ -162,7 +162,7 @@ __declspec(naked) void AudioSwap2ChainBank3State(void)
         mov     dword ptr [g_walkCallback], ecx
         mov     edx, dword ptr [eax*4 + 0x7c]
     L_a84_common:
-        mov     bl, byte ptr [g_byte_0053a498]
+        mov     bl, byte ptr [g_gtFightTickCounter]
         mov     dword ptr [g_cj_00542058], edx
         test    bl, 8
         je      short L_a84_ret

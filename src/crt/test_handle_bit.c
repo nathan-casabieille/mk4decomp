@@ -23,7 +23,7 @@ extern unsigned int g_currentNodeIdx;
  *   ret
  */
 extern unsigned int g_dispatchSave1469;
-extern unsigned int g_table_00fa0de0[];
+extern unsigned int g_crtHandleTable[];
 int TestHandleBit(int handle) {
     int hi;
     int lo;
@@ -31,6 +31,6 @@ int TestHandleBit(int handle) {
     if ((unsigned int)handle >= g_dispatchSave1469) return 0;
     hi = handle >> 5;
     lo = handle & 0x1f;
-    base = (unsigned char *)g_table_00fa0de0[hi];
+    base = (unsigned char *)g_crtHandleTable[hi];
     return base[lo * 9 * 4 + 4] & 0x40;
 }

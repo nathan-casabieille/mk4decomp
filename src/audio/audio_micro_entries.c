@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /*
  * AudioMicroEntries - 222b audio function with six small entry points (16b-aligned).
  *   Entry 0x004a7600: g_eventQueueWorkType = table[arg1]; tail-jmp Push16Call.
- *   Entry 0x004a7620: dispatch on g_byte_00543590 == 1: set (g_audioStateMachine2=1, g_audioByteTable=0)
+ *   Entry 0x004a7620: dispatch on g_gtModeFlag == 1: set (g_audioStateMachine2=1, g_audioByteTable=0)
  *     else (g_audioStateMachine2=0, g_audioByteTable=1); g_audioMicroEntry=1; tail-jmp AudioStateMachineMulti.
  *   Entry 0x004a7660: countdown helper on g_audioStateMachine0 (decrements; sets g_xformDirtyFlags|=1 at end).
  *   Entry 0x004a7680: countup helper on g_audioStateMachine0 (increments; sets g_xformDirtyFlags|=1 at end).

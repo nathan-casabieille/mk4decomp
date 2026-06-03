@@ -132,7 +132,7 @@ extern unsigned int g_mat3x3_007af994;
 extern unsigned int g_mat3x3_007af998;
 extern unsigned int g_mat3x3_007af99c;
 extern unsigned int g_mat3x3_007af9a0;
-extern unsigned int g_table_00ab4878;
+extern unsigned int g_vtxMatBase;
 extern unsigned int g_dispatchSave1530;
 extern unsigned int g_dispatchSave1531;
 extern unsigned int g_dispatchSave1532;
@@ -190,7 +190,7 @@ __declspec(naked) void AltCamMatrixProject(void) {
         mov     dword ptr [esp + 0x18], eax
     L_acm_postCall:
         mov     ecx, dword ptr [g_dispatchSave1569]
-        mov     edx, dword ptr [g_table_00ab4878]
+        mov     edx, dword ptr [g_vtxMatBase]
         mov     eax, dword ptr [g_dispatchSave1530]
         mov     dword ptr [g_vtxMat], edx
         mov     edx, dword ptr [g_dispatchSave1532]

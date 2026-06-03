@@ -115,11 +115,11 @@ extern unsigned int g_fightAxisPosY;
  *   Else: i = (i+1) & 0xf; retry.
  */
 extern unsigned int g_arr_00f9eb80;
-extern unsigned int g_byte_00f9efdc;
+extern unsigned int g_dsoundFieldDc;
 
 __declspec(naked) char FreeSlotFinder(void) {
     __asm {
-        movsx   eax, byte ptr [g_byte_00f9efdc]
+        movsx   eax, byte ptr [g_dsoundFieldDc]
         inc     eax
         push    ebx
         cdq
@@ -133,7 +133,7 @@ __declspec(naked) char FreeSlotFinder(void) {
         cmp     word ptr [ecx*4 + g_arr_00f9eb80], bx
         _emit   74h
         _emit   24h
-        cmp     al, byte ptr [g_byte_00f9efdc]
+        cmp     al, byte ptr [g_dsoundFieldDc]
         _emit   74h
         _emit   23h
 loop4c3900:
@@ -148,7 +148,7 @@ loop4c3900:
         cmp     word ptr [ecx*4 + g_arr_00f9eb80], bx
         _emit   75h
         _emit   0dch
-        mov     byte ptr [g_byte_00f9efdc], al
+        mov     byte ptr [g_dsoundFieldDc], al
         pop     ebx
         ret
         mov     al, bl

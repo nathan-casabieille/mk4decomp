@@ -13,11 +13,11 @@ extern unsigned int g_currentNodeIdx;
  *   jmp     T1
  *   jmp     T2
  */
-extern unsigned char g_byte_00543590;
+extern unsigned char g_gtModeFlag;
 extern void Helper_AudioStub_4160(void);
 extern void Helper_AudioStub_4140(void);
 void CmpByteJmp(void) {
-    if (g_byte_00543590 == 1) {
+    if (g_gtModeFlag == 1) {
         Helper_AudioStub_4160();
         return;
     }

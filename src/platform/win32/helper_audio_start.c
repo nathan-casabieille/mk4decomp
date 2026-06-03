@@ -5,20 +5,20 @@
 #include "game/tick.h"
 
 /* @addr 0x004c4390 (133b platform.win32) - guarded second-init dispatch:
- *   clear g_byte_00f9efd4; if (!g_dsoundFieldE0): ret;
+ *   clear g_audioMute; if (!g_dsoundFieldE0): ret;
  *   Else: clear g_dsoundFieldE0; walk 16 slots; per slot if type!=0xffff and
- *   arr[type*7].slot0 != 0 and g_byte_00f9efd4 == 0:
+ *   arr[type*7].slot0 != 0 and g_audioMute == 0:
  *   key2 = (subtype)+type*7; call arr[key2].method30(arr[type*7].byte_16 & 1, 0, 0).
  */
 extern unsigned int g_arr_00f8fac8;
 extern unsigned int g_arr_00f9eb80;
-extern unsigned int g_byte_00f9efd4;
+extern unsigned int g_audioMute;
 extern u32 g_dsoundFieldE0;
 
 __declspec(naked) void Helper_AudioStart(void) {
     __asm {
         mov     eax, dword ptr [g_dsoundFieldE0]
-        mov     byte ptr [g_byte_00f9efd4], 0
+        mov     byte ptr [g_audioMute], 0
         test    eax, eax
         _emit   74h
         _emit   74h
@@ -39,7 +39,7 @@ loop4c4390:
         test    edx, edx
         _emit   74h
         _emit   34h
-        mov     dl, byte ptr [g_byte_00f9efd4]
+        mov     dl, byte ptr [g_audioMute]
         test    dl, dl
         _emit   75h
         _emit   2ah

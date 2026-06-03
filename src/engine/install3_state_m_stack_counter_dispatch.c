@@ -9171,10 +9171,10 @@ __declspec(naked) void WindowsMsgProbe(void) {
 
 extern unsigned char g_byte_007b0188;
 extern unsigned int g_table_004f4ea0;
-extern unsigned int g_table_007b0108;
-extern unsigned int g_table_007b00c8;
-extern unsigned int g_table_007b0088;
-extern unsigned int g_table_007b0148;
+extern unsigned int g_joyCalSlotC;
+extern unsigned int g_joyCalSlotA;
+extern unsigned int g_joyCalSlotB;
+extern unsigned int g_joyCalSlotD;
 
 /* @addr 0x004b5380 (196b engine.geo) - aux/mciSendCommand-like probe with bit-flag aggregation.
  *   Frame: sub esp, 0x34; push ebx/esi/edi; esi (result) = 0.
@@ -9230,22 +9230,22 @@ __declspec(naked) void Input_PollJoystick(void) {
         _emit   7ch
         _emit   0e8h
         mov     eax, [esp + 0x14]
-        mov     ecx, [ebx*4 + g_table_007b0108]
+        mov     ecx, [ebx*4 + g_joyCalSlotC]
         cmp     eax, ecx
         _emit   73h
         _emit   06h
         or      esi, 0x10000000
-        cmp     eax, [ebx*4 + g_table_007b00c8]
+        cmp     eax, [ebx*4 + g_joyCalSlotA]
         _emit   76h
         _emit   06h
         or      esi, 0x20000000
         mov     eax, [esp + 0x18]
-        mov     ecx, [ebx*4 + g_table_007b0088]
+        mov     ecx, [ebx*4 + g_joyCalSlotB]
         cmp     eax, ecx
         _emit   73h
         _emit   06h
         or      esi, 0x40000000
-        cmp     eax, [ebx*4 + g_table_007b0148]
+        cmp     eax, [ebx*4 + g_joyCalSlotD]
         _emit   76h
         _emit   06h
         or      esi, 0x80000000
@@ -76231,7 +76231,7 @@ __declspec(naked) void Input_TickPlayers(void)
  * 0x8001 set, bail. Otherwise iterates 13 (key_id, payload)
  * pair groups indexed by player slot esi (arg1):
  *   for i in 0..12:
- *     key = g_table_00543ab8[esi*4 + i*8]   ; sparse but step 8
+ *     key = g_keyMap_btn0[esi*4 + i*8]   ; sparse but step 8
  *     if (Input_GetAsyncKey(key)) {
  *         *g_table_004f4dcc[esi*8 + i*0x10] |= g_table_004f4dc8[esi*8 + i*0x10];
  *     }
@@ -76258,19 +76258,19 @@ extern unsigned int g_dispatchSave1124;
 extern unsigned int g_dispatchSave1125;
 extern unsigned int g_dispatchSave1126;
 extern unsigned int g_dispatchSave1127;
-extern unsigned int g_table_00543ab8;
-extern unsigned int g_table_00543ac0;
-extern unsigned int g_table_00543ac8;
-extern unsigned int g_table_00543ad0;
-extern unsigned int g_table_00543ad8;
-extern unsigned int g_table_00543ae0;
-extern unsigned int g_table_00543ae8;
-extern unsigned int g_table_00543af0;
-extern unsigned int g_table_00543af8;
-extern unsigned int g_table_00543b00;
-extern unsigned int g_table_00543b08;
-extern unsigned int g_table_00543b10;
-extern unsigned int g_table_00543b18;
+extern unsigned int g_keyMap_btn0;
+extern unsigned int g_keyMap_btn1;
+extern unsigned int g_keyMap_btn2;
+extern unsigned int g_keyMap_btn3;
+extern unsigned int g_keyMap_btn4;
+extern unsigned int g_keyMap_btn5;
+extern unsigned int g_keyMap_btn6;
+extern unsigned int g_keyMap_btn7;
+extern unsigned int g_keyMap_btn8;
+extern unsigned int g_keyMap_btn9;
+extern unsigned int g_keyMap_btn10;
+extern unsigned int g_keyMap_btn11;
+extern unsigned int g_keyMap_btn12;
 
 __declspec(naked) void Input_PollPlayerKeyboard(void)
 {
@@ -76282,7 +76282,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
         jne     L_ppd_end
         mov     esi, dword ptr [esp + 8]
 
-        mov     eax, dword ptr [esi*4 + g_table_00543ab8]
+        mov     eax, dword ptr [esi*4 + g_keyMap_btn0]
         push    eax
         call    Input_GetAsyncKey
         add     esp, 4
@@ -76292,7 +76292,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
         mov     ecx, dword ptr [esi*8 + g_dispatchSave537]
         or      dword ptr [eax], ecx
     L_ppd_skip1:
-        mov     edx, dword ptr [esi*4 + g_table_00543ac0]
+        mov     edx, dword ptr [esi*4 + g_keyMap_btn1]
         push    edx
         call    Input_GetAsyncKey
         add     esp, 4
@@ -76302,7 +76302,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
         mov     ecx, dword ptr [esi*8 + g_dispatchSave535]
         or      dword ptr [eax], ecx
     L_ppd_skip2:
-        mov     edx, dword ptr [esi*4 + g_table_00543ac8]
+        mov     edx, dword ptr [esi*4 + g_keyMap_btn2]
         push    edx
         call    Input_GetAsyncKey
         add     esp, 4
@@ -76312,7 +76312,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
         mov     ecx, dword ptr [esi*8 + g_renderer2_var7]
         or      dword ptr [eax], ecx
     L_ppd_skip3:
-        mov     edx, dword ptr [esi*4 + g_table_00543ad0]
+        mov     edx, dword ptr [esi*4 + g_keyMap_btn3]
         push    edx
         call    Input_GetAsyncKey
         add     esp, 4
@@ -76322,7 +76322,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
         mov     ecx, dword ptr [esi*8 + g_dispatchSave533]
         or      dword ptr [eax], ecx
     L_ppd_skip4:
-        mov     edx, dword ptr [esi*4 + g_table_00543ad8]
+        mov     edx, dword ptr [esi*4 + g_keyMap_btn4]
         push    edx
         call    Input_GetAsyncKey
         add     esp, 4
@@ -76332,7 +76332,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
         mov     ecx, dword ptr [esi*8 + g_dispatchSave1110]
         or      dword ptr [eax], ecx
     L_ppd_skip5:
-        mov     edx, dword ptr [esi*4 + g_table_00543ae0]
+        mov     edx, dword ptr [esi*4 + g_keyMap_btn5]
         push    edx
         call    Input_GetAsyncKey
         add     esp, 4
@@ -76342,7 +76342,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
         mov     ecx, dword ptr [esi*8 + g_dispatchSave1112]
         or      dword ptr [eax], ecx
     L_ppd_skip6:
-        mov     edx, dword ptr [esi*4 + g_table_00543ae8]
+        mov     edx, dword ptr [esi*4 + g_keyMap_btn6]
         push    edx
         call    Input_GetAsyncKey
         add     esp, 4
@@ -76352,7 +76352,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
         mov     ecx, dword ptr [esi*8 + g_dispatchSave1114]
         or      dword ptr [eax], ecx
     L_ppd_skip7:
-        mov     edx, dword ptr [esi*4 + g_table_00543af0]
+        mov     edx, dword ptr [esi*4 + g_keyMap_btn7]
         push    edx
         call    Input_GetAsyncKey
         add     esp, 4
@@ -76362,7 +76362,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
         mov     ecx, dword ptr [esi*8 + g_dispatchSave1116]
         or      dword ptr [eax], ecx
     L_ppd_skip8:
-        mov     edx, dword ptr [esi*4 + g_table_00543af8]
+        mov     edx, dword ptr [esi*4 + g_keyMap_btn8]
         push    edx
         call    Input_GetAsyncKey
         add     esp, 4
@@ -76372,7 +76372,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
         mov     ecx, dword ptr [esi*8 + g_dispatchSave1118]
         or      dword ptr [eax], ecx
     L_ppd_skip9:
-        mov     edx, dword ptr [esi*4 + g_table_00543b00]
+        mov     edx, dword ptr [esi*4 + g_keyMap_btn9]
         push    edx
         call    Input_GetAsyncKey
         add     esp, 4
@@ -76382,7 +76382,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
         mov     ecx, dword ptr [esi*8 + g_dispatchSave1120]
         or      dword ptr [eax], ecx
     L_ppd_skip10:
-        mov     edx, dword ptr [esi*4 + g_table_00543b08]
+        mov     edx, dword ptr [esi*4 + g_keyMap_btn10]
         push    edx
         call    Input_GetAsyncKey
         add     esp, 4
@@ -76392,7 +76392,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
         mov     ecx, dword ptr [esi*8 + g_dispatchSave1122]
         or      dword ptr [eax], ecx
     L_ppd_skip11:
-        mov     edx, dword ptr [esi*4 + g_table_00543b10]
+        mov     edx, dword ptr [esi*4 + g_keyMap_btn11]
         push    edx
         call    Input_GetAsyncKey
         add     esp, 4
@@ -76402,7 +76402,7 @@ __declspec(naked) void Input_PollPlayerKeyboard(void)
         mov     ecx, dword ptr [esi*8 + g_dispatchSave1124]
         or      dword ptr [eax], ecx
     L_ppd_skip12:
-        mov     edx, dword ptr [esi*4 + g_table_00543b18]
+        mov     edx, dword ptr [esi*4 + g_keyMap_btn12]
         push    edx
         call    Input_GetAsyncKey
         add     esp, 4

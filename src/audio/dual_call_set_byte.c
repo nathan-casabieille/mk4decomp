@@ -25,14 +25,14 @@ extern unsigned int g_currentNodeIdx;
  */
 extern int TripleByteCheck(void);
 extern int TripleByteCheck20(void);
-extern unsigned char g_byte_00543590;
+extern unsigned char g_gtModeFlag;
 int DualCallSetByte(void) {
     if (TripleByteCheck() != 0) {
-        g_byte_00543590 = 1;
+        g_gtModeFlag = 1;
         return 1;
     }
     if (TripleByteCheck20() != 0) {
-        g_byte_00543590 = 2;
+        g_gtModeFlag = 2;
         return 1;
     }
     return 0;
