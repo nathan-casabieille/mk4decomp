@@ -4,18 +4,18 @@
 #include "engine/scenegraph.h"
 
 /* @addr 0x004c67f0 (48b)
- *   if (g_iat_0051ffd8) (*g_iat_0051ffd8)();
+ *   if (g_fnptr_0051ffd8) (*g_fnptr_0051ffd8)();
  *   call 0x4c6940(0x4d501c, 0x4d5024); add esp 8;
  *   call 0x4c6940(0x4d5000, 0x4d5018); add esp 8; ret.
  */
-extern void (*g_iat_0051ffd8)(void);
+extern void (*g_fnptr_0051ffd8)(void);
 extern int IterFnPtrs(void *, void *);
 extern void *g_dispatchSave550;
 extern void *g_dispatchSave549;
 extern void *g_dispatchSave548;
 extern void *g_dispatchSave547;
 void _init_premain(void) {
-    if (g_iat_0051ffd8) g_iat_0051ffd8();
+    if (g_fnptr_0051ffd8) g_fnptr_0051ffd8();
     IterFnPtrs(&g_dispatchSave548, &g_dispatchSave547);
     IterFnPtrs(&g_dispatchSave550, &g_dispatchSave549);
 }

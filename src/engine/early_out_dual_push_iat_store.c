@@ -43,17 +43,17 @@ void AppShutdown(void) {
  */
 extern int g_renderer1_active;
 extern int g_renderer1_busy;
-extern void (__stdcall *g_iat_007b0040)(int, int);
+extern void (__stdcall *g_fnptr_007b0040)(int, int);
 void EarlyOutDualPushIATStore(void) {
     unsigned int v;
     if (g_renderer1_active == 0) return;
     v = g_renderer1_busy;
     if (v == 0) return;
     if (v == 2) {
-        g_iat_007b0040(1, 1);
+        g_fnptr_007b0040(1, 1);
         g_renderer1_busy = 0;
         return;
     }
-    g_iat_007b0040(0, 0);
+    g_fnptr_007b0040(0, 0);
     g_renderer1_busy = 0;
 }

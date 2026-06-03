@@ -37,13 +37,13 @@ __declspec(naked) void AppInit_Misc2(void) {
 
 /* @addr 0x004c6e60 (42b)
  *   if g_crtCleanupFlag == 1, call F; then call F2(arg);
- *   call IAT [g_iat_00520060](0xff); ret.
+ *   call IAT [g_fnptr_00520060](0xff); ret.
  */
-extern void (*g_iat_00520060)(int);
+extern void (*g_fnptr_00520060)(int);
 void CmpCallPushIATCall(int arg) {
     if (g_crtCleanupFlag == 1) {
         DualCondCleanupCall();
     }
     RaiseAbortLocalized(arg);
-    g_iat_00520060(0xff);
+    g_fnptr_00520060(0xff);
 }

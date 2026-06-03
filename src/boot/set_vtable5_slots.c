@@ -32,12 +32,12 @@ __declspec(naked) void AppInit_Misc2(void) {
 }
 
 /* @addr 0x004c5790 (56b): set 5 vtable slots at 0x00522160..0x00522174 */
-extern void *g_iat_00522160;
-extern void *g_iat_00522164;
-extern void *g_iat_00522168;
-extern void *g_iat_0052216c;
-extern void *g_iat_00522170;
-extern void *g_iat_00522174;
+extern void *g_fnptr_00522160;
+extern void *g_fnptr_00522164;
+extern void *g_fnptr_00522168;
+extern void *g_fnptr_0052216c;
+extern void *g_fnptr_00522170;
+extern void *g_fnptr_00522174;
 extern void func_004c8940(void);
 extern void func_004c84e0(void);
 extern void func_004c8570(void);
@@ -45,10 +45,10 @@ extern void func_004c8480(void);
 extern void func_004c8550(void);
 void SetVtable5Slots(void) {
     void *fn = (void *)func_004c8940;
-    g_iat_00522164 = (void *)func_004c84e0;
-    g_iat_00522160 = fn;
-    g_iat_00522168 = (void *)func_004c8570;
-    g_iat_0052216c = (void *)func_004c8480;
-    g_iat_00522170 = (void *)func_004c8550;
-    g_iat_00522174 = fn;
+    g_fnptr_00522164 = (void *)func_004c84e0;
+    g_fnptr_00522160 = fn;
+    g_fnptr_00522168 = (void *)func_004c8570;
+    g_fnptr_0052216c = (void *)func_004c8480;
+    g_fnptr_00522170 = (void *)func_004c8550;
+    g_fnptr_00522174 = fn;
 }

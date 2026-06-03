@@ -39,8 +39,8 @@ extern int g_renderer1_active;
 extern unsigned int g_glideFnTable;
 extern unsigned int g_dispatchSave1632;
 extern unsigned int g_dispatchSave1633;
-extern unsigned int g_iat_007b000c;
-extern unsigned int g_iat_007b0010;
+extern unsigned int g_fnptr_007b000c;
+extern unsigned int g_fnptr_007b0010;
 extern unsigned int g_dispatchSave1634;
 extern unsigned int g_dispatchSave1635;
 extern unsigned int g_dispatchSave1636;
@@ -48,11 +48,11 @@ extern unsigned int g_dispatchSave1637;
 extern unsigned int g_dispatchSave1638;
 extern unsigned int g_dispatchSave1639;
 extern unsigned int g_dispatchSave1640;
-extern unsigned int g_iat_007b0030;
+extern unsigned int g_fnptr_007b0030;
 extern unsigned int g_dispatchSave1641;
 extern unsigned int g_dispatchSave1642;
 extern unsigned int g_PeekMessageA;
-extern unsigned int g_iat_007b0040;
+extern unsigned int g_fnptr_007b0040;
 extern unsigned int g_dispatchSave1643;
 extern unsigned int g_dispatchSave1644;
 extern unsigned int g_dispatchSave1645;
@@ -104,14 +104,14 @@ __declspec(naked) void Helper_GlideOpen(void)
         push     ecx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_iat_007b000c], eax
+        mov      dword ptr [g_fnptr_007b000c], eax
         je       L_4f52
         mov      edx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave861
         push     edx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_iat_007b0010], eax
+        mov      dword ptr [g_fnptr_007b0010], eax
         je       L_4f52
         mov      eax, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave860
@@ -167,7 +167,7 @@ __declspec(naked) void Helper_GlideOpen(void)
         push     ecx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_iat_007b0030], eax
+        mov      dword ptr [g_fnptr_007b0030], eax
         je       L_4f52
         mov      edx, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave852
@@ -195,7 +195,7 @@ __declspec(naked) void Helper_GlideOpen(void)
         push     edx
         call     esi
         test     eax, eax
-        mov      dword ptr [g_iat_007b0040], eax
+        mov      dword ptr [g_fnptr_007b0040], eax
         je       L_4f52
         mov      eax, dword ptr [g_glideFnTable]
         push     OFFSET g_dispatchSave848

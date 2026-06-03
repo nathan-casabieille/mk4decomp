@@ -167,7 +167,7 @@ typedef struct FightGroupNode {
                              * contact `vel_y *= -0.60` or `-0.70`
                              * (restitution). See analysis/notes/node_struct.md
                              * "Ballistic integration loop".              */
-    u32 _74;                /* +0x74 (fsm_state in ScenegraphNode view) */
+    u32 fsm_state;          /* +0x74 same semantic as ScenegraphNode    */
     s32 drag_damped[3];     /* +0x78/+0x7c/+0x80 - 3-vector multiplied
                              * by 0.99 (0xfd70) each frame alongside the
                              * +0x70 vel_y term. Linear vs angular

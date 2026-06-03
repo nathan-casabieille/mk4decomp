@@ -15,7 +15,7 @@ extern int g_renderer1_active;
 extern int g_renderer1_surface;
 extern int g_renderer1_busy;
 extern unsigned char g_byte_004f4b4c;
-extern void (__stdcall *g_iat_007b000c)(int, int, int);
+extern void (__stdcall *g_fnptr_007b000c)(int, int, int);
 void Renderer1_BeginFrame_Glide(int arg) {
     if (g_renderer1_active == 0) {
         return;
@@ -27,7 +27,7 @@ void Renderer1_BeginFrame_Glide(int arg) {
         return;
     }
     if (arg != 0) {
-        g_iat_007b000c(0, 0, 0xffff);
+        g_fnptr_007b000c(0, 0, 0xffff);
     }
     g_byte_004f4b4c = 0xff;
     g_renderer1_surface = 1;
