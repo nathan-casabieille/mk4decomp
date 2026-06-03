@@ -129,7 +129,20 @@ typedef struct ScenegraphNode {
  * fields) are left unnamed here - access them via ScenegraphNode.
  */
 typedef struct FightGroupNode {
-    u32 _00[12];            /* +0x00..+0x2F shared / opaque           */
+    /* +0x00..+0x2F: same alloc-time fields as ScenegraphNode
+     * (no fight-group-specific overrides observed in this range) */
+    u32 payload;            /* +0x00 alloc scan key (0 = slot free)   */
+    u32 self_ref;           /* +0x04 lea [edx + 0x22] self-pointer    */
+    u32 alloc_type;         /* +0x08 g_pendingNodeType at birth       */
+    u32 alloc_work_type;    /* +0x0C g_eventQueueWorkType at birth    */
+    u32 _10;                /* +0x10 polymorphic (see ScenegraphNode) */
+    u32 not_mask;           /* +0x14 g_eventQueueNotMask at birth     */
+    u32 child_chain;        /* +0x18 g_eventQueueChild at birth       */
+    u32 alloc_flags;        /* +0x1C g_currentNodeFlags at birth      */
+    u32 type_flags;         /* +0x20 type/mode flag word (walker)     */
+    u32 queue_end;          /* +0x24 g_eventQueueEnd at birth         */
+    u32 queue_idx;          /* +0x28 g_eventQueueIdx at birth         */
+    u32 group_head;         /* +0x2C g_fightGroupHead at birth        */
     u32 tag;                /* +0x30 fight-group kind tag             */
     u32 flags;              /* +0x34 fight-group flag bitfield        */
     u32 _38[2];             /* +0x38..+0x3F                           */
@@ -183,7 +196,31 @@ typedef struct FightGroupNode {
  * vec3; otherwise stick with raw `*(unsigned int *)` access.
  */
 typedef struct AuxVec3Node {
-    u32 _00[24];            /* +0x00..+0x5F shared / opaque           */
+    /* +0x00..+0x53: same alloc-time + vec3-position fields as
+     * ScenegraphNode. The "aux vec3" view only adds named meaning
+     * for +0x60..+0x68 below; everything before that is shared. */
+    u32 payload;            /* +0x00 alloc scan key (0 = slot free)   */
+    u32 self_ref;           /* +0x04 self-pointer                     */
+    u32 alloc_type;         /* +0x08 g_pendingNodeType at birth       */
+    u32 alloc_work_type;    /* +0x0C g_eventQueueWorkType at birth    */
+    u32 _10;                /* +0x10 polymorphic (see ScenegraphNode) */
+    u32 not_mask;           /* +0x14 g_eventQueueNotMask at birth     */
+    u32 child_chain;        /* +0x18 g_eventQueueChild at birth       */
+    u32 alloc_flags;        /* +0x1C g_currentNodeFlags at birth      */
+    u32 type_flags;         /* +0x20 type/mode flag word              */
+    u32 queue_end;          /* +0x24 g_eventQueueEnd at birth         */
+    u32 queue_idx;          /* +0x28 g_eventQueueIdx at birth         */
+    u32 group_head;         /* +0x2C g_fightGroupHead at birth        */
+    u32 player_id;          /* +0x30 1..4                             */
+    u32 state_mask;         /* +0x34 bit 0x1000 = on-screen           */
+    u32 _38;                /* +0x38 polymorphic user state           */
+    u32 child_a;            /* +0x3C first child reference            */
+    u32 child_b;            /* +0x40 second child reference           */
+    u32 child_c;            /* +0x44 third child reference            */
+    u32 _48[3];             /* +0x48..+0x53 user state                */
+    s32 position_x;         /* +0x54 vec3 X coord (16.16)             */
+    s32 position_y;         /* +0x58 vec3 Y coord                     */
+    s32 position_z;         /* +0x5C vec3 Z coord                     */
     s32 aux_x;              /* +0x60 secondary vec3 X component       */
     s32 aux_y;              /* +0x64 secondary vec3 Y component       */
     s32 aux_z;              /* +0x68 secondary vec3 Z component       */
