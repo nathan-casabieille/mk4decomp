@@ -10,7 +10,7 @@
  *     g_dispatchSave1416 = bl.
  */
 extern void * g_dsoundPrimary;
-extern unsigned char g_byte_00f9efec;
+extern unsigned char g_audioChannelCount;
 extern short g_audioFrameTbl[];
 
 __declspec(naked) void Helper_TitleSetMaxVolume(void) {
@@ -36,7 +36,7 @@ __declspec(naked) void Helper_TitleSetMaxVolume(void) {
         push    ecx
         push    edx
         call    dword ptr [esi + 0x3c]
-        mov     byte  ptr [g_byte_00f9efec], bl
+        mov     byte  ptr [g_audioChannelCount], bl
         pop     ebx
         pop     esi
         ret

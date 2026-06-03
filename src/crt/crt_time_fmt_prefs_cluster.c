@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave871;
-extern unsigned int g_byte_00522bb4;
+extern unsigned int g_crtTimeFmtByte;
 extern unsigned int g_dispatchSave111;
 extern unsigned int g_dispatchSave110;
 extern unsigned int g_crtTimeFmtPrefs;
@@ -404,7 +404,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster(void)
         xor      eax, eax
         mov      dl, byte ptr [ecx]
         mov      dword ptr [g_dispatchSave111], 1
-        mov      byte ptr [g_byte_00522bb4], dl
+        mov      byte ptr [g_crtTimeFmtByte], dl
         ret
     }
 }

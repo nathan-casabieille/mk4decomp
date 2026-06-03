@@ -4,11 +4,11 @@
 #include "engine/scenegraph.h"
 
 /* @addr 0x004b21b0 (8b)
- *   mov     byte ptr [g_byte_007af508], 0
+ *   mov     byte ptr [g_callocInitFlag], 0
  *   ret
  */
-extern unsigned char g_byte_007af508;
+extern unsigned char g_callocInitFlag;
 void AppInit_PostDSound(void) {
-    g_byte_007af508 = 0;
+    g_callocInitFlag = 0;
 }
 

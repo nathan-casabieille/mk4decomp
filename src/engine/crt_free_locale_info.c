@@ -189,7 +189,7 @@ extern unsigned int g_dispatchSave1616;
 extern unsigned int g_dispatchSave1617;
 extern unsigned int g_dispatchSave1618;
 extern unsigned int g_dispatchSave1619;
-extern unsigned int g_byte_007af508;
+extern unsigned int g_callocInitFlag;
 extern unsigned int g_dispatchSave1620;
 extern unsigned int g_dispatchSave1621;
 extern unsigned int g_dispatchSave1622;

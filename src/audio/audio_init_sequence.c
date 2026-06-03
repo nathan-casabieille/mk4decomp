@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004a41a0 (182b audio) - audio init sequence.
- *   g_byte_00542040 = 1; g_walkCallback = 0; call CopyGlobal; call BootInitGuardedCallChain.
+ *   g_audioInitSeqByte = 1; g_walkCallback = 0; call CopyGlobal; call BootInitGuardedCallChain.
  *   Copy chain: [0x541ec4] = [0x541ecc]; [0x541ec8] = [0x541ed0]; [0x537f48] = [0x53a790];
  *               [0x5380e0] = [0x537ea0]; [0x53a178] = [0x537edc]; [0x53a250] = [0x53a1cc];
  *               g_walkCallback = [0x53a51c].
@@ -132,7 +132,7 @@ extern s32 g_dlChar13;
 extern s32 g_dlChar24;
 extern unsigned int g_audioInitState2;
 extern unsigned int g_audioInitState1;
-extern unsigned int g_byte_00542040;
+extern unsigned int g_audioInitSeqByte;
 extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
 extern void TablePushAccumTailJmp(void);
@@ -140,7 +140,7 @@ extern void TestCmpZeroFour(void);
 
 void AudioInitSequence(void) {
     __asm {
-        mov     byte ptr [g_byte_00542040], 1
+        mov     byte ptr [g_audioInitSeqByte], 1
         mov     dword ptr [g_walkCallback], 0
         call    CopyGlobal
         call    BootInitGuardedCallChain

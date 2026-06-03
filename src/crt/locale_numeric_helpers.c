@@ -113,7 +113,7 @@ extern unsigned int g_dispatchSave889;
 extern unsigned int g_dispatchSave890;
 extern unsigned int g_crtCType;
 extern unsigned int g_crtLocaleNumeric;
-extern unsigned int g_byte_00522bb4;
+extern unsigned int g_crtTimeFmtByte;
 extern unsigned int g_iat_GetProcAddress;
 extern unsigned int g_iat_GetModuleHandleA;
 extern void FPUPrecisionCheck(void);
@@ -176,7 +176,7 @@ __declspec(naked) void LocaleNumericHelpers(void)
         test     eax, eax
         jne      short L_8496
     L_84c3:
-        mov      cl, byte ptr [g_byte_00522bb4]
+        mov      cl, byte ptr [g_crtTimeFmtByte]
         mov      al, byte ptr [esi]
         mov      byte ptr [esi], cl
         inc      esi
@@ -196,7 +196,7 @@ __declspec(naked) void LocaleNumericHelpers(void)
         /* Helper 3: strip_locale_decimal_zeros. */
         mov      eax, dword ptr [esp + 4]
         push     ebx
-        mov      bl, byte ptr [g_byte_00522bb4]
+        mov      bl, byte ptr [g_crtTimeFmtByte]
         mov      cl, byte ptr [eax]
         test     cl, cl
         je       short L_84fd

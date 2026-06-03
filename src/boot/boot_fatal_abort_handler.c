@@ -112,13 +112,13 @@ extern unsigned int g_fightAxisPosY;
  *   Args: ebp=arg0 (push-thru), [esp+0x14]=arg1 flag, [esp+0x18] bl=arg2 flag.
  *   Calls PushConstCall_Lock_0xd to do beep/header msg, then on g_dispatchSave1429==1:
  *     ![0x4d2060](arg0); ![0x4d20a4](rv).
- *   Sets g_dispatchSave1428=1, g_byte_00f9f838 = bl.
+ *   Sets g_dispatchSave1428=1, g_fatalAbortState = bl.
  *   If arg1 == 0: walk fnptr-stack [g_dispatchSave1471..g_dispatchSave1472] calling each non-null fn,
  *     reloading head each iter; then push pair (0x4d5028, 0x4d5030) and IterFnPtrs.
  *   Push pair (0x4d5034, 0x4d5038), IterFnPtrs; if bl != 0 also call PushConstCall_TableLookupIatCall_0xd.
  *   Tail: pop esi/ebp/ebx; ret. Re-entry tail: push ebp; g_dispatchSave1429 = 1; ![0x4d2154]; pop+ret.
  */
-extern unsigned int g_byte_00f9f838;
+extern unsigned int g_fatalAbortState;
 extern unsigned int g_dispatchSave1428;
 extern unsigned int g_dispatchSave1429;
 extern unsigned int g_dispatchSave1471;
@@ -149,7 +149,7 @@ __declspec(naked) void BootFatalAbortHandler(void) {
         mov     ebx, dword ptr [esp + 0x18]
         test    eax, eax
         mov     dword ptr [g_dispatchSave1428], 1
-        mov     byte ptr [g_byte_00f9f838], bl
+        mov     byte ptr [g_fatalAbortState], bl
         jne     short L_ab_skipwalk
         mov     ecx, dword ptr [g_dispatchSave1472]
         test    ecx, ecx

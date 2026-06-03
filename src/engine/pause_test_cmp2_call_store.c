@@ -25,13 +25,13 @@ extern unsigned int g_currentNodeIdx;
  *   mov     [ecx*4 + 0x24], eax
  *   ret
  */
-extern unsigned char g_byte_00542071;
+extern unsigned char g_pauseTestCmp2Byte;
 extern void ScaledIterStep_0045c020(void);
 void PauseTestCmp2CallStore(void) {
     unsigned int pause;
     unsigned int b;
     pause = g_framePauseFlag;
-    b = (unsigned int)g_byte_00542071;
+    b = (unsigned int)g_pauseTestCmp2Byte;
     g_walkCallback = (void (*)(void))b;
     if (pause != 0) return;
     if (b != 2) return;

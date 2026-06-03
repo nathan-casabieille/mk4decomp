@@ -125,7 +125,7 @@ extern unsigned int g_menuRestoreD;
 extern unsigned int g_menuRestoreA;
 extern unsigned int g_menuRestoreB;
 extern unsigned int g_menuRestoreC;
-extern unsigned int g_byte_00543ab4;
+extern unsigned int g_menuPageTailByte;
 extern unsigned int g_dispatchSave1479;
 extern unsigned int g_dispatchSave1490;
 extern unsigned int g_dispatchSave1492;
@@ -160,7 +160,7 @@ __declspec(naked) void Menu_FillOptionValues(void)
         mov      eax, dword ptr [g_menuRestoreB]
         jmp      short L_80ea
     L_80e5:
-        mov      eax, dword ptr [g_byte_00543ab4]
+        mov      eax, dword ptr [g_menuPageTailByte]
     L_80ea:
         test     eax, eax
         mov      eax, OFFSET g_dispatchSave820

@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004cb700 (372b crt) - 3-entry CRT FILE table mgmt. */
 extern unsigned int g_iat_GetLastError;
 extern unsigned int g_dispatchSave882;
-extern unsigned int g_byte_00f9f838;
+extern unsigned int g_fatalAbortState;
 extern unsigned int g_dispatchSave1465;
 extern unsigned int g_dispatchSave1466;
 extern unsigned int g_crtHandleTable;
@@ -267,7 +267,7 @@ __declspec(naked) void FileTableClose(void) {
         /* entry 3 (offset 0x160) */
     L_ftc_entry3:
         call    PushConstCall_LockIterTwoPath_1
-        mov     al, byte ptr [g_byte_00f9f838]
+        mov     al, byte ptr [g_fatalAbortState]
         test    al, al
         je      short L_ftc_e3End
         jmp     StreamCleanupLoop

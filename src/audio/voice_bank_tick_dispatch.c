@@ -114,7 +114,7 @@ extern unsigned int g_audioStateMachineVar6;
 extern unsigned int g_audioStateMachineVar5;
 extern unsigned int g_dispatchSave557;
 extern unsigned int g_audioStateMachineVar4;
-extern unsigned int g_byte_004f3238;
+extern unsigned int g_voiceBankTickByte;
 extern unsigned int g_dispatchSave810;
 extern unsigned int g_dispatchSave811;
 extern unsigned int g_dispatchSave812;
@@ -192,7 +192,7 @@ __declspec(naked) void DebugMenu_DrawMatchOptions(void)
         push     OFFSET g_dispatchSave823
         jmp      L_31d5
     L_31c1:
-        movsx    ecx, byte ptr [g_byte_004f3238]
+        movsx    ecx, byte ptr [g_voiceBankTickByte]
         mov      edx, dword ptr [ecx*4 + g_audioStateMachineVar7]
         push     edx
         push     OFFSET g_dispatchSave822

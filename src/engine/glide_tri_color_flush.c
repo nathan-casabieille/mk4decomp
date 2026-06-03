@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_byte_004f4b4c;
+extern unsigned int g_glideColorFlushByte;
 extern f32 g_glideTable2[];
 extern f32 g_glideTable1[];
 extern f32 g_glideTable3[];
@@ -141,7 +141,7 @@ __declspec(naked) void GlideTriColorFlush(void)
         xor      bl, bl
         mov      byte ptr [esp + 0xbc], bl
     L_4733:
-        cmp      byte ptr [g_byte_004f4b4c], bl
+        cmp      byte ptr [g_glideColorFlushByte], bl
         je       L_4764
         mov      eax, dword ptr [esp + 0xbc]
         push     OFFSET g_glideD0
@@ -151,7 +151,7 @@ __declspec(naked) void GlideTriColorFlush(void)
         push     ecx
         push     0
         call     dword ptr [g_dispatchSave1652]
-        mov      byte ptr [g_byte_004f4b4c], bl
+        mov      byte ptr [g_glideColorFlushByte], bl
     L_4764:
         mov      ebx, dword ptr [esp + 0xc0]
         mov      al, byte ptr [g_glideE8]

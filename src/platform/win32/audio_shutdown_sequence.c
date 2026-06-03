@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004c4240 (168b platform.win32) - audio shutdown sequence:
- *   For i in [0, g_byte_00f9efec): if BuildMaskFromArray() nonzero:
+ *   For i in [0, g_audioChannelCount): if BuildMaskFromArray() nonzero:
  *     base = (*iat)(); Audio_UpdateChannels(); VtableArgClamp(i);
  *     used = (*iat)(); delta = 10 - used; total = base + delta;
  *     if total > 0: SleepEx(total).
@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *   Helper_DSI_post1(0); g_dispatchSave1417 = 0;
  *   if g_dsoundPrimary: vtbl[+8](.); clear. Same for g_dsoundContext.
  */
-extern unsigned int g_byte_00f9efec;
+extern unsigned int g_audioChannelCount;
 extern unsigned int g_iat_Sleep;
 extern unsigned int g_iat_timeGetTime;
 extern void * g_dsoundContext;
@@ -135,7 +135,7 @@ __declspec(naked) void AudioShutdownSequence(void) {
         push    ebx
         push    esi
         push    edi
-        movsx   edi, byte ptr [g_byte_00f9efec]
+        movsx   edi, byte ptr [g_audioChannelCount]
         test    edi, edi
         _emit   7eh
         _emit   3ch

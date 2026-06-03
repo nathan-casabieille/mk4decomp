@@ -8774,7 +8774,7 @@ void MStackIndirectCallBit(void) {
 
 extern void TestCmpZeroFour(void);
 extern void TablePushAccumTailJmp(void);
-extern unsigned char g_byte_00542040;
+extern unsigned char g_audioInitSeqByte;
 extern unsigned int g_audioInitState2;
 extern unsigned int g_audioInitState1;
 extern unsigned int g_audioInitState3;
@@ -8786,7 +8786,7 @@ extern unsigned int g_audioInitState4;
 extern unsigned int g_tickFlagF;
 
 /* @addr 0x004a41a0 (182b audio) - audio init sequence.
- *   g_byte_00542040 = 1; g_walkCallback = 0; call CopyGlobal; call BootInitGuardedCallChain.
+ *   g_audioInitSeqByte = 1; g_walkCallback = 0; call CopyGlobal; call BootInitGuardedCallChain.
  *   Copy chain: [0x541ec4] = [0x541ecc]; [0x541ec8] = [0x541ed0]; [0x537f48] = [0x53a790];
  *               [0x5380e0] = [0x537ea0]; [0x53a178] = [0x537edc]; [0x53a250] = [0x53a1cc];
  *               g_walkCallback = [0x53a51c].
@@ -8797,7 +8797,7 @@ extern unsigned int g_tickFlagF;
  */
 void AudioInitSequence(void) {
     __asm {
-        mov     byte ptr [g_byte_00542040], 1
+        mov     byte ptr [g_audioInitSeqByte], 1
         mov     dword ptr [g_walkCallback], 0
         call    CopyGlobal
         call    BootInitGuardedCallChain
@@ -40819,12 +40819,12 @@ extern u32 g_gsmFlag;
 extern int g_configInitGate;
 extern int g_audioRestoreBuf;
 extern int g_audioStateGlobals;
-extern unsigned char g_byte_004f3238;
+extern unsigned char g_voiceBankTickByte;
 extern int g_audioSlotMarks;
 extern int g_audioStateGlobalsSnap;
 extern int g_audioStateMachineVar5;
 extern int g_audioStateMachineVar6;
-extern unsigned char g_byte_00543a24;
+extern unsigned char g_audioRestoreCount;
 extern int g_audioSavedGlobal4;
 extern int g_audioSavedReg_00543a28;
 extern int g_audioSavedGlobal5;
@@ -40834,11 +40834,11 @@ extern unsigned char g_audioStateWalk6;
 extern int g_audioSavedReg_00543a34;
 extern unsigned char g_audioStateWalk7;
 extern int g_audioSavedReg_00543a38;
-extern unsigned char g_byte_00543a3c;
+extern unsigned char g_audioRestoreByte3c;
 extern int g_audioSavedGlobal0;
-extern unsigned char g_byte_00543a3d;
+extern unsigned char g_audioRestoreByte3d;
 extern int g_audioSavedGlobal1;
-extern unsigned char g_byte_00543a3e;
+extern unsigned char g_audioRestoreByte3e;
 extern int g_audioSavedGlobal2;
 extern int g_audioSavedReg_00543a40;
 extern int g_audioSavedGlobal3;
@@ -40879,7 +40879,7 @@ __declspec(naked) void Config_SnapshotGlobals(void)
         mov     ecx, 0x3c
         mov     esi, offset g_audioRestoreBuf
         mov     edi, offset g_audioStateGlobals
-        mov     al, byte ptr [g_byte_004f3238]
+        mov     al, byte ptr [g_voiceBankTickByte]
         rep     movsd
         mov     ecx, 5
         mov     esi, offset g_audioSlotMarks
@@ -40888,7 +40888,7 @@ __declspec(naked) void Config_SnapshotGlobals(void)
         rep     movsd
         mov     ecx, dword ptr [g_audioStateMachineVar6]
         movsb
-        mov     byte ptr [g_byte_00543a24], al
+        mov     byte ptr [g_audioRestoreCount], al
         mov     eax, dword ptr [g_audioSavedGlobal4]
         mov     dword ptr [g_audioSavedReg_00543a28], ecx
         mov     ecx, dword ptr [g_audioSavedGlobal5]
@@ -40900,11 +40900,11 @@ __declspec(naked) void Config_SnapshotGlobals(void)
         mov     cl, byte ptr [g_audioStateWalk7]
         mov     dword ptr [g_audioSavedReg_00543a38], edx
         mov     dl, byte ptr [g_audioStateByte730]
-        mov     byte ptr [g_byte_00543a3c], al
+        mov     byte ptr [g_audioRestoreByte3c], al
         mov     eax, dword ptr [g_audioSavedGlobal0]
-        mov     byte ptr [g_byte_00543a3d], cl
+        mov     byte ptr [g_audioRestoreByte3d], cl
         mov     ecx, dword ptr [g_audioSavedGlobal1]
-        mov     byte ptr [g_byte_00543a3e], dl
+        mov     byte ptr [g_audioRestoreByte3e], dl
         mov     edx, dword ptr [g_audioSavedGlobal2]
         mov     dword ptr [g_audioSavedReg_00543a40], eax
         mov     eax, dword ptr [g_audioSavedGlobal3]
@@ -41754,14 +41754,14 @@ __declspec(naked) void DoubleToLongDouble(void) {
 }
 
 extern void StrSearchCall(void);
-extern unsigned char g_byte_00522bb4;
+extern unsigned char g_crtTimeFmtByte;
 
 /* @addr 0x004c87c0 (182b crt) - _fcvt-like decimal-string formatter.
  *   args: struct* (esi: [+0]=sign/digits ptr, [+4]=exponent), width (ebp),
  *         outbuf (ebx), flag (cl byte).
  *   - If flag != 0 and digits=="-": write '0' + null at end-of-buffer.
  *   - Write sign byte if needed; copy/pad digits; insert decimal separator
- *     from g_byte_00522bb4; pad with '0' via rep stos pattern.
+ *     from g_crtTimeFmtByte; pad with '0' via rep stos pattern.
  */
 __declspec(naked) void FcvtFormatDecimal(void) {
     __asm {
@@ -41812,7 +41812,7 @@ __declspec(naked) void FcvtFormatDecimal(void) {
         push    1
         push    edi
         call    StrSearchCall
-        mov     al, byte ptr [g_byte_00522bb4]
+        mov     al, byte ptr [g_crtTimeFmtByte]
         add     esp, 8
         mov     [edi], al
         mov     esi, [esi + 4]
@@ -41939,7 +41939,7 @@ __declspec(naked) void BitShiftMultiPrecision(void) {
 
 extern unsigned int g_dispatchSave1429;
 extern unsigned int g_dispatchSave1428;
-extern unsigned char g_byte_00f9f838;
+extern unsigned char g_fatalAbortState;
 extern unsigned int g_dispatchSave1472;
 extern unsigned int g_dispatchSave1471;
 extern void PushConstCall_Lock_0xd(void);
@@ -41950,7 +41950,7 @@ extern void IterFnPtrs(void);
  *   Args: ebp=arg0 (push-thru), [esp+0x14]=arg1 flag, [esp+0x18] bl=arg2 flag.
  *   Calls PushConstCall_Lock_0xd to do beep/header msg, then on g_dispatchSave1429==1:
  *     ![0x4d2060](arg0); ![0x4d20a4](rv).
- *   Sets g_dispatchSave1428=1, g_byte_00f9f838 = bl.
+ *   Sets g_dispatchSave1428=1, g_fatalAbortState = bl.
  *   If arg1 == 0: walk fnptr-stack [g_dispatchSave1471..g_dispatchSave1472] calling each non-null fn,
  *     reloading head each iter; then push pair (0x4d5028, 0x4d5030) and IterFnPtrs.
  *   Push pair (0x4d5034, 0x4d5038), IterFnPtrs; if bl != 0 also call PushConstCall_TableLookupIatCall_0xd.
@@ -41975,7 +41975,7 @@ __declspec(naked) void BootFatalAbortHandler(void) {
         mov     ebx, dword ptr [esp + 0x18]
         test    eax, eax
         mov     dword ptr [g_dispatchSave1428], 1
-        mov     byte ptr [g_byte_00f9f838], bl
+        mov     byte ptr [g_fatalAbortState], bl
         jne     short L_ab_skipwalk
         mov     ecx, dword ptr [g_dispatchSave1472]
         test    ecx, ecx
@@ -42244,7 +42244,7 @@ extern unsigned int g_dispatchSave1616;
 extern unsigned int g_dispatchSave1617;
 extern unsigned int g_dispatchSave1618;
 extern unsigned int g_dispatchSave1619;
-extern unsigned int g_byte_007af508;
+extern unsigned int g_callocInitFlag;
 extern void Helper_DrawCursor(s16 *entry);
 extern void FpFormatRound(void);
 extern void FormatHelper(void);
@@ -44179,8 +44179,8 @@ __declspec(naked) void FloatToStringBundle(void) {
 /* @addr 0x004b21d0 (272b engine.app) - per-char glyph emitter for HUD text.
  *   args: (esp+8)=screen_x, (esp+0xc)=string ptr, (esp+0x10)=screen_y, (esp+0x14) bp=z, (esp+0x18) sign_flag.
  *   For each printable char (0x21..0x7e): index = c - 0x21; sprite cell pos = (idx % 28, idx / 28).
- *   Builds quad descriptor at g_dispatchSave1609..g_byte_007af508, calls Helper_DrawCursor.
- *   Advances screen_x by 9 per char; clears g_byte_007af508 at end.
+ *   Builds quad descriptor at g_dispatchSave1609..g_callocInitFlag, calls Helper_DrawCursor.
+ *   Advances screen_x by 9 per char; clears g_callocInitFlag at end.
  */
 __declspec(naked) void Helper_DrawMenuText(void) {
     __asm {
@@ -44263,13 +44263,13 @@ __declspec(naked) void Helper_DrawMenuText(void) {
         pop     ebx
         pop     ebp
         pop     edi
-        mov     byte ptr [g_byte_007af508], cl
+        mov     byte ptr [g_callocInitFlag], cl
         mov     eax, esi
         pop     esi
         ret
     L_hpc_emptyTail:
         mov     esi, [esp + 8]
-        mov     byte ptr [g_byte_007af508], 0
+        mov     byte ptr [g_callocInitFlag], 0
         mov     eax, esi
         pop     esi
         ret
@@ -44922,7 +44922,7 @@ __declspec(naked) void Helper_DSI_post1(void) {
  *   args: struct (edi: digits ptr+exp+sign), buf (ebp), digit_count (esi),
  *         use_uppercase (eax flag), padflag (bl).
  *   Steps: if bl set, pad buf via StrSearchCall.
- *   Copy first digit (or '-' then digit), insert decimal sep (g_byte_00522bb4),
+ *   Copy first digit (or '-' then digit), insert decimal sep (g_crtTimeFmtByte),
  *   emit 'e' (lowercase 0x65 from g_dispatchSave515) or 'E' (uppercase),
  *   then exponent with sign and up to 3 digits using reciprocal-mul divisions.
  */
@@ -44962,7 +44962,7 @@ __declspec(naked) void CfltcvtFormat(void) {
         jle     short L_cv_skipDec
         mov     dl, [eax + 1]
         mov     [eax], dl
-        mov     cl, byte ptr [g_byte_00522bb4]
+        mov     cl, byte ptr [g_crtTimeFmtByte]
         inc     eax
         mov     [eax], cl
     L_cv_skipDec:
@@ -53527,7 +53527,7 @@ __declspec(naked) void FileTableClose(void) {
         /* entry 3 (offset 0x160) */
     L_ftc_entry3:
         call    PushConstCall_LockIterTwoPath_1
-        mov     al, byte ptr [g_byte_00f9f838]
+        mov     al, byte ptr [g_fatalAbortState]
         test    al, al
         je      short L_ftc_e3End
         jmp     StreamCleanupLoop
@@ -66956,10 +66956,10 @@ __declspec(naked) void PhaseInstallSelf3Step(void)
  * scalar stores rather than right after the rep movsd.
  * ============================================================ */
 
-extern unsigned char g_byte_00543ab4;
+extern unsigned char g_menuPageTailByte;
 extern int g_menuRestoreC;
 extern int g_menuRestoreD;
-extern unsigned char g_byte_004f3610;
+extern unsigned char g_audioRestoreByte10;
 extern int g_menuRestoreB;
 extern int g_menuRestoreA;
 extern int g_audioRestoreSlot3;
@@ -66987,7 +66987,7 @@ __declspec(naked) void Config_RestoreGlobals(void)
         mov     ecx, 0x3C
         mov     esi, offset g_audioStateGlobals
         mov     edi, offset g_audioRestoreBuf
-        mov     al, byte ptr [g_byte_00543a24]
+        mov     al, byte ptr [g_audioRestoreCount]
         rep     movsd
         mov     edx, dword ptr [g_audioSavedReg_00543a2c]
         mov     ecx, 5
@@ -66995,18 +66995,18 @@ __declspec(naked) void Config_RestoreGlobals(void)
         mov     edi, offset g_audioSlotMarks
         rep     movsd
         mov     ecx, dword ptr [g_audioSavedReg_00543a28]
-        mov     byte ptr [g_byte_004f3238], al
+        mov     byte ptr [g_voiceBankTickByte], al
         mov     eax, dword ptr [g_audioSavedReg_00543a30]
         mov     dword ptr [g_audioStateMachineVar6], ecx
         mov     ecx, dword ptr [g_audioSavedReg_00543a34]
         mov     dword ptr [g_audioStateMachineVar5], edx
         mov     edx, dword ptr [g_audioSavedReg_00543a38]
         mov     dword ptr [g_audioSavedGlobal4], eax
-        mov     al, byte ptr [g_byte_00543a3c]
+        mov     al, byte ptr [g_audioRestoreByte3c]
         mov     dword ptr [g_audioSavedGlobal5], ecx
-        mov     cl, byte ptr [g_byte_00543a3d]
+        mov     cl, byte ptr [g_audioRestoreByte3d]
         mov     dword ptr [g_gtConfig4f], edx
-        mov     dl, byte ptr [g_byte_00543a3e]
+        mov     dl, byte ptr [g_audioRestoreByte3e]
         mov     byte ptr [g_audioStateWalk6], al
         mov     eax, dword ptr [g_audioSavedReg_00543a40]
         mov     byte ptr [g_audioStateWalk7], cl
@@ -67034,11 +67034,11 @@ __declspec(naked) void Config_RestoreGlobals(void)
         mov     dword ptr [g_audioStateMachine1], eax
         mov     dword ptr [g_or], ecx
     L_arg_tail:
-        mov     al, byte ptr [g_byte_00543ab4]
+        mov     al, byte ptr [g_menuPageTailByte]
         mov     edx, dword ptr [g_menuRestoreC]
         mov     ecx, dword ptr [g_menuRestoreD]
         mov     byte ptr [g_bootGatedByte360c], al
-        mov     byte ptr [g_byte_004f3610], al
+        mov     byte ptr [g_audioRestoreByte10], al
         mov     eax, dword ptr [g_menuRestoreB]
         mov     dword ptr [g_loaded], edx
         mov     edx, dword ptr [g_menuRestoreA]
@@ -78464,7 +78464,7 @@ __declspec(naked) void ScanlineTexBlit(void)
  *
  * Glide 3 triangle-color flush. Bails on three D3D state gates
  * (007affe4/fff4/fff0). Then for arg2 (color-mode byte ≤ 0x10)
- * different from cached g_byte_004f4b4c, calls Glide setup at
+ * different from cached g_glideColorFlushByte, calls Glide setup at
  * fnptr g_dispatchSave1652 with reformatted color args. For arg3
  * (texture-mode byte) different from cached g_glideE8,
  * dispatches to Glide via g_dispatchSave1632 with 4-arg recipes.
@@ -78477,7 +78477,7 @@ __declspec(naked) void ScanlineTexBlit(void)
  * Linear no mstack. Returns: void.
  * ============================================================ */
 
-extern unsigned int g_byte_004f4b4c;
+extern unsigned int g_glideColorFlushByte;
 extern f32 g_glideTable2[];
 extern f32 g_glideTable1[];
 extern f32 g_glideTable3[];
@@ -78507,7 +78507,7 @@ __declspec(naked) void GlideTriColorFlush(void)
         xor      bl, bl
         mov      byte ptr [esp + 0xbc], bl
     L_4733:
-        cmp      byte ptr [g_byte_004f4b4c], bl
+        cmp      byte ptr [g_glideColorFlushByte], bl
         je       L_4764
         mov      eax, dword ptr [esp + 0xbc]
         push     OFFSET g_glideD0
@@ -78517,7 +78517,7 @@ __declspec(naked) void GlideTriColorFlush(void)
         push     ecx
         push     0
         call     dword ptr [g_dispatchSave1652]
-        mov      byte ptr [g_byte_004f4b4c], bl
+        mov      byte ptr [g_glideColorFlushByte], bl
     L_4764:
         mov      ebx, dword ptr [esp + 0xc0]
         mov      al, byte ptr [g_glideE8]
@@ -90273,7 +90273,7 @@ __declspec(naked) void DebugMenu_DrawMatchOptions(void)
         push     OFFSET g_dispatchSave823
         jmp      L_31d5
     L_31c1:
-        movsx    ecx, byte ptr [g_byte_004f3238]
+        movsx    ecx, byte ptr [g_voiceBankTickByte]
         mov      edx, dword ptr [ecx*4 + g_audioStateMachineVar7]
         push     edx
         push     OFFSET g_dispatchSave822
@@ -90781,7 +90781,7 @@ __declspec(naked) void Menu_FillOptionValues(void)
         mov      eax, dword ptr [g_menuRestoreB]
         jmp      short L_80ea
     L_80e5:
-        mov      eax, dword ptr [g_byte_00543ab4]
+        mov      eax, dword ptr [g_menuPageTailByte]
     L_80ea:
         test     eax, eax
         mov      eax, OFFSET g_dispatchSave820
@@ -91183,7 +91183,7 @@ __declspec(naked) void BucketBlockAllocSplit(void)
  *      advances past bytes flagged in g_crtCType (ctype
  *      table, mask 4) or filtered by IsCType(byte, 4) when
  *      g_crtLocaleNumeric > 1, then swaps the first content byte
- *      with the locale-decimal byte at g_byte_00522bb4.
+ *      with the locale-decimal byte at g_crtTimeFmtByte.
  *
  *   3. 0x4c84e0 (109b): strip_locale_decimal_zeros. Skips the
  *      locale's decimal char, then trims trailing 0s before
@@ -91266,7 +91266,7 @@ __declspec(naked) void LocaleNumericHelpers(void)
         test     eax, eax
         jne      short L_8496
     L_84c3:
-        mov      cl, byte ptr [g_byte_00522bb4]
+        mov      cl, byte ptr [g_crtTimeFmtByte]
         mov      al, byte ptr [esi]
         mov      byte ptr [esi], cl
         inc      esi
@@ -91286,7 +91286,7 @@ __declspec(naked) void LocaleNumericHelpers(void)
         /* Helper 3: strip_locale_decimal_zeros. */
         mov      eax, dword ptr [esp + 4]
         push     ebx
-        mov      bl, byte ptr [g_byte_00522bb4]
+        mov      bl, byte ptr [g_crtTimeFmtByte]
         mov      cl, byte ptr [eax]
         test     cl, cl
         je       short L_84fd
@@ -122553,7 +122553,7 @@ __declspec(naked) void CrtTimeFmtPrefsCluster(void)
         xor      eax, eax
         mov      dl, byte ptr [ecx]
         mov      dword ptr [g_dispatchSave111], 1
-        mov      byte ptr [g_byte_00522bb4], dl
+        mov      byte ptr [g_crtTimeFmtByte], dl
         ret
     }
 }
