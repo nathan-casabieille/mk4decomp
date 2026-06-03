@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_audioStateMachine2;
 extern unsigned int g_audioByteTable;
 extern unsigned int g_audioMicroEntry;
-extern unsigned int g_table_004f3af8;
+extern unsigned int g_audioStateEntryTbl;
 extern unsigned int g_audioStateMachine0;
 extern unsigned int g_audioStateMachine1;
 extern void AudioStateMachineMulti(void);
@@ -131,7 +131,7 @@ __declspec(naked) void AudioMicroEntries(void)
     __asm
     {
         mov     eax, dword ptr [esp + 4]
-        mov     ecx, dword ptr [eax*4 + g_table_004f3af8]
+        mov     ecx, dword ptr [eax*4 + g_audioStateEntryTbl]
         mov     dword ptr [g_eventQueueWorkType], ecx
         jmp     Push16Call
         _emit   90h

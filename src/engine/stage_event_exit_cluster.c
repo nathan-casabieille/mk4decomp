@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -128,7 +128,7 @@ extern void ScaledChainJmp_00429470(void);
  *   Self at [esi+8], packs (Self + 0x01000000) at the bumped scaled
  *   slot, slot[+0x84]=0, calls ScaledChainJmp_00429470, arms 0x541e6c.
  */
-extern unsigned int g_table_004d57b0;
+extern unsigned int g_phaseChainTbl;
 extern void EsiEdiAliasDualMul10(void);
 extern void NotMaskStorePair(void);
 extern void PunchAnimCluster(void);
@@ -158,7 +158,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow(void) {
         mov     ecx, dword ptr [g_eventQueueChild]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], ecx
         mov     dword ptr [g_walkCallback], 0xb333
         call    EsiEdiAliasDualMul10
         mov     eax, dword ptr [g_framePauseFlag]
@@ -170,7 +170,7 @@ __declspec(naked) void InstallSelfMStackPackedFlow(void) {
         test    eax, eax
         jne     L_ism_done
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     edx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_eventQueueChild], edx
         mov     dword ptr [g_matrixStackTop], eax

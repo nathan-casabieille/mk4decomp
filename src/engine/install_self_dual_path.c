@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   chain[+0x84]!=0 path: g_cj_00542054 = 0x004e45a0>>2; call InstallSelfPlusTailThunk; mov eax, [g_pause]; ret.
  *   chain[+0x84]==0 path: g_currentNodeFlags=0x6666; g_eventQueueChild=0x1e; install-self at +0x08=0x00435260,
  *     scaledInit-chain push 0x00435260|0x01000000; call StateGateMStackOverlap; g_pause=1; ret.
- *   Block B (+0xb0): cmp g_table_00535ddc < 0x10000? jmp InstallSelfThreeStateLeaPlus22 : jmp InstallSelfChainSet13333.
+ *   Block B (+0xb0): cmp g_fightStateProgress < 0x10000? jmp InstallSelfThreeStateLeaPlus22 : jmp InstallSelfChainSet13333.
  */
 extern void InstallSelfChainSet13333(void);
 extern void InstallSelfPlusTailThunk(void);
@@ -157,7 +157,7 @@ __declspec(naked) void InstallSelfDualPath(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00010000
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh

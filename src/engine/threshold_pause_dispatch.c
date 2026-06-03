@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback = (g_stateCountdown); if <= 1: push lit; call IterStepDualStore; ret.
  *   else: call CopyJmp; if pause or g_walkCallback < 0xcccc: ret.
  *   call DualGuardedTableSearch; if nonzero ret.
- *   g_walkCallback = (g_table_00535ddc); if > 0x18000 ret; else jmp TimerWindowThreshDispatch.
+ *   g_walkCallback = (g_fightStateProgress); if > 0x18000 ret; else jmp TimerWindowThreshDispatch.
  */
 extern void CopyJmp_ScaledSubStore_g_currentNodeIdx(void);
 extern void DualGuardedTableSearch(void);
@@ -153,7 +153,7 @@ __declspec(naked) void ThresholdPauseDispatch(void) {
         test    eax, eax
         _emit   75h
         _emit   16h
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00018000
         mov     dword ptr [g_walkCallback], eax
         _emit   7fh

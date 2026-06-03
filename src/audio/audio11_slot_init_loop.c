@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -111,12 +111,12 @@ extern unsigned int g_fightAxisPosY;
 /*
  * CharSelect_HelpPrompts - 278b audio: zero an 11-slot table at 0x00543408, then iterate
  *   11 times calling GuardedSetupCallTailJmp(ptr_i, val_i). After each call, chain[+0x54]=0x190000;
- *   chain[+0x5c]=0x18000; store g_currentNodeIdx to (g_table_00543404)[i].
+ *   chain[+0x5c]=0x18000; store g_currentNodeIdx to (g_charSelHelpNodeIdxArr)[i].
  *   Stack-frame: sub esp, 0x58. Holds 11 const ptrs (0x004d24bc..0x004d2578) and 11 const vals
  *   (0xff9c0000..0x00930000 step 0x190000-ish).
  */
-extern unsigned int g_table_00543404;
-extern unsigned int g_table_00543408;
+extern unsigned int g_charSelHelpNodeIdxArr;
+extern unsigned int g_charSelHelpSlotBuf;
 extern void GuardedSetupCallTailJmp(void);
 
 __declspec(naked) void CharSelect_HelpPrompts(void)
@@ -129,7 +129,7 @@ __declspec(naked) void CharSelect_HelpPrompts(void)
         push    edi
         mov     ecx, 0xb
         xor     eax, eax
-        mov     edi, offset g_table_00543408
+        mov     edi, offset g_charSelHelpSlotBuf
         rep     stosd
         mov     dword ptr [esp + 0x38], 0x004d24bc
         mov     dword ptr [esp + 0x3c], 0x004d24c0
@@ -170,7 +170,7 @@ __declspec(naked) void CharSelect_HelpPrompts(void)
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [eax*4 + 0x5c], edi
         mov     ecx, dword ptr [g_currentNodeIdx]
-        mov     dword ptr [esi + g_table_00543404], ecx
+        mov     dword ptr [esi + g_charSelHelpNodeIdxArr], ecx
         jb      short L_a5_iter
         pop     edi
         pop     esi

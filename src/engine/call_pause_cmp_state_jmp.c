@@ -12,7 +12,7 @@ extern unsigned int g_currentNodeIdx;
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
  *   jne     .ret
- *   mov     eax, [g_table_00535ddc]
+ *   mov     eax, [g_fightStateProgress]
  *   cmp     eax, 0x00030000
  *   mov     [g_walkCallback], eax
  *   jle     +5
@@ -22,7 +22,7 @@ extern unsigned int g_currentNodeIdx;
  *   add     esp, 4
  *   ret
  */
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern void ScaledZeroFour(void);
 extern void ArgSarStoreJmp(void *p);
 extern void *g_dispatchSave1280;
@@ -31,7 +31,7 @@ void CallPauseCmpStateJmp(void) {
     unsigned int v;
     ScaledZeroFour();
     if (g_framePauseFlag != 0) return;
-    v = g_table_00535ddc;
+    v = g_fightStateProgress;
     g_walkCallback = (void (*)(void))v;
     if ((int)v > 0x30000) {
         GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0046a560();

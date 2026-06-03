@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -129,7 +129,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave522;
 extern unsigned int g_phaseChainArr2;
 extern unsigned int g_alarmTriState;
-extern unsigned int g_table_004d57b0;
+extern unsigned int g_phaseChainTbl;
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void PendingMatch_StoreDoubleNegPauseSubStore(void);
@@ -149,7 +149,7 @@ __declspec(naked) void MStackInitTriAlarm(void) {
         push    0xc0
         mov     dword ptr [g_matrixStackTop], eax
         push    0x49db40
-        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], ecx
         mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, offset g_phaseChainArr2
         mov     dword ptr [g_eventQueueEnd], edx
@@ -175,7 +175,7 @@ __declspec(naked) void MStackInitTriAlarm(void) {
         jne     short L_msi_e1Ret
     L_msi_skipAlarm:
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     ecx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_eventQueueNotMask], ecx
         mov     dword ptr [g_matrixStackTop], eax

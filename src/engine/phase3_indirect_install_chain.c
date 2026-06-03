@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -127,7 +127,7 @@ extern unsigned int g_fightAxisPosY;
  *   Entry 4 (offset 0x140, 40b): same shape as entry 3 but tail-jmp
  *     DualEntryStateMachine.
  */
-extern unsigned int g_table_004d57b0;
+extern unsigned int g_phaseChainTbl;
 extern void CallDualStoreXorBit(void);
 extern void DualEntryStateMachine(void);
 extern void PendingMatch_00459510(void);
@@ -154,7 +154,7 @@ __declspec(naked) void Phase3IndirectInstallChain(void) {
         ret
     L_p3i_phase0:
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     ecx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_matrixStackTop], eax

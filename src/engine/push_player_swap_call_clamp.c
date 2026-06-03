@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004801a0 (146b) - mstack push g_baseSel + cmp p1==cj swap +
- *   call + clamp g_table_00535ddc to [0x40000, 0x40000+0x26666] absolute. */
+ *   call + clamp g_fightStateProgress to [0x40000, 0x40000+0x26666] absolute. */
 extern unsigned int g_dualB_00538038;
 extern unsigned int g_dualB_0053803c;
 extern void ScaledChainDouble(void);
@@ -135,7 +135,7 @@ void PushPlayerSwapCallClamp(void) {
         test    eax, eax
         _emit   75h
         _emit   44h
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         mov     dword ptr [g_eventQueueCurrent], 0x26666
         cmp     eax, 0x40000
         mov     dword ptr [g_walkCallback], eax

@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   call Cmp2CallDirtyCall; if eax: ret;
  *   push 0x4e4a10; call QuadBlockArgInstallChain; pop;
  *   if pause: ret;
- *   eax = g_table_00535ddc; g_walkCallback = eax;
+ *   eax = g_fightStateProgress; g_walkCallback = eax;
  *   cmp eax,0x20000; if >: jmp InstallSelfChainSet84_80CallW;
  *   cmp eax,0x17333; if >: jmp Wrapper_PackedAdvanceCallTailJmp_004e46d0;
  *   cmp eax,0x10000; if >: jmp MoveFsmCluster;
@@ -123,7 +123,7 @@ void ThresholdedTailJmps(void) {
     if (((int (*)(void))Cmp2CallDirtyCall)() != 0) return;
     ((void (*)(int))QuadBlockArgInstallChain)(0x004e4a10);
     if (g_framePauseFlag != 0) return;
-    state = (int)g_table_00535ddc;
+    state = (int)g_fightStateProgress;
     g_walkCallback = (void (*)(void))state;
     if (state > 0x20000) { InstallSelfChainSet84_80CallW(); return; }
     if (state > 0x17333) { Wrapper_PackedAdvanceCallTailJmp_004e46d0(); return; }

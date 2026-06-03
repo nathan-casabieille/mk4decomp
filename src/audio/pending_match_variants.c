@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -127,7 +127,7 @@ extern unsigned int g_audioStateMachineVar5;
 extern unsigned int g_audioStateMachineVar4;
 extern unsigned int g_dispatchSave503;
 extern unsigned int g_audioStateMachineVar;
-extern unsigned int g_table_004f3ac8;
+extern unsigned int g_audioSlotKeys;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_bootInitState;
@@ -982,7 +982,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         add      esp, 8
         movsx    eax, byte ptr [esi]
         mov      dword ptr [g_eventQueueCurrent], edi
-        movsx    eax, byte ptr [eax + g_table_004f3ac8]
+        movsx    eax, byte ptr [eax + g_audioSlotKeys]
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_dlNalt1], eax
         call     DoublePushCallDualPopJmp

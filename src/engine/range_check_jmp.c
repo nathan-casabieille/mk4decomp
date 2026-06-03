@@ -8,7 +8,7 @@ extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0045e590 (55b)
- *   mov     eax, [g_table_00535ddc]
+ *   mov     eax, [g_fightStateProgress]
  *   cmp     eax, 0x1cccc
  *   mov     [g_walkCallback], eax
  *   jge     +0x0d
@@ -24,10 +24,10 @@ extern unsigned int g_currentNodeIdx;
  *   ret
  *   jmp     +0x79
  */
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern void PendingMatch_SwapOrPassSet(void);
 void RangeCheckJmp(void) {
-    int v = (int)g_table_00535ddc;
+    int v = (int)g_fightStateProgress;
     g_walkCallback = (void (*)(void))v;
     if (v < 0x1cccc) {
         g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffeu;

@@ -21,7 +21,7 @@ extern void IntroComboFsmCluster(void);
  * DIR32 reloc into the imm32 slot; that keeps `addr >> 2` from being
  * constant-folded and lets MSVC SP3 /O2 emit the runtime shift. */
 extern unsigned int g_table_004e4780;   /* 0x004e4780 */
-extern unsigned int g_table_004e56d8;   /* 0x004e56d8 */
+extern unsigned int g_sceneInitBlob_004e56d8;   /* 0x004e56d8 */
 
 /* @addr 0x004368f0 */
 void ScaledAddrInit_InstallSelfMStackPushDispatch(void) {
@@ -31,12 +31,12 @@ void ScaledAddrInit_InstallSelfMStackPushDispatch(void) {
 
 /* @addr 0x004677c0 */
 void ScaledAddrInit_IntroComboFsmCluster_004677c0(void) {
-    g_walkCallback = (void (*)(void))((int)&g_table_004e56d8 >> 2);
+    g_walkCallback = (void (*)(void))((int)&g_sceneInitBlob_004e56d8 >> 2);
     IntroComboFsmCluster();
 }
 
 /* @addr 0x004677e0 */
 void ScaledAddrInit_IntroComboFsmCluster_004677e0(void) {
-    g_walkCallback = (void (*)(void))((int)&g_table_004e56d8 >> 2);
+    g_walkCallback = (void (*)(void))((int)&g_sceneInitBlob_004e56d8 >> 2);
     IntroComboFsmCluster();
 }

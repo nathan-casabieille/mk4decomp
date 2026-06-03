@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -114,7 +114,7 @@ extern void InstallSelfThreeStateDispatch(void);
 
 /* @addr 0x00435f50 (209b game) - 4-block dual-Mul10Tail + thresholded state dispatcher.
  *   A: Mul10Tail pair on cj[+0x6c]/[+0x74]; if sum zero call CmpRangeJmpStateInit.
- *     Else threshold checks on g_table_00535ddc: <0x13333 jmp PrefixThunkInstallSelf3State, >0x28000 jmp GuardedSeq_PackedSelectLoad6_then_GuardedSeq,
+ *     Else threshold checks on g_fightStateProgress: <0x13333 jmp PrefixThunkInstallSelf3State, >0x28000 jmp GuardedSeq_PackedSelectLoad6_then_GuardedSeq,
  *     else jmp PrefixThunkInstallSelf3State.
  *   B/C (+0x80/+0x90): jmp DualCallPauseDirtyJmp_00435f20.
  *   D (+0xa0): call Cmp2CallDirtyCall; if nz ret; threshold dispatch state_00535ddc: <0x2b333 jmp Wrapper_CmpDualPatchScaledRangeJmp_004e4990,
@@ -148,7 +148,7 @@ __declspec(naked) void Mul10ThresholdQuad(void) {
         _emit   74h
         _emit   05h
         jmp     CmpRangeJmpStateInit
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00013333
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh
@@ -195,7 +195,7 @@ __declspec(naked) void Mul10ThresholdQuad(void) {
         test    eax, eax
         _emit   75h
         _emit   27h
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x0002b333
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

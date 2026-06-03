@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -127,7 +127,7 @@ extern void LinkedListInsert(void);
  *   into g_xformEntityIdx and calls LinkedListInsert. Pops the 2
  *   mstack entries back and clears bit 0 of g_xformDirtyFlags via and 0xfe.
  */
-extern unsigned int g_table_004d57b0;
+extern unsigned int g_phaseChainTbl;
 
 __declspec(naked) void MStackPush2ChainLLInsert(void) {
     __asm {
@@ -148,12 +148,12 @@ __declspec(naked) void MStackPush2ChainLLInsert(void) {
         mov     ecx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_fightGroupHead]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], edx
         call    GuardedChainPushSetCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -208,11 +208,11 @@ __declspec(naked) void MStackPush2ChainLLInsert(void) {
         test    eax, eax
         jne     short L_mpl_doneNoFE
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     ecx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_fightGroupHead], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     edx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_matrixStackTop], eax

@@ -13,7 +13,7 @@ extern unsigned int g_currentNodeIdx;
  *   else → T4.
  */
 extern unsigned int g_dispatchSave1237;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern void QuadBlockArgInstallChain(void);
 extern void InstallSelfChainSet84_80Call(void);
 extern void InstallSelfStdChain(void);
@@ -25,7 +25,7 @@ void RangeDispatch4(void) {
     if (g_framePauseFlag != 0) {
         return;
     }
-    v = (int)g_table_00535ddc;
+    v = (int)g_fightStateProgress;
     g_walkCallback = (void (*)(void))v;
     if (v > 0x20000) {
         InstallSelfChainSet84_80Call();

@@ -7,10 +7,10 @@
  *   8-iteration loop reading triplets from [0x004f2fd4 - 4 ..],
  *   writing AND-NOT result into [src1] and replacing [src2] with NOT(src1).
  */
-extern unsigned int g_table_004f2fd4[];
+extern unsigned int g_tickFrameMiscTriplets[];
 void Helper_TickFrame_Misc(void) {
     __asm {
-        mov     ecx, OFFSET g_table_004f2fd4
+        mov     ecx, OFFSET g_tickFrameMiscTriplets
         mov     esi, 8
 loop_start:
         mov     eax, dword ptr [ecx - 4]

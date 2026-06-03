@@ -13,7 +13,7 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_dispatchSave505;
 extern unsigned int g_dispatchSave796;
 extern unsigned int g_acc_00542078;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_dispatchSave1308;
 extern unsigned int g_dispatchSave795;
 extern unsigned int g_dispatchSave797;
@@ -283,7 +283,7 @@ void func_GuardedTripleCallSwapJmp_then_SetJmp_Distance3DMul10Chain_then_CjInsta
  * if < clear bit 0 of state_208c and ret; if >= tail-jmp IdCascadeBitSet.
  * Orphan sub-entry of the original packed block. */
 void Cmp13333_IdCascadeBitSet_00439fa0(void) {
-    unsigned int v = g_table_00535ddc;
+    unsigned int v = g_fightStateProgress;
     g_walkCallback = v;
     if ((int)v < 0x13333) {
         g_xformDirtyFlags &= 0xfffffffeu;

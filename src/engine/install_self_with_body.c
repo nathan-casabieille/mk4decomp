@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -117,7 +117,7 @@ extern unsigned int g_matrixStack_arr;
 
 __declspec(naked) void StateGateMStackOverlap(void) {
     __asm {
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         mov     ecx, dword ptr [g_currentNodeFlags]
         cmp     eax, ecx
         push    esi

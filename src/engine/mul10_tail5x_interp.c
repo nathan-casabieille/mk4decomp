@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -112,10 +112,10 @@ extern unsigned int g_eventQueueScratch;
 
 /* @addr 0x00485d90 (214b game) - 5x Mul10Tail interpolation accumulator. */
 void Mul10Tail5xInterp(void) {
-    g_eventQueueWorkType = g_table_00535ddc;
+    g_eventQueueWorkType = g_fightStateProgress;
     g_eventQueueNotMask = g_eventQueueScratch;
     g_eventQueueChild = g_eventQueueChildSrc;
-    g_eventQueueNotMask = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_table_00535ddc, g_eventQueueScratch);
+    g_eventQueueNotMask = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_fightStateProgress, g_eventQueueScratch);
     g_eventQueueChild = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_eventQueueWorkType, g_eventQueueChild);
     g_currentNodeFlags = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_acc_00542078, g_currentNodeFlags);
     g_eventQueueNotMask = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_currentNodeFlags, g_eventQueueNotMask);

@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -113,7 +113,7 @@ extern void JumpTableDispatch(void);
 extern void DualCallTestPauseRange(void);
 
 /* @addr 0x00435340 (165b game) - 5-block dispatcher.
- *   Block A: gate g_table_00535ddc>0x20000? jmp Wrapper_CmpDualPatchScaledRangeJmp_004e4990 : jmp InstallSelfPacked0x2005.
+ *   Block A: gate g_fightStateProgress>0x20000? jmp Wrapper_CmpDualPatchScaledRangeJmp_004e4990 : jmp InstallSelfPacked0x2005.
  *   Block B (+0x20): jmp GuardedSeq_PackedSelectLoad6_then_GuardedSeq.
  *   Block C (+0x30): g_walkCallback=g_walkCallback & 0xff; push 0x004e45b0; call JumpTableDispatch; ret.
  *   Block D (+0x50): call Cmp2CallDirtyCall; if nonzero ret; threshold-dispatch.
@@ -125,7 +125,7 @@ extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void);
 
 __declspec(naked) void FiveBlockDispatch_JumpTableDispatch(void) {
     __asm {
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00020000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
@@ -160,7 +160,7 @@ __declspec(naked) void FiveBlockDispatch_JumpTableDispatch(void) {
         test    eax, eax
         _emit   75h
         _emit   1bh
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00029999
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

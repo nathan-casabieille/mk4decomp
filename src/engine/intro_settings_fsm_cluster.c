@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -119,7 +119,7 @@ extern void QuadCmpBitGateJmp(void);
  *     state=1; call ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain; pause=1; pop edi; ret.
  *   Thunk B (+0x80): call ScaledMove48to58; if pause ret. g_eventQueueNotMask=[baseSel*4+0x30].
  *     If nonzero: jmp CallPauseTripleScaledJmp. Else call MStackPush3CmpCall; if pause ret.
- *     If bit0(0054208c): jmp DualEntryStateGated. Else cmp g_table_00535ddc<=0xcccc;
+ *     If bit0(0054208c): jmp DualEntryStateGated. Else cmp g_fightStateProgress<=0xcccc;
  *     if yes: jmp IntroSettingsFsmCluster; else jmp DualEntryStateGated. Ret.
  *   Thunk C (+0xe0): call ScaledMove48to58; if pause ret. Same state_0054207c gate.
  *     If nonzero jmp CallPauseTripleScaledJmp; else jmp DualEntryStateGated.
@@ -180,7 +180,7 @@ __declspec(naked) void InstallSelfMultiThunkDispatch(void) {
         _emit   74h
         _emit   05h
         jmp     DualEntryStateGated
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0xcccc
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -129,7 +129,7 @@ extern unsigned int g_fightAxisPosY;
  *     +0x10=0, +0x14=&g_dispatchVar43>>2. Pops mstack and returns.
  */
 extern unsigned int g_dispatchVar43;
-extern unsigned int g_table_004d57b0;
+extern unsigned int g_phaseChainTbl;
 extern void AudioVolumeRescale(void);
 extern void ChainWalkPushPop(void);
 extern void MStackPush2VolumeCascade(void);
@@ -177,7 +177,7 @@ __declspec(naked) void VecScaleMStackTripleCall(void) {
         inc     eax
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], ecx
         call    ChainWalkPushPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -227,7 +227,7 @@ __declspec(naked) void VecScaleMStackTripleCall(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x14], eax
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     ecx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_fightGroupHead], ecx
         mov     dword ptr [g_matrixStackTop], eax

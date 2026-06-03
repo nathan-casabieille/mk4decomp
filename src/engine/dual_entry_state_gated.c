@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00460fa0 (127b game) - dual-entry state-gated.
  *   Block A: g_eventQueueCurrent=0xb; call ScaledChainAndF000DirtyToggle; if !pause and bitfield clear and
- *     g_table_00535ddc<=0xcccc: g_eventQueueCurrent=0x9. Then call MStackPush3CmpCall; if !pause: if bitfield set
+ *     g_fightStateProgress<=0xcccc: g_eventQueueCurrent=0x9. Then call MStackPush3CmpCall; if !pause: if bitfield set
  *     g_eventQueueCurrent=0xb; g_walkCallback=g_eventQueueCurrent; jmp StateDispatchYield.
  *   Block B (+0x70): g_walkCallback=0x8; jmp StateDispatchYield.
  */
@@ -128,7 +128,7 @@ __declspec(naked) void DualEntryStateGated(void) {
         test    byte ptr [g_xformDirtyFlags], 1
         _emit   75h
         _emit   3ch
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x0000cccc
         mov     dword ptr [g_walkCallback], eax
         _emit   7fh

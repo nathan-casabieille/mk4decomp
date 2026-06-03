@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004362f0 (149b game) - 3-block: A: jmp 0x00439e40. B: Cmp2CallDirtyCall;
- *   threshold-dispatch on g_table_00535ddc to {0x00437c10, Wrapper_CmpDualPatchScaledRangeJmp_004e4990, PrefixThunkInstallSelf3State}.
+ *   threshold-dispatch on g_fightStateProgress to {0x00437c10, Wrapper_CmpDualPatchScaledRangeJmp_004e4990, PrefixThunkInstallSelf3State}.
  *   C: similar threshold-dispatch with diff thresholds to {0x00438ee0, SetJmp_StateDispatchYield_00438f70, PrefixThunkInstallSelf3State}.
  *   D (+0x90): jmp ThresholdedTailJmps.
  */
@@ -138,7 +138,7 @@ __declspec(naked) void TripleThresholdDispatch(void) {
         test    eax, eax
         _emit   75h
         _emit   27h
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00014ccc
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh
@@ -169,7 +169,7 @@ __declspec(naked) void TripleThresholdDispatch(void) {
         test    eax, eax
         _emit   75h
         _emit   27h
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00020000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

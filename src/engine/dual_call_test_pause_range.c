@@ -12,12 +12,12 @@ extern unsigned int g_phaseTimer;
  *   call F1; test eax → jne ret
  *   call F2; pause → jne ret
  *   load g_walkCallback; test → jge skip → jmp T_inner
- *   load g_table_00535ddc; cmp 0x30000; store; jle → jmp T1; jmp T2
+ *   load g_fightStateProgress; cmp 0x30000; store; jle → jmp T1; jmp T2
  *   ret
  */
 extern void Cmp2CallDirtyCall(void);
 extern void Wrapper_ScaledIndexCondCopy(void);
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern void TriEntryGateMain(void);
 extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void PrefixThunkInstallSelf3State(void);
@@ -30,7 +30,7 @@ void DualCallTestPauseRange(void) {
         TriEntryGateMain();
         return;
     }
-    state_y = (int)g_table_00535ddc;
+    state_y = (int)g_fightStateProgress;
     g_walkCallback = (void (*)(void))state_y;
     if (state_y > 0x30000) {
         GuardedSeq_PackedSelectLoad6_then_GuardedSeq();

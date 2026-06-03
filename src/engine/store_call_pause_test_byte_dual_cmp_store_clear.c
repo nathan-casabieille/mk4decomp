@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00439f70 (83b game) - dual block.
  *   Block1 (0..43): store 500 at g_walkCallback; call audio rescale; if pause? ret;
  *     else test bit0 of g_xformDirtyFlags: set => jmp QuadGuardBitGateJmp; clear => jmp CallPauseTestByteJmpCalls.
- *   Block2 (48..82, +4 NOP pad): cmp g_table_00535ddc with 0x13333 and store; if <  clear bit0 of g_xformDirtyFlags, ret; if >= tail-jmp IdCascadeBitSet.
+ *   Block2 (48..82, +4 NOP pad): cmp g_fightStateProgress with 0x13333 and store; if <  clear bit0 of g_xformDirtyFlags, ret; if >= tail-jmp IdCascadeBitSet.
  */
 /* @addr 0x00439f70 (44b): store 0x1f4 at g_walkCallback; call AudioVolumeRescale;
  * if !pause, bit-test state_208c: if set jmp QuadGuardBitGateJmp, else jmp

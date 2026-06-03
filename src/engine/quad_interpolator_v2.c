@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -121,7 +121,7 @@ extern void QuadInterpolatorV2(void);
  *   advancing cj by 0x15 and calls QuadInterpolatorV2. Finally pops the 4
  *   originals back to 0054204c/50/54/48 in reverse order.
  */
-extern unsigned int g_table_004d57b0;
+extern unsigned int g_phaseChainTbl;
 
 __declspec(naked) void MStackBootPush4Init(void) {
     __asm {
@@ -130,24 +130,24 @@ __declspec(naked) void MStackBootPush4Init(void) {
         sub     esp, 0x24
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         push    esi
-        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], edx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_eventQueueTotal]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         lea     esi, [esp + 4]
-        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_eventQueueEnd]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], edx
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     eax, dword ptr [g_currentNodeIdx]
         add     ecx, 0x18
@@ -184,19 +184,19 @@ __declspec(naked) void MStackBootPush4Init(void) {
         mov     edx, dword ptr [g_eventQueueEnd]
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_currentNodeIdx], edx
-        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     ecx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     edx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_eventQueueTotal], edx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     ecx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_pendingNodeType], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     edx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], edx
         mov     dword ptr [g_matrixStackTop], eax

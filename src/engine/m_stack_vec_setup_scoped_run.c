@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -122,7 +122,7 @@ extern unsigned int g_fightAxisPosY;
  *   sets g_walkCallback=1 on success.
  */
 extern unsigned int g_vecSetupArrBase;
-extern unsigned int g_table_004d57b0;
+extern unsigned int g_phaseChainTbl;
 extern void AudioMixerStep(void);
 extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 
@@ -141,7 +141,7 @@ void MStackVecSetupScopedRun(void) {
         mov     ecx, dword ptr [g_currentNodeIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], ecx
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [edx*4 + 0x18]
         mov     dword ptr [g_currentNodeIdx], ecx
@@ -150,7 +150,7 @@ void MStackVecSetupScopedRun(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [ecx*4 + 0x20], eax
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     ecx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     eax, 0x95

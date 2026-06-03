@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00434690 (154b game) - install-self + countdown loop with global flag.
  *   Block A: standard install-self at 0x00434690; mstack-push 0x004346f0 jmp GameDispatchValidateState.
  *     Also sets g_dispatchSave1580 = 1 at entry.
- *   Block B (+0x60): cmp g_table_00535ddc, g_currentNodeFlags; set g_dispatchSave1580=1 either way;
+ *   Block B (+0x60): cmp g_fightStateProgress, g_currentNodeFlags; set g_dispatchSave1580=1 either way;
  *     if le: countdown g_eventQueueChild, self-jmp on nonzero; else jmp ChainDecCondStoreCallJmp.
  */
 extern unsigned int g_matrixStack_arr;
@@ -143,7 +143,7 @@ __declspec(naked) void InstallSelfFlagCountdown(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         mov     ecx, dword ptr [g_currentNodeFlags]
         cmp     eax, ecx
         mov     dword ptr [g_dispatchSave1580], 1

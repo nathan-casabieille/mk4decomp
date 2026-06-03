@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -118,8 +118,8 @@ extern void StanceEntryCluster(void);
  *   A: call ScaledCmp200eCallBool; if nonzero: g_walkCallback=0x004e4d40; g_eventQueueCurrent = (eax & 0xff) >> 2;
  *     g_xformEntityIdx = same; jmp AddDerefJmp; else ret.
  *   B (+0x30): scaledInit=baseSel[*4+0x3c]; g_walkCallback=[*4+0x30]; if zero jmp GuardedSeq_PackedSelectLoad6_then_GuardedSeq;
- *     else g_table_00535ddc<=0x30000? jmp Wrapper_CmpDualPatchScaledRangeJmp_004e4990 else jmp InstallSelfChainSet13333Alt.
- *   C (+0x80): threshold-dispatch g_table_00535ddc → GuardedSeq / CallPauseTestByteJmpCalls / InstallSelfChainSetB333v2.
+ *     else g_fightStateProgress<=0x30000? jmp Wrapper_CmpDualPatchScaledRangeJmp_004e4990 else jmp InstallSelfChainSet13333Alt.
+ *   C (+0x80): threshold-dispatch g_fightStateProgress → GuardedSeq / CallPauseTestByteJmpCalls / InstallSelfChainSetB333v2.
  *   D (+0xb0): jmp StanceEntryCluster.
  */
 extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
@@ -152,7 +152,7 @@ __declspec(naked) void FiveBlockDispatch_ScaledCmp200eCallBool(void) {
         _emit   75h
         _emit   05h
         jmp     GuardedSeq_PackedSelectLoad6_then_GuardedSeq
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00030000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
@@ -174,7 +174,7 @@ __declspec(naked) void FiveBlockDispatch_ScaledCmp200eCallBool(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00020000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

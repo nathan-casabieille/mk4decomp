@@ -13,7 +13,7 @@ extern unsigned int g_dispatchVar35;
 extern unsigned int g_primary_0052d74c;
 extern unsigned int g_walkBoundsLimit;
 extern unsigned int g_walkBoundsSlot;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_phaseThunkSlot6;
 extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
@@ -89,7 +89,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         jne      L_983c
         mov      edx, dword ptr [g_walkCallback]
         test     edx, edx
-        mov      dword ptr [g_table_00535ddc], edx
+        mov      dword ptr [g_fightStateProgress], edx
         je       L_9569
         mov      eax, dword ptr [g_currentNodeIdx]
         mov      ecx, dword ptr [eax*4 + 0x40]
@@ -380,7 +380,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_983c
-        mov      eax, dword ptr [g_table_00535ddc]
+        mov      eax, dword ptr [g_fightStateProgress]
         cmp      eax, 0x60000
         mov      dword ptr [g_walkCallback], eax
         jle      L_97ba
@@ -415,7 +415,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         test     ecx, ecx
         mov      dword ptr [g_phaseTimer], eax
         jge      L_9837
-        mov      eax, dword ptr [g_table_00535ddc]
+        mov      eax, dword ptr [g_fightStateProgress]
         cmp      eax, 0x8000
         mov      dword ptr [g_walkCallback], eax
         jge      L_9837

@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -131,7 +131,7 @@ extern unsigned int g_dispatchSave783;
 extern unsigned int g_dispatchSave784;
 extern unsigned int g_dispatchSave785;
 extern unsigned int g_dispatchSave786;
-extern unsigned int g_table_004d57b0;
+extern unsigned int g_phaseChainTbl;
 extern void ArgSarStoreJmp(void);
 extern void InstallSelfMStackPush_FiveCallGuardSetTail_004968a0(void);
 extern void PushPopWalkSet1006(void);
@@ -202,7 +202,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown(void) {
         mov     ecx, dword ptr [g_eventQueueChild]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], ecx
         mov     dword ptr [g_walkCallback], 0xb
         call    ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490
         mov     eax, dword ptr [g_framePauseFlag]
@@ -210,7 +210,7 @@ __declspec(naked) void Alarm4EntryInstallCountdown(void) {
         jne     short L_aei_e3End
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ebx, 1
-        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     edx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     al, byte ptr [g_xformDirtyFlags]

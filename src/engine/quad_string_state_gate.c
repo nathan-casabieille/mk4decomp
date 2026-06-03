@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -111,8 +111,8 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0043bd50 (123b game) - quad-entry sequence:
  *   A: push str, call PackedAdvanceCallTailJmp, ret.
  *   B (+0x10): call Cmp2CallDirtyCall; if !pause: push str, call PackedAdvanceCallTailJmp; ret.
- *   C (+0x30): call Cmp2CallDirtyCall; if !pause: gate g_table_00535ddc<=0x30000? jmp GuardedSeq else jmp PrefixThunkInstallSelf3State; ret.
- *   D (+0x60): gate g_table_00535ddc>=0x18000? jmp CallPauseTestByteJmpCalls else jmp PrefixThunkInstallSelf3State.
+ *   C (+0x30): call Cmp2CallDirtyCall; if !pause: gate g_fightStateProgress<=0x30000? jmp GuardedSeq else jmp PrefixThunkInstallSelf3State; ret.
+ *   D (+0x60): gate g_fightStateProgress>=0x18000? jmp CallPauseTestByteJmpCalls else jmp PrefixThunkInstallSelf3State.
  */
 extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void PackedAdvanceCallTailJmp(void);
@@ -144,7 +144,7 @@ __declspec(naked) void QuadStringStateGate(void) {
         test    eax, eax
         _emit   75h
         _emit   1bh
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00030000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
@@ -158,7 +158,7 @@ __declspec(naked) void QuadStringStateGate(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00018000
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh

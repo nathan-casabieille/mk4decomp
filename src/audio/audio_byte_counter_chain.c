@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /*
  * AudioByteCounterChain - 204b audio counter+state machine.
  *   chain = g_baseSel<<2; saved = chain->state; chain->state = 0.
- *   If was 0: dispatch on g_audioBankSel == 1/2 to increment indexed slots in g_table_00543848;
+ *   If was 0: dispatch on g_audioBankSel == 1/2 to increment indexed slots in g_audioBankCounterArr;
  *     call BootInitGuardedCallChain; if paused: ret.
  *     Call FiveTableWalkInit; if paused: ret.
  *     Inc g_byte_00543840; g_audioPathFlag=1; g_audioModeBankFlag=1;
@@ -128,7 +128,7 @@ extern unsigned int g_audioPathFlag;
 extern unsigned int g_audioModeBankFlag;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
-extern unsigned int g_table_00543848;
+extern unsigned int g_audioBankCounterArr;
 extern void AudioMode2BankSetup(void);
 extern void BootInitGuardedCallChain(void);
 extern void FiveTableWalkInit(void);
@@ -149,12 +149,12 @@ __declspec(naked) void AudioByteCounterChain(void)
         cmp     eax, 1
         jne     short L_check2
         mov     ecx, dword ptr [g_dlNalt1]
-        inc     dword ptr [ecx*4 + g_table_00543848]
+        inc     dword ptr [ecx*4 + g_audioBankCounterArr]
     L_check2:
         cmp     eax, 2
         jne     short L_skipInit
         mov     eax, dword ptr [g_dlNalt2]
-        inc     dword ptr [eax*4 + g_table_00543848]
+        inc     dword ptr [eax*4 + g_audioBankCounterArr]
     L_skipInit:
         call    BootInitGuardedCallChain
         cmp     dword ptr [g_framePauseFlag], ebx

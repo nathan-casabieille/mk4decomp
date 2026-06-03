@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -158,10 +158,10 @@ extern unsigned int g_menuRestoreA;
 extern unsigned int g_menuRestoreB;
 extern unsigned int g_menuRestoreC;
 extern unsigned int g_configInitGate;
-extern unsigned int g_table_004f3f28;
-extern unsigned int g_table_0053a53c;
-extern unsigned int g_table_00543934;
-extern unsigned int g_table_00543a6c;
+extern unsigned int g_audioSlotMarks;
+extern unsigned int g_audioRestoreBuf;
+extern unsigned int g_audioStateGlobals;
+extern unsigned int g_audioStateGlobalsSnap;
 extern unsigned int g_audioStateMachine0;
 extern unsigned int g_audioStateMachine1;
 extern void Config_SnapshotGlobals(void);
@@ -186,14 +186,14 @@ __declspec(naked) void Config_RestoreGlobals(void)
         call    Config_SnapshotGlobals
     L_arg_main:
         mov     ecx, 0x3C
-        mov     esi, offset g_table_00543934
-        mov     edi, offset g_table_0053a53c
+        mov     esi, offset g_audioStateGlobals
+        mov     edi, offset g_audioRestoreBuf
         mov     al, byte ptr [g_byte_00543a24]
         rep     movsd
         mov     edx, dword ptr [g_audioSavedReg_00543a2c]
         mov     ecx, 5
-        mov     esi, offset g_table_00543a6c
-        mov     edi, offset g_table_004f3f28
+        mov     esi, offset g_audioStateGlobalsSnap
+        mov     edi, offset g_audioSlotMarks
         rep     movsd
         mov     ecx, dword ptr [g_audioSavedReg_00543a28]
         mov     byte ptr [g_byte_004f3238], al

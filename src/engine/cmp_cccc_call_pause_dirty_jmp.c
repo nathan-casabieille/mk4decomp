@@ -9,7 +9,7 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_acc_00542078;
 
 /* @addr 0x004390b0 (56b)
- *   mov     eax, [g_table_00535ddc]
+ *   mov     eax, [g_fightStateProgress]
  *   cmp     eax, 0xcccc
  *   mov     [g_walkCallback], eax
  *   jle     +5
@@ -24,13 +24,13 @@ extern unsigned int g_acc_00542078;
  *   jmp     +9
  *   ret
  */
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
 extern void DualCallPauseJmpDual(void);
 extern void CallPauseTestByteJmpCalls(void);
 extern void GuardedDirtyDispatch(void);
 void CmpccccCallPauseDirtyJmp(void) {
-    unsigned int v = g_table_00535ddc;
+    unsigned int v = g_fightStateProgress;
     g_walkCallback = (void (*)(void))v;
     if ((int)v > 0xcccc) {
         DualCallPauseJmpDual();

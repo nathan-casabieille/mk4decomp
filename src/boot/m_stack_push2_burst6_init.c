@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *   clears it again (with a do-while-0 style fork on the eq flag) and exits.
  */
 extern unsigned int g_bootChainState4;
-extern unsigned int g_table_004d57b0;
+extern unsigned int g_phaseChainTbl;
 extern void MStackPushChainStepIndex(void);
 
 __declspec(naked) void MStackPush2Burst6Init(void) {
@@ -131,12 +131,12 @@ __declspec(naked) void MStackPush2Burst6Init(void) {
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
         push    edi
-        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_xformLoopCounter]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], edx
         mov     eax, dword ptr [g_bootChainState4]
         mov     dword ptr [g_currentNodeIdx], eax
         call    MStackPushChainStepIndex
@@ -201,11 +201,11 @@ __declspec(naked) void MStackPush2Burst6Init(void) {
         mov     ecx, dword ptr [g_currentNodeIdx]
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_xformEntityIdx], ecx
-        mov     esi, dword ptr [eax*4 + g_table_004d57b0]
+        mov     esi, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_xformLoopCounter], esi
         mov     dword ptr [g_matrixStackTop], eax
-        mov     esi, dword ptr [eax*4 + g_table_004d57b0]
+        mov     esi, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_currentNodeIdx], esi
         mov     esi, dword ptr [g_xformDirtyFlags]

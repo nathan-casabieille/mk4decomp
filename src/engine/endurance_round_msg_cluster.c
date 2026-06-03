@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -124,7 +124,7 @@ extern unsigned int g_dispatchSave83;
  *     Else: g_walkCallback=[0x00541e20]; cmp 0x78; if >: jmp body.
  *   state!=0 / >0x78: call DualGatedStateYield; if !=0 ret. Call LeaPlus22StoreSelf; if pause ret.
  *     Call DualCallPauseDirtyJmp; if pause ret.
- *     Cascade g_table_00535ddc: <0x10000 -> Wrapper_PackedAdvanceCallTailJmp_004e4a58 -> ret; <0x20000 -> Wrapper_PackedAdvanceCallTailJmp_004e4a70 -> ret;
+ *     Cascade g_fightStateProgress: <0x10000 -> Wrapper_PackedAdvanceCallTailJmp_004e4a58 -> ret; <0x20000 -> Wrapper_PackedAdvanceCallTailJmp_004e4a70 -> ret;
  *       <0x30000 -> EnduranceRoundMsgCluster -> ret; else push 0x004e4a38, call PackedAdvanceCallTailJmp, pop, ret.
  *   Branch 0x78 path: call CallPauseScaledStoreCopyJmp; if pause ret. Install-self at entry;
  *     state=1; g_pendingNodeType=5; pause=1; pop+ret.
@@ -201,7 +201,7 @@ __declspec(naked) void StateMachine4ArmCascade(void) {
         test    eax, eax
         _emit   75h
         _emit   7bh
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x10000
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh

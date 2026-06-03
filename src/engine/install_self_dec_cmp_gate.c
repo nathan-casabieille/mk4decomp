@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00439410 (135b) - install-self pattern w/ dec g_eventQueueChild
- *   + g_table_00535ddc < g_currentNodeFlags cmp gate. */
+ *   + g_fightStateProgress < g_currentNodeFlags cmp gate. */
 extern void PushCallSet2147Jmp(void);
 
 __declspec(naked) void InstallSelfDecCmpGate(void) {
@@ -130,7 +130,7 @@ __declspec(naked) void InstallSelfDecCmpGate(void) {
         call    StackPopDispatchTagged
         pop     esi
         ret
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         mov     ecx, dword ptr [g_currentNodeFlags]
         cmp     eax, ecx
         mov     dword ptr [g_walkCallback], eax

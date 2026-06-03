@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00438190 (144b game) - install-self + countdown wait.
  *   Block A (+0x00): standard install-self pattern as above; mstack-push 0x004381f0 jmp GameDispatchValidateState.
- *   Block B (+0x60): if g_table_00535ddc > g_currentNodeFlags jmp GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged; else countdown
+ *   Block B (+0x60): if g_fightStateProgress > g_currentNodeFlags jmp GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged; else countdown
  *     g_eventQueueChild; if not zero, self-jmp; else jmp StackPopDispatchTagged.
  */
 extern unsigned int g_matrixStack_arr;
@@ -146,7 +146,7 @@ __declspec(naked) void InstallSelfWaitCmp(void) {
         _emit   90h
         _emit   90h
         _emit   90h
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         mov     ecx, dword ptr [g_currentNodeFlags]
         cmp     eax, ecx
         mov     dword ptr [g_walkCallback], eax

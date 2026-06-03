@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -122,7 +122,7 @@ __declspec(naked) void TriEntryGateMain(void)
 {
     __asm
     {
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x20000
         mov     dword ptr [g_walkCallback], eax
         jle     short L_tegm_jmp2
@@ -194,7 +194,7 @@ __declspec(naked) void TriEntryGateMain(void)
         pop     esi
         ret
     L_tegm_cmp2:
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x20000
         mov     dword ptr [g_walkCallback], eax
         jge     short L_tegm_cmp3

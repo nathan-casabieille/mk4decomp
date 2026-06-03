@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00438530 (93b)
- *   eax = g_table_00535ddc; ecx = g_currentNodeFlags;
+ *   eax = g_fightStateProgress; ecx = g_currentNodeFlags;
  *   cmp eax,ecx; g_walkCallback = eax;
  *   if lt: jmp StackPopDispatchTagged;
  *   else: push g_eventQueueChild on mstack;
@@ -122,7 +122,7 @@ void CmpDispatchPushCallPop(void) {
     unsigned int v;
     unsigned int top;
     unsigned int saved;
-    v = g_table_00535ddc;
+    v = g_fightStateProgress;
     g_walkCallback = (void (*)(void))v;
     if ((int)v < (int)g_currentNodeFlags) {
         StackPopDispatchTagged();

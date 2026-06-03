@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0045e5d0 (111b game) - 3-entry threshold/state-check gates.
- *   Block A: if g_table_00535ddc > 0x10000: jmp PendingMatch_SwapOrPassSet; else clear bit 0 of g_xformDirtyFlags, ret.
+ *   Block A: if g_fightStateProgress > 0x10000: jmp PendingMatch_SwapOrPassSet; else clear bit 0 of g_xformDirtyFlags, ret.
  *   Block B (+0x30): if g_counter_0053a51c == 8: ret (no flag clear); else clear bit 0, ret.
  *   Block C (+0x4c): same as A but inlined (no jmp), then jmp PendingMatch_SwapOrPassSet at end.
  */
@@ -118,7 +118,7 @@ extern void PendingMatch_SwapOrPassSet(void);
 
 __declspec(naked) void TripleEntryGate(void) {
     __asm {
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00010000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
@@ -150,7 +150,7 @@ __declspec(naked) void TripleEntryGate(void) {
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         ret
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00010000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

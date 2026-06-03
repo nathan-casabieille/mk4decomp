@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -117,7 +117,7 @@ extern void InstallSelfPathSelfLoop(void);
 /*
  * @addr 0x00438340 (108b game) - 3-stage call gate cascade:
  *   call DualEntryBitFlagDispatch; if pause unset & bit0 set jmp StackPopDispatchTagged;
- *   else if g_table_00535ddc > 0x30000 jmp ScaledPopSaveJmp; else set
+ *   else if g_fightStateProgress > 0x30000 jmp ScaledPopSaveJmp; else set
  *   walk=0x28a, call AudioVolumeRescale; if pause unset & bit0 set jmp
  *   MStackPushSet4Jmp; call PushPop84TripleCall; if pause clear jmp InstallSelfPathSelfLoop.
  */
@@ -129,7 +129,7 @@ void ThreeStageGateCascade(void) {
         StackPopDispatchTagged();
         return;
     }
-    v = g_table_00535ddc;
+    v = g_fightStateProgress;
     g_walkCallback = (void (*)(void))v;
     if ((int)v > 0x30000) {
         ScaledPopSaveJmp_00438440();

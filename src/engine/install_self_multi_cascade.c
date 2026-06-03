@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *     Continuing: esi=g_eventQueueChild; call Push84CallTestInstallJmp; if !pause:
  *     call DecJneSetCallSetJmp; if !pause: mstack-push 0x00438990; jmp GameDispatchValidateState; ret.
  *   chain[+0x84]==0 path: install-self at +0x08=0x004388f0, g_pendingNodeType=1, pause=1; pop+ret.
- *   Block B (+0xa0): cmp g_table_00535ddc vs g_currentNodeFlags; if le jmp self; else jmp GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged.
+ *   Block B (+0xa0): cmp g_fightStateProgress vs g_currentNodeFlags; if le jmp self; else jmp GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged.
  */
 extern unsigned int g_matrixStack_arr;
 extern void DecJneSetCallSetJmp(void);
@@ -168,7 +168,7 @@ __declspec(naked) void InstallSelfMultiCascade(void) {
         mov     dword ptr [g_framePauseFlag], ecx
         pop     esi
         ret
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         mov     ecx, dword ptr [g_currentNodeFlags]
         cmp     eax, ecx
         mov     dword ptr [g_walkCallback], eax

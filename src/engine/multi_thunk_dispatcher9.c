@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -115,7 +115,7 @@ extern void Wrapper_PackedAdvanceCallTailJmp_004e4718(void);
 extern void MultiThunkDispatcher9(void);
 
 /* @addr 0x004366d0 (137b game) - 5-way state threshold dispatcher with two entry points.
- *   Block A (+0x00): threshold checks on g_table_00535ddc; jmp GuardedSeq/MStackPush;
+ *   Block A (+0x00): threshold checks on g_fightStateProgress; jmp GuardedSeq/MStackPush;
  *     fallback: push string, call PackedAdvanceCallTailJmp.
  *   Block B (+0x30): call Cmp2CallDirtyCall+ScaledChainSignDirtyToggle; if !pause & bit-clear: jmp GuardedSeq;
  *     else cascade 3 state-threshold gates jumping to Wrapper_PackedAdvanceCallTailJmp_004e4708/70/80 or GuardedSeq.
@@ -125,7 +125,7 @@ extern void PackedAdvanceCallTailJmp(void);
 
 __declspec(naked) void DualEntry5WayThreshold(void) {
     __asm {
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x0003cccc
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh
@@ -152,7 +152,7 @@ __declspec(naked) void DualEntry5WayThreshold(void) {
         _emit   75h
         _emit   05h
         jmp     GuardedSeq_PackedSelectLoad6_then_GuardedSeq
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00018000
         mov     dword ptr [g_walkCallback], eax
         _emit   7dh

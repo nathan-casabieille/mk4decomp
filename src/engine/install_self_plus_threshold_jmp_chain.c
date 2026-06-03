@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -118,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  *     [esi+8]=0x004359f0; chain[+0x84]=1; scaledInit-chain push 0x004359f0+0x01000000;
  *     call StateGateMStackOverlap; pause=1; ret.
  *   B2 (208..256): call Cmp2CallDirtyCall; if eax != 0 ret.
- *     Compare g_table_00535ddc to 0x34f5c then 0x2cccc; pick one of three jumps:
+ *     Compare g_fightStateProgress to 0x34f5c then 0x2cccc; pick one of three jumps:
  *     TwoEntryStateScalar / InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435b00 / EntryThenDispatcherPair.
  */
 extern void CallPauseMStackPushSet2Jmp(void);
@@ -191,7 +191,7 @@ __declspec(naked) void InstallSelfPlusThresholdJmpChain(void) {
         test    eax, eax
         _emit   75h
         _emit   27h
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00034f5c
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

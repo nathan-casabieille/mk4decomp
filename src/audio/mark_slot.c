@@ -23,13 +23,13 @@ extern unsigned int g_currentNodeIdx;
  *   pop     esi
  *   ret
  */
-extern char g_table_004f3ac8[16];
-extern char g_table_004f3f28[16];
+extern char g_audioSlotKeys[16];
+extern char g_audioSlotMarks[16];
 void MarkSlot(int arg) {
     int i;
     for (i = 0; i < 16; i++) {
-        if (arg == (int)(signed char)g_table_004f3ac8[i]) {
-            g_table_004f3f28[i] = 1;
+        if (arg == (int)(signed char)g_audioSlotKeys[i]) {
+            g_audioSlotMarks[i] = 1;
         }
     }
 }

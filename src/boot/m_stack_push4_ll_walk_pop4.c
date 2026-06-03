@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *       in 0x54206c, calls ScaledStoreThree_00409260.
  *   Loop ends on null next-pointer. Pops the 4 mstack entries back.
  */
-extern unsigned int g_table_004d57b0;
+extern unsigned int g_phaseChainTbl;
 extern void MStackInitCallToggle(void);
 extern void ScaledStoreThree_00409260(void);
 extern void SplitHi8Lo24(void);
@@ -131,22 +131,22 @@ __declspec(naked) void MStackPush4LLWalkPop4(void) {
         inc     eax
         push    ebx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_xformEntityIdx]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], edx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_fightGroupHead]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], edx
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_fightGroupHead], eax
         mov     eax, dword ptr [g_xformEntityIdx]
@@ -196,19 +196,19 @@ __declspec(naked) void MStackPush4LLWalkPop4(void) {
         jne     L_m4w_loopTop
     L_m4w_pop4:
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     ecx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_fightGroupHead], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     edx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_pendingNodeType], edx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     ecx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_xformEntityIdx], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     edx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_currentNodeIdx], edx
         mov     dword ptr [g_matrixStackTop], eax

@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -128,7 +128,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave562;
 extern unsigned int g_load_0052ab10;
 extern unsigned int g_particleEmitterNode;
-extern unsigned int g_table_004d57b0;
+extern unsigned int g_phaseChainTbl;
 extern void ChainWalkPushPop(void);
 extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
 extern void PushSetXfmMaskCallPop(void);
@@ -194,12 +194,12 @@ __declspec(naked) void BootSetupWithMStackBody(void) {
         mov     ecx, dword ptr [g_pendingNodeType]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], ecx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], ecx
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_fightGroupHead]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], edx
+        mov     dword ptr [eax*4 + g_phaseChainTbl], edx
         call    ChainWalkPushPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -220,11 +220,11 @@ __declspec(naked) void BootSetupWithMStackBody(void) {
     L_bsm_skipAdd:
         mov     eax, dword ptr [g_matrixStackTop]
         pop     esi
-        mov     ecx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     ecx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_fightGroupHead], ecx
         mov     dword ptr [g_matrixStackTop], eax
-        mov     edx, dword ptr [eax*4 + g_table_004d57b0]
+        mov     edx, dword ptr [eax*4 + g_phaseChainTbl]
         dec     eax
         mov     dword ptr [g_pendingNodeType], edx
         mov     dword ptr [g_matrixStackTop], eax

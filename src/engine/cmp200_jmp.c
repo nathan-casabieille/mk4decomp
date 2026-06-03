@@ -15,11 +15,11 @@ extern unsigned int g_currentNodeIdx;
  *   jmp     T1
  *   jmp     +5
  */
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern void PrefixThunkInstallSelf3State(void);
 extern void QuadStringStateGate(void);
 void Cmp200Jmp(void) {
-    unsigned int v = g_table_00535ddc;
+    unsigned int v = g_fightStateProgress;
     g_walkCallback = (void (*)(void))v;
     if ((int)v < 0x20000) {
         PrefixThunkInstallSelf3State();

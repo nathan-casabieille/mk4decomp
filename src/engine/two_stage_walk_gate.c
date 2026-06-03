@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /*
  * @addr 0x00439ae0 (107b game) - two-stage gate: set walk=0xe, call
- *   helper; if pause unset and walk>=0xf0, snapshot g_table_00535ddc;
+ *   helper; if pause unset and walk>=0xf0, snapshot g_fightStateProgress;
  *   if >=0x20000 && walk<=0x258 fall through, else jmp _00439b50.
  *   Then set walk=0xc8, call AudioVolumeRescale, gate again, and if
  *   state-bit 0 set jmp Thunk_SetJmp.
@@ -123,7 +123,7 @@ void TwoStageWalkGate(void) {
     if (g_framePauseFlag != 0) return;
     walk = (int)(unsigned int)g_walkCallback;
     if (walk < 0xf0) return;
-    state_val = (int)g_table_00535ddc;
+    state_val = (int)g_fightStateProgress;
     g_eventQueueCurrent = (unsigned int)state_val;
     if (state_val < 0x20000) return;
     if (walk > 0x258) {

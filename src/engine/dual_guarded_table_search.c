@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -121,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
  *   found: g_walkCallback = chain[scaledInit++]; call SnapshotDispatchMStack;
  *     call ScaledZeroFour; return 1.
  */
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern void CmpP1GTSetup(void);
 extern void SnapshotDispatchMStack(void);
 
@@ -137,7 +137,7 @@ __declspec(naked) void DualGuardedTableSearch(void) {
         xor     eax, eax
         pop     esi
         ret
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x00010000
         mov     dword ptr [g_walkCallback], eax
         _emit   7eh

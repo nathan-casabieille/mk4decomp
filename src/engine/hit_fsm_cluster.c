@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -230,7 +230,7 @@ __declspec(naked) void MoveFsmCluster(void)
         call     Cmp2CallDirtyCall
         test     eax, eax
         jne      short L_664f
-        mov      eax, dword ptr [g_table_00535ddc]
+        mov      eax, dword ptr [g_fightStateProgress]
         cmp      eax, 0x30000
         mov      dword ptr [g_walkCallback], eax
         jle      short L_6615
@@ -284,7 +284,7 @@ __declspec(naked) void MoveFsmCluster(void)
         je       short L_66a5
         jmp      DualEntry5WayThreshold
     L_66a5:
-        mov      eax, dword ptr [g_table_00535ddc]
+        mov      eax, dword ptr [g_fightStateProgress]
         cmp      eax, 0x40000
         mov      dword ptr [g_walkCallback], eax
         jle      short L_66bb

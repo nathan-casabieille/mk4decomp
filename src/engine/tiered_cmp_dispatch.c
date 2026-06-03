@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   call IdCascadeBitSet; if pause: ret;
  *   al = byte [g_xformDirtyFlags]; ecx = 1; test cl,al;
  *   if zero: ret;
- *   eax = g_table_00535ddc; cmp eax,0x30000; g_walkCallback=eax;
+ *   eax = g_fightStateProgress; cmp eax,0x30000; g_walkCallback=eax;
  *   if gt: ret;
  *   cmp eax, 0x20000; g_dispatchState = ecx; if gt: jmp Thunk_InstallSelfChainSet2011;
  *   cmp eax, 0x18000; if gt: jmp 0x439e30 (cluster);
@@ -136,7 +136,7 @@ void TieredCmpDispatch(void) {
         _emit   0c1h
         _emit   74h
         _emit   4ah
-        mov     eax, dword ptr [g_table_00535ddc]
+        mov     eax, dword ptr [g_fightStateProgress]
         cmp     eax, 0x30000
         mov     dword ptr [g_walkCallback], eax
         _emit   7fh

@@ -10,7 +10,7 @@ extern unsigned int g_acc_00542078;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
@@ -145,7 +145,7 @@ extern void IterStepScaledStore(void);
  *   Entry 5 (offset 0x140, 36b): push 0x4eb738, call IterStepScaledStore;
  *     on no-error push 0x4eb740, call ArgSarStoreJmp.
  */
-extern unsigned int g_table_004d57b0;
+extern unsigned int g_phaseChainTbl;
 extern void ArgSarStoreJmp(void);
 extern void ScaledAndAlfe(void);
 
@@ -165,7 +165,7 @@ __declspec(naked) void FiveEntryAlarmInstallChain(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
-        mov     dword ptr [eax*4 + g_table_004d57b0], offset CallPauseDirtyMStackPushFn
+        mov     dword ptr [eax*4 + g_phaseChainTbl], offset CallPauseDirtyMStackPushFn
         call    InstallSelfIndirectJmp
         pop     esi
         ret

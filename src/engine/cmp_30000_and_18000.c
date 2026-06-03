@@ -11,7 +11,7 @@ extern unsigned int g_currentNodeIdx;
  *   call    F
  *   test    eax, eax
  *   jne     +0x27
- *   mov     eax, [g_table_00535ddc]
+ *   mov     eax, [g_fightStateProgress]
  *   cmp     eax, 0x00030000
  *   mov     [g_walkCallback], eax
  *   jle     +5
@@ -22,7 +22,7 @@ extern unsigned int g_currentNodeIdx;
  *   jmp     T2
  *   ret
  */
-extern unsigned int g_table_00535ddc;
+extern unsigned int g_fightStateProgress;
 extern int Cmp2CallDirtyCall(void);
 extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void Mul10ThresholdQuad(void);
@@ -30,7 +30,7 @@ extern void TripleThresholdDispatch(void);
 void Cmp30000And18000(void) {
     unsigned int v;
     if (Cmp2CallDirtyCall() != 0) return;
-    v = g_table_00535ddc;
+    v = g_fightStateProgress;
     g_walkCallback = (void (*)(void))v;
     if ((int)v > 0x30000) {
         GuardedSeq_PackedSelectLoad6_then_GuardedSeq();
