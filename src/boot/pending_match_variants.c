@@ -176,7 +176,7 @@ extern void MStackPush3InitCallChain(void);
 extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void MStackPushNegMul10(void);
 extern void MStackPushPairTriCall(void);
-extern void MStackPushZeroCallPop_004066f0(void);
+extern void MStackPushZeroCallPop(void);
 extern void MStackScopedSlotSetupPair(void);
 extern void Mul10HeavyTransform(void);
 extern void NegateThree(void);
@@ -3839,7 +3839,7 @@ __declspec(naked) void PendingMatch_ChainWalkPushPop_0040dbb0(void)
         nop      
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_currentNodeIdx], eax
-        call     MStackPushZeroCallPop_004066f0
+        call     MStackPushZeroCallPop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e137

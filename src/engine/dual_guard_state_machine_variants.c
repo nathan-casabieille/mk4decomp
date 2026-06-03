@@ -119,7 +119,7 @@ extern void SaveCallRestore(void);
 extern void ThrowFlowSetupCluster(void);
 extern void Wrapper_SaveCallRestore(void);
 
-void DualGuardStateMachine_0049ea30(void) {
+void DualGuardStateMachine(void) {
     __asm {
         mov     eax, dword ptr [g_dlMode]
         test    eax, eax
@@ -182,7 +182,7 @@ void DualGuardStateMachine_0049ea30(void) {
         }
 }
 
-/* @addr 0x0049eb20 (216b game) - variant of DualGuardStateMachine_0049ea30, uses 0x267 tag and
+/* @addr 0x0049eb20 (216b game) - variant of DualGuardStateMachine, uses 0x267 tag and
  *   [scaledInit*4+4] field instead of 0x266 and [scaledInit*4+0]. Initial path differs: jmp Wrapper_SaveCallRestore.
  */
 

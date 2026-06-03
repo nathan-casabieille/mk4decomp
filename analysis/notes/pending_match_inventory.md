@@ -98,7 +98,7 @@ Total: 99 functions, sorted by size.
 
 - file: `src/boot/pending_match_variants.c`
 - traits: x87 FPU, cond jmps: 13
-- top callees: `Mul10Tail`×4, `StoreDoubleNegPauseSubStore`×3, `MStackPushZeroCallPop_004066f0`×2, `MStackCall_MStackPush2ChainPrepend_00406600`×2, `ClampMulShiftStore`×2, `ScaledChainOr8`, `ChainWalkPushPop`, `AudioVolumeRescale`
+- top callees: `Mul10Tail`×4, `StoreDoubleNegPauseSubStore`×3, `MStackPushZeroCallPop`×2, `MStackCall_MStackPush2ChainPrepend_00406600`×2, `ClampMulShiftStore`×2, `ScaledChainOr8`, `ChainWalkPushPop`, `AudioVolumeRescale`
 - top globals: `g_framePauseFlag`×17, `0x54206c`×12, `g_fightGroupHead`×6, `g_eventQueueCurrent`×5, `g_eventQueuePending`×4, `g_matrixStackTop`×4, `g_gameMode`×2, `g_currentNodeIdx`×2
 
 ## PendingMatch_ArgSarStoreJmp_0044d7a0 @ 0x44d7a0 (1376b)

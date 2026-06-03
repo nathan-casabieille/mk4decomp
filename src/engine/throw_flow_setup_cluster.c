@@ -119,7 +119,7 @@ extern unsigned int g_state2_0053a1bc;
 extern u32 g_dlMode;
 extern unsigned int g_audioBitField;
 
-void DualGuardStateMachine_0049ea30(void) {
+void DualGuardStateMachine(void) {
     __asm {
         mov     eax, dword ptr [g_dlMode]
         test    eax, eax

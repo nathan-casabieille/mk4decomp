@@ -2931,7 +2931,7 @@ extern void DualEntryStateMachine(void);
 extern void DualEntryStub(void);
 extern void DualFieldAddSubStore(void);
 extern void DualGatedStateYield(void);
-extern void DualGuardStateMachine_0049ea30(void);
+extern void DualGuardStateMachine(void);
 extern void DualGuardStateMachine_SaveCallRestore(void);
 extern void DualGuardedTableSearch(void);
 extern void DualHelperCallStoreCjFields(void);
@@ -3390,7 +3390,7 @@ extern void LinkSiblingsAndInstallSelf(void);
 extern void LinkedListBuilder(void);
 extern void LinkedListDistanceWalker(void);
 extern void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void);
-extern void LinkedListFieldAdd_0049d450(void);
+extern void LinkedListFieldAdd(void);
 extern void LinkedListIndirectDirtyToggle(void);
 extern void LinkedListInsert(void);
 extern void LinkedListSwapHead(void);
@@ -3547,7 +3547,7 @@ extern void MStackPushTyped_0044cf50(void);
 extern void MStackPushTyped_0044cf80(void);
 extern void MStackPushTyped_0044cfb0(void);
 extern void MStackPushVec3Mul10(void);
-extern void MStackPushZeroCallPop_004066f0(void);
+extern void MStackPushZeroCallPop(void);
 extern void MStackPushZeroCallPop_PendingMatch(void);
 extern void MStackRestore27(void);
 extern void MStackSignedMod(void);
@@ -21234,7 +21234,7 @@ void StateMachineInit(void) {
 
 
 /* @addr 0x0049ea30 (216b game) - dual-guard then state-machine init. */
-void DualGuardStateMachine_0049ea30(void) {
+void DualGuardStateMachine(void) {
     __asm {
         mov     eax, dword ptr [g_dlMode]
         test    eax, eax
@@ -21298,7 +21298,7 @@ void DualGuardStateMachine_0049ea30(void) {
 }
 
 
-/* @addr 0x0049eb20 (216b game) - variant of DualGuardStateMachine_0049ea30, uses 0x267 tag and
+/* @addr 0x0049eb20 (216b game) - variant of DualGuardStateMachine, uses 0x267 tag and
  *   [scaledInit*4+4] field instead of 0x266 and [scaledInit*4+0]. Initial path differs: jmp Wrapper_SaveCallRestore.
  */
 __declspec(naked) void DualGuardStateMachine_SaveCallRestore(void) {
@@ -25292,7 +25292,7 @@ __declspec(naked) void DualBlockInstallSelfWithSibling(void) {
  *   eax = node[+0] (next link). Loop while eax != 0.
  *   Two loop body copies in the original - first uses shl/mov, second uses lea+mov.
  */
-__declspec(naked) void LinkedListFieldAdd_0049d450(void) {
+__declspec(naked) void LinkedListFieldAdd(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         push    esi
@@ -70224,7 +70224,7 @@ __declspec(naked) void Phase2InitSlotTreeWalk(void)
  *     else slot_48[+0x14] -= 0x16 (clamp w/ store).
  *
  *   Helper B at 0x413230 (209b): bigger state-update - does
- *     MStackPushZeroCallPop_004066f0, MStackCall_MStackPush2ChainPrepend_00406600, MStackPushNegMul10 (with
+ *     MStackPushZeroCallPop, MStackCall_MStackPush2ChainPrepend_00406600, MStackPushNegMul10 (with
  *     0xccc accum); copies +0x6c, +0x74 fields; OR-bit-6 on
  *     slot[+0x18]+0x20; advances to [+0x28] sub-slot; paints
  *     [+0x48]=0x3333, [+0x2c]=0x26666, [+0x14]=0xFF, [+0x10]
@@ -70343,7 +70343,7 @@ __declspec(naked) void Phase4StateInit4Helpers(void)
     L_p44_helperB:
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackPushZeroCallPop_004066f0
+        call    MStackPushZeroCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperB_ret
@@ -72818,7 +72818,7 @@ __declspec(naked) void Phase3DispatchScaleInstallSelf(void)
  *         g_xformEntityIdx := g_alarmTriState;
  *         slot[+0x30]=0x5C;
  *         g_currentNodeIdx := g_fightGroupHead;
- *         call MStackPushZeroCallPop_004066f0; pause-gate;
+ *         call MStackPushZeroCallPop; pause-gate;
  *         call MStackCall_MStackPush2ChainPrepend_00406600; pause-gate;
  *         g_eventQueueNotMask=0x2E14, g_walkCallback=0x4CCC;
  *         call StoreDoubleNegPauseSubStore; pause-gate;
@@ -72832,7 +72832,7 @@ __declspec(naked) void Phase3DispatchScaleInstallSelf(void)
  *         store into chain[+0x44]; advance g_xformEntityIdx;
  *         paint sub_slot fields: [0]|=8, +0x48=0x4000,
  *         +0x14=0xFF, install 0x0040E840 at +0x10;
- *         call LinkedListFieldAdd_0049d450; pause-gate;
+ *         call LinkedListFieldAdd; pause-gate;
  *         install self (0x0040E920) at slot[+8], phase:=1,
  *         g_pendingNodeType:=0x19, signal [0x541e6c]=1.
  *
@@ -72922,7 +72922,7 @@ __declspec(naked) void Phase4InitWithChainCallback(void)
         mov     dword ptr [edx*4 + 0x30], eax
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackPushZeroCallPop_004066f0
+        call    MStackPushZeroCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit
@@ -73010,7 +73010,7 @@ __declspec(naked) void Phase4InitWithChainCallback(void)
         add     edx, 0x1B
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], edx
-        call    LinkedListFieldAdd_0049d450
+        call    LinkedListFieldAdd
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit
@@ -74335,7 +74335,7 @@ __declspec(naked) void Phase4DualHelperTrampoline(void)
  *     using 0x4CCC and slot+0x70 multipliers; tail-jmp 0x4ab860.
  *
  *   B at 0x40ff70 (200b + 8 nops): installed by external code.
- *     Standard "ChainBridge" handler - MStackPushZeroCallPop_004066f0, MStackCall
+ *     Standard "ChainBridge" handler - MStackPushZeroCallPop, MStackCall
  *     00406600, advance slot_5c via [+0x18][+0x28], paint flags
  *     (slot[+0x20]|=0x40, slot[0]|=0xA, [+0x48]=0xC000, [+0x2c]
  *     =0x7AE, [+0x14]=0xFF), install 0x410040 at +0x10, tail-jmp
@@ -74440,7 +74440,7 @@ __declspec(naked) void Phase4FivePackedDispatch(void)
     L_p4fpd_B:
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackPushZeroCallPop_004066f0
+        call    MStackPushZeroCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fpd_B_ret
@@ -74511,7 +74511,7 @@ __declspec(naked) void Phase4FivePackedDispatch(void)
     L_p4fpd_D:
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackPushZeroCallPop_004066f0
+        call    MStackPushZeroCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fpd_D_ret
@@ -74615,12 +74615,12 @@ __declspec(naked) void Phase4FivePackedDispatch(void)
  *         g_xformEntityIdx's slot[+0x48]=0x16666;
  *         g_eventQueueIdx=0xD; (fall through to install_self).
  *       phase==1: g_currentNodeIdx := g_fightGroupHead;
- *         call MStackPushZeroCallPop_004066f0; pause-gate;
+ *         call MStackPushZeroCallPop; pause-gate;
  *         g_currentNodeIdx := g_fightGroupHead (again);
  *         call MStackCall_MStackPush2ChainInsert_004062a0; pause-gate; install self phase=2;
  *         signal.
  *       phase==2: g_currentNodeIdx := g_fightGroupHead;
- *         call MStackPushZeroCallPop_004066f0; pause-gate;
+ *         call MStackPushZeroCallPop; pause-gate;
  *         dec g_eventQueueIdx; if >=0 fall to install_self;
  *         else g_currentNodeIdx := g_fightGroupHead; call
  *         MStackCall_MStackPush2ChainPrepend_00406600; pause-gate; if no pause:
@@ -74676,7 +74676,7 @@ __declspec(naked) void Phase4TrampolineThreePacked(void)
         je      L_p4ttp_B_phase1
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], ecx
-        call    MStackPushZeroCallPop_004066f0
+        call    MStackPushZeroCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
@@ -74695,7 +74695,7 @@ __declspec(naked) void Phase4TrampolineThreePacked(void)
     L_p4ttp_B_phase1:
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackPushZeroCallPop_004066f0
+        call    MStackPushZeroCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
@@ -75065,7 +75065,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf(void)
     L_p4tpis_C:
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackPushZeroCallPop_004066f0
+        call    MStackPushZeroCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret
@@ -108572,7 +108572,7 @@ void RoundWinTransition(void) {
         push     7
         call     SaveCallRestore
         add      esp, 4
-        call     DualGuardStateMachine_0049ea30
+        call     DualGuardStateMachine
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_ea2f
@@ -170111,7 +170111,7 @@ __declspec(naked) void PendingMatch_StoreDoubleNegPauseSubStore(void)
         mov      dword ptr [ecx*4 + 0x30], eax
         mov      edx, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_currentNodeIdx], edx
-        call     MStackPushZeroCallPop_004066f0
+        call     MStackPushZeroCallPop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e410
@@ -170259,7 +170259,7 @@ __declspec(naked) void PendingMatch_StoreDoubleNegPauseSubStore(void)
         mov      dword ptr [edx*4 + 0x30], eax
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_currentNodeIdx], eax
-        call     MStackPushZeroCallPop_004066f0
+        call     MStackPushZeroCallPop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e83c
@@ -170347,7 +170347,7 @@ __declspec(naked) void PendingMatch_StoreDoubleNegPauseSubStore(void)
         add      edx, 0x1b
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_xformEntityIdx], edx
-        call     LinkedListFieldAdd_0049d450
+        call     LinkedListFieldAdd
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e83c
@@ -171362,7 +171362,7 @@ __declspec(naked) void PendingMatch_ChainWalkPushPop_0040dbb0(void)
         nop      
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_currentNodeIdx], eax
-        call     MStackPushZeroCallPop_004066f0
+        call     MStackPushZeroCallPop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e137
@@ -212792,7 +212792,7 @@ __declspec(naked) void func_00416e50(void)
     L_76f6:
         mov      eax, dword ptr [g_fightGroupHead]
         mov      dword ptr [g_currentNodeIdx], eax
-        call     MStackPushZeroCallPop_004066f0
+        call     MStackPushZeroCallPop
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_783c

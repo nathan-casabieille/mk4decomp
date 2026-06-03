@@ -29,7 +29,7 @@ extern void MStackBracket5_LinkedListUnlink(void);
 extern void PendingMatch_00407d50(void);
 
 /* @addr 0x004066f0 */
-void MStackPushZeroCallPop_004066f0(void) {
+void MStackPushZeroCallPop(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_xformEntityIdx;

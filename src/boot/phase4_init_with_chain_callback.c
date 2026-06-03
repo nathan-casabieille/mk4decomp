@@ -113,13 +113,13 @@ extern unsigned int g_dispatchSave617;
 extern unsigned int g_phaseChainArr2;
 extern unsigned int g_alarmTriState;
 extern void CallSetPause(void);
-extern void LinkedListFieldAdd_0049d450(void);
+extern void LinkedListFieldAdd(void);
 extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void MStackPushNegMul10Var(void);
-extern void MStackPushZeroCallPop_004066f0(void);
+extern void MStackPushZeroCallPop(void);
 extern void StackPushAdd15CallPop(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void ZeroThreeFields_0040a8b0(void);
@@ -206,7 +206,7 @@ __declspec(naked) void Phase4InitWithChainCallback(void)
         mov     dword ptr [edx*4 + 0x30], eax
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackPushZeroCallPop_004066f0
+        call    MStackPushZeroCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit
@@ -294,7 +294,7 @@ __declspec(naked) void Phase4InitWithChainCallback(void)
         add     edx, 0x1B
         mov     dword ptr [g_currentNodeIdx], ecx
         mov     dword ptr [g_xformEntityIdx], edx
-        call    LinkedListFieldAdd_0049d450
+        call    LinkedListFieldAdd
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4iwcc_B_exit

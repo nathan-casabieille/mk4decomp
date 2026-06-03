@@ -193,7 +193,7 @@ __declspec(naked) void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void) {
  *   eax = node[+0] (next link). Loop while eax != 0.
  *   Two loop body copies in the original - first uses shl/mov, second uses lea+mov.
  */
-__declspec(naked) void LinkedListFieldAdd_0049d450(void) {
+__declspec(naked) void LinkedListFieldAdd(void) {
     __asm {
         mov     eax, dword ptr [g_scaledInit_00542044]
         push    esi

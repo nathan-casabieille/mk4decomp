@@ -115,7 +115,7 @@ extern void ClampMulShiftStore(void);
 extern void CopyThreeFields(void);
 extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
 extern void MStackPushNegMul10(void);
-extern void MStackPushZeroCallPop_004066f0(void);
+extern void MStackPushZeroCallPop(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ThreeChanPackClamp(void);
 
@@ -223,7 +223,7 @@ __declspec(naked) void Phase4StateInit4Helpers(void)
     L_p44_helperB:
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackPushZeroCallPop_004066f0
+        call    MStackPushZeroCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p44_helperB_ret

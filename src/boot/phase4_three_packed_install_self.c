@@ -121,7 +121,7 @@ extern void AudioMixerStep(void);
 extern void CallSetPause(void);
 extern void EsiInstallSetCbChainExtend_0048a810(void);
 extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
-extern void MStackPushZeroCallPop_004066f0(void);
+extern void MStackPushZeroCallPop(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void StoreLoadJmp(void);
 extern void StorePauseImulShr16(void);
@@ -292,7 +292,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf(void)
     L_p4tpis_C:
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackPushZeroCallPop_004066f0
+        call    MStackPushZeroCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tpis_C_ret

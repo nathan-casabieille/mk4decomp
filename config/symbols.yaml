@@ -486,7 +486,7 @@ functions:
     status: matched
     file: src/boot/scaled_load_guarded_jmp.c
   - addr: 0x004066f0
-    name: MStackPushZeroCallPop_004066f0
+    name: MStackPushZeroCallPop
     size: 73
     group: boot
     status: matched
@@ -12786,7 +12786,7 @@ functions:
     status: matched
     file: src/engine/scaled_zero_if_nonzero.c
   - addr: 0x0049d450
-    name: LinkedListFieldAdd_0049d450
+    name: LinkedListFieldAdd
     size: 248
     group: game
     status: matched
@@ -12852,7 +12852,7 @@ functions:
     status: matched
     file: src/engine/round_win_transition.c
   - addr: 0x0049ea30
-    name: DualGuardStateMachine_0049ea30
+    name: DualGuardStateMachine
     size: 216
     group: game
     status: matched

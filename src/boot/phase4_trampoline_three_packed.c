@@ -115,7 +115,7 @@ extern void CallSetPause(void);
 extern void ClampMulShiftStore(void);
 extern void MStackCall_MStackPush2ChainInsert_004062a0(void);
 extern void MStackCall_MStackPush2ChainPrepend_00406600(void);
-extern void MStackPushZeroCallPop_004066f0(void);
+extern void MStackPushZeroCallPop(void);
 extern void PushSetDualDeref(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void QuadMul10TailFpuChain(void);
@@ -162,7 +162,7 @@ __declspec(naked) void Phase4TrampolineThreePacked(void)
         je      L_p4ttp_B_phase1
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], ecx
-        call    MStackPushZeroCallPop_004066f0
+        call    MStackPushZeroCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
@@ -181,7 +181,7 @@ __declspec(naked) void Phase4TrampolineThreePacked(void)
     L_p4ttp_B_phase1:
         mov     eax, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_currentNodeIdx], eax
-        call    MStackPushZeroCallPop_004066f0
+        call    MStackPushZeroCallPop
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4ttp_B_exit
