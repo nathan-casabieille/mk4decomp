@@ -23,7 +23,7 @@ void AuxAudio_SetVolume(s32 vol);                        /* 0x004aca10 */
  * 4-byte pad (caps slot or similar). */
 typedef struct AuxChannel {
     u32 deviceId;
-    u32 _pad;
+    u32 pad_04;          /* +0x04 - 4-byte alignment / caps slot */
 } AuxChannel;
 
 extern s32         g_auxCount;        /* 0x005438a0 */
