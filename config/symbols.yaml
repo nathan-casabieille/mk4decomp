@@ -828,7 +828,7 @@ functions:
     status: matched
     file: src/engine/load_setfp_jmp.c
   - addr: 0x004093e0
-    name: LoadSetFpJmp_g_lit_00541e90
+    name: LoadSetFpJmp_g_tickFrameNodeA
     size: 25
     group: boot
     status: matched

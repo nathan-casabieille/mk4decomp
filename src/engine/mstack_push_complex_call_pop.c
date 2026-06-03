@@ -36,8 +36,8 @@
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_lit_00541e90;
-extern unsigned int g_lit_00541e94;
+extern unsigned int g_tickFrameNodeA;
+extern unsigned int g_tickFrameNodeB;
 extern void MStackPush2ChainPrepend(void);
 
 /* @addr 0x00406430 */
@@ -53,7 +53,7 @@ void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void) {
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(idx * 4))->state_mask = v;
     *(unsigned int *)(g_currentNodeIdx * 4 + 0x5c) = 0x00010000;
-    g_xformEntityIdx = g_lit_00541e90;
+    g_xformEntityIdx = g_tickFrameNodeA;
     MStackPush2ChainPrepend();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
@@ -74,7 +74,7 @@ void MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0(void) {
     g_walkCallback = (void (*)(void))v;
     ((ScenegraphNode *)(idx * 4))->state_mask = v;
     *(unsigned int *)(g_currentNodeIdx * 4 + 0x5c) = 0x00010000;
-    g_xformEntityIdx = g_lit_00541e94;
+    g_xformEntityIdx = g_tickFrameNodeB;
     MStackPush2ChainPrepend();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;

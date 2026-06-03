@@ -66803,8 +66803,8 @@ void MStackBracket3_ChainSwapAdvance(void) {
 extern unsigned int g_bootChainPair1;
 extern unsigned int g_bootChainScaled1;
 extern unsigned int g_bootChainScaled2;
-extern unsigned int g_lit_00541e90;
-extern unsigned int g_lit_00541e94;
+extern unsigned int g_tickFrameNodeA;
+extern unsigned int g_tickFrameNodeB;
 extern unsigned int g_bootChainState3;
 extern unsigned int g_bootChainScaled4;
 extern unsigned int g_bootChainScaled3;
@@ -66834,11 +66834,11 @@ void Helper_TickFrameTail(void)
     g_walkCallback = g_tickFrameTailVar;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_currentNodeIdx = g_lit_00541e90;
+    g_currentNodeIdx = g_tickFrameNodeA;
     g_walkCallback = g_tickFrameTailVar;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_currentNodeIdx = g_lit_00541e94;
+    g_currentNodeIdx = g_tickFrameNodeB;
     g_walkCallback = g_tickFrameTailVar;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
@@ -66862,11 +66862,11 @@ void Helper_TickFrameTail(void)
     g_walkCallback = g_tickFrameTailVar2;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_currentNodeIdx = g_lit_00541e90;
+    g_currentNodeIdx = g_tickFrameNodeA;
     g_walkCallback = g_tickFrameTailVar2;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_currentNodeIdx = g_lit_00541e94;
+    g_currentNodeIdx = g_tickFrameNodeB;
     g_walkCallback = g_tickFrameTailVar2;
     Helper_TickAlt();
 }
@@ -68414,13 +68414,13 @@ __declspec(naked) void BootInitChainHeavy(void)
         call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     eax, dword ptr [g_lit_00541e90]
+        mov     eax, dword ptr [g_tickFrameNodeA]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], eax
         call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     ecx, dword ptr [g_lit_00541e94]
+        mov     ecx, dword ptr [g_tickFrameNodeB]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], ecx
         call    VertexSlotInitFlagWalk
@@ -132071,7 +132071,7 @@ __declspec(naked) void StunDownCluster(void)
     }
 }
 // Externs:
-extern void LoadSetFpJmp_g_lit_00541e90(void);
+extern void LoadSetFpJmp_g_tickFrameNodeA(void);
 extern void PushPopCurrentSetFFFFFFFF(void);
 extern void PushSearchToggleBit(void);
 extern void Thunk_ScaledNeg1SetPause(void);
@@ -132146,7 +132146,7 @@ __declspec(naked) void HandWalkCluster(void)
         mov      dword ptr [g_currentNodeIdx], eax
         jmp      L_5d40
     L_5dbb:
-        call     LoadSetFpJmp_g_lit_00541e90
+        call     LoadSetFpJmp_g_tickFrameNodeA
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_5ea1
@@ -132260,7 +132260,7 @@ __declspec(naked) void HandWalkCluster(void)
         mov      dword ptr [g_currentNodeIdx], eax
         jmp      L_5ef0
     L_5f6b:
-        call     LoadSetFpJmp_g_lit_00541e90
+        call     LoadSetFpJmp_g_tickFrameNodeA
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_6051
@@ -215767,7 +215767,7 @@ __declspec(naked) void PoseFsmCluster_PendingMatch_00416e50(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_783c
-        call     LoadSetFpJmp_g_lit_00541e90
+        call     LoadSetFpJmp_g_tickFrameNodeA
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_783c

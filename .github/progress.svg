@@ -26,11 +26,11 @@
         fill="#1a1a1a" stroke="#3a2a14" stroke-width="1"/>
 
   <!-- Composite filled portion -->
-  <rect x="12" y="14" width="662.44" height="36" rx="6" ry="6"
+  <rect x="12" y="14" width="662.59" height="36" rx="6" ry="6"
         fill="url(#fillGrad)"/>
 
   <!-- Top highlight on composite -->
-  <rect x="12" y="14" width="662.44" height="8" rx="6" ry="6"
+  <rect x="12" y="14" width="662.59" height="8" rx="6" ry="6"
         fill="#ffffff" opacity="0.18"/>
 
   <!-- Composite label + percent (single line) -->
@@ -68,10 +68,10 @@
         font-size="13" fill="#fde68a">Global naming</text>
   <rect x="200" y="153" width="500" height="16" rx="3" ry="3"
         fill="#1a1a1a" stroke="#3a2a14" stroke-width="1"/>
-  <rect x="200" y="153" width="475.08" height="16" rx="3" ry="3"
+  <rect x="200" y="153" width="475.40" height="16" rx="3" ry="3"
         fill="url(#rowGrad)"/>
   <text x="694" y="165" font-family="'DejaVu Sans Mono', monospace"
-        font-size="12" fill="#fff8e1" text-anchor="end" font-weight="bold">95.0%</text>
+        font-size="12" fill="#fff8e1" text-anchor="end" font-weight="bold">95.1%</text>
   <text x="14" y="192" font-family="'DejaVu Sans', Verdana, sans-serif"
         font-size="13" fill="#fde68a">Struct field coverage</text>
   <rect x="200" y="181" width="500" height="16" rx="3" ry="3"

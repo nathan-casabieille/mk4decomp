@@ -120,8 +120,8 @@ extern unsigned int g_bootChainPair0;
 extern unsigned int g_bootChainPair1;
 extern unsigned int g_bootChainScaled1;
 extern unsigned int g_bootChainScaled2;
-extern unsigned int g_lit_00541e90;
-extern unsigned int g_lit_00541e94;
+extern unsigned int g_tickFrameNodeA;
+extern unsigned int g_tickFrameNodeB;
 extern unsigned int g_bootChainState3;
 extern unsigned int g_bootChainScaled4;
 extern unsigned int g_bootChainScaled3;
@@ -185,13 +185,13 @@ __declspec(naked) void BootInitChainHeavy(void)
         call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     eax, dword ptr [g_lit_00541e90]
+        mov     eax, dword ptr [g_tickFrameNodeA]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], eax
         call    VertexSlotInitFlagWalk
         cmp     dword ptr [g_framePauseFlag], esi
         jne     L_boot_init_exit
-        mov     ecx, dword ptr [g_lit_00541e94]
+        mov     ecx, dword ptr [g_tickFrameNodeB]
         mov     dword ptr [g_eventQueueEnd], esi
         mov     dword ptr [g_eventQueueTotal], ecx
         call    VertexSlotInitFlagWalk

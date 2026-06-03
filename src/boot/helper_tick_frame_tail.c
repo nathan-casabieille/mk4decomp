@@ -13,8 +13,8 @@ extern unsigned int g_bootChainScaled4;
 extern unsigned int g_bootChainScaled1;
 extern unsigned int g_bootChainPair1;
 extern unsigned int g_bootChainScaled2;
-extern unsigned int g_lit_00541e90;
-extern unsigned int g_lit_00541e94;
+extern unsigned int g_tickFrameNodeA;
+extern unsigned int g_tickFrameNodeB;
 extern unsigned int g_bootChainScaled3;
 
 void Helper_TickFrameTail(void)
@@ -39,11 +39,11 @@ void Helper_TickFrameTail(void)
     g_walkCallback = g_tickFrameTailVar;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_currentNodeIdx = g_lit_00541e90;
+    g_currentNodeIdx = g_tickFrameNodeA;
     g_walkCallback = g_tickFrameTailVar;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_currentNodeIdx = g_lit_00541e94;
+    g_currentNodeIdx = g_tickFrameNodeB;
     g_walkCallback = g_tickFrameTailVar;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
@@ -67,11 +67,11 @@ void Helper_TickFrameTail(void)
     g_walkCallback = g_tickFrameTailVar2;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_currentNodeIdx = g_lit_00541e90;
+    g_currentNodeIdx = g_tickFrameNodeA;
     g_walkCallback = g_tickFrameTailVar2;
     Helper_TickAlt();
     if (g_framePauseFlag != 0) return;
-    g_currentNodeIdx = g_lit_00541e94;
+    g_currentNodeIdx = g_tickFrameNodeB;
     g_walkCallback = g_tickFrameTailVar2;
     Helper_TickAlt();
 }
