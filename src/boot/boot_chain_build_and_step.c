@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned char g_byte_004f360c;
+extern unsigned char g_bootGatedByte360c;
 extern unsigned int g_dispatchSave1179;
 extern void BootChainBuildAndStep(void);
 

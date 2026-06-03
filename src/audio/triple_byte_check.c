@@ -18,15 +18,15 @@ extern unsigned int g_currentNodeIdx;
  *   shr     eax, 2
  *   ret
  */
-extern unsigned char g_byte_004d50b8;
-extern unsigned char g_byte_004d50b4;
-extern char g_byte_004d50c0;
+extern unsigned char g_audioStateMask50b8;
+extern unsigned char g_audioStateDisp50b4;
+extern char g_audioStateMask50c0;
 int TripleByteCheck(void) {
     int v = 1;
-    if (g_byte_004d50b8 & v) return v;
-    if (g_byte_004d50b4 & 0x10) return v;
+    if (g_audioStateMask50b8 & v) return v;
+    if (g_audioStateDisp50b4 & 0x10) return v;
     __asm {
-        movsx   eax, byte ptr [g_byte_004d50c0]
+        movsx   eax, byte ptr [g_audioStateMask50c0]
         and     eax, 4
         shr     eax, 2
     }

@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave704;
 extern unsigned int g_dispatchSave705;
 extern unsigned int g_tickFlagF;
-extern unsigned int g_byte_00538148;
+extern unsigned int g_handWalkState148;
 extern unsigned int g_audioStreamState;
 extern unsigned int g_installSelfCounter;
 extern void ArgSarStoreJmp(void);
@@ -198,7 +198,7 @@ __declspec(naked) void StoryCharIntroFsmCluster(void)
         jne      L_8019
         cmp      dword ptr [g_tickFlagF], 2
         jne      L_7fe5
-        mov      byte ptr [g_byte_00538148], 1
+        mov      byte ptr [g_handWalkState148], 1
     L_7fe5:
         push     0
         push     OFFSET L_8200

@@ -110,20 +110,20 @@ extern unsigned int g_fightAxisPosY;
 
 /*
  * DualBitFlagAudioChain - 175b audio dispatcher with two parallel bit-flag branches.
- *   Reads g_byte_004d50b4 as byte pair (al,ah).
+ *   Reads g_audioStateDisp50b4 as byte pair (al,ah).
  *   Branch 0 (al bit 0 OR ah bit 0): movsx slot from g_byteTab_004f3080[edx*4];
  *     if slot != -1 set chain->field_30 = slot and SetJmp; push 0x00160000;
  *     g_eventQueueChild = 0x708; call Helper_AudioStub_2960.
  *   Branch 1 (al bit 1 OR ah bit 1): same with g_byteTab_004f3080+1 and push 0xffea0000.
  */
 extern unsigned int g_byteTab_004f3080;
-extern unsigned int g_byte_004d50b4;
+extern unsigned int g_audioStateDisp50b4;
 extern void Helper_AudioStub_2960(void);
 extern void SetJmp_Push16Call_004a1ad0(void);
 
 void DualBitFlagAudioChain(void) {
     __asm {
-        mov     eax, dword ptr [g_byte_004d50b4]
+        mov     eax, dword ptr [g_audioStateDisp50b4]
         test    al, 1
         jne     short L_b0_enter
         test    ah, 1
@@ -144,7 +144,7 @@ void DualBitFlagAudioChain(void) {
         push    0x00160000
         mov     dword ptr [g_eventQueueChild], 0x00000708
         call    Helper_AudioStub_2960
-        mov     eax, dword ptr [g_byte_004d50b4]
+        mov     eax, dword ptr [g_audioStateDisp50b4]
         add     esp, 4
     L_b1_check:
         test    al, 2

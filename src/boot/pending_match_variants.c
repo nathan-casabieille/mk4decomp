@@ -117,7 +117,7 @@ extern void PendingMatch_MStackBracket3_ChainSwapAdvance(void);
  *   or 0x53815c>>2 depending on whether _58 still matches [0x538158];
  *   store [cj*4 + reloc] = walk.
  */
-extern unsigned int g_byte_004f360c;
+extern unsigned int g_bootGatedByte360c;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_particleEmitterNode;
 extern s32 g_dlNalt1;
@@ -246,10 +246,10 @@ extern unsigned int g_walkTreeArrBase;
 extern unsigned int g_audioBankPick;
 extern unsigned int g_counter_005433c8;
 extern unsigned int g_counter_0054359c;
-extern unsigned int g_byte_005435a0;
+extern unsigned int g_audioBank2Base;
 extern unsigned int g_dispatchTab62;
 extern unsigned int g_voicePoolTickFlag_005437f4;
-extern unsigned int g_byte_00543834;
+extern unsigned int g_audioStateByte834;
 extern unsigned int g_pendingMatchCmp;
 extern u32 g_timerActive;
 extern u32 g_timerStartSec;
@@ -1248,7 +1248,7 @@ __declspec(naked) void MStackBracket3_FieldSequentialCopy(void)
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4], ecx
-        mov     al, byte ptr [g_byte_004f360c]
+        mov     al, byte ptr [g_bootGatedByte360c]
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_currentNodeIdx], 0
         test    al, al
@@ -2191,7 +2191,7 @@ __declspec(naked) void Match_TeamOutcomeScreen(void)
         push     eax
         mov      eax, dword ptr [g_counter_0054359c]
         lea      ecx, [eax + eax*2]
-        lea      edx, [ecx*8 + g_byte_005435a0]
+        lea      edx, [ecx*8 + g_audioBank2Base]
         push     edx
         call     AudioMode2BankSetup
         mov      dword ptr [esi + 8], 0x4a93c0
@@ -2306,9 +2306,9 @@ __declspec(naked) void Match_TeamOutcomeScreen(void)
         call     BootInitGuardedCallChain
         cmp      dword ptr [g_framePauseFlag], ebx
         jne      L_9803
-        cmp      byte ptr [g_byte_00543834], bl
+        cmp      byte ptr [g_audioStateByte834], bl
         je       L_9692
-        mov      byte ptr [g_byte_00543834], bl
+        mov      byte ptr [g_audioStateByte834], bl
         jmp      L_96d1
     L_9692:
         call     FiveTableWalkInit
@@ -3373,7 +3373,7 @@ __declspec(naked) void PendingMatch_ChainWalkPushPop_00411890(void)
         nop      
         nop      
         push     ecx
-        mov      al, byte ptr [g_byte_004f360c]
+        mov      al, byte ptr [g_bootGatedByte360c]
         push     ebx
         push     ebp
         push     esi

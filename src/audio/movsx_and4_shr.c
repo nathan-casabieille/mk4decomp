@@ -13,10 +13,10 @@ extern unsigned int g_currentNodeIdx;
  *   shr     eax, 2
  *   ret
  */
-extern char g_byte_004d50c0;
+extern char g_audioStateMask50c0;
 void MovsxAnd4Shr(void) {
     __asm {
-        movsx   eax, byte ptr [g_byte_004d50c0]
+        movsx   eax, byte ptr [g_audioStateMask50c0]
         and     eax, 4
         shr     eax, 2
         }

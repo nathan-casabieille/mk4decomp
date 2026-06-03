@@ -113,14 +113,14 @@ extern unsigned int g_fightAxisPosY;
  *   B (+0x20): g_walkCallback=0x4000; jmp OrDualStore.
  *   C (+0x30): g_walkCallback=0x2000; jmp OrDualStore.
  *   D (+0x40): g_walkCallback=0x1000, g_eventQueueCurrent=5, g_save_0053a7d8=5; jmp OrDualStore.
- *   E (+0x60): byte[g_byte_00543730]=1; g_walkCallback=0x800; jmp OrDualStore.
+ *   E (+0x60): byte[g_audioStateByte730]=1; g_walkCallback=0x800; jmp OrDualStore.
  *   F (+0x80): call FiveSetWalkJmp; if !pause: g_walkCallback=0x400; jmp OrDualStore.
  *   G (+0xa0): g_walkCallback=0x200; jmp OrDualStore.
  *   H (+0xb0): g_walkCallback=0x40; jmp OrDualStore.
  *   I (+0xc0): g_walkCallback=0x2000; call OrDualStore; if !pause jmp Set1JmpSet2Jmp; ret.
  */
 extern unsigned int g_save_0053a7d8;
-extern unsigned int g_byte_00543730;
+extern unsigned int g_audioStateByte730;
 extern void FiveSetWalkJmp(void);
 extern void OrDualStore_0048e4b0(void);
 extern void Set1JmpSet2Jmp(void);
@@ -155,7 +155,7 @@ __declspec(naked) void NineEntryFlagDispatch(void) {
         jmp     OrDualStore_0048e4b0
         _emit   90h
         _emit   90h
-        mov     byte ptr [g_byte_00543730], 1
+        mov     byte ptr [g_audioStateByte730], 1
         mov     dword ptr [g_walkCallback], 0x00000800
         jmp     OrDualStore_0048e4b0
         _emit   90h

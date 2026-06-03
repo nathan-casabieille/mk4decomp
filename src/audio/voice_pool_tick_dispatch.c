@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_voicePoolTickFlag_005437f4;
-extern unsigned int g_byte_00543724;
-extern unsigned int g_byte_0054372c;
-extern unsigned int g_byte_00543730;
+extern unsigned int g_audioStateWalk6;
+extern unsigned int g_audioStateWalk7;
+extern unsigned int g_audioStateByte730;
 extern void PendingMatch_004a2a80(void);
 extern void DebugMenu_DrawUnlockToggles(void);
 extern void ScaledByteIdxDualCopy(void);
@@ -203,9 +203,9 @@ __declspec(naked) void AudioStateInitMultiInstall(void)
         ret
     L_asimi_phase0:
         mov     ebx, 1
-        mov     byte ptr [g_byte_00543724], bl
-        mov     byte ptr [g_byte_0054372c], bl
-        mov     byte ptr [g_byte_00543730], bl
+        mov     byte ptr [g_audioStateWalk6], bl
+        mov     byte ptr [g_audioStateWalk7], bl
+        mov     byte ptr [g_audioStateByte730], bl
         call    FiveTableWalkInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

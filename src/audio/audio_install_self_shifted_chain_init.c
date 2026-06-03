@@ -110,10 +110,10 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_audioInstallGate;
 extern s32 g_dlNalt1;
-extern unsigned char g_byte_00543724;
+extern unsigned char g_audioStateWalk6;
 extern unsigned char g_audioStateRemapByte;
-extern unsigned char g_byte_0054372c;
-extern unsigned char g_byte_00543730;
+extern unsigned char g_audioStateWalk7;
+extern unsigned char g_audioStateByte730;
 extern void AudioInstallSelfShiftedChainInit(void);
 
 /*
@@ -129,12 +129,12 @@ void AudioStateRemap(void) {
     if (g_audioInstallGate != 0 &&
         (g_fightTableC0 & 0x20) == 0 &&
         (g_fightTableC1 & 0x04) == 0) {
-        if (g_byte_00543724 != 0 && v == 6 && g_audioStateRemapByte == 0) {
+        if (g_audioStateWalk6 != 0 && v == 6 && g_audioStateRemapByte == 0) {
             v = 0xf;
             g_audioStateRemapByte = 1;
             g_dlNalt1 = v;
         }
-        if (g_byte_0054372c != 0 && g_byte_00543730 != 0 && v == 7) {
+        if (g_audioStateWalk7 != 0 && g_audioStateByte730 != 0 && v == 7) {
             g_dlNalt1 = 0x11;
         }
     }

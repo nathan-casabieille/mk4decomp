@@ -114,14 +114,14 @@ extern unsigned int g_fightAxisPosY;
  *   (blocks 0/1/5) and CH bits in the aggregator (bits 8-11 instead of 0-3).
  *   Middle blocks test byte at 0x004d50d8 bits 0x10/0x20/0x40, push to g_audioFlagAggBase table.
  */
-extern unsigned int g_byte_004d50d8;
-extern unsigned int g_byte_004d50d4;
+extern unsigned int g_audioFlagAgg50d8;
+extern unsigned int g_audioFlagAgg50d4;
 extern unsigned int g_audioFlagAggBase;
 extern void ShiftDownThreeAndAppend(void);
 
 void AudioFlagDispatchAggregatorAH(void) {
     __asm {
-        mov     eax, dword ptr [g_byte_004d50d4]
+        mov     eax, dword ptr [g_audioFlagAgg50d4]
         test    ah, 0x10
         je      short L_skipA0
         push    0x000b0000
@@ -129,7 +129,7 @@ void AudioFlagDispatchAggregatorAH(void) {
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skipA0:
-        mov     eax, dword ptr [g_byte_004d50d4]
+        mov     eax, dword ptr [g_audioFlagAgg50d4]
         test    ah, 0x40
         je      short L_skipA1
         push    0x000c0000
@@ -137,28 +137,28 @@ void AudioFlagDispatchAggregatorAH(void) {
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skipA1:
-        test    byte ptr [g_byte_004d50d8], 0x10
+        test    byte ptr [g_audioFlagAgg50d8], 0x10
         je      short L_skipA2
         push    0x000d0000
         push    offset g_audioFlagAggBase
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skipA2:
-        test    byte ptr [g_byte_004d50d8], 0x20
+        test    byte ptr [g_audioFlagAgg50d8], 0x20
         je      short L_skipA3
         push    0x000e0000
         push    offset g_audioFlagAggBase
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skipA3:
-        test    byte ptr [g_byte_004d50d8], 0x40
+        test    byte ptr [g_audioFlagAgg50d8], 0x40
         je      short L_skipA4
         push    0x000f0000
         push    offset g_audioFlagAggBase
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skipA4:
-        mov     eax, dword ptr [g_byte_004d50d4]
+        mov     eax, dword ptr [g_audioFlagAgg50d4]
         test    ah, 0x20
         je      short L_skipA5
         push    0x00100000
@@ -166,7 +166,7 @@ void AudioFlagDispatchAggregatorAH(void) {
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skipA5:
-        mov     ecx, dword ptr [g_byte_004d50d4]
+        mov     ecx, dword ptr [g_audioFlagAgg50d4]
         xor     eax, eax
         test    ch, 1
         je      short L_a_bit1

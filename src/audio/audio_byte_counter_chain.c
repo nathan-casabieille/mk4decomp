@@ -114,16 +114,16 @@ extern unsigned int g_fightAxisPosY;
  *   If was 0: dispatch on g_audioBankSel == 1/2 to increment indexed slots in g_audioBankCounterArr;
  *     call BootInitGuardedCallChain; if paused: ret.
  *     Call FiveTableWalkInit; if paused: ret.
- *     Inc g_byte_00543840; g_audioPathFlag=1; g_audioModeBankFlag=1;
- *     if hit 0xf: inc g_byte_0054383c; if also equal to (post-inc) al: zero it.
- *     Stash to g_byte_005435a0; push (&g_byte_005435b8, &g_byte_005435a0);
- *     g_byte_005435b8 = g_byte_0054383c; zero g_byte_005435a3 / g_byte_005435bb;
+ *     Inc g_audioStateByte840; g_audioPathFlag=1; g_audioModeBankFlag=1;
+ *     if hit 0xf: inc g_audioStateByte83c; if also equal to (post-inc) al: zero it.
+ *     Stash to g_audioBank2Base; push (&g_audioByteCounterChainSt, &g_audioBank2Base);
+ *     g_audioByteCounterChainSt = g_audioStateByte83c; zero g_byte_005435a3 / g_byte_005435bb;
  *     call AudioMode2BankSetup; call TwoStageAudioInit.
  */
-extern unsigned int g_byte_005435a0;
-extern unsigned int g_byte_005435b8;
-extern unsigned int g_byte_0054383c;
-extern unsigned int g_byte_00543840;
+extern unsigned int g_audioBank2Base;
+extern unsigned int g_audioByteCounterChainSt;
+extern unsigned int g_audioStateByte83c;
+extern unsigned int g_audioStateByte840;
 extern unsigned int g_audioPathFlag;
 extern unsigned int g_audioModeBankFlag;
 extern s32 g_dlNalt1;
@@ -162,27 +162,27 @@ __declspec(naked) void AudioByteCounterChain(void)
         call    FiveTableWalkInit
         cmp     dword ptr [g_framePauseFlag], ebx
         jne     short L_end
-        mov     al, byte ptr [g_byte_00543840]
+        mov     al, byte ptr [g_audioStateByte840]
         mov     dword ptr [g_audioPathFlag], 1
         inc     al
         mov     dword ptr [g_audioModeBankFlag], 1
         cmp     al, 0xf
-        mov     byte ptr [g_byte_00543840], al
+        mov     byte ptr [g_audioStateByte840], al
         jne     short L_finalize
-        mov     cl, byte ptr [g_byte_0054383c]
+        mov     cl, byte ptr [g_audioStateByte83c]
         inc     cl
         cmp     cl, al
-        mov     byte ptr [g_byte_0054383c], cl
+        mov     byte ptr [g_audioStateByte83c], cl
         jne     short L_finalize
-        mov     byte ptr [g_byte_0054383c], bl
+        mov     byte ptr [g_audioStateByte83c], bl
     L_finalize:
-        mov     byte ptr [g_byte_005435a0], al
-        mov     al, byte ptr [g_byte_0054383c]
-        push    offset g_byte_005435b8
-        push    offset g_byte_005435a0
-        mov     byte ptr [g_byte_005435b8], al
-        mov     byte ptr [g_byte_005435a0 + 3], bl
-        mov     byte ptr [g_byte_005435b8 + 3], bl
+        mov     byte ptr [g_audioBank2Base], al
+        mov     al, byte ptr [g_audioStateByte83c]
+        push    offset g_audioByteCounterChainSt
+        push    offset g_audioBank2Base
+        mov     byte ptr [g_audioByteCounterChainSt], al
+        mov     byte ptr [g_audioBank2Base + 3], bl
+        mov     byte ptr [g_audioByteCounterChainSt + 3], bl
         call    AudioMode2BankSetup
         add     esp, 8
         call    TwoStageAudioInit

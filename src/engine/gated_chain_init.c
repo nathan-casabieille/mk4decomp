@@ -109,13 +109,13 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0042f760 (221b game) - gated chain init. */
-extern unsigned int g_byte_004f360c;
+extern unsigned int g_bootGatedByte360c;
 extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void PushSetXfmMaskCallPop(void);
 
 __declspec(naked) void GatedChainInit(void) {
     __asm {
-        mov     al, byte ptr [g_byte_004f360c]
+        mov     al, byte ptr [g_bootGatedByte360c]
         push    esi
         test    al, al
         _emit   0fh

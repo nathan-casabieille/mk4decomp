@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 extern unsigned int g_tickFlagF;
-extern unsigned char g_byte_00538148;
+extern unsigned char g_handWalkState148;
 extern unsigned int g_installSelfCounter;
 
 /*
@@ -126,7 +126,7 @@ void PairedTickGated(void) {
     if (a == 1 && c == 1) g_installSelfCounter++;
     if (a == 2 && c == 2) g_installSelfCounter++;
     Wrapper_OrListLoop_004de3f8();
-    if (g_tickFlagF == 2) g_byte_00538148 = 1;
+    if (g_tickFlagF == 2) g_handWalkState148 = 1;
     PushCallPauseSetMaxThenCallPauseJmp();
     if (g_framePauseFlag != 0) return;
     g_cj_00542058 = g_cj_0054205c;

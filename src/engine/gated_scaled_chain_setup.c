@@ -108,14 +108,14 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-/* @addr 0x00427390 (204b game) - 5-step setup if [g_byte_004f360c] is set.
+/* @addr 0x00427390 (204b game) - 5-step setup if [g_bootGatedByte360c] is set.
  *   call MStackPush8; pause-check. Set g_walkCallback = 0x004e2760>>2.
  *   call PushSetXfmMaskCallPop; pause-check.
  *   If bit-2 not set: setup chain[+0x30]=0x25c, [+0x54]=g_acc_00542078, [+0x5c]=g_eventQueueNotMask,
  *     [+0x58]=0xfffffd71. Set g_walkCallback=0x18000; scaledInit = [chain*4+0x18]; chain[+0x3c]=0x18000.
  *   call MStackCall_MStackPush2ChainPrepend_004062f0; if !pause jmp MStackPop8; ret.
  */
-extern unsigned int g_byte_004f360c;
+extern unsigned int g_bootGatedByte360c;
 extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
@@ -123,7 +123,7 @@ extern void PushSetXfmMaskCallPop(void);
 
 __declspec(naked) void GatedScaledChainSetup(void) {
     __asm {
-        mov     al, byte ptr [g_byte_004f360c]
+        mov     al, byte ptr [g_bootGatedByte360c]
         test    al, al
         _emit   0fh
         _emit   84h

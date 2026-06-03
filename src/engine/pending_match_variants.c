@@ -499,7 +499,7 @@ extern unsigned int g_phaseTimer;
 extern unsigned int g_audioInstall2Slot;
 extern unsigned int g_dispatchSave101;
 extern unsigned int g_clamp_00537f2c;
-extern unsigned int g_byte_00538148;
+extern unsigned int g_handWalkState148;
 extern s32 g_dlNalt3;
 extern s32 g_dlNalt4;
 extern unsigned int g_walkCallbackSrc;
@@ -5918,7 +5918,7 @@ __declspec(naked) void StoryCharIntroFsmCluster(void)
         jne      L_8019
         cmp      dword ptr [g_tickFlagF], 2
         jne      L_7fe5
-        mov      byte ptr [g_byte_00538148], 1
+        mov      byte ptr [g_handWalkState148], 1
     L_7fe5:
         push     0
         push     OFFSET L_8200
@@ -6577,7 +6577,7 @@ __declspec(naked) void PendingMatch_CallPauseScaledStoreCopyJmp(void)
         jne      L_be8d
         cmp      dword ptr [g_tickFlagF], 2
         jne      L_be60
-        mov      byte ptr [g_byte_00538148], 1
+        mov      byte ptr [g_handWalkState148], 1
     L_be60:
         mov      eax, dword ptr [g_gtPlayerProbe1]
         mov      dword ptr [g_dispatchVar6], eax

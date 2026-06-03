@@ -111,8 +111,8 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_audioStateMachine0;
 extern unsigned int g_audioStateMachine1;
 extern unsigned int g_audioCrewState;
-extern unsigned int g_byte_005435a2;
-extern unsigned int g_byte_0054361a;
+extern unsigned int g_audioBank2Byte2;
+extern unsigned int g_audioPendByte61a;
 extern unsigned int g_dispatchSave1701;
 extern unsigned int g_glideFnTable;
 extern unsigned int g_dispatchSave1710;
@@ -136,7 +136,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew(void)
         mov      dword ptr [g_audioCrewState], ecx
         jle      L_8183
         xor      ebp, ebp
-        mov      esi, OFFSET g_byte_005435a2
+        mov      esi, OFFSET g_audioBank2Byte2
         mov      ebx, 0xfde40000
     L_80b1:
         mov      dword ptr [g_walkCallback], 0x10
@@ -189,7 +189,7 @@ __declspec(naked) void SpawnLeftRightAudioCrew(void)
         mov      dword ptr [g_audioCrewState], ecx
         jle      short L_8282
         xor      ebp, ebp
-        mov      esi, OFFSET g_byte_0054361a
+        mov      esi, OFFSET g_audioPendByte61a
         mov      ebx, 0x12c0000
     L_81b0:
         mov      dword ptr [g_walkCallback], 0x10

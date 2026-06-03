@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * AudioState50b4BitDispatcher - 309b 4-bit dispatcher on g_byte_004d50b4 (cl/ch).
+ * AudioState50b4BitDispatcher - 309b 4-bit dispatcher on g_audioStateDisp50b4 (cl/ch).
  *   edi = 0x1c20 (channel id?). For bits 0x01, 0x02 (movsx byte from table at esi[chain*9*4 + N]):
  *     if !=-1: store back at chain[+0x30]; SetJmp_Push16Call_004a1ad0. Then g_eventQueueChild = edi.
  *   For bits 0x04, 0x08 (dword load from esi[chain*9*4 + 4/+8] → g_currentNodeIdx): if !=0: clear
@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  *     call 0x004a1ac0 (sister). Then g_eventQueueChild = edi.
  *   Pop+ret.
  */
-extern unsigned int g_byte_004d50b4;
+extern unsigned int g_audioStateDisp50b4;
 extern void SetJmp_Push16Call_004a1ac0(void);
 extern void SetJmp_Push16Call_004a1ad0(void);
 
@@ -125,7 +125,7 @@ __declspec(naked) void AudioState50b4BitDispatcher(void)
 {
     __asm
     {
-        mov     ecx, dword ptr [g_byte_004d50b4]
+        mov     ecx, dword ptr [g_audioStateDisp50b4]
         push    esi
         mov     esi, dword ptr [esp + 8]
         push    edi
@@ -144,7 +144,7 @@ __declspec(naked) void AudioState50b4BitDispatcher(void)
         je      short L_a32_b1_innerSkip
         mov     dword ptr [edx*4 + 0x30], eax
         call    SetJmp_Push16Call_004a1ad0
-        mov     ecx, dword ptr [g_byte_004d50b4]
+        mov     ecx, dword ptr [g_audioStateDisp50b4]
     L_a32_b1_innerSkip:
         mov     dword ptr [g_eventQueueChild], edi
     L_a32_b1_outerSkip:
@@ -162,7 +162,7 @@ __declspec(naked) void AudioState50b4BitDispatcher(void)
         je      short L_a32_b2_innerSkip
         mov     dword ptr [edx*4 + 0x30], eax
         call    SetJmp_Push16Call_004a1ad0
-        mov     ecx, dword ptr [g_byte_004d50b4]
+        mov     ecx, dword ptr [g_audioStateDisp50b4]
     L_a32_b2_innerSkip:
         mov     dword ptr [g_eventQueueChild], edi
     L_a32_b2_outerSkip:
@@ -187,7 +187,7 @@ __declspec(naked) void AudioState50b4BitDispatcher(void)
         jne     short L_a32_b4_skipSetJmp
         call    SetJmp_Push16Call_004a1ac0
     L_a32_b4_skipSetJmp:
-        mov     ecx, dword ptr [g_byte_004d50b4]
+        mov     ecx, dword ptr [g_audioStateDisp50b4]
     L_a32_b4_innerSkip:
         mov     dword ptr [g_eventQueueChild], edi
     L_a32_b4_outerSkip:

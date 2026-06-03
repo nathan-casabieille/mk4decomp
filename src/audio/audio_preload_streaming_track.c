@@ -127,8 +127,8 @@ extern unsigned int g_dispatchSave519;
 extern unsigned int g_dispatchSave633;
 extern unsigned int g_audioPreloadBase;
 extern unsigned int g_count;
-extern unsigned int g_byte_005435a0;
-extern unsigned int g_byte_005435b8;
+extern unsigned int g_audioBank2Base;
+extern unsigned int g_audioByteCounterChainSt;
 extern unsigned int g_audioPreloadState;
 
 
@@ -178,11 +178,11 @@ __declspec(naked) void AudioPreloadStreamingTrack(void)
         lea      ecx, [ecx + ecx*2]
         jne      short L_6f2e
         mov      eax, dword ptr [eax + g_dispatchSave519]
-        lea      ecx, [ecx*8 + g_byte_005435a0]
+        lea      ecx, [ecx*8 + g_audioBank2Base]
         jmp      short L_6f7f
     L_6f2e:
         mov      eax, dword ptr [eax + g_dispatchSave519]
-        lea      ecx, [ecx*8 + g_byte_005435b8]
+        lea      ecx, [ecx*8 + g_audioByteCounterChainSt]
         jmp      short L_6f7f
     L_6f3d:
         cmp      eax, 1
@@ -191,21 +191,21 @@ __declspec(naked) void AudioPreloadStreamingTrack(void)
         shl      eax, 2
         mov      ecx, dword ptr [eax + g_audioPreloadVar]
         lea      ecx, [ecx + ecx*2]
-        lea      ecx, [ecx*8 + g_byte_005435a0]
+        lea      ecx, [ecx*8 + g_audioBank2Base]
         jmp      short L_6f79
     L_6f5c:
         mov      edx, dword ptr [g_audioPreloadState]
         lea      eax, [edx*4]
         mov      ecx, dword ptr [eax + g_audioPreloadVar]
         lea      ecx, [ecx + ecx*2]
-        lea      ecx, [ecx*8 + g_byte_005435b8]
+        lea      ecx, [ecx*8 + g_audioByteCounterChainSt]
     L_6f79:
         mov      eax, dword ptr [eax + g_dispatchSave633]
     L_6f7f:
         lea      edx, [eax + eax*2]
         push     0x18
         push     ecx
-        lea      eax, [edx*8 + g_byte_005435a0]
+        lea      eax, [edx*8 + g_audioBank2Base]
         push     eax
         call     MemcpyByteN
         mov      ecx, dword ptr [g_audioPreloadState]

@@ -108,13 +108,13 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave1179;
-extern unsigned int g_byte_004f360c;
+extern unsigned int g_bootGatedByte360c;
 
 /*
  * @addr 0x00412450 (111b boot) - guarded double-push setup + tail jmp.
  */
 void GatedDoubleSetupJmp(void) {
-    if (g_byte_004f360c == 0) {
+    if (g_bootGatedByte360c == 0) {
         g_xformDirtyFlags |= 4;
         return;
     }

@@ -18,11 +18,11 @@ extern unsigned int g_currentNodeIdx;
  * `movsx eax, m8` + `and eax, 4` + `shr eax, 2` (13b). Different
  * bytes, different upper-eax semantics - left as naked.
  */
-extern unsigned int g_byte_004d50c0;
+extern unsigned int g_audioStateMask50c0;
 
 void MovsxAnd20Shr5(void) {
     __asm {
-        movsx   eax, byte ptr [g_byte_004d50c0]
+        movsx   eax, byte ptr [g_audioStateMask50c0]
         and     eax, 0x20
         shr     eax, 5
         }

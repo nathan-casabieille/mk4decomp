@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned char g_byte_0054389c;
+extern unsigned char g_audioStateByte89c;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
 
@@ -141,7 +141,7 @@ void State6Latch(void) {
         if (g_framePauseFlag != 0) return;
         if ((int)g_walkCallback < 0x258) return;
     }
-    g_byte_0054389c = 1;
+    g_audioStateByte89c = 1;
     ((ScenegraphNode *)(g_baseSel * 4))->state_mask = 6;
     g_walkCallback = 0x2c;
     TableLookupCall_g_eventTbl_65();

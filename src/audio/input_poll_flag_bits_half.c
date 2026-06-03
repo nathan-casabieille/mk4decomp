@@ -12,18 +12,18 @@ extern unsigned int g_currentNodeIdx;
  *   [0x4d50b4] AS a dword (uses ah for 0x40, 0x10, 0x20 high-byte
  *   tests), then cl bit 0x10. Final fallback: (cl & 0x40) >> 6.
  */
-extern unsigned int g_byte_004d50b4;
-extern unsigned int g_byte_004d50b8;
+extern unsigned int g_audioStateDisp50b4;
+extern unsigned int g_audioStateMask50b8;
 
 void InputPollFlagBitsHalf(void) {
     __asm {
-        mov     cl, byte ptr [g_byte_004d50b8]
+        mov     cl, byte ptr [g_audioStateMask50b8]
         test    cl, 0x20
         _emit   74h
         _emit   06h
         mov     eax, 1
         ret
-        mov     eax, dword ptr [g_byte_004d50b4]
+        mov     eax, dword ptr [g_audioStateDisp50b4]
         test    ah, 0x40
         _emit   74h
         _emit   06h

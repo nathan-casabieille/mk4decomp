@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_byte_004f3238;
-extern unsigned int g_byte_004f360c;
+extern unsigned int g_bootGatedByte360c;
 extern unsigned int g_byte_004f3610;
-extern unsigned int g_byte_00543724;
-extern unsigned int g_byte_0054372c;
-extern unsigned int g_byte_00543730;
+extern unsigned int g_audioStateWalk6;
+extern unsigned int g_audioStateWalk7;
+extern unsigned int g_audioStateByte730;
 extern unsigned int g_byte_00543a24;
 extern unsigned int g_byte_00543a3c;
 extern unsigned int g_byte_00543a3d;
@@ -208,11 +208,11 @@ __declspec(naked) void Config_RestoreGlobals(void)
         mov     cl, byte ptr [g_byte_00543a3d]
         mov     dword ptr [g_gtConfig4f], edx
         mov     dl, byte ptr [g_byte_00543a3e]
-        mov     byte ptr [g_byte_00543724], al
+        mov     byte ptr [g_audioStateWalk6], al
         mov     eax, dword ptr [g_audioSavedReg_00543a40]
-        mov     byte ptr [g_byte_0054372c], cl
+        mov     byte ptr [g_audioStateWalk7], cl
         mov     ecx, dword ptr [g_audioSavedReg_00543a44]
-        mov     byte ptr [g_byte_00543730], dl
+        mov     byte ptr [g_audioStateByte730], dl
         mov     edx, dword ptr [g_audioSavedReg_00543a48]
         mov     dword ptr [g_audioSavedGlobal0], eax
         mov     eax, dword ptr [g_audioSavedReg_00543a4c]
@@ -238,7 +238,7 @@ __declspec(naked) void Config_RestoreGlobals(void)
         mov     al, byte ptr [g_byte_00543ab4]
         mov     edx, dword ptr [g_menuRestoreC]
         mov     ecx, dword ptr [g_menuRestoreD]
-        mov     byte ptr [g_byte_004f360c], al
+        mov     byte ptr [g_bootGatedByte360c], al
         mov     byte ptr [g_byte_004f3610], al
         mov     eax, dword ptr [g_menuRestoreB]
         mov     dword ptr [g_loaded], edx

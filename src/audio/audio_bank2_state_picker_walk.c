@@ -114,19 +114,19 @@ extern unsigned int g_fightAxisPosY;
  *   eax = g_audioBankSel; edx = g_counter_0054359c; edi = g_counter_005433c8.
  *   If eax == 1: chain low table [edi*24 + 0x0054361a/19] += 1.
  *   Else: chain high table [edx*24 + 0x005435a2/a1] += 1.
- *   ++g_bootInitState. esi=1. ecx=g_audioStateMachine0; walk g_byte_005435a2[i*24] for i in [0,ecx);
+ *   ++g_bootInitState. esi=1. ecx=g_audioStateMachine0; walk g_audioBank2Byte2[i*24] for i in [0,ecx);
  *     if any !=0: keep esi=1; else esi=0. If esi: g_audioBankPick=2; tail to cleanup.
- *   Else: ebp=g_audioStateMachine1; esi=1. Walk g_byte_0054361a[i*24] for i in [0,ebp). If esi: g_audioBankPick=1;
+ *   Else: ebp=g_audioStateMachine1; esi=1. Walk g_audioPendByte61a[i*24] for i in [0,ebp). If esi: g_audioBankPick=1;
  *     cleanup: zero g_counter_0054359c, g_counter_005433c8; call Match_TeamOutcomeScreen; pop+ret.
  *   Else (both banks have something nonzero): eax = g_audioBankSel again.
- *     If eax==2: roundrobin edx through ecx slots looking for g_byte_005435a2[edx*24]!=0; store to g_counter_0054359c.
- *     If eax==1: roundrobin edi through ebp slots looking for g_byte_0054361a[edi*24]!=0; store to g_counter_005433c8.
+ *     If eax==2: roundrobin edx through ecx slots looking for g_audioBank2Byte2[edx*24]!=0; store to g_counter_0054359c.
+ *     If eax==1: roundrobin edi through ebp slots looking for g_audioPendByte61a[edi*24]!=0; store to g_counter_005433c8.
  *     call Match_TeamOutcomeScreen; pop+ret.
  */
-extern unsigned int g_byte_005435a1;
-extern unsigned int g_byte_005435a2;
-extern unsigned int g_byte_00543619;
-extern unsigned int g_byte_0054361a;
+extern unsigned int g_audioBank2Byte1;
+extern unsigned int g_audioBank2Byte2;
+extern unsigned int g_audioPendByte619;
+extern unsigned int g_audioPendByte61a;
 extern unsigned int g_bootInitState;
 extern unsigned int g_audioBankPick;
 extern unsigned int g_counter_0054359c;
@@ -154,18 +154,18 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
         jne     short L_a92_highBank
         lea     eax, [edi + edi*2]
         shl     eax, 3
-        mov     byte ptr [eax + g_byte_0054361a], 1
-        mov     cl, byte ptr [eax + g_byte_00543619]
+        mov     byte ptr [eax + g_audioPendByte61a], 1
+        mov     cl, byte ptr [eax + g_audioPendByte619]
         inc     cl
-        mov     byte ptr [eax + g_byte_00543619], cl
+        mov     byte ptr [eax + g_audioPendByte619], cl
         jmp     short L_a92_afterStore
     L_a92_highBank:
         lea     eax, [edx + edx*2]
         shl     eax, 3
-        mov     byte ptr [eax + g_byte_005435a2], 1
-        mov     cl, byte ptr [eax + g_byte_005435a1]
+        mov     byte ptr [eax + g_audioBank2Byte2], 1
+        mov     cl, byte ptr [eax + g_audioBank2Byte1]
         inc     cl
-        mov     byte ptr [eax + g_byte_005435a1], cl
+        mov     byte ptr [eax + g_audioBank2Byte1], cl
     L_a92_afterStore:
         mov     ecx, dword ptr [g_bootInitState]
         mov     esi, 1
@@ -174,7 +174,7 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
         mov     ecx, dword ptr [g_audioStateMachine0]
         test    ecx, ecx
         jle     short L_a92_checkLow
-        mov     eax, offset g_byte_005435a2
+        mov     eax, offset g_audioBank2Byte2
     L_a92_walkHigh:
         cmp     byte ptr [eax], 0
         jne     short L_a92_walkHighCont
@@ -193,7 +193,7 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
         mov     esi, 1
         test    ebp, ebp
         jle     short L_a92_decideSet
-        mov     eax, offset g_byte_0054361a
+        mov     eax, offset g_audioPendByte61a
         mov     ecx, ebp
     L_a92_walkLow:
         cmp     byte ptr [eax], 0
@@ -227,7 +227,7 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
         xor     edx, edx
     L_a92_rrHighSkip:
         lea     ecx, [edx + edx*2]
-        cmp     byte ptr [ecx*8 + g_byte_005435a2], 0
+        cmp     byte ptr [ecx*8 + g_audioBank2Byte2], 0
         jne     short L_a92_rrHigh
         mov     dword ptr [g_counter_0054359c], edx
     L_a92_checkLowPick:
@@ -240,7 +240,7 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
         xor     edi, edi
     L_a92_rrLowSkip:
         lea     edx, [edi + edi*2]
-        mov     al, byte ptr [edx*8 + g_byte_0054361a]
+        mov     al, byte ptr [edx*8 + g_audioPendByte61a]
         test    al, al
         jne     short L_a92_rrLow
         mov     dword ptr [g_counter_005433c8], edi

@@ -112,10 +112,10 @@ extern unsigned int g_fightAxisPosY;
  *   Phase 0: sets [0x52aac4]=2, [0x53a50c]=0xe, installs Self with
  *     slot[+0x84]=1, g_pendingNodeType=1, arms 0x541e6c=1.
  *   Phase 1+: AudioSwap2ChainBank3State; reads slot[+0x30]:
- *     if 4 → reads vol byte at [g_byte_005435a0 + 0x542070*0x18],
+ *     if 4 → reads vol byte at [g_audioBank2Base + 0x542070*0x18],
  *     if 3 → similar with g_counter_0054359c stride. Then
  *     DualListInit + [g_gtModeFlag]==1 ? DebugStub_NoOp_A :
- *     DebugStub_NoOp_B. Tests [g_byte_004d50b4] al/ah bit 2 / 3 for
+ *     DebugStub_NoOp_B. Tests [g_audioStateDisp50b4] al/ah bit 2 / 3 for
  *     vol-down / vol-up (via dec/inc cl on the 0x18-stride byte table),
  *     wrapping at 0/0xe. Final call TripleCallByteCheck; on
  *     zero, calls AudioMicroEntries with the current vol byte
@@ -123,12 +123,12 @@ extern unsigned int g_fightAxisPosY;
  *     g_eventQueueEnd into 0x542044, vol byte into 0x54206c, calls
  *     ScaledChainStore24 and falls through to install tail.
  */
-extern unsigned int g_byte_004d50b4;
+extern unsigned int g_audioStateDisp50b4;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_phaseIdx;
 extern unsigned int g_counter_005433c8;
 extern unsigned int g_counter_0054359c;
-extern unsigned int g_byte_005435a0;
+extern unsigned int g_audioBank2Base;
 extern void AudioMicroEntries(void);
 extern void AudioSwap2ChainBank3State(void);
 extern void DebugStub_NoOp_A(void);
@@ -176,7 +176,7 @@ __declspec(naked) void Phase3InstallVolToggle(void) {
     L_p3v_useStubB:
         call    DebugStub_NoOp_B
     L_p3v_postStub:
-        mov     eax, dword ptr [g_byte_004d50b4]
+        mov     eax, dword ptr [g_audioStateDisp50b4]
         test    al, 4
         jne     short L_p3v_doDown
         test    ah, 4
@@ -185,13 +185,13 @@ __declspec(naked) void Phase3InstallVolToggle(void) {
         call    SetJmp_Push16Call_004a1ad0
         mov     eax, dword ptr [g_eventQueueCurrent]
         lea     eax, [eax + eax*2]
-        mov     cl, byte ptr [eax*8 + g_byte_005435a0]
+        mov     cl, byte ptr [eax*8 + g_audioBank2Base]
         dec     cl
-        mov     byte ptr [eax*8 + g_byte_005435a0], cl
+        mov     byte ptr [eax*8 + g_audioBank2Base], cl
         jns     short L_p3v_okDown
-        mov     byte ptr [eax*8 + g_byte_005435a0], 0xe
+        mov     byte ptr [eax*8 + g_audioBank2Base], 0xe
     L_p3v_okDown:
-        mov     eax, dword ptr [g_byte_004d50b4]
+        mov     eax, dword ptr [g_audioStateDisp50b4]
     L_p3v_checkUp:
         test    al, 8
         jne     short L_p3v_doUp
@@ -201,20 +201,20 @@ __declspec(naked) void Phase3InstallVolToggle(void) {
         call    SetJmp_Push16Call_004a1ad0
         mov     eax, dword ptr [g_eventQueueCurrent]
         lea     eax, [eax + eax*2]
-        mov     dl, byte ptr [eax*8 + g_byte_005435a0]
+        mov     dl, byte ptr [eax*8 + g_audioBank2Base]
         inc     dl
         mov     cl, dl
-        mov     byte ptr [eax*8 + g_byte_005435a0], dl
+        mov     byte ptr [eax*8 + g_audioBank2Base], dl
         cmp     cl, 0xf
         jne     short L_p3v_postUp
-        mov     byte ptr [eax*8 + g_byte_005435a0], 0
+        mov     byte ptr [eax*8 + g_audioBank2Base], 0
     L_p3v_postUp:
         call    TripleCallByteCheck
         test    eax, eax
         mov     eax, dword ptr [g_eventQueueCurrent]
         je      short L_p3v_storeAndCall
         lea     eax, [eax + eax*2]
-        movsx   ecx, byte ptr [eax*8 + g_byte_005435a0]
+        movsx   ecx, byte ptr [eax*8 + g_audioBank2Base]
         push    ecx
         call    AudioMicroEntries
         add     esp, 4
@@ -225,7 +225,7 @@ __declspec(naked) void Phase3InstallVolToggle(void) {
         mov     ecx, dword ptr [g_eventQueueEnd]
         lea     edx, [eax + eax*2]
         mov     dword ptr [g_currentNodeIdx], ecx
-        movsx   eax, byte ptr [edx*8 + g_byte_005435a0]
+        movsx   eax, byte ptr [edx*8 + g_audioBank2Base]
         mov     dword ptr [g_walkCallback], eax
         call    ScaledChainStore24
         jmp     short L_p3v_installTail

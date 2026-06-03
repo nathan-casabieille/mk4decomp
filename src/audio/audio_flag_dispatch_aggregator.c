@@ -110,61 +110,61 @@ extern unsigned int g_fightAxisPosY;
 
 /*
  * AudioFlagDispatchAggregator - 226b audio multi-bit-flag dispatcher.
- *   Six independent bit tests on g_byte_004d50d4/d8; for each set bit, push (channel<<16, &table)
+ *   Six independent bit tests on g_audioFlagAgg50d4/d8; for each set bit, push (channel<<16, &table)
  *   and call ShiftDownThreeAndAppend.
- *   Final aggregator: combine low nibble of g_byte_004d50d4 into a 4-bit value, shl 16; if nonzero,
+ *   Final aggregator: combine low nibble of g_audioFlagAgg50d4 into a 4-bit value, shl 16; if nonzero,
  *   push (combined, &table) and call again. Ret.
  */
-extern unsigned int g_byte_004d50d4;
-extern unsigned int g_byte_004d50d8;
+extern unsigned int g_audioFlagAgg50d4;
+extern unsigned int g_audioFlagAgg50d8;
 extern unsigned int g_audioFlagAggBase2;
 extern void ShiftDownThreeAndAppend(void);
 
 void AudioFlagDispatchAggregator(void) {
     __asm {
-        test    byte ptr [g_byte_004d50d4], 0x10
+        test    byte ptr [g_audioFlagAgg50d4], 0x10
         je      short L_skip0
         push    0x000b0000
         push    offset g_audioFlagAggBase2
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skip0:
-        test    byte ptr [g_byte_004d50d4], 0x40
+        test    byte ptr [g_audioFlagAgg50d4], 0x40
         je      short L_skip1
         push    0x000c0000
         push    offset g_audioFlagAggBase2
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skip1:
-        test    byte ptr [g_byte_004d50d8], 0x01
+        test    byte ptr [g_audioFlagAgg50d8], 0x01
         je      short L_skip2
         push    0x000d0000
         push    offset g_audioFlagAggBase2
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skip2:
-        test    byte ptr [g_byte_004d50d8], 0x02
+        test    byte ptr [g_audioFlagAgg50d8], 0x02
         je      short L_skip3
         push    0x000e0000
         push    offset g_audioFlagAggBase2
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skip3:
-        test    byte ptr [g_byte_004d50d8], 0x04
+        test    byte ptr [g_audioFlagAgg50d8], 0x04
         je      short L_skip4
         push    0x000f0000
         push    offset g_audioFlagAggBase2
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skip4:
-        test    byte ptr [g_byte_004d50d4], 0x20
+        test    byte ptr [g_audioFlagAgg50d4], 0x20
         je      short L_skip5
         push    0x00100000
         push    offset g_audioFlagAggBase2
         call    ShiftDownThreeAndAppend
         add     esp, 8
     L_skip5:
-        mov     cl, byte ptr [g_byte_004d50d4]
+        mov     cl, byte ptr [g_audioFlagAgg50d4]
         xor     eax, eax
         test    cl, 1
         je      short L_bit1

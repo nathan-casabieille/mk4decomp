@@ -24,12 +24,12 @@ extern unsigned int g_currentNodeIdx;
  *   mov     eax, 1
  *   ret
  */
-extern unsigned int g_byte_004d50b4;
-extern unsigned int g_byte_004d50b8;
-extern unsigned int g_byte_004d50c0;
+extern unsigned int g_audioStateDisp50b4;
+extern unsigned int g_audioStateMask50b8;
+extern unsigned int g_audioStateMask50c0;
 extern unsigned int g_dispatchSave1162;
 int Test4StatesAny(void) {
-    if (g_byte_004d50b4 || g_byte_004d50b8 || g_byte_004d50c0 || g_dispatchSave1162) {
+    if (g_audioStateDisp50b4 || g_audioStateMask50b8 || g_audioStateMask50c0 || g_dispatchSave1162) {
         return 1;
     }
     return 0;

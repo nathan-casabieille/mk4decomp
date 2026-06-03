@@ -14,17 +14,17 @@ extern unsigned int g_currentNodeIdx;
  *               if (byte_4d50b4 & 0x20) → 1;
  *               else (byte_4d50b8 & 0x04) >> 2 (0 or 1).
  */
-extern unsigned char g_byte_004d50b8;
-extern unsigned char g_byte_004d50b4;
+extern unsigned char g_audioStateMask50b8;
+extern unsigned char g_audioStateDisp50b4;
 void InputPollFlagBits(void) {
     __asm {
-        mov     al, byte ptr [g_byte_004d50b8]
+        mov     al, byte ptr [g_audioStateMask50b8]
         test    al, 2
         _emit   74h
         _emit   06h
         mov     eax, 1
         ret
-        mov     cl, byte ptr [g_byte_004d50b4]
+        mov     cl, byte ptr [g_audioStateDisp50b4]
         test    cl, 0x40
         _emit   74h
         _emit   06h

@@ -121,7 +121,7 @@ extern void Thunk_ExitGame(void);
  *   Pad-aligned bare-ret entry (0x004a27a0).
  *   Pad-aligned tail-jmp Thunk_ExitGame (0x004a27b0).
  */
-extern unsigned int g_byte_004d50b4;
+extern unsigned int g_audioStateDisp50b4;
 extern unsigned int g_audioStateMachineVar6;
 extern unsigned int g_audioStateMachineVar5;
 extern unsigned int g_audioStateMachineVar4;
@@ -179,10 +179,10 @@ extern void TablePushAccumTailJmp(void);
 extern void TestCmpZeroFour(void);
 extern void DebugMenu_DrawMatchOptions(void);
 
-extern unsigned int g_byte_005435a1;
-extern unsigned int g_byte_005435a2;
-extern unsigned int g_byte_00543619;
-extern unsigned int g_byte_0054361a;
+extern unsigned int g_audioBank2Byte1;
+extern unsigned int g_audioBank2Byte2;
+extern unsigned int g_audioPendByte619;
+extern unsigned int g_audioPendByte61a;
 extern unsigned int g_audioPreloadVar2;
 extern unsigned int g_audioPreloadVar;
 extern unsigned int g_dispatchSave519;
@@ -196,13 +196,13 @@ extern unsigned int g_audioPendingCcSlot;
 extern unsigned int g_audioMicroEntry;
 extern unsigned int g_audioPendingByte;
 extern unsigned int g_counter_0054359c;
-extern unsigned int g_byte_005435a0;
+extern unsigned int g_audioBank2Base;
 extern unsigned int g_byteIndexArr;
 extern unsigned int g_dispatchVar13;
-extern unsigned int g_byte_005435b8;
-extern unsigned int g_byte_00543724;
-extern unsigned int g_byte_0054372c;
-extern unsigned int g_byte_00543730;
+extern unsigned int g_audioByteCounterChainSt;
+extern unsigned int g_audioStateWalk6;
+extern unsigned int g_audioStateWalk7;
+extern unsigned int g_audioStateByte730;
 extern unsigned int g_voicePoolTickFlag_005437f4;
 extern unsigned int g_audioPreloadState;
 extern void AudioBindEntry(void);
@@ -411,13 +411,13 @@ extern void IncOrZero9(void);
  *   eax = g_audioBankSel; edx = g_counter_0054359c; edi = g_counter_005433c8.
  *   If eax == 1: chain low table [edi*24 + 0x0054361a/19] += 1.
  *   Else: chain high table [edx*24 + 0x005435a2/a1] += 1.
- *   ++g_bootInitState. esi=1. ecx=g_audioStateMachine0; walk g_byte_005435a2[i*24] for i in [0,ecx);
+ *   ++g_bootInitState. esi=1. ecx=g_audioStateMachine0; walk g_audioBank2Byte2[i*24] for i in [0,ecx);
  *     if any !=0: keep esi=1; else esi=0. If esi: g_audioBankPick=2; tail to cleanup.
- *   Else: ebp=g_audioStateMachine1; esi=1. Walk g_byte_0054361a[i*24] for i in [0,ebp). If esi: g_audioBankPick=1;
+ *   Else: ebp=g_audioStateMachine1; esi=1. Walk g_audioPendByte61a[i*24] for i in [0,ebp). If esi: g_audioBankPick=1;
  *     cleanup: zero g_counter_0054359c, g_counter_005433c8; call Match_TeamOutcomeScreen; pop+ret.
  *   Else (both banks have something nonzero): eax = g_audioBankSel again.
- *     If eax==2: roundrobin edx through ecx slots looking for g_byte_005435a2[edx*24]!=0; store to g_counter_0054359c.
- *     If eax==1: roundrobin edi through ebp slots looking for g_byte_0054361a[edi*24]!=0; store to g_counter_005433c8.
+ *     If eax==2: roundrobin edx through ecx slots looking for g_audioBank2Byte2[edx*24]!=0; store to g_counter_0054359c.
+ *     If eax==1: roundrobin edi through ebp slots looking for g_audioPendByte61a[edi*24]!=0; store to g_counter_005433c8.
  *     call Match_TeamOutcomeScreen; pop+ret.
  */
 __declspec(naked) void AudioBank2StatePickerWalk(void)
@@ -437,18 +437,18 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
         jne     short L_a92_highBank
         lea     eax, [edi + edi*2]
         shl     eax, 3
-        mov     byte ptr [eax + g_byte_0054361a], 1
-        mov     cl, byte ptr [eax + g_byte_00543619]
+        mov     byte ptr [eax + g_audioPendByte61a], 1
+        mov     cl, byte ptr [eax + g_audioPendByte619]
         inc     cl
-        mov     byte ptr [eax + g_byte_00543619], cl
+        mov     byte ptr [eax + g_audioPendByte619], cl
         jmp     short L_a92_afterStore
     L_a92_highBank:
         lea     eax, [edx + edx*2]
         shl     eax, 3
-        mov     byte ptr [eax + g_byte_005435a2], 1
-        mov     cl, byte ptr [eax + g_byte_005435a1]
+        mov     byte ptr [eax + g_audioBank2Byte2], 1
+        mov     cl, byte ptr [eax + g_audioBank2Byte1]
         inc     cl
-        mov     byte ptr [eax + g_byte_005435a1], cl
+        mov     byte ptr [eax + g_audioBank2Byte1], cl
     L_a92_afterStore:
         mov     ecx, dword ptr [g_bootInitState]
         mov     esi, 1
@@ -457,7 +457,7 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
         mov     ecx, dword ptr [g_audioStateMachine0]
         test    ecx, ecx
         jle     short L_a92_checkLow
-        mov     eax, offset g_byte_005435a2
+        mov     eax, offset g_audioBank2Byte2
     L_a92_walkHigh:
         cmp     byte ptr [eax], 0
         jne     short L_a92_walkHighCont
@@ -476,7 +476,7 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
         mov     esi, 1
         test    ebp, ebp
         jle     short L_a92_decideSet
-        mov     eax, offset g_byte_0054361a
+        mov     eax, offset g_audioPendByte61a
         mov     ecx, ebp
     L_a92_walkLow:
         cmp     byte ptr [eax], 0
@@ -510,7 +510,7 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
         xor     edx, edx
     L_a92_rrHighSkip:
         lea     ecx, [edx + edx*2]
-        cmp     byte ptr [ecx*8 + g_byte_005435a2], 0
+        cmp     byte ptr [ecx*8 + g_audioBank2Byte2], 0
         jne     short L_a92_rrHigh
         mov     dword ptr [g_counter_0054359c], edx
     L_a92_checkLowPick:
@@ -523,7 +523,7 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
         xor     edi, edi
     L_a92_rrLowSkip:
         lea     edx, [edi + edi*2]
-        mov     al, byte ptr [edx*8 + g_byte_0054361a]
+        mov     al, byte ptr [edx*8 + g_audioPendByte61a]
         test    al, al
         jne     short L_a92_rrLow
         mov     dword ptr [g_counter_005433c8], edi
@@ -616,9 +616,9 @@ __declspec(naked) void AudioStateInitMultiInstall(void)
         ret
     L_asimi_phase0:
         mov     ebx, 1
-        mov     byte ptr [g_byte_00543724], bl
-        mov     byte ptr [g_byte_0054372c], bl
-        mov     byte ptr [g_byte_00543730], bl
+        mov     byte ptr [g_audioStateWalk6], bl
+        mov     byte ptr [g_audioStateWalk7], bl
+        mov     byte ptr [g_audioStateByte730], bl
         call    FiveTableWalkInit
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
@@ -708,11 +708,11 @@ __declspec(naked) void AudioPreloadStreamingTrack(void)
         lea      ecx, [ecx + ecx*2]
         jne      short L_6f2e
         mov      eax, dword ptr [eax + g_dispatchSave519]
-        lea      ecx, [ecx*8 + g_byte_005435a0]
+        lea      ecx, [ecx*8 + g_audioBank2Base]
         jmp      short L_6f7f
     L_6f2e:
         mov      eax, dword ptr [eax + g_dispatchSave519]
-        lea      ecx, [ecx*8 + g_byte_005435b8]
+        lea      ecx, [ecx*8 + g_audioByteCounterChainSt]
         jmp      short L_6f7f
     L_6f3d:
         cmp      eax, 1
@@ -721,21 +721,21 @@ __declspec(naked) void AudioPreloadStreamingTrack(void)
         shl      eax, 2
         mov      ecx, dword ptr [eax + g_audioPreloadVar]
         lea      ecx, [ecx + ecx*2]
-        lea      ecx, [ecx*8 + g_byte_005435a0]
+        lea      ecx, [ecx*8 + g_audioBank2Base]
         jmp      short L_6f79
     L_6f5c:
         mov      edx, dword ptr [g_audioPreloadState]
         lea      eax, [edx*4]
         mov      ecx, dword ptr [eax + g_audioPreloadVar]
         lea      ecx, [ecx + ecx*2]
-        lea      ecx, [ecx*8 + g_byte_005435b8]
+        lea      ecx, [ecx*8 + g_audioByteCounterChainSt]
     L_6f79:
         mov      eax, dword ptr [eax + g_dispatchSave633]
     L_6f7f:
         lea      edx, [eax + eax*2]
         push     0x18
         push     ecx
-        lea      eax, [edx*8 + g_byte_005435a0]
+        lea      eax, [edx*8 + g_audioBank2Base]
         push     eax
         call     MemcpyByteN
         mov      ecx, dword ptr [g_audioPreloadState]
@@ -944,13 +944,13 @@ __declspec(naked) void Match_ChampionScreen(void)
         mov      eax, dword ptr [g_audioPreloadState]
         mov      eax, dword ptr [eax*4 + g_audioPreloadVar2]
         lea      ecx, [eax + eax*2]
-        lea      esi, [ecx*8 + g_byte_005435a0]
+        lea      esi, [ecx*8 + g_audioBank2Base]
         jmp      L_7483
     L_746c:
         mov      edx, dword ptr [g_audioPreloadState]
         mov      eax, dword ptr [edx*4 + g_audioPreloadVar]
         lea      eax, [eax + eax*2]
-        lea      esi, [eax*8 + g_byte_005435a0]
+        lea      esi, [eax*8 + g_audioBank2Base]
     L_7483:
         push     0x280000
         push     0x4d25a8
@@ -1609,7 +1609,7 @@ __declspec(naked) void PendingMatch_MStackPush2ChainLLInsert_004a56c0(void)
         mov      ebx, dword ptr [esp + 0x14]
         xor      ebp, ebp
     L_5ada:
-        mov      ecx, dword ptr [g_byte_004d50b4]
+        mov      ecx, dword ptr [g_audioStateDisp50b4]
         test     cl, 1
         jne      L_5aea
         test     ch, 1
@@ -1635,10 +1635,10 @@ __declspec(naked) void PendingMatch_MStackPush2ChainLLInsert_004a56c0(void)
         add      edx, 0xb80000
         mov      dword ptr [eax*4 + 0x3c], edx
         mov      eax, dword ptr [g_baseSel]
-        mov      ecx, dword ptr [g_byte_004d50b4]
+        mov      ecx, dword ptr [g_audioStateDisp50b4]
         jmp      L_5b5a
     L_5b4d:
-        mov      ecx, dword ptr [g_byte_004d50b4]
+        mov      ecx, dword ptr [g_audioStateDisp50b4]
         jmp      L_5b5a
     L_5b55:
         mov      eax, dword ptr [g_baseSel]
@@ -1692,21 +1692,21 @@ __declspec(naked) void PendingMatch_MStackPush2ChainLLInsert_004a56c0(void)
     L_5c15:
         call     SetJmp_Push16Call_004a1ac0
     L_5c1a:
-        mov      eax, dword ptr [g_byte_004d50b4]
+        mov      eax, dword ptr [g_audioStateDisp50b4]
         test     al, 4
         jne      L_5c28
         test     ah, 4
         je       L_5c4f
     L_5c28:
         lea      eax, [esi + esi*2]
-        mov      cl, byte ptr [eax*8 + g_byte_005435a0]
+        mov      cl, byte ptr [eax*8 + g_audioBank2Base]
         dec      cl
-        mov      byte ptr [eax*8 + g_byte_005435a0], cl
+        mov      byte ptr [eax*8 + g_audioBank2Base], cl
         jns      L_5c45
-        mov      byte ptr [eax*8 + g_byte_005435a0], 0xe
+        mov      byte ptr [eax*8 + g_audioBank2Base], 0xe
     L_5c45:
         call     SetJmp_Push16Call_004a1ac0
-        mov      eax, dword ptr [g_byte_004d50b4]
+        mov      eax, dword ptr [g_audioStateDisp50b4]
     L_5c4f:
         test     al, 8
         jne      L_5c58
@@ -1714,13 +1714,13 @@ __declspec(naked) void PendingMatch_MStackPush2ChainLLInsert_004a56c0(void)
         je       L_5c7f
     L_5c58:
         lea      eax, [esi + esi*2]
-        mov      dl, byte ptr [eax*8 + g_byte_005435a0]
+        mov      dl, byte ptr [eax*8 + g_audioBank2Base]
         inc      dl
         mov      cl, dl
-        mov      byte ptr [eax*8 + g_byte_005435a0], dl
+        mov      byte ptr [eax*8 + g_audioBank2Base], dl
         cmp      cl, 0xe
         jle      L_5c7a
-        mov      byte ptr [eax*8 + g_byte_005435a0], 0
+        mov      byte ptr [eax*8 + g_audioBank2Base], 0
     L_5c7a:
         call     SetJmp_Push16Call_004a1ac0
     L_5c7f:

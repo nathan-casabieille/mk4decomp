@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_byte_004f360c;
+extern unsigned int g_bootGatedByte360c;
 extern unsigned int g_dispatchSave74;
 extern void AudioMixerStep(void);
 extern void ChainGetterStateInstaller(void);
@@ -124,7 +124,7 @@ __declspec(naked) void BootGatedInitInstallPair(void)
 {
     __asm
     {
-        mov     al, byte ptr [g_byte_004f360c]
+        mov     al, byte ptr [g_bootGatedByte360c]
         test    al, al
         je      L_bgip_ret1
         mov     dword ptr [g_walkCallback], 0x2666

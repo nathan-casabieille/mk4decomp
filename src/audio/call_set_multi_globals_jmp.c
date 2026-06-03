@@ -43,7 +43,7 @@ extern unsigned int g_audioPathFlag;
 extern unsigned int g_audioPathFlag2;
 extern unsigned int g_counter_0054359c;
 extern unsigned int g_counter_005433c8;
-extern unsigned char g_byte_00543834;
+extern unsigned char g_audioStateByte834;
 extern void Match_TeamOutcomeScreen(void);
 void CallSetMultiGlobalsJmp(void) {
     DrainQueueCallEach();
@@ -53,6 +53,6 @@ void CallSetMultiGlobalsJmp(void) {
     g_audioPathFlag2 = 1;
     g_counter_0054359c = 0;
     g_counter_005433c8 = 0;
-    g_byte_00543834 = 1;
+    g_audioStateByte834 = 1;
     Match_TeamOutcomeScreen();
 }

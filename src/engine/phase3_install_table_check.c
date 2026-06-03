@@ -113,10 +113,10 @@ extern unsigned int g_fightAxisPosY;
  *     3-vec at [g_fightGroupHead*4+0x54/0x58/0x5c] into [g_eventQueueTotal*4
  *     + 0/4/8], then IndirectDispatchCjStore, installs Self
  *     at body with slot[+0x84]=1, g_pendingNodeType=1, arms 0x541e6c.
- *   Phase non-0: if byte g_byte_00538148 != 0, checks the scaled
+ *   Phase non-0: if byte g_handWalkState148 != 0, checks the scaled
  *     g_eventQueueIdx ptr against the 4 sentinel addresses
  *     {0x4efe18, 0x4eff00, 0x4effe8, 0x4f00d0}; on match tail-call
- *     CallSetPause. Otherwise byte g_byte_00538148 = 0, then
+ *     CallSetPause. Otherwise byte g_handWalkState148 = 0, then
  *     indirect-call [g_eventQueueChild] (vtable advance), call
  *     MStackPush6OpPop6. Reads g_currentNodeFlags cap;
  *     [g_eventQueueIdx*4] + 0x30000 is the next target; if cap >= that
@@ -124,7 +124,7 @@ extern unsigned int g_fightAxisPosY;
  *     IndirectDispatchCjStore, then StackPopDispatchTagged.
  *     Else tail-call IndirectDispatchCjStore directly.
  */
-extern unsigned int g_byte_00538148;
+extern unsigned int g_handWalkState148;
 extern void CallSetPause(void);
 extern void IndirectDispatchCjStore(void);
 extern void MStackPush6OpPop6(void);
@@ -140,7 +140,7 @@ __declspec(naked) void Phase3InstallTableCheck(void) {
         mov     dword ptr [esi + 0x84], ebx
         cmp     eax, ebx
         je      L_p3itc_phase0
-        cmp     byte ptr [g_byte_00538148], bl
+        cmp     byte ptr [g_handWalkState148], bl
         je      short L_p3itc_phase1
         mov     ecx, dword ptr [g_eventQueueIdx]
         lea     eax, [ecx*4]
@@ -152,7 +152,7 @@ __declspec(naked) void Phase3InstallTableCheck(void) {
         je      L_p3itc_pauseTail
         cmp     eax, 0x4f00d0
         je      L_p3itc_pauseTail
-        mov     byte ptr [g_byte_00538148], bl
+        mov     byte ptr [g_handWalkState148], bl
     L_p3itc_phase1:
         mov     dword ptr [g_walkCallback], ebx
         call    dword ptr [g_eventQueueChild]
