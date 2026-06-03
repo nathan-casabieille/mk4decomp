@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_0049db40;
+extern unsigned int g_orphanConst_0049db40;
 extern unsigned int g_dispatchSave616;
 extern void ChainListVecAdd(void);
 extern void GuardedSeq_MStackCall_then_CallSetPause_00471670(void);
@@ -136,7 +136,7 @@ __declspec(naked) void Phase2InitDispatchInstallSelf(void)
         mov     edx, offset g_dispatchSave616
         push    0xC0
         shr     edx, 2
-        push    offset g_const_0049db40
+        push    offset g_orphanConst_0049db40
         mov     dword ptr [g_eventQueueEnd], eax
         mov     dword ptr [g_eventQueueTotal], ecx
         mov     dword ptr [g_eventQueueIdx], edx

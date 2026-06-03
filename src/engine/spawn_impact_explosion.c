@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_0049db40;
+extern unsigned int g_orphanConst_0049db40;
 extern unsigned int g_dispatchSave986;
 extern unsigned int g_dispatchSave987;
 extern unsigned int g_dispatchSave988;
@@ -161,7 +161,7 @@ __declspec(naked) void SpawnImpactExplosion(void)
         mov      dword ptr [g_eventQueueIdx], edx
     L_1ca9:
         push     0xc0
-        push     OFFSET g_const_0049db40
+        push     OFFSET g_orphanConst_0049db40
         mov      dword ptr [g_eventQueueNotMask], 0xc1
         call     StoreTwoCall
         mov      al, byte ptr [g_xformDirtyFlags]

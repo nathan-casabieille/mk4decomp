@@ -13,11 +13,11 @@ extern unsigned int g_currentNodeIdx;
  *   mov     word ptr [0x00ab47fa], ax
  *   ret
  */
-extern unsigned short g_word_00ab47fc;
-extern unsigned short g_word_00ab47f8;
-extern unsigned short g_word_00ab47fa;
+extern unsigned short g_camRotZBam;
+extern unsigned short g_camRotXBam;
+extern unsigned short g_camRotYBam;
 void Init16BitFields(void) {
-    g_word_00ab47fc = 0x1000;
-    g_word_00ab47f8 = 0;
-    g_word_00ab47fa = 0;
+    g_camRotZBam = 0x1000;
+    g_camRotXBam = 0;
+    g_camRotYBam = 0;
 }

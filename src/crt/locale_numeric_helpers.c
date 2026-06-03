@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_004d2b88;
+extern unsigned int g_fpZeroLocale;
 extern unsigned int g_dispatchSave889;
 extern unsigned int g_dispatchSave890;
 extern unsigned int g_crtCType;
@@ -264,7 +264,7 @@ __declspec(naked) void LocaleNumericHelpers(void)
         /* Helper 4: __isnan-ish double-vs-0 check. */
         mov      eax, dword ptr [esp + 4]
         fld      qword ptr [eax]
-        fcomp    qword ptr [g_const_004d2b88]
+        fcomp    qword ptr [g_fpZeroLocale]
         fnstsw   ax
         test     ah, 1
         jne      short L_8569

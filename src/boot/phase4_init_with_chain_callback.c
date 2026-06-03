@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_0049db40;
+extern unsigned int g_orphanConst_0049db40;
 extern unsigned int g_dispatchSave617;
 extern unsigned int g_phaseChainArr2;
 extern unsigned int g_alarmTriState;
@@ -136,7 +136,7 @@ __declspec(naked) void Phase4InitWithChainCallback(void)
         inc     eax
         push    0xC0
         mov     dword ptr [g_matrixStackTop], eax
-        push    offset g_const_0049db40
+        push    offset g_orphanConst_0049db40
         mov     dword ptr [eax*4], ecx
         mov     edx, dword ptr [g_fightGroupHead]
         mov     eax, offset g_phaseChainArr2

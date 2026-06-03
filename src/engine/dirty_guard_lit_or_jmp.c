@@ -17,8 +17,8 @@
  */
 #include "engine/scenegraph.h"
 
-extern void *g_lit_004ed6d0;
-extern void *g_lit_004f17a8;
+extern void *g_litArg5b;
+extern void *g_litDirtyGuardArg;
 extern void DualEntryInstallScaledChain_ArgSarStoreJmp_0047ef60(void);
 extern void Alarm4EntryInstallCountdown(void);
 extern int  ArgSarStoreJmp(void *p);
@@ -29,7 +29,7 @@ void DirtyGuardLitOrJmp_0047ef40(void) {
         DualEntryInstallScaledChain_ArgSarStoreJmp_0047ef60();
         return;
     }
-    ArgSarStoreJmp(&g_lit_004ed6d0);
+    ArgSarStoreJmp(&g_litArg5b);
 }
 
 /* @addr 0x00496940 */
@@ -38,5 +38,5 @@ void DirtyGuardLitOrJmp_00496940(void) {
         Alarm4EntryInstallCountdown();
         return;
     }
-    ArgSarStoreJmp(&g_lit_004f17a8);
+    ArgSarStoreJmp(&g_litDirtyGuardArg);
 }

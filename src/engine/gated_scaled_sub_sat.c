@@ -121,8 +121,8 @@ extern unsigned int g_str_00542fa8;
 extern unsigned int g_or;
 extern void ArgScaledLoadCmpP1(void);
 
-extern unsigned int g_arr_005d8208;
-extern unsigned int g_arr_005d83a4;
+extern unsigned int g_nodeCountdownArr;
+extern unsigned int g_stateMachineDualBase;
 
 void GatedScaledSubSat(void) {
     __asm {
@@ -142,7 +142,7 @@ void GatedScaledSubSat(void) {
         mov     eax, dword ptr [g_currentNodeIdx]
         mov     ecx, dword ptr [g_eventQueueCurrent]
         push    offset g_str_00542fa8
-        mov     [eax*4 + g_arr_005d83a4], ecx
+        mov     [eax*4 + g_stateMachineDualBase], ecx
         call    ArgScaledLoadCmpP1
         mov     eax, dword ptr [g_framePauseFlag]
         add     esp, 4
@@ -151,14 +151,14 @@ void GatedScaledSubSat(void) {
         _emit   2ah
         mov     ecx, dword ptr [g_currentNodeIdx]
         mov     edx, dword ptr [g_walkCallback]
-        mov     eax, [ecx*4 + g_arr_005d8208]
+        mov     eax, [ecx*4 + g_nodeCountdownArr]
         sub     eax, edx
         mov     dword ptr [g_eventQueueCurrent], eax
         _emit   79h
         _emit   07h
         xor     eax, eax
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     [ecx*4 + g_arr_005d8208], eax
+        mov     [ecx*4 + g_nodeCountdownArr], eax
         }
 }
 

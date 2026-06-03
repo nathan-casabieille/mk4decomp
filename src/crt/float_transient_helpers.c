@@ -114,7 +114,7 @@ extern unsigned int g_fpDblMin;
 extern unsigned int g_fpExpClampNeg;
 extern unsigned int g_fpExpClampPos;
 extern unsigned int g_fpInfinity;
-extern unsigned int g_const_004d2bdc;
+extern unsigned int g_fpInfPow;
 extern void TwinEntryFpHelper(void);
 extern void func_004ca267(void);
 
@@ -274,7 +274,7 @@ __declspec(naked) void FloatTransientHelpers(void)
         sahf
         mov      eax, 4
         jae      short L_a3d2
-        fmul     qword ptr [g_const_004d2bdc]
+        fmul     qword ptr [g_fpInfPow]
         jmp      short L_a3d2
     L_a413:
         fld      qword ptr [g_fpExpClampNeg]

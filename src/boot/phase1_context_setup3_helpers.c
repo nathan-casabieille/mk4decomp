@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_0049db40;
+extern unsigned int g_orphanConst_0049db40;
 extern unsigned int g_dispatchSave521;
 extern unsigned int g_dispatchSave614;
 extern void CallSetPause(void);
@@ -151,7 +151,7 @@ __declspec(naked) void Phase1ContextSetup3Helpers(void)
         mov     dword ptr [g_eventQueueIdx], ecx
     L_p13_after_select:
         push    0xC0
-        push    offset g_const_0049db40
+        push    offset g_orphanConst_0049db40
         mov     dword ptr [g_eventQueueNotMask], 0xC1
         call    StoreTwoCall
         mov     al, byte ptr [g_xformDirtyFlags]

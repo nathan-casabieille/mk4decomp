@@ -23,14 +23,14 @@
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 
-extern void *g_lit_004ef4d0;
-extern void *g_lit_004ef7d8;
+extern void *g_litScaledArg4d;
+extern void *g_litScaledArgd8;
 extern void ScaledChainCallPauseSetJmp(void);
 extern void Wrapper_IterLoad_0048fd30_004ed980(void);
 
 /* @addr 0x00480fe0 */
 void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void) {
-    unsigned int idx = ((unsigned int)&g_lit_004ef4d0 >> 2) + (unsigned int)g_walkCallback;
+    unsigned int idx = ((unsigned int)&g_litScaledArg4d >> 2) + (unsigned int)g_walkCallback;
     g_currentNodeIdx = idx;
     g_xformEntityIdx = *(unsigned int*)(idx * 4);
     ScaledChainCallPauseSetJmp();
@@ -40,7 +40,7 @@ void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30
 
 /* @addr 0x00481020 */
 void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00481020(void) {
-    unsigned int idx = ((unsigned int)&g_lit_004ef7d8 >> 2) + (unsigned int)g_walkCallback;
+    unsigned int idx = ((unsigned int)&g_litScaledArgd8 >> 2) + (unsigned int)g_walkCallback;
     g_currentNodeIdx = idx;
     g_xformEntityIdx = *(unsigned int*)(idx * 4);
     ScaledChainCallPauseSetJmp();

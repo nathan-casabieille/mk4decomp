@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_0049db40;
+extern unsigned int g_orphanConst_0049db40;
 extern void AudioMixerStep(void);
 extern void BootStateTriple(void);
 extern void CallSetPause(void);
@@ -133,7 +133,7 @@ __declspec(naked) void Phase4SevenPackedDispatch(void)
         test    eax, eax
         jne     L_p4sp7_A_ret
         push    0xC0
-        push    offset g_const_0049db40
+        push    offset g_orphanConst_0049db40
         mov     dword ptr [g_eventQueueNotMask], 0xC1
         call    StoreTwoCall
         mov     al, byte ptr [g_xformDirtyFlags]

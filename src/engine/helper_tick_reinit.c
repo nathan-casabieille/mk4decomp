@@ -34,8 +34,8 @@ extern s16 g_vtxScreenP2Y;
 extern s16 g_vtxScreenX;
 extern s16 g_vtxScreenY;
 extern unsigned int g_dispatchSave1513;
-extern unsigned int g_word_00ab47f8;
-extern unsigned int g_word_00ab47fc;
+extern unsigned int g_camRotXBam;
+extern unsigned int g_camRotZBam;
 extern unsigned int g_vtxMatBase;
 extern unsigned int g_dispatchSave1530;
 extern unsigned int g_dispatchSave1531;
@@ -136,7 +136,7 @@ __declspec(naked) void Helper_TickReinit(void)
         call     Mat3x3VecMul
         mov      eax, dword ptr [esp + 0x3c]
         mov      ecx, dword ptr [esp + 0x38]
-        movsx    ebp, word ptr [g_word_00ab47f8]
+        movsx    ebp, word ptr [g_camRotXBam]
         mov      dword ptr [g_xformEntityIdx], eax
         add      eax, edi
         neg      eax
@@ -146,7 +146,7 @@ __declspec(naked) void Helper_TickReinit(void)
         sar      esi, 0xc
         add      esi, ecx
         mov      edx, dword ptr [esp + 0x40]
-        movsx    ecx, word ptr [g_word_00ab47fc]
+        movsx    ecx, word ptr [g_camRotZBam]
         imul     eax, ecx
         sar      eax, 0xc
         add      ebx, 6
@@ -167,7 +167,7 @@ __declspec(naked) void Helper_TickReinit(void)
         call     Mat3x3VecMul
         mov      eax, dword ptr [esp + 0x54]
         mov      ecx, dword ptr [esp + 0x50]
-        movsx    ebp, word ptr [g_word_00ab47f8]
+        movsx    ebp, word ptr [g_camRotXBam]
         mov      dword ptr [g_xformEntityIdx], eax
         add      eax, edi
         neg      eax
@@ -177,7 +177,7 @@ __declspec(naked) void Helper_TickReinit(void)
         sar      edi, 0xc
         add      edi, ecx
         mov      edx, dword ptr [esp + 0x58]
-        movsx    ecx, word ptr [g_word_00ab47fc]
+        movsx    ecx, word ptr [g_camRotZBam]
         imul     eax, ecx
         sar      eax, 0xc
         add      eax, edx

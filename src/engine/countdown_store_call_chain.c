@@ -114,8 +114,8 @@ extern unsigned int g_fightAxisPosY;
  *   then push (g_throwEventTime + 0x44ccc), store in g_currentNodeFlags,
  *   call F(arg), restore g_currentNodeFlags = result, tail-jmp to 0x43d620.
  */
-extern unsigned int g_arr_005d83a4_indexed_24;
-extern unsigned int g_arr_005d83a4_indexed_28;
+extern unsigned int g_stateMachineDualBase_indexed_24;
+extern unsigned int g_stateMachineDualBase_indexed_28;
 extern unsigned int g_str_0043d8c0;
 extern unsigned int g_dispatchSave254;
 extern unsigned int g_phaseThunkVar8;
@@ -137,13 +137,13 @@ L_csc_body:
         mov     edx, dword ptr [g_cj_0054205c]
         mov     ecx, offset g_dispatchSave254
         shr     ecx, 2
-        mov     dword ptr [edx*4 + g_arr_005d83a4_indexed_24], ecx
+        mov     dword ptr [edx*4 + g_stateMachineDualBase_indexed_24], ecx
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     eax, 0x45
         push    0x91
         mov     dword ptr [g_walkCallback], eax
         push    offset g_str_0043d8c0
-        mov     dword ptr [ecx*4 + g_arr_005d83a4_indexed_28], eax
+        mov     dword ptr [ecx*4 + g_stateMachineDualBase_indexed_28], eax
         call    StoreTwoCall
         mov     edx, dword ptr [g_throwEventTime]
         add     esp, 8

@@ -120,7 +120,7 @@ extern u32 g_glideE0;
 extern int g_renderer1_active;
 extern void Helper_ChkStk(void);
 
-extern unsigned int g_arr_007afa28;
+extern unsigned int g_glideCmdArgArr;
 
 __declspec(naked) int DecodeTableAllocaCall(void) {
     __asm {
@@ -160,7 +160,7 @@ loop4b4450:
         push    offset g_glideD0
         push    3
         lea     eax, [esp + 0x14]
-        mov     ecx, [edx*4 + g_arr_007afa28]
+        mov     ecx, [edx*4 + g_glideCmdArgArr]
         mov     dword ptr [g_glideE0], eax
         push    ecx
         push    0

@@ -19,8 +19,8 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern void *g_lit_004e44d8;
-extern void *g_lit_004ef218;
+extern void *g_litFourFlag;
+extern void *g_litArgF5c3;
 
 extern void ScaledChain3c74Jmp(void);
 extern void Wrapper_PackedAdvanceCallTailJmp_004e44f0(void);
@@ -37,7 +37,7 @@ void CallPauseDirtyLit_00433910(void) {
         Wrapper_PackedAdvanceCallTailJmp_004e44f0();
         return;
     }
-    PackedAdvanceCallTailJmp(&g_lit_004e44d8);
+    PackedAdvanceCallTailJmp(&g_litFourFlag);
 }
 
 /* @addr 0x00488c70 */
@@ -48,5 +48,5 @@ void CallPauseDirtyLit_00488c70(void) {
         InstallSelfChainPlusGuardedTail();
         return;
     }
-    Cascade5StageInit(&g_lit_004ef218);
+    Cascade5StageInit(&g_litArgF5c3);
 }

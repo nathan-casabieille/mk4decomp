@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_004d2a20;
+extern unsigned int g_fpZeroCam;
 extern unsigned int g_fpBam2PiScale;
 extern s16 g_vtxMat[];
 extern unsigned int g_mat3x3_007af994;
@@ -124,9 +124,9 @@ extern unsigned int g_dispatchSave1509;
 extern unsigned int g_dispatchSave1510;
 extern unsigned int g_dispatchSave1511;
 extern unsigned int g_dispatchSave1512;
-extern unsigned int g_word_00ab47f8;
-extern unsigned int g_word_00ab47fa;
-extern unsigned int g_word_00ab47fc;
+extern unsigned int g_camRotXBam;
+extern unsigned int g_camRotYBam;
+extern unsigned int g_camRotZBam;
 extern unsigned int g_dispatchSave1519;
 extern unsigned int g_dispatchSave1520;
 extern unsigned int g_dispatchSave1521;
@@ -269,7 +269,7 @@ __declspec(naked) void CameraSetupAndCullFan(void)
         mov      word ptr [g_dispatchSave1521], bx
         mov      dword ptr [esp + 0x18], edx
         fsqrt
-        fcom     qword ptr [g_const_004d2a20]
+        fcom     qword ptr [g_fpZeroCam]
         fnstsw   ax
         test     ah, 0x40
         jne      L_9bca
@@ -296,13 +296,13 @@ __declspec(naked) void CameraSetupAndCullFan(void)
         mov      eax, dword ptr [g_dispatchSave1520]
         mov      dx, di
         neg      dx
-        mov      word ptr [g_word_00ab47f8], dx
+        mov      word ptr [g_camRotXBam], dx
         mov      cx, bx
         neg      eax
         movsx    edx, bx
         neg      cx
-        mov      word ptr [g_word_00ab47fa], ax
-        mov      word ptr [g_word_00ab47fc], cx
+        mov      word ptr [g_camRotYBam], ax
+        mov      word ptr [g_camRotZBam], cx
         movsx    eax, word ptr [g_dispatchSave1520]
         neg      edx
         movsx    ecx, di
@@ -377,7 +377,7 @@ __declspec(naked) void CameraSetupAndCullFan(void)
         fild     dword ptr [esp + 0x1c]
         sar      ebx, 8
         fsqrt
-        fcom     qword ptr [g_const_004d2a20]
+        fcom     qword ptr [g_fpZeroCam]
         fnstsw   ax
         test     ah, 0x40
         jne      L_9d42

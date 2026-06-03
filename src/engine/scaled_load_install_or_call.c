@@ -19,8 +19,8 @@
 #include "engine/scenegraph.h"
 
 extern unsigned int g_baseSel;
-extern void *g_lit_004e4500;
-extern void *g_lit_004e4528;
+extern void *g_litEightFlag;
+extern void *g_litNineFlag;
 extern int PackedAdvanceCallTailJmp(void *p);
 
 /* @addr 0x00433960 */
@@ -28,7 +28,7 @@ void ScaledLoadInstallOrCall_00433960(void) {
     unsigned int cb = *(unsigned int*)(g_baseSel * 4 + 0x30);
     g_walkCallback = cb;
     if (cb) {
-        PackedAdvanceCallTailJmp(&g_lit_004e4500);
+        PackedAdvanceCallTailJmp(&g_litEightFlag);
     }
 }
 
@@ -37,6 +37,6 @@ void ScaledLoadInstallOrCall_00433990(void) {
     unsigned int cb = *(unsigned int*)(g_baseSel * 4 + 0x30);
     g_walkCallback = cb;
     if (cb) {
-        PackedAdvanceCallTailJmp(&g_lit_004e4528);
+        PackedAdvanceCallTailJmp(&g_litNineFlag);
     }
 }

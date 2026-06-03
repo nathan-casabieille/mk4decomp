@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_const_004a0060;
+extern unsigned int g_orphanConst_004a0060;
 extern unsigned int g_const_004a0b00;
 extern unsigned int g_const_004a0dc0;
 extern unsigned int g_const_004a10d0;
@@ -167,7 +167,7 @@ __declspec(naked) void GameNetSyncState(void)
         jne      short L_fc58
     L_fc0c:
         push     0x15
-        push     OFFSET g_const_004a0060
+        push     OFFSET g_orphanConst_004a0060
         mov      dword ptr [g_walkCallback], ebx
         mov      dword ptr [g_state2_00541d88], ebx
         call     SetWalkCurCallPauseDirty
