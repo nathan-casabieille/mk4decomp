@@ -115,7 +115,7 @@ extern unsigned int g_clamp_0053a6dc;
 extern void Cmp2DirtyToggle(void);
 extern void DualAddSar(void);
 extern void SaveCallRestore(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 extern void func_004214a0(void);
 
 __declspec(naked) void MkIntroFsm(void)
@@ -170,7 +170,7 @@ __declspec(naked) void MkIntroFsm(void)
         ret
     L_196c:
         mov      dword ptr [g_walkCallback], 0x2d
-        call     TableLookupCall_g_table_004efa00
+        call     TableLookupCall_g_eventTbl_112
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_1aa1

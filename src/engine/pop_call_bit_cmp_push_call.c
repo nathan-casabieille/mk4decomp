@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void CmpEqInitCallElseJmp(void);
 extern void ScaledChain3c74(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 
 void PopCallBitCmpPushCall(void) {
     __asm {
@@ -145,7 +145,7 @@ void PopCallBitCmpPushCall(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     dword ptr [g_walkCallback], 0x35
-        call    TableLookupCall_g_table_004efa00
+        call    TableLookupCall_g_eventTbl_112
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

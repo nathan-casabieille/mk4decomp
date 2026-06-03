@@ -12,8 +12,8 @@ extern unsigned int g_currentNodeIdx;
  *   mov     [eax + 0x14], 1
  *   ret
  */
-extern void *g_table_00522880;
+extern void *g_crtIfaceVtable;
 void InitFields50and14(char *p) {
-    *(void **)(p + 0x50) = &g_table_00522880;
+    *(void **)(p + 0x50) = &g_crtIfaceVtable;
     *(int  *)(p + 0x14) = 1;
 }

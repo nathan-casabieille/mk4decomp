@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 extern unsigned int g_dispatchSave1468;
 extern unsigned int g_dispatchSave1469;
 extern unsigned int g_iat_GetFileType;
@@ -138,7 +138,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         add      esp, 4
     L_8be6:
         lea      eax, [esi + 0x480]
-        mov      dword ptr [g_arr_00fa0de0], esi
+        mov      dword ptr [g_crtHandleTable], esi
         cmp      esi, eax
         mov      dword ptr [g_dispatchSave1469], 0x20
         mov      bl, 0xa
@@ -148,7 +148,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         mov      dword ptr [esi], 0xffffffff
         mov      byte ptr [esi + 5], bl
         mov      dword ptr [esi + 8], edi
-        mov      ecx, dword ptr [g_arr_00fa0de0]
+        mov      ecx, dword ptr [g_crtHandleTable]
         add      esi, 0x24
         add      ecx, 0x480
         cmp      esi, ecx
@@ -236,7 +236,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         sar      ecx, 5
         and      eax, 0x1f
         lea      edx, [eax + eax*8]
-        mov      eax, dword ptr [ecx*4 + g_arr_00fa0de0]
+        mov      eax, dword ptr [ecx*4 + g_crtHandleTable]
         mov      ecx, dword ptr [ebp]
         lea      eax, [eax + edx*4]
         mov      dword ptr [eax], ecx
@@ -253,7 +253,7 @@ __declspec(naked) void CrtIoInitFdTable(void)
         mov      ebx, dword ptr [g_iat_GetStdHandle]
         xor      ebp, ebp
     L_8d40:
-        mov      ecx, dword ptr [g_arr_00fa0de0]
+        mov      ecx, dword ptr [g_crtHandleTable]
         lea      eax, [ebp + ebp*8]
         lea      esi, [ecx + eax*4]
         mov      eax, dword ptr [ecx + eax*4]

@@ -6,10 +6,10 @@
 
 /*
  * MenuFlagBitDispatchSearch_b8730_004b8730 - 255b sister of 0x004b8630, different menu (4f5018 table).
- *   Uses (g_byte_00ab4300, g_dispatchSave1489, g_dispatchSave1495) instead of (00ab42d4, 00ab41a0, 00ab4364).
+ *   Uses (g_menuFlags4f5018, g_dispatchSave1489, g_dispatchSave1495) instead of (00ab42d4, 00ab41a0, 00ab4364).
  *   Pushed table addresses are 0x004f5018 / 0x004f501c.
  */
-extern unsigned int g_byte_00ab4300;
+extern unsigned int g_menuFlags4f5018;
 extern unsigned int g_gsmVar3;
 extern unsigned int g_dispatchSave867;
 extern unsigned int g_dispatchSave1489;
@@ -23,7 +23,7 @@ __declspec(naked) void Menu_GlideUnavailableDialog(void)
 {
     __asm
     {
-        mov     al, byte ptr [g_byte_00ab4300]
+        mov     al, byte ptr [g_menuFlags4f5018]
         push    ebx
         test    al, 1
         push    esi
@@ -32,7 +32,7 @@ __declspec(naked) void Menu_GlideUnavailableDialog(void)
         push    offset g_gsmVar3
         or      bl, 1
         push    0
-        mov     byte ptr [g_byte_00ab4300], bl
+        mov     byte ptr [g_menuFlags4f5018], bl
         call    Menu_FindNextSelectable
         add     esp, 8
         mov     dword ptr [g_dispatchSave1489], eax

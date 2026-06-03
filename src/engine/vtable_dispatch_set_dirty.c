@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   call via eax. On pause: ret. If low bit of (g_currentNodeFlags|g_cj):
  *   call ScaledNegThreeWords; pause? ret. Set bits 0x30 of g_xformDirtyFlags.
  */
-extern unsigned int g_table_004f7868;
+extern unsigned int g_xformDirtyTbl;
 extern unsigned int g_dispatchSave1525;
 extern void ScaledNegThreeWords(void);
 
@@ -131,7 +131,7 @@ void VtableDispatchSetDirty(void) {
         and     eax, 7
         add     eax, 0x10
         mov     edx, dword ptr [esp + 4]
-        mov     ecx, offset g_table_004f7868
+        mov     ecx, offset g_xformDirtyTbl
         sar     ecx, 2
         add     eax, ecx
         mov     ecx, offset g_dispatchSave1525

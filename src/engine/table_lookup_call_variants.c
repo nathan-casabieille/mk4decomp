@@ -20,46 +20,46 @@ extern unsigned int g_currentNodeIdx;
  * .skip:
  *   ret
  */
-extern unsigned short g_table_004ef998[];
+extern unsigned short g_eventTbl_50[];
 extern int TaggedSceneDispatch(int);
-void TableLookupCall_g_table_004ef998(void) {
+void TableLookupCall_g_eventTbl_50(void) {
     unsigned int idx = (unsigned int)g_walkCallback;
     unsigned short val;
     if (idx > 0x32) return;
-    val = g_table_004ef998[idx];
+    val = g_eventTbl_50[idx];
     if (val == 0) return;
     ((int (*)(unsigned short))TaggedSceneDispatch)(val);
 }
 
 /* @addr 0x00489ff0 (33b): same shape with cmp=0x70, table=0x004efa00 */
-extern unsigned short g_table_004efa00[];
-void TableLookupCall_g_table_004efa00(void) {
+extern unsigned short g_eventTbl_112[];
+void TableLookupCall_g_eventTbl_112(void) {
     unsigned int idx = (unsigned int)g_walkCallback;
     unsigned short val;
     if (idx > 0x70) return;
-    val = g_table_004efa00[idx];
+    val = g_eventTbl_112[idx];
     if (val == 0) return;
     ((int (*)(unsigned short))TaggedSceneDispatch)(val);
 }
 
 /* @addr 0x0048a130 (33b): same shape with cmp=0x41, table=0x004efd18 */
-extern unsigned short g_table_004efd18[];
-void TableLookupCall_g_table_004efd18(void) {
+extern unsigned short g_eventTbl_65[];
+void TableLookupCall_g_eventTbl_65(void) {
     unsigned int idx = (unsigned int)g_walkCallback;
     unsigned short val;
     if (idx > 0x41) return;
-    val = g_table_004efd18[idx];
+    val = g_eventTbl_65[idx];
     if (val == 0) return;
     ((int (*)(unsigned short))TaggedSceneDispatch)(val);
 }
 
 /* @addr 0x0048a160 (33b): same shape with cmp=0x13, table=0x004efae0 */
-extern unsigned short g_table_004efae0[];
-void TableLookupCall_g_table_004efae0(void) {
+extern unsigned short g_eventTbl_19[];
+void TableLookupCall_g_eventTbl_19(void) {
     unsigned int idx = (unsigned int)g_walkCallback;
     unsigned short val;
     if (idx > 0x13) return;
-    val = g_table_004efae0[idx];
+    val = g_eventTbl_19[idx];
     if (val == 0) return;
     ((int (*)(unsigned short))TaggedSceneDispatch)(val);
 }

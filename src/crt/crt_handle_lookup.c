@@ -12,7 +12,7 @@ extern unsigned int g_currentNodeIdx;
  *   table at +4 records FOPEN bit (0x01).
  */
 extern unsigned int g_dispatchSave1469;
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 
@@ -27,7 +27,7 @@ void CRTHandleLookup(void) {
         and     eax, 0x1f
         sar     ecx, 5
         lea     edx, [eax + eax*8]
-        mov     eax, dword ptr [ecx*4 + g_arr_00fa0de0]
+        mov     eax, dword ptr [ecx*4 + g_crtHandleTable]
         mov     cl, byte ptr [eax + edx*4 + 4]
         lea     eax, [eax + edx*4]
         test    cl, 1

@@ -5,17 +5,17 @@
 #include "game/tick.h"
 
 /* @addr 0x004cbaf0 (58b)
- *   indexed-bit test: returns true if a bit is set in g_byte_00f9f8c1[eax]
+ *   indexed-bit test: returns true if a bit is set in g_ctypeByteTable[eax]
  *   masked by cl, OR if (g_ctypeWordTable[eax*2] & arg2) != 0; else false.
  */
-extern unsigned char g_byte_00f9f8c1[];
+extern unsigned char g_ctypeByteTable[];
 extern unsigned short g_ctypeWordTable[];
 void IndexedBitTest(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
         mov     cl,  byte  ptr [esp + 0x0c]
         and     eax, 0xff
-        test    byte ptr [eax + g_byte_00f9f8c1], cl
+        test    byte ptr [eax + g_ctypeByteTable], cl
         _emit   75h
         _emit   1fh
         mov     ecx, dword ptr [esp + 8]

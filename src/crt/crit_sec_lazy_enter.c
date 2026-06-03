@@ -110,14 +110,14 @@ extern unsigned int g_fightAxisPosY;
 
 /*
  * @addr 0x004cd2b0 (101b crt) - lazy per-handle critsec init+enter:
- *   slot = arg & 0x1f, table = arg >> 5 -> base = g_arr_00fa0de0[table].
+ *   slot = arg & 0x1f, table = arg >> 5 -> base = g_crtHandleTable[table].
  *   If slot[+8] (critsec ptr) is null, take global lock 0x11, then
  *   InitializeCriticalSection(slot+0xc), bump slot[+8]; release lock
  *   0x11; EnterCriticalSection(*base + slot_off + 0xc).
  */
 extern unsigned int g_iat_EnterCriticalSection;
 extern unsigned int g_iat_InitializeCriticalSection;
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 extern void Lock(void);
 extern void TableLookupIatCall(void);
 
@@ -130,8 +130,8 @@ __declspec(naked) void CritSecLazyEnter(void) {
         sar     ecx, 5
         push    esi
         push    edi
-        mov     esi, dword ptr [ecx*4 + g_arr_00fa0de0]
-        lea     ebx, [ecx*4 + g_arr_00fa0de0]
+        mov     esi, dword ptr [ecx*4 + g_crtHandleTable]
+        lea     ebx, [ecx*4 + g_crtHandleTable]
         lea     edi, [eax + eax*8]
         shl     edi, 2
         add     esi, edi

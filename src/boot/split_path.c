@@ -117,14 +117,14 @@ extern unsigned int g_fightAxisPosY;
  *      to drive_out via FgetsImpl(out, src, 2), advances ebp
  *      past the drive. Else nulls drive_out if non-null.
  *   3. Walks the path identifying alphanumeric chars via the ctype
- *      table at g_byte_00f9f8c1 (bit 4 = "valid path char"), records
+ *      table at g_ctypeByteTable (bit 4 = "valid path char"), records
  *      the LAST '/' or '\' position into ebp (for dir-end), and the
  *      LAST '.' position into esp+0x10 (for ext-start).
  *   4. Copies the dir (capped at 0xff) to dir_out, then name and ext
  *      similarly. Null-terminates each output as needed.
  *   Returns nothing (void).
  */
-extern unsigned int g_byte_00f9f8c1;
+extern unsigned int g_ctypeByteTable;
 extern void FgetsImpl(void);
 
 __declspec(naked) void SplitPath(void) {
@@ -175,7 +175,7 @@ __declspec(naked) void SplitPath(void) {
         mov     al, byte ptr [esi]
         mov     edx, eax
         and     edx, 0xff
-        test    byte ptr [edx + g_byte_00f9f8c1], cl
+        test    byte ptr [edx + g_ctypeByteTable], cl
         je      short L_sp_checkSeps
         inc     esi
         jmp     short L_sp_scanNext

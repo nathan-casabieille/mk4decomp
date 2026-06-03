@@ -120,7 +120,7 @@ extern void Crt_doserrno(void);
  *   critsec, call CloseFd, exit critsec; else set errno=9 and
  *   _doserrno=0; return -1.
  */
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 extern void CritSecLazyEnter(void);
 
 __declspec(naked) void CloseImpl(void) {
@@ -136,7 +136,7 @@ __declspec(naked) void CloseImpl(void) {
         and     eax, 0x1f
         sar     ecx, 5
         lea     edx, [eax + eax*8]
-        mov     eax, dword ptr [ecx*4 + g_arr_00fa0de0]
+        mov     eax, dword ptr [ecx*4 + g_crtHandleTable]
         test    byte ptr [eax + edx*4 + 4], 1
         je      errorPath
         push    esi

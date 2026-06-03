@@ -17,11 +17,11 @@
  *   pop     ebp
  *   ret
  */
-extern void *g_table_00520070[];
+extern void *g_iatCritSecTable[];
 extern int (__stdcall *g_iat_LeaveCriticalSection)(void *);
 
 #pragma optimize("y", off)
 int TableLookupIatCall(int arg) {
-    return g_iat_LeaveCriticalSection(g_table_00520070[arg]);
+    return g_iat_LeaveCriticalSection(g_iatCritSecTable[arg]);
 }
 #pragma optimize("", on)

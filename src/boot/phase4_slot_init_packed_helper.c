@@ -123,7 +123,7 @@ extern void MStackPushDispatchBitGate(void);
 extern void SetJmp_ZeroAndDirty4(void);
 extern void SetJmp_BootStateTriple(void);
 extern void StoreDoubleNegPauseSubStore(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 
 __declspec(naked) void Phase4SlotInitPackedHelper(void)
 {
@@ -299,7 +299,7 @@ __declspec(naked) void Phase4SlotInitPackedHelper(void)
         mov     dword ptr [g_eventQueueCurrent], eax
         add     eax, 0x13
         mov     dword ptr [g_walkCallback], eax
-        call    TableLookupCall_g_table_004efa00
+        call    TableLookupCall_g_eventTbl_112
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4sip_B_ret

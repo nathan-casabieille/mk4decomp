@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
 extern void DualBranchWordLookup(void);
 extern void EntryThunkBodyStateMachine(void);
 extern void StoreTwoCallSubMain(void);
-extern void TableLookupCall_g_table_004ef998(void);
+extern void TableLookupCall_g_eventTbl_50(void);
 
 extern unsigned int g_matrixStack_arr;
 
@@ -168,7 +168,7 @@ __declspec(naked) void MStackBranchSelect(void) {
         _emit   75h
         _emit   0fh
         mov     dword ptr [g_walkCallback], 0x13
-        jmp     TableLookupCall_g_table_004ef998
+        jmp     TableLookupCall_g_eventTbl_50
         ret
     }
 }

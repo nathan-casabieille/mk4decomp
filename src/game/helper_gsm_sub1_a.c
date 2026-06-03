@@ -5,7 +5,7 @@
 #include "game/tick.h"
 
 /* Menu_Direct3DUnavailableDialog - sister of 0x4b8630 for 0x004f5050 menu. */
-extern unsigned int g_byte_00ab42ec;
+extern unsigned int g_menuD3dUnavailFlags;
 extern unsigned int g_gsmVar2;
 extern unsigned int g_dispatchSave868;
 extern unsigned int g_dispatchSave1486;
@@ -19,7 +19,7 @@ __declspec(naked) void Menu_Direct3DUnavailableDialog(void)
 {
     __asm
     {
-        mov     al, byte ptr [g_byte_00ab42ec]
+        mov     al, byte ptr [g_menuD3dUnavailFlags]
         push    ebx
         test    al, 1
         push    esi
@@ -28,7 +28,7 @@ __declspec(naked) void Menu_Direct3DUnavailableDialog(void)
         push    offset g_gsmVar2
         or      bl, 1
         push    0
-        mov     byte ptr [g_byte_00ab42ec], bl
+        mov     byte ptr [g_menuD3dUnavailFlags], bl
         call    Menu_FindNextSelectable
         add     esp, 8
         mov     dword ptr [g_dispatchSave1486], eax

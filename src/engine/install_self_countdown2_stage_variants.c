@@ -123,7 +123,7 @@ extern void InstallSelfCountdown2Stage_Phase1ChainSetupCallScale6(void);
  */
 extern void ArgSarStoreJmp(void);
 extern void CmpEqInitCallElseJmp(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 
 extern void InstallSelfCountdown2Stage_PopCallBitCmpPushCall(void);
 
@@ -190,7 +190,7 @@ __declspec(naked) void InstallSelfDualBranch(void) {
 __declspec(naked) void TripleEntryTblPushJmp(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x37
-        call    TableLookupCall_g_table_004efa00
+        call    TableLookupCall_g_eventTbl_112
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

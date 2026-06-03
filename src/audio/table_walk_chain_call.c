@@ -12,12 +12,12 @@ extern unsigned int g_currentNodeIdx;
  *   reads sbyte → adds to g_baseSel to form ecx;
  *   stores [ecx*4 + 0] into g_scaledInit; calls 0x406790; loop.
  */
-extern signed char g_table_004f3260[];
+extern signed char g_audioChainKeys[];
 extern void MStackPush2ChainLLInsert(void);
 
 void TableWalkChainCall(void) {
     __asm {
-        mov     esi, OFFSET g_table_004f3260
+        mov     esi, OFFSET g_audioChainKeys
 loop_start2:
         movsx   eax, byte ptr [esi]
         mov     ecx, dword ptr [g_baseSel]

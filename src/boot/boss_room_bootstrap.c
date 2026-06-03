@@ -127,7 +127,7 @@ extern unsigned int g_dispatchSave903;
 extern unsigned int g_dispatchSave915;
 extern unsigned int g_dispatchSave880;
 extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 
 __declspec(naked) void BossRoomInitCluster(void)
 {
@@ -224,7 +224,7 @@ __declspec(naked) void BossRoomInitCluster(void)
         mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [g_walkCallback], 0x19
-        call     TableLookupCall_g_table_004efa00
+        call     TableLookupCall_g_eventTbl_112
         cmp      dword ptr [g_framePauseFlag], edi
         jne      func_004107b4
     L_04e1:

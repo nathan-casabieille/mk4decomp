@@ -12,7 +12,7 @@ extern unsigned int g_currentNodeIdx;
  *   load g_fightGroupHead, g_player1NodeIdx; cmp; set 0x26 (or 0x27 if !eq); jmp T.
  */
 extern void SpecialAnimBuilder(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 void Set0xaCmpEqSet0x26Jmp(void) {
     g_walkCallback = (void(*)(void))0x0a;
     SpecialAnimBuilder();
@@ -21,5 +21,5 @@ void Set0xaCmpEqSet0x26Jmp(void) {
     if (g_fightGroupHead != g_player1NodeIdx) {
         g_walkCallback = (void(*)(void))0x27;
     }
-    TableLookupCall_g_table_004efa00();
+    TableLookupCall_g_eventTbl_112();
 }

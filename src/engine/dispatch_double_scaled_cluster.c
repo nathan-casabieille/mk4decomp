@@ -120,7 +120,7 @@ extern void InstallSelfChain494d60(void);
 extern void DispatchDoubleScaledCluster(void);
 
 extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 
 __declspec(naked) void MoveDispatch4StateFsm(void)
 {
@@ -196,7 +196,7 @@ __declspec(naked) void MoveDispatch4StateFsm(void)
         mov      eax, dword ptr [edx*4 + 8]
         shr      eax, 0x10
         mov      dword ptr [g_walkCallback], eax
-        call     TableLookupCall_g_table_004efa00
+        call     TableLookupCall_g_eventTbl_112
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_4d5c

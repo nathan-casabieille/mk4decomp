@@ -147,7 +147,7 @@ extern void MStackPush3CallCascade(void);
 extern void MStackPush3CmpCall(void);
 extern void MStackPushSet0004(void);
 extern void RoundCleanupCluster_TableLookupCall_g_table(void);
-extern void TableLookupCall_g_table_004ef998(void);
+extern void TableLookupCall_g_eventTbl_50(void);
 
 __declspec(naked) void PollThenInit(void) {
     __asm {
@@ -231,7 +231,7 @@ __declspec(naked) void RoundCleanupCluster_TableLookupCall_g_table(void)
         nop
         /* H2: animate + tail-jump */
         mov      dword ptr [g_walkCallback], 0x27
-        call     TableLookupCall_g_table_004ef998
+        call     TableLookupCall_g_eventTbl_50
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_758b

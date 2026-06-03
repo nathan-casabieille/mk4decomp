@@ -131,7 +131,7 @@ extern void PushDualDerefClearPop(void);
 extern void MStackPushTwoEntryChainCall(void);
 extern void PushPopScaled18(void);
 extern void PushCallSet2147Jmp(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 extern void CmpEqInitCallElseJmp(void);
 extern void MStackAngleRatioSubchain(void);
 extern void PushStackAllocCall(void);

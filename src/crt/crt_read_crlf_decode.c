@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 extern unsigned int g_iat_GetLastError;
 extern unsigned int g_iat_ReadFile;
 extern void Crt_doserrno(void);
@@ -135,8 +135,8 @@ __declspec(naked) void CrtReadCrlfDecode(void)
         and      eax, 0x1f
         sar      ecx, 5
         lea      ebx, [eax + eax*8]
-        mov      eax, dword ptr [ecx*4 + g_arr_00fa0de0]
-        lea      esi, [ecx*4 + g_arr_00fa0de0]
+        mov      eax, dword ptr [ecx*4 + g_crtHandleTable]
+        lea      esi, [ecx*4 + g_crtHandleTable]
         shl      ebx, 2
         mov      dword ptr [esp + 0x18], esi
         lea      ecx, [ebx + eax]

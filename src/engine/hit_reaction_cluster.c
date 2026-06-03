@@ -123,7 +123,7 @@ extern void PendingMatch_00459510(void);
 extern void RoundCleanupCluster_Ten404c40_404bd0(void);
 extern void SaveCallRestore(void);
 extern void StoreIncrMStackPush6(void);
-extern void TableLookupCall_g_table_004efd18(void);
+extern void TableLookupCall_g_eventTbl_65(void);
 
 __declspec(naked) void HitReactionCluster(void)
 {
@@ -230,7 +230,7 @@ __declspec(naked) void HitReactionCluster(void)
         cmp      dword ptr [g_dlNalt1], 9
         jne      L_c1e5
         mov      dword ptr [g_walkCallback], 0x1a
-        call     TableLookupCall_g_table_004efd18
+        call     TableLookupCall_g_eventTbl_65
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c21d
@@ -243,7 +243,7 @@ __declspec(naked) void HitReactionCluster(void)
         cmp      dword ptr [g_dlNalt2], 9
         jne      L_c218
         mov      dword ptr [g_walkCallback], 0x1a
-        call     TableLookupCall_g_table_004efd18
+        call     TableLookupCall_g_eventTbl_65
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c21d
@@ -261,7 +261,7 @@ __declspec(naked) void HitReactionCluster(void)
         cmp      dword ptr [g_dlNalt1], 9
         jne      L_c255
         mov      dword ptr [g_walkCallback], 0x1c
-        call     TableLookupCall_g_table_004efd18
+        call     TableLookupCall_g_eventTbl_65
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c28d
@@ -274,7 +274,7 @@ __declspec(naked) void HitReactionCluster(void)
         cmp      dword ptr [g_dlNalt2], 9
         jne      L_c288
         mov      dword ptr [g_walkCallback], 0x1c
-        call     TableLookupCall_g_table_004efd18
+        call     TableLookupCall_g_eventTbl_65
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_c28d

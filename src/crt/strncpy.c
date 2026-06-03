@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void Strncpy(void);
 extern unsigned int g_dispatchSave1435;
-extern unsigned char g_byte_00f9f8c1;
+extern unsigned char g_ctypeByteTable;
 
 /* @addr 0x004c9a30 (167b crt) - fgets-like string read with lock-iter implementation.
  *   if ([0xf9fac8] != 0): call Strncpy(dst, count, stream); return.
@@ -156,7 +156,7 @@ __declspec(naked) void FgetsImpl(void) {
         dec     edx
         mov     ebp, ecx
         and     ebp, 0xff
-        test    byte ptr [ebp + g_byte_00f9f8c1], 4
+        test    byte ptr [ebp + g_ctypeByteTable], 4
         mov     [edi], cl
         _emit   74h
         _emit   13h

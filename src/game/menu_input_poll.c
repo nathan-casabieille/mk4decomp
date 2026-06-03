@@ -114,13 +114,13 @@ extern void DrawMenu(void *menu_items, s32 selection);
 extern void Menu_PollNavInput(void);
 extern unsigned int g_gsmSub18Base;
 extern unsigned int g_dispatchSave516;
-extern unsigned char g_byte_00ab42d4;
+extern unsigned char g_menuHelpScreenFlags;
 extern unsigned int g_dispatchSave1473;
 extern unsigned int g_dispatchSave1494;
 
 /*
  * Menu_HelpScreen - 255b menu navigation dispatcher.
- *   al = g_byte_00ab42d4. If bit 0 not set: set it, push (0, &table); TableSearchAsc; store eax.
+ *   al = g_menuHelpScreenFlags. If bit 0 not set: set it, push (0, &table); TableSearchAsc; store eax.
  *   Else: load saved g_dispatchSave1473. Switch on g_dispatchSave1494 = 0/2/0x45/default.
  *     If 0 → set 0x00ab4364=2 + DrawMenu epilogue.
  *     If 2 → call Menu_PollNavInput(1); check bit 0x8000; bl&1: TableSearchDesc; check esi;
@@ -133,7 +133,7 @@ __declspec(naked) void Menu_HelpScreen(void)
 {
     __asm
     {
-        mov     al, byte ptr [g_byte_00ab42d4]
+        mov     al, byte ptr [g_menuHelpScreenFlags]
         push    ebx
         test    al, 1
         push    esi
@@ -142,7 +142,7 @@ __declspec(naked) void Menu_HelpScreen(void)
         push    offset g_gsmSub18Base
         or      bl, 1
         push    0
-        mov     byte ptr [g_byte_00ab42d4], bl
+        mov     byte ptr [g_menuHelpScreenFlags], bl
         call    Menu_FindNextSelectable
         add     esp, 8
         mov     dword ptr [g_dispatchSave1473], eax

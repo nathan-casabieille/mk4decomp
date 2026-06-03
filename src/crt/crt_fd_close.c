@@ -121,7 +121,7 @@ extern unsigned int g_dispatchSave1469;
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 
 __declspec(naked) int CrtFdClose(void) {
     __asm {
@@ -135,7 +135,7 @@ __declspec(naked) int CrtFdClose(void) {
         _emit   66h
         mov     eax, ecx
         sar     eax, 5
-        lea     edi, [eax*4 + g_arr_00fa0de0]
+        lea     edi, [eax*4 + g_crtHandleTable]
         mov     eax, ecx
         and     eax, 0x1f
         mov     edx, dword ptr [edi]

@@ -114,7 +114,7 @@ extern unsigned int g_dispatchSave882;
 extern unsigned int g_byte_00f9f838;
 extern unsigned int g_dispatchSave1465;
 extern unsigned int g_dispatchSave1466;
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 extern unsigned int g_dispatchSave1469;
 extern void CRTHandleLookup(void);
 extern void Calloc(void);
@@ -137,7 +137,7 @@ __declspec(naked) void FileTableClose(void) {
         jae     short L_ftc_failEBADF
         mov     eax, edi
         sar     eax, 5
-        lea     ebp, [eax*4 + g_arr_00fa0de0]
+        lea     ebp, [eax*4 + g_crtHandleTable]
         mov     eax, edi
         and     eax, 0x1f
         mov     ecx, dword ptr [ebp]
@@ -244,7 +244,7 @@ __declspec(naked) void FileTableClose(void) {
         mov     eax, ecx
         sar     esi, 5
         and     eax, 0x1f
-        mov     esi, dword ptr [esi*4 + g_arr_00fa0de0]
+        mov     esi, dword ptr [esi*4 + g_crtHandleTable]
         lea     eax, [eax + eax*8]
         mov     eax, dword ptr [esi + eax*4]
         cmp     eax, -1

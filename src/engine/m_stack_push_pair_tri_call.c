@@ -114,14 +114,14 @@ extern void MStackPushPairTriCall(void);
 /* @addr 0x00486290 (215b game) - chain dispatcher with 4-call cascade.
  *   g_walkCallback = 0x8000; if baseSel*4+0x7c <= 0: g_walkCallback = 0x4ccc.
  *   call CmpP1DualInitStore_00482ab0; if !pause: g_walkCallback=baseSel*4+0x60; if != 0x1003 jmp InstallSelfHelperGate.
- *   Else baseSel*4+0x74=0x1003; call MStackPushSet0008; pause-check; g_walkCallback=1; call TableLookupCall_g_table_004efa00; pause-check;
+ *   Else baseSel*4+0x74=0x1003; call MStackPushSet0008; pause-check; g_walkCallback=1; call TableLookupCall_g_eventTbl_112; pause-check;
  *   call MStackPushPairTriCall; pause-check; g_eventQueueNotMask=0; call CopyJmp_SlotCmp3way_g_currentNodeIdx; pause-check;
  *   if bit-0 set g_eventQueueNotMask=1; g_eventQueueChild=6; jmp MStackInstallCountdown.
  */
 extern void CmpP1DualInitStore_00482ab0(void);
 extern void MStackInstallCountdown(void);
 extern void MStackPushSet0008(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 
 __declspec(naked) void ChainDispatcher4Call(void) {
     __asm {
@@ -158,7 +158,7 @@ __declspec(naked) void ChainDispatcher4Call(void) {
         _emit   75h
         _emit   60h
         mov     dword ptr [g_walkCallback], 1
-        call    TableLookupCall_g_table_004efa00
+        call    TableLookupCall_g_eventTbl_112
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

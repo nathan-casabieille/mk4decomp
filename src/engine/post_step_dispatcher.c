@@ -114,7 +114,7 @@ extern void FlagThunk4EntryDispatcher(void);
 extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void Phase2InitDispatchInstallSelf(void);
 extern void StoreDoubleNegPauseSubStore(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 extern void Wrapper_ScaledChainPushCall_004ef8c8(void);
 
 __declspec(naked) void PostStepDispatcher(void)
@@ -255,7 +255,7 @@ __declspec(naked) void PostStepDispatcher(void)
         ret      
     L_79b5:
         mov      dword ptr [g_walkCallback], 8
-        call     TableLookupCall_g_table_004efa00
+        call     TableLookupCall_g_eventTbl_112
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7b00

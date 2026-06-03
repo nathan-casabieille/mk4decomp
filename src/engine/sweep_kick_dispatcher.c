@@ -125,7 +125,7 @@ extern void PushCallScaledClearJmp(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void ScaledTripleCopy4(void);
 extern void SoundSetupLoop(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 extern void ThreeChanPackClamp(void);
 extern void Vec2SumMul10ChainCompute(void);
 
@@ -326,7 +326,7 @@ __declspec(naked) void SweepKickDispatcher(void)
         jne      short L_741e
         mov      dword ptr [g_walkCallback], 0x61
     L_741e:
-        call     TableLookupCall_g_table_004efa00
+        call     TableLookupCall_g_eventTbl_112
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_744d

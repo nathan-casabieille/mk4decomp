@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   If i == cur: no free slot, return prior cur in al.
  *   Else: i = (i+1) & 0xf; retry.
  */
-extern unsigned int g_arr_00f9eb80;
+extern unsigned int g_audioVoiceQueue;
 extern unsigned int g_dsoundFieldDc;
 
 __declspec(naked) char FreeSlotFinder(void) {
@@ -130,7 +130,7 @@ __declspec(naked) char FreeSlotFinder(void) {
         xor     eax, edx
         sub     eax, edx
         movsx   ecx, al
-        cmp     word ptr [ecx*4 + g_arr_00f9eb80], bx
+        cmp     word ptr [ecx*4 + g_audioVoiceQueue], bx
         _emit   74h
         _emit   24h
         cmp     al, byte ptr [g_dsoundFieldDc]
@@ -145,7 +145,7 @@ loop4c3900:
         xor     eax, edx
         sub     eax, edx
         movsx   ecx, al
-        cmp     word ptr [ecx*4 + g_arr_00f9eb80], bx
+        cmp     word ptr [ecx*4 + g_audioVoiceQueue], bx
         _emit   75h
         _emit   0dch
         mov     byte ptr [g_dsoundFieldDc], al

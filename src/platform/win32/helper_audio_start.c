@@ -10,8 +10,8 @@
  *   arr[type*7].slot0 != 0 and g_audioMute == 0:
  *   key2 = (subtype)+type*7; call arr[key2].method30(arr[type*7].byte_16 & 1, 0, 0).
  */
-extern unsigned int g_arr_00f8fac8;
-extern unsigned int g_arr_00f9eb80;
+extern unsigned int g_audioVoicePool;
+extern unsigned int g_audioVoiceQueue;
 extern unsigned int g_audioMute;
 extern u32 g_dsoundFieldE0;
 
@@ -25,7 +25,7 @@ __declspec(naked) void Helper_AudioStart(void) {
         push    edi
         push    esi
         mov     dword ptr [g_dsoundFieldE0], 0
-        mov     esi, offset g_arr_00f9eb80
+        mov     esi, offset g_audioVoiceQueue
 loop4c4390:
         mov     ax, word ptr [esi]
         cmp     ax, 0xffff
@@ -35,7 +35,7 @@ loop4c4390:
         lea     eax, [ecx*8]
         sub     eax, ecx
         shl     eax, 2
-        mov     edx, dword ptr [eax + g_arr_00f8fac8]
+        mov     edx, dword ptr [eax + g_audioVoicePool]
         test    edx, edx
         _emit   74h
         _emit   34h
@@ -44,7 +44,7 @@ loop4c4390:
         _emit   75h
         _emit   2ah
         movsx   edx, word ptr [esi + 2]
-        mov     al, byte ptr [eax + g_arr_00f8fac8 + 0x16]
+        mov     al, byte ptr [eax + g_audioVoicePool + 0x16]
         lea     edi, [ecx*8]
         sub     edi, ecx
         and     eax, 1
@@ -52,7 +52,7 @@ loop4c4390:
         push    eax
         push    0
         push    0
-        mov     ecx, [edx*4 + g_arr_00f8fac8]
+        mov     ecx, [edx*4 + g_audioVoicePool]
         push    ecx
         mov     edx, [ecx]
         call    dword ptr [edx + 0x30]

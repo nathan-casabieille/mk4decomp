@@ -110,13 +110,13 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00480790 (168b game) - triple-entry dispatcher.
  *   Block A: ecx=baseSel; g_walkCallback=0x3e; eax = [ecx*4+0x68]-1; g_eventQueueCurrent=eax;
- *     if eax==0 set eax=0x46, g_eventQueueCurrent=0x46; [ecx*4+0x68]=eax; if g_eventQueueCurrent!=0x14 ret; else jmp TableLookupCall_g_table_004efa00.
+ *     if eax==0 set eax=0x46, g_eventQueueCurrent=0x46; [ecx*4+0x68]=eax; if g_eventQueueCurrent!=0x14 ret; else jmp TableLookupCall_g_eventTbl_112.
  *   Block B (+0x40): push 0x004ed838; [eax*4+0x68]=0x316; chain[*4+0x74]=0x407; call ArgSarStoreJmp; ret.
- *   Block C (+0x80): g_walkCallback=0x1d; call TableLookupCall_g_table_004efa00; if !pause: g_eventQueueChild=0xc; jmp CountdownInstallSelfMultiTail.
+ *   Block C (+0x80): g_walkCallback=0x1d; call TableLookupCall_g_eventTbl_112; if !pause: g_eventQueueChild=0xc; jmp CountdownInstallSelfMultiTail.
  */
 extern void ArgSarStoreJmp(void);
 extern void CountdownInstallSelfMultiTail(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 
 __declspec(naked) void TripleEntryChainGate(void) {
     __asm {
@@ -134,7 +134,7 @@ __declspec(naked) void TripleEntryChainGate(void) {
         cmp     eax, 0x14
         _emit   75h
         _emit   05h
-        jmp     TableLookupCall_g_table_004efa00
+        jmp     TableLookupCall_g_eventTbl_112
         ret
         mov     eax, dword ptr [g_baseSel]
         push    0x004ed838
@@ -158,7 +158,7 @@ __declspec(naked) void TripleEntryChainGate(void) {
         _emit   90h
         _emit   90h
         mov     dword ptr [g_walkCallback], 0x1d
-        call    TableLookupCall_g_table_004efa00
+        call    TableLookupCall_g_eventTbl_112
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

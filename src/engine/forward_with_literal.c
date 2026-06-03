@@ -17,15 +17,15 @@
  */
 
 extern int __cdecl FpExtendedToFloat(int a, int b, void *table);
-extern void *g_table_00522bc0;
-extern void *g_table_00522bd8;
+extern void *g_fpExtendedToFloatTbl1;
+extern void *g_fpExtendedToFloatTbl2;
 
 /* @addr 0x004ccce0 */
 int ForwardWithLiteral_004ccce0(int a, int b) {
-    return FpExtendedToFloat(a, b, &g_table_00522bc0);
+    return FpExtendedToFloat(a, b, &g_fpExtendedToFloatTbl1);
 }
 
 /* @addr 0x004ccd00 */
 int ForwardWithLiteral_004ccd00(int a, int b) {
-    return FpExtendedToFloat(a, b, &g_table_00522bd8);
+    return FpExtendedToFloat(a, b, &g_fpExtendedToFloatTbl2);
 }

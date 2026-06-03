@@ -125,8 +125,8 @@ extern void ScaledZero44(void);
 extern void SetJmp_MStackPush4IndirectCall(void);
 extern void StoreLitRetSet2(void);
 extern void StreamInitCountdownBody(void);
-extern void TableLookupCall_g_table_004efa00(void);
-extern void TableLookupCall_g_table_004efd18(void);
+extern void TableLookupCall_g_eventTbl_112(void);
+extern void TableLookupCall_g_eventTbl_65(void);
 
 __declspec(naked) void AggressorModeCluster(void)
 {
@@ -202,7 +202,7 @@ __declspec(naked) void AggressorModeCluster(void)
         test     eax, eax
         jne      L_e0fd
         mov      dword ptr [g_walkCallback], 9
-        call     TableLookupCall_g_table_004efa00
+        call     TableLookupCall_g_eventTbl_112
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_e0fd
@@ -213,7 +213,7 @@ __declspec(naked) void AggressorModeCluster(void)
         test     eax, eax
         jne      short L_e0fd
         mov      dword ptr [g_walkCallback], 0xf
-        call     TableLookupCall_g_table_004efd18
+        call     TableLookupCall_g_eventTbl_65
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_e0fd

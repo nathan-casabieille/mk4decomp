@@ -9,11 +9,11 @@
  *   For esi in 0xf9eb80..0xf9ebc0 (4-byte stride): if ax!=0xffff,
  *   lookup arr[type*7]; if non-null, call vtbl->method48(ax_obj).
  */
-extern unsigned int g_arr_00f9eb80;
+extern unsigned int g_audioVoiceQueue;
 extern u32 g_dsoundFieldE0;
 extern void Audio_UpdateChannels(void);
 
-extern unsigned int g_arr_00f8fac8;
+extern unsigned int g_audioVoicePool;
 
 __declspec(naked) void Helper_TitleAudioStop(void) {
     __asm {
@@ -24,7 +24,7 @@ __declspec(naked) void Helper_TitleAudioStop(void) {
         push    esi
         mov     dword ptr [g_dsoundFieldE0], 1
         call    Audio_UpdateChannels
-        mov     esi, offset g_arr_00f9eb80
+        mov     esi, offset g_audioVoiceQueue
 loop4c42f0:
         mov     ax, word ptr [esi]
         cmp     ax, 0xffff
@@ -33,7 +33,7 @@ loop4c42f0:
         movsx   eax, ax
         lea     ecx, [eax*8]
         sub     ecx, eax
-        mov     edx, [ecx*4 + g_arr_00f8fac8]
+        mov     edx, [ecx*4 + g_audioVoicePool]
         test    edx, edx
         _emit   74h
         _emit   1ch
@@ -41,7 +41,7 @@ loop4c42f0:
         sub     edx, eax
         movsx   eax, word ptr [esi + 2]
         add     edx, eax
-        mov     eax, [edx*4 + g_arr_00f8fac8]
+        mov     eax, [edx*4 + g_audioVoicePool]
         push    eax
         mov     ecx, [eax]
         call    dword ptr [ecx + 0x48]

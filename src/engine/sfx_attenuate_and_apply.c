@@ -112,7 +112,7 @@ extern void SfxAttenuateAndApply(void);
 extern void ScaledIndexConditionalAdd(void);
 extern void InstallSelfCascadingCalls(void);
 extern void DispatcherComplex131_00431530(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 
 /* @addr 0x00480570 (333b game) - 3-state install-self with chain init + long state-0 sequence.
  *   state>=2: tail-call FiveCallGuardSetTail; pop+ret.
@@ -123,7 +123,7 @@ extern void TableLookupCall_g_table_004efa00(void);
  *     If bit0(0054208c): tail-call InstallSelfCascadingCalls; pop+ret.
  *     Else: call ScaledZeroFour; if pause ret. g_walkCallback=5; call DispatcherComplex131_00431530; if pause ret.
  *     chain[baseSel*4+0x74]=0x1000; g_walkCallback=0x62; call ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0; if pause ret.
- *     g_walkCallback=0x3e; call TableLookupCall_g_table_004efa00; if pause ret.
+ *     g_walkCallback=0x3e; call TableLookupCall_g_eventTbl_112; if pause ret.
  *     Install-self at entry; state=1; g_pendingNodeType=0x33; pause=1; pop+ret.
  */
 extern void FiveCallGuardSetTail(void);
@@ -211,7 +211,7 @@ __declspec(naked) void Install3StateLongSeq(void) {
         _emit   75h
         _emit   3dh
         mov     dword ptr [g_walkCallback], 0x3e
-        call    TableLookupCall_g_table_004efa00
+        call    TableLookupCall_g_eventTbl_112
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   75h

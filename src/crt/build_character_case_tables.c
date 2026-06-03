@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_byte_00f9f8c1;
+extern unsigned int g_ctypeByteTable;
 extern unsigned int g_dispatchSave1434;
 extern unsigned int g_dispatchSave1435;
 extern unsigned int g_dispatchSave1436;
@@ -216,18 +216,18 @@ __declspec(naked) void BuildCharacterCaseTables(void)
         mov      cx, word ptr [edx]
         test     cl, 1
         je       short L_9975
-        mov      cl, byte ptr [eax + g_byte_00f9f8c1]
+        mov      cl, byte ptr [eax + g_ctypeByteTable]
         or       cl, bl
-        mov      byte ptr [eax + g_byte_00f9f8c1], cl
+        mov      byte ptr [eax + g_ctypeByteTable], cl
         mov      cl, byte ptr [esp + eax + 0x120]
         mov      byte ptr [eax + g_dispatchSave1434], cl
         jmp      short L_999f
     L_9975:
         test     cl, 2
         je       short L_9998
-        mov      cl, byte ptr [eax + g_byte_00f9f8c1]
+        mov      cl, byte ptr [eax + g_ctypeByteTable]
         or       cl, 0x20
-        mov      byte ptr [eax + g_byte_00f9f8c1], cl
+        mov      byte ptr [eax + g_ctypeByteTable], cl
         mov      cl, byte ptr [esp + eax + 0x220]
         mov      byte ptr [eax + g_dispatchSave1434], cl
         jmp      short L_999f
@@ -251,9 +251,9 @@ __declspec(naked) void BuildCharacterCaseTables(void)
         jb       short L_99dd
         cmp      eax, 0x5a
         ja       short L_99dd
-        mov      dl, byte ptr [eax + g_byte_00f9f8c1]
+        mov      dl, byte ptr [eax + g_ctypeByteTable]
         or       dl, bl
-        mov      byte ptr [eax + g_byte_00f9f8c1], dl
+        mov      byte ptr [eax + g_ctypeByteTable], dl
         mov      dl, al
         add      dl, 0x20
         mov      byte ptr [eax + g_dispatchSave1434], dl
@@ -263,9 +263,9 @@ __declspec(naked) void BuildCharacterCaseTables(void)
         jb       short L_9a03
         cmp      eax, 0x7a
         ja       short L_9a03
-        mov      cl, byte ptr [eax + g_byte_00f9f8c1]
+        mov      cl, byte ptr [eax + g_ctypeByteTable]
         or       cl, 0x20
-        mov      byte ptr [eax + g_byte_00f9f8c1], cl
+        mov      byte ptr [eax + g_ctypeByteTable], cl
         mov      cl, al
         sub      cl, 0x20
         mov      byte ptr [eax + g_dispatchSave1434], cl

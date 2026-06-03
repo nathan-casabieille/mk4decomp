@@ -13,7 +13,7 @@ extern unsigned int g_currentNodeIdx;
  *   call F; pause-test; jmp T.
  */
 extern unsigned int g_gameCountdown;
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 extern void PollThenInit(void);
 void DecBoundCheckCallJmp(void) {
     int s = (int)g_gameCountdown;
@@ -23,7 +23,7 @@ void DecBoundCheckCallJmp(void) {
     g_gameCountdown = s;
     if (s < 0x14) {
         g_walkCallback = (void(*)(void))0x32;
-        TableLookupCall_g_table_004efa00();
+        TableLookupCall_g_eventTbl_112();
         if (g_framePauseFlag) return;
     }
     PollThenInit();

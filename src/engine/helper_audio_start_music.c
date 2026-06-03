@@ -19,13 +19,13 @@
  *   Allocates a free voice via FreeSlotFinder -> byte index; on
  *   success writes (soundId, cursor) into the 4-byte g_audioChannelQueue
  *   entries. If the two byte args pan/vol [esp+0x18]/[esp+0x1c] are both
- *   <= 0x64 (0..100), looks up a (pan*25 + vol) offset in g_table_00f85b60
+ *   <= 0x64 (0..100), looks up a (pan*25 + vol) offset in g_audioFrameTbl
  *   and calls the DSound vtable params methods +0x3c and +0x40. Then,
  *   unless suppressed ([g_f9efd4] == 0), calls vtable +0x30
  *   (DirectSoundBuffer::Play) with (buf, 0, 0, loopflag). Marks the
  *   cursor busy and advances it (mod 4 - 4 voices per sound).
  */
-extern unsigned int g_table_00f85b60;
+extern unsigned int g_audioFrameTbl;
 extern unsigned int g_dispatchSave1405;
 extern u8 g_audioChannelTable[];
 extern unsigned int g_dispatchSave1408;
@@ -92,7 +92,7 @@ __declspec(naked) void Audio_PlaySoundId(void) {
         mov     eax, dword ptr [ecx]
         add     edi, edx
         shl     edi, 2
-        movsx   edx, word ptr [edi + g_table_00f85b60]
+        movsx   edx, word ptr [edi + g_audioFrameTbl]
         push    edx
         push    ecx
         call    dword ptr [eax + 0x3c]

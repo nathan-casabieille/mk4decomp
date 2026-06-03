@@ -116,7 +116,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void Crt_errno(void);
 
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 
 __declspec(naked) int Setmode(void) {
     __asm {
@@ -127,7 +127,7 @@ __declspec(naked) int Setmode(void) {
         sar     ecx, 5
         lea     edx, [eax + eax*8]
         mov     esi, dword ptr [esp + 0xc]
-        mov     eax, [ecx*4 + g_arr_00fa0de0]
+        mov     eax, [ecx*4 + g_crtHandleTable]
         mov     cl, byte ptr [eax + edx*4 + 4]
         lea     edx, [eax + edx*4 + 4]
         mov     al, cl

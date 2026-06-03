@@ -127,7 +127,7 @@ extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledLoadJmp_24(void);
 extern void ScaledLookupGuardJmpIndirect(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 extern void TournamentMenuFsmCluster(void);
 
 __declspec(naked) void ComboFinisherEventCluster(void)
@@ -226,7 +226,7 @@ __declspec(naked) void ComboFinisherEventCluster(void)
         ret
     L_5f26:
         mov      dword ptr [g_walkCallback], 0x1f
-        call     TableLookupCall_g_table_004efa00
+        call     TableLookupCall_g_eventTbl_112
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_60d0
         push     OFFSET g_dispatchTab69

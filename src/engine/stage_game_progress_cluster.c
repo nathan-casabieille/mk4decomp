@@ -122,7 +122,7 @@ extern void GateDispatch6c(void);
 extern void GuardedPushCall_Wrapper_ScaledChainPushCall_then_ArgSarStoreJmp(void);
 extern void ScaledMove48to58(void);
 extern void SixBlockCjCascade(void);
-extern void TableLookupCall_g_table_004efae0(void);
+extern void TableLookupCall_g_eventTbl_19(void);
 extern void Wrapper_ScaledChainPushCall_004ef920(void);
 
 __declspec(naked) void StageGameProgressCluster(void)
@@ -130,7 +130,7 @@ __declspec(naked) void StageGameProgressCluster(void)
     __asm {
         /* H1 */
         mov      dword ptr [g_walkCallback], 2
-        jmp      TableLookupCall_g_table_004efae0
+        jmp      TableLookupCall_g_eventTbl_19
         nop
         /* H2 */
         call     ScaledMove48to58

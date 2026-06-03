@@ -114,13 +114,13 @@ extern unsigned int g_fightAxisPosY;
  *   Otherwise: ensure buffer allocated (StreamAllocInit) or reset to [esi+8].
  *   Read via IOWrapper(buf=[esi+0x10], size=[esi+8], fd=[esi+0x18]) → eax.
  *   If 0 or -1: set EOF/error flag, ret -1.
- *   Otherwise: check device flags via fd lookup table (g_arr_00fa0de0 or default 0x5222e0):
+ *   Otherwise: check device flags via fd lookup table (g_crtHandleTable or default 0x5222e0):
  *     if 0x82 device flags set, OR 0x2000 into flags.
  *   If buf-size == 0x200 and flag-bit 8 set and flag-bit 0x400 clear: bump size to 0x1000.
  *   Decrement count, return first byte.
  */
 extern unsigned int g_crtFilbufBase;
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 extern void IOWrapper_CritSecLazyEnter_004c8fc0(void);
 extern void StreamAllocInit(void);
 
@@ -177,7 +177,7 @@ __declspec(naked) void Filbuf(void) {
         mov     edi, ecx
         sar     edi, 5
         and     ecx, 0x1f
-        mov     edi, dword ptr [edi*4 + g_arr_00fa0de0]
+        mov     edi, dword ptr [edi*4 + g_crtHandleTable]
         lea     ecx, [ecx + ecx*8]
         lea     ecx, [edi + ecx*4]
         jmp     short L_fb_checkFlags

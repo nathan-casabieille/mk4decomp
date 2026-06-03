@@ -128,7 +128,7 @@ extern void MStackPushSet0001(void);
 extern void MstackPopScaledChainPlusThunks(void);
 extern void MultiThunkDispatcher_ArgScaledTestStore(void);
 extern void ScaledAndAlfe(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 
 extern unsigned int g_dispatchSave787;
 extern void ArgScaledTestStore(void);
@@ -299,7 +299,7 @@ __declspec(naked) void InstallSelfCmdStreamInterp(void) {
         mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_walkCallback], edx
-        call    TableLookupCall_g_table_004efa00
+        call    TableLookupCall_g_eventTbl_112
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         _emit   0fh

@@ -10368,7 +10368,7 @@ functions:
     status: matched
     file: src/engine/small_helpers.c
   - addr: 0x00489f60
-    name: TableLookupCall_g_table_004ef998
+    name: TableLookupCall_g_eventTbl_50
     size: 33
     group: game
     status: matched
@@ -10380,7 +10380,7 @@ functions:
     status: matched
     file: src/engine/gated_word_push_call.c
   - addr: 0x00489ff0
-    name: TableLookupCall_g_table_004efa00
+    name: TableLookupCall_g_eventTbl_112
     size: 33
     group: game
     status: matched
@@ -10398,13 +10398,13 @@ functions:
     status: matched
     file: src/engine/byte_word_table_tagged_dispatch.c
   - addr: 0x0048a130
-    name: TableLookupCall_g_table_004efd18
+    name: TableLookupCall_g_eventTbl_65
     size: 33
     group: game
     status: matched
     file: src/engine/table_lookup_call_variants.c
   - addr: 0x0048a160
-    name: TableLookupCall_g_table_004efae0
+    name: TableLookupCall_g_eventTbl_19
     size: 33
     group: game
     status: matched

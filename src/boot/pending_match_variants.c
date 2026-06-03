@@ -385,7 +385,7 @@ extern void StoreCallPauseCallPauseJmp(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void StoreTwoCall(void);
 extern void StringDigitConvert(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 extern void TableWalkBoundedCmp(void);
 extern void Test4StatesAny(void);
 extern void TestByteSelectInit(void);
@@ -1095,7 +1095,7 @@ __declspec(naked) void Vec2SumMul10ChainCompute(void)
         nop
     L_v2sm10_sub4:
         mov     dword ptr [g_walkCallback], 0xe
-        call    TableLookupCall_g_table_004efa00
+        call    TableLookupCall_g_eventTbl_112
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_v2sm10_sub4_ret
@@ -1462,7 +1462,7 @@ __declspec(naked) void Phase4FourPackedDispatch(void)
         test    eax, eax
         jne     L_p4fpd2_M_ret
         mov     dword ptr [g_walkCallback], 0x0E
-        call    TableLookupCall_g_table_004efa00
+        call    TableLookupCall_g_eventTbl_112
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4fpd2_M_ret
@@ -1943,7 +1943,7 @@ __declspec(naked) void PunchAnimCluster(void)
         nop
         /* === Helper 6: event 0x65 + jmp 0x496fc0 === */
         mov      dword ptr [g_walkCallback], 0x65
-        call     TableLookupCall_g_table_004efa00
+        call     TableLookupCall_g_eventTbl_112
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_6fbd
@@ -4033,7 +4033,7 @@ __declspec(naked) void PendingMatch_TripleSubVec3(void)
         mov      eax, dword ptr [g_eventQueueEnd]
         mov      dword ptr [eax*4 + 0x10], 0x418030
         mov      dword ptr [g_walkCallback], 0x6c
-        call     TableLookupCall_g_table_004efa00
+        call     TableLookupCall_g_eventTbl_112
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      L_7de7

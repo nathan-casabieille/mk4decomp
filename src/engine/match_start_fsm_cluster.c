@@ -123,7 +123,7 @@ extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledLoadJmp_00429390(void);
 extern void SfxAttenuateAndApply(void);
 extern void StreamFlagPackedSelectChain(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 
 __declspec(naked) void MatchStartFsmCluster(void)
 {
@@ -217,7 +217,7 @@ __declspec(naked) void MatchStartFsmCluster(void)
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [g_walkCallback], 0x50
-        call     TableLookupCall_g_table_004efa00
+        call     TableLookupCall_g_eventTbl_112
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_9288
         mov      dword ptr [g_eventQueueNotMask], 3

@@ -120,7 +120,7 @@ extern void EntryThunkBodyStateMachine(void);
 extern void FiveCallGuardSetTail(void);
 extern void ScaledDualPropagateJmp(void);
 extern void ScaledZero44(void);
-extern void TableLookupCall_g_table_004ef998(void);
+extern void TableLookupCall_g_eventTbl_50(void);
 
 __declspec(naked) void GuardedThenCjCascade(void) {
     __asm {
@@ -131,7 +131,7 @@ __declspec(naked) void GuardedThenCjCascade(void) {
         _emit   75h
         _emit   2ah
         mov     dword ptr [g_walkCallback], 0x13
-        call    TableLookupCall_g_table_004ef998
+        call    TableLookupCall_g_eventTbl_50
         push    0x004ed420
         call    ScaledDualPropagateJmp
         mov     eax, dword ptr [g_framePauseFlag]

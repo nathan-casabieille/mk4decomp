@@ -7,11 +7,11 @@
 /*
  * @addr 0x004c5cf0 (117b boot) - lazy stream init+open:
  *   calls helpers to lock and reset, then either points eax at the
- *   per-handle entry in g_arr_00fa0de0 (if fd valid) or at the global
+ *   per-handle entry in g_crtHandleTable (if fd valid) or at the global
  *   stdfile slot 0x005222e0. Clears bit 1 of the flag byte, calls
  *   IOWrapper(fd,0,0), then RangePathIATDispatch_TableLookupIatCall on the FILE.
  */
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 extern void FFlushImpl(void);
 extern void IOWrapper_CritSecLazyEnter_004c8dd0(void);
 extern void RangePathIATDispatch_Lock(void);
@@ -39,7 +39,7 @@ __declspec(naked) void Helper_FOpenPostInit(void) {
         sar     ecx, 5
         and     eax, 0x1f
         lea     edx, [eax + eax*8]
-        mov     eax, dword ptr [ecx*4 + g_arr_00fa0de0]
+        mov     eax, dword ptr [ecx*4 + g_crtHandleTable]
         lea     eax, [eax + edx*4]
         jmp     gotEntry
 useStd:

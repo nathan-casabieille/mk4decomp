@@ -15,7 +15,7 @@ extern unsigned int g_currentNodeIdx;
  */
 extern void MStackPush2TripleCallChain(void);
 extern void GuardedScaled_MStackPush8_then_PendingMatch(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 void ScaledLoadCmp1003JmpDispatch(void) {
     unsigned int v = ((ScenegraphNode *)(g_baseSel * 4))->fsm_state;
     g_walkCallback = (void (*)(void))v;
@@ -25,5 +25,5 @@ void ScaledLoadCmp1003JmpDispatch(void) {
     GuardedScaled_MStackPush8_then_PendingMatch();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x3b;
-    TableLookupCall_g_table_004efa00();
+    TableLookupCall_g_eventTbl_112();
 }

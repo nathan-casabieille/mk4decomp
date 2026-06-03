@@ -117,7 +117,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_iat_GetLastError;
 extern unsigned int g_iat_SetFilePointer;
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 extern void CRTHandleLookup(void);
 extern void Crt_errno(void);
 extern void DosMapErr(void);
@@ -168,7 +168,7 @@ success:
         and     esi, 0x1f
         sar     eax, 5
         lea     ecx, [esi + esi*8]
-        mov     edx, dword ptr [eax*4 + g_arr_00fa0de0]
+        mov     edx, dword ptr [eax*4 + g_crtHandleTable]
         lea     eax, [edx + ecx*4 + 4]
         mov     cl, byte ptr [edx + ecx*4 + 4]
         and     cl, 0xfd

@@ -120,7 +120,7 @@ extern void ScaledAndAlfb(void);
 extern void ScaledAndAlfe(void);
 extern void ScaledLoadOrSetJmp(void);
 extern void StateDispatchTable(void);
-extern void TableLookupCall_g_table_004efae0(void);
+extern void TableLookupCall_g_eventTbl_19(void);
 extern void TripleEntryBitsetMStack(void);
 
 __declspec(naked) void GameLoaderHandlerCluster(void)
@@ -251,7 +251,7 @@ __declspec(naked) void GameLoaderHandlerCluster(void)
         test     eax, eax
         jne      short L_788e
         mov      dword ptr [g_walkCallback], 5
-        call     TableLookupCall_g_table_004efae0
+        call     TableLookupCall_g_eventTbl_19
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_788e

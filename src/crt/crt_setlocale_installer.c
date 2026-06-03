@@ -114,7 +114,7 @@ extern unsigned int g_crtLocaleEnvVarTbl;
 extern unsigned int g_dispatchSave115;
 extern unsigned int g_crtTlsSlot;
 extern unsigned int g_dispatchSave1433;
-extern unsigned int g_byte_00f9f8c1;
+extern unsigned int g_ctypeByteTable;
 extern unsigned int g_dispatchSave1435;
 extern unsigned int g_dispatchSave1436;
 extern unsigned int g_dispatchSave1437;
@@ -220,9 +220,9 @@ __declspec(naked) void CrtSetlocaleInstaller(void)
         cmp      eax, ecx
         ja       short L_9613
     L_95ff:
-        mov      bl, byte ptr [eax + g_byte_00f9f8c1]
+        mov      bl, byte ptr [eax + g_ctypeByteTable]
         or       bl, 4
-        mov      byte ptr [eax + g_byte_00f9f8c1], bl
+        mov      byte ptr [eax + g_ctypeByteTable], bl
         inc      eax
         cmp      eax, ecx
         jbe      short L_95ff
@@ -234,9 +234,9 @@ __declspec(naked) void CrtSetlocaleInstaller(void)
     L_961d:
         mov      eax, esi
     L_961f:
-        mov      bl, byte ptr [eax + g_byte_00f9f8c1]
+        mov      bl, byte ptr [eax + g_ctypeByteTable]
         or       bl, 8
-        mov      byte ptr [eax + g_byte_00f9f8c1], bl
+        mov      byte ptr [eax + g_ctypeByteTable], bl
         inc      eax
         cmp      eax, 0xff
         jb       short L_961f
@@ -308,7 +308,7 @@ __declspec(naked) void CrtSetlocaleInstaller(void)
         ja       short L_96ec
         mov      dl, byte ptr [edi + g_dispatchSave117]
     L_96e1:
-        or       byte ptr [eax + g_byte_00f9f8c1], dl
+        or       byte ptr [eax + g_ctypeByteTable], dl
         inc      eax
         cmp      eax, ecx
         jbe      short L_96e1

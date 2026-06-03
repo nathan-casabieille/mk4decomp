@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 extern void Helper_AudioRelease(void);
 extern void Snd3DVolumePanSet(void);
 extern unsigned int g_dispatchSave527[2];  /* double constant */
-extern unsigned char g_table_004f7dc0[];
+extern unsigned char g_effectTbl680[];
 
 /* @addr 0x004be870 (216b engine.scenegraph) - effect-table walker.
  *   Reads param (ecx<47), computes table base = &g_table[idx*680], iterates
@@ -137,7 +137,7 @@ __declspec(naked) void EffectTableWalker(void) {
         shl     eax, 4
         add     eax, ecx
         lea     eax, [eax + eax*4]
-        lea     esi, [eax*8 + g_table_004f7dc0]
+        lea     esi, [eax*8 + g_effectTbl680]
     L_et_loop:
         mov     ax, word ptr [esi]
         cmp     ax, 0xffff

@@ -118,7 +118,7 @@ extern unsigned int g_crtAbortBase;
 extern unsigned int g_crtFpuSlot1;
 extern unsigned int g_crtCType;
 extern unsigned int g_crtCleanupFlag;
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 extern unsigned int g_iat_GetModuleFileNameA;
 extern unsigned int g_iat_WriteFile;
 extern unsigned int g_iat_GetStdHandle;
@@ -266,7 +266,7 @@ __declspec(naked) void RaiseAbortLocalized(void)
         add      esp, 0x1a8
         ret
     L_c1fd:
-        mov      eax, dword ptr [g_arr_00fa0de0]
+        mov      eax, dword ptr [g_crtHandleTable]
         test     eax, eax
         je       short L_c20e
         mov      esi, dword ptr [eax + 0x48]

@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004ccfa0 (360b crt) - _ioinit-style file-table extend / find.
  *   Enters crit-sec lock 0x12 (Lock(0x12)), then walks the
- *   array of 0x480-byte file-table blocks at g_arr_00fa0de0. For each
+ *   array of 0x480-byte file-table blocks at g_crtHandleTable. For each
  *   block, scans 0x24-byte entries looking for one with bit-0 of [+4]
  *   set or count [+8] zero - lazy-initializes the InitializeCriticalSection
  *   slot at [esi+0xc] via IAT [0x4d215c] on first use, then locks via
@@ -124,7 +124,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_iat_LeaveCriticalSection;
 extern unsigned int g_iat_EnterCriticalSection;
 extern unsigned int g_iat_InitializeCriticalSection;
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 extern unsigned int g_dispatchSave1469;
 extern void CritSecLazyEnter(void);
 extern void LoadArgPushCall(void);
@@ -145,7 +145,7 @@ __declspec(naked) void FileTableExtendOrFind(void) {
         add     esp, 4
         mov     dword ptr [esp + 0x14], edi
         xor     ebx, ebx
-        mov     ebp, offset g_arr_00fa0de0
+        mov     ebp, offset g_crtHandleTable
     L_fte_outer:
         mov     esi, dword ptr [ebp]
         test    esi, esi
@@ -222,7 +222,7 @@ __declspec(naked) void FileTableExtendOrFind(void) {
         lea     ecx, [eax + 0x480]
         add     ebx, 0x20
         cmp     eax, ecx
-        mov     dword ptr [edi*4 + g_arr_00fa0de0], eax
+        mov     dword ptr [edi*4 + g_crtHandleTable], eax
         mov     dword ptr [g_dispatchSave1469], ebx
         jae     short L_fte_postSeed
         mov     cl, 0xa
@@ -231,7 +231,7 @@ __declspec(naked) void FileTableExtendOrFind(void) {
         mov     dword ptr [eax], 0xffffffff
         mov     byte ptr [eax + 5], cl
         mov     dword ptr [eax + 8], edx
-        mov     esi, dword ptr [edi*4 + g_arr_00fa0de0]
+        mov     esi, dword ptr [edi*4 + g_crtHandleTable]
         add     eax, 0x24
         add     esi, 0x480
         cmp     eax, esi

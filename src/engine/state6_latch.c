@@ -144,7 +144,7 @@ void State6Latch(void) {
     g_byte_0054389c = 1;
     ((ScenegraphNode *)(g_baseSel * 4))->state_mask = 6;
     g_walkCallback = 0x2c;
-    TableLookupCall_g_table_004efd18();
+    TableLookupCall_g_eventTbl_65();
     if (g_framePauseFlag != 0) return;
     ClearBit2x34();
 }

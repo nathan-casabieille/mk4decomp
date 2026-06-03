@@ -124,7 +124,7 @@ extern unsigned int g_dispatchSave644;
 extern unsigned int g_dispatchTableArr6;
 
 extern void ArgSarStoreJmp(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 
 __declspec(naked) void BossRoarCluster(void)
 {
@@ -178,7 +178,7 @@ __declspec(naked) void BossRoarCluster(void)
         ret
     L_82ab:
         mov      dword ptr [g_walkCallback], 0x40
-        call     TableLookupCall_g_table_004efa00
+        call     TableLookupCall_g_eventTbl_112
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_8361

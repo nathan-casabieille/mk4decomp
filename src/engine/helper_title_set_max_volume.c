@@ -6,12 +6,12 @@
 /* @addr 0x004c3eb0 (60b)
  *   if g_dsoundPrimary != 0:
  *     bl = clamp(arg, 0..0x64); ecx = sbyte(bl); eax = (ecx*16 + ecx)*3 = 51*ecx;
- *     ecx = (short)g_table_00f85b60[eax*8]; call vtable[edx, +0x3c](edx, ecx);
+ *     ecx = (short)g_audioFrameTbl[eax*8]; call vtable[edx, +0x3c](edx, ecx);
  *     g_dispatchSave1416 = bl.
  */
 extern void * g_dsoundPrimary;
 extern unsigned char g_byte_00f9efec;
-extern short g_table_00f85b60[];
+extern short g_audioFrameTbl[];
 
 __declspec(naked) void Helper_TitleSetMaxVolume(void) {
     __asm {
@@ -32,7 +32,7 @@ __declspec(naked) void Helper_TitleSetMaxVolume(void) {
         shl     eax, 4
         add     eax, ecx
         lea     eax, [eax + eax*2]
-        movsx   ecx, word ptr [eax*8 + g_table_00f85b60]
+        movsx   ecx, word ptr [eax*8 + g_audioFrameTbl]
         push    ecx
         push    edx
         call    dword ptr [esi + 0x3c]

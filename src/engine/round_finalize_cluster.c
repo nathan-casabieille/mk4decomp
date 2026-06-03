@@ -125,7 +125,7 @@ extern void MStackPush2ChainPrepend(void);
 extern void Phase1ContextSetup3Helpers(void);
 extern void QuadBlockSoundInit(void);
 extern void ScaledStackCallPause(void);
-extern void TableLookupCall_g_table_004efa00(void);
+extern void TableLookupCall_g_eventTbl_112(void);
 extern void ThreeChanPackClamp(void);
 
 __declspec(naked) void RoundFinalizeCluster(void)
@@ -343,7 +343,7 @@ __declspec(naked) void RoundFinalizeCluster(void)
         nop
         /* === h5 (0x49bb70): 489ff0+40d990 chain → tail-jmp 49bb90 === */
         mov      dword ptr [g_walkCallback], 0x5e
-        call     TableLookupCall_g_table_004efa00
+        call     TableLookupCall_g_eventTbl_112
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_bb8b

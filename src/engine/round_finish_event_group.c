@@ -114,8 +114,8 @@ extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0
 extern void RoundFinishEventGroup(void);
 extern void CmpP1DualInitStore_00482ab0(void);
 extern void ScaledCmpJlJmp(void);
-extern void TableLookupCall_g_table_004efa00(void);
-extern void TableLookupCall_g_table_004efae0(void);
+extern void TableLookupCall_g_eventTbl_112(void);
+extern void TableLookupCall_g_eventTbl_19(void);
 extern void Wrapper_IterLoad_0048fd30_004f12a8(void);
 extern void Wrapper_IterLoad_0048fd30_004f12ac(void);
 extern unsigned int g_dispatchSave595;
@@ -250,7 +250,7 @@ __declspec(naked) void GameModeAdvanceCluster(void)
         nop
         /* H6: */
         mov      dword ptr [g_walkCallback], 6
-        call     TableLookupCall_g_table_004efae0
+        call     TableLookupCall_g_eventTbl_19
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_218d
@@ -261,7 +261,7 @@ __declspec(naked) void GameModeAdvanceCluster(void)
         nop
         /* H7: */
         mov      dword ptr [g_walkCallback], 8
-        call     TableLookupCall_g_table_004efa00
+        call     TableLookupCall_g_eventTbl_112
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_21ad

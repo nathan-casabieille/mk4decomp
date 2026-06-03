@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern void Crt_errno(void);
 extern void IOWrapper_CritSecLazyEnter_004c8dd0(void);
-extern unsigned int g_arr_00fa0de0;
+extern unsigned int g_crtHandleTable;
 
 __declspec(naked) void FileTellAdjusted(void)
 {
@@ -172,7 +172,7 @@ __declspec(naked) void FileTellAdjusted(void)
         mov      eax, ebx
         sar      ebp, 5
         and      eax, 0x1f
-        mov      ebp, dword ptr [ebp*4 + g_arr_00fa0de0]
+        mov      ebp, dword ptr [ebp*4 + g_crtHandleTable]
         lea      eax, [eax + eax*8]
         test     byte ptr [ebp + eax*4 + 4], 0x80
         je       short L_597c
@@ -222,7 +222,7 @@ __declspec(naked) void FileTellAdjusted(void)
         sub      esi, edi
         sar      ecx, 5
         and      eax, 0x1f
-        lea      ebp, [ecx*4 + g_arr_00fa0de0]
+        lea      ebp, [ecx*4 + g_crtHandleTable]
         lea      edi, [eax + eax*8]
         mov      eax, dword ptr [ebp]
         shl      edi, 2
