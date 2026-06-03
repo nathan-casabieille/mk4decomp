@@ -147,7 +147,19 @@ typedef struct FightGroupNode {
     u32 flags;              /* +0x34 fight-group flag bitfield        */
     u32 _38[2];             /* +0x38..+0x3F                           */
     u32 bits;               /* +0x40 bitfield (shr+mask in dispatch)  */
-    u32 _44[11];            /* +0x44..+0x6F                           */
+    u32 child_c;            /* +0x44 third child reference            */
+    u32 _48[3];             /* +0x48..+0x53 user state                */
+    s32 position_x;         /* +0x54 vec3 X coord                     */
+    s32 position_y;         /* +0x58 vec3 Y coord                     */
+    s32 position_z;         /* +0x5C vec3 Z coord                     */
+    u32 _60[3];             /* +0x60..+0x6B polymorphic               */
+    s32 facing_lead;        /* +0x6C horizontal geometric scalar
+                             * (per node_struct.md "+0x6c facing lead":
+                             * round-start +/-0x62e97 placement, per-tick
+                             * facing sign +/-1.0, dot-product write
+                             * from X/Z position). Polymorphic - other
+                             * views reuse this slot for unrelated
+                             * scratch (camera-bounce smoothing). */
     s32 vel_y;              /* +0x70 vertical velocity, integrated
                              * against +0x58 (position_y) every frame.
                              * Two ballistic handlers add a per-frame
