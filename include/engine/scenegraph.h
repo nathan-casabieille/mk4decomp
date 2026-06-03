@@ -148,11 +148,14 @@ typedef struct FightGroupNode {
                              * +0x70 vel_y term. Linear vs angular
                              * velocity unconfirmed but the uniform-decay
                              * pattern is verified.                       */
-    u32 _84;                /* +0x84 install_flag in ScenegraphNode view */
+    u32 install_flag;       /* +0x84 - shared semantic with ScenegraphNode */
     u32 unused_88[19];      /* +0x88..+0xD3 same confirmed dead region
                              * as ScenegraphNode.unused_88 (sister view) */
-    u32 _D4[5];             /* +0xD4..+0xE7 header (magic + ptr_field +
-                             * type_word + work_type + next_link) */
+    u32 magic;              /* +0xD4 = NODE_LIVE_MAGIC when live */
+    u32 ptr_field;          /* +0xD8 alloc scan key (data-area mirror) */
+    u32 type_word;          /* +0xDC type tag */
+    u32 work_type;          /* +0xE0 alloc-time g_eventQueueWorkType */
+    u32 next_link;          /* +0xE4 linked-list next pointer */
 } FightGroupNode;
 
 /* Sister view of the same 232-byte slot when used as a node carrying
@@ -185,10 +188,14 @@ typedef struct AuxVec3Node {
     s32 aux_y;              /* +0x64 secondary vec3 Y component       */
     s32 aux_z;              /* +0x68 secondary vec3 Z component       */
     u32 _6C[6];             /* +0x6C..+0x83 polymorphic user state    */
-    u32 _84;                /* +0x84 install_flag in ScenegraphNode view */
+    u32 install_flag;       /* +0x84 - shared semantic with ScenegraphNode */
     u32 unused_88[19];      /* +0x88..+0xD3 same confirmed dead region
                              * as ScenegraphNode.unused_88              */
-    u32 _D4[5];             /* +0xD4..+0xE7 header                     */
+    u32 magic;              /* +0xD4 = NODE_LIVE_MAGIC when live */
+    u32 ptr_field;          /* +0xD8 alloc scan key (data-area mirror) */
+    u32 type_word;          /* +0xDC type tag */
+    u32 work_type;          /* +0xE0 alloc-time g_eventQueueWorkType */
+    u32 next_link;          /* +0xE4 linked-list next pointer */
 } AuxVec3Node;
 
 /* === Allocator ============================================== */
