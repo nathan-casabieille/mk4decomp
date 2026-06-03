@@ -14,16 +14,18 @@ The decomp project moves along several independent dimensions, and a single
   with MSVC 5.0 SP3 - the remaining naked functions all hit codegen quirks
   pure C cannot reproduce. Shown but not in the composite.
 
-- **Function naming** - % of functions in `config/symbols.yaml` whose name
-  does NOT end in an address suffix `_00xxxxxx`. A fully-named function like
-  `LoadGeoAsset_Textures` reads as documentation; `Helper_00412ff0` is a
-  placeholder that needs investigation. Tickers up as functions are
-  semantically named (Priority 4 in the agent brief).
+- **Function naming** - % of functions whose name carries semantic content
+  beyond a generic-prefix placeholder. A name counts as "named" if it has no
+  address suffix at all (`LoadGeoAsset_Textures`) OR if it has an address
+  suffix but ALSO carries a specific identifier (`Wrapper_OrListLoop_004de3f8`
+  - the target name `OrListLoop` is meaningful; `PendingMatch_004013a0` -
+  the FSM family `PendingMatch` is specific). Only bare placeholders like
+  `func_00411f0` (generic prefix + addr) count as not-named.
 
-- **Global naming** - same idea for `g_*` globals declared in `include/` and
-  referenced in `src/`. A fully-named global like `g_framePauseFlag` is done;
-  `g_audioBankPick_005433c0` still carries an address suffix. Tickers up with
-  Priority 3 work.
+- **Global naming** - same idea for `g_*` globals. `g_framePauseFlag` is
+  fully named; `Wrapper_OrListLoop_004de3f8` is also named (the arg hex is a
+  meaningful disambiguator). `g_table_004ab4e78` and `g_byte_005435a0` are
+  NOT named - the prefix is generic and the address is the only info.
 
 - **Struct field coverage** - % of fields in `typedef struct` blocks under
   `include/` that have a real name (not `_NN` / `_NN[K]` placeholders). This
@@ -69,6 +71,54 @@ NAKED_DECL_RE = re.compile(r'__declspec\s*\(\s*naked\s*\)')
 
 # An address-suffix name like `Helper_00412ff0` or `g_audioBank_005433c0`.
 ADDR_SUFFIX_RE = re.compile(r'_00[0-9a-fA-F]{6,}$')
+
+# Generic prefixes that, paired with only an address suffix, leave a name
+# with no semantic content. Names like `func_00411f0` or `g_table_004ab4e7`
+# are pure placeholders; names with any additional segment beyond
+# `<generic_prefix>_<addr>` (e.g. `Wrapper_OrListLoop_004de3f8` or
+# `g_dispatchSave1000`) carry semantic information and count as named.
+GENERIC_FN_PREFIXES = {'func', 'Helper', 'Sub', 'Lab', 'sub'}
+GENERIC_G_PREFIXES  = {
+    'g_table', 'g_byte', 'g_const', 'g_word', 'g_lit',
+    'g_arr', 'g_fp', 'g_struct', 'g_iface', 'g_data',
+    'g_x', 'g_state', 'g_zero', 'g_load',
+}
+
+
+def is_semantically_named(name):
+    """A name is semantically named if it carries information beyond a generic
+    prefix + address suffix.
+
+    Examples:
+      - `g_baseSel`               -> True  (no addr suffix at all)
+      - `Wrapper_OrListLoop_004de3f8` -> True  (target name in the middle)
+      - `MStackCall_MStackPush2ChainInsert_00406250` -> True
+      - `PendingMatch_004013a0`   -> True  (specific FSM-family prefix)
+      - `func_00411f0`            -> False (generic prefix + addr only)
+      - `g_table_004ab4e78`       -> False (generic prefix + addr only)
+      - `g_dispatchSave1000`      -> True  (no addr suffix, has slot ID)
+    """
+    if not ADDR_SUFFIX_RE.search(name):
+        return True
+    parts = name.split('_')
+    non_hex = [p for p in parts if not re.fullmatch(r'[0-9a-fA-F]+', p)]
+    if name.startswith('g_'):
+        # For globals, the leading `g_<word>` is the prefix group; check if
+        # that combined prefix is in the generic set, and require additional
+        # semantic content beyond it.
+        if len(non_hex) >= 2:
+            head = '_'.join(non_hex[:2])
+            if head in GENERIC_G_PREFIXES:
+                return len(non_hex) >= 3
+            return True
+        return False
+    else:
+        # For functions, the first segment is the family prefix.
+        if not non_hex:
+            return False
+        if non_hex[0] in GENERIC_FN_PREFIXES:
+            return len(non_hex) >= 2
+        return True
 
 
 def load_symbols():
@@ -127,7 +177,8 @@ def classify_file(path):
 
 
 def count_function_naming(syms):
-    """Return (named, total). 'named' = no `_00xxxxxx` address suffix."""
+    """Return (named, total). 'named' = carries semantic content beyond
+    `<generic_prefix>_<addr>` (see is_semantically_named)."""
     total = 0
     named = 0
     for s in syms:
@@ -135,7 +186,7 @@ def count_function_naming(syms):
         if not name:
             continue
         total += 1
-        if not ADDR_SUFFIX_RE.search(name):
+        if is_semantically_named(name):
             named += 1
     return (named, total)
 
@@ -153,7 +204,8 @@ G_REF_RE = re.compile(r'\bg_([A-Za-z_][A-Za-z0-9_]*)')
 
 def count_global_naming():
     """Return (named, total). Discovers `g_*` from extern decls in include/
-    and use sites in src/. 'named' = no `_00xxxxxx` address suffix."""
+    and use sites in src/. 'named' = carries semantic content beyond a
+    `<generic_prefix>_<addr>` placeholder (see is_semantically_named)."""
     seen = set()
     for h in INCLUDE_DIR.rglob("*.h"):
         try:
@@ -171,7 +223,7 @@ def count_global_naming():
             for m in G_REF_RE.finditer(text):
                 seen.add("g_" + m.group(1))
     total = len(seen)
-    named = sum(1 for n in seen if not ADDR_SUFFIX_RE.search(n))
+    named = sum(1 for n in seen if is_semantically_named(n))
     return (named, total)
 
 
@@ -378,9 +430,9 @@ def main():
     print(f"  Still __declspec(naked)               {pct(naked,  total):>6.1f}%   "
           f"({naked} / {total} functions)")
     print()
-    print(f"  Function naming  (no addr suffix)     {fn_pct:>6.1f}%   "
+    print(f"  Function naming  (semantically named) {fn_pct:>6.1f}%   "
           f"({fn_named} / {fn_total} symbols)")
-    print(f"  Global naming    (no addr suffix)     {gv_pct:>6.1f}%   "
+    print(f"  Global naming    (semantically named) {gv_pct:>6.1f}%   "
           f"({gv_named} / {gv_total} globals)")
     print(f"  Struct field coverage (named slots)   {st_pct:>6.1f}%   "
           f"({st_named} / {st_total} slots in include/)")

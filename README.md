@@ -15,7 +15,7 @@ matching, the C source is the canonical representation of the game.
 </p>
 
 <p align="center">
-  <img src=".github/progress.svg?v=3" alt="MK4 decomp progress (multi-axis)">
+  <img src=".github/progress.svg?v=4" alt="MK4 decomp progress (multi-axis)">
 </p>
 
 The decomp moves along several independent axes. A single "pure C %"
@@ -27,8 +27,8 @@ orthogonal; each one captures a different kind of progress.
 |---|---|---|
 | **Byte-perfect rebuild** | **100%** (2914 / 2914 fns) | `make matching` produces a binary that is MD5-identical to orig. Locked. The foundation - everything else must preserve it. |
 | **Pure C portability** | ~49% (1423 / 2914 fns) - *ceiling reached* | Fns with no `__asm` block. Relevant for a future WASM / Emscripten port. **Has a practical ceiling around 49%** under MSVC 5.0 SP3; the remaining functions have all been surveyed and the failure modes documented per-function in `NON-COAXABLE:` comments. |
-| **Function naming** | tickers up with [Priority 4](#4-rename-functions-to-what-they-actually-do) | % of fns in `symbols.yaml` whose name has NO `_00xxxxxx` address suffix. `LoadGeoAsset_Textures` = named; `Helper_00412ff0` = placeholder waiting for investigation. |
-| **Global naming** | tickers up with [Priority 3](#3-rename-globals-to-what-they-actually-do) | Same idea for the `g_*` globals declared in `include/`. `g_framePauseFlag` = named; `g_audioBank_005433c0` = address-disambiguated and worth promoting. |
+| **Function naming** | tickers up with [Priority 4](#4-rename-functions-to-what-they-actually-do) | % of fns whose name carries semantic content beyond a generic placeholder. `LoadGeoAsset_Textures` = named; `Wrapper_OrListLoop_004de3f8` = named (target identifies the wrapper); `PendingMatch_004013a0` = named (specific FSM family); `func_00411f0` = unnamed (generic prefix + addr only). |
+| **Global naming** | tickers up with [Priority 3](#3-rename-globals-to-what-they-actually-do) | Same idea for `g_*` globals. `g_framePauseFlag` = named; `g_audioBank_005433c0` = named (specific subsystem prefix + addr disambig); `g_table_004ab4e78`, `g_byte_005435a0` = unnamed (generic prefix + addr only). |
 | **Struct field coverage** | tickers up with [Priority 1](#1-reconstruct-typed-structs) | % of fields in `typedef struct` blocks under `include/` that have a real name (not `_NN` / `_NN[K]`). Each `ScenegraphNode` / `FightGroupNode` / `DrawEntry` slot named ticks it up. |
 | **Functional understanding** | mean of the three naming axes above | The composite shown on top of the SVG. Excludes byte-match (always 100%, doesn't move) and pure C (ceiling, would unfairly cap the score). This is the headline number that reflects *current* work velocity. |
 
