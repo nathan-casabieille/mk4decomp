@@ -47,13 +47,20 @@ def postprocess(text, fn_by_va, gl_by_va):
         return fn_by_va.get(va, m.group(0))
     text = re.sub(r'FUN_([0-9a-fA-F]{8})', fun_sub, text)
 
-    # &DAT_00xxxxxx -> &g_name ; DAT_00xxxxxx -> g_name
+    # PTR_DAT_00xxxxxx is a pointer-typed datum AT that VA (Ghidra names it
+    # by target). Map it like DAT_ to our global at that VA, BEFORE the DAT_
+    # rule (else the inner DAT_ gets rewritten and leaves PTR_g_name). Where
+    # a function actually dereferences it (type mismatch vs our scalar
+    # global), the injector's compile gate rejects that function - so this
+    # is safe: correct where it is a value read, filtered out otherwise.
     def dat_sub(m):
         va = int(m.group(2), 16)
         name = gl_by_va.get(va)
         if not name:
             return m.group(0)
         return (m.group(1) or '') + name
+    text = re.sub(r'(&)?PTR_DAT_([0-9a-fA-F]{8})', dat_sub, text)
+    # &DAT_00xxxxxx -> &g_name ; DAT_00xxxxxx -> g_name
     text = re.sub(r'(&)?DAT_([0-9a-fA-F]{8})', dat_sub, text)
 
     # packed-ptr node access -> seam (offset may be hex 0xN or decimal N)

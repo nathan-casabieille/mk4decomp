@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -111,6 +112,81 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_bootChainPair0;
 extern void MStackPushChainStepIndex(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootPhaseGateBracketedInit(void)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_xformLoopCounter;
+  g_currentNodeIdx = g_bootChainPair0;
+  MStackPushChainStepIndex();
+  if (g_framePauseFlag == 0) {
+    if ((g_xformDirtyFlags & 4) == 0) {
+      iVar2 = 0x15;
+      puVar1 = (undefined4 *)(g_currentNodeIdx << 2);
+      g_walkCallback = 0;
+      iVar3 = 5;
+      do {
+        iVar2 = iVar2 + -4;
+        *puVar1 = g_walkCallback;
+        puVar1[1] = g_walkCallback;
+        puVar1[2] = g_walkCallback;
+        puVar1[3] = g_walkCallback;
+        puVar1 = puVar1 + 4;
+        iVar3 = iVar3 + -1;
+      } while (iVar3 != 0);
+      if (0 < iVar2) {
+        do {
+          *puVar1 = g_walkCallback;
+          puVar1 = puVar1 + 1;
+          iVar2 = iVar2 + -1;
+        } while (iVar2 != 0);
+      }
+      iVar3 = 0xc;
+      g_currentNodeIdx = g_currentNodeIdx + 0x15;
+      g_walkCallback = 0;
+      puVar1 = (undefined4 *)(g_currentNodeIdx * 4);
+      iVar2 = 3;
+      do {
+        *puVar1 = 0;
+        iVar3 = iVar3 + -4;
+        puVar1[1] = 0;
+        puVar1[2] = 0;
+        puVar1[3] = 0;
+        puVar1 = puVar1 + 4;
+        iVar2 = iVar2 + -1;
+      } while (iVar2 != 0);
+      iVar2 = iVar3;
+      if (0 < iVar3) {
+        for (; iVar2 != 0; iVar2 = iVar2 + -1) {
+          *puVar1 = 0;
+          puVar1 = puVar1 + 1;
+        }
+        do {
+          iVar3 = iVar3 + -1;
+        } while (iVar3 != 0);
+      }
+      g_currentNodeIdx = g_currentNodeIdx + -0x15;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x48) = 0x10000;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x4c) = 0x10000;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x50) = 0x10000;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x20) = g_baseSel;
+    }
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+    g_xformLoopCounter = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    if (g_currentNodeIdx != 0) {
+      g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void BootPhaseGateBracketedInit(void)
 {
     __asm
@@ -224,3 +300,4 @@ __declspec(naked) void BootPhaseGateBracketedInit(void)
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesPP.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -22,6 +23,22 @@ extern unsigned int g_dispatchSave1164;
 extern unsigned int g_dispatchSave404;
 extern void Mul10Tail(int, int);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioMixerStep(void)
+
+{
+  undefined4 uVar1;
+  
+  uVar1 = g_walkCallback;
+  g_dispatchSave1163 = g_dispatchSave1163 + (int)g_dispatchSave1164;
+  g_dispatchSave1164 = g_dispatchSave1164 + (int)(g_dispatchSave1163 + ((int)g_dispatchSave1163 >> 0x1f));
+  g_dispatchSave404 = g_walkCallback;
+  g_walkCallback = (uint)g_dispatchSave1163 & 0xffff;
+  g_walkCallback = Mul10Tail(uVar1,(uint)g_dispatchSave1163 & 0xffff);
+  return;
+}
+#else
 __declspec(naked) void AudioMixerStep(void) {
     __asm {
         mov     eax, dword ptr [g_dispatchSave1163]
@@ -47,3 +64,4 @@ __declspec(naked) void AudioMixerStep(void) {
         ret
     }
 }
+#endif

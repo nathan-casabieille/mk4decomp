@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,46 @@ extern void ScaledIndexConditionalAdd(void);
 extern void ScaledZero44(void);
 extern void TripleEntryChainGate(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void HitContactDispatcherCluster(void)
+
+{
+  int iVar1;
+  
+  g_eventQueueNotMask = Mul10Tail(g_eventQueueCurrent,g_eventQueueNotMask);
+  g_eventQueueChild = Mul10Tail(g_eventQueueCurrent,g_eventQueueChild);
+  g_currentNodeIdx = MK4_NODE_AT(int, g_baseSel, 0x38);
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_currentNodeIdx, 0x5c) + g_eventQueueChild;
+  g_walkCallback = MK4_NODE_AT(int, g_currentNodeIdx, 0x54) + g_eventQueueNotMask;
+  MK4_NODE_AT(int, g_cj_0054205c, 0x54) = g_walkCallback;
+  MK4_NODE_AT(int, g_cj_0054205c, 0x5c) = g_eventQueueCurrent;
+  g_eventQueueWorkType = g_walkCallback;
+  g_chainAccumCur = g_eventQueueCurrent;
+  g_eventQueueWorkType = Mul10Tail(g_walkCallback,g_walkCallback);
+  iVar1 = Mul10Tail(g_chainAccumCur,g_chainAccumCur);
+  g_chainAccumCur = iVar1 + g_eventQueueWorkType;
+  g_eventQueueWorkType = g_rangeSqLimit;
+  if (g_rangeSqLimit < g_chainAccumCur) {
+    g_currentNodeIdx = MK4_NODE_AT(int, g_baseSel, 0x38);
+    g_walkCallback = MK4_NODE_AT(int, g_currentNodeIdx, 0x54);
+    g_eventQueueCurrent = MK4_NODE_AT(int, g_currentNodeIdx, 0x5c);
+    MK4_NODE_AT(int, g_cj_0054205c, 0x54) = g_walkCallback;
+    MK4_NODE_AT(int, g_cj_0054205c, 0x5c) = g_eventQueueCurrent;
+  }
+  ScaledChainJmp_004298e0();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = -0x2666;
+    MStackFrameCdeclDouble();
+    if (g_framePauseFlag == 0) {
+      g_baseSel = *(int *)((int)g_matrixStackTop * 4);
+      g_matrixStackTop = g_matrixStackTop + -1;
+      ScaledZero44();
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void HitContactDispatcherCluster(void)
 {
     __asm {
@@ -344,3 +385,4 @@ __declspec(naked) void HitContactDispatcherCluster(void)
         ret
     }
 }
+#endif

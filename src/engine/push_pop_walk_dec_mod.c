@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesMM.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
@@ -15,6 +16,22 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_eventQueueCurrent_mm;
 extern unsigned int g_eventMaskState;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PushPopWalkDecMod(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  g_walkCallback = g_walkCallback - 1;
+  if (-1 < (int)g_walkCallback) {
+    g_walkCallback = g_eventMaskState >> ((char)g_walkCallback * '\x04' & 0x1fU) & 0xf;
+  }
+  g_eventQueueCurrent = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_matrixStackTop = g_matrixStackTop + -1;
+  return;
+}
+#else
 __declspec(naked) void PushPopWalkDecMod(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -42,3 +59,4 @@ __declspec(naked) void PushPopWalkDecMod(void) {
         ret
     }
 }
+#endif

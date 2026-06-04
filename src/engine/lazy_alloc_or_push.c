@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,30 @@ extern void PushStackAllocCall(void);
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void LazyAllocOrPush(void)
+
+{
+  if (0x2ffff < g_currentNodeFlags) {
+    g_eventQueuePending = g_installOwnerNode + 0x15;
+    g_currentNodeIdx = g_cj_0054205c + 0x18;
+    g_dualC = g_cj_0054205c + 0x15;
+    PushStackAllocCall();
+    return;
+  }
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_currentNodeFlags;
+  g_currentNodeFlags = g_currentNodeFlags + -0x10000 >> 1;
+  g_eventQueuePending = g_installOwnerNode;
+  MStackAngleRatioSubchain();
+  if (g_framePauseFlag == 0) {
+    g_currentNodeFlags = *(int *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+  }
+  return;
+}
+#else
 __declspec(naked) void LazyAllocOrPush(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeFlags]
@@ -157,3 +182,4 @@ __declspec(naked) void LazyAllocOrPush(void) {
         ret
     }
 }
+#endif

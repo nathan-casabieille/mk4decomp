@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,40 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_chainInsertSlot;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackPush2ChainInsert(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar2 = g_eventQueuePending;
+  iVar1 = g_currentNodeIdx;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_chainInsertSlot;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_dualC;
+  iVar3 = iVar1 + MK4_NODE_AT(int, iVar2, 8);
+  MK4_NODE_AT(int, iVar3, 4) = iVar2;
+  MK4_NODE_AT(undefined4, iVar3, 8) = 0;
+  g_walkCallback = MK4_NODE_AT(int, iVar2, 0);
+  MK4_NODE_AT(int, iVar3, 0) = g_walkCallback;
+  if (MK4_NODE_AT(int, iVar2, 0) == 0) {
+    MK4_NODE_AT(int, iVar2, 4) = iVar1;
+  }
+  else {
+    *(int *)((g_walkCallback + MK4_NODE_AT(int, iVar2, 8)) * 4 + 8) = iVar1;
+  }
+  MK4_NODE_AT(int, iVar2, 0) = iVar1;
+  MK4_NODE_AT(int, iVar2, 0xc) = MK4_NODE_AT(int, iVar2, 0xc) + 1;
+  g_dualC = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_chainInsertSlot = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+  g_matrixStackTop = g_matrixStackTop + -2;
+  return;
+}
+#else
 __declspec(naked) void MStackPush2ChainInsert(void)
 {
     __asm
@@ -174,3 +209,4 @@ __declspec(naked) void MStackPush2ChainInsert(void)
         ret
     }
 }
+#endif

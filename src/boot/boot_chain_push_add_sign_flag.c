@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,46 @@ extern unsigned int g_fightAxisPosY;
  *     pop+ret.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootChainPushAddSignFlag(void)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  
+  g_eq = (uint)(g_walkCallback < 0);
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  iVar2 = MK4_NODE_AT(int, g_cj_0054205c, 0x24);
+  if (g_eq == 0) {
+    g_walkCallback = g_walkCallback + MK4_NODE_AT(int, g_cj_0054205c, 0x28);
+    g_eq = (uint)(g_walkCallback < MK4_NODE_AT(int, iVar2, 4));
+    g_eventQueuePending = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4 + 4);
+    g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+    g_matrixStackTop = g_matrixStackTop + -1;
+    if (g_eq == 0) {
+      g_xformDirtyFlags = g_xformDirtyFlags | 1;
+      g_walkCallback = 0;
+    }
+    return;
+  }
+  g_walkCallback = g_walkCallback + MK4_NODE_AT(int, g_currentNodeIdx, 0x28);
+  if (g_walkCallback < 0) {
+    puVar1 = (undefined4 *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    g_eventQueuePending = *puVar1;
+    g_walkCallback = MK4_NODE_AT(int, iVar2, 4) + -1;
+    g_xformDirtyFlags = g_xformDirtyFlags | 1;
+    return;
+  }
+  puVar1 = (undefined4 *)((int)g_matrixStackTop * 4);
+  g_matrixStackTop = g_matrixStackTop + -1;
+  g_eventQueuePending = *puVar1;
+  g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+  return;
+}
+#else
 __declspec(naked) void BootChainPushAddSignFlag(void)
 {
     __asm
@@ -205,3 +246,4 @@ __declspec(naked) void BootChainPushAddSignFlag(void)
         ret
     }
 }
+#endif

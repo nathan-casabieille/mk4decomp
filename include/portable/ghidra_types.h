@@ -10,6 +10,12 @@
 #ifndef MK4_PORTABLE_GHIDRA_TYPES_H
 #define MK4_PORTABLE_GHIDRA_TYPES_H
 
+/* Only needed by the portable (NON_MATCHING) twins. Kept entirely out of
+ * the matching build: MSVC 5.0 is C89 and rejects `long long`, and the
+ * #include sits outside the per-function #ifdef, so the header body MUST
+ * be inert under matching. */
+#ifdef NON_MATCHING
+
 typedef unsigned char      undefined;
 typedef unsigned char      undefined1;
 typedef unsigned short     undefined2;
@@ -20,5 +26,7 @@ typedef unsigned short     ushort;
 typedef unsigned char      uchar;
 typedef unsigned char      byte;
 typedef unsigned long      ulong;
+
+#endif /* NON_MATCHING */
 
 #endif /* MK4_PORTABLE_GHIDRA_TYPES_H */

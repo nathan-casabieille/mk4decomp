@@ -3367,6 +3367,68 @@ __declspec(naked) void Screen_BestKombatants(void)
 }
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_ChainWalkPushPop_00411890(void)
+
+{
+  if (g_gameMode == 0) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(int *)((int)g_matrixStackTop * 4) = g_chainAccumCur;
+    ChainWalkPushPop();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x50);
+      if (g_walkCallback < 0xcccd) {
+        MStackCall_MStackPush2ChainLLInsert();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        g_currentNodeIdx = 0;
+      }
+      else {
+        g_chainAccumCur = MK4_NODE_AT(int, g_cj_0054205c, 0x70) + 0xe5;
+        MK4_NODE_AT(int, g_cj_0054205c, 0x70) = g_chainAccumCur;
+        g_walkCallback = PendingMatch_StoreTailJmpSigned(MK4_NODE_AT(undefined4, g_cj_0054205c, 0x6c),
+                                    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x74));
+        g_eventQueueWorkType = g_walkCallback;
+        Atan2QuadrantLookup();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        g_walkCallback = g_walkCallback + g_pendingMatchVar2;
+        BootMod6487eClampAndChainMul10();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        MK4_NODE_AT(int, g_cj_0054205c, 0x60) = g_walkCallback;
+        g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x58);
+        if (-1 < g_walkCallback) {
+          ZeroThreeFields6c();
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+          g_walkCallback = 0;
+          MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58) = 0;
+          MK4_NODE_AT(int, g_cj_0054205c, 0x60) = g_walkCallback;
+          g_walkCallback = 0x1356bb;
+          ScaledStoreThree_00409260();
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+          g_walkCallback = 0;
+          MK4_NODE_AT(undefined4, g_eventQueuePending, 0x10) = 0;
+        }
+      }
+      g_chainAccumCur = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_cj_0054205c = *(int *)((int)(g_matrixStackTop + -1) * 4);
+      g_matrixStackTop = g_matrixStackTop + -2;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_ChainWalkPushPop_00411890(void)
 {
     __asm {
@@ -3651,6 +3713,7 @@ __declspec(naked) void PendingMatch_ChainWalkPushPop_00411890(void)
         ret      
     }
 }
+#endif
 
 
 #ifdef NON_MATCHING

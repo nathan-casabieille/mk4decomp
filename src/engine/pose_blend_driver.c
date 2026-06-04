@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -110,6 +111,53 @@ extern unsigned int g_fightAxisPosY;
 
 extern void MStackSignedMod(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PoseBlendDriver(void)
+
+{
+  MStackSignedMod();
+  if (g_framePauseFlag == 0) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(int *)((int)g_matrixStackTop * 4) = g_walkCallback;
+    g_eventQueueNotMask = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54);
+    g_eventQueueChild = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c);
+    g_walkCallback = g_fightAxisPosX;
+    g_eventQueueCurrent = g_fightAxisPosY;
+    g_walkCallback = Mul10Tail(0x1999,g_fightAxisPosX);
+    g_eventQueueCurrent = Mul10Tail(0x1999,g_eventQueueCurrent);
+    g_eventQueueWorkType = MK4_NODE_AT(int, g_cj_0054205c, 0x54) + g_walkCallback;
+    g_chainAccumCur = MK4_NODE_AT(int, g_cj_0054205c, 0x5c) + g_eventQueueCurrent;
+    MK4_NODE_AT(int, g_cj_0054205c, 0x54) = g_eventQueueWorkType;
+    MK4_NODE_AT(int, g_cj_0054205c, 0x5c) = g_chainAccumCur;
+    MStackSignedMod();
+    if (g_framePauseFlag == 0) {
+      g_eventQueueCurrent = *(int *)((int)g_matrixStackTop * 4);
+      g_matrixStackTop = g_matrixStackTop + -1;
+      g_eventQueueWorkType = ((g_eventQueueCurrent < g_walkCallback) - 1 & 0x20000) - 0x10000;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54) = g_eventQueueNotMask;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c) = g_eventQueueChild;
+      g_chainAccumCur = g_walkCallback + -0x4ccc;
+      if (g_chainAccumCur < 0) {
+        g_chainAccumCur = -g_chainAccumCur;
+      }
+      g_chainAccumCur = Mul10Tail(0x44924,g_chainAccumCur);
+      if (g_chainAccumCur < 0x7ae) {
+        g_chainAccumCur = 0x7ae;
+      }
+      g_eventQueueNotMask = g_fightAxisPosX;
+      g_eventQueueChild = g_fightAxisPosY;
+      g_eventQueueNotMask = Mul10Tail(g_chainAccumCur,g_fightAxisPosX);
+      g_eventQueueChild = Mul10Tail(g_chainAccumCur,g_eventQueueChild);
+      g_eventQueueNotMask = Mul10Tail(g_eventQueueWorkType,g_eventQueueNotMask);
+      g_eventQueueChild = Mul10Tail(g_eventQueueWorkType,g_eventQueueChild);
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x6c) = g_eventQueueNotMask;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x74) = g_eventQueueChild;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void PoseBlendDriver(void)
 {
     __asm {
@@ -240,3 +288,4 @@ __declspec(naked) void PoseBlendDriver(void)
         ret
     }
 }
+#endif

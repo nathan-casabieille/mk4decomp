@@ -68,6 +68,7 @@
  *   ret
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -159,7 +160,89 @@ extern void MStackPush2ChainLLInsert(void);
     }
 
 /* @addr 0x00407030 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_dualC;
+  BootPhaseGateBracketedInit();
+  if (g_framePauseFlag == 0) {
+    if ((g_xformDirtyFlags & 4) == 0) {
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x38) = g_eventQueuePending;
+      g_dualC = g_currentNodeIdx;
+      MStackBracket1_TreeWalkRecursive2();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      if ((g_xformDirtyFlags & 4) == 0) {
+        MK4_NODE_AT(int, g_dualC, 0x18) = g_currentNodeIdx;
+        MK4_NODE_AT(int, g_currentNodeIdx, 0x18) = g_dualC;
+        g_currentNodeIdx = g_dualC;
+      }
+      else {
+        g_currentNodeIdx = g_dualC;
+        MStackPush2ChainLLInsert();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        g_currentNodeIdx = 0;
+      }
+    }
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+    g_dualC = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    if (g_currentNodeIdx != 0) {
+      g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void) { DC260_BODY(MStackBracket1_TreeWalkRecursive2) }
+#endif
 
 /* @addr 0x00407400 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DispatcherComplex260_FramePauseScaledStore(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_dualC;
+  BootPhaseGateBracketedInit();
+  if (g_framePauseFlag == 0) {
+    if ((g_xformDirtyFlags & 4) == 0) {
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x38) = g_eventQueuePending;
+      g_dualC = g_currentNodeIdx;
+      FramePauseScaledStore();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      if ((g_xformDirtyFlags & 4) == 0) {
+        MK4_NODE_AT(int, g_dualC, 0x18) = g_currentNodeIdx;
+        MK4_NODE_AT(int, g_currentNodeIdx, 0x18) = g_dualC;
+        g_currentNodeIdx = g_dualC;
+      }
+      else {
+        g_currentNodeIdx = g_dualC;
+        MStackPush2ChainLLInsert();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        g_currentNodeIdx = 0;
+      }
+    }
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+    g_dualC = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    if (g_currentNodeIdx != 0) {
+      g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DispatcherComplex260_FramePauseScaledStore(void) { DC260_BODY(FramePauseScaledStore) }
+#endif

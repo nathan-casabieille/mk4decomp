@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,35 @@ extern void TwinLoopSlotFinder(void);
 extern unsigned int g_chain_arr_4348f0;
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DispatchPair(void)
+
+{
+  TableWalkBoundedCmp(7);
+  MStackPush8();
+  if (g_framePauseFlag == 0) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined4 *)((int)g_matrixStackTop * 4) = g_walkCallback;
+    TwinLoopSlotFinder();
+    if (g_framePauseFlag == 0) {
+      g_currentNodeIdx = MK4_NODE_AT(undefined4, g_cj_00542058, 0);
+      LoadGeoAsset_Default();
+      if (g_framePauseFlag == 0) {
+        g_currentNodeIdx = MK4_NODE_AT(undefined4, g_cj_00542058, 4);
+        LoadGeoAsset_Default();
+        if (g_framePauseFlag == 0) {
+          g_walkCallback = *(undefined4 *)((int)g_matrixStackTop * 4);
+          g_matrixStackTop = g_matrixStackTop + -1;
+          MStackPop8();
+          return;
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DispatchPair(void) {
     __asm {
         push    7
@@ -172,3 +202,4 @@ __declspec(naked) void DispatchPair(void) {
         ret
     }
 }
+#endif

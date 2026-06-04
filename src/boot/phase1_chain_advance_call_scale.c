@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,37 @@ extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void PushPopScaled1cDoubleCall(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase1ChainAdvanceCallScale(void)
+
+{
+  int iVar1;
+  
+  g_eventQueuePending = 0x141c46;
+  MStackBracket1_TreeWalkRecursive2();
+  if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(int *)((int)g_matrixStackTop * 4) = g_currentNodeIdx;
+    iVar1 = g_currentNodeIdx;
+    MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x40) = 0xfffe6de1;
+    MK4_NODE_AT(undefined4, iVar1, 0x3c) = 0x5e666;
+    iVar1 = iVar1 * 4;
+    *(undefined4 *)(iVar1 + 0x44) = 0x4ccc;
+    *(undefined4 *)(iVar1 + 0x30) = 0xffffeb03;
+    g_walkCallback = 10;
+    DirtyDoubleDeref();
+    if (g_framePauseFlag == 0) {
+      g_eventQueuePending = g_currentNodeIdx;
+      g_currentNodeIdx = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_matrixStackTop = g_matrixStackTop + -1;
+      PushPopScaled1cDoubleCall();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Phase1ChainAdvanceCallScale(void)
 {
     __asm {
@@ -254,3 +286,4 @@ __declspec(naked) void Phase1ChainAdvanceCallScale(void)
         ret
     }
 }
+#endif

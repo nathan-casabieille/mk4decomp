@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,19 @@ extern void RoundWinTransition(void);
 extern void StorePauseImulShr16(void);
 extern void Ten404c40_404bd0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioVoiceSequencerCluster(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_currentNodeIdx;
+  g_chainAccumCur = *(undefined4 *)((g_chainAccumCur * 5 + -5 + g_audioSequencerSlot) * 4);
+  g_currentNodeIdx = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_matrixStackTop = g_matrixStackTop + -1;
+  return;
+}
+#else
 __declspec(naked) void AudioVoiceSequencerCluster(void)
 {
     __asm {
@@ -290,3 +304,4 @@ __declspec(naked) void AudioVoiceSequencerCluster(void)
         ret
     }
 }
+#endif

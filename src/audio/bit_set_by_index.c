@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,30 @@ extern unsigned int g_audioBitField;
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BitSetByIndex(void)
+
+{
+  int iVar1;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_chainAccumCur;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  g_dispatchArg = g_walkCallback;
+  iVar1 = *(int *)(*(int *)((g_audioBitField + g_walkCallback) * 4) * 4 + 0x10);
+  g_walkCallback = MK4_NODE_AT(uint, iVar1, 0);
+  if (-1 < g_chainAccumCur + -1) {
+    g_eventQueueCurrent = 1 << ((byte)(g_chainAccumCur + -1) & 0x1f) | g_walkCallback;
+    MK4_NODE_AT(uint, iVar1, 0) = g_eventQueueCurrent;
+  }
+  g_eventQueuePending = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_chainAccumCur = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+  g_matrixStackTop = g_matrixStackTop + -2;
+  return;
+}
+#else
 __declspec(naked) void BitSetByIndex(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -172,3 +197,4 @@ __declspec(naked) void BitSetByIndex(void) {
         ret
     }
 }
+#endif
