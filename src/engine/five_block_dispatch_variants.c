@@ -21823,45 +21823,6 @@ extern unsigned int g_dispatchSave895;
  *   advance indices, write diff to scaledInit[k]*4, k++.
  *   end: store esi (=-1) to [0x0053a1ac]; rewind 3 indices.
  */
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void TripleArrayDiffClamp(void)
-
-{
-  int iVar1;
-  int iVar2;
-  
-  g_xformLoopCounter = 2;
-  iVar2 = 3;
-  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-  do {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1;
-    g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueuePending, 0) - MK4_NODE_AT(int, g_dualC, 0);
-    g_dualC = g_dualC + 1;
-    g_eventQueuePending = g_eventQueuePending + 1;
-    iVar1 = g_eventQueueCurrent;
-    if (g_eventQueueCurrent < 0) {
-      iVar1 = -g_eventQueueCurrent;
-    }
-    g_eq = (uint)(iVar1 <= g_pendingMatchVar3);
-    g_walkCallback = g_pendingMatchVar;
-    if (-1 < g_eventQueueCurrent) {
-      g_walkCallback = g_dispatchSave895;
-    }
-    if (g_eq == 0) {
-      g_eventQueueCurrent = g_eventQueueCurrent + g_walkCallback;
-    }
-    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_eventQueueCurrent;
-    g_xformLoopCounter = g_xformLoopCounter + -1;
-    iVar2 = iVar2 + -1;
-    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  } while (iVar2 != 0);
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -2;
-  g_eventQueuePending = g_eventQueuePending + -3;
-  g_dualC = g_dualC + -3;
-  return;
-}
-#else
 __declspec(naked) void TripleArrayDiffClamp(void) {
     __asm {
         push    ebx
@@ -21925,7 +21886,6 @@ loop_004251fd:
         ret
     }
 }
-#endif
 
 extern void ScaledMove48to58(void);
 extern void SixEntryYieldThunks(void);
@@ -61363,55 +61323,6 @@ extern unsigned int g_packedDispatchSlot3;
 extern unsigned int g_packedDispatchSlot2;
 extern unsigned int g_packedDispatchSlot1;
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void FourVecFillMStackBracket(void)
-
-{
-  g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
-  g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dispatchSave20;
-  g_walkCallback = 0;
-  g_eventQueueCurrent = 3;
-  g_xformLoopCounter = 7;
-  do {
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_eventQueueCurrent;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-    g_xformLoopCounter = g_xformLoopCounter + -1;
-  } while (-1 < g_xformLoopCounter);
-  g_walkCallback = 0xc;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_packedDispatchSlot3;
-  g_xformLoopCounter = 7;
-  do {
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-    g_xformLoopCounter = g_xformLoopCounter + -1;
-  } while (-1 < g_xformLoopCounter);
-  g_walkCallback = 0;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_packedDispatchSlot2;
-  g_xformLoopCounter = 7;
-  do {
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-    g_xformLoopCounter = g_xformLoopCounter + -1;
-  } while (-1 < g_xformLoopCounter);
-  g_xformLoopCounter = 7;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_packedDispatchSlot1;
-  do {
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-    g_xformLoopCounter = g_xformLoopCounter + -1;
-  } while (-1 < g_xformLoopCounter);
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)g_matrixStackTop * 4);
-  g_eventQueueCurrent = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
-  g_matrixStackTop = g_matrixStackTop + -2;
-  return;
-}
-#else
 __declspec(naked) void FourVecFillMStackBracket(void)
 {
     __asm
@@ -61507,7 +61418,6 @@ __declspec(naked) void FourVecFillMStackBracket(void)
         ret
     }
 }
-#endif
 
 extern void MStackPushDispatchBitGate(void);
 extern void PushDualDerefClearPop(void);

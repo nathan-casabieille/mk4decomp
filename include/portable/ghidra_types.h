@@ -27,9 +27,9 @@ typedef unsigned char      uchar;
 typedef unsigned char      byte;
 typedef unsigned long      ulong;
 
-/* Ghidra emits C99 bool/true/false; provide them for C89 backends. Safe
- * within the twins (no portable file includes <stdbool.h>). */
-#ifndef __cplusplus
+/* Ghidra emits bool/true/false; provide them for pre-C23 C backends. In
+ * C23+ they are built-in keywords (defining them is an error), so skip. */
+#if !defined(__cplusplus) && (!defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L)
 typedef int bool;
 #define true  1
 #define false 0
