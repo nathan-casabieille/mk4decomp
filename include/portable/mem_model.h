@@ -53,4 +53,11 @@ extern unsigned char *g_mk4Arena;       /* base of the reserved data arena */
 
 #endif
 
+/* Typed access to a node field at byte offset `off` from the packed index
+ * `idx` - i.e. the original `[idx*4 + off]` form. Used by the asm->C
+ * lifter (tools/decomp/lift_asm.py) so converted twins read/write node
+ * fields through the seam instead of raw pointer arithmetic. */
+#define MK4_NODE_AT(T, idx, off) \
+    (*(T *)((unsigned char *)MK4_NODE(unsigned char, (idx)) + (off)))
+
 #endif /* MK4_PORTABLE_MEM_MODEL_H */
