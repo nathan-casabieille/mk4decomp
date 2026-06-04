@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -970,6 +971,22 @@ __declspec(naked) void MStackInitTriAlarm(void) {
 }
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Vec2SumMul10ChainCompute(void)
+
+{
+  int iVar1;
+  
+  g_walkCallback = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54);
+  g_eventQueueCurrent = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c);
+  g_walkCallback = Mul10Tail(g_walkCallback,g_walkCallback);
+  iVar1 = Mul10Tail(g_eventQueueCurrent,g_eventQueueCurrent);
+  g_eventQueueCurrent = iVar1 + g_walkCallback;
+  g_eventQueueWorkType = g_rangeSqLimit + 0xc0000;
+  return;
+}
+#else
 __declspec(naked) void Vec2SumMul10ChainCompute(void)
 {
     __asm
@@ -1104,6 +1121,7 @@ __declspec(naked) void Vec2SumMul10ChainCompute(void)
         ret
     }
 }
+#endif
 
 
 __declspec(naked) void Phase2InitSlotTreeWalk(void)
@@ -3913,6 +3931,31 @@ __declspec(naked) void PendingMatch_ChainWalkPushPop_0040dbb0(void)
 }
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_TripleSubVec3(void)
+
+{
+  g_xformDirtyFlags = g_xformDirtyFlags | 4;
+  if ((g_currentNodeIdx != 0) && (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, g_currentNodeIdx != 0)) {
+    g_dualD = g_currentNodeIdx;
+    MK4_NODE_AT(int, g_currentNodeIdx, 0x58) = MK4_NODE_AT(int, g_currentNodeIdx, 0x58) + -0xb333;
+    g_walkCallback = MK4_NODE_AT(undefined4, g_dualD, 0x58);
+    g_dualC = g_dualD + 0x15;
+    g_eventQueuePending = g_eventQueueSeed + 0x15;
+    g_currentNodeIdx = g_savedNode;
+    TripleSubVec3();
+    if (g_framePauseFlag == 0) {
+      g_eventQueuePending = g_currentNodeIdx;
+      g_walkCallback = 0x51e;
+      g_currentNodeIdx = g_dualD + 0x1b;
+      ThreeMul10Stores();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_TripleSubVec3(void)
 {
     __asm {
@@ -4278,6 +4321,7 @@ __declspec(naked) void PendingMatch_TripleSubVec3(void)
         _emit    0x00
     }
 }
+#endif
 
 __declspec(naked) void PendingMatch_StoreTwoCall_00411210(void)
 {
@@ -6982,6 +7026,23 @@ __declspec(naked) void PendingMatch_StoreTwoCall_004163c0(void)
 }
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_Mul10Tail_00419c90(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_eventQueuePending * 4;
+  iVar1 = g_currentNodeIdx * 4;
+  *(undefined4 *)(iVar1 + 0x30) = *(undefined4 *)(iVar2 + 0x30);
+  *(undefined4 *)(iVar1 + 0x34) = *(undefined4 *)(iVar2 + 0x34);
+  g_walkCallback = *(undefined4 *)(iVar2 + 0x38);
+  *(undefined4 *)(iVar1 + 0x38) = g_walkCallback;
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_Mul10Tail_00419c90(void)
 {
     __asm {
@@ -7558,3 +7619,4 @@ __declspec(naked) void PendingMatch_Mul10Tail_00419c90(void)
         _emit    0x00
     }
 }
+#endif
