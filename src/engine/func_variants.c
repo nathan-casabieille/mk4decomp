@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -224,6 +225,22 @@ void GuardedTwiceLoopback(void) {
  * TripleEntryStateCascade, else loop back to LoopGuardedDecJmp
  * (e9 b6 ff ff ff = rel32 -0x4a). The 2-byte nop gap before this entry is
  * filled by 0x90-fill. */
+#ifdef NON_MATCHING
+/* Portable: decrement the g_baseSel node's +0x5c countdown into
+ * g_walkCallback; non-zero -> loop tail-call, zero -> cascade tail-call.
+ * Node access goes through the MK4_NODE seam (identity under matching /
+ * flat 32-bit, arena-relative under TARGET_WEB). The #else keeps the
+ * naked form because the `je` reads ZF from the `dec` - a flag
+ * dependency C cannot reproduce (see [[feedback_dec_flags_not_preserved]]). */
+void LoopGuardedDecJmp_Body_0042c7c0(void) {
+    unsigned int v = *(unsigned int *)(MK4_NODE(unsigned char, g_baseSel) + 0x5c) - 1;
+    g_walkCallback = v;
+    if (v != 0)
+        LoopGuardedDecJmp();
+    else
+        TripleEntryStateCascade();
+}
+#else
 __declspec(naked) void LoopGuardedDecJmp_Body_0042c7c0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -236,6 +253,7 @@ L_lgdj_done:
         jmp     TripleEntryStateCascade
     }
 }
+#endif
 
 /* @addr 0x00461370 (15b) walk=8 entry */
 void func_set_g_walkCallback_then_OrDualStore_00461370(void) {
