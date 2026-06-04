@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -131,6 +132,50 @@ extern void TableLookupIatCall(void);
 extern void TwoPathIATDispatch_004c7030(void);
 extern void TwoPathIATDispatch_004c70a0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int LockIterTwoPath(int param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iStack_4;
+  
+  iVar3 = 0;
+  iStack_4 = 0;
+  iVar2 = 0;
+  Lock(2);
+  if (0 < g_dispatchSave1466) {
+    do {
+      iVar1 = *(int *)(g_dispatchSave1465 + iVar3 * 4);
+      if ((iVar1 != 0) && ((*(byte *)(iVar1 + 0xc) & 0x83) != 0)) {
+        TwoPathIATDispatch_004c7030(iVar3,iVar1);
+        iVar1 = *(int *)(g_dispatchSave1465 + iVar3 * 4);
+        if ((*(uint *)(iVar1 + 0xc) & 0x83) != 0) {
+          if (param_1 == 1) {
+            iVar1 = CallTestPushSubCall(iVar1);
+            if (iVar1 != -1) {
+              iStack_4 = iStack_4 + 1;
+            }
+          }
+          else if (((param_1 == 0) && ((*(uint *)(iVar1 + 0xc) & 2) != 0)) &&
+                  (iVar1 = CallTestPushSubCall(iVar1), iVar1 == -1)) {
+            iVar2 = -1;
+          }
+        }
+        TwoPathIATDispatch_004c70a0(iVar3,*(undefined4 *)(g_dispatchSave1465 + iVar3 * 4));
+      }
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < g_dispatchSave1466);
+  }
+  TableLookupIatCall(2);
+  if (param_1 != 1) {
+    iStack_4 = iVar2;
+  }
+  return iStack_4;
+}
+#else
 __declspec(naked) void LockIterTwoPath(void) {
     __asm {
         push    ecx
@@ -221,3 +266,4 @@ __declspec(naked) void LockIterTwoPath(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesPP.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -18,6 +19,37 @@ extern unsigned int g_active_0053a408;
 extern unsigned int g_active_00537e88;
 extern void DualSeqBranchInit(void);
 extern void YRiseSpawnerCluster(void);
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int MultiGateDispatchCallJmp(void)
+
+{
+  int iVar1;
+  
+  iVar1 = g_audioPathFlag;
+  if (g_audioPathFlag == 0) {
+    if (g_audioMatchStartFlag == 0) {
+      DualSeqBranchInit();
+      iVar1 = g_framePauseFlag;
+      if (g_framePauseFlag == 0) {
+        iVar1 = YRiseSpawnerCluster();
+        return iVar1;
+      }
+    }
+    else {
+      if ((g_active_0053a408 != 0) && (DualSeqBranchInit(), g_framePauseFlag != 0)) {
+        return g_framePauseFlag;
+      }
+      iVar1 = 0;
+      if (g_active_00537e88 != 0) {
+        YRiseSpawnerCluster();
+        iVar1 = g_framePauseFlag;
+      }
+    }
+  }
+  return iVar1;
+}
+#else
 __declspec(naked) void MultiGateDispatchCallJmp(void) {
     __asm {
         mov     eax, dword ptr [g_audioPathFlag]
@@ -52,3 +84,4 @@ ret_label:
         jmp     YRiseSpawnerCluster
     }
 }
+#endif

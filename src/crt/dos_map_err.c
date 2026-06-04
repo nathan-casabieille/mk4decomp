@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,43 @@ extern unsigned int g_fightAxisPosY;
 extern void Crt_doserrno(void);
 extern void Crt_errno(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DosMapErr(uint param_1)
+
+{
+  uint *puVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  
+  puVar1 = (uint *)Crt_doserrno();
+  iVar3 = 0;
+  *puVar1 = param_1;
+  puVar1 = &(*(unsigned int *)MK4_VA(unsigned int, 0x522178));
+  do {
+    if (param_1 == *puVar1) {
+      puVar2 = (undefined4 *)Crt_errno();
+      *puVar2 = *(undefined4 *)(iVar3 * 8 + 0x52217c);
+      return;
+    }
+    puVar1 = puVar1 + 2;
+    iVar3 = iVar3 + 1;
+  } while (puVar1 < &g_crtFilbufBase);
+  if ((0x12 < param_1) && (param_1 < 0x25)) {
+    puVar2 = (undefined4 *)Crt_errno();
+    *puVar2 = 0xd;
+    return;
+  }
+  if ((0xbb < param_1) && (param_1 < 0xcb)) {
+    puVar2 = (undefined4 *)Crt_errno();
+    *puVar2 = 8;
+    return;
+  }
+  puVar2 = (undefined4 *)Crt_errno();
+  *puVar2 = 0x16;
+  return;
+}
+#else
 __declspec(naked) void DosMapErr(void) {
     __asm {
         push    esi
@@ -162,3 +200,4 @@ foundMatch:
         ret
     }
 }
+#endif

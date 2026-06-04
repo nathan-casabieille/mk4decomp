@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesB.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 
 extern unsigned int g_currentNodeIdx;
 
@@ -53,6 +54,16 @@ extern unsigned int g_currentNodeIdx;
  * So this is "get fpu status word + clear exceptions, return as int".
  * However, that's only 17 bytes, matching.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int GetFpuSwClex(void)
+
+{
+  short in_FPUStatusWord;
+  
+  return (int)in_FPUStatusWord;
+}
+#else
 __declspec(naked) void GetFpuSwClex(void) {
     __asm {
         push    ebp
@@ -66,3 +77,4 @@ __declspec(naked) void GetFpuSwClex(void) {
         ret
     }
 }
+#endif

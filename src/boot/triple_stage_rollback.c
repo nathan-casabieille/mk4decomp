@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,45 @@ extern unsigned int g_fightAxisPosY;
 extern void Thunk_NodeChainMaskMatch(void);
 extern void Thunk_LoadShlDerefCallSkip(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleStageRollback(undefined4 param_1)
+
+{
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  undefined4 uVar5;
+  
+  uVar3 = g_eventQueueCurrent;
+  uVar2 = g_dualC;
+  uVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_walkCallback = param_1;
+  g_eventQueueCurrent = 0xffff;
+  thunk_NodeChainMaskMatch();
+  uVar4 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  uVar5 = g_eventQueueCurrent;
+  if (g_framePauseFlag == 0) {
+    while (uVar4 = uVar1, g_dualC = uVar2, uVar5 = uVar3, ((byte)g_xformDirtyFlags & 1) != 0) {
+      g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      thunk_LoadShlDerefCallSkip();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_walkCallback = param_1;
+      g_eventQueueCurrent = 0xffff;
+      thunk_NodeChainMaskMatch();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+    }
+  }
+  g_eventQueueCurrent = uVar5;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = uVar4;
+  return;
+}
+#else
 __declspec(naked) void TripleStageRollback(void) {
     __asm {
         push    ecx
@@ -175,3 +215,4 @@ __declspec(naked) void TripleStageRollback(void) {
         ret
     }
 }
+#endif

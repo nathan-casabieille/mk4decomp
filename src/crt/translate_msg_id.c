@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -113,6 +114,25 @@ extern unsigned int g_fightAxisPosY;
  *   (arg-0x3a4) with 5 buckets selected through a 19-byte LUT at
  *   0x4c97ec; outputs 0x411 / 0x804 / 0x412 / 0x404 / 0.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 TranslateMsgId(undefined4 param_1)
+
+{
+  switch(param_1) {
+  case 0x3a4:
+    return 0x411;
+  default:
+    return 0;
+  case 0x3a8:
+    return 0x804;
+  case 0x3b5:
+    return 0x412;
+  case 0x3b6:
+    return 0x404;
+  }
+}
+#else
 __declspec(naked) void TranslateMsgId(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -185,3 +205,4 @@ __declspec(naked) void TranslateMsgId(void) {
         _emit   03h
     }
 }
+#endif

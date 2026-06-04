@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,35 @@ extern u8 g_vtxRGBScale0_b;
 extern u8 g_vtxRGBScale0_g;
 extern u8 g_vtxRGBScale0_r;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PackColor(int param_1,int param_2,int param_3,int param_4)
+
+{
+  if (param_2 < 0) {
+    param_2 = 0;
+  }
+  if (0xff < param_2) {
+    param_2 = 0xff;
+  }
+  if (param_3 < 0) {
+    param_3 = 0;
+  }
+  if (0xff < param_3) {
+    param_3 = 0xff;
+  }
+  if (param_4 < 0) {
+    param_4 = 0;
+  }
+  if (0xff < param_4) {
+    param_4 = 0xff;
+  }
+  *(char *)((int)&g_vtxRGBScale0_g + param_1 + 2) = (char)(param_2 >> 3);
+  *(char *)((int)&g_vtxRGBScale0_g + param_1) = (char)(param_3 >> 3);
+  *(char *)((int)&g_colorPackerPrev + param_1 + 2) = (char)(param_4 >> 3);
+  return;
+}
+#else
 __declspec(naked) void PackColor(void) {
     __asm {
         mov     eax, dword ptr [esp + 8]
@@ -161,3 +191,4 @@ bdone:
         ret
     }
 }
+#endif

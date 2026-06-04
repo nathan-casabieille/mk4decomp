@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_gsmHelperBase;
@@ -18,6 +19,69 @@ extern void Menu_PollNavInput(void);
 extern void Menu_FindNextSelectable(void);
 extern void Menu_FindPrevSelectable(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int Menu_PauseMenu(void)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  if ((g_dispatchSave1480 & 1) == 0) {
+    g_dispatchSave1480 = g_dispatchSave1480 | 1;
+    g_dispatchSave1483 = Menu_FindNextSelectable(0,&g_gsmHelperBase);
+  }
+  if (g_dispatchSave1498 == 0) {
+    g_dispatchSave1498 = 2;
+    g_dispatchSave1483 = Menu_FindNextSelectable(0,&g_gsmHelperBase);
+  }
+  else if (g_dispatchSave1498 == 2) {
+    uVar1 = Menu_PollNavInput(1);
+    uVar2 = uVar1 & 0x8000;
+    if ((uVar2 == 0) && ((uVar1 & 1) != 0)) {
+      g_dispatchSave1483 = Menu_FindPrevSelectable(g_dispatchSave1483,&g_gsmHelperBase);
+    }
+    if ((uVar2 == 0) && ((uVar1 & 2) != 0)) {
+      g_dispatchSave1483 = Menu_FindNextSelectable(g_dispatchSave1483,&g_gsmHelperBase);
+    }
+    if ((uVar2 == 0) && ((uVar1 & 0x20) != 0)) {
+      g_dispatchSave1498 = 0x45;
+    }
+    if (g_gsmOut4 == 0) {
+      g_dispatchSave1498 = 0x45;
+    }
+    switch(*(undefined2 *)(&g_dispatchSave573 + g_dispatchSave1483 * 8)) {
+    case 0x14:
+      if ((uVar2 == 0) && ((uVar1 & 0x10) != 0)) {
+        g_dispatchSave1498 = 0x45;
+      }
+      break;
+    case 0x15:
+      if ((uVar2 == 0) && ((uVar1 & 0x10) != 0)) {
+        g_dispatchSave1498 = 0x45;
+        g_gsmDirty1 = 1;
+      }
+      break;
+    case 0x16:
+      if ((uVar2 == 0) && ((uVar1 & 0x10) != 0)) {
+        g_dispatchSave1498 = 0x45;
+        g_gsmDirty2 = 1;
+      }
+      break;
+    case 0x17:
+      if ((uVar2 == 0) && ((uVar1 & 0x10) != 0)) {
+        g_dispatchSave1498 = 0x45;
+        g_gsmDirty3 = 1;
+      }
+    }
+  }
+  else if (g_dispatchSave1498 == 0x45) {
+    g_dispatchSave1498 = 0;
+  }
+  DrawMenu(&g_gsmHelperBase,g_dispatchSave1483);
+  return g_dispatchSave1498;
+}
+#else
 __declspec(naked) void Menu_PauseMenu(void)
 {
     __asm {
@@ -160,4 +224,5 @@ __declspec(naked) void Menu_PauseMenu(void)
         _emit    0x00
     }
 }
+#endif
 

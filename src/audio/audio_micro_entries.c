@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,16 @@ extern unsigned int g_audioStateMachine0;
 extern unsigned int g_audioStateMachine1;
 extern void AudioStateMachineMulti(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioMicroEntries(int param_1)
+
+{
+  g_eventQueueWorkType = MK4_NODE_AT(uint, param_1, 0x4f3af8);
+  TaggedSceneDispatch(g_eventQueueWorkType & 0xffff);
+  return;
+}
+#else
 __declspec(naked) void AudioMicroEntries(void)
 {
     __asm
@@ -214,3 +225,4 @@ __declspec(naked) void AudioMicroEntries(void)
         ret
     }
 }
+#endif

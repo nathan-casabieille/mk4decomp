@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -115,6 +116,78 @@ extern unsigned int g_fightAxisPosY;
  *   the replacement value after use. Stores final value to [arg1] before
  *   returning. Early-out when arg2 == 0.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Input_RebindKeyToAction(int *param_1,int param_2)
+
+{
+  int *piVar1;
+  int iVar2;
+  
+  iVar2 = *param_1;
+  *param_1 = 0;
+  if (param_2 != 0) {
+    piVar1 = &g_keyMap_btn1;
+    do {
+      if (piVar1[-2] == param_2) {
+        piVar1[-2] = iVar2;
+        iVar2 = 0;
+      }
+      if (*piVar1 == param_2) {
+        *piVar1 = iVar2;
+        iVar2 = 0;
+      }
+      if (piVar1[2] == param_2) {
+        piVar1[2] = iVar2;
+        iVar2 = 0;
+      }
+      if (piVar1[4] == param_2) {
+        piVar1[4] = iVar2;
+        iVar2 = 0;
+      }
+      if (piVar1[6] == param_2) {
+        piVar1[6] = iVar2;
+        iVar2 = 0;
+      }
+      if (piVar1[8] == param_2) {
+        piVar1[8] = iVar2;
+        iVar2 = 0;
+      }
+      if (piVar1[10] == param_2) {
+        piVar1[10] = iVar2;
+        iVar2 = 0;
+      }
+      if (piVar1[0xc] == param_2) {
+        piVar1[0xc] = iVar2;
+        iVar2 = 0;
+      }
+      if (piVar1[0xe] == param_2) {
+        piVar1[0xe] = iVar2;
+        iVar2 = 0;
+      }
+      if (piVar1[0x10] == param_2) {
+        piVar1[0x10] = iVar2;
+        iVar2 = 0;
+      }
+      if (piVar1[0x12] == param_2) {
+        piVar1[0x12] = iVar2;
+        iVar2 = 0;
+      }
+      if (piVar1[0x14] == param_2) {
+        piVar1[0x14] = iVar2;
+        iVar2 = 0;
+      }
+      if (piVar1[0x16] == param_2) {
+        piVar1[0x16] = iVar2;
+        iVar2 = 0;
+      }
+      piVar1 = piVar1 + 1;
+    } while ((int)piVar1 < 0x543ac8);
+    *param_1 = param_2;
+  }
+  return;
+}
+#else
 __declspec(naked) void Input_RebindKeyToAction(void)
 {
     __asm
@@ -202,3 +275,4 @@ __declspec(naked) void Input_RebindKeyToAction(void)
         ret
     }
 }
+#endif

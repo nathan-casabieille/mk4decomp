@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /*
@@ -11,6 +12,30 @@
  */
 extern int g_currentRendererMode;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_GetMenuExtents(undefined4 *param_1,undefined4 *param_2)
+
+{
+  if ((param_1 != (undefined4 *)0x0) && (param_2 != (undefined4 *)0x0)) {
+    *param_2 = 0;
+    *param_1 = 0;
+    switch(g_clampedRendererMode) {
+    case 1:
+    case 2:
+    case 5:
+      *param_1 = 0x280;
+      *param_2 = 0x1e0;
+      return;
+    case 3:
+    case 4:
+      *param_1 = 0x140;
+      *param_2 = 0xf0;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Helper_GetMenuExtents(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]
@@ -65,4 +90,5 @@ done:
         _emit   00h
     }
 }
+#endif
 

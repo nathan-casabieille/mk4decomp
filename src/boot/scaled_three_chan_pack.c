@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,36 @@ extern unsigned int g_pointPosX;
 extern unsigned int g_pointPosY;
 extern unsigned int g_pointPosZ;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ScaledThreeChanPack(uint param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  
+  uVar2 = ((int)param_1 >> 0x10) * g_walkCallback + (uint)g_gtAxisX;
+  uVar3 = (param_1 >> 8 & 0xff) * g_walkCallback + (uint)g_gtAxisY;
+  uVar1 = (param_1 & 0xff) * g_walkCallback + (uint)g_gtAxisZ;
+  if (0xfe00 < uVar2) {
+    uVar2 = 0xfe00;
+  }
+  if (0xfe00 < uVar3) {
+    uVar3 = 0xfe00;
+  }
+  if (0xfe00 < uVar1) {
+    uVar1 = 0xfe00;
+  }
+  g_gtAxisZ = (short)uVar1;
+  g_gtAxisX = (short)uVar2;
+  g_gtAxisY = (short)uVar3;
+  g_pointPosZ = 0;
+  g_pointPosY = 0;
+  g_pointPosX = 0;
+  return;
+}
+#else
 __declspec(naked) void ScaledThreeChanPack(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -167,3 +198,4 @@ __declspec(naked) void ScaledThreeChanPack(void) {
         ret
     }
 }
+#endif

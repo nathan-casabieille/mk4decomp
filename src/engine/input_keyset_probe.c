@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,35 @@ extern unsigned int g_joySelP1;
 extern void Input_PollJoystick(void);
 extern void Input_GetAsyncKey(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+bool Input_AnyConfirmPressed(int param_1)
+
+{
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  
+  if (param_1 == 0) {
+    return false;
+  }
+  iVar1 = Input_GetAsyncKey(0xd);
+  if (iVar1 != 0) {
+    return true;
+  }
+  iVar1 = Input_GetAsyncKey(0x20);
+  if (iVar1 != 0) {
+    return true;
+  }
+  iVar1 = Input_GetAsyncKey(0x1b);
+  if (iVar1 != 0) {
+    return true;
+  }
+  uVar2 = Input_PollJoystick(g_joySelP0);
+  uVar3 = Input_PollJoystick(g_joySelP1);
+  return ((uVar2 | uVar3) & 0xfffffff) != 0;
+}
+#else
 __declspec(naked) void Input_AnyConfirmPressed(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -175,3 +205,4 @@ stickPath:
         ret
     }
 }
+#endif

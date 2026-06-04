@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_gsmSubOther1Base;
@@ -15,6 +16,71 @@ extern void Menu_PollNavInput(void);
 extern void Menu_FindNextSelectable(void);
 extern void Menu_FindPrevSelectable(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int Menu_ColorDepthErrorDialog(void)
+
+{
+  uint uVar1;
+  int iVar2;
+  uint uVar3;
+  
+  if ((g_dispatchSave1482 & 1) == 0) {
+    g_dispatchSave1482 = g_dispatchSave1482 | 1;
+    g_dispatchSave1485 = Menu_FindNextSelectable(0,&g_gsmSubOther1Base);
+  }
+  if (g_dispatchSave1499 == 0) {
+    g_dispatchSave1499 = 2;
+  }
+  else if (g_dispatchSave1499 == 2) {
+    uVar1 = Menu_PollNavInput(1);
+    uVar3 = uVar1 & 0x8000;
+    if ((uVar3 == 0) && ((uVar1 & 1) != 0)) {
+      g_dispatchSave1485 = Menu_FindPrevSelectable(g_dispatchSave1485,&g_gsmSubOther1Base);
+    }
+    if ((uVar3 == 0) && ((uVar1 & 2) != 0)) {
+      g_dispatchSave1485 = Menu_FindNextSelectable(g_dispatchSave1485,&g_gsmSubOther1Base);
+    }
+    if ((uVar3 == 0) && ((uVar1 & 0x20) != 0)) {
+      g_dispatchSave1499 = 0x45;
+    }
+    iVar2 = Renderer_GetMode();
+    if ((iVar2 != 4) || (g_mode4PauseGate != 0)) {
+      g_dispatchSave1499 = 0x45;
+    }
+    switch(*(undefined2 *)(&g_dispatchSave572 + g_dispatchSave1485 * 8)) {
+    case 0xd:
+      if ((uVar3 == 0) && ((uVar1 & 0x10) != 0)) {
+        Helper_GSM_PlayMusic(1);
+        g_dispatchSave1499 = 0x45;
+      }
+      break;
+    case 0xe:
+      if ((uVar3 == 0) && ((uVar1 & 0x10) != 0)) {
+        Helper_GSM_PlayMusic(2);
+        g_dispatchSave1499 = 0x45;
+      }
+      break;
+    case 0xf:
+      if ((uVar3 == 0) && ((uVar1 & 0x10) != 0)) {
+        Helper_GSM_PlayMusic(3);
+        g_dispatchSave1499 = 0x45;
+      }
+      break;
+    case 0x10:
+      if ((uVar3 == 0) && ((uVar1 & 0x10) != 0)) {
+        Helper_GSM_PlayMusic(5);
+        g_dispatchSave1499 = 0x45;
+      }
+    }
+  }
+  else if (g_dispatchSave1499 == 0x45) {
+    g_dispatchSave1499 = 0;
+  }
+  DrawMenu(&g_gsmSubOther1Base,g_dispatchSave1485);
+  return g_dispatchSave1499;
+}
+#else
 __declspec(naked) void Menu_ColorDepthErrorDialog(void)
 {
     __asm {
@@ -165,4 +231,5 @@ __declspec(naked) void Menu_ColorDepthErrorDialog(void)
         _emit    0x00
     }
 }
+#endif
 

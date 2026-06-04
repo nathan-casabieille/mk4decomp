@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /*
@@ -17,6 +18,31 @@ extern void ComSoundSetup_004af6c0(void);
 extern void ComSoundSetup_004afef0(void);
 extern void AbsClampIATCall(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_RendererPostInit(undefined4 param_1)
+
+{
+  switch(g_clampedRendererMode) {
+  case 1:
+    AbsClampIATCall(param_1);
+    return;
+  case 2:
+    PaletteRampInit(param_1);
+    return;
+  case 3:
+    ComSoundSetup_004af6c0(param_1);
+    return;
+  case 4:
+    Helper_AppStub_2890(param_1);
+    break;
+  case 5:
+    ComSoundSetup_004afef0(param_1);
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void Helper_RendererPostInit(void) {
     __asm {
         mov     eax, dword ptr [g_currentRendererMode]
@@ -78,4 +104,5 @@ __declspec(naked) void Helper_RendererPostInit(void) {
         _emit   00h
     }
 }
+#endif
 

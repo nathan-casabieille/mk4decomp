@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesG.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
@@ -29,6 +30,24 @@ extern unsigned int g_currentNodeIdx;
  *   pop     esi
  *   ret
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void OrListLoop(int *param_1)
+
+{
+  int *piVar1;
+  uint *puVar2;
+  
+  while( true ) {
+    puVar2 = (uint *)*param_1;
+    piVar1 = param_1 + 1;
+    param_1 = param_1 + 2;
+    if ((*piVar1 == 0) && (puVar2 == (uint *)0x0)) break;
+    *puVar2 = *puVar2 | *piVar1 >> 2;
+  }
+  return;
+}
+#else
 __declspec(naked) void OrListLoop(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -53,3 +72,4 @@ __declspec(naked) void OrListLoop(void) {
         ret
     }
 }
+#endif

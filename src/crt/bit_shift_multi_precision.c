@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,47 @@ extern unsigned int g_fightAxisPosY;
  *     else word[i] = 0.
  *   Result: u32 array shifted right by count, accounting for negative counts via sign trick.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BitShiftMultiPrecision(uint *param_1,int param_2)
+
+{
+  int iVar1;
+  byte bVar2;
+  int iVar3;
+  uint uVar4;
+  uint uVar5;
+  uint *puVar6;
+  int iVar7;
+  
+  iVar1 = (int)(param_2 + (param_2 >> 0x1f & 0x1fU)) >> 5;
+  bVar2 = (byte)(param_2 >> 0x1f);
+  uVar5 = 0;
+  bVar2 = (((byte)param_2 ^ bVar2) - bVar2 & 0x1f ^ bVar2) - bVar2;
+  param_2 = 3;
+  puVar6 = param_1;
+  do {
+    uVar4 = *puVar6 >> (bVar2 & 0x1f) | uVar5;
+    uVar5 = (~(-1 << (bVar2 & 0x1f)) & *puVar6) << (0x20 - bVar2 & 0x1f);
+    *puVar6 = uVar4;
+    param_2 = param_2 + -1;
+    puVar6 = puVar6 + 1;
+  } while (param_2 != 0);
+  iVar7 = 2;
+  iVar3 = 8;
+  do {
+    if (iVar7 < iVar1) {
+      *(undefined4 *)((int)param_1 + iVar3) = 0;
+    }
+    else {
+      *(undefined4 *)((int)param_1 + iVar3) = *(undefined4 *)((int)param_1 + iVar3 + iVar1 * -4);
+    }
+    iVar7 = iVar7 + -1;
+    iVar3 = iVar3 + -4;
+  } while (-1 < iVar3);
+  return;
+}
+#else
 __declspec(naked) void BitShiftMultiPrecision(void) {
     __asm {
         sub     esp, 8
@@ -191,3 +233,4 @@ __declspec(naked) void BitShiftMultiPrecision(void) {
         ret
     }
 }
+#endif

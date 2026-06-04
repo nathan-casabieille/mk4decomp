@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -127,6 +128,108 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_ctypeByteTable;
 extern void FgetsImpl(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SplitPath(byte *param_1,byte *param_2,undefined1 *param_3,int param_4,undefined1 *param_5)
+
+{
+  byte *pbVar1;
+  byte bVar2;
+  uint uVar3;
+  int iVar4;
+  byte *pbVar5;
+  byte *local_4;
+  
+  iVar4 = -1;
+  pbVar5 = param_1;
+  do {
+    if (iVar4 == 0) break;
+    iVar4 = iVar4 + -1;
+    bVar2 = *pbVar5;
+    pbVar5 = pbVar5 + 1;
+  } while (bVar2 != 0);
+  local_4 = (byte *)0x0;
+  if ((iVar4 == -2) || (param_1[1] != 0x3a)) {
+    if (param_2 != (undefined1 *)0x0) {
+      *param_2 = 0;
+    }
+  }
+  else {
+    if (param_2 != (undefined1 *)0x0) {
+      FgetsImpl(param_2,param_1,2);
+      param_2[2] = 0;
+    }
+    param_1 = param_1 + 2;
+  }
+  bVar2 = *param_1;
+  param_2 = (byte *)0x0;
+  pbVar5 = param_1;
+  while (bVar2 != 0) {
+    bVar2 = *pbVar5;
+    if ((*(byte *)((int)&g_dispatchSave1433 + bVar2 + 1) & 4) == 0) {
+      if ((bVar2 == 0x2f) || (bVar2 == 0x5c)) {
+        param_2 = pbVar5 + 1;
+      }
+      else if (bVar2 == 0x2e) {
+        local_4 = pbVar5;
+      }
+    }
+    else {
+      pbVar5 = pbVar5 + 1;
+    }
+    pbVar1 = pbVar5 + 1;
+    pbVar5 = pbVar5 + 1;
+    bVar2 = *pbVar1;
+  }
+  if (param_2 == (byte *)0x0) {
+    param_2 = param_1;
+    if (param_3 != (undefined1 *)0x0) {
+      *param_3 = 0;
+    }
+  }
+  else if (param_3 != (undefined1 *)0x0) {
+    uVar3 = (int)param_2 - (int)param_1;
+    if (0xfe < uVar3) {
+      uVar3 = 0xff;
+    }
+    FgetsImpl(param_3,param_1,uVar3);
+    param_3[uVar3] = 0;
+  }
+  if ((local_4 == (byte *)0x0) || (local_4 < param_2)) {
+    if (param_4 != 0) {
+      uVar3 = (int)pbVar5 - (int)param_2;
+      if (0xfe < uVar3) {
+        uVar3 = 0xff;
+      }
+      FgetsImpl(param_4,param_2,uVar3);
+      *(undefined1 *)(uVar3 + param_4) = 0;
+    }
+    if (param_5 != (undefined1 *)0x0) {
+      *param_5 = 0;
+    }
+  }
+  else {
+    if (param_4 != 0) {
+      uVar3 = (int)local_4 - (int)param_2;
+      if (0xfe < uVar3) {
+        uVar3 = 0xff;
+      }
+      FgetsImpl(param_4,param_2,uVar3);
+      *(undefined1 *)(uVar3 + param_4) = 0;
+    }
+    if (param_5 != (undefined1 *)0x0) {
+      uVar3 = (int)pbVar5 - (int)local_4;
+      if (0xfe < uVar3) {
+        uVar3 = 0xff;
+      }
+      FgetsImpl(param_5,local_4,uVar3);
+      param_5[uVar3] = 0;
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void SplitPath(void) {
     __asm {
         push    ecx
@@ -295,3 +398,4 @@ __declspec(naked) void SplitPath(void) {
         ret
     }
 }
+#endif

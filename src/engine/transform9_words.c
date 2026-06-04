@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -111,6 +112,23 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x004b3a90 (159b engine.geo) - in-place 9-word transform:
  *   For i=0..8: arg1[i] = (signed short)arg1[i] * arg2[(i%3)*4] >> 12.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Transform9Words(short *param_1,int *param_2)
+
+{
+  *param_1 = (short)(*param_2 * (int)*param_1 >> 0xc);
+  param_1[1] = (short)(param_2[1] * (int)param_1[1] >> 0xc);
+  param_1[2] = (short)(param_2[2] * (int)param_1[2] >> 0xc);
+  param_1[3] = (short)(*param_2 * (int)param_1[3] >> 0xc);
+  param_1[4] = (short)(param_2[1] * (int)param_1[4] >> 0xc);
+  param_1[5] = (short)(param_2[2] * (int)param_1[5] >> 0xc);
+  param_1[6] = (short)(*param_2 * (int)param_1[6] >> 0xc);
+  param_1[7] = (short)(param_2[1] * (int)param_1[7] >> 0xc);
+  param_1[8] = (short)(param_2[2] * (int)param_1[8] >> 0xc);
+  return;
+}
+#else
 __declspec(naked) void Transform9Words(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -165,3 +183,4 @@ __declspec(naked) void Transform9Words(void) {
         ret
     }
 }
+#endif

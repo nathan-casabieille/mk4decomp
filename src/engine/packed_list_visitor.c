@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesPP.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -16,6 +17,29 @@ extern unsigned int g_currentNodeIdx;
  */
 extern u8 g_memHeapStart[];
 extern void Mem_Free(void *);
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PackedListVisitor(uint param_1)
+
+{
+  uint *puVar1;
+  uint *puVar2;
+  
+  puVar2 = &g_memHeapStart;
+  do {
+    if (((*puVar2 & 0xc0000000) == 0) &&
+       ((param_1 == 0xffffffff || (param_1 == (*puVar2 >> 0x18 & 0x3f))))) {
+      if (((undefined4 *)puVar2[1] == (undefined4 *)0x0) ||
+         (puVar1 = *(uint **)puVar2[1], puVar1 == (uint *)0x0)) {
+        puVar1 = puVar2 + 3;
+      }
+      Mem_Free(puVar1);
+    }
+    puVar2 = (uint *)((int)puVar2 + (*puVar2 & 0xffffff));
+  } while (puVar2 < &g_memHeapEnd);
+  return;
+}
+#else
 __declspec(naked) void PackedListVisitor(void) {
     __asm {
         push    esi
@@ -57,3 +81,4 @@ loop_top:
         ret
     }
 }
+#endif

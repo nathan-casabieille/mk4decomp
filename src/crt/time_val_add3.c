@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,28 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void AddOverflowCheck(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TimeValAdd3(undefined4 *param_1,undefined4 *param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = AddOverflowCheck(*param_1,*param_2,param_1);
+  if (iVar1 != 0) {
+    iVar1 = AddOverflowCheck(param_1[1],1,param_1 + 1);
+    if (iVar1 != 0) {
+      param_1[2] = param_1[2] + 1;
+    }
+  }
+  iVar1 = AddOverflowCheck(param_1[1],param_2[1],param_1 + 1);
+  if (iVar1 != 0) {
+    param_1[2] = param_1[2] + 1;
+  }
+  AddOverflowCheck(param_1[2],param_2[2],param_1 + 2);
+  return;
+}
+#else
 __declspec(naked) void TimeValAdd3(void) {
     __asm {
         push    esi
@@ -167,3 +190,4 @@ stage3:
         ret
     }
 }
+#endif

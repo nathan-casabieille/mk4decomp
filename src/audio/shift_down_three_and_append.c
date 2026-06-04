@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesL.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
@@ -22,6 +23,25 @@ extern unsigned int g_currentNodeIdx;
  *   mov     [edx + 0x0c], eax
  *   ret
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ShiftDownThreeAndAppend(undefined4 *param_1,undefined4 param_2)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  
+  iVar2 = 3;
+  puVar1 = param_1;
+  do {
+    *puVar1 = puVar1[1];
+    puVar1 = puVar1 + 1;
+    iVar2 = iVar2 + -1;
+  } while (iVar2 != 0);
+  param_1[3] = param_2;
+  return;
+}
+#else
 __declspec(naked) void ShiftDownThreeAndAppend(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
@@ -40,3 +60,4 @@ __declspec(naked) void ShiftDownThreeAndAppend(void) {
         ret
     }
 }
+#endif

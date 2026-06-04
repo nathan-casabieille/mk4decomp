@@ -2,12 +2,23 @@
  * Auto-split from misc_matchesGG.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004cf740 (40b)
  *   FPU control word read/modify (preserves FPU state across helper).
  *   fstcw [ebp-4]; ((arg2 & arg1) | (~arg2 & cw)) → ebp+0xc; fldcw; ret movsx (cw).
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int FpuMaskMerge(void)
+
+{
+  short in_FPUControlWord;
+  
+  return (int)in_FPUControlWord;
+}
+#else
 __declspec(naked) void FpuMaskMerge(void) {
     __asm {
         push    ebp
@@ -30,3 +41,4 @@ __declspec(naked) void FpuMaskMerge(void) {
         ret
     }
 }
+#endif

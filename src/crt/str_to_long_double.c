@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,59 @@ extern unsigned int g_fightAxisPosY;
 extern void Shl96By1(void);
 extern void TimeValAdd3(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StrToLongDouble(char *param_1,int param_2,uint *param_3)
+
+{
+  uint uVar1;
+  uint *puVar2;
+  short sVar3;
+  uint local_c;
+  uint local_8;
+  uint local_4;
+  
+  puVar2 = param_3;
+  sVar3 = 0x404e;
+  *param_3 = 0;
+  param_3[1] = 0;
+  param_3[2] = 0;
+  if (param_2 != 0) {
+    param_3 = (uint *)param_2;
+    do {
+      local_c = *puVar2;
+      local_8 = puVar2[1];
+      local_4 = puVar2[2];
+      Shl96By1(puVar2);
+      Shl96By1(puVar2);
+      TimeValAdd3(puVar2,&local_c);
+      Shl96By1(puVar2);
+      local_c = (uint)*param_1;
+      local_8 = 0;
+      local_4 = 0;
+      TimeValAdd3(puVar2,&local_c);
+      param_1 = param_1 + 1;
+      param_3 = (uint *)((int)param_3 + -1);
+    } while (param_3 != (uint *)0x0);
+  }
+  uVar1 = puVar2[2];
+  while (uVar1 == 0) {
+    sVar3 = sVar3 + -0x10;
+    puVar2[2] = puVar2[1] >> 0x10;
+    uVar1 = puVar2[2];
+    puVar2[1] = *puVar2 >> 0x10 | puVar2[1] << 0x10;
+    *puVar2 = *puVar2 << 0x10;
+  }
+  uVar1 = puVar2[2];
+  while ((uVar1 & 0x8000) == 0) {
+    Shl96By1(puVar2);
+    sVar3 = sVar3 + -1;
+    uVar1 = puVar2[2];
+  }
+  *(short *)((int)puVar2 + 10) = sVar3;
+  return;
+}
+#else
 __declspec(naked) void StrToLongDouble(void) {
     __asm {
         mov     eax, [esp + 8]
@@ -217,3 +271,4 @@ __declspec(naked) void StrToLongDouble(void) {
         ret
     }
 }
+#endif

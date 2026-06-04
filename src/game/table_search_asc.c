@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesDD.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
@@ -35,6 +36,29 @@ __declspec(naked) void AppInit_Misc2(void) {
  *   table search ascending from arg+1; clamps arg < -1 to -1; returns count
  *   of contiguous valid entries (each 8 bytes; .second must equal 1, .next != 0).
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int Menu_FindNextSelectable(int param_1,int param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  if (param_1 < -1) {
+    param_1 = -1;
+  }
+  iVar2 = param_1 + 1;
+  iVar1 = *(int *)(param_2 + iVar2 * 8);
+  for (param_2 = param_2 + iVar2 * 8;
+      (iVar3 = param_1, iVar1 != 0 && (iVar3 = iVar2, *(short *)(param_2 + 4) == 1));
+      param_2 = param_2 + 8) {
+    iVar1 = *(int *)(param_2 + 8);
+    iVar2 = iVar2 + 1;
+  }
+  return iVar3;
+}
+#else
 __declspec(naked) void Menu_FindNextSelectable(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
@@ -67,3 +91,4 @@ __declspec(naked) void Menu_FindNextSelectable(void) {
         ret
     }
 }
+#endif

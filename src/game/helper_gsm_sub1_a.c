@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* Menu_Direct3DUnavailableDialog - sister of 0x4b8630 for 0x004f5050 menu. */
@@ -15,6 +16,44 @@ extern void Menu_PollNavInput(void);
 extern void Menu_FindNextSelectable(void);
 extern void Menu_FindPrevSelectable(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int Menu_Direct3DUnavailableDialog(void)
+
+{
+  uint uVar1;
+  
+  if ((g_menuD3dUnavailFlags & 1) == 0) {
+    g_menuD3dUnavailFlags = g_menuD3dUnavailFlags | 1;
+    g_dispatchSave1486 = Menu_FindNextSelectable(0,&g_gsmVar2);
+  }
+  if (g_dispatchSave1496 == 0) {
+    g_dispatchSave1496 = 2;
+  }
+  else if (g_dispatchSave1496 == 2) {
+    uVar1 = Menu_PollNavInput(1);
+    if (((uVar1 & 0x8000) == 0) && ((uVar1 & 1) != 0)) {
+      g_dispatchSave1486 = Menu_FindPrevSelectable(g_dispatchSave1486,&g_gsmVar2);
+    }
+    if ((uVar1 & 0x8000) == 0) {
+      if ((uVar1 & 2) != 0) {
+        g_dispatchSave1486 = Menu_FindNextSelectable(g_dispatchSave1486,&g_gsmVar2);
+      }
+      if ((uVar1 & 0x10) != 0) {
+        g_dispatchSave1496 = (int)*(short *)(&g_dispatchSave868 + g_dispatchSave1486 * 8);
+      }
+      if ((uVar1 & 0x20) != 0) {
+        g_dispatchSave1496 = 0x45;
+      }
+    }
+  }
+  else if (g_dispatchSave1496 == 0x45) {
+    g_dispatchSave1496 = 0;
+  }
+  DrawMenu(&g_gsmVar2,g_dispatchSave1486);
+  return g_dispatchSave1496;
+}
+#else
 __declspec(naked) void Menu_Direct3DUnavailableDialog(void)
 {
     __asm
@@ -101,4 +140,5 @@ __declspec(naked) void Menu_Direct3DUnavailableDialog(void)
         ret
     }
 }
+#endif
 

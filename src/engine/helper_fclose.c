@@ -2,6 +2,7 @@
  * Auto-extracted during misc_matches reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 
 /* @addr 0x004c5800 (61b)
  *   if (arg[0xc] & 0x40) zero arg[0xc] and return -1;
@@ -11,6 +12,23 @@
 extern void func_004c6ff0_hh(void *);
 extern int FCloseImpl(void *);
 extern void func_004c7060_hh(void *);
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 Helper_FClose(int param_1)
+
+{
+  undefined4 uVar1;
+  
+  if ((*(byte *)(param_1 + 0xc) & 0x40) != 0) {
+    *(undefined4 *)(param_1 + 0xc) = 0;
+    return 0xffffffff;
+  }
+  RangePathIATDispatch_Lock(param_1);
+  uVar1 = FCloseImpl(param_1);
+  RangePathIATDispatch_TableLookupIatCall(param_1);
+  return uVar1;
+}
+#else
 __declspec(naked) void Helper_FClose(void) {
     __asm {
         push    esi
@@ -41,4 +59,5 @@ __declspec(naked) void Helper_FClose(void) {
         ret
     }
 }
+#endif
 

@@ -1550,6 +1550,36 @@ __declspec(naked) void ScaledThreeChanPack(void) {
  *   Mix arg1 nibbles with 3 word globals, clamp each result to <=0xfe00,
  *   store back; clear 3 dword globals.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ThreeChanPackClamp(uint param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  
+  uVar3 = ((int)param_1 >> 8 & 0xffffff00U) + (uint)g_gtAxisX;
+  uVar1 = ((int)param_1 >> 8 & 0xffU) * 0x100 + (uint)g_gtAxisY;
+  uVar2 = (param_1 & 0xff) * 0x100 + (uint)g_gtAxisZ;
+  if (0xfe00 < uVar3) {
+    uVar3 = 0xfe00;
+  }
+  if (0xfe00 < uVar1) {
+    uVar1 = 0xfe00;
+  }
+  if (0xfe00 < uVar2) {
+    uVar2 = 0xfe00;
+  }
+  g_gtAxisY = (short)uVar1;
+  g_gtAxisX = (short)uVar3;
+  g_gtAxisZ = (short)uVar2;
+  g_pointPosZ = 0;
+  g_pointPosY = 0;
+  g_pointPosX = 0;
+  return;
+}
+#else
 __declspec(naked) void ThreeChanPackClamp(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]
@@ -1594,6 +1624,7 @@ __declspec(naked) void ThreeChanPackClamp(void) {
         ret
     }
 }
+#endif
 
 extern void BootStateTriple(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
@@ -5428,6 +5459,53 @@ extern unsigned int g_eventArmReload;
  *   else: signed-mod check then push (si or si+0x7d0); call Audio_PlaySoundId;
  *   store result to [0x53a770].
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TaggedSceneDispatch(undefined4 param_1)
+
+{
+  char cVar1;
+  int iVar2;
+  short sVar3;
+  
+  if (g_texXorKey == 0) {
+    sVar3 = (short)param_1;
+    if (sVar3 == -1) {
+      CallZero2();
+      SixDoublePushCall();
+      TwinRecordIter();
+      return;
+    }
+    if (sVar3 == 0) {
+      CallZero2();
+      SixDoublePushCall();
+      TwinRecordIter();
+      return;
+    }
+    if (sVar3 == -2) {
+      TwinRecordIter();
+      return;
+    }
+    if ((sVar3 < 100) || ((0x157b < sVar3 && (sVar3 < 0x1591)))) {
+      TwinRecordIter();
+    }
+    iVar2 = TableSearch(param_1);
+    if (iVar2 != 0) {
+      Audio_TimerSet(iVar2,0,*(undefined4 *)(&g_dispatchSave1327 + iVar2 * 4),0);
+      return;
+    }
+    if (sVar3 < 0x65) {
+      iVar2 = sVar3 + 2000;
+    }
+    else {
+      iVar2 = (int)sVar3 / 5;
+    }
+    cVar1 = Audio_PlaySoundId(iVar2,0xffffffff,0xffffffff);
+    g_eventArmReload = (int)cVar1;
+  }
+  return;
+}
+#else
 __declspec(naked) void TaggedSceneDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_texXorKey]
@@ -5512,6 +5590,7 @@ __declspec(naked) void TaggedSceneDispatch(void) {
         ret
     }
 }
+#endif
 
 extern void DualBranchWordLookup(void);
 extern void StoreTwoCallSubMain(void);
@@ -7125,6 +7204,38 @@ extern void SnapshotDispatchMStack(void);
  *   found: g_walkCallback = chain[scaledInit++]; call SnapshotDispatchMStack;
  *     call ScaledZeroFour; return 1.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 DualGuardedTableSearch(void)
+
+{
+  MStackPush3CmpCall();
+  if (((byte)g_xformDirtyFlags & 1) == 0) {
+    return 0;
+  }
+  g_walkCallback = g_fightStateProgress;
+  if (0x10000 < g_fightStateProgress) {
+    return 0;
+  }
+  CmpP1GTSetup();
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x13afa5;
+  g_eventQueueWorkType = (*(unsigned int *)MK4_VA(unsigned int, 0x4ebe90));
+  while( true ) {
+    if (g_eventQueueWorkType < 0) {
+      return 0;
+    }
+    g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueuePending, 0x34);
+    if (g_eventQueueCurrent == g_eventQueueWorkType) break;
+    g_eventQueueWorkType = *(int *)(((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1) * 4);
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 2;
+  }
+  g_walkCallback = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  SnapshotDispatchMStack();
+  ScaledZeroFour();
+  return 1;
+}
+#else
 __declspec(naked) void DualGuardedTableSearch(void) {
     __asm {
         push    esi
@@ -7185,6 +7296,7 @@ __declspec(naked) void DualGuardedTableSearch(void) {
         ret
     }
 }
+#endif
 
 extern void GuardedChainCmpDualBitXor(void);
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
@@ -8181,6 +8293,56 @@ extern unsigned int g_btnBind8;
  *   For each slot (0..8): if (slot[ecx_idx] == edx) { slot[ecx_idx] = eax; eax = 0; }
  *   *esi = edx. pop esi; ret.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Input_RebindButtonToAction(int *param_1,int param_2,int param_3)
+
+{
+  int iVar1;
+  
+  iVar1 = *param_1;
+  *param_1 = 0;
+  if (param_2 != 0) {
+    if (*(int *)(&g_btnBind0 + param_3 * 4) == param_2) {
+      *(int *)(&g_btnBind0 + param_3 * 4) = iVar1;
+      iVar1 = 0;
+    }
+    if (*(int *)(&g_btnBind1 + param_3 * 4) == param_2) {
+      *(int *)(&g_btnBind1 + param_3 * 4) = iVar1;
+      iVar1 = 0;
+    }
+    if (*(int *)(&g_btnBind2 + param_3 * 4) == param_2) {
+      *(int *)(&g_btnBind2 + param_3 * 4) = iVar1;
+      iVar1 = 0;
+    }
+    if (*(int *)(&g_btnBind3 + param_3 * 4) == param_2) {
+      *(int *)(&g_btnBind3 + param_3 * 4) = iVar1;
+      iVar1 = 0;
+    }
+    if (*(int *)(&g_btnBind4 + param_3 * 4) == param_2) {
+      *(int *)(&g_btnBind4 + param_3 * 4) = iVar1;
+      iVar1 = 0;
+    }
+    if (*(int *)(&g_btnBind5 + param_3 * 4) == param_2) {
+      *(int *)(&g_btnBind5 + param_3 * 4) = iVar1;
+      iVar1 = 0;
+    }
+    if (*(int *)(&g_btnBind6 + param_3 * 4) == param_2) {
+      *(int *)(&g_btnBind6 + param_3 * 4) = iVar1;
+      iVar1 = 0;
+    }
+    if (*(int *)(&g_btnBind7 + param_3 * 4) == param_2) {
+      *(int *)(&g_btnBind7 + param_3 * 4) = iVar1;
+      iVar1 = 0;
+    }
+    if (*(int *)(&g_btnBind8 + param_3 * 4) == param_2) {
+      *(int *)(&g_btnBind8 + param_3 * 4) = iVar1;
+    }
+    *param_1 = param_2;
+  }
+  return;
+}
+#else
 __declspec(naked) void Input_RebindButtonToAction(void) {
     __asm {
         mov     edx, [esp + 8]
@@ -8245,6 +8407,7 @@ __declspec(naked) void Input_RebindButtonToAction(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x0042e1d0 (188b game) - install-self counted-decrement with chain accumulator.
  *   eax = base*4; flag = [eax+0x84]; clear.
@@ -16416,6 +16579,34 @@ extern unsigned int g_phaseThunkState;
  *   Store g_eventQueueTotal to [baseSel*4+0x64]; eax = arg0>>2; g_eventQueueEnd store at [baseSel*4+0x68];
  *   g_pendingNodeType=eax+0xf; scaledInit=eax+g_chainAccumCur; eax=[scaledInit*4+0]; jmp 0x0045de60.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ChainPickArgScaledInit(int param_1)
+
+{
+  int iVar1;
+  
+  if (g_cj_0054205c == 0) {
+    thunk_ScaledNeg1SetPause();
+    return;
+  }
+  iVar1 = MK4_NODE_AT(int, g_cj_00542058, 0x54);
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x54);
+  g_eventQueueWorkType = g_phaseThunkState;
+  g_walkCallback = iVar1;
+  if (((g_phaseThunkState != 0) && (g_eventQueueChild = iVar1, g_phaseThunkState != 0)) &&
+     (g_walkCallback = g_eventQueueCurrent, g_phaseThunkState != 0)) {
+    g_eventQueueCurrent = iVar1;
+  }
+  g_xformScratch2088 = (uint)(g_walkCallback < g_eventQueueCurrent);
+  MK4_NODE_AT(undefined4, g_baseSel, 100) = g_dualD;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x68) = g_cj_00542054;
+  g_dualC = (param_1 >> 2) + 0xf;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)(((param_1 >> 2) + g_chainAccumCur) * 4);
+  EventPacketDecoder();
+  return;
+}
+#else
 __declspec(naked) void ChainPickArgScaledInit(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
@@ -16467,6 +16658,7 @@ __declspec(naked) void ChainPickArgScaledInit(void) {
         jmp     EventPacketDecoder
     }
 }
+#endif
 
 extern void Atan2QuadrantLookup(void);
 
@@ -17170,6 +17362,30 @@ extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
  *   second chain at g_pendingNodeType[+0x54/0x58/0x5c]=0/0xfffc0000/0;
  *   g_scaledInit[+0x3c] = g_pendingNodeType. pop+ret.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ScaledChainInit2Phase(undefined4 param_1)
+
+{
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0;
+  *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = MK4_NODE_AT(int, g_cj_00542054, 0x5c) + 0x41999;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x68) = 0x62978;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74) = 0xffffaaab;
+  g_walkCallback = param_1;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = param_1;
+  MStackCall_MStackPush2ChainPrepend_00406340();
+  if (g_framePauseFlag == 0) {
+    g_dualC = g_particleEmitterNode;
+    MK4_NODE_AT(undefined4, g_particleEmitterNode, 0x54) = 0;
+    MK4_NODE_AT(undefined4, g_dualC, 0x58) = 0xfffc0000;
+    g_walkCallback = 0;
+    MK4_NODE_AT(undefined4, g_dualC, 0x5c) = 0;
+    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x3c) = g_dualC;
+  }
+  return;
+}
+#else
 __declspec(naked) void ScaledChainInit2Phase(void) {
     __asm {
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -17211,6 +17427,7 @@ __declspec(naked) void ScaledChainInit2Phase(void) {
         ret
     }
 }
+#endif
 
 extern void CallPauseDirtyMStackPushFn(void);
 extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430(void);
@@ -17611,6 +17828,32 @@ extern unsigned int g_pendingMatchVar3;
 extern unsigned int g_pendingMatchVar5;
 
 /* @addr 0x0042ae40 (208b game) - 3-element range-clamp loop in-place at arg0 array. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void RangeClampThree(int param_1)
+
+{
+  int iVar1;
+  
+  for (iVar1 = MK4_NODE_AT(int, param_1, 0); g_pendingMatchVar3 < iVar1; iVar1 = iVar1 - g_pendingMatchVar) {
+  }
+  for (; iVar1 <= g_pendingMatchVar5; iVar1 = iVar1 + g_pendingMatchVar) {
+  }
+  MK4_NODE_AT(int, param_1, 0) = iVar1;
+  for (iVar1 = MK4_NODE_AT(int, param_1, 4); g_pendingMatchVar3 < iVar1; iVar1 = iVar1 - g_pendingMatchVar) {
+  }
+  for (; iVar1 <= g_pendingMatchVar5; iVar1 = iVar1 + g_pendingMatchVar) {
+  }
+  MK4_NODE_AT(int, param_1, 4) = iVar1;
+  for (g_walkCallback = MK4_NODE_AT(int, param_1, 8); g_pendingMatchVar3 < g_walkCallback;
+      g_walkCallback = g_walkCallback - g_pendingMatchVar) {
+  }
+  for (; g_walkCallback <= g_pendingMatchVar5; g_walkCallback = g_walkCallback + g_pendingMatchVar) {
+  }
+  MK4_NODE_AT(int, param_1, 8) = g_walkCallback;
+  return;
+}
+#else
 __declspec(naked) void RangeClampThree(void) {
     __asm {
         mov     edx, dword ptr [g_pendingMatchVar3]
@@ -17685,6 +17928,7 @@ __declspec(naked) void RangeClampThree(void) {
         ret
     }
 }
+#endif
 
 extern void SwapOrPassSet(void);
 extern void CmpEax1OrSetDirty(void);
@@ -33408,6 +33652,63 @@ extern unsigned int g_dataArr_0053a1d0;
  *   Else: setup player2 (005380e0). g_eventQueueEnd = (0x0053a1d0>>2). Call DownloadPlayerChar; ret.
  *   Both arms normalize g_walkCallback via cmp on 0xf/6/8 and write to g_installState.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int PlayerCharSelector(void)
+
+{
+  int iVar1;
+  
+  BitShiftExtract();
+  iVar1 = g_framePauseFlag;
+  if (g_framePauseFlag == 0) {
+    if (g_active_0053a408 == 0) {
+      g_dlChar13 = 0;
+      if ((g_dlNalt2 == 0xf) && (g_walkCallback == 0xf)) {
+        g_walkCallback = 6;
+      }
+      if (g_walkCallback == 6) {
+        g_installState = 8;
+      }
+      if (g_walkCallback == 0xf) {
+        g_installState = 0xe;
+      }
+      if (g_walkCallback == 8) {
+        g_installState = 10;
+      }
+      g_dlNalt3 = g_installState;
+      g_cj_00542054 = 0x14d73f;
+      g_eventQueueCurrent = 0;
+      g_dlNalt1 = g_walkCallback;
+      DownloadPlayerChar();
+      return g_framePauseFlag;
+    }
+    g_dlChar24 = 0;
+    if ((g_dlNalt1 == 0xf) && (g_walkCallback == 0xf)) {
+      g_walkCallback = 6;
+    }
+    if (g_walkCallback == 6) {
+      g_installState = 8;
+    }
+    if (g_walkCallback == 0xf) {
+      g_installState = 0xe;
+    }
+    if (g_walkCallback == 8) {
+      g_installState = 10;
+    }
+    g_dlNalt4 = g_installState;
+    g_cj_00542054 = 0x14e874;
+    g_eventQueueCurrent = 1;
+    g_dlNalt2 = g_walkCallback;
+    iVar1 = DownloadPlayerChar();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0;
+      g_active_00537e88 = 0;
+    }
+  }
+  return iVar1;
+}
+#else
 __declspec(naked) void PlayerCharSelector(void) {
     __asm {
         push    esi
@@ -33502,6 +33803,7 @@ __declspec(naked) void PlayerCharSelector(void) {
         ret
     }
 }
+#endif
 
 extern void InstallSelfThreeStateScaledLoad(void);
 extern void ThrowGrabPoseCopyCluster(void);
@@ -39181,6 +39483,17 @@ extern void GuardedSetupCallTailJmp(int, int);
  *       0x00870000); g_currentNodeIdx*4 chain[+0x5c] = 0x14000; g_eventQueueEnd = &chain[+0x58].
  *   InstallSelf: install-self at body; chain->state=1; g_pendingNodeType=0xf; g_framePauseFlag=1; ret.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Title_PressStartScreen(int param_1,undefined4 *param_2)
+
+{
+  MK4_NODE_AT(undefined4, param_1, 0x54) = *param_2;
+  MK4_NODE_AT(undefined4, param_1, 0x58) = param_2[1];
+  MK4_NODE_AT(undefined4, param_1, 0x5c) = param_2[2];
+  return;
+}
+#else
 __declspec(naked) void Title_PressStartScreen(void)
 {
     __asm
@@ -39245,6 +39558,7 @@ __declspec(naked) void Title_PressStartScreen(void)
         ret
     }
 }
+#endif
 
 extern void StorePauseImulShr16(void);
 extern void TripleCallCountdown(void);
@@ -40220,6 +40534,37 @@ extern int g_audioSlotKeys;
  *   ClearTwoCallSetStore; g_dlMode=0; byte-table-lookup table[voice1[0]] → g_dlNalt1,
  *   table[voice2[0]] → g_dlNalt2; ret.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioMode2BankSetup(char *param_1,char *param_2)
+
+{
+  g_audioInstallSlot2 = (int)param_1[4];
+  g_phaseThunkSave2 = (int)param_2[4];
+  if ((param_1[3] != '\0') || (g_stateCountdown = 10, param_2[3] != '\0')) {
+    g_stateCountdown = 7;
+  }
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e902;
+  g_eventQueuePending = 0x14e8f8;
+  g_player1State = 0;
+  g_active_0053a408 = 0;
+  if (param_1[3] != '\0') {
+    DualScaledStoreConst();
+  }
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14dfa2;
+  g_eventQueuePending = 0x14e9c0;
+  g_player2State = 0;
+  g_active_00537e88 = 0;
+  if (param_2[3] != '\0') {
+    DualScaledStoreConst();
+  }
+  ClearTwoCallSetStore();
+  g_dlMode = 0;
+  g_dlNalt1 = (int)(char)(&g_audioSlotKeys)[*param_1];
+  g_dlNalt2 = (int)(char)(&g_audioSlotKeys)[*param_2];
+  return;
+}
+#else
 __declspec(naked) void AudioMode2BankSetup(void)
 {
     __asm
@@ -40283,6 +40628,7 @@ __declspec(naked) void AudioMode2BankSetup(void)
         ret
     }
 }
+#endif
 
 extern void TwinMStackPushScaledChain(void);
 extern void InstallSelfPackedF80(void);
@@ -40969,6 +41315,51 @@ extern s32 g_vtxOut_z;
  *   channel bits at word [esi + 0x14/0x16/0x18], packs the resulting 5-bit field into bits [0:5],
  *   [5:10] (shl 5), and [10:15] (shl 10) of the destination word.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Vec3ColorShiftClamp(int param_1,byte param_2)
+
+{
+  ushort uVar1;
+  ushort uVar2;
+  int iVar3;
+  
+  iVar3 = g_min_007af984 >> (param_2 & 0x1f);
+  if (iVar3 < 0) {
+    iVar3 = 0;
+  }
+  if (0x1f < iVar3) {
+    iVar3 = 0x1f;
+  }
+  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)(param_1 + 0x14)) & 0x1f ^
+          *(ushort *)(param_1 + 0x14);
+  uVar2 = uVar1 & 0x1f;
+  *(ushort *)(param_1 + 0x14) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
+  iVar3 = g_min_007af988 >> (param_2 & 0x1f);
+  if (iVar3 < 0) {
+    iVar3 = 0;
+  }
+  if (0x1f < iVar3) {
+    iVar3 = 0x1f;
+  }
+  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)(param_1 + 0x16)) & 0x1f ^
+          *(ushort *)(param_1 + 0x16);
+  uVar2 = uVar1 & 0x1f;
+  *(ushort *)(param_1 + 0x16) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
+  iVar3 = g_min_007af98c >> (param_2 & 0x1f);
+  if (iVar3 < 0) {
+    iVar3 = 0;
+  }
+  if (0x1f < iVar3) {
+    iVar3 = 0x1f;
+  }
+  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)(param_1 + 0x18)) & 0x1f ^
+          *(ushort *)(param_1 + 0x18);
+  uVar2 = uVar1 & 0x1f;
+  *(ushort *)(param_1 + 0x18) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
+  return;
+}
+#else
 __declspec(naked) void Vec3ColorShiftClamp(void)
 {
     __asm
@@ -41065,6 +41456,7 @@ __declspec(naked) void Vec3ColorShiftClamp(void)
         ret
     }
 }
+#endif
 
 extern void Menu_FindNextSelectable(void);
 extern void Menu_FindPrevSelectable(void);
@@ -43589,6 +43981,51 @@ extern unsigned char g_effectTbl680[];
  *   DoubleToInt64 → byte clamp stored at [esp+8]; recompute scaled idx;
  *   apply effect via Snd3DVolumePanSet(idx, -1, byte, byte).
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EffectTableWalker(uint param_1)
+
+{
+  short sVar1;
+  undefined1 uVar2;
+  int iVar3;
+  short *psVar4;
+  int iVar5;
+  
+  if (param_1 < 0x2f) {
+    iVar5 = 0;
+    psVar4 = (short *)(&g_effectTbl680 + param_1 * 0x2a8);
+    do {
+      if (*psVar4 == -1) {
+        return;
+      }
+      iVar3 = TableSearch(*psVar4);
+      if (iVar3 == 0) {
+        sVar1 = *psVar4;
+        if (sVar1 < 0x65) {
+          iVar3 = sVar1 + 2000;
+        }
+        else {
+          iVar3 = (int)sVar1 / 5;
+        }
+        Helper_AudioRelease(iVar3);
+        uVar2 = __ftol();
+        sVar1 = *psVar4;
+        if (sVar1 < 0x65) {
+          iVar3 = sVar1 + 2000;
+        }
+        else {
+          iVar3 = (int)sVar1 / 5;
+        }
+        Snd3DVolumePanSet(iVar3,0xffffffff,uVar2,uVar2);
+      }
+      iVar5 = iVar5 + 1;
+      psVar4 = psVar4 + 2;
+    } while (iVar5 < 0xaa);
+  }
+  return;
+}
+#else
 __declspec(naked) void EffectTableWalker(void) {
     __asm {
         push    ecx
@@ -43670,6 +44107,7 @@ __declspec(naked) void EffectTableWalker(void) {
         ret
     }
 }
+#endif
 
 
 /* @addr 0x004c72a0 (205b crt) - heap shrink/decommit scan.
@@ -43770,6 +44208,54 @@ __declspec(naked) void HeapShrinkDecommit(void) {
  *   Handles zero, infinity, NaN, and denormal cases. Final 11 bytes form a
  *   stub thunk (push 2; call helper; ret) that appears to be tail-padding code.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DoubleToLongDouble(uint *param_1,uint *param_2)
+
+{
+  ushort uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  ushort uVar5;
+  int iVar6;
+  
+  uVar4 = 0x80000000;
+  uVar1 = *(ushort *)((int)param_2 + 6);
+  uVar2 = *param_2;
+  uVar3 = (uVar1 & 0x7ff0) >> 4;
+  if (uVar3 == 0) {
+    uVar4 = 0;
+    if (((param_2[1] & 0xfffff) == 0) && (uVar2 == 0)) {
+      param_1[1] = 0;
+      *param_1 = 0;
+      *(undefined2 *)(param_1 + 2) = 0;
+      return;
+    }
+    iVar6 = 0x3c01;
+  }
+  else if (uVar3 == 0x7ff) {
+    iVar6 = 0x7fff;
+  }
+  else {
+    iVar6 = uVar3 + 0x3c00;
+  }
+  uVar5 = (ushort)iVar6;
+  uVar3 = uVar2 >> 0x15 | (param_2[1] & 0xfffff) << 0xb | uVar4;
+  param_1[1] = uVar3;
+  *param_1 = uVar2 << 0xb;
+  for (; uVar4 == 0; uVar4 = uVar4 & 0x80000000) {
+    uVar4 = uVar3 * 2;
+    uVar3 = *param_1 >> 0x1f | uVar4;
+    iVar6 = iVar6 + 0xffff;
+    uVar5 = (ushort)iVar6;
+    param_1[1] = uVar3;
+    *param_1 = *param_1 * 2;
+  }
+  *(ushort *)(param_1 + 2) = uVar5 | uVar1 & 0x8000;
+  return;
+}
+#else
 __declspec(naked) void DoubleToLongDouble(void) {
     __asm {
         push    ebx
@@ -43855,6 +44341,7 @@ __declspec(naked) void DoubleToLongDouble(void) {
         ret
     }
 }
+#endif
 
 extern void StrSearchCall(void);
 extern unsigned char g_crtTimeFmtByte;
@@ -48256,6 +48743,63 @@ __declspec(naked) void BootInstallerPair(void) {
  *   If not found (idx==12), find oldest via [0x523ae8] timestamps.
  *   Install voice: update tables at indices, call PendingMatch_004013a0, return slot ptr.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int VoicePicker(int param_1,int param_2,undefined1 param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  int iVar5;
+  uint uVar6;
+  int iVar7;
+  
+  iVar2 = MK4_NODE_AT(int, param_1, 0);
+  if (MK4_NODE_AT(int, param_1, 0) == 0) {
+    param_1 = 0x13ffa2;
+    iVar2 = g_dispatchSave1331;
+  }
+  if (MK4_NODE_AT(int, param_1, 4) <= param_2) {
+    param_2 = 0;
+  }
+  uVar1 = MK4_NODE_AT(uint, param_1, 8);
+  uVar6 = uVar1 >> 0x10;
+  if ((uVar1 & 0x8000) == 0) {
+    return (iVar2 >> 2) + uVar6 * param_2;
+  }
+  iVar3 = 0;
+  piVar4 = &(*(unsigned int *)MK4_VA(unsigned int, 0x523b28));
+  do {
+    if (*piVar4 == g_cj_0054205c) break;
+    piVar4 = piVar4 + 1;
+    iVar3 = iVar3 + 1;
+  } while ((int)piVar4 < 0x523b58);
+  if (0xb < iVar3) {
+    iVar3 = 0;
+    iVar5 = 1;
+    iVar7 = 0;
+    do {
+      if ((uint)(&(*(unsigned int *)MK4_VA(unsigned int, 0x523ae8)))[iVar5] < *(uint *)((int)&(*(unsigned int *)MK4_VA(unsigned int, 0x523ae8)) + iVar7)) {
+        iVar3 = iVar5;
+        iVar7 = iVar5 * 4;
+      }
+      iVar5 = iVar5 + 1;
+    } while (iVar5 < 0xc);
+  }
+  (&(*(unsigned int *)MK4_VA(unsigned int, 0x523b28)))[iVar3] = g_cj_0054205c;
+  g_dispatchSave19 = iVar2;
+  (&(*(unsigned int *)MK4_VA(unsigned int, 0x523ae8)))[iVar3] = (&(*(unsigned int *)MK4_VA(unsigned int, 0x523ae8)))[iVar3] + 1;
+  g_phaseThunkSave = MK4_NODE_AT(undefined4, param_1, 4);
+  g_dispatchSave5 = uVar6 - 3;
+  g_dispatchSave54 = param_3;
+  g_dispatchSave12 = param_2;
+  g_dispatchSave11 = &(*(unsigned int *)MK4_VA(unsigned int, 0x523b58)) + iVar3 * 0x80;
+  PendingMatch_004013a0();
+  return (int)(&(*(unsigned int *)MK4_VA(unsigned int, 0x523b58)) + iVar3 * 0x80) >> 2;
+}
+#else
 __declspec(naked) void VoicePicker(void) {
     __asm {
         push    ebx
@@ -48350,6 +48894,7 @@ __declspec(naked) void VoicePicker(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x004c6760 (144b boot) - CRT _close bundle + 2 thunks + fmod/fprem helper.
  *   sub-1 (76b @ 0x4c6760): _close(fd). Calls CloseHandle via IAT[0x4d2150];
@@ -48439,6 +48984,47 @@ __declspec(naked) void CloseAndThunksBundle(void) {
  *   (prev) is free, coalesce backward.
  *   Calls Helper_MemMalloc_Post.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Mem_Free(uint param_1)
+
+{
+  undefined4 *puVar1;
+  uint uVar2;
+  uint *puVar3;
+  uint *puVar4;
+  uint uVar5;
+  undefined *puVar6;
+  
+  if ((0x7b419f < param_1) && (param_1 < 0xab4195)) {
+    puVar1 = *(undefined4 **)(param_1 - 8);
+    puVar3 = (uint *)(param_1 - 0xc);
+    *puVar3 = *puVar3 | 0x80000000;
+    if (puVar1 != (undefined4 *)0x0) {
+      *puVar1 = 0;
+    }
+    puVar4 = *(uint **)(param_1 - 4);
+    if ((puVar4 != puVar3) && ((*puVar4 & 0x80000000) != 0)) {
+      *(uint **)((*puVar3 & 0xffffff) + 8 + (int)puVar3) = puVar4;
+      uVar5 = **(uint **)(param_1 - 4);
+      **(uint **)(param_1 - 4) = (*puVar3 + uVar5 ^ uVar5) & 0xffffff ^ uVar5;
+      puVar3 = *(uint **)(param_1 - 4);
+    }
+    uVar5 = *puVar3;
+    puVar4 = (uint *)((uVar5 & 0xffffff) + (int)puVar3);
+    if ((puVar4 < &g_memHeapEnd) && (uVar2 = *puVar4, (uVar2 & 0x80000000) != 0)) {
+      uVar5 = (uVar2 + uVar5 ^ uVar5) & 0xffffff ^ uVar5;
+      *puVar3 = uVar5;
+      puVar6 = (undefined *)((uVar5 & 0xffffff) + (int)puVar3);
+      if (puVar6 < &g_memHeapEnd) {
+        *(uint **)(puVar6 + 8) = puVar3;
+      }
+    }
+    Helper_MemMalloc_Post();
+  }
+  return;
+}
+#else
 __declspec(naked) void Mem_Free(void) {
     __asm {
         mov     eax, [esp + 4]
@@ -48500,6 +49086,7 @@ __declspec(naked) void Mem_Free(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x004c6110 (171b boot) - CRT calloc: nelem * size with zero-fill.
  *   Multiplies args; overflow → use heap fallback (HeapAlloc).
@@ -48607,6 +49194,52 @@ __declspec(naked) void *Calloc(int a, int b) {
  *     StringDigitConvert. Then more fields with flag=0. ORs all return
  *     values into edi (error tracker). Returns edi (0 = success, else error).
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+uint LocaleInfoFill(int param_1)
+
+{
+  undefined2 uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  uint uVar11;
+  uint uVar12;
+  uint uVar13;
+  uint uVar14;
+  uint uVar15;
+  uint uVar16;
+  
+  uVar1 = g_dispatchSave1460;
+  if (param_1 == 0) {
+    return 0xffffffff;
+  }
+  uVar2 = CrtGetLocaleInfo(1,g_dispatchSave1460,0x15,param_1 + 0xc);
+  uVar3 = CrtGetLocaleInfo(1,uVar1,0x14,param_1 + 0x10);
+  uVar4 = CrtGetLocaleInfo(1,uVar1,0x16,param_1 + 0x14);
+  uVar5 = CrtGetLocaleInfo(1,uVar1,0x17,param_1 + 0x18);
+  uVar6 = CrtGetLocaleInfo(1,uVar1,0x18,(undefined4 *)(param_1 + 0x1c));
+  StringDigitConvert(*(undefined4 *)(param_1 + 0x1c));
+  uVar7 = CrtGetLocaleInfo(1,uVar1,0x50,param_1 + 0x20);
+  uVar8 = CrtGetLocaleInfo(1,uVar1,0x51,param_1 + 0x24);
+  uVar9 = CrtGetLocaleInfo(0,uVar1,0x1a,param_1 + 0x28);
+  uVar10 = CrtGetLocaleInfo(0,uVar1,0x19,param_1 + 0x29);
+  uVar11 = CrtGetLocaleInfo(0,uVar1,0x54,param_1 + 0x2a);
+  uVar12 = CrtGetLocaleInfo(0,uVar1,0x55,param_1 + 0x2b);
+  uVar13 = CrtGetLocaleInfo(0,uVar1,0x56,param_1 + 0x2c);
+  uVar14 = CrtGetLocaleInfo(0,uVar1,0x57,param_1 + 0x2d);
+  uVar15 = CrtGetLocaleInfo(0,uVar1,0x52,param_1 + 0x2e);
+  uVar16 = CrtGetLocaleInfo(0,uVar1,0x53,param_1 + 0x2f);
+  return uVar2 | uVar3 | uVar4 | uVar5 | uVar6 | uVar7 | uVar8 | uVar9 | uVar10 | uVar11 | uVar12 |
+         uVar13 | uVar14 | uVar15 | uVar16;
+}
+#else
 __declspec(naked) void LocaleInfoFill(void) {
     __asm {
         push    ebx
@@ -48755,6 +49388,7 @@ __declspec(naked) void LocaleInfoFill(void) {
         ret
     }
 }
+#endif
 extern unsigned int g_dispatchSave554[];
 extern unsigned int g_fpuConst;
 extern unsigned int g_dispatchSave553;
@@ -48852,6 +49486,51 @@ __declspec(naked) void VibrationFrameUpdate(void) {
  *   (AllocNode-1) as init steps, each guarded by g_framePauseFlag == 0.
  *   Pops 3 mstack frames at end (with state-flag toggle).
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootMstackInit(undefined4 param_1,undefined4 param_2)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_walkCallback;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueWorkType;
+  g_walkCallback = param_2;
+  g_eventQueueCurrent = 0xffff;
+  thunk_NodeChainMaskMatch();
+  if (g_framePauseFlag == 0) {
+    while ((g_xformDirtyFlags & 1) != 0) {
+      g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      thunk_LoadShlDerefCallSkip();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_walkCallback = param_2;
+      g_eventQueueCurrent = 0xffff;
+      thunk_NodeChainMaskMatch();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+    }
+    g_eventQueueWorkType = param_2;
+    g_dualC = param_1;
+    AllocNode();
+    if (g_framePauseFlag == 0) {
+      g_eventQueueWorkType = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_eventQueueCurrent = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_walkCallback = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+      g_matrixStackTop = g_matrixStackTop + -3;
+      g_xformDirtyFlags = g_xformDirtyFlags | 4;
+      if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
+        g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void BootMstackInit(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -48938,6 +49617,7 @@ __declspec(naked) void BootMstackInit(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x004c5bb0 (316b boot) - CRT fread: read count*size bytes from buffered stream.
  *   Multiplies count*size, returns 0 if 0. Buffered path drains pending bytes via
@@ -49196,6 +49876,77 @@ __declspec(naked) void ChainGetterStateInstaller(void) {
  *   If new bit-set (no auto-repeat): random pitch (Helper_AudioRelease(0xa0)) +
  *   audio cue (Audio_PlaySoundId(0xa0,-1,-1)).
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+uint Menu_PollNavInput(int param_1)
+
+{
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  
+  iVar1 = Input_GetAsyncKey(0x26);
+  uVar4 = (uint)(iVar1 != 0);
+  iVar1 = Input_GetAsyncKey(0x28);
+  if (iVar1 != 0) {
+    uVar4 = uVar4 | 2;
+  }
+  iVar1 = Input_GetAsyncKey(0xd);
+  if (iVar1 != 0) {
+    uVar4 = uVar4 | 0x10;
+  }
+  iVar1 = Input_GetAsyncKey(0x20);
+  if (iVar1 != 0) {
+    uVar4 = uVar4 | 0x10;
+  }
+  iVar1 = Input_GetAsyncKey(0x25);
+  if (iVar1 != 0) {
+    uVar4 = uVar4 | 4;
+  }
+  iVar1 = Input_GetAsyncKey(0x27);
+  if (iVar1 != 0) {
+    uVar4 = uVar4 | 8;
+  }
+  iVar1 = Input_GetAsyncKey(0x1b);
+  if (iVar1 != 0) {
+    uVar4 = uVar4 | 0x60;
+  }
+  iVar1 = Input_GetAsyncKey(8);
+  if (iVar1 != 0) {
+    uVar4 = uVar4 | 0x20;
+  }
+  uVar2 = Input_PollJoystick(g_joySelP0);
+  uVar3 = Input_PollJoystick(g_joySelP1);
+  uVar2 = uVar2 | uVar3;
+  if ((uVar2 & 0x40000000) != 0) {
+    uVar4 = uVar4 | 1;
+  }
+  if ((uVar2 & 0x80000000) != 0) {
+    uVar4 = uVar4 | 2;
+  }
+  if ((uVar2 & 0x10000000) != 0) {
+    uVar4 = uVar4 | 4;
+  }
+  if ((uVar2 & 0x20000000) != 0) {
+    uVar4 = uVar4 | 8;
+  }
+  if ((param_1 != 0) && ((uVar2 & 0xfffffff) != 0)) {
+    uVar4 = uVar4 | 0x10;
+  }
+  uVar2 = uVar4;
+  if ((g_dispatchSave1491 != 0) && (uVar4 != 0)) {
+    uVar4 = uVar4 | 0x8000;
+    uVar2 = g_dispatchSave1491;
+  }
+  g_dispatchSave1491 = uVar2;
+  if (((uVar4 & 0x8000) == 0) && (uVar4 != 0)) {
+    Helper_AudioRelease(0xa0);
+    Audio_PlaySoundId(0xa0,0xffffffff,0xffffffff);
+  }
+  return uVar4;
+}
+#else
 __declspec(naked) void Menu_PollNavInput(void) {
     __asm {
         push    esi
@@ -49319,6 +50070,7 @@ __declspec(naked) void Menu_PollNavInput(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x00408d30 (312b boot) - bundled 3 sub-functions in boot group.
  *   sub-1 (~140b @ 0x408d30): state validation chain - sets bit2 of g_xformDirtyFlags
@@ -57288,6 +58040,25 @@ extern void MStackFrameCdeclDouble(void);
  *     The "still zero" branch: ScaledZeroFour → tail-jmp
  *     ScaledZero44.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StreamInitCountdownBody(int param_1)
+
+{
+  undefined4 *puVar1;
+  
+  *(undefined1 **)(g_cj_0054205c * 4 + 0x44) = &(*(unsigned int *)MK4_VA(unsigned int, 0x4948c0));
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (param_1 >> 2) + 1;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x5c) = *(undefined4 *)((param_1 >> 2) * 4);
+  puVar1 = (undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x60) = *puVar1;
+  g_walkCallback = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  MK4_NODE_AT(undefined4, g_baseSel, 100) = g_walkCallback;
+  return;
+}
+#else
 __declspec(naked) void StreamInitCountdownBody(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
@@ -57385,6 +58156,7 @@ __declspec(naked) void StreamInitCountdownBody(void) {
         jmp     ScaledZero44
     }
 }
+#endif
 
 extern unsigned int g_installCountdownVar2;
 extern unsigned int g_dispatchVar32;
@@ -62694,6 +63466,62 @@ extern void Atan2QuadrantLookup(void);
 extern void BootMod6487eClampAndChainMul10(void);
 extern void ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d470(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+uint AtanDualDeltaThreshold(void)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_walkCallback;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueChild;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x38);
+  g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x54);
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x5c);
+  g_eventQueueWorkType = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) - g_walkCallback;
+  g_chainAccumCur = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) - g_eventQueueCurrent;
+  Atan2QuadrantLookup();
+  uVar2 = g_framePauseFlag;
+  if (g_framePauseFlag == 0) {
+    g_eventQueueCurrent = MK4_NODE_AT(int, g_baseSel, 0x70);
+    BootMod6487eClampAndChainMul10();
+    uVar2 = g_framePauseFlag;
+    if (g_framePauseFlag == 0) {
+      g_eventQueueChild = g_walkCallback;
+      g_walkCallback = g_walkCallback + g_pendingMatchVar3;
+      BootMod6487eClampAndChainMul10();
+      uVar2 = g_framePauseFlag;
+      if (g_framePauseFlag == 0) {
+        iVar1 = g_walkCallback - g_eventQueueCurrent;
+        iVar3 = g_eventQueueChild - g_eventQueueCurrent;
+        if (iVar1 < 0) {
+          iVar1 = -iVar1;
+        }
+        if (iVar3 < 0) {
+          iVar3 = -iVar3;
+        }
+        if ((iVar1 < 0x199a) || (iVar3 < 0x199a)) {
+          g_eventQueueChild = *(undefined4 *)((int)g_matrixStackTop * 4);
+          g_walkCallback = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+          g_matrixStackTop = g_matrixStackTop + -2;
+          ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d470();
+          return g_framePauseFlag;
+        }
+        g_eventQueueChild = *(int *)((int)g_matrixStackTop * 4);
+        g_walkCallback = *(int *)((int)(g_matrixStackTop + -1) * 4);
+        g_matrixStackTop = g_matrixStackTop + -2;
+        uVar2 = g_xformDirtyFlags & 0xfffffffe | 4;
+        g_xformDirtyFlags = uVar2;
+      }
+    }
+  }
+  return uVar2;
+}
+#else
 __declspec(naked) void AtanDualDeltaThreshold(void)
 {
     __asm
@@ -62798,6 +63626,7 @@ __declspec(naked) void AtanDualDeltaThreshold(void)
         ret
     }
 }
+#endif
 
 extern unsigned int g_dispatchSave137;
 extern unsigned int g_dispatchSave62;
@@ -79819,6 +80648,80 @@ __declspec(naked) void R2_Init7(void)
  * Linear no mstack. Returns: void.
  * ============================================================ */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Input_PollPlayerJoystick(int param_1)
+
+{
+  uint uVar1;
+  
+  if ((&g_joySelP0)[param_1] != -1) {
+    uVar1 = Input_PollJoystick((&g_joySelP0)[param_1]);
+    if ((uVar1 & 0x40000000) != 0) {
+      *(uint *)(&g_dispatchSave536)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave536)[param_1 * 2] | (&g_dispatchSave537)[param_1 * 2];
+    }
+    if ((uVar1 & 0x80000000) != 0) {
+      *(uint *)(&g_dispatchSave534)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave534)[param_1 * 2] | (&g_dispatchSave535)[param_1 * 2];
+    }
+    if ((uVar1 & 0x10000000) != 0) {
+      *(uint *)(&g_renderer2_var6)[param_1 * 2] =
+           *(uint *)(&g_renderer2_var6)[param_1 * 2] | (&g_renderer2_var7)[param_1 * 2];
+    }
+    if ((uVar1 & 0x20000000) != 0) {
+      *(uint *)(&g_dispatchSave532)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave532)[param_1 * 2] | (&g_dispatchSave533)[param_1 * 2];
+    }
+    if ((*(int *)(&g_btnBind0 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind0 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1111)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1111)[param_1 * 2] | *(uint *)(&g_dispatchSave1110 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind1 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind1 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1113)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1113)[param_1 * 2] | *(uint *)(&g_dispatchSave1112 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind2 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind2 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1115)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1115)[param_1 * 2] | *(uint *)(&g_dispatchSave1114 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind3 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind3 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1117)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1117)[param_1 * 2] | *(uint *)(&g_dispatchSave1116 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind4 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind4 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1119)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1119)[param_1 * 2] | *(uint *)(&g_dispatchSave1118 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind5 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind5 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1121)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1121)[param_1 * 2] | *(uint *)(&g_dispatchSave1120 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind6 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind6 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1123)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1123)[param_1 * 2] | *(uint *)(&g_dispatchSave1122 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind7 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind7 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1125)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1125)[param_1 * 2] | *(uint *)(&g_dispatchSave1124 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind8 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind8 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1127)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1127)[param_1 * 2] | *(uint *)(&g_dispatchSave1126 + param_1 * 8);
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Input_PollPlayerJoystick(void)
 {
     __asm {
@@ -79966,6 +80869,7 @@ __declspec(naked) void Input_PollPlayerJoystick(void)
         ret
     }
 }
+#endif
 
 /* ============================================================
  * Input_TickPlayers - 448b engine.geo.
@@ -86202,6 +87106,120 @@ __declspec(naked) void Helper_TickReinit(void)
 
 extern unsigned int g_fpRoundNegHalfCam;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PaletteFillLineHybrid(uint param_1,uint param_2,int param_3,int param_4)
+
+{
+  bool bVar1;
+  ushort uVar2;
+  ushort uVar3;
+  ushort uVar4;
+  uint uVar5;
+  int iVar6;
+  uint uVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  uint local_28;
+  uint local_24;
+  int local_20;
+  
+  uVar5 = param_3 + param_1;
+  local_20 = 3;
+  uVar8 = (param_4 + param_2) * 0x100 - 0x100;
+  iVar6 = param_2 * 0x100;
+  uVar10 = iVar6 - 0x100;
+  do {
+    uVar9 = uVar10 & 0xff00;
+    uVar7 = uVar9 | param_1 - 1 & 0xff;
+    if (*(short *)((int)&g_texStripeBuf + uVar7 * 2) == 0) {
+      uVar2 = __ftol();
+      uVar3 = __ftol();
+      uVar4 = __ftol();
+      *(ushort *)((int)&g_texStripeBuf + uVar7 * 2) =
+           ((uVar2 & 0x1f) << 5 | uVar3 & 0x1f) << 5 | uVar4 & 0x1f;
+    }
+    uVar7 = uVar9 | param_1 & 0xff;
+    if (*(short *)((int)&g_texStripeBuf + uVar7 * 2) == 0) {
+      uVar2 = __ftol();
+      uVar3 = __ftol();
+      uVar4 = __ftol();
+      *(ushort *)((int)&g_texStripeBuf + uVar7 * 2) =
+           ((uVar2 & 0x1f) << 5 | uVar3 & 0x1f) << 5 | uVar4 & 0x1f;
+    }
+    uVar9 = uVar9 | param_1 + 1 & 0xff;
+    if (*(short *)((int)&g_texStripeBuf + uVar9 * 2) == 0) {
+      uVar2 = __ftol();
+      uVar3 = __ftol();
+      uVar4 = __ftol();
+      *(ushort *)((int)&g_texStripeBuf + uVar9 * 2) =
+           ((uVar2 & 0x1f) << 5 | uVar3 & 0x1f) << 5 | uVar4 & 0x1f;
+    }
+    uVar9 = uVar8 & 0xff00;
+    uVar7 = uVar9 | uVar5 - 1 & 0xff;
+    if (*(short *)((int)&g_texStripeBuf + uVar7 * 2) == 0) {
+      uVar2 = __ftol();
+      uVar3 = __ftol();
+      uVar4 = __ftol();
+      *(ushort *)((int)&g_texStripeBuf + uVar7 * 2) =
+           ((uVar2 & 0x1f) << 5 | uVar3 & 0x1f) << 5 | uVar4 & 0x1f;
+    }
+    uVar7 = uVar9 | uVar5 & 0xff;
+    if (*(short *)((int)&g_texStripeBuf + uVar7 * 2) == 0) {
+      uVar2 = __ftol();
+      uVar3 = __ftol();
+      uVar4 = __ftol();
+      *(ushort *)((int)&g_texStripeBuf + uVar7 * 2) =
+           ((uVar2 & 0x1f) << 5 | uVar3 & 0x1f) << 5 | uVar4 & 0x1f;
+    }
+    uVar9 = uVar9 | uVar5 + 1 & 0xff;
+    if (*(short *)((int)&g_texStripeBuf + uVar9 * 2) == 0) {
+      uVar2 = __ftol();
+      uVar3 = __ftol();
+      uVar4 = __ftol();
+      *(ushort *)((int)&g_texStripeBuf + uVar9 * 2) =
+           ((uVar2 & 0x1f) << 5 | uVar3 & 0x1f) << 5 | uVar4 & 0x1f;
+    }
+    uVar10 = uVar10 + 0x100;
+    uVar8 = uVar8 + 0x100;
+    local_20 = local_20 + -1;
+  } while (local_20 != 0);
+  bVar1 = param_3 < 1;
+  if (bVar1) {
+    param_3 = param_4;
+  }
+  local_24 = (uint)bVar1;
+  local_28 = (uint)!bVar1;
+  if (0 < param_3) {
+    uVar10 = param_1 + 1;
+    do {
+      uVar2 = __ftol();
+      uVar3 = __ftol();
+      uVar4 = __ftol();
+      uVar2 = ((uVar2 & 0x1f) << 5 | uVar3 & 0x1f) << 5 | uVar4 & 0x1f;
+      uVar8 = param_1 & 0xff;
+      uVar5 = (param_2 & 0xff) << 8;
+      *(ushort *)((int)&g_texStripeBuf + (uVar5 | uVar8) * 2) = uVar2;
+      if (local_28 == 0) {
+        uVar7 = uVar10 & 0xff | uVar5;
+        *(ushort *)((int)&g_texStripeBuf + (param_1 - 1 & 0xff | uVar5) * 2) = uVar2;
+      }
+      else {
+        uVar7 = iVar6 + 0x100U & 0xff00 | uVar8;
+        *(ushort *)((int)&g_texStripeBuf + (iVar6 - 0x100U & 0xff00 | uVar8) * 2) = uVar2;
+      }
+      *(ushort *)((int)&g_texStripeBuf + uVar7 * 2) = uVar2;
+      param_1 = param_1 + local_28;
+      uVar10 = uVar10 + local_28;
+      iVar6 = iVar6 + local_24 * 0x100;
+      param_2 = param_2 + local_24;
+      param_3 = param_3 + -1;
+    } while (param_3 != 0);
+  }
+  return;
+}
+#else
 __declspec(naked) void PaletteFillLineHybrid(void)
 {
     __asm {
@@ -86533,6 +87551,7 @@ __declspec(naked) void PaletteFillLineHybrid(void)
         ret
     }
 }
+#endif
 
 /* ============================================================
  * CameraSetupAndCullFan - 1176b engine.render.
@@ -109757,6 +110776,80 @@ extern void GatedWordPushCall(void);
 extern void AudioMixerStep(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int CameraBounceUpdate(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  func_0x004406e0();
+  iVar1 = g_framePauseFlag;
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58);
+    if (g_walkCallback < 0) {
+      if (-0xccd < g_walkCallback) {
+        return 0;
+      }
+      SetJmp_AudioBridgeMStackChainCopy_00440720();
+      return g_framePauseFlag;
+    }
+    iVar1 = 0;
+    if (g_walkCallback != 0) {
+      g_walkCallback = 0;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0;
+      g_eventQueueCurrent = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70);
+      g_eventQueueCurrent = Mul10Tail(0xffff999a,g_eventQueueCurrent);
+      iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      if (-0x28f < g_eventQueueCurrent) {
+        g_walkCallback = 0;
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) = 0;
+        iVar1 = iVar1 * 4;
+        *(int *)(iVar1 + 0x70) = g_walkCallback;
+        *(int *)(iVar1 + 0x74) = g_walkCallback;
+        *(int *)(iVar1 + 0x78) = g_walkCallback;
+        *(int *)(iVar1 + 0x7c) = g_walkCallback;
+        *(int *)(iVar1 + 0x80) = g_walkCallback;
+        *(int *)(iVar1 + 0x4c) = g_walkCallback;
+        g_walkCallback = *(undefined4 *)(iVar1 + 0x54);
+        *(undefined4 *)(iVar1 + 0x58) = 0xfffffae2;
+        g_eventQueueCurrent = *(undefined4 *)(iVar1 + 0x5c);
+        MStackBracketed3StoreCall();
+        return g_framePauseFlag;
+      }
+      g_walkCallback = 0x19;
+      iVar1 = GatedWordPushCall();
+      if (g_framePauseFlag == 0) {
+        g_walkCallback = 0x20c;
+        iVar1 = StoreDoubleNegPauseSubStore();
+        if (g_framePauseFlag == 0) {
+          *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = g_eventQueueCurrent + g_walkCallback;
+          g_eventQueueCurrent = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c);
+          g_eventQueueCurrent = Mul10Tail(0x6666,g_eventQueueCurrent);
+          g_walkCallback = 0x20000;
+          iVar1 = AudioMixerStep();
+          if (g_framePauseFlag == 0) {
+            uVar2 = Mul10Tail(g_walkCallback,g_eventQueueCurrent);
+            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) = uVar2;
+            g_eventQueueCurrent = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74);
+            g_eventQueueCurrent = Mul10Tail(0x6666,g_eventQueueCurrent);
+            g_walkCallback = 0x30000;
+            iVar1 = AudioMixerStep();
+            if (g_framePauseFlag == 0) {
+              uVar2 = Mul10Tail(g_walkCallback,g_eventQueueCurrent);
+              *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74) = uVar2;
+              g_eventQueueCurrent = -0xf333;
+              iVar1 = EsiTripleMul10Vec();
+            }
+          }
+        }
+      }
+    }
+  }
+  return iVar1;
+}
+#else
 __declspec(naked) void CameraBounceUpdate(void)
 {
     __asm {
@@ -109882,6 +110975,7 @@ __declspec(naked) void CameraBounceUpdate(void)
         ret
     }
 }
+#endif
 
 /* ------------------------------------------------------------------ */
 /* CRT setlocale codepage installer (555b crt)                         */
@@ -110942,6 +112036,59 @@ void SaveRestore7CameraTransform(void) {
 /* CRT locale-info free-all (563b crt)                                 */
 /* Frees 43 distinct heap-allocated members of a locale-info struct.   */
 /* ------------------------------------------------------------------ */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CrtLocaleInfoFreeAll(undefined4 *param_1)
+
+{
+  if (param_1 != (undefined4 *)0x0) {
+    FreeImpl(param_1[1]);
+    FreeImpl(param_1[2]);
+    FreeImpl(param_1[3]);
+    FreeImpl(param_1[4]);
+    FreeImpl(param_1[5]);
+    FreeImpl(param_1[6]);
+    FreeImpl(*param_1);
+    FreeImpl(param_1[8]);
+    FreeImpl(param_1[9]);
+    FreeImpl(param_1[10]);
+    FreeImpl(param_1[0xb]);
+    FreeImpl(param_1[0xc]);
+    FreeImpl(param_1[0xd]);
+    FreeImpl(param_1[7]);
+    FreeImpl(param_1[0xe]);
+    FreeImpl(param_1[0xf]);
+    FreeImpl(param_1[0x10]);
+    FreeImpl(param_1[0x11]);
+    FreeImpl(param_1[0x12]);
+    FreeImpl(param_1[0x13]);
+    FreeImpl(param_1[0x14]);
+    FreeImpl(param_1[0x15]);
+    FreeImpl(param_1[0x16]);
+    FreeImpl(param_1[0x17]);
+    FreeImpl(param_1[0x18]);
+    FreeImpl(param_1[0x19]);
+    FreeImpl(param_1[0x1a]);
+    FreeImpl(param_1[0x1b]);
+    FreeImpl(param_1[0x1c]);
+    FreeImpl(param_1[0x1d]);
+    FreeImpl(param_1[0x1e]);
+    FreeImpl(param_1[0x1f]);
+    FreeImpl(param_1[0x20]);
+    FreeImpl(param_1[0x21]);
+    FreeImpl(param_1[0x22]);
+    FreeImpl(param_1[0x23]);
+    FreeImpl(param_1[0x24]);
+    FreeImpl(param_1[0x25]);
+    FreeImpl(param_1[0x26]);
+    FreeImpl(param_1[0x27]);
+    FreeImpl(param_1[0x28]);
+    FreeImpl(param_1[0x29]);
+    FreeImpl(param_1[0x2a]);
+  }
+  return;
+}
+#else
 __declspec(naked) void CrtLocaleInfoFreeAll(void)
 {
     __asm {
@@ -111126,6 +112273,7 @@ __declspec(naked) void CrtLocaleInfoFreeAll(void)
         ret
     }
 }
+#endif
 
 /* ------------------------------------------------------------------ */
 /* Pose-grid generator (567b game) - 3x5 grid with offsets             */
@@ -113543,6 +114691,84 @@ void PvsMergeDriver(void) {
 /* ------------------------------------------------------------------ */
 /* Camera Z/Y bounce update with overflow correction (590b game)       */
 /* ------------------------------------------------------------------ */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int CameraBounceOverflow(void)
+
+{
+  int iVar1;
+  
+  g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) + *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x4c);
+  *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = g_walkCallback;
+  if (0x30a2 < g_walkCallback) {
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = 0x30a3;
+  }
+  g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58);
+  if (-1 < g_walkCallback) {
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0xfffffd71;
+    g_walkCallback = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70);
+    iVar1 = Mul10Tail(0xffff6667,g_walkCallback);
+    if (-0x11eb < iVar1) {
+      g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70);
+      if (g_walkCallback == 0) {
+        return 0;
+      }
+      g_walkCallback = 0x17;
+      GatedWordPushCall();
+      if (g_framePauseFlag != 0) {
+        return g_framePauseFlag;
+      }
+      g_matrixStackTop = g_matrixStackTop + 1;
+      *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_eventQueueNotMask = 7;
+      EntryThunkBodyStateMachine();
+      if (g_framePauseFlag != 0) {
+        return g_framePauseFlag;
+      }
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((int)g_matrixStackTop * 4);
+      g_matrixStackTop = g_matrixStackTop + -1;
+      iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+      g_walkCallback = 0;
+      *(undefined4 *)(iVar1 + 0x6c) = 0;
+      *(int *)(iVar1 + 0x70) = g_walkCallback;
+      *(int *)(iVar1 + 0x74) = g_walkCallback;
+      *(int *)(iVar1 + 0x7c) = g_walkCallback;
+      *(int *)(iVar1 + 0x78) = g_walkCallback;
+      *(int *)(iVar1 + 0x80) = g_walkCallback;
+      *(int *)(iVar1 + 0x4c) = g_walkCallback;
+      g_eventQueueCurrent = *(undefined4 *)(iVar1 + 0x5c);
+      g_walkCallback = *(undefined4 *)(iVar1 + 0x54);
+      MStackBracketed3StoreCall();
+      return g_framePauseFlag;
+    }
+    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = iVar1;
+    g_walkCallback = 0x17;
+    GatedWordPushCall();
+    if (g_framePauseFlag != 0) {
+      return g_framePauseFlag;
+    }
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_eventQueueNotMask = 7;
+    EntryThunkBodyStateMachine();
+    if (g_framePauseFlag != 0) {
+      return g_framePauseFlag;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+    *(int *)(iVar1 + 0x7c) = -*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x7c);
+    *(int *)(iVar1 + 0x78) = -*(int *)(iVar1 + 0x78);
+    g_walkCallback = -*(int *)(iVar1 + 0x80);
+    *(int *)(iVar1 + 0x80) = g_walkCallback;
+  }
+  if (-0x8001 < g_walkCallback) {
+    return g_walkCallback;
+  }
+  iVar1 = SetJmp_AudioBridgeMStackChainCopy_00440720();
+  return iVar1;
+}
+#else
 __declspec(naked) void CameraBounceOverflow(void)
 {
     __asm {
@@ -113670,6 +114896,7 @@ __declspec(naked) void CameraBounceOverflow(void)
         jmp      SetJmp_AudioBridgeMStackChainCopy_00440720
     }
 }
+#endif
 
 /* ------------------------------------------------------------------ */
 /* Throw-takedown step cluster (592b game, 3 packed helpers)           */
@@ -119037,6 +120264,25 @@ extern void VirtualHeapAlloc(void);
 extern void HeapShrinkDecommit(void);
 extern void BucketBlockAllocSplit(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CrtHeapCommitFreeCluster(int param_1,int param_2,byte *param_3)
+
+{
+  int *piVar1;
+  int iVar2;
+  
+  iVar2 = param_2 - *(int *)(param_1 + 0x10) >> 0xc;
+  piVar1 = (int *)(param_1 + 0x18 + iVar2 * 8);
+  *piVar1 = *(int *)(param_1 + 0x18 + iVar2 * 8) + (uint)*param_3;
+  *param_3 = 0;
+  piVar1[1] = 0xf1;
+  if ((*piVar1 == 0xf0) && (g_dispatchSave1432 = g_dispatchSave1432 + 1, g_dispatchSave1432 == 0x20)) {
+    HeapShrinkDecommit(0x10);
+  }
+  return;
+}
+#else
 __declspec(naked) void CrtHeapCommitFreeCluster(void)
 {
     __asm {
@@ -119317,6 +120563,7 @@ __declspec(naked) void CrtHeapCommitFreeCluster(void)
         ret
     }
 }
+#endif
 
 /* ------------------------------------------------------------------ */
 /* Pre-fight install cluster (660b game, 2 packed helpers)             */
@@ -123467,6 +124714,75 @@ void ScenePostInitSequencer(void) {
 extern void RandSarMod0xFFFSub400(void);
 extern void RandSarMod0xFFF(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackAngleWrapDispatch(int param_1)
+
+{
+  int iVar1;
+  uint uVar2;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueChild;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_currentNodeFlags;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_xformScratch2088;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_chainAccumCur;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueNotMask;
+  if ((int)g_eventQueueWorkType < 0) {
+    g_eventQueueWorkType = g_eventQueueWorkType + ((0x6487d - g_eventQueueWorkType) / 0x6487e) * 0x6487e;
+  }
+  if (0x6487d < (int)g_eventQueueWorkType) {
+    uVar2 = g_eventQueueWorkType / 0x6487e;
+    do {
+      g_eventQueueWorkType = g_eventQueueWorkType - 0x6487e;
+      uVar2 = uVar2 - 1;
+    } while (uVar2 != 0);
+  }
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(uint *)((int)g_matrixStackTop * 4) = g_eventQueueWorkType;
+  RandSarMod0xFFF();
+  if (g_framePauseFlag == 0) {
+    g_eventQueueWorkType = *(uint *)((int)g_matrixStackTop * 4);
+    *(undefined4 *)((int)g_matrixStackTop * 4) = g_walkCallback;
+    RandSarMod0xFFFSub400();
+    if (g_framePauseFlag == 0) {
+      g_eventQueueCurrent = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_eventQueueNotMask = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_chainAccumCur = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+      g_eventQueuePending = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -4) * 4);
+      g_matrixStackTop = g_matrixStackTop + -5;
+      g_eventQueueChild = Mul10Tail(g_chainAccumCur,g_eventQueueCurrent);
+      g_currentNodeFlags = Mul10Tail(g_eventQueueNotMask,g_walkCallback);
+      iVar1 = g_currentNodeFlags;
+      if (param_1 == 0) {
+        iVar1 = -g_currentNodeFlags;
+      }
+      g_xformScratch2088 = iVar1 + g_eventQueueChild;
+      g_eventQueueChild = Mul10Tail(g_eventQueueNotMask,g_eventQueueCurrent);
+      iVar1 = Mul10Tail(g_chainAccumCur,g_walkCallback);
+      g_eventQueueNotMask = g_eventQueueChild - iVar1;
+      g_chainAccumCur = g_xformScratch2088;
+      g_xformScratch2088 = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_currentNodeFlags = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_eventQueueChild = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+      g_eventQueueCurrent = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
+      g_matrixStackTop = g_matrixStackTop + -4;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void MStackAngleWrapDispatch(void)
 {
     __asm {
@@ -123637,6 +124953,7 @@ __declspec(naked) void MStackAngleWrapDispatch(void)
         ret
     }
 }
+#endif
 
 /* ------------------------------------------------------------------ */
 /* Pose-FSM dual entry (694b game): state-1 entry at 0x472560 (chain  */
@@ -126416,6 +127733,18 @@ extern void StoreDoubleNegPauseSubStore(void);
 extern unsigned int g_dispatchSave252;
 extern unsigned int g_dispatchByte;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void WorldCellSetupCluster(int param_1)
+
+{
+  for (; g_pendingMatchVar < param_1; param_1 = param_1 - g_pendingMatchVar) {
+  }
+  for (; param_1 < 0; param_1 = param_1 + g_pendingMatchVar) {
+  }
+  return;
+}
+#else
 __declspec(naked) void WorldCellSetupCluster(void)
 {
     __asm {
@@ -126625,6 +127954,7 @@ __declspec(naked) void WorldCellSetupCluster(void)
         ret
     }
 }
+#endif
 
 /* ------------------------------------------------------------------ */
 /* Per-tick main chain (750b game, 2 packed helpers):                 */
@@ -188701,6 +190031,23 @@ __declspec(naked) void PendingMatch_MStackPush2ChainLLInsert_004a56c0(void)
 
 // === EXTERNS ===
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int PendingMatch_StoreTailJmpSigned(int param_1,int param_2)
+
+{
+  int iVar1;
+  
+  if (param_1 < 0) {
+    param_1 = -param_1;
+  }
+  if ((param_2 < 0) && (iVar1 = -param_2, param_2 = iVar1, iVar1 < 0)) {
+    param_2 = param_1;
+    param_1 = iVar1;
+  }
+  return (param_2 * 0xf5dc >> 0x10) + (param_1 * 0x65d6 >> 0x10);
+}
+#else
 __declspec(naked) void PendingMatch_StoreTailJmpSigned(void)
 {
     __asm {
@@ -189306,6 +190653,7 @@ __declspec(naked) void PendingMatch_StoreTailJmpSigned(void)
         ret      
     }
 }
+#endif
 
 // === EXTERNS ===
 extern void ZeroMultiGlobalsCmp(void);
@@ -204531,6 +205879,112 @@ __declspec(naked) void CrtParseCommandLine(void)
 
 // === EXTERNS ===
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+uint CrtInitLocaleInfo(int param_1)
+
+{
+  undefined2 uVar1;
+  undefined2 uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  uint uVar11;
+  uint uVar12;
+  uint uVar13;
+  uint uVar14;
+  uint uVar15;
+  uint uVar16;
+  uint uVar17;
+  uint uVar18;
+  uint uVar19;
+  uint uVar20;
+  uint uVar21;
+  uint uVar22;
+  uint uVar23;
+  uint uVar24;
+  uint uVar25;
+  uint uVar26;
+  uint uVar27;
+  uint uVar28;
+  uint uVar29;
+  uint uVar30;
+  uint uVar31;
+  uint uVar32;
+  uint uVar33;
+  uint uVar34;
+  uint uVar35;
+  uint uVar36;
+  uint uVar37;
+  uint uVar38;
+  uint uVar39;
+  uint uVar40;
+  uint uVar41;
+  uint uVar42;
+  uint uVar43;
+  uint uVar44;
+  uint uVar45;
+  
+  uVar2 = (*(unsigned int *)MK4_VA(unsigned int, 0xf9fca0));
+  uVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0xf9fc9e));
+  if (param_1 == 0) {
+    return 0xffffffff;
+  }
+  uVar3 = CrtGetLocaleInfo(1,(*(unsigned int *)MK4_VA(unsigned int, 0xf9fc9e)),0x31,param_1 + 4);
+  uVar4 = CrtGetLocaleInfo(1,uVar1,0x32,param_1 + 8);
+  uVar5 = CrtGetLocaleInfo(1,uVar1,0x33,param_1 + 0xc);
+  uVar6 = CrtGetLocaleInfo(1,uVar1,0x34,param_1 + 0x10);
+  uVar7 = CrtGetLocaleInfo(1,uVar1,0x35,param_1 + 0x14);
+  uVar8 = CrtGetLocaleInfo(1,uVar1,0x36,param_1 + 0x18);
+  uVar9 = CrtGetLocaleInfo(1,uVar1,0x37,param_1);
+  uVar10 = CrtGetLocaleInfo(1,uVar1,0x2a,param_1 + 0x20);
+  uVar11 = CrtGetLocaleInfo(1,uVar1,0x2b,param_1 + 0x24);
+  uVar12 = CrtGetLocaleInfo(1,uVar1,0x2c,param_1 + 0x28);
+  uVar13 = CrtGetLocaleInfo(1,uVar1,0x2d,param_1 + 0x2c);
+  uVar14 = CrtGetLocaleInfo(1,uVar1,0x2e,param_1 + 0x30);
+  uVar15 = CrtGetLocaleInfo(1,uVar1,0x2f,param_1 + 0x34);
+  uVar16 = CrtGetLocaleInfo(1,uVar1,0x30,param_1 + 0x1c);
+  uVar17 = CrtGetLocaleInfo(1,uVar1,0x44,param_1 + 0x38);
+  uVar18 = CrtGetLocaleInfo(1,uVar1,0x45,param_1 + 0x3c);
+  uVar19 = CrtGetLocaleInfo(1,uVar1,0x46,param_1 + 0x40);
+  uVar20 = CrtGetLocaleInfo(1,uVar1,0x47,param_1 + 0x44);
+  uVar21 = CrtGetLocaleInfo(1,uVar1,0x48,param_1 + 0x48);
+  uVar22 = CrtGetLocaleInfo(1,uVar1,0x49,param_1 + 0x4c);
+  uVar23 = CrtGetLocaleInfo(1,uVar1,0x4a,param_1 + 0x50);
+  uVar24 = CrtGetLocaleInfo(1,uVar1,0x4b,param_1 + 0x54);
+  uVar25 = CrtGetLocaleInfo(1,uVar1,0x4c,param_1 + 0x58);
+  uVar26 = CrtGetLocaleInfo(1,uVar1,0x4d,param_1 + 0x5c);
+  uVar27 = CrtGetLocaleInfo(1,uVar1,0x4e,param_1 + 0x60);
+  uVar28 = CrtGetLocaleInfo(1,uVar1,0x4f,param_1 + 100);
+  uVar29 = CrtGetLocaleInfo(1,uVar1,0x38,param_1 + 0x68);
+  uVar30 = CrtGetLocaleInfo(1,uVar1,0x39,param_1 + 0x6c);
+  uVar31 = CrtGetLocaleInfo(1,uVar1,0x3a,param_1 + 0x70);
+  uVar32 = CrtGetLocaleInfo(1,uVar1,0x3b,param_1 + 0x74);
+  uVar33 = CrtGetLocaleInfo(1,uVar1,0x3c,param_1 + 0x78);
+  uVar34 = CrtGetLocaleInfo(1,uVar1,0x3d,param_1 + 0x7c);
+  uVar35 = CrtGetLocaleInfo(1,uVar1,0x3e,param_1 + 0x80);
+  uVar36 = CrtGetLocaleInfo(1,uVar1,0x3f,param_1 + 0x84);
+  uVar37 = CrtGetLocaleInfo(1,uVar1,0x40,param_1 + 0x88);
+  uVar38 = CrtGetLocaleInfo(1,uVar1,0x41,param_1 + 0x8c);
+  uVar39 = CrtGetLocaleInfo(1,uVar1,0x42,param_1 + 0x90);
+  uVar40 = CrtGetLocaleInfo(1,uVar1,0x43,param_1 + 0x94);
+  uVar41 = CrtGetLocaleInfo(1,uVar1,0x28,param_1 + 0x98);
+  uVar42 = CrtGetLocaleInfo(1,uVar1,0x29,param_1 + 0x9c);
+  uVar43 = CrtGetLocaleInfo(1,uVar2,0x1f,param_1 + 0xa0);
+  uVar44 = CrtGetLocaleInfo(1,uVar2,0x20,param_1 + 0xa4);
+  uVar45 = CrtTimeFmtPrefsCluster(uVar2,param_1);
+  return uVar3 | uVar4 | uVar5 | uVar6 | uVar7 | uVar8 | uVar9 | uVar10 | uVar11 | uVar12 | uVar13 |
+         uVar14 | uVar15 | uVar16 | uVar17 | uVar18 | uVar19 | uVar20 | uVar21 | uVar22 | uVar23 |
+         uVar24 | uVar25 | uVar26 | uVar27 | uVar28 | uVar29 | uVar30 | uVar31 | uVar32 | uVar33 |
+         uVar34 | uVar35 | uVar36 | uVar37 | uVar38 | uVar39 | uVar40 | uVar41 | uVar42 | uVar43 |
+         uVar44 | uVar45;
+}
+#else
 __declspec(naked) void CrtInitLocaleInfo(void)
 {
     __asm {
@@ -205417,6 +206871,7 @@ __declspec(naked) void CrtInitLocaleInfo(void)
         _emit    0xc3
     }
 }
+#endif
 
 // === EXTERNS ===
 
@@ -270054,6 +271509,23 @@ __declspec(naked) void PendingMatch_MStackPush8_0041bca0(void)
 
 // === EXTERNS ===
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CrtFreeLocaleInfo(int param_1)
+
+{
+  if ((param_1 != 0) && (*(undefined **)(param_1 + 0xc) != &(*(unsigned int *)MK4_VA(unsigned int, 0xf9fcd8)))) {
+    FreeImpl(*(undefined **)(param_1 + 0xc));
+    FreeImpl(*(undefined4 *)(param_1 + 0x10));
+    FreeImpl(*(undefined4 *)(param_1 + 0x14));
+    FreeImpl(*(undefined4 *)(param_1 + 0x18));
+    FreeImpl(*(undefined4 *)(param_1 + 0x1c));
+    FreeImpl(*(undefined4 *)(param_1 + 0x20));
+    FreeImpl(*(undefined4 *)(param_1 + 0x24));
+  }
+  return;
+}
+#else
 __declspec(naked) void CrtFreeLocaleInfo(void)
 {
     __asm {
@@ -271083,6 +272555,7 @@ __declspec(naked) void CrtFreeLocaleInfo(void)
         _emit    0xcc
     }
 }
+#endif
 
 // === EXTERNS ===
 

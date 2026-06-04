@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,28 @@ extern unsigned int g_fightAxisPosY;
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void MStackPush3LinkedListWalk(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SnapshotDirtyMark(undefined4 param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MStackBracket4_ListInsertZeroFill();
+  if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+    MStackPush3LinkedListWalk();
+    if (g_framePauseFlag == 0) {
+      g_eventQueuePending = *(int *)(*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18) * 4 + 0x28);
+      g_walkCallback = MK4_NODE_AT(uint, g_eventQueuePending, 0) | 8;
+      MK4_NODE_AT(uint, g_eventQueuePending, 0) = g_walkCallback;
+      MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48) = param_1;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void SnapshotDirtyMark(void) {
     __asm {
         push    esi
@@ -150,3 +173,4 @@ done:
         ret
     }
 }
+#endif

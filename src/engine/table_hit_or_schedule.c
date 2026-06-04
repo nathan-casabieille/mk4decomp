@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,28 @@ extern void Audio_TimerTeardown(void);
 extern void Snd3DSourceCleanup(void);
 extern void TableSearch(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TableHitOrSchedule(undefined4 param_1)
+
+{
+  int iVar1;
+  short sVar2;
+  
+  iVar1 = TableSearch(param_1);
+  if (iVar1 != 0) {
+    Audio_TimerTeardown();
+    return;
+  }
+  sVar2 = (short)param_1;
+  if (sVar2 < 0x65) {
+    Snd3DSourceCleanup(sVar2 + 2000,0);
+    return;
+  }
+  Snd3DSourceCleanup((int)sVar2 / 5,0);
+  return;
+}
+#else
 __declspec(naked) void TableHitOrSchedule(void) {
     __asm {
         push    esi
@@ -156,3 +179,4 @@ __declspec(naked) void TableHitOrSchedule(void) {
         ret
     }
 }
+#endif

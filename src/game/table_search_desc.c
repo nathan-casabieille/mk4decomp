@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesDD.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
@@ -36,6 +37,29 @@ __declspec(naked) void AppInit_Misc2(void) {
  *   while (eax >= 0 && tab[eax].first != 0) { if (tab[eax].second != 1) break; eax--; }
  *   complex tail computing the final index.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+uint Menu_FindPrevSelectable(uint param_1,int param_2)
+
+{
+  uint uVar1;
+  int *piVar2;
+  
+  uVar1 = param_1 - 1;
+  if (-1 < (int)uVar1) {
+    piVar2 = (int *)(param_2 + uVar1 * 8);
+    do {
+      if (*piVar2 == 0) break;
+      if ((short)piVar2[1] != 1) {
+        return uVar1;
+      }
+      uVar1 = uVar1 - 1;
+      piVar2 = piVar2 + -2;
+    } while (-1 < (int)uVar1);
+  }
+  return ((int)param_1 < 1) - 1 & param_1;
+}
+#else
 __declspec(naked) void Menu_FindPrevSelectable(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
@@ -67,3 +91,4 @@ __declspec(naked) void Menu_FindPrevSelectable(void) {
         ret
     }
 }
+#endif

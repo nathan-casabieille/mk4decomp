@@ -69,6 +69,28 @@ extern int  FileWriteWithLfToCrlf(int handle, int a, int b);
 
 /* @addr 0x004c8dd0 */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 IOWrapper_CritSecLazyEnter_004c8dd0(uint param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  
+  if ((param_1 < g_dispatchSave1469) &&
+     ((*(byte *)((&g_crtHandleTable)[(int)param_1 >> 5] + 4 + (param_1 & 0x1f) * 0x24) & 1) != 0)) {
+    CritSecLazyEnter(param_1);
+    uVar1 = LseekImpl(param_1,param_2,param_3);
+    DivMod32IAT(param_1);
+    return uVar1;
+  }
+  puVar2 = (undefined4 *)Crt_errno();
+  *puVar2 = 9;
+  puVar2 = (undefined4 *)Crt_doserrno();
+  *puVar2 = 0;
+  return 0xffffffff;
+}
+#else
 __declspec(naked) void IOWrapper_CritSecLazyEnter_004c8dd0(void) {
     __asm {
         mov     eax, dword ptr [g_handleCount_004ffae0]
@@ -115,8 +137,31 @@ __declspec(naked) void IOWrapper_CritSecLazyEnter_004c8dd0(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x004c8fc0 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 IOWrapper_CritSecLazyEnter_004c8fc0(uint param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  
+  if ((param_1 < g_dispatchSave1469) &&
+     ((*(byte *)((&g_crtHandleTable)[(int)param_1 >> 5] + 4 + (param_1 & 0x1f) * 0x24) & 1) != 0)) {
+    CritSecLazyEnter(param_1);
+    uVar1 = CrtReadCrlfDecode(param_1,param_2,param_3);
+    DivMod32IAT(param_1);
+    return uVar1;
+  }
+  puVar2 = (undefined4 *)Crt_errno();
+  *puVar2 = 9;
+  puVar2 = (undefined4 *)Crt_doserrno();
+  *puVar2 = 0;
+  return 0xffffffff;
+}
+#else
 __declspec(naked) void IOWrapper_CritSecLazyEnter_004c8fc0(void) {
     __asm {
         mov     eax, dword ptr [g_handleCount_004ffae0]
@@ -163,8 +208,31 @@ __declspec(naked) void IOWrapper_CritSecLazyEnter_004c8fc0(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x004c9ae0 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 IOWrapper_CritSecLazyEnter_004c9ae0(uint param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  
+  if ((param_1 < g_dispatchSave1469) &&
+     ((*(byte *)((&g_crtHandleTable)[(int)param_1 >> 5] + 4 + (param_1 & 0x1f) * 0x24) & 1) != 0)) {
+    CritSecLazyEnter(param_1);
+    uVar1 = FileWriteWithLfToCrlf(param_1,param_2,param_3);
+    DivMod32IAT(param_1);
+    return uVar1;
+  }
+  puVar2 = (undefined4 *)Crt_errno();
+  *puVar2 = 9;
+  puVar2 = (undefined4 *)Crt_doserrno();
+  *puVar2 = 0;
+  return 0xffffffff;
+}
+#else
 __declspec(naked) void IOWrapper_CritSecLazyEnter_004c9ae0(void) {
     __asm {
         mov     eax, dword ptr [g_handleCount_004ffae0]
@@ -211,3 +279,4 @@ __declspec(naked) void IOWrapper_CritSecLazyEnter_004c9ae0(void) {
         ret
     }
 }
+#endif

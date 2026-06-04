@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /*
@@ -17,6 +18,33 @@ extern void IOWrapper_CritSecLazyEnter_004c8dd0(void);
 extern void RangePathIATDispatch_Lock(void);
 extern void RangePathIATDispatch_TableLookupIatCall(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_FOpenPostInit(int param_1)
+
+{
+  uint uVar1;
+  undefined *puVar2;
+  
+  uVar1 = *(uint *)(param_1 + 0x10);
+  RangePathIATDispatch_Lock(param_1);
+  FFlushImpl(param_1);
+  *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) & 0xffffffcf;
+  if (uVar1 == 0xffffffff) {
+    puVar2 = &g_crtFilbufBase;
+  }
+  else {
+    puVar2 = (undefined *)((&g_crtHandleTable)[(int)uVar1 >> 5] + (uVar1 & 0x1f) * 0x24);
+  }
+  puVar2[4] = puVar2[4] & 0xfd;
+  if ((*(uint *)(param_1 + 0xc) & 0x80) != 0) {
+    *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) & 0xfffffffc;
+  }
+  IOWrapper_CritSecLazyEnter_004c8dd0(uVar1,0,0);
+  RangePathIATDispatch_TableLookupIatCall(param_1);
+  return;
+}
+#else
 __declspec(naked) void Helper_FOpenPostInit(void) {
     __asm {
         push    esi
@@ -67,4 +95,5 @@ callIO:
         ret
     }
 }
+#endif
 

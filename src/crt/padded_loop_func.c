@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesEE.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
@@ -42,6 +43,21 @@ void _init_premain(void) {
  *   break if [arg3] == -1 or count == 0. Calls with raw 3 args.
  */
 extern void WriteCharBuffered(int, int, int);
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PaddedLoopFunc(undefined4 param_1,int param_2,undefined4 param_3,int *param_4)
+
+{
+  do {
+    if (param_2 < 1) {
+      return;
+    }
+    param_2 = param_2 + -1;
+    WriteCharBuffered(param_1,param_3,param_4);
+  } while (*param_4 != -1);
+  return;
+}
+#else
 __declspec(naked) void PaddedLoopFunc(void) {
     __asm {
         push    ebx
@@ -79,3 +95,4 @@ loop_top:
         ret
     }
 }
+#endif

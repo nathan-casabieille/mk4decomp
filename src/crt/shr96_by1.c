@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesGG.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004ce2c0 (45b)
@@ -13,6 +14,20 @@
  * stores p[2] early and uses a different instruction interleaving.
  * esi/edi allocation order is not controllable from C source.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Shr96By1(uint *param_1)
+
+{
+  uint uVar1;
+  
+  uVar1 = param_1[1];
+  param_1[1] = uVar1 >> 1 | param_1[2] << 0x1f;
+  param_1[2] = param_1[2] >> 1;
+  *param_1 = *param_1 >> 1 | uVar1 << 0x1f;
+  return;
+}
+#else
 __declspec(naked) void Shr96By1(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -38,3 +53,4 @@ __declspec(naked) void Shr96By1(void) {
         ret
     }
 }
+#endif

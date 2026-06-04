@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,44 @@ extern void InstallSelfStateCascade(void);
  *   two-step for the ptr; MSVC SP3 /O2 folds into single `mov edx, [ecx*4+4]`
  *   (7b) direct indexed-dereference, never emitting the intermediate lea.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Scaled3StorePushCallJmp(int param_1)
+
+{
+  int *piVar1;
+  int iVar2;
+  int iVar3;
+  
+  param_1 = param_1 >> 2;
+  g_cj_00542058 = MK4_NODE_AT(undefined4, param_1, 0);
+  g_eventQueueChild = *(undefined4 *)((param_1 + 1) * 4);
+  g_eventQueuePending = param_1 + 2;
+  piVar1 = (int *)(g_baseSel * 4 + 4);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *piVar1;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = MK4_NODE_AT(undefined4, g_eventQueuePending, 0);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *piVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  Push80SetWalkNegDualCallPop();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  iVar3 = g_baseSel * 4;
+  iVar2 = *(int *)(iVar3 + 0x84);
+  *(undefined4 *)(iVar3 + 0x84) = 0;
+  if (iVar2 != 0) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined **)((int)g_matrixStackTop * 4) = &(*(unsigned int *)MK4_VA(unsigned int, 0x438300));
+    GameDispatchValidateState();
+    return;
+  }
+  *(undefined4 *)(iVar3 + 8) = 0x4382a0;
+  *(undefined4 *)(iVar3 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void Scaled3StorePushCallJmp(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -152,3 +191,4 @@ done:
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -141,6 +142,68 @@ extern void CallZero(void);
  */
 extern void Audio_TimerTeardown(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+byte SceneFrameStepWithInputs(int param_1,undefined4 param_2)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  int iVar4;
+  undefined4 local_10;
+  undefined4 local_c;
+  undefined4 local_8;
+  undefined4 local_4;
+  
+  local_4 = 0;
+  local_8 = 0;
+  local_c = 0;
+  local_10 = 0;
+  iVar4 = 0;
+  DrawScene();
+  Loop16Init();
+  Audio_TimerTeardown();
+  Helper_TitleAudioReset();
+  if (g_gsmActiveFlag != 0) {
+    return 0;
+  }
+  iVar1 = SceneRecordLookupRandInit(param_1);
+  while( true ) {
+    if (iVar1 == 0) {
+      return 0;
+    }
+    if (g_titleStateE == 0) {
+      uVar2 = 0;
+    }
+    else {
+      uVar2 = DSound_GetContext();
+    }
+    param_1 = param_1 * 0x10;
+    ECM_OpenTrack(iVar1,uVar2,100,*(undefined4 *)(&g_dispatchSave1324 + param_1));
+    iVar1 = TestPushPushCall();
+    while ((((iVar1 != 0 && (iVar4 = Input_AnyConfirmPressed(param_2), iVar4 == 0)) &&
+            (iVar1 <= *(int *)(&g_dispatchSave1325 + param_1))) &&
+           ((iVar3 = Renderer_GetMode(), iVar3 != 4 || (g_mode4PauseGate != 0))))) {
+      if (-1 < iVar1) {
+        iVar1 = AnimNodeKindDispatch(1,&local_4,&local_8,&local_c,&local_10);
+        if (iVar1 != 0) {
+          SmoothShiftBlit(local_4,local_8,local_c,local_10);
+          JumpTable5Way();
+          PresentFrame();
+        }
+        PumpMessages();
+      }
+      iVar1 = TestPushPushCall();
+    }
+    CallZero();
+    if ((iVar4 != 0) || (param_1 = *(int *)(&g_dispatchSave1326 + param_1), param_1 == -1)) break;
+    iVar1 = SceneRecordLookupRandInit(param_1);
+  }
+  Helper_TitleAudioReset();
+  return -(iVar4 != 0) & 10;
+}
+#else
 __declspec(naked) void SceneFrameStepWithInputs(void) {
     __asm {
         sub     esp, 0x10
@@ -281,3 +344,4 @@ __declspec(naked) void SceneFrameStepWithInputs(void) {
         ret
     }
 }
+#endif

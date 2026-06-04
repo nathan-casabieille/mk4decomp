@@ -30,6 +30,18 @@ extern int ForwardWithLiteral_004ccce0(int a, int b);
 extern int ForwardWithLiteral_004ccd00(int a, int b);
 
 /* @addr 0x004ccd20 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SevenArgThenTwoArg_PendingMatch_004ccd20(undefined4 param_1,undefined4 param_2)
+
+{
+  undefined1 local_c [12];
+  
+  PendingMatch_004ce3f0(local_c,&param_2,param_2,0,0,0,0);
+  ForwardWithLiteral_004ccce0(local_c,param_1);
+  return;
+}
+#else
 __declspec(naked) void SevenArgThenTwoArg_PendingMatch_004ccd20(void) {
     __asm {
         mov     eax, dword ptr [esp + 8]
@@ -61,8 +73,21 @@ __declspec(naked) void SevenArgThenTwoArg_PendingMatch_004ccd20(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x004ccd60 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SevenArgThenTwoArg_PendingMatch_004ccd60(undefined4 param_1,undefined4 param_2)
+
+{
+  undefined1 local_c [12];
+  
+  PendingMatch_004ce3f0(local_c,&param_2,param_2,0,0,0,0);
+  ForwardWithLiteral_004ccd00(local_c,param_1);
+  return;
+}
+#else
 __declspec(naked) void SevenArgThenTwoArg_PendingMatch_004ccd60(void) {
     __asm {
         mov     eax, dword ptr [esp + 8]
@@ -94,3 +119,4 @@ __declspec(naked) void SevenArgThenTwoArg_PendingMatch_004ccd60(void) {
         ret
     }
 }
+#endif

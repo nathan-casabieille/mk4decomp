@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesFF.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
@@ -14,6 +15,19 @@ extern unsigned int g_currentNodeIdx;
 extern unsigned int g_pendingMatchVar3;
 extern unsigned int g_pendingMatchVar;
 extern unsigned int g_pendingMatchVar5;
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int ModuloMagic(int param_1)
+
+{
+  for (; g_pendingMatchVar3 < param_1; param_1 = param_1 - g_pendingMatchVar) {
+  }
+  if (param_1 <= g_pendingMatchVar5) {
+    param_1 = param_1 + (((g_pendingMatchVar5 - param_1) + 0x6487eU) / 0x6487e) * 0x6487e;
+  }
+  return param_1;
+}
+#else
 __declspec(naked) void ModuloMagic(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]
@@ -42,3 +56,4 @@ sub_loop:
         ret
     }
 }
+#endif

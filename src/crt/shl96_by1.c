@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesGG.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004ce290 (46b)
@@ -13,6 +14,22 @@
  * (reuses edx for low/carry/high sequentially); orig is 46 bytes.
  * MSVC's optimizer eliminates the need for the edi callee-save entirely.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Shl96By1(uint *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  uVar1 = *param_1;
+  uVar2 = param_1[1];
+  *param_1 = uVar1 * 2;
+  param_1[1] = uVar2 * 2 | uVar1 >> 0x1f;
+  param_1[2] = param_1[2] << 1 | uVar2 >> 0x1f;
+  return;
+}
+#else
 __declspec(naked) void Shl96By1(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -38,3 +55,4 @@ __declspec(naked) void Shl96By1(void) {
         ret
     }
 }
+#endif

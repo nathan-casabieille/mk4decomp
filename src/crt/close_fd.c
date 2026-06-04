@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,28 @@ extern void Crt_doserrno(void);
 extern unsigned int g_crtHandleTable;
 extern void CritSecLazyEnter(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 CloseImpl(uint param_1)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  
+  if ((param_1 < g_dispatchSave1469) &&
+     ((*(byte *)((&g_crtHandleTable)[(int)param_1 >> 5] + 4 + (param_1 & 0x1f) * 0x24) & 1) != 0)) {
+    CritSecLazyEnter(param_1);
+    uVar1 = CloseFd(param_1);
+    DivMod32IAT(param_1);
+    return uVar1;
+  }
+  puVar2 = (undefined4 *)Crt_errno();
+  *puVar2 = 9;
+  puVar2 = (undefined4 *)Crt_doserrno();
+  *puVar2 = 0;
+  return 0xffffffff;
+}
+#else
 __declspec(naked) void CloseImpl(void) {
     __asm {
         mov     eax, dword ptr [g_dispatchSave1469]
@@ -164,3 +187,4 @@ errorPath:
         ret
     }
 }
+#endif

@@ -102,7 +102,12 @@ def main():
         c = gp.postprocess(dpath.read_text(), fn_by_va, gl_by_va)
         # strip the "/* ghidra name */" comment line
         c = re.sub(r'^/\* ghidra name:.*\*/\n', '', c)
-        m = re.match(r'\s*void\s+(\w+)\s*\(\s*void\s*\)\s*\{', c)
+        # Accept any return type / signature (Ghidra recovers args for
+        # arg-taking functions); capture the function name. The #else keeps
+        # our void(void) naked decl, so matching is unaffected; cross-file
+        # signature consistency is a Phase-B follow-up (callers reconcile as
+        # they convert). The compile gate still vets each twin.
+        m = re.match(r'\s*[A-Za-z_][\w ]*?\b(\w+)\s*\(', c)
         if not m or m.group(1) != name:
             skipped += 1
             continue

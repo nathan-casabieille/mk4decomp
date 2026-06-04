@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -115,6 +116,36 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void AddOverflowCheck(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BitsetIterClear(int param_1,int param_2)
+
+{
+  byte bVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  
+  bVar1 = (byte)(param_2 >> 0x1f);
+  iVar3 = (int)(param_2 + (param_2 >> 0x1f & 0x1fU)) >> 5;
+  iVar2 = AddOverflowCheck(*(undefined4 *)(param_1 + iVar3 * 4),
+                       1 << (0x1f - ((((byte)param_2 ^ bVar1) - bVar1 & 0x1f ^ bVar1) - bVar1) &
+                            0x1f),param_1 + iVar3 * 4);
+  iVar3 = iVar3 + -1;
+  if (-1 < iVar3) {
+    puVar4 = (undefined4 *)(param_1 + iVar3 * 4);
+    do {
+      if (iVar2 == 0) {
+        return;
+      }
+      iVar2 = AddOverflowCheck(*puVar4,1,puVar4);
+      iVar3 = iVar3 + -1;
+      puVar4 = puVar4 + -1;
+    } while (-1 < iVar3);
+  }
+  return;
+}
+#else
 __declspec(naked) void BitsetIterClear(void) {
     __asm {
         mov     ecx, dword ptr [esp + 8]
@@ -169,3 +200,4 @@ done:
         ret
     }
 }
+#endif
