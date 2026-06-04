@@ -163,6 +163,23 @@ portable-check:
 	@$(CC_PORTABLE) $(CFLAGS_PORTABLE) -fsyntax-only $(SRC) \
 		&& echo "OK: $(SRC) compiles under NON_MATCHING"
 
+# === Arena (relocated memory model, Phase 1) =============================
+#
+# Extract the original mapped image into a flat blob, then exercise the
+# MK4_VA / MK4_NODE seam against it with a host-native test (pure C, no
+# Win32 / no asm - runs directly, no Wine).
+ARENA_BLOB := $(BUILD_DIR)/arena.bin
+HOST_CC    := cc
+
+arena-blob: $(ARENA_BLOB)
+$(ARENA_BLOB): $(ORIGINAL_EXE) tools/decomp/extract_arena.py
+	@python3 tools/decomp/extract_arena.py $(ORIGINAL_EXE) $@
+
+arena-test: $(ARENA_BLOB)
+	@$(HOST_CC) -DMK4_ARENA -DNON_MATCHING -Iinclude -O2 -Wall \
+		tools/portable/test_arena.c src/portable/arena.c -o $(BUILD_DIR)/test_arena
+	@$(BUILD_DIR)/test_arena $(ARENA_BLOB)
+
 # === Diff / progress =====================================================
 
 diff: $(MATCH_EXE)
