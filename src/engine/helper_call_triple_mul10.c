@@ -131,12 +131,12 @@ void HelperCallTripleMul10(void)
   
   g_matrixStackTop = g_matrixStackTop + 1;
   *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
-  g_cj_0054205c = g_currentNodeIdx;
+  g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   g_cj_00542054 = MK4_NODE_AT(undefined4, g_baseSel, 100);
   SetupVecFsmCluster();
   if (g_framePauseFlag == 0) {
-    g_walkCallback = MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x78);
-    iVar1 = g_currentNodeIdx * 4;
+    g_walkCallback = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x78);
+    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
     uVar2 = Mul10Tail(0x9999,g_walkCallback);
     *(undefined4 *)(iVar1 + 0x78) = uVar2;
     g_walkCallback = *(undefined4 *)(iVar1 + 0x7c);

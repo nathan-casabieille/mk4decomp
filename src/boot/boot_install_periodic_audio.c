@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,15 @@ extern void BootMStackBracketChain(void);
 extern void CallSetPause(void);
 extern void ZeroAndDirty4(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootInstallPeriodicAudio(void)
+
+{
+  StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x413ac0)),0x8c);
+  return;
+}
+#else
 __declspec(naked) void BootInstallPeriodicAudio(void)
 {
     __asm
@@ -192,3 +202,4 @@ __declspec(naked) void BootInstallPeriodicAudio(void)
         ret
     }
 }
+#endif

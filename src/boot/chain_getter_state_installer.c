@@ -127,8 +127,8 @@ extern void GuardedSeq_MStackCall_then_CallSetPause_00471670(void);
 void ChainGetterStateInstaller(void)
 
 {
-  g_currentNodeIdx = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
-  g_eventQueuePending = MK4_NODE_AT(int, g_currentNodeIdx, 0x28);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+  g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
   g_walkCallback = MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48);
   return;
 }

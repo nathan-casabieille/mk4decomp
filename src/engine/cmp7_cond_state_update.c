@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,28 @@ extern unsigned int g_eventMusicSlot2;
 extern void CallSetPause(void);
 extern void Cmp7DirtyToggle(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Cmp7CondStateUpdate(void)
+
+{
+  Cmp7DirtyToggle();
+  if (g_framePauseFlag == 0) {
+    if ((((byte)g_xformDirtyFlags & 1) != 0) && (g_walkCallback = (*(unsigned int *)MK4_VA(unsigned int, 0x537f8c)), (*(unsigned int *)MK4_VA(unsigned int, 0x537f8c)) == 0)) {
+      g_walkCallback = 1;
+      if ((*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) == 1) &&
+         (g_walkCallback = g_eventMusicSlot2, g_eventMusicSlot2 != g_eventQueueCurrent)) {
+        g_eventQueueCurrent = 2;
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 2;
+        g_walkCallback = 1;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x537f8c)) = 1;
+      }
+    }
+    CallSetPause();
+  }
+  return;
+}
+#else
 __declspec(naked) void Cmp7CondStateUpdate(void) {
     __asm {
         call    Cmp7DirtyToggle
@@ -155,3 +178,4 @@ done:
         ret
     }
 }
+#endif

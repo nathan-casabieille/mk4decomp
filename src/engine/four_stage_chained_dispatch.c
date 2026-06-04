@@ -131,13 +131,13 @@ void FourStageChainedDispatch(void)
   g_walkCallback = 3;
   DirtyDoubleDeref();
   if (g_framePauseFlag == 0) {
-    g_eventQueuePending = MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x24);
+    g_eventQueuePending = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x24);
     DispatcherComplex260_FramePauseScaledStore();
     if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) == 0)) {
-      g_cj_0054205c = g_currentNodeIdx;
+      g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       g_walkCallback = 1;
-      *(undefined4 *)(MK4_NODE_AT(int, g_currentNodeIdx, 0x18) * 4 + 0x30) = 1;
-      g_currentNodeIdx = g_cj_0054205c;
+      *(undefined4 *)(*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18) * 4 + 0x30) = 1;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
       GDispatch4();
       if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) == 0)) {
         func_0x004537a0();
@@ -145,12 +145,12 @@ void FourStageChainedDispatch(void)
           g_eventQueuePending = 0x13b23e;
           MStackBracket1_TreeWalkRecursive2();
           if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) == 0)) {
-            MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x1c) = 0;
+            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = 0;
             g_walkCallback = 0;
-            MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x30) = 0;
-            MK4_NODE_AT(int, g_currentNodeIdx, 0x38) = g_walkCallback;
+            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0;
+            *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x38) = g_walkCallback;
             g_walkCallback = -0x10000;
-            MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x34) = 0xffff0000;
+            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34) = 0xffff0000;
             ScaledTestPauseStore();
             if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) == 0)) {
               g_eventQueuePending = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x18);
@@ -158,12 +158,12 @@ void FourStageChainedDispatch(void)
               if (g_framePauseFlag == 0) {
                 g_dualC = MK4_NODE_AT(int, g_cj_0054205c, 0x1c);
                 g_walkCallback = MK4_NODE_AT(int, g_dualC, 0) + 1;
-                MK4_NODE_AT(int, g_currentNodeIdx, 0x1c) = g_walkCallback;
-                g_currentNodeIdx = g_cj_0054205c;
+                *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = g_walkCallback;
+                (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
                 MStackBracket4_ListInsertZeroFill();
                 if (g_framePauseFlag == 0) {
                   g_xformDirtyFlags = g_xformDirtyFlags | 4;
-                  if (g_currentNodeIdx != 0) {
+                  if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
                     g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
                   }
                 }

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,47 @@ extern unsigned int g_dispatchSave142;
 extern void RegistryPushBindPop(void);
 extern void TableWalkBoundedCmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootMultiAssetLoadStateInit(void)
+
+{
+  TableWalkBoundedCmp(8);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b05;
+  LoadGeoAsset_Default();
+  if (g_framePauseFlag == 0) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b05;
+    LoadGeoAsset_Default();
+    if (g_framePauseFlag == 0) {
+      g_eventQueuePending = 0x142036;
+      DispatcherComplex260_FramePauseScaledStore();
+      if (g_framePauseFlag == 0) {
+        *(undefined **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = &(*(unsigned int *)MK4_VA(unsigned int, 0x627d70));
+        g_walkCallback = 0x1f;
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+        PushSetCallPop();
+        if (g_framePauseFlag == 0) {
+          RegistryPushBindPop();
+          if (g_framePauseFlag == 0) {
+            g_eventQueuePending = 0x14202f;
+            DispatcherComplex260_FramePauseScaledStore();
+            if (g_framePauseFlag == 0) {
+              *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0xff9b8000;
+              g_walkCallback = 0x1f;
+              *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+              PushSetCallPop();
+              if (g_framePauseFlag == 0) {
+                RegistryPushBindPop();
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void BootMultiAssetLoadStateInit(void)
 {
     __asm
@@ -190,3 +232,4 @@ __declspec(naked) void BootMultiAssetLoadStateInit(void)
         ret
     }
 }
+#endif

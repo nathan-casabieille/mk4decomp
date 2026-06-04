@@ -128,17 +128,17 @@ void ChainSearch(void)
 {
   int iVar1;
   
-  iVar1 = g_currentNodeIdx * 4;
+  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
   do {
     if (iVar1 == 0) {
-      g_currentNodeIdx = 0;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0;
       g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe | 4;
       return;
     }
     if (*(int *)(iVar1 + 0xd8) != 0) {
-      g_currentNodeIdx = iVar1 >> 2;
-      g_eventQueueWorkType = MK4_NODE_AT(int, g_currentNodeIdx, 0xc);
-      if ((g_eventQueueWorkType == g_walkCallback) && (MK4_NODE_AT(int, g_currentNodeIdx, 0x2c) == g_cj_0054205c))
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1 >> 2;
+      g_eventQueueWorkType = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc);
+      if ((g_eventQueueWorkType == g_walkCallback) && (*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x2c) == g_cj_0054205c))
       {
         g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffb | 1;
         return;

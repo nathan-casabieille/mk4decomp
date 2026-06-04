@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,16 @@ extern void BootSlotInstallChainTail(void);
 extern void CallSetPause(void);
 extern void TableHitOrSchedule(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootInstallPeriodicTriple(void)
+
+{
+  StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x414950)),0xb0);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34) = g_baseSel;
+  return;
+}
+#else
 __declspec(naked) void BootInstallPeriodicTriple(void)
 {
     __asm
@@ -193,3 +204,4 @@ __declspec(naked) void BootInstallPeriodicTriple(void)
         ret
     }
 }
+#endif

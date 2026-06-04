@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,44 @@ extern void MStackPush8(void);
 extern void MStackPushCallPop(void);
 extern void SetJmp_ZeroAndDirty4(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootSetJmpStoreThenChainTriple(void)
+
+{
+  SetJmp_ZeroAndDirty4();
+  if (((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) != 0)) &&
+     (MStackPush8(), g_framePauseFlag == 0)) {
+    g_cj_00542054 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_dualD = g_eventQueuePending;
+    g_cj_00542058 = 0x15083a;
+    g_eventQueueNotMask = 0xc1;
+    StoreTwoCall(&g_orphanConst_0049db40,0xc0);
+    if (((byte)g_xformDirtyFlags & 1) == 0) {
+      MStackPushCallPop();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x44) = MK4_NODE_AT(undefined4, g_dualD, 0);
+      g_dualD = g_dualD + 1;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x48) = MK4_NODE_AT(undefined4, g_dualD, 0);
+      g_walkCallback = *(undefined4 *)((g_dualD + 1) * 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x4c) = g_walkCallback;
+    }
+    g_baseSel = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_cj_0054205c = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+    g_cj_00542058 = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+    g_cj_00542054 = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
+    g_dualD = *(undefined4 *)((int)(g_matrixStackTop + -4) * 4);
+    g_dualC = *(undefined4 *)((int)(g_matrixStackTop + -5) * 4);
+    g_eventQueuePending = *(undefined4 *)((int)(g_matrixStackTop + -6) * 4);
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -7) * 4);
+    g_matrixStackTop = g_matrixStackTop + -8;
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void BootSetJmpStoreThenChainTriple(void)
 {
     __asm
@@ -182,3 +221,4 @@ __declspec(naked) void BootSetJmpStoreThenChainTriple(void)
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,60 @@ extern void AudioBindEntry(void);
 extern void AudioInitArgs3(void);
 extern void GuardedSetupCallTailJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void VoiceMixerTickDispatch(void)
+
+{
+  undefined *puVar1;
+  int iVar2;
+  undefined **ppuVar3;
+  undefined **ppuVar4;
+  int iVar5;
+  
+  ppuVar3 = (undefined **)&g_dispatchSave578;
+  do {
+    if (ppuVar3 < &g_dispatchSave806) {
+      AudioInitArgs3(&g_dispatchSave120,0,*ppuVar3 + -0x50000,0x10000);
+    }
+    ppuVar3 = ppuVar3 + 7;
+  } while (ppuVar3 < &g_dispatchSave809);
+  AudioBindEntry(&g_dispatchSave723);
+  iVar5 = 0;
+  ppuVar3 = &g_dispatchSave804;
+  do {
+    g_walkCallback = ppuVar3[2];
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *ppuVar3;
+    GuardedSetupCallTailJmp((*(unsigned int *)MK4_VA(unsigned int, 0x542044)),g_walkCallback);
+    switch(iVar5) {
+    case 6:
+    case 7:
+      iVar2 = *(int *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) + -0xf00000;
+      break;
+    case 8:
+    case 9:
+      iVar2 = *(int *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) + 0xf00000;
+      break;
+    default:
+      goto switchD_004a2838_default;
+    }
+    *(int *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = iVar2;
+switchD_004a2838_default:
+    ppuVar4 = ppuVar3 + 7;
+    *(undefined **)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = ppuVar3[3];
+    iVar2 = g_baseSel;
+    puVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    ppuVar3[1] = *(undefined **)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54);
+    g_eventQueueCurrent = (int)*(char *)(ppuVar3 + -1);
+    iVar5 = iVar5 + 1;
+    *(undefined **)((g_eventQueueCurrent + iVar2) * 4) = puVar1;
+    ppuVar3 = ppuVar4;
+    if (&g_dispatchSave808 <= ppuVar4) {
+      return;
+    }
+  } while( true );
+}
+#else
 __declspec(naked) void VoiceMixerTickDispatch(void)
 {
     __asm {
@@ -219,3 +274,4 @@ __declspec(naked) void VoiceMixerTickDispatch(void)
         _emit 0x00
     }
 }
+#endif

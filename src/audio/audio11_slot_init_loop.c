@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,57 @@ extern unsigned int g_charSelHelpNodeIdxArr;
 extern unsigned int g_charSelHelpSlotBuf;
 extern void GuardedSetupCallTailJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CharSelect_HelpPrompts(void)
+
+{
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  undefined4 *puVar4;
+  char *apcStack_58 [22];
+  
+  puVar4 = (undefined4 *)0x543408;
+  for (iVar1 = 0xb; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar4 = 0;
+    puVar4 = puVar4 + 1;
+  }
+  apcStack_58[0xb] = " ";
+  apcStack_58[0xc] = "USE UP/DOWN TO";
+  apcStack_58[0xd] = "SELECT A PLAYER.";
+  apcStack_58[0xe] = "LEFT/RIGHT TO";
+  apcStack_58[0xf] = "CHOOSE CHARACTER.";
+  apcStack_58[0x10] = "PRESS PUNCH TO TOGGLE";
+  apcStack_58[0x11] = "HUMAN OR CPU.";
+  apcStack_58[0x12] = "PRESS KICK TO";
+  apcStack_58[0x13] = "CHANGE CPU SKILL.";
+  apcStack_58[0x14] = "PRESS START WHEN";
+  apcStack_58[0x15] = "FINISHED.";
+  apcStack_58[0] = (char *)0xff9c0000;
+  apcStack_58[1] = (char *)0xffb20000;
+  apcStack_58[2] = (char *)0xffcb0000;
+  apcStack_58[3] = (char *)0xffe40000;
+  apcStack_58[4] = (char *)0xfffd0000;
+  apcStack_58[5] = (char *)0x160000;
+  apcStack_58[6] = (char *)0x2f0000;
+  apcStack_58[7] = "";
+  apcStack_58[8] = &(*(unsigned int *)MK4_VA(unsigned int, 0x610000));
+  apcStack_58[9] = (char *)0x7a0000;
+  apcStack_58[10] = (char *)0x930000;
+  uVar2 = 0;
+  do {
+    GuardedSetupCallTailJmp(*(undefined4 *)((int)apcStack_58 + uVar2 + 0x2c),
+                 *(undefined4 *)((int)apcStack_58 + uVar2));
+    uVar3 = uVar2 + 4;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0x190000;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0x18000;
+    *(int *)(uVar2 + 0x543408) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    uVar2 = uVar3;
+  } while (uVar3 < 0x2c);
+  return;
+}
+#else
 __declspec(naked) void CharSelect_HelpPrompts(void)
 {
     __asm
@@ -179,3 +231,4 @@ __declspec(naked) void CharSelect_HelpPrompts(void)
         ret
     }
 }
+#endif

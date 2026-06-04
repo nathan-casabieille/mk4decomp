@@ -136,15 +136,15 @@ void MStackPush2Burst6Init(void)
   bool bVar5;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_currentNodeIdx;
+  *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   g_matrixStackTop = g_matrixStackTop + 1;
   *(undefined4 *)((int)g_matrixStackTop * 4) = g_xformLoopCounter;
-  g_currentNodeIdx = g_bootChainState4;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_bootChainState4;
   MStackPushChainStepIndex();
   if (g_framePauseFlag == 0) {
     if ((g_xformDirtyFlags & 4) == 0) {
       iVar3 = 6;
-      puVar4 = (undefined4 *)(g_currentNodeIdx * 4);
+      puVar4 = (undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
       iVar1 = 1;
       do {
         *puVar4 = 0;
@@ -162,9 +162,9 @@ void MStackPush2Burst6Init(void)
         }
       }
       iVar3 = 0xd;
-      g_currentNodeIdx = g_currentNodeIdx + 6;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 6;
       g_walkCallback = 0;
-      puVar4 = (undefined4 *)(g_currentNodeIdx * 4);
+      puVar4 = (undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
       iVar1 = 3;
       do {
         *puVar4 = 0;
@@ -181,19 +181,19 @@ void MStackPush2Burst6Init(void)
           puVar4 = puVar4 + 1;
         }
       }
-      g_currentNodeIdx = g_currentNodeIdx + -6;
-      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x14) = g_baseSel;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -6;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x14) = g_baseSel;
     }
-    g_eventQueuePending = g_currentNodeIdx;
+    g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     g_xformLoopCounter = *(undefined4 *)((int)g_matrixStackTop * 4);
     puVar2 = g_matrixStackTop + -1;
     g_matrixStackTop = g_matrixStackTop + -2;
     g_xformDirtyFlags = g_xformDirtyFlags | 4;
-    if ((g_currentNodeIdx == 0) ||
-       (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, bVar5 = g_currentNodeIdx == 0,
-       g_currentNodeIdx = *(int *)((int)puVar2 * 4), bVar5)) {
+    if (((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) ||
+       (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, bVar5 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0,
+       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((int)puVar2 * 4), bVar5)) {
       g_eventQueuePending = 0;
-      g_currentNodeIdx = *(int *)((int)puVar2 * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((int)puVar2 * 4);
     }
   }
   return;

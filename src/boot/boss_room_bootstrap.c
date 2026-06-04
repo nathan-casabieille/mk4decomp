@@ -130,18 +130,6 @@ extern unsigned int g_dispatchSave880;
 extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void BossRoomInitCluster(void)
-
-{
-  g_currentNodeIdx = 0x135605;
-  g_walkCallback = g_walkCallback << 0x10;
-  g_eventQueueCurrent = g_dispatchSave903 & 0xffff | g_walkCallback;
-  g_dispatchSave903 = g_eventQueueCurrent;
-  return;
-}
-#else
 __declspec(naked) void BossRoomInitCluster(void)
 {
     __asm {
@@ -284,4 +272,3 @@ __declspec(naked) void BossRoomInitCluster(void)
         _emit    0x6b
     }
 }
-#endif

@@ -127,7 +127,7 @@ void LazyAllocOrPush(void)
 {
   if (0x2ffff < g_currentNodeFlags) {
     g_eventQueuePending = g_installOwnerNode + 0x15;
-    g_currentNodeIdx = g_cj_0054205c + 0x18;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c + 0x18;
     g_dualC = g_cj_0054205c + 0x15;
     PushStackAllocCall();
     return;

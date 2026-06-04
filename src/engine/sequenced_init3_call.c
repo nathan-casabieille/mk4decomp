@@ -133,7 +133,7 @@ void SequencedInit3Call(void)
     Init4Globals();
     if (g_framePauseFlag == 0) {
       g_dispatchSave40 = 0;
-      g_currentNodeIdx = g_eventQueueSeed;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_eventQueueSeed;
       g_dispatchSave42 = 0;
       iVar1 = g_eventQueueSeed * 4;
       *(undefined4 *)(iVar1 + 0x54) = 0;
@@ -146,10 +146,10 @@ void SequencedInit3Call(void)
       g_walkCallback = 0;
       CopyGlobal();
       if (g_framePauseFlag == 0) {
-        g_currentNodeIdx = 0x142c49;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x142c49;
         LoadGeoAsset_Default();
         if (g_framePauseFlag == 0) {
-          g_currentNodeIdx = 0x142c49;
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x142c49;
           LoadGeoAsset_Default();
         }
       }

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,15 @@ extern void SetJmp_ZeroAndDirty4(void);
 extern void SkelAnimUpdaterCluster(void);
 extern void ZeroThreeFields_0040a8b0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase4DualHelperTrampoline(void)
+
+{
+  StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x412920)),0x8a);
+  return;
+}
+#else
 __declspec(naked) void Phase4DualHelperTrampoline(void)
 {
     __asm {
@@ -353,3 +363,4 @@ __declspec(naked) void Phase4DualHelperTrampoline(void)
         ret
     }
 }
+#endif

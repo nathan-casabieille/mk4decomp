@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,38 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void RegistryPushBindPop(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DoublePackedPtrInstall(void)
+
+{
+  g_eventQueuePending = 0x143c7d;
+  DispatcherComplex260_FramePauseScaledStore();
+  if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0xffba0000;
+    g_walkCallback = 0x1f;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+    PushSetCallPop();
+    if (g_framePauseFlag == 0) {
+      RegistryPushBindPop();
+      if (g_framePauseFlag == 0) {
+        g_eventQueuePending = 0x143c84;
+        DispatcherComplex260_FramePauseScaledStore();
+        if (g_framePauseFlag == 0) {
+          *(undefined **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = &(*(unsigned int *)MK4_VA(unsigned int, 0x810000));
+          g_walkCallback = 0x1f;
+          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+          PushSetCallPop();
+          if (g_framePauseFlag == 0) {
+            RegistryPushBindPop();
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DoublePackedPtrInstall(void) {
     __asm {
         mov     eax, 0x0050f1f4
@@ -179,3 +212,4 @@ __declspec(naked) void DoublePackedPtrInstall(void) {
         ret
     }
 }
+#endif

@@ -140,10 +140,10 @@ void FiveTableWalkInit(void)
   TableWalkBoundedCmp(7);
   BootInitGuardedCallChain();
   if (g_framePauseFlag == 0) {
-    g_currentNodeIdx = 0x141b08;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b08;
     LoadGeoAsset_Default();
     if (g_framePauseFlag == 0) {
-      g_currentNodeIdx = 0x141b08;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b08;
       LoadGeoAsset_Default();
       if (g_framePauseFlag == 0) {
         AudioStateClearAndChainStep();
@@ -151,7 +151,7 @@ void FiveTableWalkInit(void)
           g_walkCallback = 0;
           CopyGlobal();
           if (g_framePauseFlag == 0) {
-            g_currentNodeIdx = g_eventQueueSeed;
+            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_eventQueueSeed;
             iVar1 = g_eventQueueSeed * 4;
             *(undefined4 *)(iVar1 + 0x60) = 0;
             *(undefined4 *)(iVar1 + 100) = 0;

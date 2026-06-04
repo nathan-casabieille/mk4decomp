@@ -42,7 +42,8 @@ BAIL_TOKENS = ('code', 'CONCAT', 'SUB4', 'SUB8', 'SUB2', 'ZEXT', 'SEXT',
 # Leftover Ghidra placeholders (unmapped global/func, code label, jump
 # table, or a PTR_<sym> indirect thunk) -> bail, keep the function naked.
 UNMAPPED = re.compile(
-    r'\b(FUN|DAT|LAB|UNK|switchD|JUMP)_?[0-9a-fA-F]{4,}\b|\bPTR_\w+')
+    r'\b(FUN|DAT|LAB|UNK|switchD|JUMP)_?[0-9a-fA-F]{4,}\b|\bPTR_\w+'
+    r'|\bUNRESOLVED_[0-9a-fA-F]{8}\b')
 
 
 def has_bail(c):

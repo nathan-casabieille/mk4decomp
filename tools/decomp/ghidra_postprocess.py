@@ -24,6 +24,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 
 
+GHIDRA_SYMS = ROOT / 'build' / 'ghidra_syms.txt'
+
+
 def load_maps():
     import yaml
     fn_by_va = {}
@@ -40,7 +43,57 @@ def load_maps():
     return fn_by_va, gl_by_va
 
 
+def load_ghidra_names():
+    """ghidra_symbol_name -> VA, from MK4DumpSymbols.java output. Ghidra's
+    names do NOT reliably match ours (it calls 0x542044 'g_currentNodeIdx'
+    while ours is 0x54205c), so reconcile every named ref by ADDRESS."""
+    m = {}
+    if GHIDRA_SYMS.exists():
+        for line in GHIDRA_SYMS.read_text().splitlines():
+            if '\t' in line:
+                name, va = line.rsplit('\t', 1)
+                if va.strip().isdigit():
+                    m.setdefault(name, int(va))   # first def wins
+    return m
+
+
+def reconcile_names(text, ghidra_va, our_by_va):
+    """Replace every Ghidra symbol identifier with OUR name at Ghidra's VA
+    for it. Mismatch (our addr differs) is fixed; an addr we don't name is
+    rewritten to UNRESOLVED_<va> so the injector's bail/compile gate drops
+    that function rather than mis-bind a global."""
+    def sub(m):
+        name = m.group(0)
+        gva = ghidra_va.get(name)
+        if gva is None:
+            return name                      # not a Ghidra symbol; leave
+        ours = our_by_va.get(gva)
+        if ours:
+            return ours
+        # addr real (Ghidra named it) but unnamed in our project: access it
+        # through the arena seam. Scalar form; if the site needs an array /
+        # different type, the injector's compile gate drops the function.
+        return '(*(unsigned int *)MK4_VA(unsigned int, 0x%x))' % gva
+    # identifiers that could be Ghidra symbols: g_* globals and PascalCase
+    return re.sub(r'\b(?:g_[A-Za-z]\w*|[A-Z]\w+)\b', sub, text)
+
+
+_GHIDRA_VA = None
+
+
 def postprocess(text, fn_by_va, gl_by_va):
+    # Reconcile EVERY Ghidra symbol identifier by ADDRESS first: Ghidra's
+    # names (g_*, DAT_, FUN_, PascalCase fns) are not address-consistent
+    # with ours. ghidra_name -> ghidra_VA -> our name at that VA; unknown
+    # addrs become UNRESOLVED_* so the injector drops the function.
+    global _GHIDRA_VA
+    if _GHIDRA_VA is None:
+        _GHIDRA_VA = load_ghidra_names()
+    if _GHIDRA_VA:
+        our_by_va = dict(gl_by_va)
+        our_by_va.update(fn_by_va)
+        text = reconcile_names(text, _GHIDRA_VA, our_by_va)
+
     # FUN_00xxxxxx -> our function name (or leave if unknown)
     def fun_sub(m):
         va = int(m.group(1), 16)

@@ -133,11 +133,11 @@ void AudioTriEntryFlagPairInit(void)
 
 {
   if (g_gtModeFlag == '\x01') {
-    g_currentNodeIdx = 0x14e902;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e902;
     g_eventQueuePending = 0x14e8f8;
   }
   else {
-    g_currentNodeIdx = 0x14dfa2;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14dfa2;
     g_eventQueuePending = 0x14e9c0;
   }
   DualScaledStoreConst();

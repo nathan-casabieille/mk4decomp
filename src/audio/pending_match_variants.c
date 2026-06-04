@@ -260,11 +260,11 @@ void GameMode_EnterScene(void)
 
 {
   if (g_gtModeFlag == '\x01') {
-    g_currentNodeIdx = 0x14e902;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e902;
     g_eventQueuePending = 0x14e8f8;
   }
   else {
-    g_currentNodeIdx = 0x14dfa2;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14dfa2;
     g_eventQueuePending = 0x14e9c0;
   }
   DualScaledStoreConst();
@@ -365,7 +365,7 @@ void AudioInitLoopTriple(void)
     SnapshotDirtyMark(0x13333);
     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
     if (g_framePauseFlag == 0) {
-      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x5c) = 0x100000;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0x100000;
     }
   }
   return;
@@ -1484,6 +1484,35 @@ __declspec(naked) void PendingMatch_Push16Call_004a3400(void)
 }
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_MStackPush2ChainLLInsert_004a56c0(void)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  
+  puVar2 = &(*(unsigned int *)MK4_VA(unsigned int, 0x5435ac));
+  iVar1 = 0xf;
+  do {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = puVar2[-1];
+    MStackPush2ChainLLInsert();
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *puVar2;
+    puVar2[-1] = 0;
+    MStackPush2ChainLLInsert();
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = puVar2[1];
+    *puVar2 = 0;
+    MStackPush2ChainLLInsert();
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = puVar2[2];
+    puVar2[1] = 0;
+    MStackPush2ChainLLInsert();
+    puVar2[2] = 0;
+    puVar2 = puVar2 + 6;
+    iVar1 = iVar1 + -1;
+  } while (iVar1 != 0);
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_MStackPush2ChainLLInsert_004a56c0(void)
 {
     __asm {
@@ -2000,7 +2029,18 @@ __declspec(naked) void PendingMatch_MStackPush2ChainLLInsert_004a56c0(void)
         ret      
     }
 }
+#endif
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Screen_Loading(void)
+
+{
+  (*(unsigned int *)MK4_VA(unsigned int, 0x543824)) = 1;
+  CallZero2();
+  return;
+}
+#else
 __declspec(naked) void Screen_Loading(void)
 {
     __asm {
@@ -3268,6 +3308,7 @@ __declspec(naked) void Screen_Loading(void)
         _emit    0xc3
     }
 }
+#endif
 
 __declspec(naked) void TeamMode_JoinScreen(void)
 {

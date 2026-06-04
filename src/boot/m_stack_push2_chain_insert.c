@@ -130,7 +130,7 @@ void MStackPush2ChainInsert(void)
   int iVar3;
   
   iVar2 = g_eventQueuePending;
-  iVar1 = g_currentNodeIdx;
+  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   g_matrixStackTop = g_matrixStackTop + 1;
   *(undefined4 *)((int)g_matrixStackTop * 4) = g_chainInsertSlot;
   g_matrixStackTop = g_matrixStackTop + 1;

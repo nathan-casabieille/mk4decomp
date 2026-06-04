@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -148,6 +149,74 @@ extern void PushSetXfmMaskCallPop(void);
 extern void ZeroAndDirty4(void);
 extern void ClampMulShiftStore(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase4StateInitWithHelpers(void)
+
+{
+  undefined *puVar1;
+  uint *puVar2;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_cj_00542054;
+  g_cj_0054205c = 0;
+  g_walkCallback = 0xeb85;
+  ZeroAndDirty4();
+  if (g_framePauseFlag == 0) {
+    if ((g_xformDirtyFlags & 4) != 0) {
+      g_walkCallback = 0x135a86;
+      PushSetXfmMaskCallPop();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      if ((g_xformDirtyFlags & 4) == 0) {
+        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x30) = 0x9b;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+        g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
+        puVar2 = (uint *)(g_eventQueuePending * 4);
+        puVar2[4] = (uint)&(*(unsigned int *)MK4_VA(unsigned int, 0x414590));
+        puVar2[5] = 0;
+        puVar2[0x12] = 0x28f;
+        *puVar2 = *puVar2 | 8;
+        g_dualC = g_dualC + -1;
+        puVar1 = g_matrixStackTop;
+        g_walkCallback = g_dualC;
+        if (-1 < g_dualC) {
+          g_matrixStackTop = g_matrixStackTop + 1;
+          *(int *)((int)g_matrixStackTop * 4) = g_dualC;
+          ChainNodeAdvanceCallback();
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+          while( true ) {
+            g_dualC = *(int *)((int)g_matrixStackTop * 4) + -1;
+            puVar1 = g_matrixStackTop + -1;
+            if (g_dualC < 0) break;
+            *(int *)((int)g_matrixStackTop * 4) = g_dualC;
+            ChainNodeAdvanceCallback();
+            if (g_framePauseFlag != 0) {
+              return;
+            }
+          }
+        }
+        g_matrixStackTop = puVar1;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+        MStackCall_MStackPush2ChainPrepend_00406600();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+      }
+    }
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+    if (g_cj_0054205c != 0) {
+      g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+    }
+    g_cj_00542054 = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+  }
+  return;
+}
+#else
 __declspec(naked) void Phase4StateInitWithHelpers(void)
 {
     __asm {
@@ -311,3 +380,4 @@ __declspec(naked) void Phase4StateInitWithHelpers(void)
         jmp     ClampMulShiftStore
     }
 }
+#endif

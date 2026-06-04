@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,19 @@ extern void InstallSelfIndirectJmp(void);
 extern void InstallSelfOrCmpJmp(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BossRoarCluster(void)
+
+{
+  g_walkCallback = 0x83;
+  MK4_NODE_AT(undefined4, g_cj_0054205c, 0x4c) = 0x83;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined1 **)((int)g_matrixStackTop * 4) = &(*(unsigned int *)MK4_VA(unsigned int, 0x488250));
+  InstallSelfIndirectJmpNeg();
+  return;
+}
+#else
 __declspec(naked) void BossRoarCluster(void)
 {
     __asm {
@@ -312,3 +326,4 @@ __declspec(naked) void BossRoarCluster(void)
         ret
     }
 }
+#endif

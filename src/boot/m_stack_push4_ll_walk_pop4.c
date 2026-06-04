@@ -131,7 +131,7 @@ void MStackPush4LLWalkPop4(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_currentNodeIdx;
+  *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   g_matrixStackTop = g_matrixStackTop + 1;
   *(int *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
   g_matrixStackTop = g_matrixStackTop + 1;
@@ -139,14 +139,14 @@ void MStackPush4LLWalkPop4(void)
   g_matrixStackTop = g_matrixStackTop + 1;
   *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
   g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0);
-  g_cj_0054205c = g_currentNodeIdx;
+  g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   g_dualC = g_eventQueuePending;
   while( true ) {
     if (g_walkCallback == 0) {
       g_cj_0054205c = *(undefined4 *)((int)g_matrixStackTop * 4);
       g_dualC = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
       g_eventQueuePending = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
-      g_currentNodeIdx = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
       g_matrixStackTop = g_matrixStackTop + -4;
       return;
     }
@@ -158,9 +158,9 @@ void MStackPush4LLWalkPop4(void)
     if (g_framePauseFlag != 0) {
       return;
     }
-    if ((((byte)g_xformDirtyFlags & 4) == 0) && (MK4_NODE_AT(int, g_currentNodeIdx, 0x28) != 0)) {
+    if ((((byte)g_xformDirtyFlags & 4) == 0) && (*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28) != 0)) {
       g_walkCallback = g_eventQueuePending >> 2;
-      g_eventQueuePending = MK4_NODE_AT(int, g_currentNodeIdx, 0x28);
+      g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
       ScaledStoreThree_00409260();
       if (g_framePauseFlag != 0) {
         return;

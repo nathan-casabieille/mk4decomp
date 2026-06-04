@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,15 @@ extern void ProneAnimFsmCluster(void);
 
 /* @addr 0x00495770 (325b game) - 7-block thunk dispatcher with push-call entries. */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SevenThunkDispatcher(void)
+
+{
+  ArgScaledChain(&(*(unsigned int *)MK4_VA(unsigned int, 0x4f1468)));
+  return;
+}
+#else
 __declspec(naked) void SevenThunkDispatcher(void) {
     __asm {
         push    0x004f1468
@@ -239,3 +249,4 @@ __declspec(naked) void SevenThunkDispatcher(void) {
         ret
     }
 }
+#endif

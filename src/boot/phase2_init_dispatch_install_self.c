@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,38 @@ extern void MStackPushCallPop(void);
 extern void MStackScopedSlotSetupPair(void);
 extern void SetJmp_ZeroAndDirty4(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase2InitDispatchInstallSelf(void)
+
+{
+  SetJmp_ZeroAndDirty4();
+  if (((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) != 0)) &&
+     (MStackPush8(), g_framePauseFlag == 0)) {
+    g_cj_00542054 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_dualD = g_eventQueuePending;
+    g_cj_00542058 = 0x135964;
+    g_eventQueueNotMask = 0xc1;
+    StoreTwoCall(&g_orphanConst_0049db40,0xc0);
+    if (((byte)g_xformDirtyFlags & 1) == 0) {
+      MStackPushCallPop();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x44) = MK4_NODE_AT(undefined4, g_dualD, 0);
+      g_dualD = g_dualD + 1;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x48) = MK4_NODE_AT(undefined4, g_dualD, 0);
+      g_dualD = g_dualD + 1;
+      g_walkCallback = MK4_NODE_AT(undefined4, g_dualD, 0);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x4c) = g_walkCallback;
+      g_dualD = g_dualD + 1;
+    }
+    MStackPop8();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void Phase2InitDispatchInstallSelf(void)
 {
     __asm {
@@ -266,3 +299,4 @@ __declspec(naked) void Phase2InitDispatchInstallSelf(void)
         ret
     }
 }
+#endif

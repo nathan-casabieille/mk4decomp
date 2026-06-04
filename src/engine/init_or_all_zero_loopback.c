@@ -23,7 +23,7 @@ void InitOrAllZeroLoopback(void)
 {
   undefined4 *puVar1;
   
-  puVar1 = (undefined4 *)(g_currentNodeIdx * 4);
+  puVar1 = (undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
   *puVar1 = 0x1000;
   puVar1[1] = 0;
   puVar1[2] = 0x1000;

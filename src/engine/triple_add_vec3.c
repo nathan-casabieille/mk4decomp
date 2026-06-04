@@ -30,7 +30,7 @@ void TripleAddVec3(void)
   
   piVar2 = (int *)(g_eventQueuePending * 4);
   piVar3 = (int *)(g_dualC * 4);
-  piVar1 = (int *)(g_currentNodeIdx * 4);
+  piVar1 = (int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
   *piVar1 = *piVar3 + *piVar2;
   piVar1[1] = piVar2[1] + piVar3[1];
   piVar1[2] = piVar3[2] + piVar2[2];

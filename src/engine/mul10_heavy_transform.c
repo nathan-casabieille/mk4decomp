@@ -138,7 +138,7 @@ void PoseTreeBlendWalker(void)
   
   MStackPush8();
   iVar1 = g_eventQueuePending;
-  iVar4 = g_currentNodeIdx;
+  iVar4 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   iVar5 = g_savedNode;
   iVar6 = g_mul10TransformVar;
   if (g_framePauseFlag == 0) {
@@ -192,14 +192,14 @@ void PoseTreeBlendWalker(void)
         return;
       }
       piVar3[2] = g_walkCallback;
-      g_currentNodeIdx = g_dispatchSave6;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dispatchSave6;
       g_eventQueuePending = g_dualD;
       Mul10HeavyTransform();
       if (g_framePauseFlag != 0) {
         return;
       }
-      g_eventQueuePending = g_currentNodeIdx;
-      g_currentNodeIdx = g_cj_00542054 + 4;
+      g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542054 + 4;
       QuadInterpolator();
       if (g_framePauseFlag != 0) {
         return;
@@ -210,7 +210,7 @@ void PoseTreeBlendWalker(void)
       iVar6 = g_dualD;
       iVar4 = MK4_NODE_AT(int, g_cj_00542054, 0);
     }
-    g_currentNodeIdx = g_cj_00542054;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542054;
     g_eventQueuePending = g_cj_00542058;
     g_walkCallback = g_cj_00542054;
     MStackPop8();

@@ -132,12 +132,12 @@ void LinearSearchByEsi(void)
 
 {
   g_eventQueueWorkType = 0;
-  g_currentNodeIdx = 0x13a1c9;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x13a1c9;
   g_eventQueueCurrent = g_dispatchSave1263;
   while (g_eventQueueCurrent != g_walkCallback) {
     g_eventQueueWorkType = g_eventQueueWorkType + 1;
-    g_currentNodeIdx = g_currentNodeIdx + 1;
-    g_eventQueueCurrent = *(int *)(g_currentNodeIdx * 4 + -4);
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    g_eventQueueCurrent = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + -4);
   }
   g_walkCallback = g_eventQueueWorkType;
   return;

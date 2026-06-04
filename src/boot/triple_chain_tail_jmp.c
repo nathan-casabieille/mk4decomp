@@ -125,30 +125,6 @@ extern void SlotInitAndChainLink(void);
  * Orig has xform in ecx (8b 0d, 6b) and val in eax (b8), giving a3 (5b) and
  * 8b15+8915 (12b). MSVC's choice is more optimal; register layout not coaxable.
  */
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void TripleChainTailJmp(void)
-
-{
-  MStackPush2RunCountdown();
-  if (g_framePauseFlag == 0) {
-    MStackBracket7_DispatchAndChain();
-    if (g_framePauseFlag == 0) {
-      g_eventQueueWorkType = 3;
-      g_dualC = 0x135ebe;
-      SlotInitAndChainLink();
-      if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
-        g_walkCallback = 0x11999;
-        MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48) = 0x11999;
-        g_currentNodeIdx = g_cj_00542054 + 0x15;
-        BootFlagChainAudioPause();
-        return;
-      }
-    }
-  }
-  return;
-}
-#else
 __declspec(naked) void TripleChainTailJmp(void) {
     __asm {
         call    MStackPush2RunCountdown
@@ -181,4 +157,3 @@ done:
         ret
     }
 }
-#endif

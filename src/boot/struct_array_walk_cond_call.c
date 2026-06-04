@@ -128,8 +128,8 @@ void StructArrayWalkCondCall(void)
   puVar1 = &g_nodeSlotsArea;
   do {
     if (puVar1[0x36] != 0) {
-      g_currentNodeIdx = (int)puVar1 >> 2;
-      g_eventQueueWorkType = MK4_NODE_AT(uint, g_currentNodeIdx, 0xc) & g_eventQueueCurrent;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (int)puVar1 >> 2;
+      g_eventQueueWorkType = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc) & g_eventQueueCurrent;
       if (g_eventQueueWorkType == g_walkCallback) {
         NodeUnlink(puVar1);
       }

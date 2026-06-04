@@ -131,32 +131,32 @@ void SpawnListGlyphRender(void)
   int iVar3;
   
   BootPhaseGateBracketedInit();
-  iVar2 = g_currentNodeIdx;
-  g_currentNodeIdx = iVar2;
+  iVar2 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar2;
   if (((byte)g_xformDirtyFlags & 4) == 0) {
-    puVar1 = (uint *)(g_currentNodeIdx * 4 + 0x34);
+    puVar1 = (uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34);
     *puVar1 = *puVar1 | 0x20000;
     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
     if (g_framePauseFlag == 0) {
       MStackBracket5_FieldClear_StateAdvance();
-      iVar3 = g_currentNodeIdx;
-      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x24) = 0;
+      iVar3 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x24) = 0;
       MK4_NODE_AT(int, iVar2, 0x18) = iVar3;
       MK4_NODE_AT(int, iVar3, 0x18) = iVar2;
       g_walkCallback = 4;
       MStackPush3HelperCondToggle();
-      g_eventQueuePending = g_currentNodeIdx;
+      g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       g_eventQueueCurrent = -0x1999;
-      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0xc) = 0x1455e9;
-      MK4_NODE_AT(int, g_currentNodeIdx, 4) = g_eventQueueCurrent;
-      MK4_NODE_AT(undefined4, g_currentNodeIdx, 8) = 0;
-      for (g_currentNodeIdx = MK4_NODE_AT(int, g_currentNodeIdx, 0); g_eventQueueCurrent = g_eventQueueCurrent + 0xf5c,
-          g_currentNodeIdx != 0; g_currentNodeIdx = MK4_NODE_AT(int, g_currentNodeIdx, 0)) {
-        MK4_NODE_AT(undefined4, g_currentNodeIdx, 0xc) = 0x1455e9;
-        MK4_NODE_AT(int, g_currentNodeIdx, 4) = g_eventQueueCurrent;
-        MK4_NODE_AT(undefined4, g_currentNodeIdx, 8) = 0;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc) = 0x1455e9;
+      *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4) = g_eventQueueCurrent;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 8) = 0;
+      for ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4); g_eventQueueCurrent = g_eventQueueCurrent + 0xf5c,
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0; (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4)) {
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc) = 0x1455e9;
+        *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4) = g_eventQueueCurrent;
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 8) = 0;
       }
-      g_currentNodeIdx = iVar2;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar2;
     }
   }
   return;

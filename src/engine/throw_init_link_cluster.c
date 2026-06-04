@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,24 @@ extern void PendingMatch_ArgSarStoreJmp_00452770(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StageTransitionCluster_PendingMatch(void)
+
+{
+  PendingMatch_ArgSarStoreJmp_00452770();
+  if (g_framePauseFlag == 0) {
+    StoreLoadJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x455530)));
+    g_walkCallback = 0x5c;
+    GatedWordPushCall();
+    if (g_framePauseFlag == 0) {
+      g_cj_0054205c = g_cj_00542058;
+      ArgSarStoreJmp(&g_dispatchSave693);
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void StageTransitionCluster_PendingMatch(void)
 {
     __asm {
@@ -320,3 +339,4 @@ __declspec(naked) void StageTransitionCluster_PendingMatch(void)
         ret
     }
 }
+#endif

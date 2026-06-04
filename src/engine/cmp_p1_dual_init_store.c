@@ -45,11 +45,11 @@ void CmpP1DualInitStore_00433d30(void)
 {
   int iVar1;
   
-  g_currentNodeIdx = 0x14e868;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e868;
   g_eventQueuePending = 0x14e946;
   iVar1 = 0x14e868;
   if (g_cj_0054205c != g_player1NodeIdx) {
-    g_currentNodeIdx = 0x14e946;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e946;
     iVar1 = 0x14e946;
   }
   MK4_NODE_AT(undefined4, iVar1, 0) = g_walkCallback;
@@ -91,11 +91,11 @@ void CmpP1DualInitStore_00482ab0(void)
 {
   int iVar1;
   
-  g_currentNodeIdx = 0x14e8f9;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e8f9;
   g_eventQueuePending = 0x14e91d;
   iVar1 = 0x14e8f9;
   if (g_cj_0054205c != g_player1NodeIdx) {
-    g_currentNodeIdx = 0x14e91d;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e91d;
     iVar1 = 0x14e91d;
   }
   MK4_NODE_AT(undefined4, iVar1, 0) = g_walkCallback;

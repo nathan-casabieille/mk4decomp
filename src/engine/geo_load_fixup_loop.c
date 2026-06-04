@@ -139,8 +139,8 @@ void GeoLoadFixupLoop(void)
   ushort *puVar3;
   uint uVar4;
   
-  iVar2 = g_currentNodeIdx;
-  iVar1 = MK4_NODE_AT(int, g_currentNodeIdx, 4);
+  iVar2 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  iVar1 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4);
   if (iVar1 != 0) {
     puVar3 = (ushort *)(*(int *)(iVar1 + 4) + 4 + iVar1);
     for (uVar4 = (uint)*puVar3; uVar4 != 0; uVar4 = uVar4 - 1) {
