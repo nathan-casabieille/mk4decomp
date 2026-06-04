@@ -93,6 +93,48 @@ The matching build target requires:
 - **Compiler flags** are fixed: `/MT /O2 /W3 /Gz` (stdcall default).
   Don't change them per-file unless the original asm requires it.
 
+## Portable / NON_MATCHING dual build
+
+The repo serves two builds from one tree (the standard decomp pattern,
+as used by the SM64 and OoT PC/Web ports):
+
+- **matching** (default, no flags): MSVC 5.0, byte-identical. The oracle.
+- **portable** (`-DNON_MATCHING`): non-MSVC toolchain, behavior-equivalent
+  C only, the base for native + WASM. See
+  [tools/decomp/AGENT_PORTABLE_WASM_MIGRATION.md](tools/decomp/AGENT_PORTABLE_WASM_MIGRATION.md).
+
+A function that must stay `__asm` to match gets a portable C twin behind
+`#ifdef NON_MATCHING`:
+
+```c
+/* @addr 0x004xxxxx */
+#ifdef NON_MATCHING
+void Foo(void) {
+    /* behavior-equivalent portable C (no __asm) */
+}
+#else
+__declspec(naked) void Foo(void) {
+    __asm { /* byte-exact MSVC body - FROZEN, never edit */ }
+}
+#endif
+```
+
+Rules:
+- Functions already in pure C need **no** `#ifdef` - they serve both
+  builds as-is.
+- The `#else` (matching) body is **frozen**: never edit it; the
+  matching build must stay MD5-identical. Verify with
+  `touch src/boot/boot_mstack_init.c && make matching`.
+- `NON-COAXABLE:` comments describe the matching constraint - they belong
+  in the `#else` branch and are NOT a reason to skip the C twin.
+- The `NON_MATCHING` body needs only behavior equivalence, not identical
+  bytes - do not fight MSVC codegen here.
+- Absolute VAs / packed-ptr (`addr >> 2`) used in a `NON_MATCHING` body
+  are fine on flat 32-bit targets; flag them for the Phase 1 memory-model
+  pass (`GLOBAL()` / `NODE()` translation) for native/WASM.
+- Check one converted file with
+  `make portable-check SRC=src/path/file.c`.
+
 ## Globals at fixed VAs
 
 The original binary has globals at specific virtual addresses. To

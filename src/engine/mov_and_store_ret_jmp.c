@@ -17,6 +17,14 @@ extern unsigned int g_currentNodeIdx;
  */
 extern unsigned int g_dispatchSave1401;
 extern void LoadStoreRetNopJmp(void);
+#ifdef NON_MATCHING
+/* Portable: the orig const-folds the load+and into one store; behavior
+ * is just "store the masked constant". (Matching keeps the explicit
+ * load+and form below so MSVC SP3 does not fold it.) */
+void MovAndStoreRetJmp(void) {
+    g_dispatchSave1401 = 0x00b4d00fu & 0xfffe0000u;
+}
+#else
 __declspec(naked) void MovAndStoreRetJmp(void) {
     __asm {
         mov     eax, 0x00b4d00f
@@ -25,3 +33,4 @@ __declspec(naked) void MovAndStoreRetJmp(void) {
         ret
     }
 }
+#endif

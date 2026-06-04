@@ -63,15 +63,16 @@ ALL_OBJS := $(C_OBJS) $(ASM_OBJS)
 
 # === Phony targets =======================================================
 
-.PHONY: all matching portable diff progress clean help check-msvc
+.PHONY: all matching portable portable-check diff progress clean help check-msvc
 
 help:
 	@echo "MK4 matching decomp - targets:"
-	@echo "  make matching   - rebuild MK4.EXE byte-identical (MSVC 5.0)"
-	@echo "  make portable   - build portable binary (MinGW-w64 / clang)"
-	@echo "  make diff       - diff the matching build vs game/MK4.EXE"
-	@echo "  make progress   - print per-function match progress"
-	@echo "  make clean      - remove build/"
+	@echo "  make matching       - rebuild MK4.EXE byte-identical (MSVC 5.0)"
+	@echo "  make portable       - build portable binary (MinGW-w64, -DNON_MATCHING) [WIP]"
+	@echo "  make portable-check SRC=path.c - syntax-check one file under NON_MATCHING"
+	@echo "  make diff           - diff the matching build vs game/MK4.EXE"
+	@echo "  make progress       - print per-function match progress"
+	@echo "  make clean          - remove build/"
 	@echo
 	@echo "Setup (run once):"
 	@echo "  ./tools/setup-macos.sh"
@@ -127,11 +128,40 @@ $(BUILD_DIR):
 
 # === Portable build (MinGW-w64) - TODO ==================================
 
-portable: $(PORT_EXE)
+# === Portable / NON_MATCHING toolchain ===================================
+#
+# The portable build drops byte-identity (-DNON_MATCHING) and compiles
+# with a non-MSVC toolchain, so the codebase can target other platforms
+# (native first, then WASM via emscripten). See the migration brief:
+#   tools/decomp/AGENT_PORTABLE_WASM_MIGRATION.md
+#
+# i686-w64-mingw32 is the first portable target: 32-bit (matches the
+# packed-ptr / absolute-address memory model) and Windows (matches the
+# current Win32 / Glide / DirectSound platform surface). Native and WASM
+# backends come later behind -DTARGET_PORTABLE / -DTARGET_WEB.
+#
+# Status: WIP. `make portable` will fail on functions still in x86
+# `__asm` (no NON_MATCHING C body yet) - that is the remaining-work
+# signal. Use `make portable-check SRC=...` to validate a single file's
+# NON_MATCHING branch as you convert it.
+CC_PORTABLE     := i686-w64-mingw32-gcc
+CFLAGS_PORTABLE := -DNON_MATCHING -DTARGET_PORTABLE -Iinclude -O2 -w
+PORT_OBJ_DIR    := $(BUILD_DIR)/obj-portable
+PORT_C_OBJS     := $(patsubst src/%.c,$(PORT_OBJ_DIR)/%.o,$(C_SOURCES))
 
-$(PORT_EXE):
-	@echo "TODO: portable build not yet implemented."
-	@false
+portable: $(PORT_C_OBJS)
+	@echo "portable: $(words $(PORT_C_OBJS)) objects compiled."
+	@echo "  (link step is TODO until the asm->C conversion + PAL land)"
+
+$(PORT_OBJ_DIR)/%.o: src/%.c
+	@mkdir -p $(dir $@)
+	$(CC_PORTABLE) $(CFLAGS_PORTABLE) -c $< -o $@
+
+# Syntax-check a single file's NON_MATCHING branch (no codegen / link):
+#   make portable-check SRC=src/engine/mov_and_store_ret_jmp.c
+portable-check:
+	@$(CC_PORTABLE) $(CFLAGS_PORTABLE) -fsyntax-only $(SRC) \
+		&& echo "OK: $(SRC) compiles under NON_MATCHING"
 
 # === Diff / progress =====================================================
 
