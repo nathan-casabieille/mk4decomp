@@ -73,47 +73,64 @@ def run_unicorn(func_va, arena):
     from unicorn import Uc, UC_ARCH_X86, UC_MODE_32, UC_HOOK_MEM_WRITE
     from unicorn.x86_const import UC_X86_REG_ESP, UC_X86_REG_EIP
     size = (len(arena) + 0xFFF) & ~0xFFF
+    # Map [0, FULL) so near-null packed-ptr derefs (zero indices in the
+    # static initial state) read/write zero instead of faulting. Image
+    # bytes live at BASE..; [0,BASE) and gaps are zero. Stack is separate.
+    full = (BASE + len(arena) + 0xFFF) & ~0xFFF
     uc = Uc(UC_ARCH_X86, UC_MODE_32)
-    uc.mem_map(BASE, size)
+    uc.mem_map(0, full)
     uc.mem_write(BASE, bytes(arena))
-    stack = 0x00100000
-    uc.mem_map(stack, 0x10000)
+    stack = 0x20000000
+    uc.mem_map(stack, 0x20000)
     SENT = 0x00bad0de
-    esp = stack + 0xF000
+    esp = stack + 0x10000
     uc.reg_write(UC_X86_REG_ESP, esp)
     uc.mem_write(esp, SENT.to_bytes(4, 'little'))   # return address
-    writes = {}
+    # Lazily map data pages a wild (garbage-state) packed-ptr wanders into,
+    # so the run completes; this is an equivalence check on a shared state,
+    # not a realistic-input test. Code fetches are NOT lazily mapped.
+    from unicorn import UC_HOOK_MEM_READ_UNMAPPED, UC_HOOK_MEM_WRITE_UNMAPPED
 
-    def on_write(uc, access, addr, sz, val, ud):
-        if BASE <= addr < BASE + size:
-            writes[addr] = (sz, val & ((1 << (sz * 8)) - 1))
-    uc.hook_add(UC_HOOK_MEM_WRITE, on_write)
+    def on_unmapped(uc, access, addr, sz, val, ud):
+        try:
+            uc.mem_map(addr & ~0xFFF, 0x1000)
+        except Exception:
+            pass
+        return True
+    uc.hook_add(UC_HOOK_MEM_READ_UNMAPPED | UC_HOOK_MEM_WRITE_UNMAPPED, on_unmapped)
     try:
-        uc.emu_start(func_va, SENT, count=200000)
+        uc.emu_start(func_va, SENT, count=400000)
     except Exception as e:
         return None, 'unicorn: %s' % e
-    delta = {}
-    for addr, (sz, val) in writes.items():
-        delta[addr - BASE] = val.to_bytes(sz, 'little')
-    return delta, None
+    return bytes(uc.mem_read(0, full)), None
 
 
-def run_native(name, body, gl_va):
+def run_native(name, body, gl_va, full):
     globs = sorted(set(re.findall(r'\bg_[A-Za-z]\w*', body)))
     if any(g not in gl_va for g in globs):
         return None, 'unmapped global: %s' % [g for g in globs if g not in gl_va]
     defs = ''.join(
         '#define %s (*(unsigned int *)(g_mk4Arena + 0x%x))\n' % (g, gl_va[g] - BASE)
         for g in globs)
+    # Allocate [0, FULL); g_mk4Arena = buf + BASE so MK4_PTR(va)=buf+va for
+    # any va in [0, FULL) - matches the Unicorn map (near-null safe).
+    # Back the arena with a sparse 4 GB anon mmap so a wild packed-ptr (from
+    # garbage initial state) reads/writes zero instead of segfaulting -
+    # matching the Unicorn lazy-map. Only touched pages commit.
     harness = (
         '#define NON_MATCHING 1\n#define MK4_ARENA 1\n'
         '#include "portable/ghidra_types.h"\n#include "portable/mem_model.h"\n'
-        '#include "portable/arena.h"\n#include <stdio.h>\n'
+        '#include "portable/arena.h"\n#include <stdio.h>\n#include <sys/mman.h>\n'
         + defs + body + '\n'
         'int main(void){\n'
-        '  if(!MK4_ArenaInitFromFile("%s")) return 2;\n' % ARENA +
+        '  unsigned char *buf = mmap(0, 0x100000000ULL, PROT_READ|PROT_WRITE,'
+        ' MAP_ANON|MAP_PRIVATE, -1, 0);\n'
+        '  if(buf==MAP_FAILED) return 2;\n'
+        '  FILE *f = fopen("%s","rb"); if(!f) return 2;\n' % ARENA +
+        '  fread(buf + 0x%xu, 1, 0x%xu, f); fclose(f);\n' % (BASE, full - BASE) +
+        '  g_mk4Arena = buf + 0x%xu; g_mk4ArenaSize = 0x%xu;\n' % (BASE, full) +
         '  %s();\n' % name +
-        '  fwrite(g_mk4Arena,1,g_mk4ArenaSize,stdout);\n  return 0;\n}\n')
+        '  fwrite(buf, 1, 0x%xu, stdout);\n  return 0;\n}\n' % full)
     with tempfile.TemporaryDirectory() as d:
         c = Path(d) / 'h.c'
         c.write_text(harness)
@@ -137,34 +154,32 @@ def verify(name, fn_va, gl_va, arena):
     if not t:
         return 'SKIP no-twin'
     body, _ = t
+    full = (BASE + len(arena) + 0xFFF) & ~0xFFF
+    init = bytearray(full)
+    init[BASE:BASE + len(arena)] = arena            # [0,BASE) stays zero
     uni, err = run_unicorn(fn_va[name], arena)
     if uni is None:
         return 'SKIP ' + err
-    out, err = run_native(name, body, gl_va)
+    out, err = run_native(name, body, gl_va, full)
     if out is None:
         return 'SKIP ' + err
-    # native delta vs initial arena
-    nat = {}
-    for off in range(0, min(len(out), len(arena)), 4):
-        if out[off:off + 4] != arena[off:off + 4]:
-            nat[off] = bytes(out[off:off + 4])
-    # normalize unicorn delta to 4-byte words that actually changed
-    uni_n = {}
-    for off, b in uni.items():
-        word_off = off & ~3
-        cur = bytearray(arena[word_off:word_off + 4])
-        cur[off - word_off:off - word_off + len(b)] = b
-        if bytes(cur) != arena[word_off:word_off + 4]:
-            uni_n[word_off] = bytes(cur)
-    if nat == uni_n:
+
+    def delta(buf):
+        d = {}
+        n = min(len(buf), full)
+        for off in range(0, n, 4):
+            if buf[off:off + 4] != init[off:off + 4]:
+                d[off] = bytes(buf[off:off + 4])
+        return d
+    u, nat = delta(uni), delta(out)
+    if u == nat:
         return 'VERIFIED (%d writes)' % len(nat)
-    only_u = set(uni_n) - set(nat)
-    only_n = set(nat) - set(uni_n)
-    diff = {o for o in set(uni_n) & set(nat) if uni_n[o] != nat[o]}
+    only_u = sorted(set(u) - set(nat))
+    only_n = sorted(set(nat) - set(u))
+    vdiff = sorted(o for o in set(u) & set(nat) if u[o] != nat[o])
     return 'MISMATCH uni_only=%s nat_only=%s val_diff=%s' % (
-        sorted(hex(o) for o in only_u)[:4],
-        sorted(hex(o) for o in only_n)[:4],
-        sorted(hex(o) for o in diff)[:4])
+        [hex(o) for o in only_u[:4]], [hex(o) for o in only_n[:4]],
+        [hex(o) for o in vdiff[:4]])
 
 
 def leaf_twins():
