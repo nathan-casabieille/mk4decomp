@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesPP.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -13,6 +14,25 @@ extern unsigned int g_currentNodeIdx;
  *   Then clears g_walkCallback and the indexed slot.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualScaledInitClear(void)
+
+{
+  int iVar1;
+  
+  g_currentNodeIdx = 0x14e868;
+  g_eventQueuePending = 0x14e946;
+  iVar1 = 0x14e868;
+  if (g_cj_0054205c != g_player1NodeIdx) {
+    g_currentNodeIdx = 0x14e946;
+    iVar1 = 0x14e946;
+  }
+  g_walkCallback = 0;
+  MK4_NODE_AT(undefined4, iVar1, 0) = 0;
+  return;
+}
+#else
 __declspec(naked) void DualScaledInitClear(void) {
     __asm {
         mov     edx, dword ptr [g_fightGroupHead]
@@ -35,3 +55,4 @@ __declspec(naked) void DualScaledInitClear(void) {
         ret
     }
 }
+#endif

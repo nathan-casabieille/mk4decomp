@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,24 @@ extern void ThreeChanPackClamp(void);
  * reversing the SIB index/value roles and replacing the orig's 3-byte base+disp8
  * stores with 7-byte SIB no-base stores. Register layout not coaxable from C.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualAxisScalePair(void)
+
+{
+  int iVar1;
+  
+  iVar1 = g_cj_0054205c;
+  MK4_NODE_AT(undefined4, g_cj_0054205c, 0x68) = g_walkCallback;
+  g_currentNodeFlags = Mul10Tail(0x2666,g_currentNodeFlags);
+  g_xformScratch2088 = Mul10Tail(0x2666,g_xformScratch2088);
+  MK4_NODE_AT(undefined4, iVar1, 0x6c) = g_currentNodeFlags;
+  MK4_NODE_AT(undefined4, iVar1, 0x74) = g_xformScratch2088;
+  ThreeChanPackClamp(0x23fb23);
+  CopyThreeFields(g_cj_0054205c);
+  return;
+}
+#else
 __declspec(naked) void DualAxisScalePair(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
@@ -158,3 +177,4 @@ __declspec(naked) void DualAxisScalePair(void) {
         ret
     }
 }
+#endif

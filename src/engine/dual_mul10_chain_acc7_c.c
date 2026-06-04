@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -130,6 +131,21 @@ extern unsigned int g_distRefZ;
  * ecx) then loads b into ecx via `mov ecx, [esi*4+0x5c]`. The index-equals-
  * destination SIB pattern cannot be coaxed from pure C.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualMul10ChainAcc7C(void)
+
+{
+  g_chainAccumCur = g_distRefX;
+  g_eventQueueNotMask = g_distRefZ;
+  g_eventQueueChild = MK4_NODE_AT(int, g_cj_0054205c, 0x54) - g_distRefX;
+  g_currentNodeFlags = MK4_NODE_AT(int, g_cj_0054205c, 0x5c) - g_distRefZ;
+  g_eventQueueChild = Mul10Tail(g_eventQueueChild,g_eventQueueChild);
+  g_currentNodeFlags = Mul10Tail(g_currentNodeFlags,g_currentNodeFlags);
+  g_eventQueueNotMask = g_currentNodeFlags + g_eventQueueChild;
+  return;
+}
+#else
 __declspec(naked) void DualMul10ChainAcc7C(void) {
     __asm {
         mov     ecx, dword ptr [g_distRefX]
@@ -163,3 +179,4 @@ __declspec(naked) void DualMul10ChainAcc7C(void) {
         ret
     }
 }
+#endif

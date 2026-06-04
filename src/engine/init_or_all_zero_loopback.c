@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesPP.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -15,6 +16,22 @@ extern unsigned int g_currentNodeIdx;
  *   else loop back to entry.
  */
 extern void NodeApplyTransform_A(void);
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InitOrAllZeroLoopback(void)
+
+{
+  undefined4 *puVar1;
+  
+  puVar1 = (undefined4 *)(g_currentNodeIdx * 4);
+  *puVar1 = 0x1000;
+  puVar1[1] = 0;
+  puVar1[2] = 0x1000;
+  puVar1[3] = 0;
+  *(undefined2 *)(puVar1 + 4) = 0x1000;
+  return;
+}
+#else
 __declspec(naked) void InitOrAllZeroLoopback(void) {
     __asm {
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -48,3 +65,4 @@ __declspec(naked) void InitOrAllZeroLoopback(void) {
         jmp     NodeApplyTransform_A
     }
 }
+#endif

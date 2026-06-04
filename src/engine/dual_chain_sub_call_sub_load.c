@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,23 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_eventQueueSeed;
 extern void Atan2QuadrantLookup(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualChainSubCallSubLoad(void)
+
+{
+  g_eventQueuePending = g_eventQueueSeed;
+  g_walkCallback = MK4_NODE_AT(int, g_eventQueueSeed, 0x54);
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueueSeed, 0x5c);
+  g_eventQueueWorkType = MK4_NODE_AT(int, g_currentNodeIdx, 0x54) - g_walkCallback;
+  g_chainAccumCur = MK4_NODE_AT(int, g_currentNodeIdx, 0x5c) - g_eventQueueCurrent;
+  Atan2QuadrantLookup();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 0x1921f - g_walkCallback;
+  }
+  return;
+}
+#else
 __declspec(naked) void DualChainSubCallSubLoad(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueSeed]
@@ -153,3 +171,4 @@ __declspec(naked) void DualChainSubCallSubLoad(void) {
         ret
     }
 }
+#endif

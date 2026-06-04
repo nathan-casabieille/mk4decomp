@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,27 @@ extern unsigned int g_fightAxisPosY;
  *          [eax+0x6c] = ecx; pop esi; ret.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CondPickDualStore(void)
+
+{
+  int iVar1;
+  
+  g_eventQueueCurrent = g_fightAxisPosY;
+  g_walkCallback = g_fightAxisPosX;
+  iVar1 = g_baseSel * 4;
+  if (g_cj_0054205c != g_player1NodeIdx) {
+    g_walkCallback = g_fightAxisNegX;
+    if (g_cj_0054205c != g_player1NodeIdx) {
+      g_eventQueueCurrent = g_fightAxisNegY;
+    }
+  }
+  *(undefined4 *)(iVar1 + 0x68) = g_walkCallback;
+  *(undefined4 *)(iVar1 + 0x6c) = g_eventQueueCurrent;
+  return;
+}
+#else
 __declspec(naked) void CondPickDualStore(void) {
     __asm {
         mov     edx, dword ptr [g_fightAxisPosY]
@@ -148,3 +170,4 @@ __declspec(naked) void CondPickDualStore(void) {
         ret
     }
 }
+#endif

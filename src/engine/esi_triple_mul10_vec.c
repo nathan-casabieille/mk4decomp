@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,27 @@ extern unsigned int g_fightAxisPosY;
  * [eax*4+0x78] (7b SIB) with eax=si before eax is overwritten with v. MSVC's
  * choice to keep the raw index vs. the pre-scaled pointer is not coaxable.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EsiTripleMul10Vec(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  iVar1 = g_currentNodeIdx * 4;
+  g_walkCallback = MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x78);
+  uVar2 = Mul10Tail(g_eventQueueCurrent,g_walkCallback);
+  *(undefined4 *)(iVar1 + 0x78) = uVar2;
+  g_walkCallback = *(undefined4 *)(iVar1 + 0x7c);
+  uVar2 = Mul10Tail(g_eventQueueCurrent,g_walkCallback);
+  *(undefined4 *)(iVar1 + 0x7c) = uVar2;
+  g_walkCallback = *(undefined4 *)(iVar1 + 0x80);
+  g_walkCallback = Mul10Tail(g_eventQueueCurrent,g_walkCallback);
+  *(undefined4 *)(iVar1 + 0x80) = g_walkCallback;
+  return;
+}
+#else
 __declspec(naked) void EsiTripleMul10Vec(void) {
     __asm {
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -153,3 +175,4 @@ __declspec(naked) void EsiTripleMul10Vec(void) {
         ret
     }
 }
+#endif

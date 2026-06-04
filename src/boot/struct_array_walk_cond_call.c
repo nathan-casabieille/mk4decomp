@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,28 @@ extern void NodeUnlink(void);
 
 extern unsigned int g_arr_41fc50_disp_0c;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StructArrayWalkCondCall(void)
+
+{
+  undefined4 *puVar1;
+  
+  g_walkCallback = g_walkCallback & g_eventQueueCurrent;
+  puVar1 = &g_nodeSlotsArea;
+  do {
+    if (puVar1[0x36] != 0) {
+      g_currentNodeIdx = (int)puVar1 >> 2;
+      g_eventQueueWorkType = MK4_NODE_AT(uint, g_currentNodeIdx, 0xc) & g_eventQueueCurrent;
+      if (g_eventQueueWorkType == g_walkCallback) {
+        NodeUnlink(puVar1);
+      }
+    }
+    puVar1 = puVar1 + 0x3a;
+  } while ((int)puVar1 < 0x541d68);
+  return;
+}
+#else
 __declspec(naked) void StructArrayWalkCondCall(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueCurrent]
@@ -151,3 +174,4 @@ loop41fc50:
         ret
     }
 }
+#endif

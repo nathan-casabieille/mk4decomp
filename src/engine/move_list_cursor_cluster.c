@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -111,6 +112,20 @@ extern unsigned int g_fightAxisPosY;
 extern void PendingMatch_00459510(void);
 extern void ScaledIterStep_0045c020(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MoveListCursorCluster(void)
+
+{
+  ScaledIterStep_0045c020();
+  if (g_framePauseFlag == 0) {
+    MK4_NODE_AT(undefined4, g_baseSel, 0x48) = g_walkCallback;
+    PendingMatch_00459510();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void MoveListCursorCluster(void)
 {
     __asm {
@@ -287,3 +302,4 @@ __declspec(naked) void MoveListCursorCluster(void)
         ret
     }
 }
+#endif

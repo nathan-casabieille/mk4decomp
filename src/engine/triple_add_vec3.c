@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesX.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
@@ -18,6 +19,24 @@ extern void Mul10Tail(void);
  * Orig uses edx (B ptr) as accumulator instead. Register choice for
  * commutative addition cannot be controlled from C source.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleAddVec3(void)
+
+{
+  int *piVar1;
+  int *piVar2;
+  int *piVar3;
+  
+  piVar2 = (int *)(g_eventQueuePending * 4);
+  piVar3 = (int *)(g_dualC * 4);
+  piVar1 = (int *)(g_currentNodeIdx * 4);
+  *piVar1 = *piVar3 + *piVar2;
+  piVar1[1] = piVar2[1] + piVar3[1];
+  piVar1[2] = piVar3[2] + piVar2[2];
+  return;
+}
+#else
 __declspec(naked) void TripleAddVec3(void) {
     __asm {
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -45,3 +64,4 @@ __declspec(naked) void TripleAddVec3(void) {
         ret
     }
 }
+#endif

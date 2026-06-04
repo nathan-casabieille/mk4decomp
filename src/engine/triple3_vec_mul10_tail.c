@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,30 @@ extern unsigned int g_fightAxisPosY;
 extern void DivLongPushCall(void);
 extern void TripleMul10VecJmpFpu(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Triple3VecMul10Tail(void)
+
+{
+  undefined4 *puVar1;
+  undefined4 uVar2;
+  
+  TripleMul10VecJmpFpu();
+  if (g_framePauseFlag == 0) {
+    DivLongPushCall();
+    if (g_framePauseFlag == 0) {
+      puVar1 = (undefined4 *)(g_currentNodeIdx * 4);
+      uVar2 = Mul10Tail(MK4_NODE_AT(undefined4, g_currentNodeIdx, 0),g_walkCallback);
+      *puVar1 = uVar2;
+      uVar2 = Mul10Tail(puVar1[1],g_walkCallback);
+      puVar1[1] = uVar2;
+      uVar2 = Mul10Tail(puVar1[2],g_walkCallback);
+      puVar1[2] = uVar2;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Triple3VecMul10Tail(void) {
     __asm {
         call    TripleMul10VecJmpFpu
@@ -162,3 +187,4 @@ __declspec(naked) void Triple3VecMul10Tail(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,23 @@ extern unsigned int g_fightAxisPosY;
  * latency. Push placement is not controllable from C source.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void LinearSearchByEsi(void)
+
+{
+  g_eventQueueWorkType = 0;
+  g_currentNodeIdx = 0x13a1c9;
+  g_eventQueueCurrent = g_dispatchSave1263;
+  while (g_eventQueueCurrent != g_walkCallback) {
+    g_eventQueueWorkType = g_eventQueueWorkType + 1;
+    g_currentNodeIdx = g_currentNodeIdx + 1;
+    g_eventQueueCurrent = *(int *)(g_currentNodeIdx * 4 + -4);
+  }
+  g_walkCallback = g_eventQueueWorkType;
+  return;
+}
+#else
 __declspec(naked) void LinearSearchByEsi(void) {
     __asm {
         mov     eax, 0x004e8720
@@ -155,3 +173,4 @@ L_lsbe_done:
         ret
     }
 }
+#endif

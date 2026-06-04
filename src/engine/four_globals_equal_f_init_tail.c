@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,26 @@ extern unsigned int g_counter_0053a51c;
 extern void ScenePostInitSequencer(void);
 extern void TablePushAccumTailJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FourGlobalsEqualFInitTail(void)
+
+{
+  if ((((g_dlNalt1 == 0xf) || (g_dlNalt2 == 0xf)) || (g_dlNalt3 == 0xf)) ||
+     (g_dlNalt4 == 0xf)) {
+    g_counter_0053a51c = 0;
+    g_walkCallback = 0;
+    TablePushAccumTailJmp();
+  }
+  g_currentNodeIdx = g_counter_0053a51c + 0x137f52;
+  g_rangeBase = MK4_NODE_AT(undefined4, g_currentNodeIdx, 0);
+  g_eventQueueCurrent = g_rangeBase;
+  g_rangeSqLimit = Mul10Tail(g_rangeBase,g_rangeBase);
+  g_eventQueueCurrent = g_rangeSqLimit;
+  ScenePostInitSequencer();
+  return;
+}
+#else
 __declspec(naked) void FourGlobalsEqualFInitTail(void) {
     __asm {
         mov     ecx, dword ptr [g_dlNalt1]
@@ -163,3 +184,4 @@ __declspec(naked) void FourGlobalsEqualFInitTail(void) {
         jmp     ScenePostInitSequencer
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -128,6 +129,36 @@ extern u32 g_texCount[];
 extern void Helper_GeoLoadPost(void);
 extern void Mem_Free(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GeoLoadFixupLoop(void)
+
+{
+  int iVar1;
+  int iVar2;
+  ushort *puVar3;
+  uint uVar4;
+  
+  iVar2 = g_currentNodeIdx;
+  iVar1 = MK4_NODE_AT(int, g_currentNodeIdx, 4);
+  if (iVar1 != 0) {
+    puVar3 = (ushort *)(*(int *)(iVar1 + 4) + 4 + iVar1);
+    for (uVar4 = (uint)*puVar3; uVar4 != 0; uVar4 = uVar4 - 1) {
+      puVar3 = puVar3 + 2;
+      if ((short)*puVar3 != -1) {
+        (&g_dispatchSave1568)[(short)*puVar3] = 0;
+      }
+    }
+    iVar1 = MK4_NODE_AT(int, iVar2, 0);
+    (&g_dispatchSave1578)[*(ushort *)(iVar1 + 6)] = 0;
+    *(undefined4 *)(&g_texCount + (uint)*(ushort *)(iVar1 + 6) * 4) = 0;
+    Mem_Free(MK4_NODE_AT(undefined4, iVar2, 4));
+    g_curTexSlot = 0;
+    Helper_GeoLoadPost();
+  }
+  return;
+}
+#else
 __declspec(naked) void GeoLoadFixupLoop(void) {
     __asm {
         push    esi
@@ -174,3 +205,4 @@ done:
         ret
     }
 }
+#endif

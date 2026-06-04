@@ -24,6 +24,8 @@ Usage:
 """
 import json
 import re
+import subprocess
+import tempfile
 import sys
 from pathlib import Path
 
@@ -48,6 +50,30 @@ def has_bail(c):
     if UNMAPPED.search(c):
         return True
     return any(re.search(r'\b%s' % re.escape(t), c) for t in BAIL_TOKENS)
+
+
+CC = 'i686-w64-mingw32-gcc'
+
+
+def compile_ok(twin, name):
+    """Isolation syntax-check: a clean twin must compile with permissive
+    externs for the globals/functions it references. Guards against shapes
+    the token bail misses (floats, local arrays, strings, ...)."""
+    globs = sorted(set(re.findall(r'\bg_[A-Za-z]\w*', twin)))
+    calls = [f for f in sorted(set(re.findall(r'\b([A-Z]\w+)\s*\(', twin)) - {name})
+             if not f.startswith('MK4_')]
+    h = ('#define NON_MATCHING 1\n#include "portable/ghidra_types.h"\n'
+         '#include "portable/mem_model.h"\n')
+    h += ''.join('extern unsigned int %s;\n' % g for g in globs)
+    h += ''.join('extern int %s();\n' % f for f in calls)
+    h += twin + '\n'
+    with tempfile.NamedTemporaryFile('w', suffix='.c', delete=False) as t:
+        t.write(h)
+        tn = t.name
+    r = subprocess.run([CC, '-std=gnu89', '-DNON_MATCHING',
+                        '-I' + str(ROOT / 'include'), '-w', '-fsyntax-only', tn],
+                       capture_output=True, text=True)
+    return r.returncode == 0
 
 
 def fn_body_span(src, brace_idx):
@@ -81,6 +107,9 @@ def main():
             skipped += 1
             continue
         if has_bail(c):
+            skipped += 1
+            continue
+        if not compile_ok(c.strip(), name):
             skipped += 1
             continue
         by_file.setdefault(srcfile, []).append((name, c.strip()))

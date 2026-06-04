@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,17 @@ extern void GuardedSeq_CjTableThresholdDispatch_then_RoundTextMenuEventCluster(v
 extern unsigned int g_eventQueueSeed;
 extern void CmpP1DualInitStore_00482ab0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualEntryStateLoadCascade(void)
+
+{
+  g_eventQueueChild = 0x4ccc;
+  g_cj_00542058 = g_eventQueueSeed;
+  DualHelperMul10TailPair();
+  return;
+}
+#else
 __declspec(naked) void DualEntryStateLoadCascade(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueSeed]
@@ -178,3 +190,4 @@ __declspec(naked) void DualEntryStateLoadCascade(void) {
         ret
     }
 }
+#endif

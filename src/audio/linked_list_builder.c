@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,42 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void LinkedListBuilder(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  
+  iVar3 = g_dualD;
+  iVar2 = g_dualC;
+  iVar1 = g_eventQueuePending;
+  MK4_NODE_AT(undefined4, g_dualD, 0) = 0;
+  MK4_NODE_AT(int, iVar3, 4) = g_eventQueuePending;
+  MK4_NODE_AT(int, iVar3, 8) = g_cj_00542054;
+  iVar4 = g_currentNodeIdx;
+  if (g_cj_00542054 != 0) {
+    MK4_NODE_AT(int, iVar3, 0) = g_currentNodeIdx;
+    *(int *)((iVar1 + 1 + iVar4) * 4) = iVar3;
+    g_xformLoopCounter = MK4_NODE_AT(int, iVar3, 8);
+    if (1 < g_xformLoopCounter) {
+      for (g_xformLoopCounter = g_xformLoopCounter + -2; -1 < g_xformLoopCounter; g_xformLoopCounter = g_xformLoopCounter + -1) {
+        iVar5 = iVar4 * 4;
+        iVar4 = iVar4 + iVar2;
+        *(int *)(iVar5 + 4 + iVar1 * 4) = iVar3;
+        *(int *)(iVar5 + iVar1 * 4) = iVar4;
+      }
+    }
+    *(undefined4 *)((iVar1 + iVar4) * 4) = 0;
+    *(int *)((iVar1 + 1 + iVar4) * 4) = iVar3;
+  }
+  return;
+}
+#else
 __declspec(naked) void LinkedListBuilder(void) {
     __asm {
         push    ebx
@@ -178,3 +215,4 @@ __declspec(naked) void LinkedListBuilder(void) {
         ret
     }
 }
+#endif

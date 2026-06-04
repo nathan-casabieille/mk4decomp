@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -127,6 +128,35 @@ extern void MStackPush2ChainPrepend(void);
  *   chain[g_scaledInit].slot38 = eax; jmp F2.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ChainWalkInstall(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  g_eventQueuePending = 0x142d2d;
+  FramePauseScaledStore();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  g_eventQueuePending = MK4_NODE_AT(int, g_baseSel, 100);
+  for (iVar1 = MK4_NODE_AT(int, g_eventQueuePending, 0); iVar1 != 0; iVar1 = MK4_NODE_AT(int, iVar1, 0)) {
+    g_eventQueuePending = iVar1;
+  }
+  uVar2 = 0xffffb334;
+  g_eventQueueCurrent = 0xffffb334;
+  g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0x1c);
+  if (g_walkCallback == 4) {
+    uVar2 = 0xffff6667;
+    g_eventQueueCurrent = 0xffff6667;
+  }
+  MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x38) = uVar2;
+  MStackPush2ChainPrepend();
+  return;
+}
+#else
 __declspec(naked) void ChainWalkInstall(void) {
     __asm {
         mov     eax, offset g_framePauseArrBase
@@ -168,3 +198,4 @@ walkNext:
         ret
     }
 }
+#endif

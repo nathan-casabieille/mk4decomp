@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,32 @@ extern void InstallSelfTableWalk(void);
 extern void SixCallSeqPushImm(void);
 extern void TableWalkBoundedCmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioTriEntryFlagPairInit(void)
+
+{
+  if (g_gtModeFlag == '\x01') {
+    g_currentNodeIdx = 0x14e902;
+    g_eventQueuePending = 0x14e8f8;
+  }
+  else {
+    g_currentNodeIdx = 0x14dfa2;
+    g_eventQueuePending = 0x14e9c0;
+  }
+  DualScaledStoreConst();
+  ClearTwoCallSetStore();
+  g_dlMode = 0;
+  SixCallSeqPushImm();
+  g_eventQueueWorkType = 0;
+  Push16Call();
+  if (g_framePauseFlag == 0) {
+    InstallSelfTableWalk();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void AudioTriEntryFlagPairInit(void)
 {
     __asm
@@ -189,3 +216,4 @@ __declspec(naked) void AudioTriEntryFlagPairInit(void)
         jmp     AudioTriEntryFlagPairInit
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -144,6 +145,65 @@ extern void GuardedPackedSlotInit(void);
 extern void ScaledChainJmp_00429470(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StreamFlagPackedSelectChain(void)
+
+{
+  undefined *puVar1;
+  
+  g_walkCallback = 0x52;
+  TableLookupCall_g_eventTbl_112();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 10;
+    ScaledIndexConditionalAdd();
+    if (g_framePauseFlag == 0) {
+      if ((g_baseSel == g_dualB_00538038) && (g_mul10SumState != 0)) {
+        puVar1 = &g_mul10TableBase;
+        if (g_mul10SumState != 1) {
+          puVar1 = &g_dispatchTab;
+        }
+        g_dualD = (uint)puVar1 >> 2;
+        g_mul10SumState = 0;
+      }
+      else if ((g_baseSel == g_dualB_0053803c) && (g_mul10SumState2 != 0)) {
+        puVar1 = &g_mul10TableBase;
+        if (g_mul10SumState2 != 1) {
+          puVar1 = &g_dispatchTab;
+        }
+        g_dualD = (uint)puVar1 >> 2;
+        g_mul10SumState2 = 0;
+      }
+      else {
+        g_dualC = 0x13b010;
+        g_dualD = 0x13b014;
+        g_eventQueueChild = 0;
+        GuardedDualConst2AndToggle();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        if ((g_xformDirtyFlags & 1) != 0) {
+          g_eventQueueChild = 1;
+          g_dualD = g_dualC;
+        }
+      }
+      g_currentNodeIdx = g_dualD;
+      Mul10SumStoreNegCommit();
+      if ((((g_framePauseFlag == 0) && (GuardedPackedSlotInit(&g_dispatchVar37), g_framePauseFlag == 0)) &&
+          (MStackPush3CmpCall(), g_framePauseFlag == 0)) &&
+         (((g_xformDirtyFlags & 1) == 0 || (PendingMatch_QuadCallPhase2(), g_framePauseFlag == 0)))) {
+        if (g_eventQueueChild != 0) {
+          ScaledClearJmp_EsiInstallBitCallChain();
+          return;
+        }
+        ScaledChainJmp_00429470();
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void StreamFlagPackedSelectChain(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x52
@@ -244,3 +304,4 @@ __declspec(naked) void StreamFlagPackedSelectChain(void) {
         ret
     }
 }
+#endif

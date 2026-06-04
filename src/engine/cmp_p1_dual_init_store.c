@@ -22,6 +22,7 @@
  *   ret
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -37,6 +38,24 @@ extern unsigned int g_phaseThunkArr;
  *   allocation order is address-dependent, not controllable from C source.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CmpP1DualInitStore_00433d30(void)
+
+{
+  int iVar1;
+  
+  g_currentNodeIdx = 0x14e868;
+  g_eventQueuePending = 0x14e946;
+  iVar1 = 0x14e868;
+  if (g_cj_0054205c != g_player1NodeIdx) {
+    g_currentNodeIdx = 0x14e946;
+    iVar1 = 0x14e946;
+  }
+  MK4_NODE_AT(undefined4, iVar1, 0) = g_walkCallback;
+  return;
+}
+#else
 __declspec(naked) void CmpP1DualInitStore_00433d30(void) {
     __asm {
         mov     edx, dword ptr [g_fightGroupHead]
@@ -59,11 +78,30 @@ __declspec(naked) void CmpP1DualInitStore_00433d30(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x00482ab0
  *   NON-COAXABLE: same pattern - MSVC assigns eax to higher-address symbol
  *   (0x0053a474 > 0x0053a3e4), but orig has lower in eax. Same blocker.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CmpP1DualInitStore_00482ab0(void)
+
+{
+  int iVar1;
+  
+  g_currentNodeIdx = 0x14e8f9;
+  g_eventQueuePending = 0x14e91d;
+  iVar1 = 0x14e8f9;
+  if (g_cj_0054205c != g_player1NodeIdx) {
+    g_currentNodeIdx = 0x14e91d;
+    iVar1 = 0x14e91d;
+  }
+  MK4_NODE_AT(undefined4, iVar1, 0) = g_walkCallback;
+  return;
+}
+#else
 __declspec(naked) void CmpP1DualInitStore_00482ab0(void) {
     __asm {
         mov     edx, dword ptr [g_fightGroupHead]
@@ -86,3 +124,4 @@ __declspec(naked) void CmpP1DualInitStore_00482ab0(void) {
         ret
     }
 }
+#endif

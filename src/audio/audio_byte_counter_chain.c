@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -134,6 +135,47 @@ extern void BootInitGuardedCallChain(void);
 extern void FiveTableWalkInit(void);
 extern void TwoStageAudioInit(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioByteCounterChain(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  iVar2 = g_audioBankSel;
+  if (iVar1 == 0) {
+    if (g_audioBankSel == 1) {
+      *(int *)(&g_audioBankCounterArr + g_dlNalt1 * 4) = *(int *)(&g_audioBankCounterArr + g_dlNalt1 * 4) + 1;
+    }
+    if (iVar2 == 2) {
+      *(int *)(&g_audioBankCounterArr + g_dlNalt2 * 4) = *(int *)(&g_audioBankCounterArr + g_dlNalt2 * 4) + 1;
+    }
+  }
+  BootInitGuardedCallChain();
+  if (g_framePauseFlag == 0) {
+    FiveTableWalkInit();
+    if (g_framePauseFlag == 0) {
+      g_audioPathFlag = 1;
+      g_audioBank2Base = g_audioStateByte840 + '\x01';
+      g_audioModeBankFlag = 1;
+      if ((g_audioBank2Base == '\x0f') && (g_audioStateByte83c = g_audioStateByte83c + '\x01', g_audioStateByte83c == '\x0f')
+         ) {
+        g_audioStateByte83c = '\0';
+      }
+      g_audioByteCounterChainSt = g_audioStateByte83c;
+      g_byteIndexArr = 0;
+      g_byteFlagH = 0;
+      g_audioStateByte840 = g_audioBank2Base;
+      AudioMode2BankSetup(&g_audioBank2Base,&g_audioByteCounterChainSt);
+      TwoStageAudioInit();
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void AudioByteCounterChain(void)
 {
     __asm
@@ -191,3 +233,4 @@ __declspec(naked) void AudioByteCounterChain(void)
         ret
     }
 }
+#endif

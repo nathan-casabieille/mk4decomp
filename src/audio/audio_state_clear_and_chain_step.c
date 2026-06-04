@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,48 @@ extern void CopyGlobal(void);
 extern unsigned int g_eventQueueSeed;
 extern void TableWalkBoundedCmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FiveTableWalkInit(void)
+
+{
+  int iVar1;
+  
+  TableWalkBoundedCmp(2);
+  TableWalkBoundedCmp(3);
+  TableWalkBoundedCmp(4);
+  TableWalkBoundedCmp(5);
+  TableWalkBoundedCmp(7);
+  BootInitGuardedCallChain();
+  if (g_framePauseFlag == 0) {
+    g_currentNodeIdx = 0x141b08;
+    LoadGeoAsset_Default();
+    if (g_framePauseFlag == 0) {
+      g_currentNodeIdx = 0x141b08;
+      LoadGeoAsset_Default();
+      if (g_framePauseFlag == 0) {
+        AudioStateClearAndChainStep();
+        if (g_framePauseFlag == 0) {
+          g_walkCallback = 0;
+          CopyGlobal();
+          if (g_framePauseFlag == 0) {
+            g_currentNodeIdx = g_eventQueueSeed;
+            iVar1 = g_eventQueueSeed * 4;
+            *(undefined4 *)(iVar1 + 0x60) = 0;
+            *(undefined4 *)(iVar1 + 100) = 0;
+            *(undefined4 *)(iVar1 + 0x68) = 0;
+            *(undefined4 *)(iVar1 + 0x54) = 0;
+            *(undefined4 *)(iVar1 + 0x58) = 0;
+            g_walkCallback = 0xfff88000;
+            *(undefined4 *)(iVar1 + 0x5c) = 0xfff88000;
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void FiveTableWalkInit(void) {
     __asm {
         push    esi
@@ -187,3 +230,4 @@ __declspec(naked) void FiveTableWalkInit(void) {
         ret
     }
 }
+#endif

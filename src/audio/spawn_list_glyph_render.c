@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,47 @@ extern void MStackPush3HelperCondToggle(void);
 extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void SplitInt32(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SpawnListGlyphRender(void)
+
+{
+  uint *puVar1;
+  int iVar2;
+  int iVar3;
+  
+  BootPhaseGateBracketedInit();
+  iVar2 = g_currentNodeIdx;
+  g_currentNodeIdx = iVar2;
+  if (((byte)g_xformDirtyFlags & 4) == 0) {
+    puVar1 = (uint *)(g_currentNodeIdx * 4 + 0x34);
+    *puVar1 = *puVar1 | 0x20000;
+    MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
+    if (g_framePauseFlag == 0) {
+      MStackBracket5_FieldClear_StateAdvance();
+      iVar3 = g_currentNodeIdx;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x24) = 0;
+      MK4_NODE_AT(int, iVar2, 0x18) = iVar3;
+      MK4_NODE_AT(int, iVar3, 0x18) = iVar2;
+      g_walkCallback = 4;
+      MStackPush3HelperCondToggle();
+      g_eventQueuePending = g_currentNodeIdx;
+      g_eventQueueCurrent = -0x1999;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0xc) = 0x1455e9;
+      MK4_NODE_AT(int, g_currentNodeIdx, 4) = g_eventQueueCurrent;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 8) = 0;
+      for (g_currentNodeIdx = MK4_NODE_AT(int, g_currentNodeIdx, 0); g_eventQueueCurrent = g_eventQueueCurrent + 0xf5c,
+          g_currentNodeIdx != 0; g_currentNodeIdx = MK4_NODE_AT(int, g_currentNodeIdx, 0)) {
+        MK4_NODE_AT(undefined4, g_currentNodeIdx, 0xc) = 0x1455e9;
+        MK4_NODE_AT(int, g_currentNodeIdx, 4) = g_eventQueueCurrent;
+        MK4_NODE_AT(undefined4, g_currentNodeIdx, 8) = 0;
+      }
+      g_currentNodeIdx = iVar2;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void SpawnListGlyphRender(void)
 {
     __asm {
@@ -299,3 +341,4 @@ __declspec(naked) void SpawnListGlyphRender(void)
         ret
     }
 }
+#endif

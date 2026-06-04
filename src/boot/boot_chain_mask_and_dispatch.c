@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,32 @@ extern void DirtyDoubleDeref(void);
 extern void MStackBracket2_TreeWalkRecursive(void);
 extern void MStackInitCallToggle(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootChainMaskAndDispatch(void)
+
+{
+  g_walkCallback = 2;
+  DirtyDoubleDeref();
+  if ((g_framePauseFlag == 0) && (g_currentNodeIdx != 0)) {
+    MK4_NODE_AT(uint, g_currentNodeIdx, 0x20) = MK4_NODE_AT(uint, g_currentNodeIdx, 0x20) & 0xfffffffb;
+    g_walkCallback = 0xffffffec;
+    MStackInitCallToggle();
+    if (g_framePauseFlag == 0) {
+      if ((((byte)g_xformDirtyFlags & 4) == 0) && (MStackBracket2_TreeWalkRecursive(), g_framePauseFlag != 0)) {
+        return;
+      }
+      g_walkCallback = 0xffffffea;
+      MStackInitCallToggle();
+      if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+        MStackBracket2_TreeWalkRecursive();
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void BootChainMaskAndDispatch(void)
 {
     __asm
@@ -194,3 +221,4 @@ __declspec(naked) void BootChainMaskAndDispatch(void)
         ret
     }
 }
+#endif

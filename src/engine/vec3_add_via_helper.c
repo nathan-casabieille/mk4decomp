@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,30 @@ extern unsigned int g_fightAxisPosY;
  * (7b SIB) for all accesses. Tested with #pragma optimize("a"), `register` kwd,
  * /G6 (Pentium Pro target), /Ox - all produce 67-71 diffs.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Vec3AddViaHelper(void)
+
+{
+  int *piVar1;
+  int *piVar2;
+  int *piVar3;
+  
+  piVar1 = (int *)(g_eventQueuePending * 4);
+  piVar2 = (int *)(g_dualC * 4);
+  piVar3 = (int *)(g_currentNodeIdx * 4);
+  g_walkCallback = *piVar2 + *piVar1;
+  BootMod6487eClampAndChainMul10();
+  *piVar3 = g_walkCallback;
+  g_walkCallback = piVar1[1] + piVar2[1];
+  BootMod6487eClampAndChainMul10();
+  piVar3[1] = g_walkCallback;
+  g_walkCallback = piVar2[2] + piVar1[2];
+  BootMod6487eClampAndChainMul10();
+  piVar3[2] = g_walkCallback;
+  return;
+}
+#else
 __declspec(naked) void Vec3AddViaHelper(void) {
     __asm {
         mov     ecx, dword ptr [g_xformEntityIdx]
@@ -159,3 +184,4 @@ __declspec(naked) void Vec3AddViaHelper(void) {
         ret
     }
 }
+#endif

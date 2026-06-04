@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -149,6 +150,36 @@ extern void MStackPushSet0004(void);
 extern void RoundCleanupCluster_TableLookupCall_g_table(void);
 extern void TableLookupCall_g_eventTbl_50(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PollThenInit(void)
+
+{
+  SaveCallRestore(0x22);
+  SaveCallRestoreOrXor(0x22);
+  while (((byte)g_xformDirtyFlags & 4) == 0) {
+    SaveCallRestore(0x22);
+    SaveCallRestoreOrXor(0x22);
+  }
+  g_walkCallback = g_gameCountdown;
+  if (g_gameCountdown < 0) {
+    g_walkCallback = 0;
+  }
+  StoreIncrMStackPush6();
+  if (g_framePauseFlag == 0) {
+    g_eventQueueWorkType = 0x22;
+    g_eventQueueCurrent = 2;
+    g_chainAccumCur = 0;
+    g_eventQueueNotMask = 0xff960000;
+    g_currentNodeFlags = 2;
+    DispatcherComplex181_Push70CallScaleArith();
+    if (g_framePauseFlag == 0) {
+      RoundCleanupCluster_Ten404c40_404bd0();
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void PollThenInit(void) {
     __asm {
         push    ebx
@@ -203,6 +234,7 @@ loopPoll:
         ret
     }
 }
+#endif
 
 
 __declspec(naked) void RoundCleanupCluster_TableLookupCall_g_table(void)

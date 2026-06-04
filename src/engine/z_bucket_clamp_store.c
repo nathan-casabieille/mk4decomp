@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,22 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dest_0053a6e4;
 extern unsigned int g_eq;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ZBucketClampStore(void)
+
+{
+  g_walkCallback = (g_currentNodeFlags & 0xf00000) + 0x100000;
+  g_eventQueueCurrent = 0xf00000;
+  g_eq = (uint)(g_dest_0053a6e4 <= (int)g_walkCallback);
+  if (g_eq != 0) {
+    g_walkCallback = 0;
+  }
+  g_currentNodeFlags = g_currentNodeFlags & 0xff0fffff | g_walkCallback;
+  MK4_NODE_AT(uint, g_currentNodeIdx, 0x20) = g_currentNodeFlags;
+  return;
+}
+#else
 __declspec(naked) void ZBucketClampStore(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeFlags]
@@ -146,3 +163,4 @@ keep:
         ret
     }
 }
+#endif

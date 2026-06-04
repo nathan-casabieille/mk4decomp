@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,100 @@ extern unsigned int g_mul10TransformVar;
 extern void QuadInterpolator(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PoseTreeBlendWalker(void)
+
+{
+  int iVar1;
+  int *piVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  
+  MStackPush8();
+  iVar1 = g_eventQueuePending;
+  iVar4 = g_currentNodeIdx;
+  iVar5 = g_savedNode;
+  iVar6 = g_mul10TransformVar;
+  if (g_framePauseFlag == 0) {
+    while (g_dualD = iVar6, g_dualC = iVar5, g_cj_00542054 = iVar4, g_cj_00542058 = iVar1,
+          g_cj_00542054 != 0) {
+      iVar1 = g_cj_00542058 * 4;
+      piVar2 = (int *)(g_dualC * 4);
+      piVar3 = (int *)(g_dualD * 4);
+      g_walkCallback = *(int *)(iVar1 + 0x3c);
+      if ((g_walkCallback != 0) && (StoreDoubleNegPauseSubStore(), g_framePauseFlag != 0)) {
+        return;
+      }
+      *piVar2 = g_walkCallback + *(int *)(iVar1 + 0x30);
+      g_walkCallback = *(int *)(iVar1 + 0x40);
+      if ((g_walkCallback != 0) && (StoreDoubleNegPauseSubStore(), g_framePauseFlag != 0)) {
+        return;
+      }
+      piVar2[1] = g_walkCallback + *(int *)(iVar1 + 0x34);
+      g_walkCallback = *(int *)(iVar1 + 0x44);
+      if ((g_walkCallback != 0) && (StoreDoubleNegPauseSubStore(), g_framePauseFlag != 0)) {
+        return;
+      }
+      piVar2[2] = g_walkCallback + *(int *)(iVar1 + 0x38);
+      g_walkCallback = *(int *)(iVar1 + 0x24);
+      if ((g_walkCallback != 0) && (StoreDoubleNegPauseSubStore(), g_framePauseFlag != 0)) {
+        return;
+      }
+      g_walkCallback = g_walkCallback + *(int *)(iVar1 + 0x18);
+      BootMod6487eClampAndChainMul10();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      *piVar3 = g_walkCallback;
+      g_walkCallback = *(int *)(iVar1 + 0x28);
+      if ((g_walkCallback != 0) && (StoreDoubleNegPauseSubStore(), g_framePauseFlag != 0)) {
+        return;
+      }
+      g_walkCallback = g_walkCallback + *(int *)(iVar1 + 0x1c);
+      BootMod6487eClampAndChainMul10();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      piVar3[1] = g_walkCallback;
+      g_walkCallback = *(int *)(iVar1 + 0x2c);
+      if ((g_walkCallback != 0) && (StoreDoubleNegPauseSubStore(), g_framePauseFlag != 0)) {
+        return;
+      }
+      g_walkCallback = g_walkCallback + *(int *)(iVar1 + 0x20);
+      BootMod6487eClampAndChainMul10();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      piVar3[2] = g_walkCallback;
+      g_currentNodeIdx = g_dispatchSave6;
+      g_eventQueuePending = g_dualD;
+      Mul10HeavyTransform();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_eventQueuePending = g_currentNodeIdx;
+      g_currentNodeIdx = g_cj_00542054 + 4;
+      QuadInterpolator();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_framePauseFlag = 0;
+      iVar1 = g_cj_00542058;
+      iVar5 = g_dualC;
+      iVar6 = g_dualD;
+      iVar4 = MK4_NODE_AT(int, g_cj_00542054, 0);
+    }
+    g_currentNodeIdx = g_cj_00542054;
+    g_eventQueuePending = g_cj_00542058;
+    g_walkCallback = g_cj_00542054;
+    MStackPop8();
+  }
+  return;
+}
+#else
 __declspec(naked) void PoseTreeBlendWalker(void)
 {
     __asm {
@@ -279,3 +374,4 @@ __declspec(naked) void PoseTreeBlendWalker(void)
         ret
     }
 }
+#endif

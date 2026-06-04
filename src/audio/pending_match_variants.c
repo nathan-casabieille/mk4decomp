@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -253,6 +254,32 @@ extern void DebugMenu_DrawUnlockToggles(void);
  * function lives in the 0x4a2000-0x4a9000 menu/mode cluster that the
  * symbol table labels "audio"). See analysis/notes/menu_state.md.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GameMode_EnterScene(void)
+
+{
+  if (g_gtModeFlag == '\x01') {
+    g_currentNodeIdx = 0x14e902;
+    g_eventQueuePending = 0x14e8f8;
+  }
+  else {
+    g_currentNodeIdx = 0x14dfa2;
+    g_eventQueuePending = 0x14e9c0;
+  }
+  DualScaledStoreConst();
+  ClearTwoCallSetStore();
+  g_dlMode = 0;
+  SixCallSeqPushImm();
+  g_eventQueueWorkType = 0;
+  Push16Call();
+  if (g_framePauseFlag == 0) {
+    PendingMatch_Push16Call_004a3400();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void GameMode_EnterScene(void)
 {
     __asm
@@ -313,6 +340,7 @@ __declspec(naked) void GameMode_EnterScene(void)
         jmp     Thunk_ExitGame
     }
 }
+#endif
 
 
 /*
@@ -326,6 +354,23 @@ __declspec(naked) void GameMode_EnterScene(void)
  *     Loop3 (esi 0..5): chain[(g_baseSel+esi)*4 + 0x48], call. DrainQueueCallEach.
  *     if [0x005433f4] == 2: tail-call PendingMatch_AudioInitArgs3 else AudioInstallSelfStateMachine2.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioInitLoopTriple(void)
+
+{
+  g_eventQueuePending = 0x143c45;
+  DispatcherComplex260_FramePauseScaledStore();
+  if (g_framePauseFlag == 0) {
+    SnapshotDirtyMark(0x13333);
+    MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
+    if (g_framePauseFlag == 0) {
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x5c) = 0x100000;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void AudioInitLoopTriple(void)
 {
     __asm
@@ -402,6 +447,7 @@ __declspec(naked) void AudioInitLoopTriple(void)
         ret
     }
 }
+#endif
 
 extern void IncOrZero9(void);
 

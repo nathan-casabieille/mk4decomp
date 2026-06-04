@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -134,6 +135,30 @@ extern void AudioVolumeRescale(void);
  * (push esi/edi) vs orig's single push esi. The volatile-register-survives-
  * branch + register-reuse pattern is not coaxable from pure C.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void WeightedSumClampHelper(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_stateCountdown * g_dispatchSave1321 + g_dispatchSave1319;
+  if (g_audioPathFlag != 0) {
+    iVar1 = g_phaseThunkSave2;
+    if (g_baseSel == g_dualB_00538038) {
+      iVar1 = g_audioInstallSlot2;
+    }
+    iVar2 = iVar2 + g_dispatchSave1320 * iVar1;
+  }
+  g_walkCallback = g_phaseCounter * g_dispatchSave1320 + iVar2 + g_audioRestoreSlot3 * g_dispatchSave1322;
+  if (0x3cf < g_walkCallback) {
+    g_walkCallback = 0x3cf;
+  }
+  AudioVolumeRescale();
+  return;
+}
+#else
 __declspec(naked) void WeightedSumClampHelper(void) {
     __asm {
         mov     eax, dword ptr [g_stateCountdown]
@@ -173,3 +198,4 @@ callTail:
         ret
     }
 }
+#endif

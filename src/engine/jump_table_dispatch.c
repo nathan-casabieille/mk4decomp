@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,20 @@ extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void PrefixThunkInstallSelf3State(void);
 extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FiveBlockDispatch_JumpTableDispatch(void)
+
+{
+  g_walkCallback = g_fightStateProgress;
+  if (0x20000 < g_fightStateProgress) {
+    Wrapper_CmpDualPatchScaledRangeJmp_004e4990();
+    return;
+  }
+  InstallSelfPacked0x2005();
+  return;
+}
+#else
 __declspec(naked) void FiveBlockDispatch_JumpTableDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_fightStateProgress]
@@ -206,3 +221,4 @@ __declspec(naked) void FiveBlockDispatch_JumpTableDispatch(void) {
         jmp     DualCallTestPauseRange
     }
 }
+#endif

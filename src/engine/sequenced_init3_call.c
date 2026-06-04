@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,43 @@ extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
 extern void Init4Globals(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SequencedInit3Call(void)
+
+{
+  int iVar1;
+  
+  BootInitGuardedCallChain();
+  if (g_framePauseFlag == 0) {
+    Init4Globals();
+    if (g_framePauseFlag == 0) {
+      g_dispatchSave40 = 0;
+      g_currentNodeIdx = g_eventQueueSeed;
+      g_dispatchSave42 = 0;
+      iVar1 = g_eventQueueSeed * 4;
+      *(undefined4 *)(iVar1 + 0x54) = 0;
+      *(undefined4 *)(iVar1 + 0x58) = 0xfffe199a;
+      *(undefined4 *)(iVar1 + 0x5c) = 0xfffc0000;
+      g_walkCallback = 0;
+      *(undefined4 *)(iVar1 + 0x60) = 0;
+      *(undefined4 *)(iVar1 + 100) = g_walkCallback;
+      *(undefined4 *)(iVar1 + 0x68) = g_walkCallback;
+      g_walkCallback = 0;
+      CopyGlobal();
+      if (g_framePauseFlag == 0) {
+        g_currentNodeIdx = 0x142c49;
+        LoadGeoAsset_Default();
+        if (g_framePauseFlag == 0) {
+          g_currentNodeIdx = 0x142c49;
+          LoadGeoAsset_Default();
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void SequencedInit3Call(void) {
     __asm {
         push    esi
@@ -175,3 +213,4 @@ __declspec(naked) void SequencedInit3Call(void) {
         ret
     }
 }
+#endif

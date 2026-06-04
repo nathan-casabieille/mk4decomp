@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -127,6 +128,25 @@ extern unsigned int g_fightAxisPosY;
  * (a1, 5b) as orig does. The push esi/edi order and LEA-based address
  * computation pattern cannot be coaxed from pure C with this register layout.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EsiEdiAliasDualMul10(void)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  
+  g_eventQueueCurrent = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x6c);
+  iVar1 = g_cj_0054205c * 4;
+  puVar2 = (undefined4 *)(g_cj_0054205c * 4 + 0x74);
+  g_eventQueueWorkType = *puVar2;
+  g_eventQueueCurrent = Mul10Tail(g_walkCallback,g_eventQueueCurrent);
+  g_eventQueueWorkType = Mul10Tail(g_walkCallback,g_eventQueueWorkType);
+  *(undefined4 *)(iVar1 + 0x6c) = g_eventQueueCurrent;
+  *puVar2 = g_eventQueueWorkType;
+  return;
+}
+#else
 __declspec(naked) void EsiEdiAliasDualMul10(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
@@ -160,3 +180,4 @@ __declspec(naked) void EsiEdiAliasDualMul10(void) {
         ret
     }
 }
+#endif

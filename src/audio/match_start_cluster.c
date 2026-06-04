@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -131,6 +132,30 @@ extern void TablePushAccumTailJmp(void);
 extern void TableWalkBoundedCmp(void);
 extern void TestCmpZeroFour(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MatchStartCluster(void)
+
+{
+  g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+  g_currentNodeIdx = 0x14e902;
+  g_eventQueuePending = 0x14e8f8;
+  DualScaledStoreConst();
+  g_currentNodeIdx = 0x14dfa2;
+  g_eventQueuePending = 0x14e9c0;
+  DualScaledStoreConst();
+  ClearTwoCallSetStore();
+  g_dlMode = 0;
+  SixCallSeqPushImm();
+  g_eventQueueWorkType = 0;
+  Push16Call();
+  if (g_framePauseFlag == 0) {
+    InstallSelfTableWalk();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void MatchStartCluster(void)
 {
     __asm {
@@ -279,3 +304,4 @@ __declspec(naked) void MatchStartCluster(void)
         ret
     }
 }
+#endif

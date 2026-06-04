@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -127,6 +128,38 @@ extern unsigned int g_audioMatchStartFlag;
 extern void ClampTwoToMax_004226a0(void);
 extern void ClampTwoToMax_004226e0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TriBranchFlagWrite(void)
+
+{
+  if ((g_audioMatchStartFlag != 1) || (g_audioTriEntryFlag != 0)) {
+    g_audioTriEntryFlag = 0;
+    g_walkCallback = 0x10000;
+    g_clamp_0053a6dc = 0x10000;
+    g_clamp_0053a328 = 0x10000;
+    g_clamp_00537f2c = 0x10000;
+    g_clamp_0053e348 = 0x10000;
+    return;
+  }
+  if (g_active_0053a408 == 0) {
+    g_walkCallback = 0x10000;
+    g_clamp_0053a6dc = 0x10000;
+    g_clamp_0053a328 = 0x10000;
+  }
+  else {
+    ClampTwoToMax_004226a0();
+  }
+  if (g_active_00537e88 != 0) {
+    ClampTwoToMax_004226e0();
+    return;
+  }
+  g_walkCallback = 0x10000;
+  g_clamp_00537f2c = 0x10000;
+  g_clamp_0053e348 = 0x10000;
+  return;
+}
+#else
 __declspec(naked) void TriBranchFlagWrite(void) {
     __asm {
         mov     eax, dword ptr [g_audioMatchStartFlag]
@@ -172,3 +205,4 @@ __declspec(naked) void TriBranchFlagWrite(void) {
         ret
     }
 }
+#endif

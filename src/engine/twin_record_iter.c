@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,47 @@ extern unsigned int g_fightAxisPosY;
 extern void Audio_TimerTeardown(void);
 extern void Snd3DSourceCleanup(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TwinRecordIter(void)
+
+{
+  int iVar1;
+  short sVar2;
+  int iVar3;
+  
+  Audio_TimerTeardown();
+  sVar2 = 0;
+  iVar3 = 0;
+  do {
+    if (sVar2 != 0x3c) {
+      if (sVar2 < 0x65) {
+        iVar1 = iVar3 + 2000;
+      }
+      else {
+        iVar1 = iVar3 / 5;
+      }
+      Snd3DSourceCleanup(iVar1,0);
+    }
+    sVar2 = sVar2 + 1;
+    iVar3 = iVar3 + 1;
+  } while (sVar2 < 100);
+  sVar2 = 0x157c;
+  iVar3 = 0x157c;
+  do {
+    if (sVar2 < 0x65) {
+      iVar1 = iVar3 + 2000;
+    }
+    else {
+      iVar1 = iVar3 / 5;
+    }
+    Snd3DSourceCleanup(iVar1,0);
+    sVar2 = sVar2 + 1;
+    iVar3 = iVar3 + 1;
+  } while (sVar2 < 0x1591);
+  return;
+}
+#else
 __declspec(naked) void TwinRecordIter(void) {
     __asm {
         push    esi
@@ -176,3 +218,4 @@ call2:
         ret
     }
 }
+#endif

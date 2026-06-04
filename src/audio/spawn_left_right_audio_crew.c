@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,70 @@ extern void AudioChainInit(void);
 extern void AudioInitLoopTriple(void);
 extern void ScaledChainStore24(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SpawnLeftRightAudioCrew(void)
+
+{
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
+  
+  g_audioCrewState = g_audioStateMachine0 * 0x600000 + -0x600000;
+  iVar3 = 0;
+  if (0 < g_audioStateMachine0) {
+    iVar1 = 0;
+    pcVar2 = &g_audioBank2Byte2;
+    do {
+      g_walkCallback = 0x10;
+      AudioChainInit();
+      *(int *)((iVar3 + g_baseSel) * 4 + 0x34) = g_currentNodeIdx;
+      MK4_NODE_AT(int, g_currentNodeIdx, 0x54) = (iVar1 - g_audioCrewState) * 4;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x58) = 0xfde40000;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 100) = 0;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x5c) = 0xc0000;
+      g_walkCallback = (int)pcVar2[-2];
+      ScaledChainStore24();
+      if (*pcVar2 != '\0') {
+        AudioInitLoopTriple();
+        MK4_NODE_AT(int, g_currentNodeIdx, 0x54) = iVar1 - g_audioCrewState;
+        MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x58) = 0xff890000;
+        MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x5c) = 0x30000;
+      }
+      iVar3 = iVar3 + 1;
+      pcVar2 = pcVar2 + 0x18;
+      iVar1 = iVar1 + 0xc00000;
+    } while (iVar3 < g_audioStateMachine0);
+  }
+  iVar3 = 0;
+  g_audioCrewState = g_audioStateMachine1 * 0x600000 + -0x600000;
+  if (0 < g_audioStateMachine1) {
+    iVar1 = 0;
+    pcVar2 = &g_audioPendByte61a;
+    do {
+      g_walkCallback = 0x10;
+      AudioChainInit();
+      *(int *)((iVar3 + g_baseSel) * 4 + 0x48) = g_currentNodeIdx;
+      MK4_NODE_AT(int, g_currentNodeIdx, 0x54) = (iVar1 - g_audioCrewState) * 4;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x58) = 0x12c0000;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 100) = 0;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x5c) = 0xc0000;
+      g_walkCallback = (int)pcVar2[-2];
+      ScaledChainStore24();
+      if (*pcVar2 != '\0') {
+        AudioInitLoopTriple();
+        MK4_NODE_AT(int, g_currentNodeIdx, 0x54) = iVar1 - g_audioCrewState;
+        *(undefined4 **)(g_currentNodeIdx * 4 + 0x58) = &g_glideFnTable;
+        MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x5c) = 0x30000;
+      }
+      iVar3 = iVar3 + 1;
+      pcVar2 = pcVar2 + 0x18;
+      iVar1 = iVar1 + 0xc00000;
+    } while (iVar3 < g_audioStateMachine1);
+  }
+  return;
+}
+#else
 __declspec(naked) void SpawnLeftRightAudioCrew(void)
 {
     __asm {
@@ -240,3 +305,4 @@ __declspec(naked) void SpawnLeftRightAudioCrew(void)
         ret
     }
 }
+#endif

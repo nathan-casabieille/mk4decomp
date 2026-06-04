@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesMM.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
@@ -21,6 +22,28 @@ extern unsigned int g_eventQueueCurrent_mm2;
 extern void func_004c5740_mm(void);
 extern int Alldiv(int, int, int, int);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FixedDiv16(void)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  iVar1 = g_eventQueueCurrent;
+  if (g_eventQueueCurrent == 0) {
+    g_walkCallback = g_eventQueueCurrent;
+    return;
+  }
+  if ((-0x8001 < g_walkCallback) && (g_walkCallback < 0x8000)) {
+    g_walkCallback = (g_walkCallback << 0x10) / g_eventQueueCurrent;
+    return;
+  }
+  uVar2 = __allshl();
+  g_walkCallback = __alldiv(uVar2,iVar1,iVar1 >> 0x1f);
+  return;
+}
+#else
 __declspec(naked) void FixedDiv16(void) {
     __asm {
         push    esi
@@ -65,3 +88,4 @@ __declspec(naked) void FixedDiv16(void) {
         ret
     }
 }
+#endif

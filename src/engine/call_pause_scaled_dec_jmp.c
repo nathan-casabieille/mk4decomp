@@ -5,6 +5,7 @@
  * (`dec ecx; mov [g], ecx; js`).
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 
 /* @addr 0x00429750 (56b)
  *   call    F
@@ -26,6 +27,26 @@ extern void ScaledStoreCurDirtyClear(void);
 extern void ScaledStoreCurDirtyOr1(void);
 extern u32 g_framePauseFlag;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CallPauseScaledDecJmp(void)
+
+{
+  GuardedChainCmpDualBitXor();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x28) + -1;
+  if (-1 < g_eventQueueCurrent) {
+    ScaledStoreCurDirtyClear();
+    return;
+  }
+  g_eventQueueCurrent = 0;
+  MK4_NODE_AT(undefined4, g_cj_0054205c, 0x28) = 0;
+  g_xformDirtyFlags = g_xformDirtyFlags | 1;
+  return;
+}
+#else
 __declspec(naked) void CallPauseScaledDecJmp(void) {
     __asm {
         call    GuardedChainCmpDualBitXor
@@ -45,3 +66,4 @@ L_cpsdj_ret:
         ret
     }
 }
+#endif

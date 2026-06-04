@@ -36,6 +36,7 @@
  *   ret
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_active_0053a408;
@@ -53,6 +54,30 @@ extern int  TaggedSceneDispatch(int);
 
 /* @addr 0x0049f900 */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DispatcherComplex115_Cmp3DirtyToggle_0049f900(void)
+
+{
+  Cmp3DirtyToggle();
+  if (((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 1) != 0)) &&
+     (g_walkCallback = g_active_0053a408, g_active_0053a408 == 0)) {
+    g_walkCallback = g_state2_00541d88;
+    if (g_state2_00541d88 == 0) {
+      g_active_0053a408 = 2;
+      g_player1State = g_state2_00541d88;
+      RoundWinTransition();
+      if (g_framePauseFlag == 0) {
+        StateAdd5Capped();
+        if (g_framePauseFlag == 0) {
+          TaggedSceneDispatch(g_lit16_004e286c);
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DispatcherComplex115_Cmp3DirtyToggle_0049f900(void) {
     __asm {
         call    Cmp3DirtyToggle
@@ -93,8 +118,33 @@ __declspec(naked) void DispatcherComplex115_Cmp3DirtyToggle_0049f900(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x0049f980 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DispatcherComplex115_Cmp3DirtyToggle_0049f980(void)
+
+{
+  Cmp3DirtyToggle();
+  if (((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 1) != 0)) &&
+     (g_walkCallback = g_active_00537e88, g_active_00537e88 == 0)) {
+    g_walkCallback = g_state2_00537ea8;
+    if (g_state2_00537ea8 == 0) {
+      g_active_00537e88 = 2;
+      g_player2State = g_state2_00537ea8;
+      RoundWinTransition();
+      if (g_framePauseFlag == 0) {
+        StateAdd5Capped();
+        if (g_framePauseFlag == 0) {
+          TaggedSceneDispatch(g_lit16_004e286c);
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DispatcherComplex115_Cmp3DirtyToggle_0049f980(void) {
     __asm {
         call    Cmp3DirtyToggle
@@ -135,3 +185,4 @@ __declspec(naked) void DispatcherComplex115_Cmp3DirtyToggle_0049f980(void) {
         ret
     }
 }
+#endif
