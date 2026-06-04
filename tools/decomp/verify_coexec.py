@@ -27,6 +27,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import verify_twin as vt           # reuse load_maps / extract_twin / leaf_twins
+import synthesize as syn           # reuse COFF parser
+import struct
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = 0x00400000
@@ -37,13 +39,20 @@ CODE = 0x70000000
 STACK = 0x10000000
 
 
-def build_twin_blob(name, body, gl_va):
+def _strip(n):
+    return n[1:] if n.startswith('_') else n
+
+
+def build_twin_blob(name, body, gl_va, name_to_va):
+    """Compile twin -> .text, relocated so external calls target the
+    ORIGINAL function VAs (callees co-execute as original bytes in the
+    arena) and intra-twin labels resolve within the loaded blob.
+    Returns (blob, entry_offset, err)."""
     globs = sorted(set(re.findall(r'\bg_[A-Za-z]\w*', body)))
     if any(g not in gl_va for g in globs):
-        return None, 'unmapped global'
+        return None, None, 'unmapped global'
     defs = ''.join('#define %s (*(unsigned int *)0x%xu)\n' % (g, gl_va[g])
                    for g in globs)
-    # identity memory model (NO MK4_ARENA): MK4_VA(va)=(T*)va absolute.
     src = ('#define NON_MATCHING 1\n'
            '#include "portable/ghidra_types.h"\n#include "portable/mem_model.h"\n'
            + defs + body + '\n')
@@ -51,20 +60,43 @@ def build_twin_blob(name, body, gl_va):
         c = Path(d) / 't.c'
         c.write_text(src)
         o = Path(d) / 't.o'
-        b = Path(d) / 't.bin'
         r = subprocess.run(
             [CC, '-m32', '-std=gnu89', '-c', '-O2', '-fno-stack-protector',
              '-fno-pic', '-ffreestanding', '-fno-asynchronous-unwind-tables',
              '-I' + str(ROOT / 'include'), '-w', str(c), '-o', str(o)],
             capture_output=True, text=True)
         if r.returncode:
-            return None, 'compile: ' + (r.stderr.strip().splitlines() or [''])[-1]
-        subprocess.run([OBJCOPY, '-O', 'binary', '--only-section=.text',
-                        str(o), str(b)], capture_output=True)
-        blob = b.read_bytes()
-        if not blob:
-            return None, 'empty .text'
-        return blob, None
+            return None, None, 'compile: ' + (r.stderr.strip().splitlines() or [''])[-1]
+        syms, sections = syn.parse_obj_full(o.read_bytes())
+    text = next((s for s in sections if s['name'].startswith('.text')), None)
+    if text is None:
+        return None, None, 'no .text'
+    buf = bytearray(text['content'])
+    entry = 0
+    for s in syms:
+        if s and _strip(s['name']) == name and s['sec'] > 0:
+            entry = s['value']
+    for r in text['relocs']:
+        sym = syms[r['sym_idx']] if 0 <= r['sym_idx'] < len(syms) else None
+        if sym is None:
+            return None, None, 'bad sym'
+        off, rt = r['va'], r['type']
+        if sym['sec'] > 0:                         # defined in this obj (label)
+            target = CODE + sym['value']
+        else:                                      # external -> original VA
+            tv = name_to_va.get(_strip(sym['name']))
+            if tv is None:
+                return None, None, 'unresolved call: %s' % _strip(sym['name'])
+            target = tv
+        if rt == 6 and off >= 1 and buf[off-1] in (0xe8, 0xe9):
+            rt = 20
+        existing = struct.unpack_from('<I', buf, off)[0]
+        if rt == 6:
+            struct.pack_into('<I', buf, off, (target + existing) & 0xffffffff)
+        elif rt == 20:
+            struct.pack_into('<I', buf, off,
+                             (target - (CODE + off + 4) + existing) & 0xffffffff)
+    return bytes(buf), entry, None
 
 
 def uc_new(arena):
@@ -97,14 +129,14 @@ def run_at(uc, eip, full):
     return bytes(uc.mem_read(0, full))
 
 
-def verify(name, fn_va, gl_va, arena):
+def verify(name, fn_va, gl_va, name_to_va, arena):
     if name not in fn_va:
         return 'SKIP no-addr'
     t = vt.extract_twin(name)
     if not t:
         return 'SKIP no-twin'
     body = t[0]
-    blob, err = build_twin_blob(name, body, gl_va)
+    blob, entry, err = build_twin_blob(name, body, gl_va, name_to_va)
     if blob is None:
         return 'SKIP ' + err
     try:
@@ -112,7 +144,7 @@ def verify(name, fn_va, gl_va, arena):
         orig = run_at(uc1, fn_va[name], full)
         uc2, _ = uc_new(arena)
         uc2.mem_write(CODE, blob)
-        twin = run_at(uc2, CODE, full)
+        twin = run_at(uc2, CODE + entry, full)
     except Exception as e:
         return 'SKIP unicorn: %s' % e
     init = bytearray(full)
@@ -131,13 +163,28 @@ def verify(name, fn_va, gl_va, arena):
         [hex(o) for o in ou[:3]], [hex(o) for o in on[:3]], [hex(o) for o in vd[:3]])
 
 
+def all_twins():
+    names = []
+    for f in (ROOT / 'src').rglob('*.c'):
+        s = f.read_text(errors='ignore')
+        for m in re.finditer(r'#ifdef NON_MATCHING\b', s):
+            j = s.find('#else', m.end())
+            if j < 0:
+                continue
+            nm = re.search(r'\b(\w+)\s*\(', s[m.end():j])
+            if nm:
+                names.append(nm.group(1))
+    return names
+
+
 def main():
     fn_va, gl_va = vt.load_maps()
+    name_to_va = fn_va                 # load_maps' fn_va is already name -> VA
     arena = ARENA.read_bytes()
-    names = sys.argv[1:] or vt.leaf_twins()
+    names = sys.argv[1:] or all_twins()
     counts = {}
     for n in names:
-        r = verify(n, fn_va, gl_va, arena)
+        r = verify(n, fn_va, gl_va, name_to_va, arena)
         counts[r.split()[0]] = counts.get(r.split()[0], 0) + 1
         print('%-44s %s' % (n, r))
     print('\nsummary:', counts)
