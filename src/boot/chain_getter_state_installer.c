@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,17 @@ extern unsigned int g_fightAxisPosY;
 extern void ChainListVecAdd(void);
 extern void GuardedSeq_MStackCall_then_CallSetPause_00471670(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ChainGetterStateInstaller(void)
+
+{
+  g_currentNodeIdx = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+  g_eventQueuePending = MK4_NODE_AT(int, g_currentNodeIdx, 0x28);
+  g_walkCallback = MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48);
+  return;
+}
+#else
 __declspec(naked) void ChainGetterStateInstaller(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
@@ -197,3 +209,4 @@ __declspec(naked) void ChainGetterStateInstaller(void) {
         ret
     }
 }
+#endif

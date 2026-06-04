@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,38 @@ extern void PendingMatch_PushSetXfmMaskCallPop_00413f40(void);
 extern void SetJmp_ZeroAndDirty4(void);
 extern void ThreeChanPackClamp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SoundSetupLoop(void)
+
+{
+  ThreeChanPackClamp(0x408000);
+  CopyThreeFields(g_cj_0054205c);
+  MStackPush8();
+  if (g_framePauseFlag == 0) {
+    g_dualD = 0x23;
+    g_cj_00542054 = g_cj_0054205c;
+    SetJmp_ZeroAndDirty4();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 4) == 0) {
+        g_dualD = 0x14;
+      }
+      func_0x00413f40();
+      if (g_framePauseFlag == 0) {
+        while ((((byte)g_xformDirtyFlags & 4) == 0 &&
+               (g_dualD = g_dualD + -1, -1 < g_dualD))) {
+          func_0x00413f40();
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+        }
+        MStackPop8();
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void SoundSetupLoop(void) {
     __asm {
         push    ebx
@@ -180,3 +213,4 @@ loop413ea0:
         ret
     }
 }
+#endif

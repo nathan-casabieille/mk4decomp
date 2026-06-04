@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,45 @@ extern unsigned int g_gtFightTickCounter;
 extern unsigned int g_counter_005433c8;
 extern unsigned int g_counter_0054359c;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioSwap2ChainBank3State(void)
+
+{
+  int iVar1;
+  
+  g_cj_00542058 = MK4_NODE_AT(int, g_baseSel, 0x7c);
+  MK4_NODE_AT(undefined4, g_cj_00542058, 0x54) = 0;
+  MK4_NODE_AT(undefined4, g_cj_00542058, 0x58) = 0;
+  MK4_NODE_AT(undefined4, g_cj_00542058, 0x5c) = 0;
+  g_cj_00542058 = MK4_NODE_AT(int, g_baseSel, 0x80);
+  MK4_NODE_AT(undefined4, g_cj_00542058, 0x54) = 0;
+  MK4_NODE_AT(undefined4, g_cj_00542058, 0x58) = 0;
+  MK4_NODE_AT(undefined4, g_cj_00542058, 0x5c) = 0;
+  iVar1 = MK4_NODE_AT(int, g_baseSel, 0x30);
+  if (iVar1 == 3) {
+    g_walkCallback = g_counter_0054359c + 0xd;
+    g_cj_00542058 = MK4_NODE_AT(int, g_baseSel, 0x7c);
+  }
+  else {
+    if (iVar1 != 4) {
+      return;
+    }
+    g_walkCallback = g_counter_005433c8 + 0x12;
+    g_cj_00542058 = MK4_NODE_AT(int, g_baseSel, 0x80);
+  }
+  if (((byte)g_gtFightTickCounter & 8) != 0) {
+    g_currentNodeIdx = *(int *)((g_walkCallback + g_baseSel) * 4);
+    g_walkCallback = MK4_NODE_AT(int, g_currentNodeIdx, 0x54);
+    g_eventQueueCurrent = MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x58);
+    g_eventQueueWorkType = MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x5c);
+    MK4_NODE_AT(int, g_cj_00542058, 0x54) = g_walkCallback;
+    MK4_NODE_AT(undefined4, g_cj_00542058, 0x58) = g_eventQueueCurrent;
+    MK4_NODE_AT(undefined4, g_cj_00542058, 0x5c) = g_eventQueueWorkType;
+  }
+  return;
+}
+#else
 __declspec(naked) void AudioSwap2ChainBank3State(void)
 {
     __asm
@@ -188,3 +228,4 @@ __declspec(naked) void AudioSwap2ChainBank3State(void)
         ret
     }
 }
+#endif

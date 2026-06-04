@@ -30,9 +30,17 @@ public class MK4Decompile extends GhidraScript {
             Address addr = toAddr(args[i]);
             Function fn = (addr == null) ? null : fm.getFunctionAt(addr);
             if (fn == null && addr != null) fn = fm.getFunctionContaining(addr);
+            // NOFUNC: the saved project did not auto-analyze this VA, but
+            // symbols.yaml says it is a function - disassemble + create it
+            // (in-memory; -readOnly discards the change after the run).
+            if (fn == null && addr != null) {
+                try {
+                    if (getInstructionAt(addr) == null) disassemble(addr);
+                    fn = createFunction(addr, null);
+                } catch (Exception e) { /* fall through to NOFUNC */ }
+            }
             if (fn == null) {
-                println("MK4DEC NOFUNC " + args[i] + " addr=" + addr
-                        + " instr=" + getInstructionAt(addr));
+                println("MK4DEC NOFUNC " + args[i]);
                 continue;
             }
             DecompileResults res = dec.decompileFunction(fn, 60, monitor);

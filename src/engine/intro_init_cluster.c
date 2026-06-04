@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,85 @@ extern void MStackCall_PushPopScaled1cDoubleCall(void);
 extern void IntroInitCluster(void);
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PreFight4StageSequencer(void)
+
+{
+  func_0x0044d060();
+  if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+    g_currentNodeIdx = MK4_NODE_AT(int, g_dualD, 0x18);
+    g_walkCallback = 1;
+    MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x1c) = 1;
+    func_0x0044cf50();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 9;
+      func_0x0044d0c0();
+      if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+        g_walkCallback = 2;
+        MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x1c) = 2;
+        func_0x0044cf80();
+        if (g_framePauseFlag == 0) {
+          g_eventQueuePending = MK4_NODE_AT(int, g_dualD, 0x18);
+          func_0x0044d230();
+          if (g_framePauseFlag == 0) {
+            g_eventQueuePending = MK4_NODE_AT(int, g_dualD, 0x18);
+            g_walkCallback = 7;
+            g_cj_00542054 = g_dualC;
+            func_0x0044d0c0();
+            if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+              func_0x0044d1e0();
+              if (g_framePauseFlag == 0) {
+                func_0x0044d230();
+                if (g_framePauseFlag == 0) {
+                  g_eventQueuePending = g_currentNodeIdx;
+                  MStackBracket5_FieldClear_StateAdvance();
+                  if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+                    g_walkCallback = 3;
+                    MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x1c) = 3;
+                    func_0x0044cfb0();
+                    if (g_framePauseFlag == 0) {
+                      func_0x0044d230();
+                      if (g_framePauseFlag == 0) {
+                        g_eventQueuePending = g_currentNodeIdx;
+                        g_walkCallback = 5;
+                        g_cj_00542054 = g_dualC;
+                        func_0x0044d0c0();
+                        if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+                          func_0x0044d1e0();
+                          if (g_framePauseFlag == 0) {
+                            func_0x0044d230();
+                            if (g_framePauseFlag == 0) {
+                              g_eventQueuePending = g_currentNodeIdx;
+                              func_0x0044d280();
+                              if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+                                MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x1c) = 4;
+                                g_walkCallback = 0x3243f;
+                                MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x3c) = 0x3243f;
+                                func_0x0044d230();
+                                if (g_framePauseFlag == 0) {
+                                  g_currentNodeIdx = g_dualD;
+                                  g_cj_0054205c = g_dualD;
+                                  GDispatch4();
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void PreFight4StageSequencer(void)
 {
     __asm {
@@ -254,3 +334,4 @@ __declspec(naked) void PreFight4StageSequencer(void)
         ret
     }
 }
+#endif

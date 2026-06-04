@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,20 @@ extern void StateDispatchTable(void);
 extern void TableLookupCall_g_eventTbl_19(void);
 extern void TripleEntryBitsetMStack(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GameLoaderHandlerCluster(void)
+
+{
+  ScaledAndAlfb();
+  if (g_framePauseFlag == 0) {
+    g_eventQueueCurrent = MK4_NODE_AT(uint, g_cj_0054205c, 0x40) & 0xfffffffe;
+    MK4_NODE_AT(uint, g_cj_0054205c, 0x40) = g_eventQueueCurrent;
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void GameLoaderHandlerCluster(void)
 {
     __asm {
@@ -260,3 +275,4 @@ __declspec(naked) void GameLoaderHandlerCluster(void)
         ret
     }
 }
+#endif

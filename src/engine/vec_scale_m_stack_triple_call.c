@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -135,6 +136,21 @@ extern void ChainWalkPushPop(void);
 extern void MStackPush2VolumeCascade(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void VecScaleMStackTripleCall(void)
+
+{
+  g_eventQueueCurrent = Mul10Tail(0x13333,g_eventQueueCurrent);
+  g_walkCallback = 0xf5c;
+  StoreDoubleNegPauseSubStore();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = g_walkCallback + 0x10000;
+    g_eventQueueCurrent = Mul10Tail(g_walkCallback,g_eventQueueCurrent);
+  }
+  return;
+}
+#else
 __declspec(naked) void VecScaleMStackTripleCall(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueCurrent]
@@ -236,3 +252,4 @@ __declspec(naked) void VecScaleMStackTripleCall(void) {
         ret
     }
 }
+#endif

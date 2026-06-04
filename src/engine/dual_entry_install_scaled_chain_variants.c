@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -173,6 +174,15 @@ __declspec(naked) void MStackPushWaitChain(void) {
  *     at +0x08=0x0047ef70, baseSel[*4+0x84]=1, push 0x0047ef70|0x01000000 to scaledInit chain,
  *     call SlotEvent3EntryChain, g_pause=1; ret.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualEntryInstallScaledChain_ArgSarStoreJmp_0047ef60(void)
+
+{
+  ArgSarStoreJmp(0x4ed700);
+  return;
+}
+#else
 __declspec(naked) void DualEntryInstallScaledChain_ArgSarStoreJmp_0047ef60(void) {
     __asm {
         push    0x004ed700
@@ -211,3 +221,4 @@ __declspec(naked) void DualEntryInstallScaledChain_ArgSarStoreJmp_0047ef60(void)
         ret
     }
 }
+#endif

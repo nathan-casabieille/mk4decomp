@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,61 @@ extern void PoseCopyIdleCluster(void);
 
 extern unsigned int g_chain_arr_4348f0;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FourStageChainedDispatch(void)
+
+{
+  g_walkCallback = 3;
+  DirtyDoubleDeref();
+  if (g_framePauseFlag == 0) {
+    g_eventQueuePending = MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x24);
+    DispatcherComplex260_FramePauseScaledStore();
+    if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) == 0)) {
+      g_cj_0054205c = g_currentNodeIdx;
+      g_walkCallback = 1;
+      *(undefined4 *)(MK4_NODE_AT(int, g_currentNodeIdx, 0x18) * 4 + 0x30) = 1;
+      g_currentNodeIdx = g_cj_0054205c;
+      GDispatch4();
+      if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) == 0)) {
+        func_0x004537a0();
+        if (g_framePauseFlag == 0) {
+          g_eventQueuePending = 0x13b23e;
+          MStackBracket1_TreeWalkRecursive2();
+          if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) == 0)) {
+            MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x1c) = 0;
+            g_walkCallback = 0;
+            MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x30) = 0;
+            MK4_NODE_AT(int, g_currentNodeIdx, 0x38) = g_walkCallback;
+            g_walkCallback = -0x10000;
+            MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x34) = 0xffff0000;
+            ScaledTestPauseStore();
+            if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) == 0)) {
+              g_eventQueuePending = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x18);
+              PushPopScaled1cDoubleCall();
+              if (g_framePauseFlag == 0) {
+                g_dualC = MK4_NODE_AT(int, g_cj_0054205c, 0x1c);
+                g_walkCallback = MK4_NODE_AT(int, g_dualC, 0) + 1;
+                MK4_NODE_AT(int, g_currentNodeIdx, 0x1c) = g_walkCallback;
+                g_currentNodeIdx = g_cj_0054205c;
+                MStackBracket4_ListInsertZeroFill();
+                if (g_framePauseFlag == 0) {
+                  g_xformDirtyFlags = g_xformDirtyFlags | 4;
+                  if (g_currentNodeIdx != 0) {
+                    g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+                  }
+                }
+              }
+            }
+          }
+          return;
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void FourStageChainedDispatch(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 3
@@ -170,3 +226,4 @@ __declspec(naked) void FourStageChainedDispatch(void) {
         ret
     }
 }
+#endif

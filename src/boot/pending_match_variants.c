@@ -409,6 +409,31 @@ extern void ZeroMultiGlobalsCmp(void);
 extern void ZeroThreeFields6c(void);
 extern void ZeroThreeFields_0040a8b0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CjDispatchCommit(void)
+
+{
+  int iVar1;
+  
+  g_cj_00542058 = g_cj_0054205c;
+  ScaledZeroFour();
+  if (g_framePauseFlag == 0) {
+    func_0x0041d770();
+    if (g_framePauseFlag == 0) {
+      g_currentNodeIdx = 0x14e056;
+      g_eventQueuePending = 0x14e057;
+      iVar1 = 0x14e056;
+      if (g_cj_00542058 != g_player1NodeIdx) {
+        g_currentNodeIdx = 0x14e057;
+        iVar1 = 0x14e057;
+      }
+      MK4_NODE_AT(int, iVar1, 0) = g_cj_0054205c;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void CjDispatchCommit(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
@@ -442,6 +467,7 @@ done:
         ret
     }
 }
+#endif
 
 
 /* @addr 0x00413ea0 (157b boot) - 4-stage sound setup loop:
@@ -1412,6 +1438,15 @@ __declspec(naked) void MStackBracket3_FieldSequentialCopy(void)
 }
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase4FourPackedDispatch(void)
+
+{
+  ArgSarStoreJmp(0x4d7ce8);
+  return;
+}
+#else
 __declspec(naked) void Phase4FourPackedDispatch(void)
 {
     __asm {
@@ -1642,8 +1677,31 @@ __declspec(naked) void Phase4FourPackedDispatch(void)
         ret
     }
 }
+#endif
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StageEntityInitCluster(void)
+
+{
+  ThreeChanPackClamp(&g_dispatchSave1704);
+  CopyThreeFields(g_cj_0054205c);
+  MK4_NODE_AT(undefined4, g_baseSel, 0x38) = g_currentNodeIdx;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x3c) = g_eventQueuePending;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x80) = 0;
+  g_walkCallback = 0;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x7c) = 0;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x30) = g_walkCallback;
+  MainTickChain();
+  if (g_framePauseFlag == 0) {
+    g_eventQueueNotMask = 0x1002e;
+    HitReactionDispatcher();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void StageEntityInitCluster(void)
 {
     __asm {
@@ -1785,6 +1843,7 @@ __declspec(naked) void StageEntityInitCluster(void)
         ret
     }
 }
+#endif
 
 /* ------------------------------------------------------------------ */
 /* Punch-anim event cluster (574b game, 6 packed helpers)              */
@@ -2705,6 +2764,24 @@ __declspec(naked) void PendingMatch_MStackPush2RunCountdown_0040cd50(void)
 }
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_MStackBracket3_ChainSwapAdvance(void)
+
+{
+  func_0x0041d560();
+  if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) == 0)) {
+    g_walkCallback = MK4_NODE_AT(uint, g_cj_0054205c, 0x34) | 4;
+    MK4_NODE_AT(uint, g_cj_0054205c, 0x34) = g_walkCallback;
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+    g_cj_0054205c = g_currentNodeIdx;
+    if (g_currentNodeIdx != 0) {
+      g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_MStackBracket3_ChainSwapAdvance(void)
 {
     __asm {
@@ -3032,6 +3109,7 @@ __declspec(naked) void PendingMatch_MStackBracket3_ChainSwapAdvance(void)
         ret      
     }
 }
+#endif
 
 __declspec(naked) void Screen_BestKombatants(void)
 {
@@ -3575,6 +3653,23 @@ __declspec(naked) void PendingMatch_ChainWalkPushPop_00411890(void)
 }
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_ChainWalkPushPop_0040dbb0(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_currentNodeIdx * 4;
+  iVar1 = g_cj_0054205c * 4;
+  *(undefined4 *)(iVar1 + 0x54) = *(undefined4 *)(iVar2 + 0x54);
+  *(undefined4 *)(iVar1 + 0x58) = *(undefined4 *)(iVar2 + 0x58);
+  g_walkCallback = *(undefined4 *)(iVar2 + 0x5c);
+  *(undefined4 *)(iVar1 + 0x5c) = g_walkCallback;
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_ChainWalkPushPop_0040dbb0(void)
 {
     __asm {
@@ -3929,6 +4024,7 @@ __declspec(naked) void PendingMatch_ChainWalkPushPop_0040dbb0(void)
         ret      
     }
 }
+#endif
 
 
 #ifdef NON_MATCHING

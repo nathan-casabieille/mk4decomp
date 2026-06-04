@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,31 @@ extern unsigned int g_secondary_00535d04;
 extern unsigned int g_primary_0053a774;
 extern void State208cBit0Flag(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CjPairCallCmp(void)
+
+{
+  g_walkCallback = g_primary_0053a774;
+  g_eventQueueCurrent = g_secondary_00535d04;
+  if ((g_cj_0054205c != g_player1NodeIdx) &&
+     (g_walkCallback = g_secondary_00535d04, g_cj_0054205c != g_player1NodeIdx)) {
+    g_eventQueueCurrent = g_primary_0053a774;
+  }
+  if (g_walkCallback <= g_eventQueueCurrent) {
+    State208cBit0Flag();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (g_eventQueueWorkType < g_currentNodeFlags) {
+      g_xformDirtyFlags = g_xformDirtyFlags | 1;
+      return;
+    }
+  }
+  g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+  return;
+}
+#else
 __declspec(naked) void CjPairCallCmp(void) {
     __asm {
         mov     edx, dword ptr [g_cj_0054205c]
@@ -164,3 +190,4 @@ epi:
         ret
     }
 }
+#endif

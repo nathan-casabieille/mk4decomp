@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -129,6 +130,47 @@ extern void PushFourCallPopBitJmp(void);
  *   B4 (192..211): call ScaledMove48to58; if !pause jmp PushFourCallPopBitJmp; ret.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void QuadStateHandler(void)
+
+{
+  ScaledMove48to58();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  FlagCascadeStateSet();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  if (((byte)g_xformDirtyFlags & 1) != 0) {
+    g_walkCallback = 7;
+    StateDispatchYield();
+    return;
+  }
+  g_walkCallback = g_fightStateProgress;
+  if (g_fightStateProgress < 0xcccd) {
+    MStackPush3CmpCall();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 1) == 0) {
+      ScaledChain3c74();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      if ((g_walkCallback != 0x4005) && (g_walkCallback != 0x4001)) {
+        g_walkCallback = 0xc;
+        StateDispatchYield();
+        return;
+      }
+    }
+  }
+  g_walkCallback = 5;
+  StateDispatchYield();
+  return;
+}
+#else
 __declspec(naked) void QuadStateHandler(void) {
     __asm {
         call    ScaledMove48to58
@@ -212,3 +254,4 @@ __declspec(naked) void QuadStateHandler(void) {
         ret
     }
 }
+#endif

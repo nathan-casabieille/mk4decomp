@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,27 @@ extern void SweepCluster(void);
 extern void TripleBlockChainDiffMStackThunks(void);
 extern void Vec2SumMul10ChainCompute(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PunchDispatcherCluster(void)
+
+{
+  int iVar1;
+  
+  g_walkCallback = 0x316;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x316;
+  g_currentNodeIdx = MK4_NODE_AT(int, g_baseSel, 4);
+  iVar1 = g_baseSel * 4;
+  MK4_NODE_AT(undefined4, g_currentNodeIdx, 0) = g_eventQueueChild;
+  g_currentNodeIdx = g_currentNodeIdx + 1;
+  *(int *)(iVar1 + 4) = g_currentNodeIdx;
+  CondPickDualStore();
+  if (g_framePauseFlag == 0) {
+    ArgSarStoreJmp(&g_dispatchSave643);
+  }
+  return;
+}
+#else
 __declspec(naked) void PunchDispatcherCluster(void)
 {
     __asm {
@@ -331,3 +353,4 @@ __declspec(naked) void PunchDispatcherCluster(void)
         ret
     }
 }
+#endif
