@@ -3,7 +3,7 @@
 
 The portable / WASM build relocates the engine's absolute-VA memory model
 into a single reserved linear region (see
-tools/decomp/AGENT_PORTABLE_WASM_MIGRATION.md, Phase 1). This tool
+tools/decomp/AGENT_PORTABLE_MIGRATION.md, Phase 1). This tool
 produces that region's initial contents:
 
     arena.bin[ va - image_base ] == the byte the original process sees at va

@@ -1,7 +1,7 @@
 /**
  * Memory-model seam: packed-pointer node pool + absolute-VA globals.
  *
- * See tools/decomp/AGENT_PORTABLE_WASM_MIGRATION.md (Phase 1).
+ * See tools/decomp/AGENT_PORTABLE_MIGRATION.md (Phase 1).
  *
  * The original engine addresses everything by raw virtual address:
  *   - a node reference is a "packed pointer" = VA / 4, dereferenced as
@@ -13,10 +13,12 @@
  * writes inline, so routing existing accesses through them changes no
  * bytes. This is the default branch.
  *
- * RELOCATED targets (WASM, whose linear memory starts at 0; or a native
- * build without a VA-pinning linker script): the node pool + data/rdata
- * blobs are loaded into one reserved arena and these macros add the base
- * translation.
+ * RELOCATED targets (ANY non-matching backend - native SDL, WASM, etc. -
+ * since a normal toolchain will not place data at the original 0x4xxxxx /
+ * 0x5xxxxx VAs): the node pool + data/rdata blobs are loaded into one
+ * reserved arena and these macros add the base translation. This is the
+ * memory model, NOT a platform choice - it is gated on `MK4_ARENA`
+ * (orthogonal to whichever TARGET_* platform backend is linked).
  *
  *   ***  The relocated branch is the next open decision  ***
  * It is gated behind `MK4_ARENA` (defined once the arena loader exists)
@@ -33,9 +35,9 @@
 #ifndef MK4_PORTABLE_MEM_MODEL_H
 #define MK4_PORTABLE_MEM_MODEL_H
 
-#if defined(MK4_ARENA) || defined(TARGET_WEB)
+#if defined(MK4_ARENA)
 
-/* --- Relocated arena (Phase 1 target; inert until MK4_ARENA is set) --- */
+/* --- Relocated arena (any backend; inert until MK4_ARENA is set) --- */
 extern unsigned char *g_mk4Arena;       /* base of the reserved data arena */
 #define MK4_ORIG_IMAGE_BASE  0x00400000u
 #define MK4_PTR(va) \

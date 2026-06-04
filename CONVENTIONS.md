@@ -100,8 +100,21 @@ as used by the SM64 and OoT PC/Web ports):
 
 - **matching** (default, no flags): MSVC 5.0, byte-identical. The oracle.
 - **portable** (`-DNON_MATCHING`): non-MSVC toolchain, behavior-equivalent
-  C only, the base for native + WASM. See
-  [tools/decomp/AGENT_PORTABLE_WASM_MIGRATION.md](tools/decomp/AGENT_PORTABLE_WASM_MIGRATION.md).
+  C only, the shared base for EVERY port (native SDL, WASM, ...). See
+  [tools/decomp/AGENT_PORTABLE_MIGRATION.md](tools/decomp/AGENT_PORTABLE_MIGRATION.md).
+
+Three orthogonal axes - **WASM is not privileged, it is one backend**:
+
+| Flag | Axis | Notes |
+|---|---|---|
+| `-DNON_MATCHING` | build mode | drops byte-identity; shared by every port target |
+| `-DMK4_ARENA` | memory model | relocates absolute-VA / packed-ptr into one arena (`include/portable/mem_model.h`); needed by ANY relocated backend, native SDL included |
+| `-DTARGET_<X>` | platform backend | selects which PAL impl + main loop you LINK; backend code lives ONLY in `src/platform/<x>/` (`win32/`, future `sdl/`, `web/`) |
+
+So a contributor who wants an **SDL-native** port builds with
+`TARGET_SDL` and never compiles a line of WASM; WASM is `TARGET_WEB` +
+emscripten. The engine, the memory model, and the converted C are shared;
+only the thin backend differs.
 
 A function that must stay `__asm` to match gets a portable C twin behind
 `#ifdef NON_MATCHING`:
@@ -129,11 +142,14 @@ Rules:
   in the `#else` branch and are NOT a reason to skip the C twin.
 - The `NON_MATCHING` body needs only behavior equivalence, not identical
   bytes - do not fight MSVC codegen here.
-- Absolute VAs / packed-ptr (`addr >> 2`) used in a `NON_MATCHING` body
-  are fine on flat 32-bit targets; flag them for the Phase 1 memory-model
-  pass (`GLOBAL()` / `NODE()` translation) for native/WASM.
+- Node / absolute-VA access in a `NON_MATCHING` body goes through the
+  seam in `include/portable/mem_model.h`: `MK4_NODE(T, idx)` for packed
+  pointers, `MK4_VA(T, va)` for fixed-VA reads. Identity under matching /
+  flat 32-bit; arena-relative under `-DMK4_ARENA`. Do NOT write raw
+  `(T*)(idx*4)` in new twins - use the seam so the relocation is free.
 - Check one converted file with
-  `make portable-check SRC=src/path/file.c`.
+  `make portable-check SRC=src/path/file.c` (a multi-function file passes
+  only once ALL its functions are converted).
 
 ## Globals at fixed VAs
 

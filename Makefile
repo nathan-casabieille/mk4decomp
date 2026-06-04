@@ -130,15 +130,23 @@ $(BUILD_DIR):
 
 # === Portable / NON_MATCHING toolchain ===================================
 #
-# The portable build drops byte-identity (-DNON_MATCHING) and compiles
-# with a non-MSVC toolchain, so the codebase can target other platforms
-# (native first, then WASM via emscripten). See the migration brief:
-#   tools/decomp/AGENT_PORTABLE_WASM_MIGRATION.md
+# Three ORTHOGONAL axes (WASM is NOT privileged - it is one backend):
+#   -DNON_MATCHING : build mode. Drops byte-identity, swaps __asm bodies
+#                    for portable-C twins. Shared by EVERY port target.
+#   -DMK4_ARENA    : memory model. Relocates the absolute-VA / packed-ptr
+#                    layout into one arena (see include/portable/mem_model.h).
+#                    Needed by ANY relocated backend (native SDL included),
+#                    not just WASM.
+#   -DTARGET_<X>   : platform backend selector - which PAL impl + main loop
+#                    you LINK. Backend-specific code lives ONLY in
+#                    src/platform/<x>/ (e.g. win32/, sdl/, web/). A cloner
+#                    wanting an SDL-native port picks TARGET_SDL and never
+#                    compiles the web backend; WASM is TARGET_WEB + emcc.
+# See the migration brief: tools/decomp/AGENT_PORTABLE_MIGRATION.md
 #
-# i686-w64-mingw32 is the first portable target: 32-bit (matches the
+# i686-w64-mingw32 is the first compile target: 32-bit (matches the
 # packed-ptr / absolute-address memory model) and Windows (matches the
-# current Win32 / Glide / DirectSound platform surface). Native and WASM
-# backends come later behind -DTARGET_PORTABLE / -DTARGET_WEB.
+# current Win32 / Glide / DirectSound platform surface).
 #
 # Status: WIP. `make portable` will fail on functions still in x86
 # `__asm` (no NON_MATCHING C body yet) - that is the remaining-work
