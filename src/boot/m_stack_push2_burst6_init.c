@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,81 @@ extern unsigned int g_bootChainState4;
 extern unsigned int g_phaseChainTbl;
 extern void MStackPushChainStepIndex(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackPush2Burst6Init(void)
+
+{
+  int iVar1;
+  undefined *puVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  bool bVar5;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_currentNodeIdx;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_xformLoopCounter;
+  g_currentNodeIdx = g_bootChainState4;
+  MStackPushChainStepIndex();
+  if (g_framePauseFlag == 0) {
+    if ((g_xformDirtyFlags & 4) == 0) {
+      iVar3 = 6;
+      puVar4 = (undefined4 *)(g_currentNodeIdx * 4);
+      iVar1 = 1;
+      do {
+        *puVar4 = 0;
+        iVar3 = iVar3 + -4;
+        puVar4[1] = 0;
+        puVar4[2] = 0;
+        puVar4[3] = 0;
+        puVar4 = puVar4 + 4;
+        iVar1 = iVar1 + -1;
+      } while (iVar1 != 0);
+      if (0 < iVar3) {
+        for (; iVar3 != 0; iVar3 = iVar3 + -1) {
+          *puVar4 = 0;
+          puVar4 = puVar4 + 1;
+        }
+      }
+      iVar3 = 0xd;
+      g_currentNodeIdx = g_currentNodeIdx + 6;
+      g_walkCallback = 0;
+      puVar4 = (undefined4 *)(g_currentNodeIdx * 4);
+      iVar1 = 3;
+      do {
+        *puVar4 = 0;
+        iVar3 = iVar3 + -4;
+        puVar4[1] = 0;
+        puVar4[2] = 0;
+        puVar4[3] = 0;
+        puVar4 = puVar4 + 4;
+        iVar1 = iVar1 + -1;
+      } while (iVar1 != 0);
+      if (0 < iVar3) {
+        for (; iVar3 != 0; iVar3 = iVar3 + -1) {
+          *puVar4 = 0;
+          puVar4 = puVar4 + 1;
+        }
+      }
+      g_currentNodeIdx = g_currentNodeIdx + -6;
+      MK4_NODE_AT(undefined4, g_currentNodeIdx, 0x14) = g_baseSel;
+    }
+    g_eventQueuePending = g_currentNodeIdx;
+    g_xformLoopCounter = *(undefined4 *)((int)g_matrixStackTop * 4);
+    puVar2 = g_matrixStackTop + -1;
+    g_matrixStackTop = g_matrixStackTop + -2;
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+    if ((g_currentNodeIdx == 0) ||
+       (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, bVar5 = g_currentNodeIdx == 0,
+       g_currentNodeIdx = *(int *)((int)puVar2 * 4), bVar5)) {
+      g_eventQueuePending = 0;
+      g_currentNodeIdx = *(int *)((int)puVar2 * 4);
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void MStackPush2Burst6Init(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -227,3 +303,4 @@ __declspec(naked) void MStackPush2Burst6Init(void) {
         ret
     }
 }
+#endif

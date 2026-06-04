@@ -27,6 +27,14 @@ typedef unsigned char      uchar;
 typedef unsigned char      byte;
 typedef unsigned long      ulong;
 
+/* Ghidra emits C99 bool/true/false; provide them for C89 backends. Safe
+ * within the twins (no portable file includes <stdbool.h>). */
+#ifndef __cplusplus
+typedef int bool;
+#define true  1
+#define false 0
+#endif
+
 #endif /* NON_MATCHING */
 
 #endif /* MK4_PORTABLE_GHIDRA_TYPES_H */

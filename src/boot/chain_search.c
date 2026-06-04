@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,33 @@ extern unsigned int g_chain_arr_41f9c0;
 extern unsigned int g_chain_disp_0c_41f9c0;
 extern unsigned int g_chain_disp_2c_41f9c0;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ChainSearch(void)
+
+{
+  int iVar1;
+  
+  iVar1 = g_currentNodeIdx * 4;
+  do {
+    if (iVar1 == 0) {
+      g_currentNodeIdx = 0;
+      g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe | 4;
+      return;
+    }
+    if (*(int *)(iVar1 + 0xd8) != 0) {
+      g_currentNodeIdx = iVar1 >> 2;
+      g_eventQueueWorkType = MK4_NODE_AT(int, g_currentNodeIdx, 0xc);
+      if ((g_eventQueueWorkType == g_walkCallback) && (MK4_NODE_AT(int, g_currentNodeIdx, 0x2c) == g_cj_0054205c))
+      {
+        g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffb | 1;
+        return;
+      }
+    }
+    iVar1 = *(int *)(iVar1 + 0xe4);
+  } while( true );
+}
+#else
 __declspec(naked) void ChainSearch(void) {
     __asm {
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -168,3 +196,4 @@ loop41f9c0:
         ret
     }
 }
+#endif

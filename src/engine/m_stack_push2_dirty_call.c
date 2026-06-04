@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,34 @@ extern void SaveCallRestore(int);
  *   pause set.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SequenceLoopFalloutCalls(void)
+
+{
+  g_walkCallback = 0x238;
+  MStackPush2DirtyCall();
+  if (g_framePauseFlag == 0) {
+    while( true ) {
+      g_walkCallback = 0x238;
+      MStackPush2LLWalkCompare();
+      if (g_framePauseFlag != 0) break;
+      if (((byte)g_xformDirtyFlags & 4) != 0) {
+        SaveCallRestore(0x249);
+        SaveCallRestore(0x24a);
+        SaveCallRestore(0x23b);
+        return;
+      }
+      g_walkCallback = 0x238;
+      MStackPush2DirtyCall();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void SequenceLoopFalloutCalls(void) {
     __asm {
         push    ebx
@@ -163,3 +192,4 @@ done:
         ret
     }
 }
+#endif

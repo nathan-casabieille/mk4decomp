@@ -38,8 +38,7 @@ ROOT = Path(__file__).resolve().parents[2]
 # odd-width undefineds, and C99 bool/true/false (not assumed available).
 BAIL_TOKENS = ('code', 'CONCAT', 'SUB4', 'SUB8', 'SUB2', 'ZEXT', 'SEXT',
                'in_EAX', 'in_ECX', 'unaff_', 'extraout_', 'halt_baddata',
-               'undefined3', 'undefined5', 'undefined6', 'undefined7',
-               'bool', 'true', 'false')
+               'undefined3', 'undefined5', 'undefined6', 'undefined7')
 # Leftover Ghidra placeholders (unmapped global/func, code label, jump
 # table, or a PTR_<sym> indirect thunk) -> bail, keep the function naked.
 UNMAPPED = re.compile(

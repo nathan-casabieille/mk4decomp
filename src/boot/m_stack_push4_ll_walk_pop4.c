@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,52 @@ extern void MStackInitCallToggle(void);
 extern void ScaledStoreThree_00409260(void);
 extern void SplitHi8Lo24(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackPush4LLWalkPop4(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_currentNodeIdx;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_dualC;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
+  g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0);
+  g_cj_0054205c = g_currentNodeIdx;
+  g_dualC = g_eventQueuePending;
+  while( true ) {
+    if (g_walkCallback == 0) {
+      g_cj_0054205c = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_dualC = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_eventQueuePending = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+      g_currentNodeIdx = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
+      g_matrixStackTop = g_matrixStackTop + -4;
+      return;
+    }
+    g_dualC = g_dualC + 1;
+    SplitHi8Lo24();
+    if (g_framePauseFlag != 0) break;
+    g_walkCallback = g_eventQueueCurrent;
+    MStackInitCallToggle();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if ((((byte)g_xformDirtyFlags & 4) == 0) && (MK4_NODE_AT(int, g_currentNodeIdx, 0x28) != 0)) {
+      g_walkCallback = g_eventQueuePending >> 2;
+      g_eventQueuePending = MK4_NODE_AT(int, g_currentNodeIdx, 0x28);
+      ScaledStoreThree_00409260();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+    }
+    g_walkCallback = MK4_NODE_AT(int, g_dualC, 0);
+  }
+  return;
+}
+#else
 __declspec(naked) void MStackPush4LLWalkPop4(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -217,3 +264,4 @@ __declspec(naked) void MStackPush4LLWalkPop4(void) {
         ret
     }
 }
+#endif
