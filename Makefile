@@ -152,13 +152,23 @@ $(BUILD_DIR):
 # `__asm` (no NON_MATCHING C body yet) - that is the remaining-work
 # signal. Use `make portable-check SRC=...` to validate a single file's
 # NON_MATCHING branch as you convert it.
+# Backend selection (orthogonal axis): exactly one src/platform/<TARGET>/
+# backend is compiled into the portable build; the others are excluded.
+# Matching ignores TARGET entirely (it always compiles the real win32
+# engine layer). WASM = TARGET=web; native = TARGET=sdl; default win32.
+TARGET          ?= win32
+PORT_BACKENDS   := win32 sdl web
+PORT_DROP       := $(filter-out $(TARGET),$(PORT_BACKENDS))
+PORT_SOURCES    := $(C_SOURCES)
+$(foreach b,$(PORT_DROP),$(eval PORT_SOURCES := $(filter-out src/platform/$(b)/%,$(PORT_SOURCES))))
+
 CC_PORTABLE     := i686-w64-mingw32-gcc
 CFLAGS_PORTABLE := -DNON_MATCHING -DTARGET_PORTABLE -Iinclude -O2 -w
 PORT_OBJ_DIR    := $(BUILD_DIR)/obj-portable
-PORT_C_OBJS     := $(patsubst src/%.c,$(PORT_OBJ_DIR)/%.o,$(C_SOURCES))
+PORT_C_OBJS     := $(patsubst src/%.c,$(PORT_OBJ_DIR)/%.o,$(PORT_SOURCES))
 
 portable: $(PORT_C_OBJS)
-	@echo "portable: $(words $(PORT_C_OBJS)) objects compiled."
+	@echo "portable (TARGET=$(TARGET)): $(words $(PORT_C_OBJS)) objects compiled."
 	@echo "  (link step is TODO until the asm->C conversion + PAL land)"
 
 $(PORT_OBJ_DIR)/%.o: src/%.c
