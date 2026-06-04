@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -126,7 +126,7 @@ extern unsigned int g_audioStateByte730;
 __declspec(naked) void AudioStateRemapB(void) {
     __asm {
         mov     ecx, dword ptr [g_audioPeriodicSlot]
-        mov     eax, dword ptr [g_acc_00542078]
+        mov     eax, dword ptr [g_chainAccumCur]
         test    ecx, ecx
         mov     dword ptr [g_dlNalt2], eax
         je      tail

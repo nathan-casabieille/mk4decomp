@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -112,9 +112,9 @@ extern unsigned int g_fightAxisPosY;
  *   eax = g_cj_00542058; ecx = [eax*4]; ++eax;
  *   g_xformEntityIdx = ecx; g_cj_00542058 = eax;
  *   g_walkCallback = 0x5f; g_eventQueueCurrent = 4;
- *   ecx = [eax*4]; ++eax; g_acc_00542078 = ecx; g_cj_00542058 = eax;
+ *   ecx = [eax*4]; ++eax; g_chainAccumCur = ecx; g_cj_00542058 = eax;
  *   edx = [eax*4]; ++eax; ecx<<=0x10; edx<<=0x10;
- *   g_cj_00542058 = eax; g_acc_00542078 = ecx; g_eventQueueNotMask = edx;
+ *   g_cj_00542058 = eax; g_chainAccumCur = ecx; g_eventQueueNotMask = edx;
  *   call Push70CallScaleArith; if pause: ret;
  *   edx = g_scaledInit; eax = 0x19999;
  *   g_walkCallback = eax; [edx*4 + 0x5c] = eax; ret.
@@ -129,14 +129,14 @@ void TripleArgScaledShiftCall(void) {
     g_eventQueueCurrent = 4;
     val2 = *(unsigned int *)(cj * 4);
     cj++;
-    g_acc_00542078 = val2;
+    g_chainAccumCur = val2;
     g_cj_00542058 = cj;
     val3 = *(unsigned int *)(cj * 4);
     cj++;
     val2 <<= 0x10;
     val3 <<= 0x10;
     g_cj_00542058 = cj;
-    g_acc_00542078 = val2;
+    g_chainAccumCur = val2;
     g_eventQueueNotMask = val3;
     Push70CallScaleArith();
     if (g_framePauseFlag != 0) return;

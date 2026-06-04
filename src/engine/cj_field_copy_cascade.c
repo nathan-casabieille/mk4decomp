@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback=2; call BootStateTriple; if pause? ret.
  *   Then for k in {0, 0x30, 0x34, 0x38}: copy scaledInit[k] to g_xformEntityIdx[k]
  *     (first iteration also OR's al with 4).
- *   Then call MStackBracket7_DispatchAndChain; if !pause: g_walkCallback=3, g_acc_00542078=2, tail-jmp GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b; ret.
+ *   Then call MStackBracket7_DispatchAndChain; if !pause: g_walkCallback=3, g_chainAccumCur=2, tail-jmp GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b; ret.
  */
 extern void BootStateTriple(void);
 extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b(void);
@@ -171,7 +171,7 @@ __declspec(naked) void CjFieldCopyCascade(void) {
         _emit   75h
         _emit   19h
         mov     dword ptr [g_walkCallback], 3
-        mov     dword ptr [g_acc_00542078], 2
+        mov     dword ptr [g_chainAccumCur], 2
         jmp     GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b
         ret
     }

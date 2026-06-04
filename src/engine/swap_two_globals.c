@@ -21,7 +21,7 @@ extern unsigned int g_currentNodeIdx;
  *   890d78205400 = mov [0x00542078], ecx
  *   jmp T
  */
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern void ScaledChainDouble(void);
 extern void Atan2QuadrantLookup(void);
 void SwapTwoGlobals(void) {
@@ -31,6 +31,6 @@ void SwapTwoGlobals(void) {
     a = g_eventQueueNotMask;
     b = g_eventQueueChild;
     g_eventQueueWorkType = a;
-    g_acc_00542078 = b;
+    g_chainAccumCur = b;
     Atan2QuadrantLookup();
 }

@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 
 /* @addr 0x0043a630 (58b)
  *   mov     eax, [g_currentNodeIdx]

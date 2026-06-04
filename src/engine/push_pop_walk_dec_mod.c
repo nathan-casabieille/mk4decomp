@@ -10,10 +10,10 @@ extern unsigned int g_currentNodeIdx;
 /* @addr 0x004923f0 (91b)
  *   inc g_matrixStackTop; push g_eventQueueCurrent; load walk;
  *   dec walk; if walk<0 jmp shift-amount path; else fall through.
- *   Computes shifted-mod via [g_zero_0053a470 + ecx*4] table.
+ *   Computes shifted-mod via [g_eventMaskState + ecx*4] table.
  */
 extern unsigned int g_eventQueueCurrent_mm;
-extern unsigned int g_zero_0053a470;
+extern unsigned int g_eventMaskState;
 
 __declspec(naked) void PushPopWalkDecMod(void) {
     __asm {
@@ -28,7 +28,7 @@ __declspec(naked) void PushPopWalkDecMod(void) {
         _emit   78h
         _emit   1dh
         mov     edx, eax
-        mov     eax, dword ptr [g_zero_0053a470]
+        mov     eax, dword ptr [g_eventMaskState]
         lea     ecx, [edx*4 + 0]
         shr     eax, cl
         and     eax, 0x0f

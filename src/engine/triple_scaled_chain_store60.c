@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -107,11 +107,11 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 
 /* @addr 0x00431450 (124b) - twin of 0x004313d0 with chain offsets 0x60/0x64/0x68. */
 void TripleScaledChainStore60(int arg) {
-    unsigned int cj = g_load_0052ab10;
+    unsigned int cj = g_eventQueueSeed;
     unsigned int idx;
     unsigned int v;
     idx = (unsigned int)(arg >> 2);

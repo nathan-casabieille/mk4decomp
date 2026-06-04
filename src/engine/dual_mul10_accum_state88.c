@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -114,7 +114,7 @@ extern void DualMul10AccumState88(void);
  *   Block A (chain[+0x84]!=0): update state machine: g_walkCallback=-0x28f (sign-extended from 0xfd71),
  *     g_eventQueueCurrent=[g_fightGroupHead*4+0x58] clamped to >=0xfffd8000; g_xformScratch2088 -= 0x51e;
  *     if g_xformScratch2088 still > 0xfffcdbc1: install-self path; else call ScaledInitWithCounterAndType_004314f0, pop+ret.
- *   Block B (chain[+0x84]==0): g_xformScratch2088=0x3243f; g_acc_00542078=0x7cccc; call DualMul10AccumState88;
+ *   Block B (chain[+0x84]==0): g_xformScratch2088=0x3243f; g_chainAccumCur=0x7cccc; call DualMul10AccumState88;
  *     if !pause: install-self at +0x08=0x00431f40, chain[+0x84]=1, g_pendingNodeType=1, pause=1; pop+ret.
  */
 extern void ScaledInitWithCounterAndType_004314f0(void);
@@ -150,7 +150,7 @@ __declspec(naked) void InstallSelfState88(void) {
         pop     esi
         ret
         mov     dword ptr [g_xformScratch2088], 0x0003243f
-        mov     dword ptr [g_acc_00542078], 0x00070ccc
+        mov     dword ptr [g_chainAccumCur], 0x00070ccc
         call    DualMul10AccumState88
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

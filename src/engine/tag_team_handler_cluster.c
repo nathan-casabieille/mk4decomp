@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -122,7 +122,7 @@ extern void InstallSelfChainStateInit(void);
 extern void ComboMenuFsmCluster(void);
 extern unsigned int g_pendingMatchAudio2;
 
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern void MStackAngleRatioSubchain(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
@@ -211,7 +211,7 @@ __declspec(naked) void ThrowEventCluster(void)
         ret
     L_ea9c:
         /* case 2: set 0054205c, 43ed70, install state 3 */
-        mov      ecx, dword ptr [g_load_0052ab10]
+        mov      ecx, dword ptr [g_eventQueueSeed]
         mov      dword ptr [g_fightGroupHead], ecx
         call     StackPushCallPopChain
         cmp      dword ptr [g_framePauseFlag], edi
@@ -326,7 +326,7 @@ __declspec(naked) void ThrowEventCluster(void)
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [g_eventQueueIdx]
         mov      dword ptr [eax*4 + 0x68], ecx
-        mov      edx, dword ptr [g_load_0052ab10]
+        mov      edx, dword ptr [g_eventQueueSeed]
         mov      dword ptr [g_currentNodeFlags], 0x1999
         mov      dword ptr [g_fightGroupHead], edx
     L_ec49:

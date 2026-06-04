@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 
 /* @addr 0x00470980 (55b)
  *   mov     ecx, [g_gtPlayerProbe2]

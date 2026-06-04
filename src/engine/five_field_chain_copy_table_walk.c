@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -111,10 +111,10 @@ extern unsigned int g_walkBoundsLimit;
 extern unsigned int g_walkBoundsSlot;
 extern unsigned int g_pendingClear;
 extern unsigned int g_xformEntityIdxSrc;
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 
 /* @addr 0x00431260 (256b game) - 5-field copy from indexed table to chain.
- *   eax = g_load_0052ab10 (chain base); ecx = g_xformEntityIdxSrc (table idx).
+ *   eax = g_eventQueueSeed (chain base); ecx = g_xformEntityIdxSrc (table idx).
  *   g_currentNodeIdx = eax; g_xformEntityIdx = ecx.
  *   Initial: chain[+0x54] = table[+0]. Then 4 more iterations:
  *     idx++; chain[+0x58/+0x5c/+0x60/+0x64] = table[+idx]; g_walkCallback=value.
@@ -124,7 +124,7 @@ extern unsigned int g_load_0052ab10;
  *   g_walkBoundsLimit=0xffff0000; ret.
  */
 void FiveFieldChainCopyTableWalk(void) {
-    g_currentNodeIdx = g_load_0052ab10;
+    g_currentNodeIdx = g_eventQueueSeed;
     g_xformEntityIdx = g_xformEntityIdxSrc;
     g_walkCallback = *(unsigned int *)(g_xformEntityIdx * 4);
     ((ScenegraphNode *)(g_currentNodeIdx * 4))->position_x = g_walkCallback;

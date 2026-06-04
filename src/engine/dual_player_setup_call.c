@@ -17,7 +17,7 @@
  *   mov     [g_eventQueueEnd], ecx
  *   mov     ecx, [eax*4 + 0x34]
  *   push    edx
- *   mov     [g_acc_00542078], ecx
+ *   mov     [g_chainAccumCur], ecx
  *   call    Func
  *   add     esp, 4
  *   ret
@@ -26,7 +26,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 
 extern void ChainPickArgScaledInit(int);
 
@@ -50,7 +50,7 @@ __declspec(naked) void DualPlayerSetupCall_ChainPickArgScaledInit_0045dcd0(void)
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     ecx, dword ptr [eax*4 + 0x34]
         push    edx
-        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_chainAccumCur], ecx
         call    ChainPickArgScaledInit
         add     esp, 4
         ret
@@ -75,7 +75,7 @@ __declspec(naked) void DualPlayerSetupCall_ChainPickArgScaledInit_0045dd30(void)
         mov     dword ptr [g_eventQueueEnd], ecx
         mov     ecx, dword ptr [eax*4 + 0x34]
         push    edx
-        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_chainAccumCur], ecx
         call    ChainPickArgScaledInit
         add     esp, 4
         ret

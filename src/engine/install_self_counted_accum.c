@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -120,7 +120,7 @@ extern unsigned int g_fightAxisPosY;
  *     chain[esi+0x5c] = ecx. install self: [eax+8]=0x42e1d0, [eax+0x84]=1.
  *     g_pendingNodeType = 2; pause = 1.
  */
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 
 __declspec(naked) void InstallSelfCountedAccum(void) {
     __asm {
@@ -142,7 +142,7 @@ __declspec(naked) void InstallSelfCountedAccum(void) {
         pop     edi
         pop     esi
         ret
-        mov     esi, dword ptr [g_load_0052ab10]
+        mov     esi, dword ptr [g_eventQueueSeed]
         mov     edx, 0x004e38d0
         shr     edx, 2
         mov     dword ptr [g_fightGroupHead], esi

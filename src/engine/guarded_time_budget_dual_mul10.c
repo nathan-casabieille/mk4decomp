@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -113,8 +113,8 @@ extern unsigned int g_fightAxisPosY;
  *   call TimeBudgetSubCallChain; if pause: ret;
  *   push g_eventQueueWorkType, g_currentNodeFlags;
  *   call Mul10Tail; store to g_eventQueueWorkType;
- *   push g_acc_00542078, g_currentNodeFlags;
- *   call Mul10Tail; store to g_acc_00542078; ret.
+ *   push g_chainAccumCur, g_currentNodeFlags;
+ *   call Mul10Tail; store to g_chainAccumCur; ret.
  */
 void GuardedTimeBudgetDualMul10(void) {
     BootMod6487eClampAndChainMul10();
@@ -122,5 +122,5 @@ void GuardedTimeBudgetDualMul10(void) {
     WalkCbSubMul10();
     if (g_framePauseFlag != 0) return;
     g_eventQueueWorkType = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_currentNodeFlags, g_eventQueueWorkType);
-    g_acc_00542078 = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_currentNodeFlags, g_acc_00542078);
+    g_chainAccumCur = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_currentNodeFlags, g_chainAccumCur);
 }

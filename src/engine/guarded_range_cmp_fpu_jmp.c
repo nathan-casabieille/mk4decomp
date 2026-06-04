@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -114,19 +114,19 @@ extern unsigned int g_fightAxisPosY;
  *   cmp eax,ecx; if lt: ret;
  *   ecx = g_rangeBase; edx = g_eventQueueWorkType;
  *   ecx -= edx; g_eventQueueWorkType = eax;
- *   g_acc_00542078 = ecx; call FpuSqrtMul;
+ *   g_chainAccumCur = ecx; call FpuSqrtMul;
  *   if pause: ret;
- *   edx = g_walkCallback; eax = g_acc_00542078;
+ *   edx = g_walkCallback; eax = g_chainAccumCur;
  *   cmp edx,eax; if le: ret; else: jmp 0x42b930.
  */
 void GuardedRangeCmpFpuJmp(void) {
     ScaledLoadCmpStoreXfm();
     if (g_framePauseFlag != 0) return;
     if ((int)g_walkCallback < (int)g_eventQueueCurrent) return;
-    g_acc_00542078 = g_rangeBase - g_eventQueueWorkType;
+    g_chainAccumCur = g_rangeBase - g_eventQueueWorkType;
     g_eventQueueWorkType = g_walkCallback;
     FpuSqrtMul();
     if (g_framePauseFlag != 0) return;
-    if ((int)g_walkCallback <= (int)g_acc_00542078) return;
+    if ((int)g_walkCallback <= (int)g_chainAccumCur) return;
     PendingMatch_StoreTwoCall_0042b930();
 }

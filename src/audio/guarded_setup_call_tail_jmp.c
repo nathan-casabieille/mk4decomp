@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   call AllocSlotPushTripleGlobals; if pause: ret;
  *   eax = arg0 >> 2 → g_xformEntityIdx; ecx = arg1;
  *   g_walkCallback = 0xa000; g_eventQueueCurrent = 4;
- *   g_acc_00542078 = 0; g_eventQueueNotMask = ecx;
+ *   g_chainAccumCur = 0; g_eventQueueNotMask = ecx;
  *   call Push70CallScaleArith; if no pause: jmp MStackPop4Rewrite; else ret.
  */
 void GuardedSetupCallTailJmp(unsigned int arg0, unsigned int arg1) {
@@ -121,7 +121,7 @@ void GuardedSetupCallTailJmp(unsigned int arg0, unsigned int arg1) {
     g_xformEntityIdx = arg0 >> 2;
     g_walkCallback = (void (*)(void))0xa000;
     g_eventQueueCurrent = 4;
-    g_acc_00542078 = 0;
+    g_chainAccumCur = 0;
     g_eventQueueNotMask = arg1;
     Push70CallScaleArith();
     if (g_framePauseFlag != 0) return;

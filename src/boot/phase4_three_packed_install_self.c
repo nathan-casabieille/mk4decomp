@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -112,8 +112,8 @@ extern unsigned int g_pendingMatchVar;
 extern unsigned int g_dispatchSave917;
 extern unsigned int g_phase4ThreePackedBase;
 extern unsigned int g_dispatchSave778;
-extern unsigned int g_load_0052ab04;
-extern unsigned int g_load_0052ab08;
+extern unsigned int g_distRefX;
+extern unsigned int g_distRefZ;
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_installOwner2;
 extern unsigned int g_dispatchSave71;
@@ -244,7 +244,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf(void)
         call    Mul10Tail
         add     esp, 8
         mov     dword ptr [g_walkCallback], eax
-        mov     eax, dword ptr [g_load_0052ab04]
+        mov     eax, dword ptr [g_distRefX]
         push    eax
         push    0x3333
         mov     dword ptr [g_eventQueueCurrent], eax
@@ -263,7 +263,7 @@ __declspec(naked) void Phase4ThreePackedInstallSelf(void)
         call    Mul10Tail
         add     esp, 8
         mov     dword ptr [g_walkCallback], eax
-        mov     eax, dword ptr [g_load_0052ab08]
+        mov     eax, dword ptr [g_distRefZ]
         push    eax
         push    0x3333
         mov     dword ptr [g_eventQueueCurrent], eax

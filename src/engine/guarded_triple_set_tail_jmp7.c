@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   [g_xformEntityIdx*4] |= 4; ecx=g_xformEntityIdx;
  *   eax=0xa0000; g_walkCallback=eax; [ecx*4+0x34]=eax;
  *   call MStackBracket7_DispatchAndChain; if pause: ret;
- *   g_acc_00542078 = 5; g_walkCallback = 7; jmp GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d.
+ *   g_chainAccumCur = 5; g_walkCallback = 7; jmp GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d.
  */
 void GuardedTripleSetTailJmp7(void) {
     unsigned int v;
@@ -130,7 +130,7 @@ void GuardedTripleSetTailJmp7(void) {
     ((ScenegraphNode *)(g_xformEntityIdx * 4))->state_mask = 0xa0000;
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag != 0) return;
-    g_acc_00542078 = 5;
+    g_chainAccumCur = 5;
     g_walkCallback = (void (*)(void))7;
     GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d();
 }

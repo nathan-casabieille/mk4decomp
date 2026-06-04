@@ -9,7 +9,7 @@ extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x0042fc40 (50b)
  *   mov     eax, [g_eventQueueWorkType]
- *   mov     ecx, [g_acc_00542078]
+ *   mov     ecx, [g_chainAccumCur]
  *   sub     eax, 0x0a3d
  *   cmp     ecx, eax
  *   mov     [g_eventQueueWorkType], eax
@@ -22,7 +22,7 @@ extern unsigned int g_currentNodeIdx;
  *   jmp     T2
  *   ret
  */
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern void GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fb80(void);
 extern void PoseBlendDriver(void);
 extern void PhaseInstall2DInterpDispatch(void);
@@ -31,7 +31,7 @@ void SubCmpCallPauseJmp(void) {
     int acc;
     new_wt = g_eventQueueWorkType;
     new_wt -= 0x0a3d;
-    acc = (int)g_acc_00542078;
+    acc = (int)g_chainAccumCur;
     g_eventQueueWorkType = new_wt;
     if (acc > (int)new_wt) {
         GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fb80();

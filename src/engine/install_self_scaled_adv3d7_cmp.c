@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0043a830 (286b game) - scaled-step + threshold cmp + install-self.
  *   Load idx=g_baseSel; entry=ecx=*idx*4; state=[idx*4+0x84]; clear state.
- *   state==0: clear-and-init path; copy [idx*4+0x58], [g_acc_00542078]; fall to install.
+ *   state==0: clear-and-init path; copy [idx*4+0x58], [g_chainAccumCur]; fall to install.
  *   state!=0: bump [g_eventQueueEnd*4 + 0x70] by 0x3d7; compare with [g_baseSel*4 + 0x5c].
  *     if eax<edx: jump to install (state stays 1).
  *     else: clear scaledInit fields; tail-call StackPopDispatchTagged.
@@ -162,7 +162,7 @@ __declspec(naked) void InstallSelfScaledAdv3d7Cmp(void) {
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [edx*4 + 0x5c], eax
         mov     eax, dword ptr [g_eventQueueEnd]
-        mov     edx, dword ptr [g_acc_00542078]
+        mov     edx, dword ptr [g_chainAccumCur]
         mov     dword ptr [eax*4 + 0x70], edx
     install:
         mov     eax, 1

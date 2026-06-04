@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -120,13 +120,13 @@ extern unsigned int g_fightAxisPosY;
  *   14b NOP align pad.
  *   Entry 2 / body (offset 0xd0, 171b): mstack-pushes
  *     g_pendingNodeType/0054205c, calls ChainWalkPushPop.
- *     On no-error: g_pendingNodeType = g_load_0052ab10, computes
+ *     On no-error: g_pendingNodeType = g_eventQueueSeed, computes
  *     [g_fightGroupHead*4+0x58] += 0x9fd70; if greater than the new
  *     0x54204c-derived value adds 0x3be3d7 instead. Then pops both
  *     mstack entries back.
  */
 extern unsigned int g_dispatchSave562;
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern unsigned int g_particleEmitterNode;
 extern unsigned int g_phaseChainTbl;
 extern void ChainWalkPushPop(void);
@@ -204,7 +204,7 @@ __declspec(naked) void BootSetupWithMStackBody(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     short L_bsm_bodyEnd
-        mov     ecx, dword ptr [g_load_0052ab10]
+        mov     ecx, dword ptr [g_eventQueueSeed]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_pendingNodeType], ecx
         push    esi

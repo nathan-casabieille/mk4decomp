@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -114,7 +114,7 @@ extern unsigned int g_fightAxisPosY;
  *   After: g_fightGroupHead = [0x52ab10]; g_walkCallback = chain[+0x74] = 0xffffaaab;
  *   mstack-pop into g_eventQueueWorkType, g_eventQueueCurrent.
  */
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern void MStackBracket3Init4bd5e0Tail(void);
 
 extern unsigned int g_matrixStack_arr;
@@ -152,7 +152,7 @@ void CountedLoopMStack(void) {
         _emit   74h
         _emit   0d3h
         ret
-        mov     eax, dword ptr [g_load_0052ab10]
+        mov     eax, dword ptr [g_eventQueueSeed]
         mov     ecx, 0xffffaaab
         mov     dword ptr [g_fightGroupHead], eax
         mov     dword ptr [g_walkCallback], ecx

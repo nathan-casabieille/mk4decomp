@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -116,7 +116,7 @@ extern void RoundCleanupCluster_Ten404c40_404bd0(void);
  *   poll: SaveCallRestore(0x22); SaveCallRestoreOrXor(0x22); while (state & 4): retry.
  *   walkCallback = max(g_gameCountdown, 0); call StoreIncrMStackPush6; pause? ret.
  *   set fixed state (walkCallback=2, g_eventQueueWorkType=0x22, g_eventQueueCurrent=2,
- *   g_acc_00542078=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
+ *   g_chainAccumCur=0, g_eventQueueNotMask=0xff960000, g_currentNodeFlags=2);
  *   call DispatcherComplex181; pause? ret; call RoundCleanupCluster_Ten404c40_404bd0.
  */
 extern unsigned int g_dispatchSave689;
@@ -190,7 +190,7 @@ loopPoll:
         mov     eax, 2
         mov     dword ptr [g_eventQueueWorkType], 0x22
         mov     dword ptr [g_eventQueueCurrent], eax
-        mov     dword ptr [g_acc_00542078], 0
+        mov     dword ptr [g_chainAccumCur], 0
         mov     dword ptr [g_eventQueueNotMask], 0xff960000
         mov     dword ptr [g_currentNodeFlags], eax
         call    DispatcherComplex181_Push70CallScaleArith
@@ -467,14 +467,14 @@ __declspec(naked) void RoundCleanupCluster_ArgSarStoreJmp(void)
         ret
     L_5abd:
         mov      ecx, dword ptr [g_eventQueueIdx]
-        mov      dword ptr [g_acc_00542078], 0x16666
+        mov      dword ptr [g_chainAccumCur], 0x16666
         mov      dword ptr [g_currentNodeIdx], ecx
         mov      dword ptr [g_eventQueueNotMask], edi
         call     ChainGatedNegAccum
         cmp      dword ptr [g_framePauseFlag], edi
         jne      short L_5b22
         mov      edx, dword ptr [g_eventQueueEnd]
-        mov      eax, dword ptr [g_acc_00542078]
+        mov      eax, dword ptr [g_chainAccumCur]
         push     OFFSET g_dispatchSave691
         mov      dword ptr [edx*4 + 0x54], eax
         mov      ecx, dword ptr [g_eventQueueEnd]

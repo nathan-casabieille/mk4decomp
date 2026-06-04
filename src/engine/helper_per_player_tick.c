@@ -4,9 +4,9 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_load_0052ab04;
-extern unsigned int g_load_0052ab08;
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_distRefX;
+extern unsigned int g_distRefZ;
+extern unsigned int g_eventQueueSeed;
 extern unsigned int g_phaseThunkSlot7;
 extern unsigned int g_audioBridgeSlot2;
 extern unsigned int g_dispatchVar35;
@@ -27,7 +27,7 @@ extern unsigned int g_phaseThunkState;
 extern unsigned int g_dispatchVar14;
 extern unsigned int g_scenegraphWalkEnd;
 extern unsigned int g_bootInitSaveSlot;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_xformScratch94;
 extern void DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThresholdRevertAdvance(void);
 extern void DualInstallCallSwap_CjChainResetThreshold_then_CjChainResetThreshold(void);
@@ -60,28 +60,28 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         lea      edi, [eax + edx]
         sub      eax, edx
         sar      edi, 1
-        mov      dword ptr [g_load_0052ab04], edi
+        mov      dword ptr [g_distRefX], edi
         lea      edi, [ecx + esi]
         sar      edi, 1
         sub      ecx, esi
         push     eax
         push     eax
-        mov      dword ptr [g_load_0052ab08], edi
+        mov      dword ptr [g_distRefZ], edi
         mov      dword ptr [g_eventQueueWorkType], eax
-        mov      dword ptr [g_acc_00542078], ecx
+        mov      dword ptr [g_chainAccumCur], ecx
         mov      dword ptr [g_eventQueueNotMask], eax
         mov      dword ptr [g_eventQueueChild], ecx
         call     Mul10Tail
         add      esp, 8
         mov      dword ptr [g_eventQueueWorkType], eax
-        mov      eax, dword ptr [g_acc_00542078]
+        mov      eax, dword ptr [g_chainAccumCur]
         push     eax
         push     eax
         call     Mul10Tail
         mov      ecx, dword ptr [g_eventQueueWorkType]
         add      esp, 8
         add      ecx, eax
-        mov      dword ptr [g_acc_00542078], eax
+        mov      dword ptr [g_chainAccumCur], eax
         mov      dword ptr [g_eventQueueWorkType], ecx
         call     FpuSqrtMul
         mov      eax, dword ptr [g_framePauseFlag]
@@ -147,10 +147,10 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         test     eax, eax
         mov      dword ptr [g_phaseInstallSlot], eax
         jne      L_9569
-        mov      edx, dword ptr [g_load_0052ab04]
+        mov      edx, dword ptr [g_distRefX]
         mov      edi, dword ptr [g_fightAxisPosX]
         lea      eax, [esi + edx]
-        mov      esi, dword ptr [g_load_0052ab08]
+        mov      esi, dword ptr [g_distRefZ]
         add      edx, ecx
         mov      ecx, esi
         mov      dword ptr [g_eventQueueNotMask], edx
@@ -170,18 +170,18 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      dword ptr [g_walkCallback], edx
         mov      dword ptr [g_eventQueueCurrent], esi
         mov      dword ptr [g_eventQueueWorkType], eax
-        mov      dword ptr [g_acc_00542078], ecx
+        mov      dword ptr [g_chainAccumCur], ecx
         call     Mul10Tail
         add      esp, 8
         mov      dword ptr [g_eventQueueWorkType], eax
-        mov      eax, dword ptr [g_acc_00542078]
+        mov      eax, dword ptr [g_chainAccumCur]
         push     eax
         push     eax
         call     Mul10Tail
         mov      ecx, dword ptr [g_eventQueueWorkType]
         mov      edi, dword ptr [g_walkCallback]
         mov      esi, dword ptr [g_eventQueueChild]
-        mov      dword ptr [g_acc_00542078], eax
+        mov      dword ptr [g_chainAccumCur], eax
         add      ecx, eax
         mov      eax, dword ptr [g_eventQueueNotMask]
         add      esp, 8
@@ -213,20 +213,20 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      eax, dword ptr [g_dispatchVar35]
         mov      ecx, dword ptr [g_phaseThunkSlot7]
     L_9531:
-        mov      esi, dword ptr [g_load_0052ab08]
-        mov      edx, dword ptr [g_load_0052ab04]
+        mov      esi, dword ptr [g_distRefZ]
+        mov      edx, dword ptr [g_distRefX]
         mov      dword ptr [g_walkBoundsLimit], ecx
         mov      dword ptr [g_walkBoundsSlot], eax
         sub      ecx, esi
         sub      eax, edx
         mov      dword ptr [g_eventQueueWorkType], edx
-        mov      dword ptr [g_acc_00542078], esi
+        mov      dword ptr [g_chainAccumCur], esi
         mov      dword ptr [g_eventQueueCurrent], ecx
         mov      dword ptr [g_dispatchVar14], eax
         mov      dword ptr [g_scenegraphWalkEnd], ecx
     L_9569:
         mov      ecx, dword ptr [g_fightAxisPosY]
-        mov      eax, dword ptr [g_load_0052ab10]
+        mov      eax, dword ptr [g_eventQueueSeed]
         test     ecx, ecx
         mov      dword ptr [g_pendingNodeType], eax
         mov      dword ptr [g_walkCallback], ecx
@@ -248,7 +248,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         mov      ecx, dword ptr [eax*4 + 0x54]
         mov      dword ptr [g_eventQueueWorkType], ecx
         mov      edx, dword ptr [eax*4 + 0x5c]
-        mov      dword ptr [g_acc_00542078], edx
+        mov      dword ptr [g_chainAccumCur], edx
         mov      eax, dword ptr [esi*4 + 0x54]
         mov      dword ptr [g_eventQueueNotMask], eax
         mov      esi, dword ptr [esi*4 + 0x5c]
@@ -300,7 +300,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
     L_968e:
         add      edx, esi
         add      eax, ecx
-        mov      dword ptr [g_acc_00542078], edx
+        mov      dword ptr [g_chainAccumCur], edx
         mov      dword ptr [g_eventQueueCurrent], eax
         jns      L_96a6
         neg      eax
@@ -346,7 +346,7 @@ __declspec(naked) void Helper_PerPlayerTick(void)
     L_9722:
         add      edx, esi
         add      eax, ecx
-        mov      dword ptr [g_acc_00542078], edx
+        mov      dword ptr [g_chainAccumCur], edx
         mov      dword ptr [g_eventQueueCurrent], eax
         jns      L_973a
         neg      eax

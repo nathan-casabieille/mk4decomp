@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -120,7 +120,7 @@ extern unsigned int g_particleEmitterNode;
  *   push 0x4f3030, g_scaledInit; call Title_PressStartScreen; add esp, 8.
  *   g_scaledInit = [0x52ab10]; push 0x4f3040, g_scaledInit; call Title_PressStartScreen; add esp, 8.
  */
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 
 void ChainInitDoublePushCall(void) {
     __asm {
@@ -153,7 +153,7 @@ void ChainInitDoublePushCall(void) {
         push    0x004f3030
         push    ecx
         call    Title_PressStartScreen
-        mov     eax, dword ptr [g_load_0052ab10]
+        mov     eax, dword ptr [g_eventQueueSeed]
         add     esp, 8
         mov     dword ptr [g_currentNodeIdx], eax
         push    0x004f3040

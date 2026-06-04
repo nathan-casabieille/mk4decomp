@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -60,8 +60,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -149,7 +149,7 @@ __declspec(naked) void GameNetSyncState(void)
         mov      eax, dword ptr [g_audioInstall2State]
         mov      dword ptr [g_eventQueueNotMask], esi
         cmp      eax, 0xf
-        mov      dword ptr [g_acc_00542078], eax
+        mov      dword ptr [g_chainAccumCur], eax
         ja       L_fcd4
         push     0x252
         call     DualPushSetCallDualPop
@@ -196,7 +196,7 @@ __declspec(naked) void GameNetSyncState(void)
         add      esp, 4
         test     al, bl
         je       short L_fc9e
-        mov      edx, dword ptr [g_acc_00542078]
+        mov      edx, dword ptr [g_chainAccumCur]
         mov      eax, dword ptr [g_audioInitPeriodic]
         cmp      edx, eax
         je       short L_fd46
@@ -205,7 +205,7 @@ __declspec(naked) void GameNetSyncState(void)
         call     BitSetByIndex
         cmp      dword ptr [g_framePauseFlag], esi
         jne      short L_fd46
-        mov      eax, dword ptr [g_acc_00542078]
+        mov      eax, dword ptr [g_chainAccumCur]
         push     0x238
         push     OFFSET MStackDualPushSaveRestore + 0x140
         mov      dword ptr [g_eventQueueChild], eax

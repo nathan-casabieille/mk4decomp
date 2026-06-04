@@ -15,9 +15,9 @@ extern unsigned int g_baseSel;
  *   mov     [eax*4 + 0x58], ecx
  *   ret
  */
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 void LoadStoreScaled58(void) {
-    unsigned int idx = g_load_0052ab10;
+    unsigned int idx = g_eventQueueSeed;
     g_fightGroupHead = idx;
     g_walkCallback   = (void(*)(void))0xfffe8000;
     ((ScenegraphNode *)(idx * 4))->position_y = (s32)0xfffe8000;

@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern unsigned int g_dispatchArr;
 extern void AiAngleDistComputation(void);
 extern void CameraAimSplineDriver(void);
@@ -208,7 +208,7 @@ __declspec(naked) void PoseFsmTriHelpers(void)
         ret
     L_1747:
         mov      edx, dword ptr [g_baseSel]
-        mov      ecx, dword ptr [g_load_0052ab10]
+        mov      ecx, dword ptr [g_eventQueueSeed]
         mov      dword ptr [g_fightGroupHead], ecx
         mov      dword ptr [g_walkCallback], edi
         lea      eax, [edx*4]

@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -127,11 +127,11 @@ extern void GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042f
  *   g_player1NodeIdx → ChainFieldTest2Branch → load g_player2NodeIdx
  *   → ChainFieldTest2Branch → LoadSetCallPauseStoreJmp →
  *   MStackPush4DualCallAbsPop4. After the chain:
- *     - if g_acc_00542078 > 0xa3d, tail-call WalkTowardTargetFsm.
+ *     - if g_chainAccumCur > 0xa3d, tail-call WalkTowardTargetFsm.
  *     - else call DualMul10ChainAcc7C, then if g_eventQueueNotMask <
  *       0x300000 tail-call EsiInstallChainCallCmpThreshold.
  *     - else (>= 0x370000): compute eax = g_eventQueueWorkType - 0x1999,
- *       store into g_acc_00542078, compare 0x54206c/0x542070 against it
+ *       store into g_chainAccumCur, compare 0x54206c/0x542070 against it
  *       and select one of three tails:
  *         - if 0x54206c <  threshold: GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0
  *         - else if 0x542070 < threshold: GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0
@@ -174,7 +174,7 @@ __declspec(naked) void PhaseInstall2DInterpDispatch(void) {
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_pii_done
-        cmp     dword ptr [g_acc_00542078], 0xa3d
+        cmp     dword ptr [g_chainAccumCur], 0xa3d
         jle     short L_pii_check2
         call    WalkTowardTargetFsm
         pop     esi
@@ -198,7 +198,7 @@ __declspec(naked) void PhaseInstall2DInterpDispatch(void) {
         jl      short L_pii_sample
         lea     eax, [ecx - 0x1999]
         cmp     esi, eax
-        mov     dword ptr [g_acc_00542078], eax
+        mov     dword ptr [g_chainAccumCur], eax
         jge     short L_pii_eaxOk
         call    GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0
         pop     esi
@@ -219,7 +219,7 @@ __declspec(naked) void PhaseInstall2DInterpDispatch(void) {
         ret
     L_pii_storeEsi:
         mov     eax, dword ptr [g_player2NodeIdx]
-        mov     dword ptr [g_acc_00542078], esi
+        mov     dword ptr [g_chainAccumCur], esi
         mov     dword ptr [g_currentNodeIdx], eax
         call    SubCmpCallPauseJmp
         pop     esi
@@ -231,7 +231,7 @@ __declspec(naked) void PhaseInstall2DInterpDispatch(void) {
         pop     esi
         ret
     L_pii_writeEdx:
-        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_chainAccumCur], edx
         call    SubCmpCallPauseJmp
         pop     esi
         ret

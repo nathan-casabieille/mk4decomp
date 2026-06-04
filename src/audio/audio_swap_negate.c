@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -107,7 +107,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 
 /*
  * @addr 0x004ac080 (126b audio) - audio swap and negate:
@@ -121,15 +121,15 @@ void AudioSwapNegate(void) {
     unsigned int chain;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
-    g_xformEntityIdx = g_load_0052ab10;
-    v = (unsigned int)(-(int)*(int *)(g_load_0052ab10 * 4 + 0x64));
+    g_xformEntityIdx = g_eventQueueSeed;
+    v = (unsigned int)(-(int)*(int *)(g_eventQueueSeed * 4 + 0x64));
     g_walkCallback = (void(*)(void))v;
     chain = ((ScenegraphNode *)(g_cj_0054205c * 4))->state_mask;
     g_eventQueueCurrent = chain;
     chain &= 1;
     g_xformScratch94 = chain;
     if (chain != 0) {
-        v = *(unsigned int *)(g_load_0052ab10 * 4 + 0x64);
+        v = *(unsigned int *)(g_eventQueueSeed * 4 + 0x64);
         g_walkCallback = (void(*)(void))v;
     }
     *(unsigned int *)(g_cj_0054205c * 4 + 0x64) = v;

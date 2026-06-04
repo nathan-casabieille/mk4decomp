@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave540;
 extern unsigned int g_dispatchSave539;
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern unsigned int g_bossArrivalState;
 extern void ArgSarStoreJmp(void);
 extern void BossArrivalSequence(void);
@@ -234,7 +234,7 @@ __declspec(naked) void BlockedCounterCluster(void)
         je       short L_1874
         push     0x1392
         call     TableHitOrSchedule
-        mov      eax, dword ptr [g_load_0052ab10]
+        mov      eax, dword ptr [g_eventQueueSeed]
         mov      ecx, 0xfffffd71
         add      esp, 4
         mov      dword ptr [g_currentNodeIdx], eax

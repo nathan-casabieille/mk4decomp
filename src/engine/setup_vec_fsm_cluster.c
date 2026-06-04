@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -115,11 +115,11 @@ extern void MStackDualDiffSequencer(void);
  *   mstack-push g_cj_0054205c; g_cj_0054205c = g_currentNodeIdx;
  *   g_eventQueueEnd = baseSel[+0x64]; call SetupVecFsmCluster; if pause? final-ret.
  *   esi = scaledInit*4 base. 3x Mul10Tail for fields +0x78/+0x7c/+0x80 with 0x9999 mod;
- *   then g_xformEntityIdx = g_load_0052ab10 + 0x15; g_eventQueueCurrent = 0x2b85;
+ *   then g_xformEntityIdx = g_eventQueueSeed + 0x15; g_eventQueueCurrent = 0x2b85;
  *   g_eventQueueWorkType = 0x20; call MStackDualDiffSequencer; if pause? final-ret.
  *   mstack-pop g_cj_0054205c; ret.
  */
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 
 __declspec(naked) void HelperCallTripleMul10(void) {
     __asm {
@@ -168,7 +168,7 @@ __declspec(naked) void HelperCallTripleMul10(void) {
         call    Mul10Tail
         mov     dword ptr [g_walkCallback], eax
         mov     dword ptr [esi + 0x80], eax
-        mov     eax, dword ptr [g_load_0052ab10]
+        mov     eax, dword ptr [g_eventQueueSeed]
         add     esp, 8
         add     eax, 0x15
         mov     dword ptr [g_eventQueueCurrent], 0x2b85

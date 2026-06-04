@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0042ee40 (370b game) - boot-init: clears slot 0x52ab10, seeds
  *   bookkeeping globals, and zero-fills a counted region.
  *   Calls BootInitGuardedCallChain first. On no-error: reads the
- *   slot index from g_load_0052ab10 into g_currentNodeIdx, calls
+ *   slot index from g_eventQueueSeed into g_currentNodeIdx, calls
  *   ZeroThreeFields_00404ed0 then writes (0, 0, 0xfffc0000) into
  *   [slot+0x54/+0x58/+0x5c]. Mirrors with g_particleEmitterNode slot getting
  *   (0, 0, 0x10000, 0). Then sets globals: 0x535de0=0, 0x541dd8=0,
@@ -131,7 +131,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_installCountdownArr2;
 extern unsigned int g_phaseThunkVar2;
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern unsigned int g_phaseThunkVar4;
 extern unsigned int g_particleEmitterNode;
 extern s32 g_dlNalt1;
@@ -156,7 +156,7 @@ __declspec(naked) void BootInitClearSlotSeed(void) {
         xor     ebx, ebx
         cmp     eax, ebx
         jne     L_bic_done
-        mov     eax, dword ptr [g_load_0052ab10]
+        mov     eax, dword ptr [g_eventQueueSeed]
         mov     dword ptr [g_currentNodeIdx], eax
         lea     esi, [eax*4]
         call    ZeroThreeFields_00404ed0

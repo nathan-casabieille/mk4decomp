@@ -3,31 +3,31 @@
  *
  * Pattern:
  *   mov     [g_walkCallback], IMM_A     ; per-helper
- *   mov     [g_acc_00542078], 4
+ *   mov     [g_chainAccumCur], 4
  *   jmp     Tail
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern void GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop(void);
 
 /* @addr 0x00453480 */
 void DualConstJmp_00453480(void) {
     g_walkCallback = (void (*)(void))2;
-    g_acc_00542078 = 4;
+    g_chainAccumCur = 4;
     GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop();
 }
 
 /* @addr 0x004534a0 */
 void DualConstJmp_004534a0(void) {
     g_walkCallback = (void (*)(void))0x0d;
-    g_acc_00542078 = 4;
+    g_chainAccumCur = 4;
     GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop();
 }
 
 /* @addr 0x004534c0 */
 void DualConstJmp_004534c0(void) {
     g_walkCallback = (void (*)(void))0x0e;
-    g_acc_00542078 = 4;
+    g_chainAccumCur = 4;
     GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop();
 }

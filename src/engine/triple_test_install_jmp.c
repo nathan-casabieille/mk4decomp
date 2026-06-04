@@ -4,7 +4,7 @@
  * Pattern:
  *   mov     eax, [g_eventQueueEnd]
  *   mov     [g_eventQueueWorkType], eax
- *   mov     [g_acc_00542078], eax
+ *   mov     [g_chainAccumCur], eax
  *   call    Func
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
@@ -21,7 +21,7 @@
  *   jne     .skip2
  *   jmp     T2
  * .skip2:
- *   mov     eax, [g_acc_00542078]
+ *   mov     eax, [g_chainAccumCur]
  *   mov     [g_finalDest], eax               ; per-helper
  *   jmp     T3
  * .ret:
@@ -31,7 +31,7 @@
 #include "game/tick.h"
 #include "game/statemachine.h"
 
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_state2_0053a1bc;
 extern unsigned int g_state2_0053a354;
 extern unsigned int g_finalDest_0053a178;
@@ -48,7 +48,7 @@ void TripleTestInstallJmp_004a0130(void) {
     unsigned int v;
     v = g_eventQueueEnd;
     g_eventQueueWorkType = v;
-    g_acc_00542078 = v;
+    g_chainAccumCur = v;
     AudioVoiceSequencerCluster();
     if (g_framePauseFlag) return;
     v = g_dlMode;
@@ -63,7 +63,7 @@ void TripleTestInstallJmp_004a0130(void) {
         AudioStateRemap();
         return;
     }
-    g_finalDest_0053a178 = g_acc_00542078;
+    g_finalDest_0053a178 = g_chainAccumCur;
     AudioInstallSelfShiftedChainInit();
 }
 
@@ -72,7 +72,7 @@ void TripleTestInstallJmp_004a0440(void) {
     unsigned int v;
     v = g_eventQueueEnd;
     g_eventQueueWorkType = v;
-    g_acc_00542078 = v;
+    g_chainAccumCur = v;
     AudioVoiceSequencerCluster();
     if (g_framePauseFlag) return;
     v = g_dlMode;
@@ -87,6 +87,6 @@ void TripleTestInstallJmp_004a0440(void) {
         AudioStateRemapB();
         return;
     }
-    g_finalDest_0053a250 = g_acc_00542078;
+    g_finalDest_0053a250 = g_chainAccumCur;
     AudioInstallSelfChannel8();
 }

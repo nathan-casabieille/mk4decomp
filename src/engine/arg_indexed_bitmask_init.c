@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -132,7 +132,7 @@ void ArgIndexedBitmaskInit(void) {
         mov     dword ptr [g_eventQueueTotal], eax
         mov     edx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_chainAccumCur], edx
         mov     dword ptr [g_eventQueueTotal], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
@@ -154,7 +154,7 @@ void ArgIndexedBitmaskInit(void) {
         mov     dword ptr [g_eventQueueTotal], eax
         mov     edx, dword ptr [eax*4 + 0]
         inc     eax
-        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_chainAccumCur], edx
         mov     dword ptr [g_eventQueueTotal], eax
         mov     ecx, dword ptr [eax*4 + 0]
         inc     eax
@@ -188,7 +188,7 @@ void ArgIndexedBitmaskInit(void) {
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         ret
-        cmp     dword ptr [g_acc_00542078], ecx
+        cmp     dword ptr [g_chainAccumCur], ecx
         _emit   74h
         _emit   0dh
         mov     eax, dword ptr [g_xformDirtyFlags]

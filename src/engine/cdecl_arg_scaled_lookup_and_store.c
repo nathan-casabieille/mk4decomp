@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -110,12 +110,12 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0045f470 (251b game) - cdecl arg-1 + 8-field copy + AND chain + bit toggle.
  *   arg1 = [esp+4]; eax = arg1>>2 -> g_eventQueueTotal.
- *   Copy [eax*4 +0/+4/+8/+0xc] -> g_eventQueueWorkType/g_acc_00542078/g_eventQueueNotMask/g_eventQueueChild.
+ *   Copy [eax*4 +0/+4/+8/+0xc] -> g_eventQueueWorkType/g_chainAccumCur/g_eventQueueNotMask/g_eventQueueChild.
  *   If g_cj_0054205c == g_player1NodeIdx: skip second 8-field load; else copy
  *     [eax*4 +0x10/+0x14/+0x18/+0x1c] -> same dests. eax += 8, store; call
  *     NotMaskStorePair; if pause? ret.
  *   AND g_walkCallback &= g_eventQueueNotMask; AND g_eventQueueCurrent &= g_eventQueueChild;
- *   if g_eventQueueWorkType == g_walkCallback then: if g_acc_00542078 == g_eventQueueCurrent:
+ *   if g_eventQueueWorkType == g_walkCallback then: if g_chainAccumCur == g_eventQueueCurrent:
  *     bit0 of g_xformDirtyFlags set, else clear; else clear bit0; ret.
  */
 extern void NotMaskStorePair(void);
@@ -128,7 +128,7 @@ void CdeclArgScaledLookupAndStore(void) {
         mov     ecx, dword ptr [eax*4 + 0]
         mov     dword ptr [g_eventQueueWorkType], ecx
         mov     edx, dword ptr [eax*4 + 4]
-        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_chainAccumCur], edx
         mov     ecx, dword ptr [eax*4 + 8]
         mov     dword ptr [g_eventQueueNotMask], ecx
         mov     edx, dword ptr [eax*4 + 0x0c]
@@ -142,7 +142,7 @@ void CdeclArgScaledLookupAndStore(void) {
         mov     ecx, dword ptr [eax*4 + 0x10]
         mov     dword ptr [g_eventQueueWorkType], ecx
         mov     edx, dword ptr [eax*4 + 0x14]
-        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_chainAccumCur], edx
         mov     ecx, dword ptr [eax*4 + 0x18]
         mov     dword ptr [g_eventQueueNotMask], ecx
         mov     edx, dword ptr [eax*4 + 0x1c]
@@ -170,7 +170,7 @@ void CdeclArgScaledLookupAndStore(void) {
         and     al, 0xfe
         mov     dword ptr [g_xformDirtyFlags], eax
         ret
-        mov     eax, dword ptr [g_acc_00542078]
+        mov     eax, dword ptr [g_chainAccumCur]
         cmp     eax, ecx
         mov     eax, dword ptr [g_xformDirtyFlags]
         _emit   74h

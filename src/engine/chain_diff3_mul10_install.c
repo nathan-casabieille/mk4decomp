@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -150,7 +150,7 @@ __declspec(naked) void ChainDiff3Mul10Install(void)
         mov     dword ptr [g_currentNodeFlags], edx
         mov     ecx, dword ptr [esi + 0x5c]
         sub     eax, ecx
-        mov     ecx, dword ptr [g_acc_00542078]
+        mov     ecx, dword ptr [g_chainAccumCur]
         shl     ecx, 0x10
         mov     dword ptr [g_xformScratch2088], eax
         mov     dword ptr [g_walkCallback], ecx
@@ -184,7 +184,7 @@ __declspec(naked) void ChainDiff3Mul10Install(void)
         mov     dword ptr [esi + 0x70], eax
         mov     ecx, dword ptr [g_xformScratch2088]
         mov     dword ptr [esi + 0x74], ecx
-        mov     edx, dword ptr [g_acc_00542078]
+        mov     edx, dword ptr [g_chainAccumCur]
         mov     eax, 1
         mov     dword ptr [g_pendingNodeType], edx
         mov     dword ptr [edi + 8], offset ChainDiff3Mul10Install

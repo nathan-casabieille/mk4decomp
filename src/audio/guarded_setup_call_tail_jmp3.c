@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   call AllocSlotPushTripleGlobals; if pause: ret;
  *   eax=arg0, ecx=arg1, edx=arg2;
  *   g_walkCallback=0xa000; g_xformEntityIdx=arg0>>2;
- *   g_eventQueueCurrent=4; g_acc_00542078=ecx; g_eventQueueNotMask=edx;
+ *   g_eventQueueCurrent=4; g_chainAccumCur=ecx; g_eventQueueNotMask=edx;
  *   call StreamChainStringInstall; if no pause: jmp MStackPop4Rewrite; else ret.
  */
 void GuardedSetupCallTailJmp3(unsigned int arg0, unsigned int arg1, unsigned int arg2) {
@@ -121,7 +121,7 @@ void GuardedSetupCallTailJmp3(unsigned int arg0, unsigned int arg1, unsigned int
     g_walkCallback = (void (*)(void))0xa000;
     g_xformEntityIdx = arg0 >> 2;
     g_eventQueueCurrent = 4;
-    g_acc_00542078 = arg1;
+    g_chainAccumCur = arg1;
     g_eventQueueNotMask = arg2;
     StreamChainStringInstall();
     if (g_framePauseFlag != 0) return;

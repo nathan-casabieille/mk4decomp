@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004300a0 (312b game) - distance2D Mul10 clamp / 3-branch saturation.
- *   Sub esi=g_cj. dx=[cj*4+0x54]-g_load_0052ab04; dy=[cj*4+0x5c]-g_load_0052ab08.
+ *   Sub esi=g_cj. dx=[cj*4+0x54]-g_distRefX; dy=[cj*4+0x5c]-g_distRefZ.
  *   Mul10Tail(dx,dx)+Mul10Tail(dy,dy)->g_acc.
  *   If sum > 0x370000: jump to saturation_high.
  *   Else: load g_player1NodeIdx / g_player2NodeIdx (scaledInit/x_48); a=[scaled[+0x58]], c=[48[+0x58]].
@@ -119,13 +119,13 @@ extern unsigned int g_fightAxisPosY;
  *   saturation_low: cmp ecx with 0xfffe3334; if < 0: eax=0; mov [cj*4+0x70]=eax; pop+ret.
  *     Else: eax stays -0x7ae, mov to g_walkCallback, store at cj[+0x70]=-0x7ae; pop+ret.
  */
-extern unsigned int g_load_0052ab04;
-extern unsigned int g_load_0052ab08;
+extern unsigned int g_distRefX;
+extern unsigned int g_distRefZ;
 
 __declspec(naked) void Distance2DSaturationClamp(void) {
     __asm {
-        mov     ecx, dword ptr [g_load_0052ab04]
-        mov     edx, dword ptr [g_load_0052ab08]
+        mov     ecx, dword ptr [g_distRefX]
+        mov     edx, dword ptr [g_distRefZ]
         push    esi
         mov     esi, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_walkCallback], ecx
@@ -138,11 +138,11 @@ __declspec(naked) void Distance2DSaturationClamp(void) {
         push    eax
         push    eax
         mov     dword ptr [g_eventQueueWorkType], eax
-        mov     dword ptr [g_acc_00542078], esi
+        mov     dword ptr [g_chainAccumCur], esi
         call    Mul10Tail
         add     esp, 8
         mov     dword ptr [g_eventQueueWorkType], eax
-        mov     eax, dword ptr [g_acc_00542078]
+        mov     eax, dword ptr [g_chainAccumCur]
         push    eax
         push    eax
         call    Mul10Tail
@@ -150,7 +150,7 @@ __declspec(naked) void Distance2DSaturationClamp(void) {
         add     esp, 8
         add     eax, edx
         cmp     eax, 0x370000
-        mov     dword ptr [g_acc_00542078], eax
+        mov     dword ptr [g_chainAccumCur], eax
         _emit   7fh
         _emit   41h
         mov     eax, dword ptr [g_player1NodeIdx]

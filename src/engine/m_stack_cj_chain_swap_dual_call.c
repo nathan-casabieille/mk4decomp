@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -137,10 +137,10 @@ __declspec(naked) void MStackCjChainSwapDualCall(void) {
         mov     edx, dword ptr [ecx*4 + 0x54]
         mov     dword ptr [g_eventQueueWorkType], edx
         mov     ecx, dword ptr [ecx*4 + 0x5c]
-        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_chainAccumCur], ecx
         mov     dword ptr [eax*4 + 0x54], edx
         mov     edx, dword ptr [g_currentNodeIdx]
-        mov     eax, dword ptr [g_acc_00542078]
+        mov     eax, dword ptr [g_chainAccumCur]
         mov     dword ptr [edx*4 + 0x5c], eax
         mov     ecx, dword ptr [g_cj_0054205c]
         mov     edx, dword ptr [g_walkCallback]
@@ -170,7 +170,7 @@ __declspec(naked) void MStackCjChainSwapDualCall(void) {
         mov     eax, dword ptr [g_matrixStackTop]
         mov     dword ptr [g_eventQueueCurrent], ecx
         mov     dword ptr [g_eventQueueWorkType], edx
-        mov     dword ptr [g_acc_00542078], esi
+        mov     dword ptr [g_chainAccumCur], esi
         mov     dword ptr [g_fightAxisPosX], edx
         mov     dword ptr [g_fightAxisPosY], esi
         mov     dword ptr [g_fightAxisNegY], ecx

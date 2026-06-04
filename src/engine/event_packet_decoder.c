@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -118,7 +118,7 @@ extern unsigned int g_phaseThunkState;
  *   3 nested tests; if min/max swap; check eax<>g_eventQueueChild.
  *   If lo: g_xformScratch2088 = 1.
  *   Store g_eventQueueTotal to [baseSel*4+0x64]; eax = arg0>>2; g_eventQueueEnd store at [baseSel*4+0x68];
- *   g_pendingNodeType=eax+0xf; scaledInit=eax+g_acc_00542078; eax=[scaledInit*4+0]; jmp 0x0045de60.
+ *   g_pendingNodeType=eax+0xf; scaledInit=eax+g_chainAccumCur; eax=[scaledInit*4+0]; jmp 0x0045de60.
  */
 
 __declspec(naked) void ChainPickArgScaledInit(void) {
@@ -164,7 +164,7 @@ __declspec(naked) void ChainPickArgScaledInit(void) {
         mov     dword ptr [ecx*4 + 0x68], edx
         lea     ecx, [eax + 0x0f]
         mov     dword ptr [g_pendingNodeType], ecx
-        mov     ecx, dword ptr [g_acc_00542078]
+        mov     ecx, dword ptr [g_chainAccumCur]
         add     eax, ecx
         mov     dword ptr [g_currentNodeIdx], eax
         mov     edx, dword ptr [eax*4 + 0]

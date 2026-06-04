@@ -8,10 +8,10 @@ extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00431d50 (74b)
  *   walk = 0x1921f - walk; mov g_eventQueueWorkType = walk; call F1;
- *   pause → ret; g_acc_00542078 = walk; call F2; pause → ret;
+ *   pause → ret; g_chainAccumCur = walk; call F2; pause → ret;
  *   g_eventQueueWorkType = walk; ret.
  */
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern void MStackMagicModMul10(void);
 extern void ModMagicMul10Index(void);
 void WalkCbSubMul10(void) {
@@ -20,7 +20,7 @@ void WalkCbSubMul10(void) {
     g_eventQueueWorkType = v;
     MStackMagicModMul10();
     if (g_framePauseFlag) return;
-    g_acc_00542078 = (unsigned int)g_walkCallback;
+    g_chainAccumCur = (unsigned int)g_walkCallback;
     ModMagicMul10Index();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = (unsigned int)g_walkCallback;

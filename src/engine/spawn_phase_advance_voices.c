@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern unsigned int g_phaseThunkVar4;
 extern unsigned int g_dispatchVar7;
 extern unsigned int g_imageBaseHi;
@@ -146,7 +146,7 @@ __declspec(naked) void SpawnPhaseAdvanceVoices(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
-        mov      edx, dword ptr [g_load_0052ab10]
+        mov      edx, dword ptr [g_eventQueueSeed]
         mov      eax, dword ptr [g_dispatchVar7]
         mov      esi, dword ptr [g_matrixStackTop]
         mov      dword ptr [g_pendingNodeType], edx

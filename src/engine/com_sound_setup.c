@@ -42,11 +42,11 @@
  */
 
 extern unsigned int g_dsqc_730_state874;
-extern unsigned int g_iface_0058c870;
+extern unsigned int g_soundCtrlIfaceA;
 extern unsigned int g_retSlot_0058c878;
 
 extern unsigned int g_dsqc_f60_state874;
-extern unsigned int g_iface_0058c8f0;
+extern unsigned int g_soundCtrlIfaceB;
 extern unsigned int g_retSlot_0058c8f8;
 
 /* @addr 0x004af6c0 */
@@ -76,7 +76,7 @@ __declspec(naked) void ComSoundSetup_004af6c0(void) {
         lea     eax, dword ptr [esi + esi*4]
         mov     dword ptr [esp + 8], 0x28
         mov     dword ptr [esp + 0x24], eax
-        mov     eax, dword ptr [g_iface_0058c870]
+        mov     eax, dword ptr [g_soundCtrlIfaceA]
         test    eax, eax
         mov     dword ptr [esp + 0x0c], 0x20
         _emit   74h
@@ -120,7 +120,7 @@ __declspec(naked) void ComSoundSetup_004afef0(void) {
         lea     eax, dword ptr [esi + esi*4]
         mov     dword ptr [esp + 8], 0x28
         mov     dword ptr [esp + 0x24], eax
-        mov     eax, dword ptr [g_iface_0058c8f0]
+        mov     eax, dword ptr [g_soundCtrlIfaceB]
         test    eax, eax
         mov     dword ptr [esp + 0x0c], 0x20
         _emit   74h

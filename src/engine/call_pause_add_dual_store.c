@@ -17,9 +17,9 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_acc_0053a438;
-extern unsigned int g_acc_0053a440;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumA;
+extern unsigned int g_chainAccumB;
+extern unsigned int g_chainAccumCur;
 
 extern void MStackPush3TripleMul10WithAbs(void);
 
@@ -28,9 +28,9 @@ void CallPauseAddDualStore_0048b480(void) {
     unsigned int v;
     MStackPush3TripleMul10WithAbs();
     if (g_framePauseFlag) return;
-    v = g_acc_0053a438 + (unsigned int)g_walkCallback;
-    g_acc_00542078 = v;
-    g_acc_0053a438 = v;
+    v = g_chainAccumA + (unsigned int)g_walkCallback;
+    g_chainAccumCur = v;
+    g_chainAccumA = v;
 }
 
 /* @addr 0x0048b4b0 */
@@ -38,7 +38,7 @@ void CallPauseAddDualStore_0048b4b0(void) {
     unsigned int v;
     MStackPush3TripleMul10WithAbs();
     if (g_framePauseFlag) return;
-    v = g_acc_0053a440 + (unsigned int)g_walkCallback;
-    g_acc_00542078 = v;
-    g_acc_0053a440 = v;
+    v = g_chainAccumB + (unsigned int)g_walkCallback;
+    g_chainAccumCur = v;
+    g_chainAccumB = v;
 }

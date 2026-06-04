@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -109,15 +109,15 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x004a07a0 (196b audio) - mstack-push 2; sample bit-update by index.
- *   Push g_acc_00542078, g_xformEntityIdx.
+ *   Push g_chainAccumCur, g_xformEntityIdx.
  *   ecx = [0x541fc0]; eax = g_walkCallback; g_xformEntityIdx = ecx;
  *   [0x535e48] = eax (= g_walkCallback snapshot); ecx += eax;
  *   eax = chain[ecx]; g_xformEntityIdx = eax;
  *   edx = chain[eax + 0x10]; g_xformEntityIdx = edx; esi = chain[edx];
- *   g_acc_00542078--; g_walkCallback = esi;
- *   if (g_acc_00542078 > 0 before decrement, i.e., decremented value >= 0):
- *     g_eventQueueCurrent = (1 << g_acc_00542078) | esi; chain[edx] = same.
- *   mstack-pop into g_xformEntityIdx, g_acc_00542078.
+ *   g_chainAccumCur--; g_walkCallback = esi;
+ *   if (g_chainAccumCur > 0 before decrement, i.e., decremented value >= 0):
+ *     g_eventQueueCurrent = (1 << g_chainAccumCur) | esi; chain[edx] = same.
+ *   mstack-pop into g_xformEntityIdx, g_chainAccumCur.
  */
 extern unsigned int g_dispatchArg;
 extern unsigned int g_audioBitField;
@@ -127,7 +127,7 @@ extern unsigned int g_matrixStack_arr;
 __declspec(naked) void BitSetByIndex(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_acc_00542078]
+        mov     ecx, dword ptr [g_chainAccumCur]
         inc     eax
         push    esi
         mov     dword ptr [g_matrixStackTop], eax
@@ -145,15 +145,15 @@ __declspec(naked) void BitSetByIndex(void) {
         mov     eax, [ecx*4 + g_matrixStack_arr]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, [eax*4 + 0x10]
-        mov     eax, dword ptr [g_acc_00542078]
+        mov     eax, dword ptr [g_chainAccumCur]
         mov     dword ptr [g_xformEntityIdx], edx
         dec     eax
         mov     esi, [edx*4 + g_matrixStack_arr]
-        mov     dword ptr [g_acc_00542078], eax
+        mov     dword ptr [g_chainAccumCur], eax
         mov     dword ptr [g_walkCallback], esi
         _emit   78h
         _emit   1bh
-        mov     ecx, dword ptr [g_acc_00542078]
+        mov     ecx, dword ptr [g_chainAccumCur]
         mov     eax, 1
         shl     eax, cl
         or      eax, esi
@@ -167,7 +167,7 @@ __declspec(naked) void BitSetByIndex(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     edx, [eax*4 + g_matrixStack_arr]
         dec     eax
-        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_chainAccumCur], edx
         mov     dword ptr [g_matrixStackTop], eax
         ret
     }

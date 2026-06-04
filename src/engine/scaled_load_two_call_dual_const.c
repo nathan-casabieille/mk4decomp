@@ -14,7 +14,7 @@
  *   test    eax, eax
  *   jne     .ret
  *   mov     [g_walkCallback], 2
- *   mov     [g_acc_00542078], 3
+ *   mov     [g_chainAccumCur], 3
  * .ret:
  *   ret
  */
@@ -22,7 +22,7 @@
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
@@ -35,7 +35,7 @@ void ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_Disp
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))2;
-    g_acc_00542078 = 3;
+    g_chainAccumCur = 3;
 }
 
 /* @addr 0x00467c30 */
@@ -46,5 +46,5 @@ void ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_Disp
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag) return;
     g_walkCallback = (void(*)(void))2;
-    g_acc_00542078 = 3;
+    g_chainAccumCur = 3;
 }

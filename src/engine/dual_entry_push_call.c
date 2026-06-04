@@ -6,7 +6,7 @@
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 
 /* @addr 0x0046b630 (59b)
  *   push    0x004eafb8

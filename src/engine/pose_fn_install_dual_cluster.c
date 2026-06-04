@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern void CallSetPause(void);
 extern void MStackChainCountdownLoop(void);
 extern void PendingMatch_ThreeMul10Stores(void);
@@ -160,12 +160,12 @@ __declspec(naked) void PoseFnInstallDualCluster(void)
         call     MStackChainCountdownLoop
         cmp      dword ptr [g_framePauseFlag], edi
         jne      L_321c
-        mov      eax, dword ptr [g_acc_00542078]
+        mov      eax, dword ptr [g_chainAccumCur]
         mov      edx, dword ptr [g_baseSel]
         sub      eax, 0x20000
-        mov      dword ptr [g_acc_00542078], eax
+        mov      dword ptr [g_chainAccumCur], eax
         mov      dword ptr [edx*4 + 0x3c], eax
-        mov      eax, dword ptr [g_load_0052ab10]
+        mov      eax, dword ptr [g_eventQueueSeed]
         mov      ecx, dword ptr [g_baseSel]
         mov      dword ptr [g_fightGroupHead], eax
         mov      eax, dword ptr [eax*4 + 0x60]
@@ -240,10 +240,10 @@ __declspec(naked) void PoseFnInstallDualCluster(void)
         mov      eax, dword ptr [g_baseSel]
         mov      ecx, dword ptr [g_eventQueueWorkType]
         mov      dword ptr [eax*4 + 0x38], ecx
-        mov      eax, dword ptr [g_acc_00542078]
+        mov      eax, dword ptr [g_chainAccumCur]
         mov      edx, dword ptr [g_baseSel]
         sub      eax, 0x51e
-        mov      dword ptr [g_acc_00542078], eax
+        mov      dword ptr [g_chainAccumCur], eax
         mov      dword ptr [edx*4 + 0x3c], eax
         mov      eax, dword ptr [g_fightGroupHead]
         mov      edx, dword ptr [g_baseSel]

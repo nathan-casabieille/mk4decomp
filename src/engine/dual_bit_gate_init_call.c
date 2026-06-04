@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -109,23 +109,23 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0048a1c0 (89b)
- *   if g_zero_00541fa4==0 and (g_dualBitGate&1)!=0:
+ *   if g_armedReloadA==0 and (g_dualBitGate&1)!=0:
  *     g_eventQueueWorkType=0x1f9; call Push16Call;
- *     g_zero_00541fa4 = g_eventArmReload;
- *   if g_zero_00541fa8==0 and (g_dualBitGate&2)!=0:
+ *     g_armedReloadA = g_eventArmReload;
+ *   if g_armedReloadB==0 and (g_dualBitGate&2)!=0:
  *     g_eventQueueWorkType=0x1fe; call Push16Call;
- *     g_zero_00541fa8 = g_eventArmReload;
+ *     g_armedReloadB = g_eventArmReload;
  *   ret.
  */
 void DualBitGateInitCall(void) {
-    if (g_zero_00541fa4 == 0 && (g_dualBitGate & 1) != 0) {
+    if (g_armedReloadA == 0 && (g_dualBitGate & 1) != 0) {
         g_eventQueueWorkType = 0x1f9;
         Push16Call();
-        g_zero_00541fa4 = g_eventArmReload;
+        g_armedReloadA = g_eventArmReload;
     }
-    if (g_zero_00541fa8 == 0 && (g_dualBitGate & 2) != 0) {
+    if (g_armedReloadB == 0 && (g_dualBitGate & 2) != 0) {
         g_eventQueueWorkType = 0x1fe;
         Push16Call();
-        g_zero_00541fa8 = g_eventArmReload;
+        g_armedReloadB = g_eventArmReload;
     }
 }

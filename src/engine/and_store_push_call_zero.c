@@ -22,7 +22,7 @@ extern unsigned int g_currentNodeIdx;
  *   ret
  */
 extern unsigned int g_dualBitGate;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadB;
 extern int PushArgPushNeg1Call(void *p);
 void AndStorePushCallZero(void) {
     unsigned int v;
@@ -30,8 +30,8 @@ void AndStorePushCallZero(void) {
     v = g_dualBitGate & 0xFFFFFFFDu;
     g_eventQueueCurrent = v;
     g_dualBitGate = v;
-    p = (void *)g_zero_00541fa8;
+    p = (void *)g_armedReloadB;
     if (p == 0) return;
     PushArgPushNeg1Call(p);
-    g_zero_00541fa8 = 0;
+    g_armedReloadB = 0;
 }

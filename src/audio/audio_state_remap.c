@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -116,13 +116,13 @@ extern unsigned char g_audioStateByte730;
 
 /*
  * @addr 0x004a0190 (120b audio) - audio state remap-then-tail-jmp:
- *   stash g_acc_00542078 into g_dlNalt1; if guard at 0x541dd4 set
+ *   stash g_chainAccumCur into g_dlNalt1; if guard at 0x541dd4 set
  *   and certain bit-flags are clear, possibly remap eax==6 to 0xf
  *   (and bump 0x543728); possibly remap eax==7 to 0x11; then tail-
  *   jmp AudioInstallSelfShiftedChainInit.
  */
 void AudioStateRemap(void) {
-    unsigned int v = g_acc_00542078;
+    unsigned int v = g_chainAccumCur;
     g_dlNalt1 = v;
     if (g_audioInstallGate != 0 &&
         (g_fightTableC0 & 0x20) == 0 &&

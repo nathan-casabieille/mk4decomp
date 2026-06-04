@@ -14,15 +14,15 @@ extern unsigned int g_currentNodeIdx;
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
  *   jne     .ret
- *   mov     ecx, [g_acc_00542078]
+ *   mov     ecx, [g_chainAccumCur]
  *   mov     [g_currentNodeFlags], ecx
  *   ret
  */
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern void CmpDirectOrIndirectChain(void);
 void StoreCallPauseStore(void) {
     g_eventQueueWorkType = g_eventQueueChild;
     CmpDirectOrIndirectChain();
     if (g_framePauseFlag != 0) return;
-    g_currentNodeFlags = g_acc_00542078;
+    g_currentNodeFlags = g_chainAccumCur;
 }

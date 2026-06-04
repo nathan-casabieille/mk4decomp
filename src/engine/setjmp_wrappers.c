@@ -11,7 +11,7 @@
 #include "engine/scenegraph.h"
 
 /* New globals referenced by these wrappers. */
-extern unsigned int g_acc_00542078;   /* 0x00542078 */
+extern unsigned int g_chainAccumCur;   /* 0x00542078 */
 extern unsigned int g_setjmp;   /* 0x00ab5750 */
 
 /* Externs for jump targets. */
@@ -149,7 +149,7 @@ void SetJmp_SetJmp_00451ad0_00451ac0(void) {
 
 /* @addr 0x00451ad0 */
 void SetJmp_GuardedSeq_00473f10_00451ad0(void) {
-    g_acc_00542078 = 0x00000006;
+    g_chainAccumCur = 0x00000006;
     GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d();
 }
 
@@ -173,7 +173,7 @@ void SetJmp_SetJmp_00451b10_00451b00(void) {
 
 /* @addr 0x00451b10 */
 void SetJmp_GuardedSeq_00473f10_00451b10(void) {
-    g_acc_00542078 = 0x00000005;
+    g_chainAccumCur = 0x00000005;
     GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d();
 }
 
@@ -197,7 +197,7 @@ void SetJmp_SetJmp_00451b50_00451b40(void) {
 
 /* @addr 0x00451b50 */
 void SetJmp_GuardedSeq_00473f10_00451b50(void) {
-    g_acc_00542078 = 0x0000000c;
+    g_chainAccumCur = 0x0000000c;
     GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d();
 }
 
@@ -281,7 +281,7 @@ void SetJmp_InstallSelfTwoTailJmp(void) {
 
 /* @addr 0x00485d60 */
 void SetJmp_DualLoadDualStoreJmp(void) {
-    g_acc_00542078 = 0x00010000;
+    g_chainAccumCur = 0x00010000;
     DualLoadDualStoreJmp();
 }
 

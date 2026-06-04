@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00487dd0 (166b game) - snapshot + dispatch + accumulator update:
  *   walkCallback=2; g_phaseTimer=2; g_eventQueueWorkType = g_xformScratch2088;
  *   g_eventQueueChild = g_currentNodeFlags;
- *   g_acc_00542078 = chain[g_eventQueueIdx].slot54;
+ *   g_chainAccumCur = chain[g_eventQueueIdx].slot54;
  *   g_eventQueueNotMask = chain[g_eventQueueIdx].slot5c;
  *   call BossSpinCluster; pause? ret;
  *   chain[cj].slot54 = g_eventQueueCurrent; chain[cj].slot5c = walkCallback;
@@ -133,7 +133,7 @@ void SnapshotDispatchAccum(void) {
         mov     dword ptr [g_eventQueueChild], eax
         mov     eax, dword ptr [g_eventQueueIdx]
         mov     edx, [eax*4 + g_chain_arr_4348f0 + 0x54]
-        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_chainAccumCur], edx
         mov     eax, [eax*4 + g_chain_arr_4348f0 + 0x5c]
         mov     dword ptr [g_eventQueueNotMask], eax
         call    BossSpinCluster

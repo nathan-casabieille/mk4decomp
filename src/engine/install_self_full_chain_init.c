@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -111,10 +111,10 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00462470 (230b game) - install-self with full chain init.
  *   chain[+0x84]!=0 path: call StackPopDispatchTagged; pop+ret.
  *   chain[+0x84]==0 path: chain[*4+0x30]=0x8c, chain[*4+0x34]=0; chain at [esi+0x38..0x48] populated from
- *   g_load_0052ab10 fields (+0x60, 0, +0x68); install-self at +0x08=0x00462470 with scaledInit-chain push;
+ *   g_eventQueueSeed fields (+0x60, 0, +0x68); install-self at +0x08=0x00462470 with scaledInit-chain push;
  *   call PendingMatch_ThreeMul10Stores; g_pause=1; pop+ret.
  */
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern void PendingMatch_ThreeMul10Stores(void);
 
 __declspec(naked) void InstallSelfFullChainInit(void) {
@@ -141,7 +141,7 @@ __declspec(naked) void InstallSelfFullChainInit(void) {
         mov     dword ptr [eax + 0x38], 0xfffe0000
         mov     dword ptr [g_walkCallback], edx
         mov     dword ptr [eax + 0x3c], edx
-        mov     edx, dword ptr [g_load_0052ab10]
+        mov     edx, dword ptr [g_eventQueueSeed]
         mov     dword ptr [g_fightGroupHead], edx
         shl     edx, 2
         mov     edi, dword ptr [edx + 0x60]

@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -129,7 +129,7 @@ extern unsigned int g_dispatchSave503;
 extern unsigned int g_audioStateMachineVar;
 extern unsigned int g_audioSlotKeys;
 extern unsigned int g_tickFlagF;
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern unsigned int g_bootInitState;
 extern unsigned int g_particleEmitterNode;
 extern s32 g_dlNalt1;
@@ -838,7 +838,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         mov      eax, dword ptr [g_currentNodeIdx]
         add      dword ptr [eax*4 + 0x58], 0x1999
     L_724e:
-        mov      esi, dword ptr [g_load_0052ab10]
+        mov      esi, dword ptr [g_eventQueueSeed]
         mov      dword ptr [g_fightGroupHead], esi
         mov      ecx, dword ptr [esi*4 + 0x58]
         lea      eax, [ecx + 0x1a666]
@@ -972,7 +972,7 @@ __declspec(naked) void Match_ChampionScreen(void)
         push     eax
         mov      dword ptr [g_currentNodeIdx], eax
         call     GuardedSetupCallTailJmp
-        mov      eax, dword ptr [g_load_0052ab10]
+        mov      eax, dword ptr [g_eventQueueSeed]
         add      esp, 8
         mov      dword ptr [g_fightGroupHead], eax
         push     0x4f3ad8

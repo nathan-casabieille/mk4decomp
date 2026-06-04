@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -109,23 +109,23 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00431c80 (112b)
- *   eax = g_load_0052ab10; edx = g_scaledInit;
+ *   eax = g_eventQueueSeed; edx = g_scaledInit;
  *   g_xformEntityIdx = eax; push esi;
  *   ecx = [eax*4+0x54]; g_walkCallback = ecx;
  *   eax = [eax*4+0x5c]; g_eventQueueCurrent = eax;
  *   esi = [edx*4+0x54]; g_eventQueueWorkType = esi;
  *   edx = [edx*4+0x5c]; esi -= ecx; edx -= eax;
- *   g_eventQueueWorkType = esi; g_acc_00542078 = edx;
+ *   g_eventQueueWorkType = esi; g_chainAccumCur = edx;
  *   call Atan2QuadrantLookup; if pause: skip;
  *   ecx = g_walkCallback; eax = 0x1921f - ecx;
  *   g_walkCallback = eax; skip: pop esi; ret.
  */
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern void Atan2QuadrantLookup(void);
 
 __declspec(naked) void DualChainSubCallSubLoad(void) {
     __asm {
-        mov     eax, dword ptr [g_load_0052ab10]
+        mov     eax, dword ptr [g_eventQueueSeed]
         mov     edx, dword ptr [g_currentNodeIdx]
         mov     dword ptr [g_xformEntityIdx], eax
         push    esi
@@ -139,7 +139,7 @@ __declspec(naked) void DualChainSubCallSubLoad(void) {
         sub     esi, ecx
         sub     edx, eax
         mov     dword ptr [g_eventQueueWorkType], esi
-        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_chainAccumCur], edx
         call    Atan2QuadrantLookup
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax

@@ -17,11 +17,11 @@ extern unsigned int g_currentNodeIdx;
  *   test    eax, eax
  *   jne     +0x19
  *   mov     [g_walkCallback], 3
- *   mov     [g_acc_00542078], 2
+ *   mov     [g_chainAccumCur], 2
  *   jmp     T
  *   ret
  */
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
 extern void GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop(void);
@@ -31,6 +31,6 @@ void TwoCallPauseSetJmp(void) {
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))3;
-    g_acc_00542078 = 2;
+    g_chainAccumCur = 2;
     GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop();
 }

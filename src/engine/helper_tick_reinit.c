@@ -4,7 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern u32 g_inLoopStep;
 extern unsigned int g_dispatchSave1626[];
 extern s16 g_vtxIn2_x;
@@ -80,7 +80,7 @@ __declspec(naked) void Helper_TickReinit(void)
         mov      dword ptr [g_mat3x3_007af994], edx
         mov      edx, dword ptr [g_dispatchSave1532]
         mov      word ptr [g_mat3x3_007af9a0], cx
-        mov      ecx, dword ptr [g_load_0052ab10]
+        mov      ecx, dword ptr [g_eventQueueSeed]
         mov      dword ptr [g_mat3x3_007af99c], edx
         mov      dword ptr [g_vtxTransX], esi
         mov      dword ptr [g_vtxTransY], esi

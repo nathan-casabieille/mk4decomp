@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -113,7 +113,7 @@ extern unsigned int g_dispatchSave774;
 extern unsigned int g_dispatchSave775;
 extern unsigned int g_dispatchSave776;
 extern unsigned int g_dispatchSave777;
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern unsigned int g_dispatchSave_00537ef4;
 extern unsigned int g_dispatchSave70;
 extern void ArgSarStoreJmp(void);
@@ -153,7 +153,7 @@ __declspec(naked) void AggressorRunInitCluster(void)
         add      esp, 4
         test     eax, eax
         jne      short L_1475
-        mov      ecx, dword ptr [g_load_0052ab10]
+        mov      ecx, dword ptr [g_eventQueueSeed]
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      eax, dword ptr [ecx*4 + 0x58]
         add      eax, 0x18000
@@ -168,7 +168,7 @@ __declspec(naked) void AggressorRunInitCluster(void)
         mov      eax, dword ptr [g_framePauseFlag]
         test     eax, eax
         jne      short L_1475
-        mov      ecx, dword ptr [g_load_0052ab10]
+        mov      ecx, dword ptr [g_eventQueueSeed]
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      eax, dword ptr [ecx*4 + 0x58]
         sub      eax, 0x18000

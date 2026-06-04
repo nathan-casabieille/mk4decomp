@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   Push g_eventQueueChild, g_walkCallback, g_eventQueueCurrent, g_eventQueueWorkType onto mstack.
  *   Call CameraAimSplineDriver; if pause: ret.
  *   Call BootMod6487eClampAndChainMul10; if pause: ret. Save current 6c->70, load [g_cj*4+0x64]->6c.
- *   Call BootMod6487eClampAndChainMul10; if pause: ret. Compute |6c - 70|; store to 6c and g_acc_00542078.
+ *   Call BootMod6487eClampAndChainMul10; if pause: ret. Compute |6c - 70|; store to 6c and g_chainAccumCur.
  *   Pop 4 entries back: mstack[top..top-3] -> g_eventQueueWorkType, g_eventQueueCurrent, g_walkCallback, g_eventQueueChild.
  */
 extern void CameraAimSplineDriver(void);
@@ -173,11 +173,11 @@ void MStackPush4DualCallAbsPop4(void) {
         mov     ecx, dword ptr [g_eventQueueCurrent]
         sub     eax, ecx
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_acc_00542078], eax
+        mov     dword ptr [g_chainAccumCur], eax
         _emit   79h
         _emit   07h
         neg     eax
-        mov     dword ptr [g_acc_00542078], eax
+        mov     dword ptr [g_chainAccumCur], eax
         mov     eax, dword ptr [g_matrixStackTop]
         mov     ecx, [eax*4 + g_matrixStack_arr]
         dec     eax

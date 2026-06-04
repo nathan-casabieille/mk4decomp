@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   chain[+4] extension; on existing-slot tail-jmp StackPopDispatchTagged.
  *   Sets g_eventQueueChild = 0x48aad0 (callback). */
 extern void EsiInstallSetCbChainExtend_0048a810(void);
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 void EsiInstallSetCbChainExtend_0048a810(void) {
     unsigned char *base = (unsigned char *)(g_baseSel * 4);
     unsigned int prev = ((ScenegraphNode *)base)->install_flag;
@@ -121,7 +121,7 @@ void EsiInstallSetCbChainExtend_0048a810(void) {
         StackPopDispatchTagged();
         return;
     }
-    g_fightGroupHead = g_load_0052ab10;
+    g_fightGroupHead = g_eventQueueSeed;
     ZeroSixStores6c80();
     g_eventQueueChild = 0x0048aad0;
     *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a810;
@@ -148,7 +148,7 @@ void EsiInstallSetCbChainExtend_0048a8c0(void) {
         StackPopDispatchTagged();
         return;
     }
-    g_fightGroupHead = g_load_0052ab10;
+    g_fightGroupHead = g_eventQueueSeed;
     ZeroSixStores6c80();
     g_eventQueueChild = 0x0048ab40;
     *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a8c0;
@@ -175,7 +175,7 @@ void EsiInstallSetCbChainExtend_0048a970(void) {
         StackPopDispatchTagged();
         return;
     }
-    g_fightGroupHead = g_load_0052ab10;
+    g_fightGroupHead = g_eventQueueSeed;
     ZeroSixStores6c80();
     g_eventQueueChild = 0x0048abc0;
     *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a970;

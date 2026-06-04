@@ -3,7 +3,7 @@
  */
 #include "engine/scenegraph.h"
 
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern u32 g_framePauseFlag;
 
 /* @addr 0x00456180 (54b)
@@ -15,7 +15,7 @@ extern u32 g_framePauseFlag;
  *   mov     eax, [g_framePauseFlag]
  *   test    eax, eax
  *   jne     +0x19
- *   mov     [g_acc_00542078], 2
+ *   mov     [g_chainAccumCur], 2
  *   mov     [g_walkCallback], 3
  *   jmp     T
  *   ret
@@ -28,7 +28,7 @@ void TwoCallPauseSetJmp2(void) {
     if (g_framePauseFlag != 0) return;
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag != 0) return;
-    g_acc_00542078 = 2;
+    g_chainAccumCur = 2;
     g_walkCallback = (void (*)(void))3;
     GuardedSeq_DualSetShiftCall_then_MStackPush2CjMul10Triple();
 }

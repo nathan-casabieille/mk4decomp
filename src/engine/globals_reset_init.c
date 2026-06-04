@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -127,8 +127,8 @@ extern unsigned int g_pendingMatchAcc;
 extern unsigned int g_dispatchSave84;
 extern unsigned int g_dst_0053a6e0;
 extern unsigned int g_player2State;
-extern unsigned int g_load_0052ab04;
-extern unsigned int g_load_0052ab08;
+extern unsigned int g_distRefX;
+extern unsigned int g_distRefZ;
 extern unsigned int g_phaseTimer;
 extern unsigned int g_dst_00537ea4;
 extern unsigned int g_counter_0053a51c;
@@ -180,8 +180,8 @@ __declspec(naked) void GlobalsResetInit(void) {
         mov     dword ptr [g_nodeUnlinkSlot], esi
         mov     dword ptr [g_dispatchSave94], esi
         mov     dword ptr [g_dispatchSave93], esi
-        mov     dword ptr [g_load_0052ab04], esi
-        mov     dword ptr [g_load_0052ab08], esi
+        mov     dword ptr [g_distRefX], esi
+        mov     dword ptr [g_distRefZ], esi
         pop     esi
         ret
     }

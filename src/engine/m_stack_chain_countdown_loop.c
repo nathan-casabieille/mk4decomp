@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -112,7 +112,7 @@ extern unsigned int g_fightAxisPosY;
  *   call MStackPushSearchLoop; pause-check. Compute min(g_walkCallback, g_eventQueueWorkType) into eax;
  *   scaledInit = g_phaseCounter*4 + g_dispatchAcc; g_eventQueueCurrent = [scaledInit*4+4];
  *   loop: edx = 0xffff9688 - 0x6978*counter; until counter==0; store result.
- *   g_acc_00542078 = [scaledInit*4+8]; mstack-pop g_scaledInit; pop esi; ret.
+ *   g_chainAccumCur = [scaledInit*4+8]; mstack-pop g_scaledInit; pop esi; ret.
  */
 extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchAcc;
@@ -174,7 +174,7 @@ __declspec(naked) void MStackChainCountdownLoop(void) {
         mov     dword ptr [g_eventQueueWorkType], edx
         mov     edx, dword ptr [esi*4 + 8]
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_chainAccumCur], edx
         pop     esi
         mov     ecx, dword ptr [eax*4 + g_matrixStack_arr]
         dec     eax

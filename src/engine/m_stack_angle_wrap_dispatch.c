@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -146,7 +146,7 @@ __declspec(naked) void MStackAngleWrapDispatch(void)
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
         mov      eax, dword ptr [g_matrixStackTop]
-        mov      ecx, dword ptr [g_acc_00542078]
+        mov      ecx, dword ptr [g_chainAccumCur]
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
@@ -207,7 +207,7 @@ __declspec(naked) void MStackAngleWrapDispatch(void)
         mov      dword ptr [g_matrixStackTop], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_acc_00542078], edx
+        mov      dword ptr [g_chainAccumCur], edx
         mov      dword ptr [g_matrixStackTop], eax
         mov      esi, dword ptr [eax*4]
         dec      eax
@@ -247,7 +247,7 @@ __declspec(naked) void MStackAngleWrapDispatch(void)
         push     eax
         call     Mul10Tail
         mov      ecx, dword ptr [g_walkCallback]
-        mov      edx, dword ptr [g_acc_00542078]
+        mov      edx, dword ptr [g_chainAccumCur]
         add      esp, 8
         mov      dword ptr [g_eventQueueChild], eax
         push     ecx
@@ -258,7 +258,7 @@ __declspec(naked) void MStackAngleWrapDispatch(void)
         sub      ecx, eax
         mov      eax, dword ptr [g_matrixStackTop]
         mov      dword ptr [g_eventQueueNotMask], ecx
-        mov      dword ptr [g_acc_00542078], edx
+        mov      dword ptr [g_chainAccumCur], edx
         mov      ecx, dword ptr [eax*4]
         add      esp, 8
         dec      eax

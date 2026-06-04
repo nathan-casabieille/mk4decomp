@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -109,9 +109,9 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00430020 (115b)
- *   ecx = g_load_0052ab04; edx = g_load_0052ab08;
+ *   ecx = g_distRefX; edx = g_distRefZ;
  *   push esi; esi = g_cj_0054205c;
- *   g_acc_00542078 = ecx; g_eventQueueNotMask = edx;
+ *   g_chainAccumCur = ecx; g_eventQueueNotMask = edx;
  *   eax = [esi*4+0x54]; g_eventQueueChild = eax;
  *   esi = [esi*4+0x5c]; eax -= ecx; esi -= edx;
  *   push eax; push eax; g_eventQueueChild = eax;
@@ -121,8 +121,8 @@ extern unsigned int g_fightAxisPosY;
  *   add esp,8; g_currentNodeFlags = eax; add eax,ecx;
  *   g_eventQueueNotMask = eax; pop esi; ret.
  */
-extern unsigned int g_load_0052ab04;
-extern unsigned int g_load_0052ab08;
+extern unsigned int g_distRefX;
+extern unsigned int g_distRefZ;
 
 /*
  * NON-COAXABLE: orig emits `mov esi, [esi*4+0x5c]` reusing esi as both SIB
@@ -132,11 +132,11 @@ extern unsigned int g_load_0052ab08;
  */
 __declspec(naked) void DualMul10ChainAcc7C(void) {
     __asm {
-        mov     ecx, dword ptr [g_load_0052ab04]
-        mov     edx, dword ptr [g_load_0052ab08]
+        mov     ecx, dword ptr [g_distRefX]
+        mov     edx, dword ptr [g_distRefZ]
         push    esi
         mov     esi, dword ptr [g_cj_0054205c]
-        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_chainAccumCur], ecx
         mov     dword ptr [g_eventQueueNotMask], edx
         mov     eax, dword ptr [esi*4 + 0x54]
         mov     dword ptr [g_eventQueueChild], eax

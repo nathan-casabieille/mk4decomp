@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -110,28 +110,28 @@ extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0042d010 (96b)
  *   ecx = g_cj_0054205c; edx = g_eventQueueCurrent;
- *   eax = [ecx*4+0x54]; g_acc_00542078 = eax;
+ *   eax = [ecx*4+0x54]; g_chainAccumCur = eax;
  *   ecx = [ecx*4+0x5c]; eax -= edx; edx = g_eventQueueWorkType;
- *   ecx -= edx; push eax, eax; g_acc_00542078 = eax;
+ *   ecx -= edx; push eax, eax; g_chainAccumCur = eax;
  *   g_eventQueueNotMask = ecx; call Mul10Tail; pop esp*2;
- *   g_acc_00542078 = eax; eax = g_eventQueueNotMask;
- *   push eax, eax; call Mul10Tail; ecx = g_acc_00542078;
+ *   g_chainAccumCur = eax; eax = g_eventQueueNotMask;
+ *   push eax, eax; call Mul10Tail; ecx = g_chainAccumCur;
  *   pop esp*2; add eax,ecx; g_eventQueueNotMask=eax; ret.
  */
 void DualMul10ChainAcc(void) {
     unsigned int cj = g_cj_0054205c;
     int a = (int)((ScenegraphNode *)(cj * 4))->position_x;
     int b;
-    g_acc_00542078 = (unsigned int)a;
+    g_chainAccumCur = (unsigned int)a;
     b = (int)((ScenegraphNode *)(cj * 4))->position_z;
     a -= (int)g_eventQueueCurrent;
     b -= (int)g_eventQueueWorkType;
-    g_acc_00542078 = (unsigned int)a;
+    g_chainAccumCur = (unsigned int)a;
     g_eventQueueNotMask = (unsigned int)b;
     a = ((int(*)(int, int))&Mul10Tail)(a, a);
-    g_acc_00542078 = (unsigned int)a;
+    g_chainAccumCur = (unsigned int)a;
     b = (int)g_eventQueueNotMask;
     b = ((int(*)(int, int))&Mul10Tail)(b, b);
-    b += (int)g_acc_00542078;
+    b += (int)g_chainAccumCur;
     g_eventQueueNotMask = (unsigned int)b;
 }

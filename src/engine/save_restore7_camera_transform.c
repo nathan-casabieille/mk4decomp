@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -108,7 +108,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern void MStackMagicModMul10(void);
 extern void ModMagicMul10Index(void);
 
@@ -130,7 +130,7 @@ void SaveRestore7CameraTransform(void) {
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
         mov      eax, dword ptr [g_matrixStackTop]
-        mov      edx, dword ptr [g_acc_00542078]
+        mov      edx, dword ptr [g_chainAccumCur]
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
@@ -150,7 +150,7 @@ void SaveRestore7CameraTransform(void) {
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], ecx
         mov      edx, dword ptr [g_eventQueueWorkType]
-        mov      eax, dword ptr [g_load_0052ab10]
+        mov      eax, dword ptr [g_eventQueueSeed]
         mov      dword ptr [g_eventQueueChild], edx
         mov      edx, dword ptr [g_xformScratch2088]
         mov      dword ptr [g_fightGroupHead], eax
@@ -175,11 +175,11 @@ void SaveRestore7CameraTransform(void) {
         sub      eax, 0x1921f
         push     edx
         mov      dword ptr [g_xformScratch2088], eax
-        mov      eax, dword ptr [g_acc_00542078]
+        mov      eax, dword ptr [g_chainAccumCur]
         push     eax
         call     Mul10Tail
         mov      ecx, dword ptr [g_walkCallback]
-        mov      edx, dword ptr [g_acc_00542078]
+        mov      edx, dword ptr [g_chainAccumCur]
         add      esp, 8
         mov      dword ptr [g_eventQueueNotMask], eax
         push     ecx
@@ -219,7 +219,7 @@ void SaveRestore7CameraTransform(void) {
         mov      dword ptr [g_matrixStackTop], eax
         mov      edx, dword ptr [eax*4]
         dec      eax
-        mov      dword ptr [g_acc_00542078], edx
+        mov      dword ptr [g_chainAccumCur], edx
         mov      dword ptr [g_matrixStackTop], eax
         mov      ecx, dword ptr [eax*4]
         dec      eax

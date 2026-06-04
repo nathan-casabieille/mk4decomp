@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -111,7 +111,7 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0042d090 (304b game) - 3D-distance mul10 + scaled chain advance.
  *   Load eax/ecx/edx from globals 0053a1a8/0053a1a4/g_cj. esi = [cj*4+0x54].
  *   Compute diffs: eax -= esi; ecx -= edx[cj*4+0x5c].
- *   Mul10Tail(eax,eax)->g_eventQueueWorkType. Mul10Tail(ecx,ecx)->g_acc_00542078; add for g_eventQueueWorkType.
+ *   Mul10Tail(eax,eax)->g_eventQueueWorkType. Mul10Tail(ecx,ecx)->g_chainAccumCur; add for g_eventQueueWorkType.
  *   Call FpuSqrtMul; if pause ret.
  *   Mul10Tail(g_currentNodeFlags, g_walkCallback)->g_eventQueueChild.
  *   Mul10Tail(eax, g_eventQueueScratch)->g_eventQueueWorkType. Mul10Tail(ecx, g_eventQueueChildSrc)->g_acc.
@@ -131,7 +131,7 @@ __declspec(naked) void Distance3DMul10Chain(void) {
         mov     edx, dword ptr [g_cj_0054205c]
         push    esi
         mov     dword ptr [g_eventQueueWorkType], eax
-        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_chainAccumCur], ecx
         mov     esi, dword ptr [edx*4 + 0x54]
         mov     dword ptr [g_walkCallback], esi
         mov     edx, dword ptr [edx*4 + 0x5c]
@@ -141,18 +141,18 @@ __declspec(naked) void Distance3DMul10Chain(void) {
         push    eax
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_eventQueueWorkType], eax
-        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_chainAccumCur], ecx
         call    Mul10Tail
         add     esp, 8
         mov     dword ptr [g_eventQueueWorkType], eax
-        mov     eax, dword ptr [g_acc_00542078]
+        mov     eax, dword ptr [g_chainAccumCur]
         push    eax
         push    eax
         call    Mul10Tail
         mov     ecx, dword ptr [g_eventQueueWorkType]
         add     esp, 8
         add     ecx, eax
-        mov     dword ptr [g_acc_00542078], eax
+        mov     dword ptr [g_chainAccumCur], eax
         mov     dword ptr [g_eventQueueWorkType], ecx
         call    FpuSqrtMul
         mov     eax, dword ptr [g_framePauseFlag]
@@ -174,14 +174,14 @@ __declspec(naked) void Distance3DMul10Chain(void) {
         add     esp, 8
         mov     dword ptr [g_eventQueueChild], eax
         mov     dword ptr [g_eventQueueWorkType], ecx
-        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_chainAccumCur], edx
         push    ecx
         push    eax
         call    Mul10Tail
         mov     ecx, dword ptr [g_eventQueueChild]
         add     esp, 8
         mov     dword ptr [g_eventQueueWorkType], eax
-        mov     eax, dword ptr [g_acc_00542078]
+        mov     eax, dword ptr [g_chainAccumCur]
         push    eax
         push    ecx
         call    Mul10Tail
@@ -189,7 +189,7 @@ __declspec(naked) void Distance3DMul10Chain(void) {
         mov     ecx, dword ptr [g_dual_0053a1a8]
         add     ecx, edx
         mov     edx, dword ptr [g_dual_0053a1a4]
-        mov     dword ptr [g_acc_00542078], eax
+        mov     dword ptr [g_chainAccumCur], eax
         add     edx, eax
         mov     eax, dword ptr [g_cj_0054205c]
         mov     dword ptr [g_walkCallback], ecx

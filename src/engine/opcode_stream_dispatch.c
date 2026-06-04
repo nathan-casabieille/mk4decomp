@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -114,7 +114,7 @@ extern void OpcodeStreamDispatch(void);
  *   call BootInitGuardedCallChain; pause? -> ret.
  *   g_walkCallback = 0; call CopyGlobal; pause? -> ret.
  *   g_xformEntityIdx = packed_ptr(0x4dedf8); g_walkCallback = 0xa;
- *   g_eventQueueCurrent = 4; g_acc_00542078 = 0; g_eventQueueNotMask = 0xff9c0000.
+ *   g_eventQueueCurrent = 4; g_chainAccumCur = 0; g_eventQueueNotMask = 0xff9c0000.
  *   call Push70CallScaleArith; pause? -> ret.
  *   chain[g_scaledInit + 0x5c] = 0x10000; g_eventQueueIdx = packed_ptr(0x4dfb50);
  *   g_walkCallback = 0x10000. jmp OpcodeStreamDispatch.
@@ -130,7 +130,7 @@ void ChainInit3CallTailJmp(void) {
     g_walkCallback = 0x0a;
     g_xformEntityIdx = (unsigned int)&g_dispatchSave666 >> 2;
     g_eventQueueCurrent = 4;
-    g_acc_00542078 = 0;
+    g_chainAccumCur = 0;
     g_eventQueueNotMask = 0xff9c0000;
     Push70CallScaleArith();
     if (g_framePauseFlag != 0) return;

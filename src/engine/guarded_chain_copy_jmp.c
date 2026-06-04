@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -111,10 +111,10 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x0049b730 (132b)
  *   eax = g_cj_0054205c → g_scaledInit; call MStackPush2ChainLLInsert;
  *   if pause: ret; ecx = g_baseSel; eax = [ecx*4+0x38];
- *   g_eventQueueEnd = eax; edx = [eax*4+0x6c]; g_acc_00542078 = edx;
+ *   g_eventQueueEnd = eax; edx = [eax*4+0x6c]; g_chainAccumCur = edx;
  *   eax = [eax*4+0x74]; g_eventQueueNotMask = eax;
  *   g_walkCallback = 0x48; call ScaledLitAddJmp; if pause: ret;
- *   ecx = g_eventQueueEnd; edx = g_acc_00542078;
+ *   ecx = g_eventQueueEnd; edx = g_chainAccumCur;
  *   [ecx*4+0x6c] = edx; lea eax,[ecx*4]; ecx = g_eventQueueNotMask;
  *   [eax+0x74] = ecx; jmp 0x41f830.
  */
@@ -134,7 +134,7 @@ void GuardedChainCopyJmp(void) {
         mov     eax, dword ptr [ecx*4 + 0x38]
         mov     dword ptr [g_eventQueueEnd], eax
         mov     edx, dword ptr [eax*4 + 0x6c]
-        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_chainAccumCur], edx
         mov     eax, dword ptr [eax*4 + 0x74]
         mov     dword ptr [g_eventQueueNotMask], eax
         mov     dword ptr [g_walkCallback], 0x48
@@ -144,7 +144,7 @@ void GuardedChainCopyJmp(void) {
         _emit   75h
         _emit   28h
         mov     ecx, dword ptr [g_eventQueueEnd]
-        mov     edx, dword ptr [g_acc_00542078]
+        mov     edx, dword ptr [g_chainAccumCur]
         mov     dword ptr [ecx*4 + 0x6c], edx
         lea     eax, [ecx*4 + 0]
         mov     ecx, dword ptr [g_eventQueueNotMask]

@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -109,13 +109,13 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x0040a730 (166b boot) - same shape as MStackPushNegMul10
- *   but with 3rd FP step: mstack-push scaledInit; snapshot g_load_0052ab10
+ *   but with 3rd FP step: mstack-push scaledInit; snapshot g_eventQueueSeed
  *   into scaledInit; chain[+0x64] -> g_eventQueueWorkType; call MStackPush1MagicMod2;
  *   pause? ret; Mul10Tail(g_eventQueueCurrent, neg) -> g_eventQueueWorkType;
  *   Mul10Tail(walkCallback, neg) -> g_eventQueueCurrent; neg g_eventQueueWorkType -> walkCallback;
  *   mstack-pop into scaledInit.
  */
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern void MStackPush1MagicMod2(void);
 
 extern unsigned int g_chain_disp_64_40a690;
@@ -129,9 +129,9 @@ void MStackPushNegMul10Var(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     [eax*4 + g_matrixStack_arr], ecx
         mov     edx, dword ptr [g_walkCallback]
-        mov     eax, dword ptr [g_load_0052ab10]
+        mov     eax, dword ptr [g_eventQueueSeed]
         neg     edx
-        mov     dword ptr [g_acc_00542078], edx
+        mov     dword ptr [g_chainAccumCur], edx
         mov     dword ptr [g_currentNodeIdx], eax
         mov     eax, [eax*4 + g_chain_disp_64_40a690]
         mov     dword ptr [g_eventQueueWorkType], eax
@@ -141,11 +141,11 @@ void MStackPushNegMul10Var(void) {
         _emit   75h
         _emit   5bh
         mov     ecx, dword ptr [g_eventQueueCurrent]
-        mov     edx, dword ptr [g_acc_00542078]
+        mov     edx, dword ptr [g_chainAccumCur]
         push    ecx
         push    edx
         call    Mul10Tail
-        mov     ecx, dword ptr [g_acc_00542078]
+        mov     ecx, dword ptr [g_chainAccumCur]
         add     esp, 8
         mov     dword ptr [g_eventQueueWorkType], eax
         mov     eax, dword ptr [g_walkCallback]

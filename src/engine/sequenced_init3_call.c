@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -109,11 +109,11 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00464190 (173b game) - sequenced init: call BootInitGuardedCallChain; pause-check;
- *   call Init4Globals; pause-check; setup scaledInit/0053a734/0053a350 from g_load_0052ab10;
+ *   call Init4Globals; pause-check; setup scaledInit/0053a734/0053a350 from g_eventQueueSeed;
  *   init 5 fields of struct[*4+0x54..0x68]; call CopyGlobal; pause-check;
  *   scaledInit = 0x0050b124>>2; call LoadGeoAsset_Default; pause-check; repeat; ret.
  */
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern unsigned int g_dispatchSave42;
 extern unsigned int g_dispatchSave40;
 extern void BootInitGuardedCallChain(void);
@@ -141,7 +141,7 @@ __declspec(naked) void SequencedInit3Call(void) {
         _emit   00h
         _emit   00h
         _emit   00h
-        mov     eax, dword ptr [g_load_0052ab10]
+        mov     eax, dword ptr [g_eventQueueSeed]
         mov     dword ptr [g_dispatchSave40], esi
         mov     dword ptr [g_currentNodeIdx], eax
         mov     dword ptr [g_dispatchSave42], esi

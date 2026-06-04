@@ -9,7 +9,7 @@ extern unsigned int g_currentNodeIdx;
 
 /* @addr 0x00458880 (46b)
  *   mov     eax, [0x0053a278]
- *   mov     [g_acc_00542078], eax
+ *   mov     [g_chainAccumCur], eax
  *   inc     eax
  *   cmp     eax, 0x28
  *   mov     [g_walkCallback], eax
@@ -19,11 +19,11 @@ extern unsigned int g_currentNodeIdx;
  *   jmp     T
  */
 extern unsigned int g_stateChangePair3;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern void CinematicStageCluster(void);
 void IncCmp28StoreOrJmp(void) {
     int v = (int)g_stateChangePair3;
-    g_acc_00542078 = (unsigned int)v;
+    g_chainAccumCur = (unsigned int)v;
     v++;
     g_walkCallback = (void (*)(void))v;
     if (v >= 0x28) {

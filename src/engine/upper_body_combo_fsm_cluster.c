@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -109,7 +109,7 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchSave962;
-extern unsigned int g_zero_0053a470;
+extern unsigned int g_eventMaskState;
 extern unsigned int g_dispatchTableBase;
 extern void CallSetPause(void);
 extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
@@ -127,7 +127,7 @@ __declspec(naked) void UpperBodyComboFsmCluster(void)
         inc      eax
         mov      dword ptr [g_matrixStackTop], eax
         mov      dword ptr [eax*4], edx
-        mov      edx, dword ptr [g_zero_0053a470]
+        mov      edx, dword ptr [g_eventMaskState]
         mov      eax, OFFSET g_dispatchSave962
         mov      dword ptr [g_walkCallback], edx
         shr      eax, 2

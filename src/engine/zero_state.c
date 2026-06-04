@@ -9,7 +9,7 @@ extern unsigned int g_currentNodeIdx;
  *   mov     [g_state], 0
  *   ret
  */
-extern unsigned int g_zero_00541fa4;
+extern unsigned int g_armedReloadA;
 void ZeroState(void) {
-    g_zero_00541fa4 = 0;
+    g_armedReloadA = 0;
 }

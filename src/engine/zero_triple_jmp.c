@@ -46,12 +46,12 @@ void ScaledAndAhfe_00490390(void) {
  *   mov     [g_Y], eax
  *   jmp     +0xffa
  */
-extern unsigned int g_zero_0053a470;
-extern unsigned int g_zero_0053a104;
+extern unsigned int g_eventMaskState;
+extern unsigned int g_dispatchWalkVar;
 extern void DualTableMappedDispatch(void);
 void ZeroTripleJmp(void) {
     g_walkCallback = 0;
-    g_zero_0053a470 = 0;
-    g_zero_0053a104 = 0;
+    g_eventMaskState = 0;
+    g_dispatchWalkVar = 0;
     DualTableMappedDispatch();
 }

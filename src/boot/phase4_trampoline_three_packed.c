@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchVar42;
 extern unsigned int g_dispatchSave615;
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern void CallSetPause(void);
 extern void ClampMulShiftStore(void);
 extern void MStackCall_MStackPush2ChainInsert_004062a0(void);
@@ -199,7 +199,7 @@ __declspec(naked) void Phase4TrampolineThreePacked(void)
         pop     esi
         ret
     L_p4ttp_B_phase0:
-        mov     eax, dword ptr [g_load_0052ab10]
+        mov     eax, dword ptr [g_eventQueueSeed]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_eventQueueTotal], eax
         mov     dword ptr [g_eventQueueEnd], edx

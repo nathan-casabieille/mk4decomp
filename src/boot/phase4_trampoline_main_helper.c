@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -233,14 +233,14 @@ __declspec(naked) void Phase4TrampolineMainHelper(void)
         add     eax, esi
         add     ecx, 0x10000
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_acc_00542078], eax
+        mov     dword ptr [g_chainAccumCur], eax
         mov     dword ptr [g_eventQueueWorkType], ecx
         call    MStackPush1MagicMod2
         mov     eax, dword ptr [g_framePauseFlag]
         test    eax, eax
         jne     L_p4tmh_M_ret
         mov     edx, dword ptr [g_walkCallback]
-        mov     eax, dword ptr [g_acc_00542078]
+        mov     eax, dword ptr [g_chainAccumCur]
         push    edx
         push    eax
         call    Mul10Tail
@@ -249,7 +249,7 @@ __declspec(naked) void Phase4TrampolineMainHelper(void)
         add     esp, 8
         mov     dword ptr [ecx*4], eax
         mov     edx, dword ptr [g_eventQueueCurrent]
-        mov     eax, dword ptr [g_acc_00542078]
+        mov     eax, dword ptr [g_chainAccumCur]
         push    edx
         push    eax
         call    Mul10Tail
@@ -257,13 +257,13 @@ __declspec(naked) void Phase4TrampolineMainHelper(void)
         mov     dword ptr [g_eventQueueCurrent], eax
         add     esp, 8
         mov     dword ptr [ecx*4 + 8], eax
-        mov     edx, dword ptr [g_acc_00542078]
+        mov     edx, dword ptr [g_chainAccumCur]
         push    edx
         push    0xFFFFFAE2
         call    Mul10Tail
         mov     ecx, dword ptr [g_xformEntityIdx]
         add     esp, 8
-        mov     dword ptr [g_acc_00542078], eax
+        mov     dword ptr [g_chainAccumCur], eax
         mov     dword ptr [ecx*4 + 4], eax
         call    ScaledTripleCopy10
         mov     eax, dword ptr [g_framePauseFlag]

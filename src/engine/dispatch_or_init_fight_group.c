@@ -12,7 +12,7 @@ extern unsigned int g_currentNodeIdx;
  *   mov [g_baseSel*4 + 0x64] = walk; jmp T2.
  */
 extern unsigned int g_tickFlagF;
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern unsigned int g_baseSel;
 extern void StoreByteJmp(void);
 extern void CameraAimSplineDriver(void);
@@ -24,7 +24,7 @@ void DispatchOrInitFightGroup(void) {
         StoreByteJmp();
         return;
     }
-    g_fightGroupHead = g_load_0052ab10;
+    g_fightGroupHead = g_eventQueueSeed;
     CameraAimSplineDriver();
     if (g_framePauseFlag) return;
     *(unsigned int *)(g_baseSel * 4 + 0x64) = (unsigned int)g_walkCallback;

@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -109,10 +109,10 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /* @addr 0x00477300 (241b game) - mstack-push 3 + 2 calls + halve subtract.
- *   mstack-push g_acc_00542078; call FixedDiv16; if pause? ret.
+ *   mstack-push g_chainAccumCur; call FixedDiv16; if pause? ret.
  *   mstack-push g_walkCallback twice. g_eventQueueCurrent = g_walkCallback; g_walkCallback =
- *     g_acc_00542078; call FixedDiv16 again; if pause? ret.
- *   g_acc_00542078 = g_walkCallback. mstack-pop; push (ecx, g_eventQueueWorkType) for cdecl call
+ *     g_chainAccumCur; call FixedDiv16 again; if pause? ret.
+ *   g_chainAccumCur = g_walkCallback. mstack-pop; push (ecx, g_eventQueueWorkType) for cdecl call
  *     to Mul10Tail. After call: cdq; eax-=edx; eax>>=1; ecx-=eax. mstack-pop 2.
  */
 extern void FixedDiv16(void);
@@ -120,7 +120,7 @@ extern void FixedDiv16(void);
 void MStackPush3DualCallHalve(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
-        mov     ecx, dword ptr [g_acc_00542078]
+        mov     ecx, dword ptr [g_chainAccumCur]
         inc     eax
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
@@ -144,7 +144,7 @@ void MStackPush3DualCallHalve(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     dword ptr [eax*4 + 0], ecx
         mov     edx, dword ptr [g_walkCallback]
-        mov     eax, dword ptr [g_acc_00542078]
+        mov     eax, dword ptr [g_chainAccumCur]
         mov     dword ptr [g_eventQueueCurrent], edx
         mov     dword ptr [g_walkCallback], eax
         call    FixedDiv16
@@ -155,7 +155,7 @@ void MStackPush3DualCallHalve(void) {
         mov     ecx, dword ptr [g_walkCallback]
         mov     eax, dword ptr [g_matrixStackTop]
         mov     edx, dword ptr [g_eventQueueWorkType]
-        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_chainAccumCur], ecx
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
         push    ecx
@@ -163,7 +163,7 @@ void MStackPush3DualCallHalve(void) {
         mov     dword ptr [g_walkCallback], ecx
         mov     dword ptr [g_matrixStackTop], eax
         call    Mul10Tail
-        mov     ecx, dword ptr [g_acc_00542078]
+        mov     ecx, dword ptr [g_chainAccumCur]
         add     esp, 8
         cdq
         sub     eax, edx
@@ -177,7 +177,7 @@ void MStackPush3DualCallHalve(void) {
         mov     dword ptr [g_matrixStackTop], eax
         mov     ecx, dword ptr [eax*4 + 0]
         dec     eax
-        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_chainAccumCur], ecx
         mov     dword ptr [g_matrixStackTop], eax
         }
 }

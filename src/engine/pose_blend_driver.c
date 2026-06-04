@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -152,10 +152,10 @@ __declspec(naked) void PoseBlendDriver(void)
         add      ecx, edi
         add      esi, eax
         mov      dword ptr [g_eventQueueWorkType], ecx
-        mov      dword ptr [g_acc_00542078], esi
+        mov      dword ptr [g_chainAccumCur], esi
         mov      dword ptr [edx*4 + 0x54], ecx
         mov      eax, dword ptr [g_fightGroupHead]
-        mov      ecx, dword ptr [g_acc_00542078]
+        mov      ecx, dword ptr [g_chainAccumCur]
         mov      dword ptr [eax*4 + 0x5c], ecx
         call     MStackSignedMod
         mov      eax, dword ptr [g_framePauseFlag]
@@ -183,20 +183,20 @@ __declspec(naked) void PoseBlendDriver(void)
         mov      ecx, dword ptr [g_walkCallback]
         lea      eax, [ecx - 0x4ccc]
         test     eax, eax
-        mov      dword ptr [g_acc_00542078], eax
+        mov      dword ptr [g_chainAccumCur], eax
         jge      short L_fddf
         neg      eax
-        mov      dword ptr [g_acc_00542078], eax
+        mov      dword ptr [g_chainAccumCur], eax
     L_fddf:
         push     eax
         push     0x44924
         call     Mul10Tail
         add      esp, 8
         cmp      eax, 0x7ae
-        mov      dword ptr [g_acc_00542078], eax
+        mov      dword ptr [g_chainAccumCur], eax
         jge      short L_fe03
         mov      eax, 0x7ae
-        mov      dword ptr [g_acc_00542078], eax
+        mov      dword ptr [g_chainAccumCur], eax
     L_fe03:
         mov      ecx, dword ptr [g_fightAxisPosX]
         mov      edx, dword ptr [g_fightAxisPosY]
@@ -205,7 +205,7 @@ __declspec(naked) void PoseBlendDriver(void)
         mov      dword ptr [g_eventQueueNotMask], ecx
         mov      dword ptr [g_eventQueueChild], edx
         call     Mul10Tail
-        mov      ecx, dword ptr [g_acc_00542078]
+        mov      ecx, dword ptr [g_chainAccumCur]
         add      esp, 8
         mov      dword ptr [g_eventQueueNotMask], eax
         mov      eax, dword ptr [g_eventQueueChild]

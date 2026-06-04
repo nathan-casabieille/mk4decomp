@@ -15,10 +15,10 @@ extern unsigned int g_currentNodeIdx;
  *   ret
  */
 extern void Loop16Init(void);
-extern unsigned int g_zero_00541fa8;
-extern unsigned int g_zero_00541fa4;
+extern unsigned int g_armedReloadB;
+extern unsigned int g_armedReloadA;
 void CallZero2(void) {
     Loop16Init();
-    g_zero_00541fa8 = 0;
-    g_zero_00541fa4 = 0;
+    g_armedReloadB = 0;
+    g_armedReloadA = 0;
 }

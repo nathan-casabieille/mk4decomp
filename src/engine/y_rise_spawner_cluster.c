@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -60,8 +60,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -164,7 +164,7 @@ void YRiseSpawnerCluster(void) {
         jne      L_7e12
         mov      dword ptr [g_eventQueueCurrent], 3
         mov      dword ptr [g_eventQueueWorkType], 0x26
-        mov      dword ptr [g_acc_00542078], 0xa00000
+        mov      dword ptr [g_chainAccumCur], 0xa00000
         mov      dword ptr [g_eventQueueNotMask], 0xff970000
         mov      dword ptr [g_currentNodeFlags], 2
         call     DispatcherComplex181_StreamChainStringInstall
@@ -190,7 +190,7 @@ void YRiseSpawnerCluster(void) {
         jne      L_7e12
         mov      dword ptr [g_eventQueueCurrent], 3
         mov      dword ptr [g_eventQueueWorkType], 0x26
-        mov      dword ptr [g_acc_00542078], 0x970000
+        mov      dword ptr [g_chainAccumCur], 0x970000
         mov      dword ptr [g_eventQueueNotMask], 0xff970000
         mov      dword ptr [g_currentNodeFlags], 2
         call     DispatcherComplex181_StreamChainStringInstall

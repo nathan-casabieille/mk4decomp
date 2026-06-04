@@ -12,7 +12,7 @@ extern unsigned int g_currentNodeIdx;
  * into Block A and a forward tail-jmp. */
 extern unsigned int g_dispatchSave505;
 extern unsigned int g_dispatchSave796;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_fightStateProgress;
 extern unsigned int g_dispatchSave1308;
 extern unsigned int g_dispatchSave795;
@@ -996,7 +996,7 @@ __declspec(naked) void func_PendingMatch(void) {
         mov      ebx, 4
         mov      dword ptr [g_eventQueueWorkType], 0x23e
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_acc_00542078], 0xfe9d0000
+        mov      dword ptr [g_chainAccumCur], 0xfe9d0000
         mov      dword ptr [g_eventQueueNotMask], 0xff9c0000
         mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_Push70CallScaleArith2
@@ -1022,7 +1022,7 @@ __declspec(naked) void func_PendingMatch(void) {
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_acc_00542078], 0xfecf0000
+        mov      dword ptr [g_chainAccumCur], 0xfecf0000
         mov      dword ptr [g_eventQueueNotMask], 0xff9c0000
         call     Push70CallScaleArith2
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1050,7 +1050,7 @@ __declspec(naked) void func_PendingMatch(void) {
         jne      L_2a6a
         mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_eventQueueWorkType], 0x240
-        mov      dword ptr [g_acc_00542078], 0xfe540000
+        mov      dword ptr [g_chainAccumCur], 0xfe540000
         mov      dword ptr [g_eventQueueNotMask], 0xffb00000
         mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_Push70CallScaleArith2
@@ -1075,7 +1075,7 @@ __declspec(naked) void func_PendingMatch(void) {
         shr      ecx, 2
         mov      dword ptr [g_xformEntityIdx], ecx
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_acc_00542078], 0xfecf0000
+        mov      dword ptr [g_chainAccumCur], 0xfecf0000
         mov      dword ptr [g_eventQueueNotMask], 0xffb00000
         call     Push70CallScaleArith2
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1170,7 +1170,7 @@ __declspec(naked) void func_PendingMatch(void) {
         mov      esi, 0xffa00000
         mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_eventQueueWorkType], 0x242
-        mov      dword ptr [g_acc_00542078], 0x1310000
+        mov      dword ptr [g_chainAccumCur], 0x1310000
         mov      dword ptr [g_eventQueueNotMask], esi
         mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_StreamChainStringInstall
@@ -1198,7 +1198,7 @@ __declspec(naked) void func_PendingMatch(void) {
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_acc_00542078], 0x14d0000
+        mov      dword ptr [g_chainAccumCur], 0x14d0000
         mov      dword ptr [g_eventQueueNotMask], esi
         call     StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1221,7 +1221,7 @@ __declspec(naked) void func_PendingMatch(void) {
         shr      eax, 2
         mov      dword ptr [g_xformEntityIdx], eax
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_acc_00542078], 0x1430000
+        mov      dword ptr [g_chainAccumCur], 0x1430000
         mov      dword ptr [g_eventQueueNotMask], esi
         call     StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1251,7 +1251,7 @@ __declspec(naked) void func_PendingMatch(void) {
         mov      esi, 0xffb40000
         mov      dword ptr [g_eventQueueCurrent], ebx
         mov      dword ptr [g_eventQueueWorkType], 0x244
-        mov      dword ptr [g_acc_00542078], 0x1310000
+        mov      dword ptr [g_chainAccumCur], 0x1310000
         mov      dword ptr [g_eventQueueNotMask], esi
         mov      dword ptr [g_currentNodeFlags], 1
         call     DispatcherComplex181_StreamChainStringInstall
@@ -1279,7 +1279,7 @@ __declspec(naked) void func_PendingMatch(void) {
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_acc_00542078], 0x14a0000
+        mov      dword ptr [g_chainAccumCur], 0x14a0000
         mov      dword ptr [g_eventQueueNotMask], esi
         call     StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]
@@ -1302,7 +1302,7 @@ __declspec(naked) void func_PendingMatch(void) {
         shr      edx, 2
         mov      dword ptr [g_xformEntityIdx], edx
         mov      dword ptr [g_eventQueueCurrent], ebx
-        mov      dword ptr [g_acc_00542078], 0x1400000
+        mov      dword ptr [g_chainAccumCur], 0x1400000
         mov      dword ptr [g_eventQueueNotMask], esi
         call     StreamChainStringInstall
         mov      eax, dword ptr [g_framePauseFlag]

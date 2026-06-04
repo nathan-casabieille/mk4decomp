@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -122,7 +122,7 @@ extern void CopyGlobal(void);
  *   g_scaledInit = [0x52ab10]; g_walkCallback = 0xfff88000;
  *   chain[g_scaledInit*4 + 0x54/0x58/0x5c/0x60/0x64/0x68] = 0 (or 0xfff88000 for +0x5c).
  */
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern void TableWalkBoundedCmp(void);
 
 __declspec(naked) void FiveTableWalkInit(void) {
@@ -172,7 +172,7 @@ __declspec(naked) void FiveTableWalkInit(void) {
         cmp     dword ptr [g_framePauseFlag], esi
         _emit   75h
         _emit   2ah
-        mov     eax, dword ptr [g_load_0052ab10]
+        mov     eax, dword ptr [g_eventQueueSeed]
         mov     ecx, 0xfff88000
         mov     dword ptr [g_currentNodeIdx], eax
         shl     eax, 2

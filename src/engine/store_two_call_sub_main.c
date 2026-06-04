@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -119,7 +119,7 @@ extern unsigned int g_chain_arr_485cc0;
  *   Wrapper_ScaledChainPushCall_004ef810 -> pause? ret;
  *   g_eventQueueNotMask = 0; EntryThunkBodyStateMachine -> pause? ret;
  *   g_walkCallback = 6; ByteWordTableTaggedDispatch -> pause? ret;
- *   g_acc_00542078 = chain[cj].slot54; g_eventQueueNotMask = chain[cj].slot5c;
+ *   g_chainAccumCur = chain[cj].slot54; g_eventQueueNotMask = chain[cj].slot5c;
  *   StoreTwoCallSubMain -> pause? ret.
  *   g_walkCallback = chain[cj].slot48; chain[cj].slot58 = walkCallback.
  */
@@ -155,7 +155,7 @@ void FiveStageSetupChain(void) {
         _emit   46h
         mov     eax, dword ptr [g_cj_0054205c]
         mov     ecx, [eax*4 + g_chain_arr_485cc0 + 0x54]
-        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_chainAccumCur], ecx
         mov     edx, [eax*4 + g_chain_arr_485cc0 + 0x5c]
         mov     dword ptr [g_eventQueueNotMask], edx
         call    StoreTwoCallSubMain

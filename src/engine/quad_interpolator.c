@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -114,7 +114,7 @@ extern void MStackPush2DualModMul10Pop2(void);
 extern void QuadInterpolator(void);
 extern unsigned int g_dispatchSave6;
 extern unsigned int g_pendingMatchVar3;
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 
 /* @addr 0x004107d0 (198b boot) - 2-arg cdecl call + neg-chain + signed-bit branch + final tail-jmp.
  *   g_eventQueueIdx = g_walkCallback; push 0x2f, 0x4109b0; call StoreTwoCall;
@@ -138,7 +138,7 @@ __declspec(naked) void StoreTailJmpSigned(void) {
         mov     dword ptr [g_eventQueueIdx], eax
         call    StoreTwoCall
         mov     ecx, dword ptr [g_currentNodeIdx]
-        mov     eax, dword ptr [g_load_0052ab10]
+        mov     eax, dword ptr [g_eventQueueSeed]
         mov     edx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_baseSel], ecx
         mov     dword ptr [g_currentNodeIdx], eax

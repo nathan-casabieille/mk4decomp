@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -180,7 +180,7 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall(void)
         pop     esi
         ret
     L_qfeji_sub2_phase1:
-        mov     dword ptr [g_acc_00542078], 0xffffeb86
+        mov     dword ptr [g_chainAccumCur], 0xffffeb86
         mov     dword ptr [esi + 8], offset L_qfeji_sub2
         mov     ecx, dword ptr [g_baseSel]
         mov     edx, offset L_qfeji_sub2
@@ -200,7 +200,7 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall(void)
         sub     eax, edx
         mov     edx, offset L_qfeji_sub2
         mov     dword ptr [g_walkCallback], eax
-        mov     dword ptr [g_acc_00542078], eax
+        mov     dword ptr [g_chainAccumCur], eax
         mov     dword ptr [esi + 8], offset L_qfeji_sub2
         mov     ecx, dword ptr [g_baseSel]
         add     edx, 0x1000000

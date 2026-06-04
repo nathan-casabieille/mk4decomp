@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -123,7 +123,7 @@ void MStackBracket6_DualGate(void) {
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_walkCallback;
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_acc_00542078;
+    *(unsigned int *)(g_matrixStackTop * 4) = g_chainAccumCur;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueNotMask;
     g_matrixStackTop++;
@@ -158,7 +158,7 @@ void MStackBracket6_DualGate(void) {
     g_matrixStackTop--;
     g_eventQueueNotMask = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
-    g_acc_00542078 = *(unsigned int *)(g_matrixStackTop * 4);
+    g_chainAccumCur = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;
     g_walkCallback = *(unsigned int *)(g_matrixStackTop * 4);
     g_matrixStackTop--;

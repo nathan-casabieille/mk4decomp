@@ -6,7 +6,7 @@
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
-extern unsigned int g_acc_00542078;
+extern unsigned int g_chainAccumCur;
 extern unsigned int g_cj_0054205c;
 extern unsigned int g_gameCountdown;
 extern unsigned int g_xformScratch94;
@@ -58,8 +58,8 @@ extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
-extern unsigned int g_zero_00541fa4;
-extern unsigned int g_zero_00541fa8;
+extern unsigned int g_armedReloadA;
+extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
@@ -119,7 +119,7 @@ extern unsigned int g_fightAxisPosY;
  *         if (eax != 0): loop_outer.
  *         else: ecx=0; edi=0; jmp skip-loop.
  *       } else: ebx -= eax; edi += ebx; ecx=0; esi++; fall to skip-loop.
- *   skip-loop: edx = esi + ebp; g_acc_00542078 = ecx;
+ *   skip-loop: edx = esi + ebp; g_chainAccumCur = ecx;
  *     while (chain[edx] != ecx): esi++; edx = esi + ebp;
  *     esi += edi + ebp; g_xformEntityIdx = chain[esi*4 + 8];
  *     restore: g_eventQueueCurrent = saved; g_scaledInit = [g_scaledInit] (no-op).
@@ -174,7 +174,7 @@ __declspec(naked) void ScaledSearchSum(void) {
         xor     ecx, ecx
         inc     esi
         lea     edx, [esi + ebp]
-        mov     dword ptr [g_acc_00542078], ecx
+        mov     dword ptr [g_chainAccumCur], ecx
         cmp     [edx*4 + g_matrixStack_arr], ecx
         _emit   75h
         _emit   0edh

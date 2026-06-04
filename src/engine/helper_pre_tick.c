@@ -14,7 +14,7 @@
  *   [0xab4d18..0x20] = chain[ecx+0..+8]; [0xab4e24] = chain[ecx+0x58].
  */
 extern unsigned int g_currentNodeIdx;
-extern unsigned int g_load_0052ab10;
+extern unsigned int g_eventQueueSeed;
 extern unsigned int g_dispatchSave1551;
 extern unsigned int g_dispatchSave1552;
 extern unsigned int g_dispatchSave1553;
@@ -27,7 +27,7 @@ extern unsigned int g_matrixStack_arr;
 void Helper_PreTick(void) {
     __asm {
         call    DispatchScaledLEA
-        mov     ecx, dword ptr [g_load_0052ab10]
+        mov     ecx, dword ptr [g_eventQueueSeed]
         mov     eax, 0x00ab4878
         sar     eax, 2
         add     ecx, 0x18
@@ -66,7 +66,7 @@ void Helper_PreTick(void) {
         cmp     eax, 0x00ab4d6a
         _emit   7ch
         _emit   0ebh
-        mov     ecx, dword ptr [g_load_0052ab10]
+        mov     ecx, dword ptr [g_eventQueueSeed]
         lea     eax, [ecx + 0x15]
         mov     dword ptr [g_xformEntityIdx], eax
         mov     edx, [eax*4 + g_matrixStack_arr]
