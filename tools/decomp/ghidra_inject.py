@@ -105,6 +105,10 @@ def main():
         c = gp.postprocess(dpath.read_text(), fn_by_va, gl_by_va)
         # strip the "/* ghidra name */" comment line
         c = re.sub(r'^/\* ghidra name:.*\*/\n', '', c)
+        # strip any leading Ghidra block comments (e.g. the "WARNING:
+        # Globals starting with '_' overlap..." analysis notes) so the
+        # signature regex below sees the function, not the comment.
+        c = re.sub(r'\A\s*(?:/\*.*?\*/\s*)+', '', c, flags=re.DOTALL)
         # Accept any return type / signature (Ghidra recovers args for
         # arg-taking functions); capture the function name. The #else keeps
         # our void(void) naked decl, so matching is unaffected; cross-file

@@ -64,6 +64,13 @@ def reconcile_names(text, ghidra_va, our_by_va):
     that function rather than mis-bind a global."""
     def sub(m):
         name = m.group(0)
+        # Leave Ghidra auto-placeholders alone here: code labels (LAB_),
+        # data/func/ptr autonames (DAT_/FUN_/PTR_), jump tables and unknowns
+        # have dedicated handlers downstream, or must reach has_bail so the
+        # function is dropped. Rewriting a LAB_ label target into an MK4_VA
+        # deref produces invalid C (`(*(uint*)MK4_VA(...)):`).
+        if re.match(r'(?:LAB|DAT|FUN|PTR|UNK|JUMP|switchD)_', name):
+            return name
         gva = ghidra_va.get(name)
         if gva is None:
             return name                      # not a Ghidra symbol; leave
@@ -115,6 +122,14 @@ def postprocess(text, fn_by_va, gl_by_va):
     text = re.sub(r'(&)?PTR_DAT_([0-9a-fA-F]{8})', dat_sub, text)
     # &DAT_00xxxxxx -> &g_name ; DAT_00xxxxxx -> g_name
     text = re.sub(r'(&)?DAT_([0-9a-fA-F]{8})', dat_sub, text)
+
+    # Ghidra string-literal autonames: s_<sanitized text>_<8-hex VA> (and the
+    # wide-string u_ variant) are pointers to .rdata bytes at that VA. Route
+    # them through the seam as char* into the arena - behavior-equivalent
+    # (the string bytes are loaded at VA-base offset) and compilable. The
+    # trailing _XXXXXXXX is the VA; greedy \w+ backtracks to the final group.
+    text = re.sub(r'\b[su]_\w+_([0-9a-fA-F]{8})\b',
+                  lambda m: 'MK4_VA(char, 0x%s)' % m.group(1), text)
 
     # packed-ptr node access -> seam (offset may be hex 0xN or decimal N)
     #   *(T *)(EXPR * 4 + N)

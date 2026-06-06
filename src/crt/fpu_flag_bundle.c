@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,14 @@ extern void CrtInitLocaleInfo(void);
 extern void CrtLocaleInfoFreeAll(void);
 extern void FreeImpl(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FpuFlagBundle(void)
+
+{
+  return;
+}
+#else
 __declspec(naked) void FpuFlagBundle(void) {
     __asm {
         /* sub-1: FPU flag-driven constant loader (0x4cf770..0x4cf7c8) */
@@ -237,3 +246,4 @@ __declspec(naked) void FpuFlagBundle(void) {
         ret
     }
 }
+#endif

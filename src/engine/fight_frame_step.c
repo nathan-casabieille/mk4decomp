@@ -10,6 +10,7 @@
  * primary end.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 
 /*
  * @addr 0x0045c6c0
@@ -22,6 +23,61 @@
  * also requires a hand-rolled tail.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FightFrameStep_Inner(void)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  g_walkCallback = MK4_NODE_AT(uint, g_cj_0054205c, 0) & 0xffff;
+  g_eventQueueCurrent = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  g_eventQueueWorkType = MK4_NODE_AT(uint, g_eventQueuePending, 0);
+  *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
+  MK4_NODE_AT(uint, g_eventQueuePending, 0) = g_eventQueueCurrent;
+  uVar1 = g_eventQueueCurrent ^ g_walkCallback;
+  g_currentNodeFlags = g_eventQueueCurrent;
+  if (uVar1 != 0) {
+    g_eventQueueNotMask = ~g_walkCallback;
+    if ((g_eventQueueNotMask & uVar1) == 0) {
+      g_dualC = g_dualD;
+      uVar2 = uVar1;
+    }
+    else {
+      g_currentNodeFlags = g_eventQueueCurrent & g_eventQueueWorkType;
+      uVar2 = g_eventQueueNotMask & uVar1 & g_currentNodeFlags;
+    }
+    g_walkCallback = MK4_NODE_AT(uint, g_dualC, 0);
+    g_eventQueueCurrent = uVar1;
+    g_cj_00542058 = g_eventQueueHead;
+    g_eventQueuePending = g_dualC;
+    g_eventQueueChild = uVar2;
+    while (uVar1 = g_eventQueueCurrent, g_walkCallback != 0) {
+      g_eventQueueCurrent = uVar2 & g_walkCallback;
+      if (g_eventQueueCurrent != 0) {
+        g_dualD = MK4_NODE_AT(int, g_eventQueuePending, 4);
+        MK4_NODE_AT(int, g_eventQueueHead, 0) = g_dualD;
+        g_cj_00542058 = g_cj_00542058 + 1;
+        g_cj_00542054 = 0x14e942;
+        if (g_cj_00542058 == 0x14e942) {
+          g_cj_00542058 = 0x14e92e;
+        }
+        g_eventQueueHead = g_cj_00542058;
+        uVar2 = g_eventQueueChild;
+        if (g_eventQueueChild == g_walkCallback) {
+          g_cj_00542054 = 0x14e942;
+          return;
+        }
+      }
+      g_eventQueuePending = g_eventQueuePending + 2;
+      g_walkCallback = MK4_NODE_AT(uint, g_eventQueuePending, 0);
+    }
+  }
+  g_eventQueueCurrent = uVar1;
+  return;
+}
+#else
 __declspec(naked) void FightFrameStep_Inner(void)
 {
     __asm {
@@ -111,3 +167,4 @@ end:
         ret
     }
 }
+#endif

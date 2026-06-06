@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004c51f0 (171b boot) - aux audio reference-window probe.
@@ -18,6 +19,50 @@ extern void AuxAudioDevCapsQuery(void);
 extern void DSoundQueryProperty(void);
 extern void Helper_AuxAudio_PostInit(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AppInit_Misc8(void)
+
+{
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  int *piVar4;
+  int local_3c [15];
+  
+  local_3c[1] = 0x5c;
+  local_3c[2] = 0x5c;
+  local_3c[3] = 0x5c;
+  local_3c[4] = 0x5c;
+  local_3c[5] = 0x5c;
+  local_3c[6] = 0x5c;
+  local_3c[7] = 0x5c;
+  local_3c[8] = 0x7a;
+  local_3c[9] = 0x10;
+  local_3c[10] = 0x38;
+  local_3c[0xb] = 0x5c;
+  local_3c[0xc] = 0x5c;
+  local_3c[0xd] = 0x5c;
+  local_3c[0xe] = 0x5a;
+  g_demoModeFlag = 0;
+  iVar1 = Helper_AuxAudio_PostInit();
+  if ((iVar1 != 0) && (iVar1 = DSoundQueryProperty(), iVar1 == 0xf)) {
+    iVar1 = 1;
+    piVar4 = local_3c;
+    do {
+      piVar4 = (int *)((int)piVar4 + 4);
+      iVar2 = AuxAudioDevCapsQuery(iVar1);
+      uVar3 = iVar2 - piVar4[0xffffffff] >> 0x1f;
+      if (5 < (int)((iVar2 - piVar4[0xffffffff] ^ uVar3) - uVar3)) {
+        return;
+      }
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < 0x10);
+    g_demoModeFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void AppInit_Misc8(void) {
     __asm {
         sub     esp, 0x3c
@@ -72,4 +117,5 @@ __declspec(naked) void AppInit_Misc8(void) {
         ret
     }
 }
+#endif
 

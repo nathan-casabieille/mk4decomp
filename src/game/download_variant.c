@@ -9,6 +9,7 @@
  * stayed clear) walks the geo-asset chain via LoadGeoAsset_Textures.
  */
 #include "game/statemachine.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 #include "engine/scenegraph.h"
 #include "engine/geo.h"
@@ -28,6 +29,51 @@ static const char $SG_dl4[] = "DOWNLOAD Player 4 p4_char %d p2_nalt %d";
  * MSVC alloca-4 idiom (the slot is read once via `mov esi, [esp+4]`
  * and otherwise serves as scratch).
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void __fastcall DownloadPlayerChar_Variant(int param_1)
+
+{
+  if (g_eventQueueCurrent == 0) {
+    Helper_DownloadDebugPrint(MK4_VA(char, 0x004f058c),g_dlNalt1,g_dlChar13);
+  }
+  if (g_eventQueueCurrent == 1) {
+    Helper_DownloadDebugPrint(MK4_VA(char, 0x004f0564),g_dlNalt2,g_dlChar24);
+  }
+  if (g_eventQueueCurrent == 2) {
+    Helper_DownloadDebugPrint(MK4_VA(char, 0x004f053c),g_dlNalt3,g_dlChar13);
+  }
+  if (g_eventQueueCurrent == 3) {
+    Helper_DownloadDebugPrint(MK4_VA(char, 0x004f0514),g_dlNalt4,g_dlChar24);
+  }
+  if (g_eventQueueCurrent == 0) {
+    param_1 = (int)(char)(&g_dlVariantTable)[g_dlNalt1 * 4 + g_dlChar13];
+  }
+  if (g_eventQueueCurrent == 2) {
+    param_1 = (int)(char)(&g_dlVariantTable)[g_dlNalt3 * 4 + g_dlChar13];
+  }
+  if (g_eventQueueCurrent == 1) {
+    param_1 = (int)(char)(&g_dlVariantTable)[g_dlNalt2 * 4 + g_dlChar24];
+  }
+  if (g_eventQueueCurrent == 3) {
+    param_1 = (int)(char)(&g_dlVariantTable)[g_dlNalt4 * 4 + g_dlChar24];
+  }
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  Helper_DownloadSetup();
+  if (g_framePauseFlag == 0) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) =
+         *(int *)(*(int *)(((uint)(g_eventQueueWorkType != 0) + (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) * 4 + 0xc) * 4 + 4) >> 2;
+    LoadGeoAsset_Textures(param_1);
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((int)g_matrixStackTop * 4);
+    g_eventQueueCurrent = *(int *)((int)(g_matrixStackTop + -1) * 4);
+    g_matrixStackTop = g_matrixStackTop + -2;
+  }
+  return;
+}
+#else
 __declspec(naked) void DownloadPlayerChar_Variant(void)
 {
     __asm {
@@ -149,3 +195,4 @@ exit:
         ret
     }
 }
+#endif
