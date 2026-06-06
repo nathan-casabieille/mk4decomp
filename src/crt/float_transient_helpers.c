@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,20 @@ extern unsigned int g_fpInfPow;
 extern void TwinEntryFpHelper(void);
 extern void func_004ca267(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+unkbyte10 FloatTransientHelpers(void)
+
+{
+  float10 in_ST0;
+  float10 fVar1;
+  unkbyte10 Var2;
+  
+  fVar1 = (float10)f2xm1(-(ROUND(in_ST0) - in_ST0));
+  Var2 = fscale((float10)1 + fVar1,ROUND(in_ST0));
+  return Var2;
+}
+#else
 __declspec(naked) void FloatTransientHelpers(void)
 {
     __asm {
@@ -297,3 +312,4 @@ __declspec(naked) void FloatTransientHelpers(void)
         int      3
     }
 }
+#endif

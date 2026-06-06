@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesB.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 
 extern unsigned int g_currentNodeIdx;
 
@@ -17,6 +18,14 @@ extern unsigned int g_currentNodeIdx;
  *   pop     ebp
  *   ret
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+float10 RoundDouble(double param_1)
+
+{
+  return (float10)ROUND(param_1);
+}
+#else
 __declspec(naked) void RoundDouble(void) {
     __asm {
         push    ebp
@@ -31,3 +40,4 @@ __declspec(naked) void RoundDouble(void) {
         ret
     }
 }
+#endif

@@ -36,6 +36,11 @@ typedef unsigned long      ulong;
  * belong to the Phase-C hard cluster, not the mechanical store/load twins. */
 typedef unsigned char      code;
 
+/* x87 80-bit extended values and the odd-width signed byte Ghidra emits. */
+typedef long double        float10;
+typedef long double        unkbyte10;
+typedef signed char        sbyte;
+
 /* Ghidra emits bool/true/false; provide them for pre-C23 C backends. In
  * C23+ they are built-in keywords (defining them is an error), so skip. */
 #if !defined(__cplusplus) && (!defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L)
