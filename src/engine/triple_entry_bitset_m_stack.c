@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,19 @@ extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void InstallSelfMStackIndirect(void);
 extern void SetJmp_InstallSelfMStackIndirect(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleEntryBitsetMStack(void)
+
+{
+  GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
+  if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 1) != 0)) {
+    g_walkCallback = 4;
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x28) = 4;
+  }
+  return;
+}
+#else
 __declspec(naked) void TripleEntryBitsetMStack(void) {
     __asm {
         call    GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
@@ -150,3 +164,4 @@ __declspec(naked) void TripleEntryBitsetMStack(void) {
         jmp     SetJmp_InstallSelfMStackIndirect
     }
 }
+#endif

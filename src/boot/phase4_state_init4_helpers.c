@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,55 @@ extern void MStackPushZeroCallPop(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ThreeChanPackClamp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase4StateInit4Helpers(void)
+
+{
+  int iVar1;
+  uint *puVar2;
+  int iVar3;
+  
+  ChainDirtyBitWalker();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 4) == 0) {
+      g_dualC = g_eventQueuePending;
+      g_walkCallback = 0x1359d6;
+      PushSetXfmMaskCallPop();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      if (((byte)g_xformDirtyFlags & 4) == 0) {
+        iVar3 = g_dualC * 4;
+        iVar1 = g_cj_0054205c * 4;
+        *(undefined4 *)(iVar1 + 0x30) = 0x98;
+        *(undefined4 *)(iVar1 + 0x54) = *(undefined4 *)(iVar3 + 0x3c);
+        *(undefined4 *)(iVar1 + 0x58) = *(undefined4 *)(iVar3 + 0x40);
+        g_walkCallback = *(undefined4 *)(iVar3 + 0x44);
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 0x18);
+        *(undefined4 *)(iVar1 + 0x5c) = g_walkCallback;
+        ThreeChanPackClamp(0x100020);
+        CopyThreeFields(g_cj_0054205c);
+        g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
+        puVar2 = (uint *)(g_eventQueuePending * 4);
+        puVar2[0x12] = 0xa666;
+        puVar2[5] = 0xff;
+        *puVar2 = *puVar2 | 8;
+        g_walkCallback = 0x4131f0;
+        puVar2[4] = 0x4131f0;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+        MStackCall_MStackPush2ChainPrepend_00406600();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+      }
+    }
+    g_cj_0054205c = *(int *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+  }
+  return;
+}
+#else
 __declspec(naked) void Phase4StateInit4Helpers(void)
 {
     __asm {
@@ -299,3 +349,4 @@ __declspec(naked) void Phase4StateInit4Helpers(void)
         ret
     }
 }
+#endif

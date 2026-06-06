@@ -121,6 +121,33 @@ extern void MStackPushSet6Jmp(void);
 extern void ScaledChainJmp_00429470(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfChainExtendCall_MStackPushSet0Jmp(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    InstallSelfPair();
+    return;
+  }
+  *(code **)(iVar2 + 8) = InstallSelfChainExtendCall_MStackPushSet0Jmp;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1434f10;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  MStackPushSet0Jmp();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfChainExtendCall_MStackPushSet0Jmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -153,8 +180,36 @@ __declspec(naked) void InstallSelfChainExtendCall_MStackPushSet0Jmp(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x004351b0 (128b) - twin of 0x00434f10 w/ MStackPushSet6Jmp + 0x4350f0. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfChainExtendCall_MStackPushSet6Jmp(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    CallPauseConstStoreJmp_MultiThunkDispatcher_then_InstallSelfPair();
+    return;
+  }
+  *(code **)(iVar2 + 8) = InstallSelfChainExtendCall_MStackPushSet6Jmp;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14351b0;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  MStackPushSet6Jmp();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfChainExtendCall_MStackPushSet6Jmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -187,6 +242,7 @@ __declspec(naked) void InstallSelfChainExtendCall_MStackPushSet6Jmp(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x0047de60 (128b) - install-self chain extension variant
  *   w/ FiveCallGuardSetTail bypass + ScaledChainJmp tail. */

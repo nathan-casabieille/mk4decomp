@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,23 @@ extern void MstackPopScaledChainPlusThunks(void);
 extern void Set0xaCmpEqSet0x26Jmp(void);
 extern void SetJmp_HitReactionDispatcher(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualEntryBitGated(void)
+
+{
+  LinkedListDistanceWalker();
+  if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 1) != 0)) {
+    g_dispatchState = 1;
+    g_matrixStackTop = g_matrixStackTop + 1;
+    g_walkCallback = 0;
+    *(undefined4 *)((int)g_matrixStackTop * 4) = 0x439bf0;
+    MstackPopScaledChainPlusThunks();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void DualEntryBitGated(void) {
     __asm {
         call    LinkedListDistanceWalker
@@ -169,3 +187,4 @@ __declspec(naked) void DualEntryBitGated(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,31 @@ extern unsigned int g_matrixStack_arr;
 extern unsigned int g_dispatchSave1580;
 extern void ChainDecCondStoreCallJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfFlagCountdown(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  g_dispatchSave1580 = 1;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined4 *)((int)g_matrixStackTop * 4) = 0x4346f0;
+    GameDispatchValidateState();
+    return;
+  }
+  *(code **)(iVar2 + 8) = InstallSelfFlagCountdown;
+  *(undefined4 *)(iVar2 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfFlagCountdown(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -160,3 +186,4 @@ __declspec(naked) void InstallSelfFlagCountdown(void) {
         jmp     ChainDecCondStoreCallJmp
     }
 }
+#endif

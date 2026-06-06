@@ -2,6 +2,7 @@
  * Auto-split from misc_matches5.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -16,6 +17,16 @@ extern unsigned int g_baseSel;
  *   ret
  */
 extern void Event23bMusicCluster(void);
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ScaledStoreCallEpilogue(void)
+
+{
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_currentNodeFlags;
+  Event23bMusicCluster();
+  return;
+}
+#else
 __declspec(naked) void ScaledStoreCallEpilogue(void) {
     __asm {
         mov     edx, dword ptr [g_currentNodeIdx]
@@ -28,3 +39,4 @@ __declspec(naked) void ScaledStoreCallEpilogue(void) {
         ret
     }
 }
+#endif

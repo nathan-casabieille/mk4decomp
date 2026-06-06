@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,33 @@ extern unsigned int g_eventQueueDrainBase;
 extern unsigned int g_arr_slot_45c840;
 extern unsigned int g_arr_table_45c840;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EventQueueDrainLoop(void)
+
+{
+  if (g_eventQueueHead != g_eventQueuePending) {
+    do {
+      g_dualC = MK4_NODE_AT(undefined4, g_eventQueuePending, 0);
+      g_eventQueueWorkType = 0x11;
+      g_cj_00542054 = g_eventQueueHead;
+      AllocNode();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_walkCallback = 0;
+      MK4_NODE_AT(undefined4, g_eventQueuePending, 0) = 0;
+      g_eventQueuePending = g_eventQueuePending + 1;
+      if (g_eventQueuePending == g_dualD) {
+        g_eventQueuePending = 0x14e92e;
+      }
+    } while (g_eventQueueHead != g_eventQueuePending);
+  }
+  g_cj_00542054 = g_eventQueueHead;
+  DispatchEventQueue_Commit();
+  return;
+}
+#else
 __declspec(naked) void EventQueueDrainLoop(void) {
     __asm {
         mov     ecx, dword ptr [g_eventQueueHead]
@@ -164,3 +192,4 @@ __declspec(naked) void EventQueueDrainLoop(void) {
         ret
     }
 }
+#endif

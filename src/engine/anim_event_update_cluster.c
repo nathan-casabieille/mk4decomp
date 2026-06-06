@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -114,6 +115,49 @@ extern void DualBitGateInitCall(void);
 extern void OrDualStore_0048a190(void);
 extern void ScaledTestPauseStore(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AnimEventUpdateCluster(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  g_walkCallback = 1;
+  DirtyDoubleDeref();
+  if (g_framePauseFlag == 0) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    ScaledTestPauseStore();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 4) == 0) {
+        MK4_NODE_AT(uint, g_eventQueuePending, 0) = MK4_NODE_AT(uint, g_eventQueuePending, 0) | 2;
+        MK4_NODE_AT(undefined4, g_eventQueuePending, 0x2c) = 0x5999;
+        g_walkCallback = 1;
+        DirtyDoubleDeref();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
+        g_walkCallback = 0x494020;
+        MK4_NODE_AT(undefined4, g_eventQueuePending, 0x10) = 0x494020;
+        if (((byte)g_dualBitGate & 1) == 0) {
+          g_walkCallback = 1;
+          OrDualStore_0048a190();
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+          DualBitGateInitCall();
+        }
+      }
+      g_eventQueuePending = *(int *)((int)g_matrixStackTop * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((int)(g_matrixStackTop + -1) * 4);
+      g_matrixStackTop = g_matrixStackTop + -2;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void AnimEventUpdateCluster(void)
 {
     __asm {
@@ -252,3 +296,4 @@ __declspec(naked) void AnimEventUpdateCluster(void)
         ret
     }
 }
+#endif

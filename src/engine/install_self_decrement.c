@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,39 @@ extern void StageRoundFlowCluster(void);
 
 extern void FiveCallGuardSetTail(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfDecrement(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x5c) + -1;
+    if (-1 < (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) {
+      func_0x0047fb70();
+      return;
+    }
+LAB_0047fc96:
+    StageRoundFlowCluster();
+    return;
+  }
+  g_walkCallback = 5;
+  CmpEqInitCallElseJmp();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 1) != 0) goto LAB_0047fc96;
+    *(code **)(iVar1 + 8) = InstallSelfDecrement;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfDecrement(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -165,3 +199,4 @@ __declspec(naked) void InstallSelfDecrement(void) {
         ret
     }
 }
+#endif

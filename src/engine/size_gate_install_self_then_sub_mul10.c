@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -115,6 +116,59 @@ extern void PendingMatch_AudioMixerStep_00473640(void);
 extern void ScaledStoreThree_00409260(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SizeGateInstallSelfThenSubMul10(void)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  
+  if (g_chainAccumCur <= *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c)) {
+    g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
+    MK4_NODE_AT(undefined4, g_eventQueuePending, 0x20) = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x3c);
+    g_walkCallback = *(code **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40);
+    if (g_walkCallback != (code *)0x0) {
+      uVar1 = Mul10Tail(0x1999,g_walkCallback);
+      MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48) = uVar1;
+      MK4_NODE_AT(uint, g_eventQueuePending, 0) = MK4_NODE_AT(uint, g_eventQueuePending, 0) | 8;
+    }
+    g_walkCallback = (code *)0x10000;
+    StoreDoubleNegPauseSubStore();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(code **)(g_eventQueuePending * 4 + 0x18) = g_walkCallback;
+    g_walkCallback = (code *)0xccc;
+    AudioMixerStep();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    MK4_NODE_AT(int, g_eventQueuePending, 0x1c) = (int)g_walkCallback + 0xccc;
+    iVar2 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+    *(undefined4 *)(iVar2 + 0x3c) = 0;
+    *(undefined4 *)(iVar2 + 0x40) = 0;
+    *(undefined4 *)(iVar2 + 0x44) = 0;
+    g_walkCallback = (code *)0x13b30e;
+    ScaledStoreThree_00409260();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    MK4_NODE_AT(undefined4, g_eventQueuePending, 0x10) = 0;
+    MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0x13b254;
+  }
+  g_walkCallback = *(code **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc);
+  if (g_walkCallback != (code *)0x0) {
+    g_walkCallback = SizeGateInstallSelfThenSubMul10;
+    Helper_TickAlt();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+  }
+  g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+  return;
+}
+#else
 __declspec(naked) void SizeGateInstallSelfThenSubMul10(void)
 {
     __asm
@@ -224,3 +278,4 @@ __declspec(naked) void SizeGateInstallSelfThenSubMul10(void)
         jmp     PendingMatch_AudioMixerStep_00473640
     }
 }
+#endif

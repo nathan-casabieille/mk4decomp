@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,60 @@ extern void CjInstallSelfRouter(void);
 extern void EsiInstallClampAddCall(void);
 extern void StateDispatchTable(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Install3StateRouterTail(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    StateDispatchTable();
+    if (g_framePauseFlag == 0) {
+      g_currentNodeFlags = 0x1999;
+      g_cj_00542054 = g_walkCallback;
+      g_eventQueueNotMask = 0;
+      *(code **)(iVar1 + 8) = Install3StateRouterTail;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x146b4e0;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      EsiInstallClampAddCall();
+      g_framePauseFlag = 1;
+    }
+    return;
+  }
+  if (iVar2 == 1) {
+    CallPauseScaledStoreCopyJmp();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+  }
+  else {
+    g_walkCallback = g_tickFlagF;
+    if (g_tickFlagF == 2) {
+      CjInstallSelfRouter();
+      return;
+    }
+    g_walkCallback = g_smState4Way;
+    if (g_smState4Way != 0) {
+      CjInstallSelfRouter();
+      return;
+    }
+  }
+  *(code **)(iVar1 + 8) = Install3StateRouterTail;
+  *(undefined4 *)(iVar1 + 0x84) = 2;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void Install3StateRouterTail(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -215,3 +270,4 @@ __declspec(naked) void Install3StateRouterTail(void) {
         ret
     }
 }
+#endif

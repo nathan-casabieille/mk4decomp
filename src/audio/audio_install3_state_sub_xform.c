@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,53 @@ extern void InstallSelfChainAddSigned(void);
 extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void ScaledInitOrSelfPtrSetType14(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioInstall3StateSubXform(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54) = g_eventQueueWorkType;
+    g_walkCallback = 0;
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58) = 0;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+    MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
+    if (g_framePauseFlag == 0) {
+      *(code **)(iVar1 + 8) = AudioInstall3StateSubXform;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 0x1c;
+      g_framePauseFlag = 1;
+    }
+    return;
+  }
+  if (iVar2 == 1) {
+    g_walkCallback = g_cj_00542054;
+    if (g_cj_00542054 != 0) {
+      InstallSelfChainAddSigned();
+      return;
+    }
+  }
+  else {
+    g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x6c) + -0x4000;
+    MK4_NODE_AT(int, g_cj_0054205c, 0x6c) = g_walkCallback;
+    if (g_walkCallback < 1) {
+      ScaledInitOrSelfPtrSetType14();
+      return;
+    }
+  }
+  *(code **)(iVar1 + 8) = AudioInstall3StateSubXform;
+  *(undefined4 *)(iVar1 + 0x84) = 2;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void AudioInstall3StateSubXform(void)
 {
     __asm
@@ -187,3 +235,4 @@ __declspec(naked) void AudioInstall3StateSubXform(void)
         ret
     }
 }
+#endif

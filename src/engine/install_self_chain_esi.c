@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,41 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void SelfInstallPhaseDispatch_StackPopDispatchTagged(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfChainEsi(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x24) = g_cj_00542054;
+    g_walkCallback = 0;
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x28) = 0;
+    g_cj_00542054 = MK4_NODE_AT(undefined4, g_baseSel, 100);
+    g_cj_00542058 = MK4_NODE_AT(undefined4, g_baseSel, 0x68);
+    StackPopDispatchTagged();
+    return;
+  }
+  g_currentNodeFlags = 0x32f1;
+  g_xformScratch2088 = 0x3333;
+  g_eventQueueChild = 0;
+  *(code **)(iVar2 + 8) = InstallSelfChainEsi;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14753b0;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  SelfInstallPhaseDispatch_StackPopDispatchTagged();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfChainEsi(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -162,3 +198,4 @@ __declspec(naked) void InstallSelfChainEsi(void) {
         ret
     }
 }
+#endif

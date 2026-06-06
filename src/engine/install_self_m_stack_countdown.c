@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,46 @@ extern unsigned int g_matrixStack_arr;
 extern void CallPauseJmpStateInit(void);
 extern void GuardedDualAndFlagToggle(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfMStackCountdown(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 == 0) {
+    *(code **)(iVar2 + 8) = InstallSelfMStackCountdown;
+    *(undefined4 *)(iVar2 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  else {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueChild;
+    GuardedDualAndFlagToggle();
+    if (g_framePauseFlag == 0) {
+      g_eventQueueChild = *(undefined4 *)((int)g_matrixStackTop * 4);
+      if (((byte)g_xformDirtyFlags & 1) != 0) {
+        *(undefined4 *)((int)g_matrixStackTop * 4) = 0x4370c0;
+        GameDispatchValidateState();
+        return;
+      }
+      g_matrixStackTop = g_matrixStackTop + -1;
+      LeaPlus22StoreSelf();
+      if (g_framePauseFlag == 0) {
+        CjInstallSelfRouter();
+        return;
+      }
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfMStackCountdown(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -168,3 +209,4 @@ __declspec(naked) void InstallSelfMStackCountdown(void) {
         jmp     StackPopDispatchTagged
     }
 }
+#endif

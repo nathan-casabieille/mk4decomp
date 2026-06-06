@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -113,6 +114,35 @@ extern void CallSetPause(void);
 extern void DirtyToggleScaledTest(void);
 extern void InstallSelfScaledAdv3d7Cmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void QuadFieldEarlyJmpThenInstall(void)
+
+{
+  do {
+    g_eventQueueCurrent = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30);
+    if ((((g_eventQueueCurrent == 0x6c) &&
+         (g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c), g_walkCallback == 0)) &&
+        (g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70), g_walkCallback == 0)) &&
+       (g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74), g_walkCallback == 0)) {
+      g_matrixStackTop = g_matrixStackTop + 1;
+      *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_cj_00542054 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_eventQueueWorkType = 0x32;
+      g_dualC = 0x43a730;
+      AllocNode();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((int)g_matrixStackTop * 4);
+      g_matrixStackTop = g_matrixStackTop + -1;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+  } while (((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) && (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0));
+  return;
+}
+#else
 __declspec(naked) void QuadFieldEarlyJmpThenInstall(void)
 {
     __asm
@@ -222,3 +252,4 @@ __declspec(naked) void QuadFieldEarlyJmpThenInstall(void)
         ret
     }
 }
+#endif

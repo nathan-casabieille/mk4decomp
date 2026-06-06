@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -130,6 +131,28 @@ extern void CallSetPause(void);
 extern void InstallSelfStride5(void);
 extern void RoundWinTransition(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioInitInstallSelfPeriodic(void)
+
+{
+  g_walkCallback = g_dlMode;
+  if ((g_dlMode != 0) && (g_walkCallback = g_state2_0053a354, g_state2_0053a354 == 0)) {
+    g_state2_0053a354 = 1;
+    g_state2_00537ea8 = 0;
+    g_audioPeriodicSlot = 0;
+    g_audioInitPeriodic = 4;
+    g_walkCallback = 0;
+    MK4_NODE_AT(undefined4, g_baseSel, 0xc) = 0;
+    RoundWinTransition();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+  }
+  CallSetPause();
+  return;
+}
+#else
 __declspec(naked) void AudioInitInstallSelfPeriodic(void)
 {
     __asm
@@ -197,3 +220,4 @@ __declspec(naked) void AudioInitInstallSelfPeriodic(void)
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,30 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_matrixStack_arr;
 extern void GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfWaitCmp(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined4 *)((int)g_matrixStackTop * 4) = 0x4381f0;
+    GameDispatchValidateState();
+    return;
+  }
+  *(code **)(iVar2 + 8) = InstallSelfWaitCmp;
+  *(undefined4 *)(iVar2 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfWaitCmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -162,3 +187,4 @@ __declspec(naked) void InstallSelfWaitCmp(void) {
         jmp     StackPopDispatchTagged
     }
 }
+#endif

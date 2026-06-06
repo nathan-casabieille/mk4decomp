@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,16 @@ extern void SixBlockCjCascade(void);
 extern void TableLookupCall_g_eventTbl_19(void);
 extern void Wrapper_ScaledChainPushCall_004ef920(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StageGameProgressCluster(void)
+
+{
+  g_walkCallback = 2;
+  TableLookupCall_g_eventTbl_19();
+  return;
+}
+#else
 __declspec(naked) void StageGameProgressCluster(void)
 {
     __asm {
@@ -314,3 +325,4 @@ __declspec(naked) void StageGameProgressCluster(void)
         ret
     }
 }
+#endif

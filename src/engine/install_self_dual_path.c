@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,37 @@ extern void InstallSelfPlusTailThunk(void);
 extern void InstallSelfThreeStateLeaPlus22(void);
 extern void StateGateMStackOverlap(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 InstallSelfDualPath(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    g_cj_00542054 = 0x139168;
+    InstallSelfPlusTailThunk();
+    return g_framePauseFlag;
+  }
+  g_currentNodeFlags = 0x6666;
+  g_eventQueueChild = 0x1e;
+  *(code **)(iVar2 + 8) = InstallSelfDualPath;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1435260;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  uVar3 = StateGateMStackOverlap();
+  g_framePauseFlag = 1;
+  return uVar3;
+}
+#else
 __declspec(naked) void InstallSelfDualPath(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -166,3 +198,4 @@ __declspec(naked) void InstallSelfDualPath(void) {
         jmp     InstallSelfChainSet13333
     }
 }
+#endif

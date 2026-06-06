@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,36 @@ extern void StoreLoadJmp(void);
 extern void StunDownChainCluster(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StunDownCluster(void)
+
+{
+  g_walkCallback = MK4_NODE_AT(int, g_cj_00542054, 0);
+  g_cj_00542054 = g_cj_00542054 + 1;
+  if (-1 < g_walkCallback) {
+    while (ChainDirtyBitWalker(), g_framePauseFlag == 0) {
+      g_dualD = MK4_NODE_AT(int, g_cj_00542054, 0);
+      g_cj_00542054 = g_cj_00542054 + 1;
+      g_cj_00542058 = g_eventQueuePending + 0xf;
+      g_dualC = 0x139e9a;
+      do {
+        DualPushSet7dCallPop();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        g_dualD = g_dualD + -1;
+      } while (-1 < g_dualD);
+      g_walkCallback = MK4_NODE_AT(int, g_cj_00542054, 0);
+      g_cj_00542054 = g_cj_00542054 + 1;
+      if (g_walkCallback < 0) {
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void StunDownCluster(void)
 {
     __asm {
@@ -339,3 +370,4 @@ __declspec(naked) void StunDownCluster(void)
         _emit 0x00
     }
 }
+#endif

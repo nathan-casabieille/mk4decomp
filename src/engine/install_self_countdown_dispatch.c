@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,35 @@ extern void CmpJmpConstStoreJmp(void);
 extern void DualGatedStateYield(void);
 extern void Push84CallTestInstallJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfCountdownDispatch(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = *(int *)(iVar1 + 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    *(code **)(iVar1 + 8) = InstallSelfCountdownDispatch;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  else {
+    iVar2 = DualGatedStateYield();
+    if (iVar2 == 0) {
+      g_matrixStackTop = g_matrixStackTop + 1;
+      *(undefined4 *)((int)g_matrixStackTop * 4) = 0x438a70;
+      GameDispatchValidateState();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfCountdownDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -159,3 +189,4 @@ __declspec(naked) void InstallSelfCountdownDispatch(void) {
         ret
     }
 }
+#endif
