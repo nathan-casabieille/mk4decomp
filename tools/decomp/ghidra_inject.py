@@ -39,7 +39,10 @@ ROOT = Path(__file__).resolve().parents[2]
 # `code` was here but is now typedef'd (unsigned char) in ghidra_types.h:
 # code-pointer store/loads compile, while a genuine indirect call through a
 # `code *` stays a compile error -> the compile gate bails on it for us.
-BAIL_TOKENS = ('CONCAT', 'SUB4', 'SUB8', 'SUB2', 'ZEXT', 'SEXT',
+# CONCAT<a><b> bit-concat intrinsics are defined as macros in
+# ghidra_types.h (verified semantics); a too-wide variant with no integer
+# result type stays undefined and the compile gate drops its function.
+BAIL_TOKENS = ('SUB4', 'SUB8', 'SUB2', 'ZEXT', 'SEXT',
                'in_EAX', 'in_ECX', 'unaff_', 'extraout_', 'halt_baddata',
                'undefined3', 'undefined5', 'undefined6', 'undefined7')
 # Leftover Ghidra placeholders (unmapped global/func, jump table, or a

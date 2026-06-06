@@ -41,6 +41,25 @@ typedef long double        float10;
 typedef long double        unkbyte10;
 typedef signed char        sbyte;
 
+/* Ghidra CONCAT<a><b>(hi, lo): build an (a+b)-byte value from an a-byte
+ * high part and a b-byte low part (hi << b*8 | lo, each masked to width).
+ * Standard Ghidra semantics; verified against tools/decomp. Only the
+ * variants the corpus actually uses are defined; an (a+b) > 8 byte result
+ * (e.g. CONCAT28) has no integer type and is left undefined so its
+ * function stays naked. */
+#define CONCAT11(h, l) ((ushort)(((ushort)(uchar)(h) << 8) | (uchar)(l)))
+#define CONCAT12(h, l) (((uint)(uchar)(h) << 16) | (ushort)(l))
+#define CONCAT13(h, l) (((uint)(uchar)(h) << 24) | ((uint)(l) & 0xffffffu))
+#define CONCAT21(h, l) (((uint)(ushort)(h) << 8) | (uchar)(l))
+#define CONCAT22(h, l) (((uint)(ushort)(h) << 16) | (ushort)(l))
+#define CONCAT31(h, l) (((uint)(h) << 8) | (uchar)(l))
+#define CONCAT16(h, l) (((undefined8)(uchar)(h) << 48) \
+                        | ((undefined8)(l) & 0xffffffffffffULL))
+#define CONCAT17(h, l) (((undefined8)(uchar)(h) << 56) \
+                        | ((undefined8)(l) & 0xffffffffffffffULL))
+#define CONCAT24(h, l) (((undefined8)(ushort)(h) << 32) | (uint)(l))
+#define CONCAT44(h, l) (((undefined8)(uint)(h) << 32) | (uint)(l))
+
 /* Ghidra emits bool/true/false; provide them for pre-C23 C backends. In
  * C23+ they are built-in keywords (defining them is an error), so skip. */
 #if !defined(__cplusplus) && (!defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L)
