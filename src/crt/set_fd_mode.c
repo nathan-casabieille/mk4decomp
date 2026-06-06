@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -127,6 +128,45 @@ extern void Crt_errno(void);
 
 extern unsigned int g_crtHandleTable;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 SetFdMode(uint param_1,HANDLE param_2)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  
+  if (param_1 < g_dispatchSave1469) {
+    iVar2 = (param_1 & 0x1f) * 0x24;
+    if (*(int *)((&g_crtHandleTable)[(int)param_1 >> 5] + iVar2) == -1) {
+      if (g_crtFdCloseSlot == 1) {
+        if (param_1 == 0) {
+          g_chain_disp_24_409420(0xfffffff6,param_2);
+        }
+        else {
+          if (param_1 == 1) {
+            g_chain_disp_24_409420(0xfffffff5,param_2);
+            *(HANDLE *)(g_crtHandleTable + 0x24) = param_2;
+            return 0;
+          }
+          if (param_1 == 2) {
+            g_chain_disp_24_409420(0xfffffff4,param_2);
+            *(HANDLE *)(g_crtHandleTable + 0x48) = param_2;
+            return 0;
+          }
+        }
+      }
+      *(HANDLE *)((&g_crtHandleTable)[(int)param_1 >> 5] + iVar2) = param_2;
+      return 0;
+    }
+  }
+  puVar1 = (undefined4 *)Crt_errno();
+  *puVar1 = 9;
+  puVar1 = (undefined4 *)Crt_doserrno();
+  *puVar1 = 0;
+  return 0xffffffff;
+}
+#else
 __declspec(naked) void SetFdMode(void) {
     __asm {
         mov     ecx, [esp + 4]
@@ -203,3 +243,4 @@ __declspec(naked) void SetFdMode(void) {
         ret
     }
 }
+#endif

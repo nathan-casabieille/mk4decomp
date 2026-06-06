@@ -97,7 +97,19 @@ def compile_ok(twin, name):
     h = ('#define NON_MATCHING 1\n#define MK4_WIN32_SHIM 1\n'
          '#include "portable/ghidra_types.h"\n'
          '#include "portable/mem_model.h"\n')
-    h += ''.join('extern unsigned int %s;\n' % g for g in globs)
+    # Type each global extern by how the body uses it, so the isolation
+    # gate matches what the real headers would accept in-context: a global
+    # dereferenced/indexed (`*g`, `g[i]`) needs array/pointer type, one
+    # called through (`(*g)()`, `g()`) needs a function-pointer type.
+    # Scalar `unsigned int` is the default. (A wrong guess only fails the
+    # gate conservatively; matching is unaffected either way.)
+    for g in globs:
+        if re.search(r'\b%s\s*\[' % g, twin) or re.search(r'\*\s*%s\b' % g, twin):
+            h += 'extern unsigned int %s[];\n' % g
+        elif re.search(r'\(\s*\*\s*%s\s*\)\s*\(' % g, twin) or re.search(r'\b%s\s*\(' % g, twin):
+            h += 'extern int (*%s)();\n' % g
+        else:
+            h += 'extern unsigned int %s;\n' % g
     h += ''.join('extern int %s();\n' % f for f in calls)
     h += twin + '\n'
     with tempfile.NamedTemporaryFile('w', suffix='.c', delete=False) as t:

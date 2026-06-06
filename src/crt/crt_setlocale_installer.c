@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -132,6 +133,135 @@ extern void TranslateMsgId(void);
 
 extern unsigned int g_dispatchSave114;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 CrtSetlocaleInstaller(undefined4 param_1)
+
+{
+  BYTE *pBVar1;
+  byte *pbVar2;
+  byte bVar3;
+  byte bVar4;
+  UINT CodePage;
+  UINT *pUVar5;
+  BOOL BVar6;
+  uint uVar7;
+  uint uVar8;
+  int iVar9;
+  int iVar10;
+  BYTE *pBVar11;
+  byte *pbVar12;
+  byte *pbVar13;
+  undefined4 *puVar14;
+  _cpinfo local_14;
+  
+  Lock(0x19);
+  CodePage = CRTSignalDispatch(param_1);
+  if (CodePage == g_dispatchSave1435) {
+    TableLookupIatCall(0x19);
+    return 0;
+  }
+  if (CodePage == 0) {
+    InitGlobalsAndZero();
+    BuildCharacterCaseTables();
+    TableLookupIatCall(0x19);
+    return 0;
+  }
+  iVar10 = 0;
+  pUVar5 = &g_dispatchSave116;
+  do {
+    if (*pUVar5 == CodePage) {
+      puVar14 = &g_dispatchSave1433;
+      for (iVar9 = 0x40; iVar9 != 0; iVar9 = iVar9 + -1) {
+        *puVar14 = 0;
+        puVar14 = puVar14 + 1;
+      }
+      *(undefined1 *)puVar14 = 0;
+      uVar7 = 0;
+      iVar10 = iVar10 * 0x30;
+      pbVar12 = (byte *)(iVar10 + 0x522320);
+      do {
+        bVar3 = *pbVar12;
+        for (pbVar13 = pbVar12; (bVar3 != 0 && (bVar3 = pbVar13[1], bVar3 != 0));
+            pbVar13 = pbVar13 + 2) {
+          uVar8 = (uint)*pbVar13;
+          if (uVar8 <= bVar3) {
+            bVar4 = (&g_dispatchSave117)[uVar7];
+            do {
+              pbVar2 = (byte *)((int)&g_dispatchSave1433 + uVar8 + 1);
+              *pbVar2 = *pbVar2 | bVar4;
+              uVar8 = uVar8 + 1;
+            } while (uVar8 <= bVar3);
+          }
+          bVar3 = pbVar13[2];
+        }
+        uVar7 = uVar7 + 1;
+        pbVar12 = pbVar12 + 8;
+      } while (uVar7 < 4);
+      g_dispatchSave1467 = 1;
+      g_dispatchSave1435 = CodePage;
+      g_dispatchSave1436 = TranslateMsgId(CodePage);
+      g_dispatchSave1437 = *(undefined4 *)(iVar10 + 0x522314);
+      g_dispatchSave1438 = *(undefined4 *)(iVar10 + 0x522318);
+      g_dispatchSave1439 = *(undefined4 *)(iVar10 + 0x52231c);
+      goto LAB_004c9672;
+    }
+    pUVar5 = pUVar5 + 0xc;
+    iVar10 = iVar10 + 1;
+  } while (pUVar5 < &g_crtTlsSlot);
+  BVar6 = g_arr_476f30_disp_34(CodePage,&local_14);
+  if (BVar6 == 1) {
+    puVar14 = &g_dispatchSave1433;
+    for (iVar10 = 0x40; iVar10 != 0; iVar10 = iVar10 + -1) {
+      *puVar14 = 0;
+      puVar14 = puVar14 + 1;
+    }
+    *(undefined1 *)puVar14 = 0;
+    g_dispatchSave1436 = 0;
+    if (local_14.MaxCharSize < 2) {
+      g_dispatchSave1467 = 0;
+      g_dispatchSave1435 = CodePage;
+    }
+    else {
+      g_dispatchSave1435 = CodePage;
+      if (local_14.LeadByte[0] != '\0') {
+        pBVar11 = local_14.LeadByte + 1;
+        do {
+          bVar3 = *pBVar11;
+          if (bVar3 == 0) break;
+          for (uVar7 = (uint)pBVar11[-1]; uVar7 <= bVar3; uVar7 = uVar7 + 1) {
+            *(byte *)((int)&g_dispatchSave1433 + uVar7 + 1) =
+                 *(byte *)((int)&g_dispatchSave1433 + uVar7 + 1) | 4;
+          }
+          pBVar1 = pBVar11 + 1;
+          pBVar11 = pBVar11 + 2;
+        } while (*pBVar1 != 0);
+      }
+      uVar7 = 1;
+      do {
+        *(byte *)((int)&g_dispatchSave1433 + uVar7 + 1) = *(byte *)((int)&g_dispatchSave1433 + uVar7 + 1) | 8;
+        uVar7 = uVar7 + 1;
+      } while (uVar7 < 0xff);
+      g_dispatchSave1436 = TranslateMsgId(CodePage);
+      g_dispatchSave1467 = 1;
+    }
+    g_dispatchSave1437 = 0;
+    g_dispatchSave1438 = 0;
+    g_dispatchSave1439 = 0;
+  }
+  else {
+    if (g_dispatchSave1440 == 0) {
+      TableLookupIatCall(0x19);
+      return 0xffffffff;
+    }
+    InitGlobalsAndZero();
+  }
+LAB_004c9672:
+  BuildCharacterCaseTables();
+  TableLookupIatCall(0x19);
+  return 0;
+}
+#else
 __declspec(naked) void CrtSetlocaleInstaller(void)
 {
     __asm {
@@ -339,3 +469,4 @@ __declspec(naked) void CrtSetlocaleInstaller(void)
         jmp      L_9672
     }
 }
+#endif
