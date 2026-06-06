@@ -18,7 +18,12 @@
 #ifndef MK4_PORTABLE_WIN32_TYPES_H
 #define MK4_PORTABLE_WIN32_TYPES_H
 
-#ifdef NON_MATCHING
+/* Active when there is no real <windows.h>: a native non-Windows SDL
+ * backend (!_WIN32), or the injector's isolation compile-gate which sets
+ * MK4_WIN32_SHIM to get these types without windows.h's API prototypes. On
+ * a Windows/mingw real build _WIN32 is set and types.h pulls in the
+ * authoritative <windows.h>, so this stays inert there (no redefinition). */
+#if defined(NON_MATCHING) && (!defined(_WIN32) || defined(MK4_WIN32_SHIM))
 
 /* --- Scalars (Win32 LLP64-irrelevant; this engine is a 32-bit target) --- */
 typedef int                BOOL;

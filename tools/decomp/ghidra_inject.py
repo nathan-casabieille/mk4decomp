@@ -89,7 +89,13 @@ def compile_ok(twin, name):
     # extern of a 2-arg macro fails to preprocess ("requires 2 arguments").
     calls = [f for f in sorted(set(re.findall(r'\b([A-Z]\w+)\s*\(', twin)) - {name})
              if not f.startswith('MK4_') and not re.match(r'CONCAT\d\d$', f)]
-    h = ('#define NON_MATCHING 1\n#include "portable/ghidra_types.h"\n'
+    # MK4_WIN32_SHIM activates win32_types.h's portable Win32 typedefs here
+    # without pulling in the real <windows.h> (whose API prototypes would
+    # clash with the permissive `extern int F();` externs below). The real
+    # portable build instead uses <windows.h> via types.h (_WIN32 set), where
+    # win32_types.h stays inert - so the gate and the build agree on types.
+    h = ('#define NON_MATCHING 1\n#define MK4_WIN32_SHIM 1\n'
+         '#include "portable/ghidra_types.h"\n'
          '#include "portable/mem_model.h"\n')
     h += ''.join('extern unsigned int %s;\n' % g for g in globs)
     h += ''.join('extern int %s();\n' % f for f in calls)
