@@ -6963,6 +6963,16 @@ __declspec(naked) void PendingMatch_LeaPlus22StoreSelf(void)
     }
 }
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_StoreTwoCall_004163c0(void)
+
+{
+  StoreTwoCall(0x4163f0,0xb5);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x2c) = g_cj_0054205c;
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_StoreTwoCall_004163c0(void)
 {
     __asm {
@@ -7496,6 +7506,7 @@ __declspec(naked) void PendingMatch_StoreTwoCall_004163c0(void)
         ret      
     }
 }
+#endif
 
 
 #ifdef NON_MATCHING

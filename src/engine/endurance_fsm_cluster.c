@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,77 @@ extern void InstallSelfPackedF80(void);
 extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void TableWalkBoundedCmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EnduranceFsmCluster(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  iVar1 = g_baseSel * 4;
+  uVar2 = MK4_NODE_AT(undefined4, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  switch(uVar2) {
+  case 0:
+    BootInitGuardedCallChain();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0;
+      g_active_0053a408 = 0;
+      g_active_00537e88 = 0;
+      BootMultiAssetLoadStateInit();
+      if (g_framePauseFlag == 0) {
+        g_cj_00542058 = 0x137dbc;
+        goto LAB_004239c9;
+      }
+    }
+    break;
+  case 1:
+    goto LAB_004239c9;
+  case 2:
+    g_cj_00542058 = g_cj_00542058 + 1;
+LAB_004239c9:
+    g_walkCallback = MK4_NODE_AT(int, g_cj_00542058, 0);
+    if (g_walkCallback < 0) {
+      *(code **)(iVar1 + 8) = EnduranceFsmCluster;
+      *(undefined4 *)(iVar1 + 0x84) = 3;
+      g_dualC = 0x168;
+      g_framePauseFlag = 1;
+      return;
+    }
+    if (g_walkCallback == 1) {
+      g_cj_00542058 = g_cj_00542058 + 1;
+      *(code **)(iVar1 + 8) = EnduranceFsmCluster;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 0x32;
+      g_framePauseFlag = 1;
+      return;
+    }
+    StoreTwoCall(0x423a90,0x17);
+    *(code **)(iVar1 + 8) = EnduranceFsmCluster;
+    *(undefined4 *)(iVar1 + 0x84) = 2;
+    g_dualC = 0x12;
+    g_framePauseFlag = 1;
+    return;
+  case 3:
+    g_eventQueueCurrent = 4;
+    *(code **)(iVar1 + 8) = EnduranceFsmCluster;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 4;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x44238e0;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    InstallSelfPackedF80();
+    g_framePauseFlag = 1;
+    return;
+  default:
+    TableWalkBoundedCmp(9);
+    StackPopDispatchTagged();
+  }
+  return;
+}
+#else
 __declspec(naked) void EnduranceFsmCluster(void)
 {
     __asm {
@@ -302,3 +374,4 @@ __declspec(naked) void EnduranceFsmCluster(void)
         ret
     }
 }
+#endif

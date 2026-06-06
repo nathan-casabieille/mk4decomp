@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,46 @@ extern void ScaledTripleCopy54(void);
 extern void SetJmp_BootStateTriple(void);
 extern void TableWalkBoundedCmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase4MultiHelperInit(void)
+
+{
+  int iVar1;
+  
+  MStackPush8();
+  if (g_framePauseFlag == 0) {
+    g_cj_00542054 = g_cj_0054205c;
+    g_walkCallback = 0x135d68;
+    PushSetXfmMaskCallPop();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 4) != 0) {
+LAB_00418bd4:
+        MStackPop8();
+        return;
+      }
+      SetJmp_BootStateTriple();
+      iVar1 = g_eventQueuePending;
+      if (g_framePauseFlag == 0) {
+        MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48) = 0x3333;
+        MK4_NODE_AT(undefined4, iVar1, 0x14) = 0xff;
+        MK4_NODE_AT(uint, iVar1, 0) = MK4_NODE_AT(uint, iVar1, 0) | 8;
+        g_walkCallback = 0x418be0;
+        ((uint *)(iVar1 * 4))[4] = 0x418be0;
+        ScaledTripleCopy54();
+        if (g_framePauseFlag == 0) {
+          MK4_NODE_AT(int, g_cj_0054205c, 0x58) = MK4_NODE_AT(int, g_cj_0054205c, 0x58) + -0x1c000;
+          g_walkCallback = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58);
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+          MStackCall_MStackPush2ChainPrepend_00406600();
+          if (g_framePauseFlag == 0) goto LAB_00418bd4;
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Phase4MultiHelperInit(void)
 {
     __asm {
@@ -320,3 +361,4 @@ __declspec(naked) void Phase4MultiHelperInit(void)
         ret
     }
 }
+#endif

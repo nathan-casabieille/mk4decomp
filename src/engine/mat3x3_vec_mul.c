@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,24 @@ extern unsigned int g_mat3x3_007af99c;
 extern unsigned int g_mat3x3_007af99e;
 extern unsigned int g_mat3x3_007af9a0;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Mat3x3VecMul(int *param_1,int *param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar1 = *param_1;
+  iVar2 = param_1[1];
+  iVar3 = param_1[2];
+  *param_2 = g_mat3x3_007af994 * iVar3 + g_mat3x3_007af992 * iVar2 + g_mat3x3_007af990 * iVar1 >> 0xc;
+  param_2[1] = g_mat3x3_007af99a * iVar3 + g_mat3x3_007af998 * iVar2 + g_mat3x3_007af996 * iVar1 >> 0xc;
+  param_2[2] = g_mat3x3_007af9a0 * iVar3 + g_mat3x3_007af99e * iVar2 + g_mat3x3_007af99c * iVar1 >> 0xc;
+  return;
+}
+#else
 __declspec(naked) void Mat3x3VecMul(void) {
     __asm {
         mov     edx, dword ptr [esp + 4]
@@ -169,3 +188,4 @@ __declspec(naked) void Mat3x3VecMul(void) {
         ret
     }
 }
+#endif

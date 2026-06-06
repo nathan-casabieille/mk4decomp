@@ -1727,6 +1727,74 @@ void func_GatedPushAndArgSar_004e6318(void) {
  * install-self states reachable via internal pointers (0x448990, 0x448ce0,
  * 0x448e10, etc.); hand-rolled prologues, push esi interleaved with body
  * setup, and constant register caching make pure-C conversion impractical. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int func_Set2CallIncJmp(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 == 0) {
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x28) = 0xe1;
+    g_walkCallback = 3;
+    func_0x00476f10();
+    if (g_framePauseFlag != 0) {
+      return g_framePauseFlag;
+    }
+    g_cj_00542054 = MK4_NODE_AT(undefined4, g_baseSel, 100);
+    g_cj_00542058 = MK4_NODE_AT(undefined4, g_baseSel, 0x68);
+    StoreLoadJmp(0x448b50);
+    g_eventQueueChild = 0x115;
+    *(code **)(iVar2 + 8) = func_Set2CallIncJmp;
+    uVar3 = 0x1448990;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  }
+  else {
+    if (iVar1 != 1) {
+      Set2CallIncJmp();
+      if (g_framePauseFlag != 0) {
+        return g_framePauseFlag;
+      }
+      g_eventQueueNotMask = 5;
+      EntryThunkBodyStateMachine();
+      if (g_framePauseFlag != 0) {
+        return g_framePauseFlag;
+      }
+      ArgSarStoreJmp(0x4e6328);
+      return g_framePauseFlag;
+    }
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x28) = 0x116;
+    g_walkCallback = 0x12;
+    GatedWordPushCall();
+    if (g_framePauseFlag != 0) {
+      return g_framePauseFlag;
+    }
+    g_eventQueueNotMask = 5;
+    EntryThunkBodyStateMachine();
+    if (g_framePauseFlag != 0) {
+      return g_framePauseFlag;
+    }
+    g_eventQueueChild = 0x133;
+    *(code **)(iVar2 + 8) = func_Set2CallIncJmp;
+    uVar3 = 0x2448990;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  }
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = uVar3;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  iVar2 = InstallSelf3WayChainCmp();
+  g_framePauseFlag = 1;
+  return iVar2;
+}
+#else
 __declspec(naked) void func_Set2CallIncJmp(void) {
     __asm {
         mov      eax, dword ptr [g_baseSel]
@@ -2076,3 +2144,4 @@ __declspec(naked) void func_Set2CallIncJmp(void) {
         ret      
     }
 }
+#endif

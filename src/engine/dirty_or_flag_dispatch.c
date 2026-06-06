@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,28 @@ extern unsigned int g_fightAxisPosY;
 extern void CondInstallDispatch_00476ed0(void);
 extern void DirtyDoubleDeref(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DirtyOrFlagDispatch(void)
+
+{
+  DirtyDoubleDeref();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) | 4;
+  g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc);
+  if (g_walkCallback != 0) {
+    g_walkCallback = 0x476e90;
+    Helper_TickAlt();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+  }
+  g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+  return;
+}
+#else
 __declspec(naked) void DirtyOrFlagDispatch(void) {
     __asm {
         call    DirtyDoubleDeref
@@ -148,3 +171,4 @@ __declspec(naked) void DirtyOrFlagDispatch(void) {
         jmp     CondInstallDispatch_00476ed0
     }
 }
+#endif

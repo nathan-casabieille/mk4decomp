@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,68 @@ extern void MStackPush2ClampLookup(void);
 extern void SpawnTrioInitCluster(void);
 extern void TripleEntryDispatch(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GuardedStateChangePair(void)
+
+{
+  int *piVar1;
+  
+  g_walkCallback = g_stateChangePair;
+  if (g_stateChangePair != 0) {
+    CallSetPause();
+    return;
+  }
+  g_walkCallback = g_stateChangePair3;
+  if (g_stateChangePair3 == 0x27) {
+    g_eventQueueCurrent = g_stateChangePair2 + -1;
+    if (g_eventQueueCurrent < 0) {
+      CallSetPause();
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_stateChangePair2 + 0x14e02b;
+    g_walkCallback = 0x27;
+    g_stateChangePair2 = g_eventQueueCurrent;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x27;
+    SpawnTrioInitCluster();
+    if (g_framePauseFlag == 0) {
+      CallSetPause();
+      return;
+    }
+  }
+  else {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e02c;
+    g_eventQueueCurrent = g_stateChangePair2;
+    if (2 < g_stateChangePair2) {
+LAB_004586cd:
+      g_walkCallback = 1;
+      g_stateChangePair = 1;
+      StoreTwoCall(0x458770,0);
+      CallSetPause();
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_stateChangePair2 + 0x14e02c;
+    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_stateChangePair3;
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(int *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+    MStackPush2ClampLookup();
+    if (g_framePauseFlag == 0) {
+      piVar1 = (int *)((int)g_matrixStackTop * 4);
+      g_matrixStackTop = g_matrixStackTop + -1;
+      g_eventQueueCurrent = *piVar1 + 1;
+      if (2 < g_eventQueueCurrent) goto LAB_004586cd;
+      g_stateChangePair2 = g_eventQueueCurrent;
+      SpawnTrioInitCluster();
+      if (g_framePauseFlag == 0) {
+        StoreTwoCall(0x458770,0);
+        CallSetPause();
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void GuardedStateChangePair(void)
 {
     __asm
@@ -259,3 +322,4 @@ __declspec(naked) void GuardedStateChangePair(void)
         jmp     TripleEntryDispatch
     }
 }
+#endif

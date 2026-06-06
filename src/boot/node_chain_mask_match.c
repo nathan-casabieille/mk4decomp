@@ -116,6 +116,34 @@ extern unsigned int g_fightAxisPosY;
  *   path, set bit 0 of state and exit; else clear bit 0 and exit.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void NodeChainMaskMatch(void)
+
+{
+  int iVar1;
+  
+  g_walkCallback = g_walkCallback & g_eventQueueCurrent;
+  iVar1 = g_extra_0052ab3c;
+  if (g_extra_0052ab3c == 0) {
+    g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+    return;
+  }
+  do {
+    if (*(int *)(iVar1 + 0xd8) != 0) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1 >> 2;
+      g_eventQueueWorkType = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc) & g_eventQueueCurrent;
+      if (g_eventQueueWorkType == g_walkCallback) {
+        g_xformDirtyFlags = g_xformDirtyFlags | 1;
+        return;
+      }
+    }
+    iVar1 = *(int *)(iVar1 + 0xe4);
+  } while (iVar1 != 0);
+  g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+  return;
+}
+#else
 __declspec(naked) void NodeChainMaskMatch(void) {
     __asm {
         mov     edx, dword ptr [g_walkCallback]
@@ -161,3 +189,4 @@ empty:
         ret
     }
 }
+#endif

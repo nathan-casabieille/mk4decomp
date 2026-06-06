@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -127,6 +128,64 @@ extern void StoreLoadJmp(void);
 extern void StorePauseImulShr16(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase4ThreePackedInstallSelf(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_eventQueuePending = 0x13b23e;
+    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 4) != 0) goto LAB_0041a659;
+      g_installOwnerNode = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 100) = 0x4b65f;
+      g_installOwner2 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_walkCallback = 0;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0;
+      *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_walkCallback;
+      g_walkCallback = 0xfffe4ccd;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0xfffe4ccd;
+      StoreLoadJmp(0x41a7d0);
+      g_cj_00542058 = g_counter_0053a51c + 0x135ee2;
+      g_walkCallback = MK4_NODE_AT(int, g_cj_00542058, 0);
+      StorePauseImulShr16();
+      if (g_framePauseFlag == 0) {
+        g_cj_00542058 = *(int *)((g_walkCallback + 0x150b3a) * 4);
+        if (g_counter_0053a51c == 3) {
+          g_cj_00542058 = 0x13c034;
+        }
+        g_eventQueueNotMask = 0;
+        g_cj_00542054 = g_installOwner2;
+        g_walkCallback = 0xc4;
+        AudioMixerStep();
+        if (g_framePauseFlag == 0) {
+          g_xformScratch2088 = g_walkCallback + 0x189;
+          *(code **)(iVar1 + 8) = Phase4ThreePackedInstallSelf;
+          MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x141a610;
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+          *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+          MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+          EsiInstallSetCbChainExtend_0048a810();
+          g_framePauseFlag = 1;
+        }
+      }
+    }
+    return;
+  }
+LAB_0041a659:
+  thunk_ScaledNeg1SetPause();
+  return;
+}
+#else
 __declspec(naked) void Phase4ThreePackedInstallSelf(void)
 {
     __asm {
@@ -366,3 +425,4 @@ __declspec(naked) void Phase4ThreePackedInstallSelf(void)
         ret
     }
 }
+#endif

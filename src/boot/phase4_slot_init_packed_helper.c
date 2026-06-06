@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,93 @@ extern void SetJmp_BootStateTriple(void);
 extern void StoreDoubleNegPauseSubStore(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase4SlotInitPackedHelper(void)
+
+{
+  int iVar1;
+  
+  MStackPush8();
+  if (g_framePauseFlag == 0) {
+    g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_eventQueuePending = 0x1447e9;
+    MStackPushDispatchBitGate();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 4) == 0) {
+        iVar1 = g_cj_0054205c * 4;
+        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x30) = 0xa3;
+        *(undefined4 *)(iVar1 + 0x3c) = g_particleEmitterNode;
+        *(uint *)(iVar1 + 0x34) = *(uint *)(iVar1 + 0x34) | 0x4000;
+        *(undefined4 *)(iVar1 + 0x54) = MK4_NODE_AT(undefined4, g_dualC, 0);
+        g_dualC = g_dualC + 1;
+        *(undefined4 *)(iVar1 + 0x58) = MK4_NODE_AT(undefined4, g_dualC, 0);
+        g_dualC = g_dualC + 1;
+        *(undefined4 *)(iVar1 + 0x5c) = MK4_NODE_AT(undefined4, g_dualC, 0);
+        g_dualC = g_dualC + 1;
+        *(undefined4 *)(iVar1 + 0x60) = 0x13333;
+        g_dualD = g_eventQueueSeed;
+        g_walkCallback = -MK4_NODE_AT(int, g_eventQueueSeed, 100);
+        BootMod6487eClampAndChainMul10();
+        iVar1 = g_cj_0054205c;
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        MK4_NODE_AT(int, g_cj_0054205c, 100) = g_walkCallback;
+        g_walkCallback = 0x1999;
+        iVar1 = iVar1 * 4;
+        StoreDoubleNegPauseSubStore();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        *(int *)(iVar1 + 0x6c) = g_walkCallback;
+        g_walkCallback = 0x1999;
+        StoreDoubleNegPauseSubStore();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        *(int *)(iVar1 + 0x74) = g_walkCallback;
+        g_walkCallback = 0xccc;
+        AudioMixerStep();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        *(int *)(iVar1 + 0x70) = g_walkCallback + -0x2666;
+        g_walkCallback = 0x9999;
+        StoreDoubleNegPauseSubStore();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        *(int *)(iVar1 + 0x80) = g_walkCallback;
+        g_walkCallback = 0xf5c;
+        StoreDoubleNegPauseSubStore();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        *(int *)(iVar1 + 0x7c) = g_walkCallback;
+        g_walkCallback = 0xf5c;
+        StoreDoubleNegPauseSubStore();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        *(int *)(iVar1 + 0x78) = g_walkCallback;
+        SetJmp_BootStateTriple();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        g_walkCallback = 0x416280;
+        MK4_NODE_AT(undefined4, g_eventQueuePending, 0x10) = 0x416280;
+        MStackCall_MStackPush2ChainPrepend_004062f0();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+      }
+      MStackPop8();
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Phase4SlotInitPackedHelper(void)
 {
     __asm {
@@ -318,3 +406,4 @@ __declspec(naked) void Phase4SlotInitPackedHelper(void)
         ret
     }
 }
+#endif

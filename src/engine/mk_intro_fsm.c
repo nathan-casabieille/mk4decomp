@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,107 @@ extern void SaveCallRestore(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 extern void func_004214a0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MkIntroFsm(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_eventQueueWorkType = 0;
+    Push16Call();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 1;
+      g_quadEntryGate = 1;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualB_00538038;
+      g_eventQueuePending = 0x4214a0;
+      thunk_ChainNodeInit();
+      if (g_framePauseFlag == 0) {
+        g_eventQueuePending = 0x4214a0;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualB_0053803c;
+        thunk_ChainNodeInit();
+        if (g_framePauseFlag == 0) {
+          g_walkCallback = 0x24b;
+          g_eventQueueCurrent = 4;
+          g_chainAccumCur = 0;
+          g_eventQueueNotMask = 0xffc90000;
+          g_eventQueuePending = 0x1355b6;
+          Push70CallScaleArith();
+          if (g_framePauseFlag == 0) {
+            g_eventQueueWorkType = 0x48;
+            Push16Call();
+            if (g_framePauseFlag == 0) {
+              *(code **)(iVar1 + 8) = MkIntroFsm;
+              *(undefined4 *)(iVar1 + 0x84) = 1;
+              g_dualC = 0x10;
+              g_framePauseFlag = 1;
+            }
+          }
+        }
+      }
+    }
+    return;
+  }
+  if (iVar2 == 1) {
+    g_walkCallback = 0x2d;
+    TableLookupCall_g_eventTbl_112();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(code **)(iVar1 + 8) = MkIntroFsm;
+    *(undefined4 *)(iVar1 + 0x84) = 2;
+    g_dualC = 0x90;
+    g_framePauseFlag = 1;
+    return;
+  }
+  if (iVar2 == 2) {
+    SaveCallRestore(0x24b);
+    *(code **)(iVar1 + 8) = MkIntroFsm;
+    *(undefined4 *)(iVar1 + 0x84) = 3;
+    g_dualC = 8;
+    g_framePauseFlag = 1;
+    return;
+  }
+  Cmp2DirtyToggle();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  if (((byte)g_xformDirtyFlags & 1) == 0) {
+LAB_00421aa8:
+    g_walkCallback = g_clamp_0053a6dc;
+    g_eventQueueCurrent = g_clamp_00537f2c;
+    if (g_clamp_00537f2c < (int)g_clamp_0053a6dc) {
+LAB_00421ae4:
+      g_walkCallback = 1;
+      g_audioBankSel = 1;
+      StackPopDispatchTagged();
+      return;
+    }
+    if (g_clamp_00537f2c <= (int)g_clamp_0053a6dc) {
+      if (g_clamp_0053a6dc == 0x10000) goto LAB_0042192f;
+      DualAddSar();
+      if ((g_walkCallback & 1) == 0) goto LAB_00421ae4;
+    }
+  }
+  else {
+    if (g_player3NodeIdx != 0) {
+      if (g_player4NodeIdx == 0) goto LAB_00421ae4;
+      goto LAB_00421aa8;
+    }
+    if (g_player4NodeIdx == 0) goto LAB_00421aa8;
+  }
+  g_walkCallback = 2;
+  g_audioBankSel = 2;
+LAB_0042192f:
+  StackPopDispatchTagged();
+  return;
+}
+#else
 __declspec(naked) void MkIntroFsm(void)
 {
     __asm {
@@ -253,3 +355,4 @@ __declspec(naked) void MkIntroFsm(void)
         ret
     }
 }
+#endif
