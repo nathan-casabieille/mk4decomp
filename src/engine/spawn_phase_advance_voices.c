@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -115,6 +116,68 @@ extern unsigned int g_imageBaseHi;
 extern void MStackPush2ChainLLInsert(void);
 extern void MStackPushTableMatch(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SpawnPhaseAdvanceVoices(void)
+
+{
+  int iVar1;
+  undefined *puVar2;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_walkCallback;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_dualC;
+  g_eventQueuePending = MK4_NODE_AT(int, g_dispatchVar7, 0);
+  g_dualC = g_eventQueueSeed;
+  puVar2 = g_matrixStackTop;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dispatchVar7;
+  do {
+    if (g_eventQueuePending == 0) {
+      g_eventQueueCurrent = *(undefined4 *)((int)(puVar2 + -3) * 4);
+      g_walkCallback = *(undefined4 *)((int)(puVar2 + -4) * 4);
+      g_dualC = *(undefined4 *)((int)puVar2 * 4);
+      g_eventQueuePending = *(undefined4 *)((int)(puVar2 + -1) * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(puVar2 + -2) * 4);
+      g_matrixStackTop = puVar2 + -5;
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    iVar1 = MK4_NODE_AT(int, g_eventQueuePending, 0x5c);
+    g_eventQueueCurrent = iVar1 + 0xa0000;
+    if (g_eventQueueCurrent <= MK4_NODE_AT(int, g_dualC, 0x5c)) {
+      if (g_phaseThunkVar4 == 0) {
+        *(undefined **)(g_eventQueuePending * 4 + 0x5c) = &(*(unsigned int *)MK4_VA(unsigned int, 0x640000)) + iVar1;
+        puVar2 = g_matrixStackTop;
+      }
+      else {
+        g_matrixStackTop = puVar2 + 1;
+        g_walkCallback = g_phaseThunkVar4;
+        *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_eventQueuePending;
+        MStackPushTableMatch();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        MStackPush2ChainLLInsert();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((int)g_matrixStackTop * 4);
+        puVar2 = g_matrixStackTop + -1;
+        g_matrixStackTop = puVar2;
+      }
+    }
+    g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  } while( true );
+}
+#else
 __declspec(naked) void SpawnPhaseAdvanceVoices(void)
 {
     __asm {
@@ -229,3 +292,4 @@ __declspec(naked) void SpawnPhaseAdvanceVoices(void)
         ret
     }
 }
+#endif

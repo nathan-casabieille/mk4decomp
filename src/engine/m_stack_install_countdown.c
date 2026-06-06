@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,18 @@ extern unsigned int g_matrixStack_arr;
 extern void MStackPushWaitChain(void);
 extern void NegInstallNegSelfTrigPair(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackInstallCountdown(void)
+
+{
+  g_currentNodeFlags = 0xccc;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined **)((int)g_matrixStackTop * 4) = &(*(unsigned int *)MK4_VA(unsigned int, 0x4863a0));
+  NegInstallNegSelfTrigPair();
+  return;
+}
+#else
 __declspec(naked) void MStackInstallCountdown(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -160,3 +173,4 @@ __declspec(naked) void MStackInstallCountdown(void) {
         ret
     }
 }
+#endif

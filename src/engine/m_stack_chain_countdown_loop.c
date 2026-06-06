@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,40 @@ extern unsigned int g_dispatchAcc;
 extern unsigned int g_phaseCounter;
 extern void MStackPushSearchLoop(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackChainCountdownLoop(void)
+
+{
+  int iVar1;
+  uint uVar2;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_eventQueueWorkType = g_walkCallback;
+  MStackPushSearchLoop();
+  if (g_framePauseFlag == 0) {
+    if (g_walkCallback < g_eventQueueWorkType) {
+      g_eventQueueWorkType = g_walkCallback;
+    }
+    iVar1 = g_dispatchAcc + g_phaseCounter * 4;
+    g_eventQueueCurrent = MK4_NODE_AT(undefined4, iVar1, 4);
+    if (g_eventQueueWorkType == 0) {
+      g_eventQueueWorkType = 1;
+    }
+    g_walkCallback = g_eventQueueWorkType - 1;
+    g_eventQueueWorkType = 0xffff9688;
+    for (uVar2 = g_walkCallback; uVar2 != 0; uVar2 = uVar2 - 1) {
+      g_eventQueueWorkType = g_eventQueueWorkType - 27000;
+      g_walkCallback = g_walkCallback - 1;
+    }
+    g_chainAccumCur = MK4_NODE_AT(undefined4, iVar1, 8);
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+  }
+  return;
+}
+#else
 __declspec(naked) void MStackChainCountdownLoop(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -183,3 +218,4 @@ __declspec(naked) void MStackChainCountdownLoop(void) {
         ret
     }
 }
+#endif

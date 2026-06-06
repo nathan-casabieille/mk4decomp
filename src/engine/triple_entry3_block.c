@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -115,6 +116,22 @@ extern void Phase4FourHelperChain(void);
 extern void ScaledIndirectJmp_0049c850(void);
 extern void Vec2SumMul10ChainCompute(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleEntry3Block(void)
+
+{
+  int iVar1;
+  
+  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+  g_currentNodeFlags = Mul10Tail(0x3333,g_currentNodeFlags);
+  g_xformScratch2088 = Mul10Tail(0x3333,g_xformScratch2088);
+  *(undefined4 *)(iVar1 + 0x6c) = g_currentNodeFlags;
+  *(undefined4 *)(iVar1 + 0x74) = g_xformScratch2088;
+  g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  return;
+}
+#else
 __declspec(naked) void TripleEntry3Block(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeFlags]
@@ -174,3 +191,4 @@ __declspec(naked) void TripleEntry3Block(void) {
         ret
     }
 }
+#endif

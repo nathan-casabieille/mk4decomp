@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,51 @@ extern unsigned int g_triStripRingB;
 extern s32 g_vtxOut2_z;
 extern s32 g_vtxOut_z;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Vec3ColorShiftClamp(int param_1,byte param_2)
+
+{
+  ushort uVar1;
+  ushort uVar2;
+  int iVar3;
+  
+  iVar3 = g_min_007af984 >> (param_2 & 0x1f);
+  if (iVar3 < 0) {
+    iVar3 = 0;
+  }
+  if (0x1f < iVar3) {
+    iVar3 = 0x1f;
+  }
+  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)(param_1 + 0x14)) & 0x1f ^
+          *(ushort *)(param_1 + 0x14);
+  uVar2 = uVar1 & 0x1f;
+  *(ushort *)(param_1 + 0x14) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
+  iVar3 = g_min_007af988 >> (param_2 & 0x1f);
+  if (iVar3 < 0) {
+    iVar3 = 0;
+  }
+  if (0x1f < iVar3) {
+    iVar3 = 0x1f;
+  }
+  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)(param_1 + 0x16)) & 0x1f ^
+          *(ushort *)(param_1 + 0x16);
+  uVar2 = uVar1 & 0x1f;
+  *(ushort *)(param_1 + 0x16) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
+  iVar3 = g_min_007af98c >> (param_2 & 0x1f);
+  if (iVar3 < 0) {
+    iVar3 = 0;
+  }
+  if (0x1f < iVar3) {
+    iVar3 = 0x1f;
+  }
+  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)(param_1 + 0x18)) & 0x1f ^
+          *(ushort *)(param_1 + 0x18);
+  uVar2 = uVar1 & 0x1f;
+  *(ushort *)(param_1 + 0x18) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
+  return;
+}
+#else
 __declspec(naked) void Vec3ColorShiftClamp(void)
 {
     __asm
@@ -215,3 +261,4 @@ __declspec(naked) void Vec3ColorShiftClamp(void)
         ret
     }
 }
+#endif

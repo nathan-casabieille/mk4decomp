@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -131,6 +132,31 @@ extern s32 g_vtxLight1_z;
 extern s32 g_vtxLight1_y;
 extern void Word9Reorder(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MatVec2Multiply(void)
+
+{
+  short local_20;
+  short local_1e;
+  short local_1c;
+  short local_1a;
+  short local_18;
+  short local_16;
+  short local_14;
+  short local_12;
+  short local_10;
+  
+  Word9Reorder(&g_mat3x3_007af990,&local_20);
+  g_lightMat20 = g_lightMat00 * local_20 + g_lightMat01 * local_1e + g_lightMat02 * local_1c >> 0xc;
+  g_lightMat21 = g_lightMat00 * local_1a + g_lightMat01 * local_18 + g_lightMat02 * local_16 >> 0xc;
+  g_lightMat22 = g_lightMat00 * local_14 + g_lightMat01 * local_12 + g_lightMat02 * local_10 >> 0xc;
+  g_vtxLight1_x = g_dispatchSave1627 * local_20 + g_dispatchSave1628 * local_1e + g_dispatchSave1629 * local_1c >> 0xc;
+  g_vtxLight1_z = g_dispatchSave1627 * local_1a + g_dispatchSave1628 * local_18 + g_dispatchSave1629 * local_16 >> 0xc;
+  g_vtxLight1_y = g_dispatchSave1627 * local_14 + g_dispatchSave1628 * local_12 + g_dispatchSave1629 * local_10 >> 0xc;
+  return;
+}
+#else
 __declspec(naked) void MatVec2Multiply(void) {
     __asm {
         sub     esp, 0x20
@@ -230,3 +256,4 @@ __declspec(naked) void MatVec2Multiply(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,43 @@ extern void StateMachineInit(void);
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void RecordListIterMStack(void)
+
+{
+  g_eventQueuePending = MK4_NODE_AT(undefined4, g_cj_00542058, 0);
+  g_eventQueueWorkType = *(int *)((g_cj_00542058 + 1) * 4);
+  g_currentNodeFlags = *(int *)((g_cj_00542058 + 2) * 4);
+  g_cj_00542058 = g_cj_00542058 + 3;
+  while( true ) {
+    if (g_currentNodeFlags == -0x10000) {
+      return;
+    }
+    g_xformScratch2088 = MK4_NODE_AT(undefined4, g_cj_00542058, 0);
+    g_cj_00542058 = g_cj_00542058 + 1;
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(int *)((int)g_matrixStackTop * 4) = g_eventQueueWorkType;
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+    g_walkCallback = 0x6c;
+    StateMachineInit();
+    if (g_framePauseFlag != 0) break;
+    g_eventQueuePending = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_eventQueueCurrent = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+    g_eventQueueWorkType = *(int *)((int)(g_matrixStackTop + -2) * 4);
+    g_matrixStackTop = g_matrixStackTop + -3;
+    if (g_eventQueueWorkType != 0) {
+      MK4_NODE_AT(int, g_cj_0054205c, 0x58) = g_eventQueueWorkType;
+    }
+    g_currentNodeFlags = MK4_NODE_AT(int, g_cj_00542058, 0);
+    g_cj_00542058 = g_cj_00542058 + 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void RecordListIterMStack(void) {
     __asm {
         mov     ecx, dword ptr [g_eventQueueIdx]
@@ -207,3 +245,4 @@ __declspec(naked) void RecordListIterMStack(void) {
         ret
     }
 }
+#endif

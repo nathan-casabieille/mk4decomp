@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -128,6 +129,23 @@ extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void PendingMatch_AudioInitArgs3(void);
 extern void SnapshotDirtyMark(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioInitLoopTriple(void)
+
+{
+  g_eventQueuePending = 0x143c45;
+  DispatcherComplex260_FramePauseScaledStore();
+  if (g_framePauseFlag == 0) {
+    SnapshotDirtyMark(0x13333);
+    MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
+    if (g_framePauseFlag == 0) {
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0x100000;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void AudioInitLoopTriple(void)
 {
     __asm
@@ -204,3 +222,4 @@ __declspec(naked) void AudioInitLoopTriple(void)
         ret
     }
 }
+#endif

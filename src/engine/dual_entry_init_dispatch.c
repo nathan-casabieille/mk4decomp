@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,24 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualEntryInitDispatch(void)
+
+{
+  int iVar1;
+  
+  iVar1 = g_cj_0054205c * 4;
+  g_walkCallback = 0;
+  *(undefined4 *)(iVar1 + 0x78) = 0;
+  *(undefined4 *)(iVar1 + 0x7c) = g_walkCallback;
+  *(undefined4 *)(iVar1 + 0x80) = g_walkCallback;
+  *(undefined4 *)(iVar1 + 0x6c) = g_walkCallback;
+  *(undefined4 *)(iVar1 + 0x70) = g_walkCallback;
+  *(undefined4 *)(iVar1 + 0x74) = g_walkCallback;
+  return;
+}
+#else
 __declspec(naked) void DualEntryInitDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
@@ -155,3 +174,4 @@ __declspec(naked) void DualEntryInitDispatch(void) {
         ret
     }
 }
+#endif

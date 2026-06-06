@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,22 @@ extern void ScaledInit_GameModeHandlerCluster_g_scaledInit_00495590(void);
 extern void ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0(void);
 extern void StateGateMStackOverlap(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ThrowGrabInitCluster(void)
+
+{
+  LeaPlus22StoreSelf();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 10;
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined1 **)((int)g_matrixStackTop * 4) = &(*(unsigned int *)MK4_VA(unsigned int, 0x436b10));
+    MstackPopScaledChainPlusThunks();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void ThrowGrabInitCluster(void)
 {
     __asm {
@@ -335,3 +352,4 @@ __declspec(naked) void ThrowGrabInitCluster(void)
         ret
     }
 }
+#endif

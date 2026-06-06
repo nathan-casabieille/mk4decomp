@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,34 @@ extern void CjTableThresholdDispatch(void);
 extern void GatedChainClamp(void);
 extern void StanceFsmCluster(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackPush3CallCascade(void)
+
+{
+  g_walkCallback = -g_walkCallback;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueNotMask;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueChild;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueWorkType;
+  if ((((g_eventQueueCurrent == 0) || (StanceFsmCluster(), g_framePauseFlag == 0)) &&
+      (MStackFrameCdeclDouble(), g_framePauseFlag == 0)) && (IterStepDualStore(&(*(unsigned int *)MK4_VA(unsigned int, 0x4eee48))), g_framePauseFlag == 0))
+  {
+    g_eventQueueWorkType = *(int *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    if ((g_eventQueueWorkType == 0) || (CjTableThresholdDispatch(), g_framePauseFlag == 0)) {
+      g_eventQueueChild = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_eventQueueNotMask = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_matrixStackTop = g_matrixStackTop + -2;
+      GatedChainClamp();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void MStackPush3CallCascade(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -186,3 +215,4 @@ __declspec(naked) void MStackPush3CallCascade(void) {
         ret
     }
 }
+#endif

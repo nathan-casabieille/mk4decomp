@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,17 @@ extern unsigned int g_fightAxisPosY;
 extern void ThreeChanPackClamp(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfMagicShift(void)
+
+{
+  g_walkCallback = 0;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 0x14e055;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfMagicShift(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeIdx]
@@ -154,3 +166,4 @@ __declspec(naked) void InstallSelfMagicShift(void) {
         ret
     }
 }
+#endif

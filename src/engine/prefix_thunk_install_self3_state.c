@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -33128,6 +33129,22 @@ __declspec(naked) void Distance3DMul10Chain(void) {
  *     pause=1; pop edi/esi; ret.
  *   state>=2 (fall): call DualCallPauseJmpDual; pop edi/esi; ret.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PrefixThunkInstallSelf3State(void)
+
+{
+  LeaPlus22StoreSelf();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 0xc;
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined1 **)((int)g_matrixStackTop * 4) = &(*(unsigned int *)MK4_VA(unsigned int, 0x438fc0));
+    MstackPopScaledChainPlusThunks();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void PrefixThunkInstallSelf3State(void) {
     __asm {
         call    LeaPlus22StoreSelf
@@ -33214,6 +33231,7 @@ __declspec(naked) void PrefixThunkInstallSelf3State(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x0048af60 (292b game) - mstack-push 6 + middle-op + mstack-pop 6.
  *   Push 6 globals onto mstack: 70, 74, 78, 80, 4c, 7c.

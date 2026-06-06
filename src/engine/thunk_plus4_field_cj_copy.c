@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,15 @@ extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void StoreFightFieldCallTailJmp(void);
 extern void TripleMStackPushChainStores(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ThunkPlus4FieldCjCopy(void)
+
+{
+  ArgSarStoreJmp(0x4eaa08);
+  return;
+}
+#else
 __declspec(naked) void ThunkPlus4FieldCjCopy(void) {
     __asm {
         push    0x004eaa08
@@ -189,3 +199,4 @@ __declspec(naked) void ThunkPlus4FieldCjCopy(void) {
         ret
     }
 }
+#endif

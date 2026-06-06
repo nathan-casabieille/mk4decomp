@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,59 @@ extern void PushPopScaled1cDoubleCall(void);
 extern void ScaledLoadDirtyOrSetJmp(void);
 extern void StoreLoadJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MeshReplicateDriver(void)
+
+{
+  StoreLoadJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4738a0)));
+  StoreLoadJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x473a80)));
+  g_eventQueueWorkType = *(int *)(MK4_NODE_AT(int, g_cj_0054205c, 0x1c) * 4) + 1;
+  g_dualC = 0x13b2d6;
+  g_chainAccumCur = g_eventQueueWorkType;
+  g_walkCallback = g_dispatchSave732;
+  while( true ) {
+    if (g_walkCallback == 0) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+      MStackBracket4_ListInsertZeroFill();
+      if ((((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) &&
+          (MStackPush3LinkedListWalk(), g_framePauseFlag == 0)) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+        ScaledLoadDirtyOrSetJmp();
+      }
+      return;
+    }
+    DirtyDoubleDeref();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_dualD = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_eventQueuePending = 0x145254;
+    MStackBracket1_TreeWalkRecursive2();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 4) != 0) break;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x3c) = MK4_NODE_AT(undefined4, g_dualC, 0);
+    g_dualC = g_dualC + 1;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40) = MK4_NODE_AT(undefined4, g_dualC, 0);
+    g_dualC = g_dualC + 1;
+    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = MK4_NODE_AT(int, g_dualD, 0x30) >> 1;
+    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34) = MK4_NODE_AT(int, g_dualD, 0x34) >> 1;
+    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x38) = MK4_NODE_AT(int, g_dualD, 0x38) >> 1;
+    g_walkCallback = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) & 0xfaffffff | 0xa001000;
+    *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) = g_walkCallback;
+    g_eventQueuePending = MK4_NODE_AT(undefined4, g_dualD, 0x14);
+    PushPopScaled1cDoubleCall();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = g_eventQueueWorkType;
+    g_eventQueueWorkType = g_eventQueueWorkType + 1;
+    g_walkCallback = MK4_NODE_AT(int, g_dualC, 0);
+  }
+  return;
+}
+#else
 __declspec(naked) void MeshReplicateDriver(void)
 {
     __asm {
@@ -241,3 +295,4 @@ __declspec(naked) void MeshReplicateDriver(void)
         ret
     }
 }
+#endif

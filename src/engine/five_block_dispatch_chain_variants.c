@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -170,6 +171,23 @@ extern void ScaledAndAlfe(void);
 extern void TripleCallPauseJmp(void);
 extern void Wrapper_ScaledChainPushCall_004ef838(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FiveBlockDispatchChain_ScaledAndAlfe(void)
+
+{
+  ScaledAndAlfe();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 0x604;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x604;
+    TripleCallPauseJmp();
+    if (g_framePauseFlag == 0) {
+      ArgSarStoreJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4eb6d8)));
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void FiveBlockDispatchChain_ScaledAndAlfe(void) {
     __asm {
         call    ScaledAndAlfe
@@ -291,3 +309,4 @@ __declspec(naked) void FiveBlockDispatchChain_ScaledAndAlfe(void) {
         jmp     MStackJmpInstallSelf
     }
 }
+#endif

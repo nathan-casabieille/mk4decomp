@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -135,6 +136,25 @@ extern void Install3StateRouterTail(void);
 extern void ScaledAndAlfe(void);
 extern void ScaledClearJmp_EsiInstallBitCallChain(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StateRemapPackedInstall(void)
+
+{
+  g_eventQueuePending = 0x140674;
+  g_walkCallback = MK4_NODE_AT(int, g_baseSel, 0x34);
+  if (g_walkCallback == 0x10) {
+    g_walkCallback = 2;
+  }
+  if (g_walkCallback == 0x11) {
+    g_walkCallback = 7;
+  }
+  if (g_walkCallback != 0xf) {
+    ArgScaledTestStore(&g_dispatchSave64);
+  }
+  return;
+}
+#else
 __declspec(naked) void StateRemapPackedInstall(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
@@ -238,3 +258,4 @@ __declspec(naked) void StateRemapPackedInstall(void) {
         ret
     }
 }
+#endif

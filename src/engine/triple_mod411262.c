@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,53 @@ extern unsigned int g_fightAxisPosY;
  *   pop esi; ret.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleMod411262(void)
+
+{
+  uint uVar1;
+  uint uVar2;
+  
+  uVar1 = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  if ((int)uVar1 < 0) {
+    uVar1 = uVar1 + ((0x6487d - uVar1) / 0x6487e) * 0x6487e;
+  }
+  if (0x6487d < (int)uVar1) {
+    uVar2 = uVar1 / 0x6487e;
+    do {
+      uVar1 = uVar1 - 0x6487e;
+      uVar2 = uVar2 - 1;
+    } while (uVar2 != 0);
+  }
+  *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = uVar1;
+  uVar1 = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4);
+  if ((int)uVar1 < 0) {
+    uVar1 = uVar1 + ((0x6487d - uVar1) / 0x6487e) * 0x6487e;
+  }
+  if (0x6487d < (int)uVar1) {
+    uVar2 = uVar1 / 0x6487e;
+    do {
+      uVar1 = uVar1 - 0x6487e;
+      uVar2 = uVar2 - 1;
+    } while (uVar2 != 0);
+  }
+  *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4) = uVar1;
+  g_walkCallback = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 8);
+  if ((int)g_walkCallback < 0) {
+    g_walkCallback = g_walkCallback + ((0x6487d - g_walkCallback) / 0x6487e) * 0x6487e;
+  }
+  if (0x6487d < (int)g_walkCallback) {
+    uVar1 = g_walkCallback / 0x6487e;
+    do {
+      g_walkCallback = g_walkCallback - 0x6487e;
+      uVar1 = uVar1 - 1;
+    } while (uVar1 != 0);
+  }
+  *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 8) = g_walkCallback;
+  return;
+}
+#else
 __declspec(naked) void TripleMod411262(void) {
     __asm {
         push    esi
@@ -201,3 +249,4 @@ __declspec(naked) void TripleMod411262(void) {
         ret
     }
 }
+#endif

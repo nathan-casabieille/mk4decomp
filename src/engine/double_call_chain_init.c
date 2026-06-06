@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,30 @@ extern unsigned int g_fightAxisPosY;
 extern void MStackPush2LLWalkCompare(void);
 extern void Thunk_StructArrayWalkCondCall(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DoubleCallChainInit(void)
+
+{
+  g_walkCallback = 0x83;
+  g_eventQueueCurrent = 0xffffffff;
+  thunk_StructArrayWalkCondCall();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 0x45;
+    MStackPush2LLWalkCompare();
+    while ((g_framePauseFlag == 0 && (((byte)g_xformDirtyFlags & 4) == 0))) {
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x7a;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = 0xffffeb86;
+      g_walkCallback = 0;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) = 0;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74) = g_walkCallback;
+      g_walkCallback = 0x45;
+      MStackPush2LLWalkCompare();
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DoubleCallChainInit(void) {
     __asm {
         push    ebx
@@ -169,3 +194,4 @@ __declspec(naked) void DoubleCallChainInit(void) {
         ret
     }
 }
+#endif

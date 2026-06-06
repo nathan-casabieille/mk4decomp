@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,38 @@ extern void TableLookupCall_g_eventTbl_50(void);
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackBranchSelect(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_baseSel;
+  g_baseSel = g_dualB_00538038;
+  if (g_cj_0054205c != g_player1NodeIdx) {
+    g_baseSel = g_dualB_0053803c;
+  }
+  g_walkCallback = 1;
+  DualBranchWordLookup();
+  if (g_framePauseFlag == 0) {
+    g_baseSel = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    g_chainAccumCur = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54);
+    g_eventQueueNotMask = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c);
+    StoreTwoCallSubMain();
+    if (g_framePauseFlag == 0) {
+      g_eventQueueNotMask = 0;
+      EntryThunkBodyStateMachine();
+      if (g_framePauseFlag == 0) {
+        g_walkCallback = 0x13;
+        TableLookupCall_g_eventTbl_50();
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void MStackBranchSelect(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -172,3 +205,4 @@ __declspec(naked) void MStackBranchSelect(void) {
         ret
     }
 }
+#endif

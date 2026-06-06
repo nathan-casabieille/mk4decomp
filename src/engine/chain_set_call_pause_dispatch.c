@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,33 @@ extern void Wrapper_ArgSarStoreJmp_004ed440(void);
 extern unsigned int g_arr_chain_68_47d650;
 extern unsigned int g_arr_chain_74_47d650;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ChainSetCallPauseDispatch(void)
+
+{
+  MK4_NODE_AT(undefined4, g_baseSel, 0x68) = 0x400;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x202;
+  g_walkCallback = 0x2666;
+  MStackFrameCdeclDouble();
+  if (g_framePauseFlag == 0) {
+    TripleFieldCopyJmpHi();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 10;
+      g_phaseTimer = 10;
+      CopyJmp_SlotCmp3way_g_currentNodeIdx();
+      if (g_framePauseFlag == 0) {
+        if (((byte)g_xformDirtyFlags & 1) == 0) {
+          ArgSarStoreJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4ed440)));
+          return;
+        }
+        ArgSarStoreJmp(&g_str_004ed428);
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void ChainSetCallPauseDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -157,3 +185,4 @@ __declspec(naked) void ChainSetCallPauseDispatch(void) {
         ret
     }
 }
+#endif

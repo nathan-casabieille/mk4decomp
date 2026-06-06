@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,36 @@ extern void PendingMatch_StackPopDispatchTagged_004492f0(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MatchEndFadeFsmCluster(void)
+
+{
+  g_cj_0054205c = MK4_NODE_AT(undefined4, g_baseSel, 100);
+  MStackPush2RunCountdown();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 2;
+    ChainDirtyBitWalker();
+    if (g_framePauseFlag == 0) {
+      MK4_NODE_AT(uint, g_eventQueuePending, 0) = MK4_NODE_AT(uint, g_eventQueuePending, 0) | 4;
+      g_walkCallback = 0xa0000;
+      MK4_NODE_AT(undefined4, g_eventQueuePending, 0x34) = 0xa0000;
+      MStackBracket7_DispatchAndChain();
+      if (g_framePauseFlag == 0) {
+        g_walkCallback = 2;
+        g_chainAccumCur = 4;
+        DualSetShiftCall();
+        if (g_framePauseFlag == 0) {
+          DualPushSet7dCallPop();
+          return;
+        }
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void MatchEndFadeFsmCluster(void)
 {
     __asm {
@@ -291,3 +322,4 @@ __declspec(naked) void MatchEndFadeFsmCluster(void)
         _emit    0x00
     }
 }
+#endif

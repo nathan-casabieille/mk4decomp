@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,15 @@ extern void ScaledIndexConditionalAdd(void);
 extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void RoundEndCelebrationCluster(void)
+
+{
+  ArgSarStoreJmp(0x4ed1b0);
+  return;
+}
+#else
 __declspec(naked) void RoundEndCelebrationCluster(void)
 {
     __asm {
@@ -263,3 +273,4 @@ __declspec(naked) void RoundEndCelebrationCluster(void)
         ret
     }
 }
+#endif

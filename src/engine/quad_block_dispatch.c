@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,19 @@ extern void RoundCutsceneCluster(void);
 extern void ScaledMove48to58(void);
 extern void Wrapper_ScaledChainPushCall_004ef8e0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void QuadBlockDispatch(void)
+
+{
+  ArgSarStoreJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4ee418)));
+  if (g_framePauseFlag == 0) {
+    CallPauseDirtyLit_00488c70();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void QuadBlockDispatch(void) {
     __asm {
         push    0x004ee418
@@ -183,3 +197,4 @@ __declspec(naked) void QuadBlockDispatch(void) {
         ret
     }
 }
+#endif

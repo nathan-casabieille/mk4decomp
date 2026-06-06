@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,17 @@ extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void PoseFsm4StateInstall(void);
 extern void WeightedSumClampHelper(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfDualChain(void)
+
+{
+  g_eventQueueCurrent = g_walkCallback & 0xff;
+  g_eventQueuePending = 0x139326;
+  AddDerefJmp();
+  return;
+}
+#else
 __declspec(naked) void InstallSelfDualChain(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -189,3 +201,4 @@ __declspec(naked) void InstallSelfDualChain(void) {
         ret
     }
 }
+#endif

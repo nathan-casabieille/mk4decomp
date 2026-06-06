@@ -13986,6 +13986,20 @@ extern void DualCallTestPauseRange(void);
  *   Block D (+0x50): call Cmp2CallDirtyCall; if nonzero ret; threshold-dispatch.
  *   Blocks E/F/G (+0x80/+0x90/+0xa0): all jmp DualCallTestPauseRange.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FiveBlockDispatch_JumpTableDispatch(void)
+
+{
+  g_walkCallback = g_fightStateProgress;
+  if (0x20000 < g_fightStateProgress) {
+    Wrapper_CmpDualPatchScaledRangeJmp_004e4990();
+    return;
+  }
+  InstallSelfPacked0x2005();
+  return;
+}
+#else
 __declspec(naked) void FiveBlockDispatch_JumpTableDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_fightStateProgress]
@@ -14069,6 +14083,7 @@ __declspec(naked) void FiveBlockDispatch_JumpTableDispatch(void) {
         jmp     DualCallTestPauseRange
     }
 }
+#endif
 
 extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
 extern void CallPauseCmpStateJmp(void);

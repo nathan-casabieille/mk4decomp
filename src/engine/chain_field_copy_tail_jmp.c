@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,48 @@ extern void MStackPushDispatchBitGate(void);
 extern void MStackPushTwoEntryChainCall(void);
 extern void SetupVecFsmCluster(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ChainFieldCopyTailJmp(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_walkCallback = 2;
+  DirtyDoubleDeref();
+  if (g_framePauseFlag == 0) {
+    g_eventQueuePending = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x24);
+    MStackPushDispatchBitGate();
+    if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+      MStackPushTwoEntryChainCall();
+      if (g_framePauseFlag == 0) {
+        MStackCall_MStackPush2ChainPrepend_004062f0();
+        if (g_framePauseFlag == 0) {
+          iVar2 = g_cj_00542054 * 4;
+          iVar1 = g_cj_0054205c * 4;
+          *(undefined4 *)(iVar1 + 0x54) = *(undefined4 *)(iVar2 + 0x54);
+          *(int *)(iVar1 + 0x58) = *(int *)(iVar2 + 0x58) + -0x9999;
+          *(undefined4 *)(iVar1 + 0x5c) = *(undefined4 *)(iVar2 + 0x5c);
+          *(undefined4 *)(iVar1 + 0x60) = *(undefined4 *)(iVar2 + 0x60);
+          *(undefined4 *)(iVar1 + 100) = *(undefined4 *)(iVar2 + 100);
+          *(undefined4 *)(iVar1 + 0x68) = *(undefined4 *)(iVar2 + 0x68);
+          *(uint *)(iVar1 + 0x34) = *(uint *)(iVar2 + 0x34) ^ 1;
+          MK4_NODE_AT(undefined4, g_cj_0054205c, 0x3c) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x3c);
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 0x18);
+          g_walkCallback = 0;
+          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0;
+          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34) = g_walkCallback;
+          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x38) = g_walkCallback;
+          SetupVecFsmCluster();
+          return;
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void ChainFieldCopyTailJmp(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 2
@@ -217,3 +260,4 @@ __declspec(naked) void ChainFieldCopyTailJmp(void) {
         ret
     }
 }
+#endif

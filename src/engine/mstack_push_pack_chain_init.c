@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,61 @@ extern void ScaledTripleCopy4(void);
 extern void TripleEntry3Block(void);
 extern void Vec3AccMul10ChainBlend(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MstackPushPackChainInit(void)
+
+{
+  undefined4 uVar1;
+  uint *puVar2;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
+  g_walkCallback = 0x1359c6;
+  PushSetXfmMaskCallPop();
+  if (g_framePauseFlag == 0) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+    g_cj_0054205c = *(int *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    if (((byte)g_xformDirtyFlags & 4) != 0) {
+      CallSetPause();
+      return;
+    }
+    g_dualD = 0x13c9fc;
+    func_0x0049c3d0();
+    if (g_framePauseFlag == 0) {
+      TripleEntry3Block();
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 100) = 0;
+      g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18);
+      g_walkCallback = 1;
+      CmpDivJmp();
+      if (g_framePauseFlag == 0) {
+        if (((byte)g_xformDirtyFlags & 4) == 0) {
+          g_eventQueuePending = g_savedNode;
+          g_walkCallback = MK4_NODE_AT(undefined4, g_dualC, 0x6c);
+          uVar1 = Mul10Tail(0xffff3334,g_walkCallback);
+          MK4_NODE_AT(undefined4, g_eventQueuePending, 0) = uVar1;
+          MK4_NODE_AT(undefined4, g_eventQueuePending, 4) = 0;
+          g_walkCallback = MK4_NODE_AT(undefined4, g_dualC, 0x74);
+          g_walkCallback = Mul10Tail(0xffff3334,g_walkCallback);
+          MK4_NODE_AT(undefined4, g_eventQueuePending, 8) = g_walkCallback;
+          ScaledTripleCopy4();
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+        }
+        puVar2 = (uint *)(*(int *)(MK4_NODE_AT(int, g_dualC, 0x18) * 4 + 0x28) * 4);
+        *puVar2 = *puVar2 | 8;
+        g_walkCallback = 0xc000;
+        puVar2[0x12] = 0xc000;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualC;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void MstackPushPackChainInit(void)
 {
     __asm
@@ -217,3 +273,4 @@ __declspec(naked) void MstackPushPackChainInit(void)
         ret
     }
 }
+#endif

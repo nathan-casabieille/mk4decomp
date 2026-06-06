@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,19 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_counter_0053a51c;
 extern void DualSave(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TenThunkDualSave(void)
+
+{
+  g_walkCallback = g_counter_0053a51c;
+  if (g_counter_0053a51c == 4) {
+    g_walkCallback = 10;
+    g_save_0053a748 = 10;
+  }
+  return;
+}
+#else
 __declspec(naked) void TenThunkDualSave(void) {
     __asm {
         mov     eax, dword ptr [g_counter_0053a51c]
@@ -223,3 +237,4 @@ __declspec(naked) void TenThunkDualSave(void) {
         jmp     DualSave
     }
 }
+#endif

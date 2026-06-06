@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -130,6 +131,15 @@ extern void ScaledLookupGuardJmpIndirect(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 extern void TournamentMenuFsmCluster(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ComboFinisherEventCluster(void)
+
+{
+  ScaledLookupGuardJmpIndirect(&g_dispatchSave780);
+  return;
+}
+#else
 __declspec(naked) void ComboFinisherEventCluster(void)
 {
     __asm {
@@ -321,3 +331,4 @@ __declspec(naked) void ComboFinisherEventCluster(void)
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,32 @@ extern void PendingMatch_Push16Call_004a3400(void);
 extern void SixCallSeqPushImm(void);
 extern void Thunk_ExitGame(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GameMode_EnterScene(void)
+
+{
+  if (g_gtModeFlag == '\x01') {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e902;
+    g_eventQueuePending = 0x14e8f8;
+  }
+  else {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14dfa2;
+    g_eventQueuePending = 0x14e9c0;
+  }
+  DualScaledStoreConst();
+  ClearTwoCallSetStore();
+  g_dlMode = 0;
+  SixCallSeqPushImm();
+  g_eventQueueWorkType = 0;
+  Push16Call();
+  if (g_framePauseFlag == 0) {
+    PendingMatch_Push16Call_004a3400();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void GameMode_EnterScene(void)
 {
     __asm
@@ -185,3 +212,4 @@ __declspec(naked) void GameMode_EnterScene(void)
         jmp     Thunk_ExitGame
     }
 }
+#endif

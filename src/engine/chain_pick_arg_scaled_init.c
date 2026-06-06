@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,34 @@ extern unsigned int g_phaseThunkState;
 extern void EventPacketDecoder(void);
 extern void Thunk_Thunk_0049cbc0_0045e0f0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ChainPickArgScaledInit(int param_1)
+
+{
+  int iVar1;
+  
+  if (g_cj_0054205c == 0) {
+    thunk_ScaledNeg1SetPause();
+    return;
+  }
+  iVar1 = MK4_NODE_AT(int, g_cj_00542058, 0x54);
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x54);
+  g_eventQueueWorkType = g_phaseThunkState;
+  g_walkCallback = iVar1;
+  if (((g_phaseThunkState != 0) && (g_eventQueueChild = iVar1, g_phaseThunkState != 0)) &&
+     (g_walkCallback = g_eventQueueCurrent, g_phaseThunkState != 0)) {
+    g_eventQueueCurrent = iVar1;
+  }
+  g_xformScratch2088 = (uint)(g_walkCallback < g_eventQueueCurrent);
+  MK4_NODE_AT(undefined4, g_baseSel, 100) = g_dualD;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x68) = g_cj_00542054;
+  g_dualC = (param_1 >> 2) + 0xf;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)(((param_1 >> 2) + g_chainAccumCur) * 4);
+  EventPacketDecoder();
+  return;
+}
+#else
 __declspec(naked) void ChainPickArgScaledInit(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
@@ -171,3 +200,4 @@ __declspec(naked) void ChainPickArgScaledInit(void) {
         jmp     EventPacketDecoder
     }
 }
+#endif

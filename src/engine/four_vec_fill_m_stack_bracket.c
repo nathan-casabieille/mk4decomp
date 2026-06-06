@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -113,6 +114,55 @@ extern unsigned int g_packedDispatchSlot3;
 extern unsigned int g_packedDispatchSlot2;
 extern unsigned int g_packedDispatchSlot1;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FourVecFillMStackBracket(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dispatchSave20;
+  g_walkCallback = 0;
+  g_eventQueueCurrent = 3;
+  g_xformLoopCounter = 7;
+  do {
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_eventQueueCurrent;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    g_xformLoopCounter = g_xformLoopCounter + -1;
+  } while (-1 < g_xformLoopCounter);
+  g_walkCallback = 0xc;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_packedDispatchSlot3;
+  g_xformLoopCounter = 7;
+  do {
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    g_xformLoopCounter = g_xformLoopCounter + -1;
+  } while (-1 < g_xformLoopCounter);
+  g_walkCallback = 0;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_packedDispatchSlot2;
+  g_xformLoopCounter = 7;
+  do {
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    g_xformLoopCounter = g_xformLoopCounter + -1;
+  } while (-1 < g_xformLoopCounter);
+  g_xformLoopCounter = 7;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_packedDispatchSlot1;
+  do {
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    g_xformLoopCounter = g_xformLoopCounter + -1;
+  } while (-1 < g_xformLoopCounter);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_eventQueueCurrent = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+  g_matrixStackTop = g_matrixStackTop + -2;
+  return;
+}
+#else
 __declspec(naked) void FourVecFillMStackBracket(void)
 {
     __asm
@@ -208,3 +258,4 @@ __declspec(naked) void FourVecFillMStackBracket(void)
         ret
     }
 }
+#endif

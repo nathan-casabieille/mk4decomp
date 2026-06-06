@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,32 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackPushMul10TailSqrt(void)
+
+{
+  int iVar1;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueWorkType;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_chainAccumCur;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_eventQueueWorkType;
+  g_chainAccumCur = MK4_NODE_AT(int, g_eventQueueWorkType, 0) - MK4_NODE_AT(int, g_dualC, 0);
+  g_eventQueueWorkType = MK4_NODE_AT(int, g_eventQueueWorkType, 8) - MK4_NODE_AT(int, g_dualC, 8);
+  g_chainAccumCur = Mul10Tail(g_chainAccumCur,g_chainAccumCur);
+  iVar1 = Mul10Tail(g_eventQueueWorkType,g_eventQueueWorkType);
+  g_eventQueueWorkType = iVar1 + g_chainAccumCur;
+  FpuSqrtMul();
+  if (g_framePauseFlag == 0) {
+    g_chainAccumCur = *(int *)((int)g_matrixStackTop * 4);
+    g_eventQueueWorkType = *(int *)((int)(g_matrixStackTop + -1) * 4);
+    g_matrixStackTop = g_matrixStackTop + -2;
+  }
+  return;
+}
+#else
 __declspec(naked) void MStackPushMul10TailSqrt(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -173,3 +200,4 @@ __declspec(naked) void MStackPushMul10TailSqrt(void) {
         ret
     }
 }
+#endif

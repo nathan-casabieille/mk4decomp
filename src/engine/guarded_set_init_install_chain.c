@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -115,6 +116,31 @@ extern void GatedWordPushCall(void);
 extern void StorePauseImulShr16(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GuardedSetInitInstallChain(void)
+
+{
+  if (g_dispatchVar33 == g_gtFightTickCounter) {
+    g_phaseThunkSlot2 = g_phaseThunkSlot2 + 1;
+    if (0 < g_phaseThunkSlot2) {
+      return;
+    }
+  }
+  else {
+    g_dispatchVar33 = g_gtFightTickCounter;
+    g_phaseThunkSlot2 = 0;
+  }
+  g_walkCallback = 4;
+  StorePauseImulShr16();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  g_walkCallback = g_walkCallback + 5;
+  GatedWordPushCall();
+  return;
+}
+#else
 __declspec(naked) void GuardedSetInitInstallChain(void)
 {
     __asm
@@ -257,3 +283,4 @@ __declspec(naked) void GuardedSetInitInstallChain(void)
         ret
     }
 }
+#endif

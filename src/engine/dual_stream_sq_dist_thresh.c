@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,39 @@ extern unsigned int g_fightAxisPosY;
 extern void MatchPredicateCluster(void);
 extern void SixSubdispatchSpan(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualStreamSqDistThresh(void)
+
+{
+  int iVar1;
+  
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player1NodeIdx;
+  MatchPredicateCluster();
+  if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 1) != 0)) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player2NodeIdx;
+    MatchPredicateCluster();
+    if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 1) != 0)) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player1NodeIdx;
+      g_eventQueuePending = g_player2NodeIdx;
+      g_walkCallback = MK4_NODE_AT(int, g_player1NodeIdx, 0x54) - MK4_NODE_AT(int, g_player2NodeIdx, 0x54);
+      g_eventQueueCurrent = MK4_NODE_AT(int, g_player1NodeIdx, 0x58) - MK4_NODE_AT(int, g_player2NodeIdx, 0x58);
+      g_eventQueueWorkType = MK4_NODE_AT(int, g_player1NodeIdx, 0x5c) - MK4_NODE_AT(int, g_player2NodeIdx, 0x5c);
+      g_walkCallback = Mul10Tail(g_walkCallback,g_walkCallback);
+      g_eventQueueCurrent = Mul10Tail(g_eventQueueCurrent,g_eventQueueCurrent);
+      iVar1 = Mul10Tail(g_eventQueueWorkType,g_eventQueueWorkType);
+      g_eventQueueCurrent = g_eventQueueCurrent + g_walkCallback;
+      g_eventQueueWorkType = iVar1 + g_eventQueueCurrent;
+      if (0x20000 < g_eventQueueWorkType) {
+        g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+        return;
+      }
+      g_xformDirtyFlags = g_xformDirtyFlags | 1;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DualStreamSqDistThresh(void) {
     __asm {
         mov     eax, dword ptr [g_player1NodeIdx]
@@ -220,3 +254,4 @@ __declspec(naked) void DualStreamSqDistThresh(void) {
         jmp     SixSubdispatchSpan
     }
 }
+#endif

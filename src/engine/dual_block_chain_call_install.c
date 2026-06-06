@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -130,6 +131,32 @@ extern void TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_Aggres
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualBlockChainCallInstall(void)
+
+{
+  MK4_NODE_AT(undefined4, g_baseSel, 0x74) = g_walkCallback;
+  GateDispatch6c();
+  if (g_framePauseFlag == 0) {
+    CopyJmp_SlotCmp3way_g_currentNodeIdx();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 1) != 0) {
+        TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster();
+        return;
+      }
+      ScaledMove48to58();
+      if (g_framePauseFlag == 0) {
+        IterStepDualStore(&(*(unsigned int *)MK4_VA(unsigned int, 0x4ee7d8)));
+        if (g_framePauseFlag == 0) {
+          ArgSarStoreJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4ee7e0)));
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DualBlockChainCallInstall(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -213,3 +240,4 @@ __declspec(naked) void DualBlockChainCallInstall(void) {
         ret
     }
 }
+#endif

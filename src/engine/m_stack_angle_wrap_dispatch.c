@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -111,6 +112,75 @@ extern unsigned int g_fightAxisPosY;
 extern void RandSarMod0xFFFSub400(void);
 extern void RandSarMod0xFFF(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackAngleWrapDispatch(int param_1)
+
+{
+  int iVar1;
+  uint uVar2;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueChild;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_currentNodeFlags;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_xformScratch2088;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_chainAccumCur;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueNotMask;
+  if ((int)g_eventQueueWorkType < 0) {
+    g_eventQueueWorkType = g_eventQueueWorkType + ((0x6487d - g_eventQueueWorkType) / 0x6487e) * 0x6487e;
+  }
+  if (0x6487d < (int)g_eventQueueWorkType) {
+    uVar2 = g_eventQueueWorkType / 0x6487e;
+    do {
+      g_eventQueueWorkType = g_eventQueueWorkType - 0x6487e;
+      uVar2 = uVar2 - 1;
+    } while (uVar2 != 0);
+  }
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(uint *)((int)g_matrixStackTop * 4) = g_eventQueueWorkType;
+  RandSarMod0xFFF();
+  if (g_framePauseFlag == 0) {
+    g_eventQueueWorkType = *(uint *)((int)g_matrixStackTop * 4);
+    *(undefined4 *)((int)g_matrixStackTop * 4) = g_walkCallback;
+    RandSarMod0xFFFSub400();
+    if (g_framePauseFlag == 0) {
+      g_eventQueueCurrent = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_eventQueueNotMask = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_chainAccumCur = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+      g_eventQueuePending = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -4) * 4);
+      g_matrixStackTop = g_matrixStackTop + -5;
+      g_eventQueueChild = Mul10Tail(g_chainAccumCur,g_eventQueueCurrent);
+      g_currentNodeFlags = Mul10Tail(g_eventQueueNotMask,g_walkCallback);
+      iVar1 = g_currentNodeFlags;
+      if (param_1 == 0) {
+        iVar1 = -g_currentNodeFlags;
+      }
+      g_xformScratch2088 = iVar1 + g_eventQueueChild;
+      g_eventQueueChild = Mul10Tail(g_eventQueueNotMask,g_eventQueueCurrent);
+      iVar1 = Mul10Tail(g_chainAccumCur,g_walkCallback);
+      g_eventQueueNotMask = g_eventQueueChild - iVar1;
+      g_chainAccumCur = g_xformScratch2088;
+      g_xformScratch2088 = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_currentNodeFlags = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_eventQueueChild = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+      g_eventQueueCurrent = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
+      g_matrixStackTop = g_matrixStackTop + -4;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void MStackAngleWrapDispatch(void)
 {
     __asm {
@@ -281,3 +351,4 @@ __declspec(naked) void MStackAngleWrapDispatch(void)
         ret
     }
 }
+#endif

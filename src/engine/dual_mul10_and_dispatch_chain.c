@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,27 @@ extern void PendingMatch_MStackPush8_0040a8d0(void);
 extern void Phase1ChainExtendedInitLoop(void);
 extern void ScaledIndirectJmp_0049c850(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualMul10AndDispatchChain(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+  iVar2 = g_baseSel * 4;
+  g_currentNodeFlags = Mul10Tail(0x3333,g_currentNodeFlags);
+  g_xformScratch2088 = Mul10Tail(0x3333,g_xformScratch2088);
+  *(undefined4 *)(iVar1 + 0x6c) = g_currentNodeFlags;
+  *(undefined4 *)(iVar1 + 0x74) = g_xformScratch2088;
+  g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *(undefined4 *)(iVar2 + 0x5c) = 0x30;
+  g_walkCallback = 1;
+  *(undefined4 *)(iVar2 + 0x74) = 1;
+  return;
+}
+#else
 __declspec(naked) void DualMul10AndDispatchChain(void) {
     __asm {
         mov     edx, dword ptr [g_currentNodeFlags]
@@ -213,3 +235,4 @@ __declspec(naked) void DualMul10AndDispatchChain(void) {
         ret
     }
 }
+#endif

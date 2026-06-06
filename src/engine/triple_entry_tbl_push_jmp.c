@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,19 @@ extern void ArgSarStoreJmp(void);
 extern void InstallSelfCountdown2Stage_PopCallBitCmpPushCall(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleEntryTblPushJmp(void)
+
+{
+  g_walkCallback = 0x37;
+  TableLookupCall_g_eventTbl_112();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 7;
+  }
+  return;
+}
+#else
 __declspec(naked) void TripleEntryTblPushJmp(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x37
@@ -163,3 +177,4 @@ __declspec(naked) void TripleEntryTblPushJmp(void) {
         jmp     InstallSelfCountdown2Stage_PopCallBitCmpPushCall
     }
 }
+#endif

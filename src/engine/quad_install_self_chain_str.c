@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,15 @@ extern void FiveCallGuardSetTail(void);
 extern void InstallSelfCountdownLong(void);
 extern void SlotEvent3EntryChain(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void QuadInstallSelfChainStr(void)
+
+{
+  ArgSarStoreJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4ed670)));
+  return;
+}
+#else
 __declspec(naked) void QuadInstallSelfChainStr(void) {
     __asm {
         push    0x004ed670
@@ -181,3 +191,4 @@ __declspec(naked) void QuadInstallSelfChainStr(void) {
         jmp     InstallSelfCountdownLong
     }
 }
+#endif

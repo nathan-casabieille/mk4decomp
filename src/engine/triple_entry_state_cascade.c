@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,18 @@ extern void GameSectionSwitcher(void);
 extern void InstallSelfDualStateDispatch(void);
 extern void TripleBlockCjCopy(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleEntryStateCascade(void)
+
+{
+  Cascade3ChainInit();
+  if (g_framePauseFlag == 0) {
+    ArgSarStoreJmp(0x4e3828);
+  }
+  return;
+}
+#else
 __declspec(naked) void TripleEntryStateCascade(void) {
     __asm {
         call    Cascade3ChainInit
@@ -191,3 +204,4 @@ __declspec(naked) void TripleEntryStateCascade(void) {
         ret
     }
 }
+#endif

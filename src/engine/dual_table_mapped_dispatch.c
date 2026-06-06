@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,77 @@ extern void BootInitGuardedCallChain(void);
 extern void TableWalkBoundedCmp(void);
 extern void ZeroThreeFields_00404ed0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualTableMappedDispatch(void)
+
+{
+  int iVar1;
+  
+  TableWalkBoundedCmp(5);
+  BootInitGuardedCallChain();
+  if (g_framePauseFlag == 0) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x142c4f;
+    LoadGeoAsset_Default();
+    if (g_framePauseFlag == 0) {
+      iVar1 = g_dlNalt1;
+      if (g_dlNalt1 == 0xf) {
+        iVar1 = 6;
+      }
+      if (iVar1 == 0x10) {
+        iVar1 = 2;
+      }
+      if (iVar1 == 0x11) {
+        iVar1 = 7;
+      }
+      g_walkCallback = iVar1 * 2;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((g_walkCallback + 0x150c22) * 4);
+      g_dualC = g_walkCallback + 0x150c23;
+      g_eventQueuePending = 0x7e20000;
+      LoadGeoAsset_Default();
+      if (g_framePauseFlag == 0) {
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_dualC, 0);
+        g_dualC = g_dualC + 1;
+        g_eventQueuePending = 0x7e00000;
+        LoadGeoAsset_Default();
+        if (g_framePauseFlag == 0) {
+          iVar1 = g_dlNalt2;
+          if (g_dlNalt2 == 0xf) {
+            iVar1 = 6;
+          }
+          if (iVar1 == 0x10) {
+            iVar1 = 2;
+          }
+          if (iVar1 == 0x11) {
+            iVar1 = 7;
+          }
+          g_walkCallback = iVar1 * 2;
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((g_walkCallback + 0x150c22) * 4);
+          g_dualC = g_walkCallback + 0x150c23;
+          g_eventQueuePending = 0x7f10000;
+          LoadGeoAsset_Default();
+          if (g_framePauseFlag == 0) {
+            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_dualC, 0);
+            g_dualC = g_dualC + 1;
+            g_eventQueuePending = 0x7e10000;
+            LoadGeoAsset_Default();
+            if (g_framePauseFlag == 0) {
+              (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_eventQueueSeed;
+              iVar1 = g_eventQueueSeed * 4;
+              ZeroThreeFields_00404ed0();
+              *(undefined4 *)(iVar1 + 0x54) = 0;
+              *(undefined4 *)(iVar1 + 0x58) = 0x1999;
+              g_walkCallback = -0x78000;
+              *(undefined4 *)(iVar1 + 0x5c) = 0xfff88000;
+            }
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DualTableMappedDispatch(void)
 {
     __asm
@@ -225,3 +297,4 @@ __declspec(naked) void DualTableMappedDispatch(void)
         ret
     }
 }
+#endif

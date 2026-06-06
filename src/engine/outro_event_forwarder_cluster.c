@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -127,6 +128,20 @@ extern void ScaledCmpJlJmp(void);
 extern void ScaledDecOrZero(void);
 extern void ScaledMove48to58(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void OutroEventForwarderCluster(void)
+
+{
+  ScaledAndAlf7();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 3;
+    ScaledCmpJlJmp();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void OutroEventForwarderCluster(void)
 {
     __asm {
@@ -360,3 +375,4 @@ __declspec(naked) void OutroEventForwarderCluster(void)
         ret
     }
 }
+#endif

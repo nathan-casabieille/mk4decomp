@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -137,6 +138,20 @@ extern void PerSlotPhaseRouter_DualGatedStateYield_004605d0(void);
 extern void PerSlotPhaseRouter_DualGatedStateYield_00460770(void);
 extern void ScaledStackCallPause(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MultiThunkDispatcher_MStackCall(void)
+
+{
+  MStackCall_MStackPush2ChainLLInsert();
+  if (g_framePauseFlag == 0) {
+    ScaledNeg1SetPause();
+    g_framePauseFlag = 1;
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void MultiThunkDispatcher_MStackCall(void) {
     __asm {
         call    MStackCall_MStackPush2ChainLLInsert
@@ -255,6 +270,7 @@ __declspec(naked) void MultiThunkDispatcher_MStackCall(void) {
         _emit   00h
     }
 }
+#endif
 
 /* @addr 0x00460470 (308b game) - multi-thunk: push-call entry + state dispatcher + 6 LeaPlus22 thunks.
  *   Block A (0..0x1c): push 0x00542980; call ArgScaledTestStore; pop; if !pause tail-jmp DualScaledStoreZero; ret.
@@ -263,6 +279,19 @@ __declspec(naked) void MultiThunkDispatcher_MStackCall(void) {
  *     ecx = g_eventQueueTotal + (g_walkCallback & 0xf); jmp [ecx*4].
  *   Block C-H (0xc0..end): 6 thunks, each "call LeaPlus22StoreSelf; if !pause tail-jmp <target>; ret".
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MultiThunkDispatcher_ArgScaledTestStore(void)
+
+{
+  ArgScaledTestStore(&(*(unsigned int *)MK4_VA(unsigned int, 0x542980)));
+  if (g_framePauseFlag == 0) {
+    DualScaledStoreZero();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void MultiThunkDispatcher_ArgScaledTestStore(void) {
     __asm {
         push    0x00542980
@@ -411,3 +440,4 @@ __declspec(naked) void MultiThunkDispatcher_ArgScaledTestStore(void) {
         ret
     }
 }
+#endif

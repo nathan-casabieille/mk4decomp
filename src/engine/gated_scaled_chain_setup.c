@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,43 @@ extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void PushSetXfmMaskCallPop(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GatedScaledChainSetup(void)
+
+{
+  if ((g_bootGatedByte360c != '\0') && (MStackPush8(), g_framePauseFlag == 0)) {
+    g_walkCallback = 0x1389d8;
+    PushSetXfmMaskCallPop();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 4) == 0) {
+        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x30) = 0x25c;
+        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54) = g_chainAccumCur;
+        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c) = g_eventQueueNotMask;
+        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58) = 0xfffffd71;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+        g_walkCallback = 0x18000;
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x3c) = 0x18000;
+        MStackCall_MStackPush2ChainPrepend_004062f0();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+      }
+      g_baseSel = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_cj_0054205c = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_cj_00542058 = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+      g_cj_00542054 = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
+      g_dualD = *(undefined4 *)((int)(g_matrixStackTop + -4) * 4);
+      g_dualC = *(undefined4 *)((int)(g_matrixStackTop + -5) * 4);
+      g_eventQueuePending = *(undefined4 *)((int)(g_matrixStackTop + -6) * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -7) * 4);
+      g_matrixStackTop = g_matrixStackTop + -8;
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void GatedScaledChainSetup(void) {
     __asm {
         mov     al, byte ptr [g_bootGatedByte360c]
@@ -182,3 +220,4 @@ __declspec(naked) void GatedScaledChainSetup(void) {
         ret
     }
 }
+#endif

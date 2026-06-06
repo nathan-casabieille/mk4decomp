@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,16 @@ extern void SaveCallRestore(void);
 extern void StoreIncrMStackPush6(void);
 extern void TableLookupCall_g_eventTbl_65(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void HitReactionCluster(void)
+
+{
+  g_walkCallback = g_eventQueueCurrent & 0xfff;
+  g_eventQueueCurrent = g_eventQueueCurrent >> 0xc & 0xfff;
+  return;
+}
+#else
 __declspec(naked) void HitReactionCluster(void)
 {
     __asm {
@@ -468,3 +479,4 @@ __declspec(naked) void HitReactionCluster(void)
         _emit    0x00
     }
 }
+#endif

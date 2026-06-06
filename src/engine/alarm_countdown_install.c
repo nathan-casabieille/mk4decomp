@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -138,6 +139,28 @@ extern void NineEntryFlagDispatch(void);
 extern void StateSnapshotDispatch(void);
 extern void ZeroScaledZeroCallPauseJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AlarmCountdownInstall(void)
+
+{
+  MK4_NODE_AT(undefined4, g_baseSel, 0x6c) = g_walkCallback;
+  g_walkCallback = 0x2147;
+  MStackFrameCdeclDouble();
+  if (g_framePauseFlag == 0) {
+    NineEntryFlagDispatch();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0x51e;
+      g_eventQueueCurrent = 0x28;
+      GatedScaledSubSat();
+      if (g_framePauseFlag == 0) {
+        StateSnapshotDispatch(&g_dispatchSave959);
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void AlarmCountdownInstall(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
@@ -244,3 +267,4 @@ __declspec(naked) void AlarmCountdownInstall(void) {
         ret
     }
 }
+#endif

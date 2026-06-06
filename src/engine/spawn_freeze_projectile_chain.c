@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -113,6 +114,71 @@ extern void MStackPush1MagicMod2(void);
 extern void MStackPush3CallChainBit2(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SpawnFreezeProjectileChain(void)
+
+{
+  int iVar1;
+  
+  g_cj_00542054 = MK4_NODE_AT(undefined4, g_baseSel, 100);
+  g_cj_00542058 = MK4_NODE_AT(undefined4, g_baseSel, 0x68);
+  g_dualD = 0x139602;
+  g_walkCallback = g_dispatchSave602;
+  while( true ) {
+    if (((g_walkCallback == 0) || (MStackPush3CallChainBit2(), g_framePauseFlag != 0)) ||
+       (((byte)g_xformDirtyFlags & 4) != 0)) {
+      return;
+    }
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x7e;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = 0xffffe148;
+    g_walkCallback = 0x3d7;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x4c) = 0x3d7;
+    g_eventQueueWorkType = MK4_NODE_AT(int, g_dualD, 4) + -0x4b65f + MK4_NODE_AT(int, g_cj_0054205c, 100);
+    MStackPush1MagicMod2();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_eventQueueCurrent = Mul10Tail(0x28f5,g_eventQueueCurrent);
+    g_walkCallback = Mul10Tail(0x28f5,g_walkCallback);
+    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_eventQueueWorkType = MK4_NODE_AT(uint, g_cj_0054205c, 0x34) & 1;
+    if (g_eventQueueWorkType != 0) {
+      g_eventQueueCurrent = -g_eventQueueCurrent;
+    }
+    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) = g_eventQueueCurrent;
+    iVar1 = iVar1 * 4;
+    *(int *)(iVar1 + 0x74) = g_walkCallback;
+    g_walkCallback = 0x1999;
+    StoreDoubleNegPauseSubStore();
+    if (g_framePauseFlag != 0) break;
+    *(int *)(iVar1 + 0x78) = g_walkCallback;
+    g_walkCallback = 0x1999;
+    StoreDoubleNegPauseSubStore();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(int *)(iVar1 + 0x7c) = g_walkCallback;
+    g_walkCallback = 0x1999;
+    StoreDoubleNegPauseSubStore();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(int *)(iVar1 + 0x80) = g_walkCallback;
+    g_eventQueueWorkType = 0x7ae;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 0x1b;
+    TripleVecAccCallStore();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -0x1b;
+    g_dualD = g_dualD + 9;
+    g_walkCallback = MK4_NODE_AT(int, g_dualD, 0);
+    g_framePauseFlag = 0;
+  }
+  return;
+}
+#else
 __declspec(naked) void SpawnFreezeProjectileChain(void)
 {
     __asm {
@@ -234,3 +300,4 @@ __declspec(naked) void SpawnFreezeProjectileChain(void)
         ret
     }
 }
+#endif

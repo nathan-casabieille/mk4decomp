@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -114,6 +115,15 @@ extern void CjInstallSelfRouter(void);
 extern void EsiInstallClampAddCall(void);
 extern void StateDispatchTable(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfDualStateDispatch(void)
+
+{
+  ArgSarStoreJmp(0x4e3550);
+  return;
+}
+#else
 __declspec(naked) void InstallSelfDualStateDispatch(void) {
     __asm {
         push    0x004e3550
@@ -166,3 +176,4 @@ __declspec(naked) void InstallSelfDualStateDispatch(void) {
         ret
     }
 }
+#endif

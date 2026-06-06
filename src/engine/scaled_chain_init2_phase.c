@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,30 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_particleEmitterNode;
 extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ScaledChainInit2Phase(undefined4 param_1)
+
+{
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0;
+  *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = MK4_NODE_AT(int, g_cj_00542054, 0x5c) + 0x41999;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x68) = 0x62978;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74) = 0xffffaaab;
+  g_walkCallback = param_1;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = param_1;
+  MStackCall_MStackPush2ChainPrepend_00406340();
+  if (g_framePauseFlag == 0) {
+    g_dualC = g_particleEmitterNode;
+    MK4_NODE_AT(undefined4, g_particleEmitterNode, 0x54) = 0;
+    MK4_NODE_AT(undefined4, g_dualC, 0x58) = 0xfffc0000;
+    g_walkCallback = 0;
+    MK4_NODE_AT(undefined4, g_dualC, 0x5c) = 0;
+    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x3c) = g_dualC;
+  }
+  return;
+}
+#else
 __declspec(naked) void ScaledChainInit2Phase(void) {
     __asm {
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -159,3 +184,4 @@ __declspec(naked) void ScaledChainInit2Phase(void) {
         ret
     }
 }
+#endif

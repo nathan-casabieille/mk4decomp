@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,60 @@ extern void StoreLoadJmp(void);
 extern void ThrowFsmCluster_MStackPush2RunCountdown(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ThrowChargeCluster(void)
+
+{
+  int iVar1;
+  
+  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x75;
+  g_walkCallback = 0x2147;
+  iVar1 = iVar1 * 4;
+  StoreDoubleNegPauseSubStore();
+  if (g_framePauseFlag == 0) {
+    *(int *)(iVar1 + 0x78) = g_walkCallback;
+    g_walkCallback = 0x2147;
+    StoreDoubleNegPauseSubStore();
+    if (g_framePauseFlag == 0) {
+      *(int *)(iVar1 + 0x7c) = g_walkCallback;
+      g_walkCallback = 0x2147;
+      StoreDoubleNegPauseSubStore();
+      if (g_framePauseFlag == 0) {
+        *(int *)(iVar1 + 0x80) = g_walkCallback;
+        g_walkCallback = g_pendingMatchVar;
+        AudioMixerStep();
+        if (g_framePauseFlag == 0) {
+          g_eventQueueWorkType = g_walkCallback;
+          MStackPush1MagicMod2();
+          if (g_framePauseFlag == 0) {
+            g_walkCallback = Mul10Tail(0x2b85,g_walkCallback);
+            g_eventQueueWorkType = g_walkCallback;
+            g_eventQueueCurrent = Mul10Tail(0x2b85,g_eventQueueCurrent);
+            g_walkCallback = 0xb333;
+            AudioMixerStep();
+            if (g_framePauseFlag == 0) {
+              g_walkCallback = g_walkCallback + 0x4ccc;
+              g_eventQueueWorkType = Mul10Tail(g_walkCallback,g_eventQueueWorkType);
+              g_eventQueueCurrent = Mul10Tail(g_walkCallback,g_eventQueueCurrent);
+              *(int *)(iVar1 + 0x6c) = g_eventQueueWorkType;
+              *(undefined4 *)(iVar1 + 0x74) = g_eventQueueCurrent;
+              g_walkCallback = 0x11eb;
+              AudioMixerStep();
+              if (g_framePauseFlag == 0) {
+                g_walkCallback = -0x1c28 - g_walkCallback;
+                *(int *)(iVar1 + 0x70) = g_walkCallback;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void ThrowChargeCluster(void)
 {
     __asm {
@@ -359,3 +414,4 @@ __declspec(naked) void ThrowChargeCluster(void)
         ret      
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -132,6 +133,29 @@ extern unsigned int g_dispatchState;
 extern unsigned int g_dispatchSave681;
 extern unsigned int g_dispatchSave680;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void HitReactionStateCluster(void)
+
+{
+  int iVar1;
+  
+  LeaPlus22StoreSelf();
+  if (g_framePauseFlag == 0) {
+    ScaledMove48to58();
+    if (g_framePauseFlag == 0) {
+      iVar1 = DualGatedStateYield();
+      if (iVar1 == 0) {
+        g_matrixStackTop = g_matrixStackTop + 1;
+        *(undefined1 **)((int)g_matrixStackTop * 4) = &(*(unsigned int *)MK4_VA(unsigned int, 0x433640));
+        GameDispatchValidateState();
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void HitReactionStateCluster(void)
 {
     __asm {
@@ -311,3 +335,4 @@ __declspec(naked) void HitReactionStateCluster(void)
         ret
     }
 }
+#endif

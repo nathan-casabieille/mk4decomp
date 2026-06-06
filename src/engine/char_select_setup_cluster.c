@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,42 @@ extern void TableHitOrSchedule(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 extern void WorldCellSetupCluster(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CharSelectSetupCluster(void)
+
+{
+  undefined4 uVar1;
+  
+  g_eventQueuePending = 0x142d81;
+  DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+  if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+    MStackCall_MStackPush2ChainPrepend_00406600();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = MK4_NODE_AT(int, g_cj_00542054, 100) + 0x4b65f;
+      uVar1 = WorldCellSetupCluster(g_walkCallback);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 100) = uVar1;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x93;
+      g_walkCallback = 0xfffff852;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0xfffff852;
+      g_cj_00542058 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18);
+      ScaledTestPauseStore();
+      if (g_framePauseFlag == 0) {
+        g_walkCallback = 0x13a064;
+        ScaledStoreThree_00409260();
+        if (g_framePauseFlag == 0) {
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+          MStackBracket4_ListInsertZeroFill();
+          return;
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void CharSelectSetupCluster(void)
 {
     __asm {
@@ -320,3 +357,4 @@ __declspec(naked) void CharSelectSetupCluster(void)
         ret
     }
 }
+#endif

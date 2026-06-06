@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -137,6 +138,91 @@ extern void CopyGlobal(void);
 extern void Match_TeamOutcomeScreen(void);
 extern void IncOrZero9(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioBank2StatePickerWalk(void)
+
+{
+  bool bVar1;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
+  int iVar5;
+  
+  g_walkCallback = 0;
+  CopyGlobal();
+  IncOrZero9();
+  iVar4 = g_counter_0054359c;
+  iVar5 = g_counter_005433c8;
+  if (g_audioBankSel == 1) {
+    iVar2 = g_counter_005433c8 * 0x18;
+    (&g_audioPendByte61a)[iVar2] = 1;
+    (&g_audioPendByte619)[iVar2] = (&g_audioPendByte619)[iVar2] + '\x01';
+  }
+  else {
+    iVar2 = g_counter_0054359c * 0x18;
+    (&g_audioBank2Byte2)[iVar2] = 1;
+    (&g_audioBank2Byte1)[iVar2] = (&g_audioBank2Byte1)[iVar2] + '\x01';
+  }
+  bVar1 = true;
+  g_bootInitState = g_bootInitState + 1;
+  if (0 < g_audioStateMachine0) {
+    pcVar3 = &g_audioBank2Byte2;
+    iVar2 = g_audioStateMachine0;
+    do {
+      if (*pcVar3 == '\0') {
+        bVar1 = false;
+      }
+      pcVar3 = pcVar3 + 0x18;
+      iVar2 = iVar2 + -1;
+    } while (iVar2 != 0);
+  }
+  if (bVar1) {
+    g_audioBankPick = 2;
+  }
+  else {
+    bVar1 = true;
+    if (0 < g_audioStateMachine1) {
+      pcVar3 = &g_audioPendByte61a;
+      iVar2 = g_audioStateMachine1;
+      do {
+        if (*pcVar3 == '\0') {
+          bVar1 = false;
+        }
+        pcVar3 = pcVar3 + 0x18;
+        iVar2 = iVar2 + -1;
+      } while (iVar2 != 0);
+    }
+    if (!bVar1) {
+      if (g_audioBankSel == 2) {
+        do {
+          iVar4 = iVar4 + 1;
+          if (iVar4 == g_audioStateMachine0) {
+            iVar4 = 0;
+          }
+          g_counter_0054359c = iVar4;
+        } while ((&g_audioBank2Byte2)[iVar4 * 0x18] != '\0');
+      }
+      if (g_audioBankSel == 1) {
+        do {
+          iVar5 = iVar5 + 1;
+          if (iVar5 == g_audioStateMachine1) {
+            iVar5 = 0;
+          }
+          g_counter_005433c8 = iVar5;
+        } while ((&g_audioPendByte61a)[iVar5 * 0x18] != '\0');
+      }
+      Match_TeamOutcomeScreen();
+      return;
+    }
+    g_audioBankPick = 1;
+  }
+  g_counter_0054359c = 0;
+  g_counter_005433c8 = 0;
+  Match_TeamOutcomeScreen();
+  return;
+}
+#else
 __declspec(naked) void AudioBank2StatePickerWalk(void)
 {
     __asm
@@ -252,3 +338,4 @@ __declspec(naked) void AudioBank2StatePickerWalk(void)
         ret
     }
 }
+#endif

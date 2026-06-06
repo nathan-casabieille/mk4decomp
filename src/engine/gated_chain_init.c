@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -113,6 +114,43 @@ extern unsigned int g_bootGatedByte360c;
 extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void PushSetXfmMaskCallPop(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GatedChainInit(void)
+
+{
+  int iVar1;
+  
+  if (g_bootGatedByte360c != '\0') {
+    g_walkCallback = 0x138e26;
+    PushSetXfmMaskCallPop();
+    if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+      MStackCall_MStackPush2ChainPrepend_00406340();
+      if (g_framePauseFlag == 0) {
+        iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+        *(undefined4 *)(iVar1 + 0x54) = 0;
+        *(undefined4 *)(iVar1 + 0x58) = 0;
+        *(undefined4 *)(iVar1 + 0x5c) = 0x3333;
+        *(undefined4 *)(iVar1 + 0x60) = 0xca3d;
+        g_walkCallback = 0x138e26;
+        PushSetXfmMaskCallPop();
+        if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+          MStackCall_MStackPush2ChainPrepend_00406340();
+          iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+          if (g_framePauseFlag == 0) {
+            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0xb333;
+            MK4_NODE_AT(undefined4, iVar1, 0x58) = 0x3333;
+            MK4_NODE_AT(undefined4, iVar1, 0x5c) = 0x3333;
+            g_walkCallback = 0xca3d;
+            MK4_NODE_AT(undefined4, iVar1, 0x60) = 0xca3d;
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void GatedChainInit(void) {
     __asm {
         mov     al, byte ptr [g_bootGatedByte360c]
@@ -183,3 +221,4 @@ __declspec(naked) void GatedChainInit(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,35 @@ extern void PoseFsm4StateInstall(void);
 extern void PrefixThunkInstallSelf3State(void);
 extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Mul10ThresholdQuad(void)
+
+{
+  int iVar1;
+  
+  g_walkCallback = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x6c);
+  g_eventQueueCurrent = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x74);
+  g_walkCallback = Mul10Tail(g_walkCallback,g_walkCallback);
+  iVar1 = Mul10Tail(g_eventQueueCurrent,g_eventQueueCurrent);
+  g_eventQueueCurrent = iVar1 + g_walkCallback;
+  if (g_eventQueueCurrent != 0) {
+    CmpRangeJmpStateInit();
+    return;
+  }
+  g_walkCallback = g_fightStateProgress;
+  if (g_fightStateProgress < 0x13333) {
+    PrefixThunkInstallSelf3State();
+    return;
+  }
+  if (0x28000 < g_fightStateProgress) {
+    GuardedSeq_PackedSelectLoad6_then_GuardedSeq();
+    return;
+  }
+  PrefixThunkInstallSelf3State();
+  return;
+}
+#else
 __declspec(naked) void Mul10ThresholdQuad(void) {
     __asm {
         mov     ecx, dword ptr [g_fightGroupHead]
@@ -208,3 +238,4 @@ __declspec(naked) void Mul10ThresholdQuad(void) {
         ret
     }
 }
+#endif

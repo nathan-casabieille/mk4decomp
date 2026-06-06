@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,18 @@ extern void OrDualStore_0048e4b0(void);
 extern void Set1JmpSet2Jmp(void);
 extern void Wrapper_ScaledChainPushCall_004ef898(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void NineEntryFlagDispatch(void)
+
+{
+  Wrapper_ScaledChainPushCall_004ef898();
+  if (g_framePauseFlag == 0) {
+    g_eventQueueChild = 0xd;
+  }
+  return;
+}
+#else
 __declspec(naked) void NineEntryFlagDispatch(void) {
     __asm {
         call    Wrapper_ScaledChainPushCall_004ef898
@@ -194,3 +207,4 @@ __declspec(naked) void NineEntryFlagDispatch(void) {
         ret
     }
 }
+#endif

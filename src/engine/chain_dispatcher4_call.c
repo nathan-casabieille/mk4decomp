@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,78 @@ extern void MStackPushPairTriCall(void);
 extern void MStackPushSet0008(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ChainDispatcher4Call(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_walkCallback = 0x8000;
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_baseSel, 0x7c);
+  if (0 < g_eventQueueCurrent) {
+    g_walkCallback = 0x4ccc;
+  }
+  CmpP1DualInitStore_00482ab0();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = MK4_NODE_AT(int, g_baseSel, 0x60);
+    if (g_walkCallback == 0x1003) {
+      iVar1 = g_baseSel * 4;
+      iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+      *(undefined4 *)(iVar1 + 0x84) = 0;
+      if (iVar2 == 0) {
+        g_walkCallback = 0x43;
+        ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0();
+        if (g_framePauseFlag == 0) {
+          *(undefined4 *)(iVar1 + 8) = 0x486490;
+          *(undefined4 *)(iVar1 + 0x84) = 1;
+          g_dualC = 1;
+          g_framePauseFlag = 1;
+        }
+      }
+      else {
+        CopyJmp_SlotCmp3way_g_currentNodeIdx();
+        if (g_framePauseFlag == 0) {
+          if (((byte)g_xformDirtyFlags & 1) != 0) {
+            Const20cFae2Jmp();
+            return;
+          }
+          CjInstallSelfRouter();
+          return;
+        }
+      }
+      return;
+    }
+    g_walkCallback = 0x1003;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x1003;
+    MStackPushSet0008();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 1;
+      TableLookupCall_g_eventTbl_112();
+      if (g_framePauseFlag == 0) {
+        MStackPushPairTriCall();
+        if (g_framePauseFlag == 0) {
+          g_eventQueueNotMask = 0;
+          CopyJmp_SlotCmp3way_g_currentNodeIdx();
+          if (g_framePauseFlag == 0) {
+            if (((byte)g_xformDirtyFlags & 1) != 0) {
+              g_eventQueueNotMask = 1;
+            }
+            g_eventQueueChild = 6;
+            g_currentNodeFlags = 0xccc;
+            g_matrixStackTop = g_matrixStackTop + 1;
+            *(undefined **)((int)g_matrixStackTop * 4) = &(*(unsigned int *)MK4_VA(unsigned int, 0x4863a0));
+            NegInstallNegSelfTrigPair();
+            return;
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void ChainDispatcher4Call(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -182,3 +255,4 @@ __declspec(naked) void ChainDispatcher4Call(void) {
         ret
     }
 }
+#endif

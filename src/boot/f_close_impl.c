@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,32 @@ extern void CloseImpl(void);
 extern void FFlushImpl(void);
 extern void FreeImpl(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 FCloseImpl(int param_1)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  uVar2 = 0xffffffff;
+  if ((*(byte *)(param_1 + 0xc) & 0x83) != 0) {
+    uVar2 = FFlushImpl(param_1);
+    BitTestFreeClear(param_1);
+    iVar1 = CloseImpl(*(undefined4 *)(param_1 + 0x10));
+    if (iVar1 < 0) {
+      *(undefined4 *)(param_1 + 0xc) = 0;
+      return 0xffffffff;
+    }
+    if (*(int *)(param_1 + 0x1c) != 0) {
+      FreeImpl(*(int *)(param_1 + 0x1c));
+      *(undefined4 *)(param_1 + 0x1c) = 0;
+    }
+  }
+  *(undefined4 *)(param_1 + 0xc) = 0;
+  return uVar2;
+}
+#else
 __declspec(naked) void FCloseImpl(void) {
     __asm {
         push    esi
@@ -162,3 +189,4 @@ noFlush:
         ret
     }
 }
+#endif

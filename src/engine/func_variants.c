@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesT.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 #include "portable/mem_model.h"
 
@@ -442,6 +443,46 @@ void func_ScaledIndexConditionalAdd_then_CondPickDualStore(void) {
  * 004f2240. Keep naked: 13+ intermediate `mov [g_walkCallback], reg`
  * stores that pure C dead-store-eliminates; callee-saved esi for
  * cross-call value retention; reload-via-global pattern. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void func_TableLookupCall_g_table_00498980(void)
+
+{
+  int iVar1;
+  
+  g_walkCallback = 0x47;
+  TableLookupCall_g_eventTbl_112();
+  if (g_framePauseFlag == 0) {
+    DualCmpSwapStore();
+    if (g_framePauseFlag == 0) {
+      g_eventQueuePending = 0x138eb2;
+      DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+      if (g_framePauseFlag == 0) {
+        MStackCall_MStackPush2ChainPrepend_00406340();
+        if (g_framePauseFlag == 0) {
+          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x43;
+          iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+          g_eventQueueCurrent = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58);
+          g_eventQueueWorkType = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c);
+          *(undefined4 *)(iVar1 + 0x54) = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54);
+          *(undefined4 *)(iVar1 + 0x58) = g_eventQueueCurrent;
+          *(undefined4 *)(iVar1 + 0x5c) = g_eventQueueWorkType;
+          g_walkCallback = MK4_NODE_AT(uint, g_cj_0054205c, 0x34) & 1 |
+                         *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34);
+          *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34) = g_walkCallback;
+          g_currentNodeFlags = Mul10Tail(0x23d7,g_currentNodeFlags);
+          g_xformScratch2088 = Mul10Tail(0x23d7,g_xformScratch2088);
+          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) = g_currentNodeFlags;
+          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74) = g_xformScratch2088;
+          g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+          ArgSar_Set0_Jmp(0x4f2240);
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void func_TableLookupCall_g_table_00498980(void)
 {
     __asm {
@@ -522,6 +563,7 @@ __declspec(naked) void func_TableLookupCall_g_table_00498980(void)
         ret
     }
 }
+#endif
 
 /* h4 @ 0x00498af0 (48b): Vec2SumMul10ChainCompute + threshold check
  * (signed cmp [70] vs [74]) -> tail-jmp ScaledIndirectJmp. */
@@ -681,6 +723,21 @@ __declspec(naked) void func_ScaledZero44(void)
 /* h6 @ 0x0047c530 (64b naked): swap-side pose [+0x70] add 0x51e on
  * both sides. Keep naked: redundant `mov [g_walkCallback], reg`
  * stores before final indexed-store. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SwapSidePoseAdd51e_0047c530(void)
+
+{
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player2NodeIdx;
+  if (g_cj_0054205c != g_player1NodeIdx) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player1NodeIdx;
+  }
+  g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x70) + 0x51e;
+  MK4_NODE_AT(int, g_cj_0054205c, 0x70) = g_walkCallback;
+  *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = g_walkCallback;
+  return;
+}
+#else
 __declspec(naked) void SwapSidePoseAdd51e_0047c530(void)
 {
     __asm {
@@ -703,6 +760,7 @@ __declspec(naked) void SwapSidePoseAdd51e_0047c530(void)
         ret
     }
 }
+#endif
 
 /* h7 @ 0x0047c580 (93b): event 004ed308 via 3-call chain w/ 0x200d
  * store + bit-1 fail-first dispatch to SevenThunks.
@@ -965,6 +1023,120 @@ void func_DualSubInstallChain_g_dispatchSave941(void) {
  * Hand-rolled prologues (push interleaved with body code) and constant
  * register caching (ebx=4, esi=0xff*0000) are non-coaxable in pure C.
  * Internal data-table reference at 0x00432a70 (entry C label) preserved. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void func_PendingMatch(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_currentNodeFlags;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_dualC;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_cj_00542058;
+  PendingMatch_Ten404c40_404bd0();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  if ((((byte)g_xformDirtyFlags & 1) != 0) && (DualPushSetCallDualPop(0x228), ((byte)g_xformDirtyFlags & 1) == 0)) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x139116;
+    g_currentNodeFlags = g_currentNodeFlags + (*(unsigned int *)MK4_VA(unsigned int, 0x4e4458));
+    StoreIncrMStackPush6();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_eventQueueWorkType = 0x23e;
+    g_eventQueueCurrent = 4;
+    g_chainAccumCur = 0xfe9d0000;
+    g_eventQueueNotMask = 0xff9c0000;
+    g_currentNodeFlags = 1;
+    DispatcherComplex181_Push70CallScaleArith2();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    RoundCleanupCluster_Ten404c40_404bd0();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 4) == 0) {
+      g_eventQueueChild = 0x18000;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0x18000;
+      AllocSlotPushTripleGlobals();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_walkCallback = 0x23f;
+      g_eventQueuePending = 0x13556a;
+      g_eventQueueCurrent = 4;
+      g_chainAccumCur = 0xfecf0000;
+      g_eventQueueNotMask = 0xff9c0000;
+      Push70CallScaleArith2();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      MStackPop4Rewrite();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      if (((byte)g_xformDirtyFlags & 4) == 0) {
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_eventQueueChild;
+        g_currentNodeFlags = g_currentNodeFlags * 100;
+        g_walkCallback = g_currentNodeFlags >> 0x10;
+        StoreIncrMStackPush6();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        g_eventQueueCurrent = 4;
+        g_eventQueueWorkType = 0x240;
+        g_chainAccumCur = 0xfe540000;
+        g_eventQueueNotMask = 0xffb00000;
+        g_currentNodeFlags = 1;
+        DispatcherComplex181_Push70CallScaleArith2();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        RoundCleanupCluster_Ten404c40_404bd0();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        if (((byte)g_xformDirtyFlags & 4) == 0) {
+          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_eventQueueChild;
+          AllocSlotPushTripleGlobals();
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+          g_walkCallback = 0x241;
+          g_eventQueuePending = 0x13556c;
+          g_eventQueueCurrent = 4;
+          g_chainAccumCur = 0xfecf0000;
+          g_eventQueueNotMask = 0xffb00000;
+          Push70CallScaleArith2();
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+          MStackPop4Rewrite();
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+          if (((byte)g_xformDirtyFlags & 4) == 0) {
+            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_eventQueueChild;
+            g_cj_00542058 = 0;
+            StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x432f00)),0x228);
+          }
+        }
+      }
+    }
+  }
+  g_currentNodeFlags = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
+  g_cj_00542058 = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_dualC = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+  g_matrixStackTop = g_matrixStackTop + -4;
+  return;
+}
+#else
 __declspec(naked) void func_PendingMatch(void) {
     __asm {
         mov      eax, dword ptr [g_matrixStackTop]
@@ -1365,6 +1537,7 @@ __declspec(naked) void func_PendingMatch(void) {
         ret      
     }
 }
+#endif
 
 void func_GatedPushAndArgSar_004e62c8(void) {
     *(unsigned int *)(g_fightGroupHead * 4 + 0x28) = 0x3b;

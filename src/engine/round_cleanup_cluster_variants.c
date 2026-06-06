@@ -386,6 +386,15 @@ __declspec(naked) void RoundCleanupCluster_TableLookupCall_g_table(void)
     }
 }
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void RoundCleanupCluster_ArgSarStoreJmp(void)
+
+{
+  ArgSarStoreJmp(0x4e7f40);
+  return;
+}
+#else
 __declspec(naked) void RoundCleanupCluster_ArgSarStoreJmp(void)
 {
     __asm {
@@ -593,3 +602,4 @@ __declspec(naked) void RoundCleanupCluster_ArgSarStoreJmp(void)
         jmp      PendingMatch_ArgSarStoreJmp_00455bd0
     }
 }
+#endif

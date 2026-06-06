@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,38 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void RegistryPushBindPop(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualSectionInit(void)
+
+{
+  g_eventQueuePending = 0x143cf4;
+  DispatcherComplex260_FramePauseScaledStore();
+  if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0xff9c0000;
+    g_walkCallback = 0x1f;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+    PushSetCallPop();
+    if (g_framePauseFlag == 0) {
+      RegistryPushBindPop();
+      if (g_framePauseFlag == 0) {
+        g_eventQueuePending = 0x143cfb;
+        DispatcherComplex260_FramePauseScaledStore();
+        if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+          *(undefined **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = &(*(unsigned int *)MK4_VA(unsigned int, 0x630000));
+          g_walkCallback = 0x1f;
+          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+          PushSetCallPop();
+          if (g_framePauseFlag == 0) {
+            RegistryPushBindPop();
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DualSectionInit(void) {
     __asm {
         mov     eax, 0x0050f3d0
@@ -181,3 +214,4 @@ __declspec(naked) void DualSectionInit(void) {
         ret
     }
 }
+#endif

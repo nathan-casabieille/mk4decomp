@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,20 @@ extern void PrefixThunkInstallSelf3State(void);
 extern void ProneFsmCluster(void);
 extern void TriPhaseGateInstallSelfBig(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TriEntryGateMain(void)
+
+{
+  g_walkCallback = g_fightStateProgress;
+  if (0x20000 < g_fightStateProgress) {
+    GuardedSeq_PackedSelectLoad6_then_GuardedSeq();
+    return;
+  }
+  PrefixThunkInstallSelf3State();
+  return;
+}
+#else
 __declspec(naked) void TriEntryGateMain(void)
 {
     __asm
@@ -229,3 +244,4 @@ __declspec(naked) void TriEntryGateMain(void)
         ret
     }
 }
+#endif

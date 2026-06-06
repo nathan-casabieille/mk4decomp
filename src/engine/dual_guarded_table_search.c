@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -127,6 +128,38 @@ extern void SnapshotDispatchMStack(void);
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 DualGuardedTableSearch(void)
+
+{
+  MStackPush3CmpCall();
+  if (((byte)g_xformDirtyFlags & 1) == 0) {
+    return 0;
+  }
+  g_walkCallback = g_fightStateProgress;
+  if (0x10000 < g_fightStateProgress) {
+    return 0;
+  }
+  CmpP1GTSetup();
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x13afa5;
+  g_eventQueueWorkType = (*(unsigned int *)MK4_VA(unsigned int, 0x4ebe90));
+  while( true ) {
+    if (g_eventQueueWorkType < 0) {
+      return 0;
+    }
+    g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueuePending, 0x34);
+    if (g_eventQueueCurrent == g_eventQueueWorkType) break;
+    g_eventQueueWorkType = *(int *)(((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1) * 4);
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 2;
+  }
+  g_walkCallback = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  SnapshotDispatchMStack();
+  ScaledZeroFour();
+  return 1;
+}
+#else
 __declspec(naked) void DualGuardedTableSearch(void) {
     __asm {
         push    esi
@@ -187,3 +220,4 @@ __declspec(naked) void DualGuardedTableSearch(void) {
         ret
     }
 }
+#endif

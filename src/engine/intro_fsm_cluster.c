@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,15 @@ extern void SetJmp_InstallSelfChainEsi(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void IntroFsmCluster(void)
+
+{
+  ArgSarStoreJmp(0x4e65b8);
+  return;
+}
+#else
 __declspec(naked) void IntroFsmCluster(void)
 {
     __asm {
@@ -264,3 +274,4 @@ __declspec(naked) void IntroFsmCluster(void)
         ret
     }
 }
+#endif

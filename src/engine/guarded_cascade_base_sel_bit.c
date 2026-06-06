@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,46 @@ extern void Thunk_MStackPush2ChainPrepend(void);
 extern void PushPopScaled1cDoubleCall(void);
 extern void SetupVecFsmCluster(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GuardedCascadeBaseSelBit(void)
+
+{
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x30);
+  g_eventQueuePending = MK4_NODE_AT(undefined4, g_baseSel, 0x60);
+  g_cj_0054205c = MK4_NODE_AT(undefined4, g_baseSel, 0x4c);
+  PushPopScaled1cDoubleCall();
+  if (g_framePauseFlag == 0) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined4 *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
+    g_cj_0054205c = g_cj_00542058;
+    DispatchSetDirtyToggle();
+    if ((g_xformDirtyFlags & 4) == 0) {
+      g_eventQueuePending = 0x1466b8;
+    }
+    else {
+      g_eventQueuePending = 0x14658b;
+    }
+    g_cj_0054205c = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    MStackBracket1_TreeWalkRecursive2();
+    if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) == 0)) {
+      g_eventQueuePending = MK4_NODE_AT(undefined4, g_baseSel, 0x30);
+      thunk_MStackPush2ChainPrepend();
+      if (g_framePauseFlag == 0) {
+        SetupVecFsmCluster();
+        if (g_framePauseFlag == 0) {
+          g_xformDirtyFlags = g_xformDirtyFlags | 4;
+          if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
+            g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void GuardedCascadeBaseSelBit(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -206,3 +247,4 @@ __declspec(naked) void GuardedCascadeBaseSelBit(void) {
         ret
     }
 }
+#endif

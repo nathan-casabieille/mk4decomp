@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,29 @@ extern void PushPopScaled1cDoubleCall(void);
 extern void StoreLoadJmp(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ScaledRunCountdownCluster(void)
+
+{
+  g_cj_0054205c = MK4_NODE_AT(undefined4, g_baseSel, 0x4c);
+  MStackPush2RunCountdown();
+  if (g_framePauseFlag == 0) {
+    MStackBracket7_DispatchAndChain();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 3;
+      g_chainAccumCur = 4;
+      DualSetShiftCall();
+      if (g_framePauseFlag == 0) {
+        DoubleStackPushAndJmp7d();
+        return;
+      }
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void ScaledRunCountdownCluster(void)
 {
     __asm {
@@ -396,3 +420,4 @@ __declspec(naked) void ScaledRunCountdownCluster(void)
         ret      
     }
 }
+#endif

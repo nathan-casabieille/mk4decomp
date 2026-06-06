@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,37 @@ extern unsigned int g_chain_disp_24_460b60;
 extern unsigned int g_chain_disp_28_460b60;
 extern void FiveCallGuardSetTail(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StateSnapshotDispatch(int param_1)
+
+{
+  int *piVar1;
+  
+  CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  g_cj_00542058 = *(undefined4 *)((param_1 >> 2) * 4);
+  g_cj_00542054 = (param_1 >> 2) + 1;
+  piVar1 = (int *)(g_baseSel * 4 + 4);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *piVar1;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = MK4_NODE_AT(undefined4, g_cj_00542054, 0);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *piVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_cj_0054205c, 0x24) = g_cj_00542058;
+  g_walkCallback = 0;
+  MK4_NODE_AT(undefined4, g_cj_0054205c, 0x28) = 0;
+  GuardedScaledChainJmpIndirect(&(*(unsigned int *)MK4_VA(unsigned int, 0x4e9fc0)));
+  if (g_framePauseFlag == 0) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined **)((int)g_matrixStackTop * 4) = &(*(unsigned int *)MK4_VA(unsigned int, 0x460c40));
+    EsiInstallChainCallIndirect();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void StateSnapshotDispatch(void) {
     __asm {
         call    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx
@@ -164,3 +196,4 @@ __declspec(naked) void StateSnapshotDispatch(void) {
         ret
     }
 }
+#endif

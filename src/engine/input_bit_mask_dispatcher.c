@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -110,6 +111,80 @@ extern unsigned int g_fightAxisPosY;
 
 extern void Input_PollJoystick(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Input_PollPlayerJoystick(int param_1)
+
+{
+  uint uVar1;
+  
+  if ((&g_joySelP0)[param_1] != -1) {
+    uVar1 = Input_PollJoystick((&g_joySelP0)[param_1]);
+    if ((uVar1 & 0x40000000) != 0) {
+      *(uint *)(&g_dispatchSave536)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave536)[param_1 * 2] | (&g_dispatchSave537)[param_1 * 2];
+    }
+    if ((uVar1 & 0x80000000) != 0) {
+      *(uint *)(&g_dispatchSave534)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave534)[param_1 * 2] | (&g_dispatchSave535)[param_1 * 2];
+    }
+    if ((uVar1 & 0x10000000) != 0) {
+      *(uint *)(&g_renderer2_var6)[param_1 * 2] =
+           *(uint *)(&g_renderer2_var6)[param_1 * 2] | (&g_renderer2_var7)[param_1 * 2];
+    }
+    if ((uVar1 & 0x20000000) != 0) {
+      *(uint *)(&g_dispatchSave532)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave532)[param_1 * 2] | (&g_dispatchSave533)[param_1 * 2];
+    }
+    if ((*(int *)(&g_btnBind0 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind0 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1111)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1111)[param_1 * 2] | *(uint *)(&g_dispatchSave1110 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind1 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind1 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1113)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1113)[param_1 * 2] | *(uint *)(&g_dispatchSave1112 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind2 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind2 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1115)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1115)[param_1 * 2] | *(uint *)(&g_dispatchSave1114 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind3 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind3 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1117)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1117)[param_1 * 2] | *(uint *)(&g_dispatchSave1116 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind4 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind4 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1119)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1119)[param_1 * 2] | *(uint *)(&g_dispatchSave1118 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind5 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind5 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1121)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1121)[param_1 * 2] | *(uint *)(&g_dispatchSave1120 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind6 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind6 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1123)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1123)[param_1 * 2] | *(uint *)(&g_dispatchSave1122 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind7 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind7 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1125)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1125)[param_1 * 2] | *(uint *)(&g_dispatchSave1124 + param_1 * 8);
+    }
+    if ((*(int *)(&g_btnBind8 + param_1 * 4) != 0) &&
+       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind8 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+      *(uint *)(&g_dispatchSave1127)[param_1 * 2] =
+           *(uint *)(&g_dispatchSave1127)[param_1 * 2] | *(uint *)(&g_dispatchSave1126 + param_1 * 8);
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Input_PollPlayerJoystick(void)
 {
     __asm {
@@ -257,3 +332,4 @@ __declspec(naked) void Input_PollPlayerJoystick(void)
         ret
     }
 }
+#endif

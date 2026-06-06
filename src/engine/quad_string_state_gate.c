@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,15 @@ extern void GuardedSeq_PackedSelectLoad6_then_GuardedSeq(void);
 extern void PackedAdvanceCallTailJmp(void);
 extern void PrefixThunkInstallSelf3State(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void QuadStringStateGate(void)
+
+{
+  PackedAdvanceCallTailJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4e4c58)));
+  return;
+}
+#else
 __declspec(naked) void QuadStringStateGate(void) {
     __asm {
         push    0x004e4c58
@@ -167,3 +177,4 @@ __declspec(naked) void QuadStringStateGate(void) {
         jmp     PrefixThunkInstallSelf3State
     }
 }
+#endif

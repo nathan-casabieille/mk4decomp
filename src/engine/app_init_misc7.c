@@ -2,8 +2,19 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AppInit_Misc7(void)
+
+{
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x1444d3;
+  LoadGeoAsset_Default();
+  return;
+}
+#else
 __declspec(naked) void AppInit_Misc7(void)
 {
     __asm {
@@ -5821,4 +5832,5 @@ __declspec(naked) void AppInit_Misc7(void)
         _emit    0x00
     }
 }
+#endif
 

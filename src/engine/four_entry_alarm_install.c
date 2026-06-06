@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -135,6 +136,23 @@ extern void ArgSarStoreJmp(void);
 extern void ScaledDecBranch_00466460(void);
 extern void TripleStageRollback(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FourEntryAlarmInstall(void)
+
+{
+  g_cj_00542058 = MK4_NODE_AT(undefined4, g_baseSel, 0x38);
+  g_cj_00542054 = MK4_NODE_AT(undefined4, g_baseSel, 0x3c);
+  g_eventQueueWorkType = 0x267;
+  g_dualC = &g_dispatchSave1145;
+  g_cj_0054205c = g_cj_00542054;
+  AllocNode();
+  if (g_framePauseFlag == 0) {
+    ArgSarStoreJmp(0x4ea9c0);
+  }
+  return;
+}
+#else
 __declspec(naked) void FourEntryAlarmInstall(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -232,3 +250,4 @@ __declspec(naked) void FourEntryAlarmInstall(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -128,6 +129,39 @@ extern unsigned int g_dispatchVar27;
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualCmpSwapStore(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel;
+  iVar2 = g_dualB_00538038;
+  if (g_cj_0054205c != g_player1NodeIdx) {
+    iVar2 = g_dualB_0053803c;
+  }
+  g_currentNodeFlags = MK4_NODE_AT(undefined4, iVar2, 0x68);
+  g_xformScratch2088 = MK4_NODE_AT(undefined4, iVar2, 0x6c);
+  g_dualD = g_dispatchVar30;
+  g_dualC = g_dualB_0053803c;
+  g_cj_00542054 = g_dispatchVar29;
+  g_eventQueuePending = g_player2NodeIdx;
+  if (g_player2NodeIdx == g_cj_0054205c) {
+    g_dualC = g_dualB_00538038;
+    g_dualD = g_dispatchVar28;
+    g_cj_00542054 = g_dispatchVar27;
+    g_eventQueuePending = g_player1NodeIdx;
+  }
+  MK4_NODE_AT(int, g_baseSel, 0x38) = g_eventQueuePending;
+  iVar1 = iVar1 * 4;
+  *(int *)(iVar1 + 0x3c) = g_dualC;
+  *(undefined4 *)(iVar1 + 0x40) = g_dualD;
+  *(undefined4 *)(iVar1 + 0x44) = g_cj_00542054;
+  return;
+}
+#else
 __declspec(naked) void DualCmpSwapStore(void) {
     __asm {
         mov     edx, dword ptr [g_fightGroupHead]
@@ -180,3 +214,4 @@ __declspec(naked) void DualCmpSwapStore(void) {
         ret
     }
 }
+#endif

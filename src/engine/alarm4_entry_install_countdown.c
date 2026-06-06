@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -140,6 +141,18 @@ extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChain
 extern void ScaledLookupGuardJmpIndirect(void);
 extern void StreamInitCountdownBody(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Alarm4EntryInstallCountdown(void)
+
+{
+  PushPopWalkSet1006();
+  if (g_framePauseFlag == 0) {
+    ArgSarStoreJmp(0x4f17c0);
+  }
+  return;
+}
+#else
 __declspec(naked) void Alarm4EntryInstallCountdown(void) {
     __asm {
         call    PushPopWalkSet1006
@@ -251,3 +264,4 @@ __declspec(naked) void Alarm4EntryInstallCountdown(void) {
         ret
     }
 }
+#endif

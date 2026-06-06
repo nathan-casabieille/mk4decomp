@@ -4199,6 +4199,31 @@ __declspec(naked) void PendingMatch_ChainWalkPushPop_0040dbb0(void)
 #endif
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_TripleSubVec3(void)
+
+{
+  g_xformDirtyFlags = g_xformDirtyFlags | 4;
+  if (((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) && (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0)) {
+    g_dualD = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) + -0xb333;
+    g_walkCallback = MK4_NODE_AT(undefined4, g_dualD, 0x58);
+    g_dualC = g_dualD + 0x15;
+    g_eventQueuePending = g_eventQueueSeed + 0x15;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_savedNode;
+    TripleSubVec3();
+    if (g_framePauseFlag == 0) {
+      g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_walkCallback = 0x51e;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualD + 0x1b;
+      ThreeMul10Stores();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_TripleSubVec3(void)
 {
     __asm {
@@ -4564,6 +4589,7 @@ __declspec(naked) void PendingMatch_TripleSubVec3(void)
         _emit    0x00
     }
 }
+#endif
 
 __declspec(naked) void PendingMatch_StoreTwoCall_00411210(void)
 {
@@ -7268,6 +7294,23 @@ __declspec(naked) void PendingMatch_StoreTwoCall_004163c0(void)
 }
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_Mul10Tail_00419c90(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_eventQueuePending * 4;
+  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+  *(undefined4 *)(iVar1 + 0x30) = *(undefined4 *)(iVar2 + 0x30);
+  *(undefined4 *)(iVar1 + 0x34) = *(undefined4 *)(iVar2 + 0x34);
+  g_walkCallback = *(undefined4 *)(iVar2 + 0x38);
+  *(undefined4 *)(iVar1 + 0x38) = g_walkCallback;
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_Mul10Tail_00419c90(void)
 {
     __asm {
@@ -7844,3 +7887,4 @@ __declspec(naked) void PendingMatch_Mul10Tail_00419c90(void)
         _emit    0x00
     }
 }
+#endif

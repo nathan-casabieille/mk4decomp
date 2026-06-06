@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,39 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_eq;
 extern void StoreDoubleNegPauseSubStore(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void)
+
+{
+  int *piVar1;
+  int iVar2;
+  
+  while( true ) {
+    if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) {
+      g_walkCallback = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      return;
+    }
+    piVar1 = (int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0);
+    iVar2 = g_eventQueuePending * 4;
+    if ((g_walkCallback != 0) && (StoreDoubleNegPauseSubStore(), g_framePauseFlag != 0)) {
+      return;
+    }
+    piVar1[1] = g_walkCallback;
+    g_walkCallback = *(int *)(iVar2 + 4);
+    if ((g_walkCallback != 0) && (StoreDoubleNegPauseSubStore(), g_framePauseFlag != 0)) {
+      return;
+    }
+    piVar1[2] = g_walkCallback;
+    g_walkCallback = *(int *)(iVar2 + 8);
+    if ((g_walkCallback != 0) && (StoreDoubleNegPauseSubStore(), g_framePauseFlag != 0)) break;
+    piVar1[3] = g_walkCallback;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *piVar1;
+  }
+  return;
+}
+#else
 __declspec(naked) void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void) {
     __asm {
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -185,6 +219,7 @@ __declspec(naked) void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x0049d450 (248b game) - linked-list traverse adding 3 fields per node.
  *   eax = [g_currentNodeIdx]; if 0 ret.
@@ -193,6 +228,38 @@ __declspec(naked) void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void) {
  *   eax = node[+0] (next link). Loop while eax != 0.
  *   Two loop body copies in the original - first uses shl/mov, second uses lea+mov.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void LinkedListFieldAdd(void)
+
+{
+  int iVar1;
+  int *piVar2;
+  int *piVar3;
+  
+  g_eventQueueCurrent = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
+    piVar3 = (int *)(g_eventQueuePending * 4);
+    piVar2 = (int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    piVar2[1] = *piVar3 + piVar2[1];
+    piVar2[2] = piVar3[1] + piVar2[2];
+    g_walkCallback = piVar3[2] + piVar2[3];
+    piVar2[3] = g_walkCallback;
+    g_eventQueueCurrent = *piVar2;
+    while (g_eq = (uint)(g_eventQueueCurrent != 0), g_eq != 0) {
+      piVar2 = (int *)(g_eventQueueCurrent * 4);
+      iVar1 = g_eventQueuePending * 4;
+      piVar2[1] = MK4_NODE_AT(int, g_eventQueuePending, 0) + piVar2[1];
+      piVar2[2] = *(int *)(iVar1 + 4) + piVar2[2];
+      g_walkCallback = *(int *)(iVar1 + 8) + piVar2[3];
+      piVar2[3] = g_walkCallback;
+      g_eventQueueCurrent = *piVar2;
+    }
+  }
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_eventQueueCurrent;
+  return;
+}
+#else
 __declspec(naked) void LinkedListFieldAdd(void) {
     __asm {
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -271,3 +338,4 @@ __declspec(naked) void LinkedListFieldAdd(void) {
         ret
     }
 }
+#endif

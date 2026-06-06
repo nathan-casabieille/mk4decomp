@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,17 @@ extern void CallPauseDirtyScaledSet7(void);
 extern void CmpP1GTSetup(void);
 extern void TableLookupCall_g_eventTbl_50(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualEntryDecLoop(void)
+
+{
+  MK4_NODE_AT(undefined4, g_eventQueuePending, 0x5c) = 7;
+  g_walkCallback = 0x29;
+  TableLookupCall_g_eventTbl_50();
+  return;
+}
+#else
 __declspec(naked) void DualEntryDecLoop(void) {
     __asm {
         mov     eax, dword ptr [g_xformEntityIdx]
@@ -170,3 +182,4 @@ __declspec(naked) void DualEntryDecLoop(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,18 @@ extern void ArgScaledChain(void);
 extern void Const111ScaledStoreJmp(void);
 extern void HitReactionDispatcher(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleEntry03ChainArg(void)
+
+{
+  g_walkCallback = 0x302;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x302;
+  g_eventQueueNotMask = 0x20011;
+  HitReactionDispatcher();
+  return;
+}
+#else
 __declspec(naked) void TripleEntry03ChainArg(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
@@ -162,3 +175,4 @@ __declspec(naked) void TripleEntry03ChainArg(void) {
         ret
     }
 }
+#endif

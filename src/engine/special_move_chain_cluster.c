@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,78 @@ extern void MStackPush2BitLoop(void);
 extern void PushPopCurrentSetFFFFFFFF(void);
 extern void TwoCallScaledOr1600(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SpecialMoveChainCluster(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_walkCallback = 0x76;
+  MStackPush2BitLoop();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 0x7b;
+    MStackPush2BitLoop();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0x77;
+      MStackPush2BitLoop();
+      if (g_framePauseFlag == 0) {
+        g_walkCallback = 0xc1;
+        MStackPush2BitLoop();
+        if (g_framePauseFlag == 0) {
+          g_walkCallback = 0xc1;
+          PushPopCurrentSetFFFFFFFF();
+          if (g_framePauseFlag == 0) {
+            g_walkCallback = 0xc0;
+            PushPopCurrentSetFFFFFFFF();
+            if (g_framePauseFlag == 0) {
+              func_0x0043f8f0();
+              if (g_framePauseFlag == 0) {
+                g_matrixStackTop = g_matrixStackTop + 1;
+                *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
+                iVar2 = g_baseSel * 4;
+                iVar1 = g_cj_0054205c * 4;
+                *(undefined4 *)(iVar1 + 0x54) = *(undefined4 *)(iVar2 + 0x3c);
+                *(undefined4 *)(iVar1 + 0x58) = *(undefined4 *)(iVar2 + 0x40);
+                *(undefined4 *)(iVar1 + 0x5c) = *(undefined4 *)(iVar2 + 0x44);
+                g_walkCallback = 0x93;
+                PushPopCurrentSetFFFFFFFF();
+                if (g_framePauseFlag == 0) {
+                  iVar1 = g_baseSel * 4;
+                  g_cj_00542054 = *(int *)(iVar1 + 100);
+                  iVar2 = g_cj_00542054 * 4;
+                  *(undefined4 *)(iVar2 + 0x54) = *(undefined4 *)(iVar1 + 0x30);
+                  *(undefined4 *)(iVar2 + 0x58) = *(undefined4 *)(iVar1 + 0x34);
+                  *(undefined4 *)(iVar2 + 0x5c) = *(undefined4 *)(iVar1 + 0x38);
+                  g_cj_0054205c = g_cj_00542054;
+                  g_walkCallback = 3;
+                  func_0x00476fc0();
+                  if (g_framePauseFlag == 0) {
+                    g_walkCallback = 0x74;
+                    MStackPush2BitLoop();
+                    if (g_framePauseFlag == 0) {
+                      g_walkCallback = 0x75;
+                      MStackPush2BitLoop();
+                      if (g_framePauseFlag == 0) {
+                        ScaledZeroFour();
+                        if (g_framePauseFlag == 0) {
+                          ArgSarStoreJmp(0x4e51c8);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void SpecialMoveChainCluster(void)
 {
     __asm {
@@ -318,3 +391,4 @@ __declspec(naked) void SpecialMoveChainCluster(void)
         ret
     }
 }
+#endif

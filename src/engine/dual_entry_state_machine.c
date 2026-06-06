@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,17 @@ extern void ScaledStoreOrFlagXor(void);
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualEntryStateMachine(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined1 **)((int)g_matrixStackTop * 4) = &(*(unsigned int *)MK4_VA(unsigned int, 0x45a1a0));
+  ComboMoveSelectFsmCluster();
+  return;
+}
+#else
 __declspec(naked) void DualEntryStateMachine(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -229,3 +241,4 @@ __declspec(naked) void DualEntryStateMachine(void) {
         ret
     }
 }
+#endif

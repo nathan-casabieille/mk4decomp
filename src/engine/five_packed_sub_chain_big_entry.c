@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,20 @@ extern void ScaledLookupGuardJmpIndirect(void);
 extern void StreamInitCountdownBody(void);
 extern void ThresholdSetMatchDispatch(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FivePackedSubChainBigEntry(void)
+
+{
+  g_walkCallback = 0x212;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x212;
+  StreamInitCountdownBody(&(*(unsigned int *)MK4_VA(unsigned int, 0x4f1728)));
+  if (g_framePauseFlag == 0) {
+    ArgScaledChain(&(*(unsigned int *)MK4_VA(unsigned int, 0x4f1738)));
+  }
+  return;
+}
+#else
 __declspec(naked) void FivePackedSubChainBigEntry(void)
 {
     __asm
@@ -270,3 +285,4 @@ __declspec(naked) void FivePackedSubChainBigEntry(void)
         ret
     }
 }
+#endif

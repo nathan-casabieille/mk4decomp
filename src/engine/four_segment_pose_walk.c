@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -115,6 +116,146 @@ extern unsigned int g_phase4SlotArr2;
 extern void SetJmp_ZeroAndDirty4(void);
 extern void Vec3SetupQuadrupleMul10Sub(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FourSegmentPoseWalk(void)
+
+{
+  g_cj_00542058 = MK4_NODE_AT(int, g_baseSel, 0x68);
+  g_cj_0054205c = g_cj_00542058;
+  MStackPush2RunCountdown();
+  if ((g_framePauseFlag == 0) && (MStackBracket7_DispatchAndChain(), g_framePauseFlag == 0)) {
+    g_walkCallback = 10;
+    ChainDirtyBitWalker();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 9;
+      g_cj_00542054 = g_eventQueuePending;
+      ChainDirtyBitWalker();
+      if (g_framePauseFlag == 0) {
+        MK4_NODE_AT(int, g_cj_00542054, 0x3c) =
+             MK4_NODE_AT(int, g_eventQueuePending, 0x3c) + MK4_NODE_AT(int, g_cj_00542054, 0x3c) >> 1;
+        MK4_NODE_AT(int, g_cj_00542054, 0x40) =
+             MK4_NODE_AT(int, g_eventQueuePending, 0x40) + MK4_NODE_AT(int, g_cj_00542054, 0x40) >> 1;
+        g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0x44) + MK4_NODE_AT(int, g_cj_00542054, 0x44) >> 1;
+        MK4_NODE_AT(int, g_cj_00542054, 0x44) = g_walkCallback;
+        g_cj_00542058 = 2;
+        SetJmp_ZeroAndDirty4();
+        if (g_framePauseFlag == 0) {
+          if (((byte)g_xformDirtyFlags & 4) == 0) {
+            g_cj_00542058 = 1;
+          }
+          g_eventQueuePending = 0x142cf5;
+          DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+          if (g_framePauseFlag == 0) {
+            while (((byte)g_xformDirtyFlags & 4) == 0) {
+              Vec3SetupQuadrupleMul10Sub();
+              if (g_framePauseFlag != 0) {
+                return;
+              }
+              g_cj_00542058 = g_cj_00542058 + -1;
+              if (g_cj_00542058 < 0) {
+                g_cj_00542058 = 3;
+                SetJmp_ZeroAndDirty4();
+                if (g_framePauseFlag != 0) {
+                  return;
+                }
+                if (((byte)g_xformDirtyFlags & 4) == 0) {
+                  g_cj_00542058 = 1;
+                }
+                g_eventQueuePending = 0x142cfc;
+                DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+                if (g_framePauseFlag != 0) {
+                  return;
+                }
+                while( true ) {
+                  if (((byte)g_xformDirtyFlags & 4) != 0) {
+                    return;
+                  }
+                  Vec3SetupQuadrupleMul10Sub();
+                  if (g_framePauseFlag != 0) {
+                    return;
+                  }
+                  g_cj_00542058 = g_cj_00542058 + -1;
+                  if (g_cj_00542058 < 0) break;
+                  g_eventQueuePending = 0x142cfc;
+                  DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+                  if (g_framePauseFlag != 0) {
+                    return;
+                  }
+                }
+                g_cj_00542058 = 4;
+                SetJmp_ZeroAndDirty4();
+                if (g_framePauseFlag != 0) {
+                  return;
+                }
+                if (((byte)g_xformDirtyFlags & 4) == 0) {
+                  g_cj_00542058 = 2;
+                }
+                g_eventQueuePending = 0x142d03;
+                DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+                if (g_framePauseFlag != 0) {
+                  return;
+                }
+                while( true ) {
+                  if (((byte)g_xformDirtyFlags & 4) != 0) {
+                    return;
+                  }
+                  Vec3SetupQuadrupleMul10Sub();
+                  if (g_framePauseFlag != 0) {
+                    return;
+                  }
+                  g_cj_00542058 = g_cj_00542058 + -1;
+                  if (g_cj_00542058 < 0) break;
+                  g_eventQueuePending = 0x142d03;
+                  DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+                  if (g_framePauseFlag != 0) {
+                    return;
+                  }
+                }
+                g_cj_00542058 = 3;
+                SetJmp_ZeroAndDirty4();
+                if (g_framePauseFlag != 0) {
+                  return;
+                }
+                if (((byte)g_xformDirtyFlags & 4) == 0) {
+                  g_cj_00542058 = 1;
+                }
+                g_eventQueuePending = 0x142d0a;
+                DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+                if (g_framePauseFlag != 0) {
+                  return;
+                }
+                do {
+                  if (((byte)g_xformDirtyFlags & 4) != 0) {
+                    return;
+                  }
+                  Vec3SetupQuadrupleMul10Sub();
+                  if (g_framePauseFlag != 0) {
+                    return;
+                  }
+                  g_cj_00542058 = g_cj_00542058 + -1;
+                  if (g_cj_00542058 < 0) {
+                    return;
+                  }
+                  g_eventQueuePending = 0x142d0a;
+                  DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+                } while (g_framePauseFlag == 0);
+                return;
+              }
+              g_eventQueuePending = 0x142cf5;
+              DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+              if (g_framePauseFlag != 0) {
+                return;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void FourSegmentPoseWalk(void)
 {
     __asm {
@@ -318,3 +459,4 @@ __declspec(naked) void FourSegmentPoseWalk(void)
         ret
     }
 }
+#endif

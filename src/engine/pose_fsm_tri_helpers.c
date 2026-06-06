@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,92 @@ extern void PendingMatch_ThreeMul10Stores(void);
 extern void PendingMatch_ZeroThreeFields6c_then_ZeroThreeSlots(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PoseFsmTriHelpers(void)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int iStack_10;
+  
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((g_eventQueueChild + 0x150862) * 4);
+  g_eventQueuePending = g_eventQueueSeed;
+  iVar6 = MK4_NODE_AT(int, g_player1NodeIdx, 0x54);
+  iVar7 = MK4_NODE_AT(int, g_player1NodeIdx, 0x5c);
+  iVar2 = MK4_NODE_AT(int, g_player2NodeIdx, 0x5c);
+  iVar5 = MK4_NODE_AT(int, g_eventQueueSeed, 0x5c);
+  iVar3 = MK4_NODE_AT(int, g_player2NodeIdx, 0x54);
+  iVar8 = MK4_NODE_AT(int, g_eventQueueSeed, 0x54);
+  iVar4 = Mul10Tail(iVar8 - iVar6,iVar2 - iVar5);
+  iVar5 = Mul10Tail(iVar3 - iVar8,iVar5 - iVar7);
+  TimerWindowWrap();
+  iStack_10 = g_walkCallback;
+  if (g_framePauseFlag == 0) {
+    g_eventQueueCurrent = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    g_eventQueueCurrent = Mul10Tail(g_xformScratch2088,g_eventQueueCurrent);
+    g_walkCallback = g_walkCallback + g_eventQueueCurrent;
+    g_currentNodeFlags = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    GuardedTimeBudgetDualMul10();
+    if (g_framePauseFlag == 0) {
+      iVar8 = MK4_NODE_AT(int, g_cj_00542054, 0x54) + g_eventQueueWorkType;
+      iVar9 = MK4_NODE_AT(int, g_cj_00542054, 0x5c) + g_chainAccumCur;
+      g_walkCallback = iVar8;
+      g_eventQueueCurrent = iVar9;
+      if (g_audioStreamState == 0) {
+        iVar6 = Mul10Tail(iVar8 - iVar6,iVar2 - iVar9);
+        iVar7 = Mul10Tail(iVar3 - iVar8,iVar9 - iVar7);
+        if (iVar6 - iVar7 < 0 != iVar4 - iVar5 < 0) {
+          iStack_10 = iStack_10 + 0x3243f;
+          g_eventQueueCurrent = *(undefined4 *)(((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -2) * 4);
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -1;
+          g_walkCallback = iStack_10;
+          g_eventQueueCurrent = Mul10Tail(g_xformScratch2088,g_eventQueueCurrent);
+          g_walkCallback = g_walkCallback + g_eventQueueCurrent;
+          g_currentNodeFlags = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+          GuardedTimeBudgetDualMul10();
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+          g_walkCallback = MK4_NODE_AT(int, g_cj_00542054, 0x54) + g_eventQueueWorkType;
+          g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_00542054, 0x5c) + g_chainAccumCur;
+        }
+      }
+      iVar6 = g_baseSel;
+      MK4_NODE_AT(int, g_baseSel, 0x34) = g_walkCallback;
+      MK4_NODE_AT(int, iVar6, 0x3c) = g_eventQueueCurrent;
+      puVar1 = (undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      MK4_NODE_AT(undefined4, iVar6, 0x40) = *puVar1;
+      g_walkCallback = iStack_10;
+      g_eventQueueCurrent = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      g_eventQueueCurrent = Mul10Tail(g_xformScratch2088,g_eventQueueCurrent);
+      MK4_NODE_AT(int, g_baseSel, 0x44) = g_walkCallback + g_eventQueueCurrent;
+      puVar1 = (undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x38) = *puVar1;
+      puVar1 = (undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x78) = *puVar1;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x48) = 0;
+      g_walkCallback = 0x28;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x30) = 0x28;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void PoseFsmTriHelpers(void)
 {
     __asm {
@@ -304,3 +391,4 @@ __declspec(naked) void PoseFsmTriHelpers(void)
         ret
     }
 }
+#endif

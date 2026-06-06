@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,43 @@ extern void Thunk_BootMod6487eClampAndChainMul10(void);
 extern void TripleEntryWordPushChain(void);
 extern void func_00462ac0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MkTowerScreenFsmCluster(void)
+
+{
+  int iVar1;
+  
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_phaseThunkVar + g_phaseCounter;
+  g_eventQueueCurrent = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  if (g_eventQueueCurrent != 0) {
+    g_dualC = g_phaseCounter * 4 + g_dispatchAcc;
+    g_walkCallback = MK4_NODE_AT(int, g_dualC, 0);
+    MStackPush2LLWalkCompare();
+    if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) == 0)) {
+      g_walkCallback = -0x1921f;
+      g_eventQueueCurrent = g_eventQueueCurrent + -1;
+      for (iVar1 = g_eventQueueCurrent; iVar1 != 0; iVar1 = iVar1 + -1) {
+        g_walkCallback = g_walkCallback + -0x1921f;
+        g_eventQueueCurrent = g_eventQueueCurrent + -1;
+      }
+      thunk_BootMod6487eClampAndChainMul10();
+      if (g_framePauseFlag == 0) {
+        do {
+          *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 100) = g_walkCallback;
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40);
+          if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) {
+            g_xformDirtyFlags = g_xformDirtyFlags | 4;
+            return;
+          }
+          g_xformDirtyFlags = (g_xformDirtyFlags | 4) ^ 4;
+        } while ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0);
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void MkTowerScreenFsmCluster(void)
 {
     __asm {
@@ -308,3 +346,4 @@ __declspec(naked) void MkTowerScreenFsmCluster(void)
         jmp      TripleEntryWordPushChain
     }
 }
+#endif

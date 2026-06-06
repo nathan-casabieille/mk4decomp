@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,23 @@ extern void ScaledInitWithCounterAndType_004314f0(void);
 extern void SwapTwoGlobals(void);
 extern void TableHitOrSchedule(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BlockedCounterCluster(void)
+
+{
+  uint *puVar1;
+  
+  puVar1 = (uint *)(g_cj_0054205c * 4 + 0x34);
+  *puVar1 = *puVar1 & 0xfffffffe;
+  SwapTwoGlobals();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = g_walkCallback + -0x191eb;
+    MK4_NODE_AT(int, g_cj_0054205c, 100) = g_walkCallback;
+  }
+  return;
+}
+#else
 __declspec(naked) void BlockedCounterCluster(void)
 {
     __asm {
@@ -268,3 +286,4 @@ __declspec(naked) void BlockedCounterCluster(void)
         ret
     }
 }
+#endif

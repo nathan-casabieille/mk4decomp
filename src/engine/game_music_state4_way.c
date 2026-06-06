@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -114,6 +115,16 @@ extern void MStackBitLoopTripleCall(void);
 extern void SetJmp_ZeroAndDirty4(void);
 extern void SetupHelperCluster(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GameMusicState4Way(void)
+
+{
+  g_walkCallback = 0x23c;
+  MStackBitLoopTripleCall();
+  return;
+}
+#else
 __declspec(naked) void GameMusicState4Way(void)
 {
     __asm {
@@ -248,3 +259,4 @@ __declspec(naked) void GameMusicState4Way(void)
         _emit    0x00
     }
 }
+#endif

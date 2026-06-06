@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -282,6 +283,41 @@ __declspec(naked) void CinematicFsmCluster(void)
     }
 }
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void RoundFsmCluster_Atan2QuadrantLookup(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_cj_00542058 = g_player1NodeIdx;
+  g_cj_0054205c = g_eventQueueSeed;
+  g_eventQueueWorkType = MK4_NODE_AT(int, g_player1NodeIdx, 0x5c) - MK4_NODE_AT(int, g_eventQueueSeed, 0x5c);
+  g_walkCallback = MK4_NODE_AT(int, g_eventQueueSeed, 0x58);
+  g_chainAccumCur = MK4_NODE_AT(int, g_player1NodeIdx, 0x58) - g_walkCallback;
+  g_eventQueueNotMask = g_chainAccumCur;
+  Atan2QuadrantLookup();
+  if (g_framePauseFlag == 0) {
+    g_eventQueueNotMask = 0x6487e - g_walkCallback;
+    iVar1 = g_cj_0054205c * 4;
+    iVar2 = g_cj_00542058 * 4;
+    *(int *)(iVar1 + 0x60) = g_eventQueueNotMask;
+    g_eventQueueWorkType = *(int *)(iVar2 + 0x5c) - *(int *)(iVar1 + 0x5c);
+    g_walkCallback = *(int *)(iVar1 + 0x54);
+    g_chainAccumCur = *(int *)(iVar2 + 0x54) - g_walkCallback;
+    Atan2QuadrantLookup();
+    if (g_framePauseFlag == 0) {
+      *(int *)(iVar1 + 100) = g_walkCallback;
+      g_eventQueueNotMask = 0;
+      *(undefined4 *)(iVar1 + 0x60) = 0;
+      *(int *)(iVar1 + 100) = g_eventQueueNotMask;
+      *(int *)(iVar1 + 0x68) = g_eventQueueNotMask;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void RoundFsmCluster_Atan2QuadrantLookup(void)
 {
     __asm {
@@ -590,3 +626,4 @@ __declspec(naked) void RoundFsmCluster_Atan2QuadrantLookup(void)
         ret      
     }
 }
+#endif

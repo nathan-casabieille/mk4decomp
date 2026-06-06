@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -128,6 +129,48 @@ extern void ThreeChanPackClamp(void);
 extern void TripleEntry3Block(void);
 extern void Vec3AccMul10ChainBlend(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AiComboDispatcherCluster(void)
+
+{
+  undefined *puVar1;
+  
+  MK4_NODE_AT(undefined4, g_baseSel, 0x5c) = g_currentNodeFlags;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x60) = g_xformScratch2088;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueChild;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
+  g_walkCallback = 0x1359e2;
+  PushSetXfmMaskCallPop();
+  if (g_framePauseFlag == 0) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+    g_cj_0054205c = *(int *)((int)g_matrixStackTop * 4);
+    puVar1 = g_matrixStackTop + -1;
+    g_eventQueueChild = *(undefined4 *)((int)puVar1 * 4);
+    if (((byte)g_xformDirtyFlags & 4) != 0) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+      g_matrixStackTop = g_matrixStackTop + -3;
+      ScaledNeg1SetPause();
+      g_framePauseFlag = 1;
+      return;
+    }
+    g_matrixStackTop = puVar1;
+    *(undefined4 *)((int)puVar1 * 4) = g_eventQueueChild;
+    g_dualD = 0x13c9fc;
+    func_0x0049c3d0();
+    if (g_framePauseFlag == 0) {
+      TripleEntry3Block();
+      g_walkCallback = 0;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 100) = 0;
+      g_eventQueueChild = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_matrixStackTop = g_matrixStackTop + -1;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void AiComboDispatcherCluster(void)
 {
     __asm {
@@ -333,3 +376,4 @@ __declspec(naked) void AiComboDispatcherCluster(void)
         ret
     }
 }
+#endif

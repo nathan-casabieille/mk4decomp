@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,55 @@ extern unsigned int g_fightAxisPosY;
 extern void BootStateTriple(void);
 extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CjFieldCopyCascade(void)
+
+{
+  g_cj_0054205c = MK4_NODE_AT(int, g_baseSel, 0x4c);
+  MStackPush2RunCountdown();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 2;
+    BootStateTriple();
+    if (g_framePauseFlag == 0) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+      MK4_NODE_AT(uint, g_eventQueuePending, 0) = MK4_NODE_AT(uint, g_eventQueuePending, 0) | 4;
+      MK4_NODE_AT(undefined4, g_eventQueuePending, 0x30) = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30);
+      MK4_NODE_AT(undefined4, g_eventQueuePending, 0x34) = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34);
+      g_walkCallback = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x38);
+      MK4_NODE_AT(int, g_eventQueuePending, 0x38) = g_walkCallback;
+      MStackBracket7_DispatchAndChain();
+      if (g_framePauseFlag == 0) {
+        g_walkCallback = 3;
+        g_chainAccumCur = 2;
+        DualSetShiftCall();
+        if (g_framePauseFlag == 0) {
+          g_matrixStackTop = g_matrixStackTop + 1;
+          *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+          g_matrixStackTop = g_matrixStackTop + 1;
+          *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x7b;
+          PreFightInstallCluster();
+          if (g_framePauseFlag == 0) {
+            if (((byte)g_xformDirtyFlags & 4) == 0) {
+              MK4_NODE_AT(int, g_cj_0054205c, 0x6c) = MK4_NODE_AT(int, g_cj_0054205c, 0x6c) >> 1;
+              MK4_NODE_AT(int, g_cj_0054205c, 0x70) = MK4_NODE_AT(int, g_cj_0054205c, 0x70) >> 1;
+              g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x74) >> 1;
+              MK4_NODE_AT(int, g_cj_0054205c, 0x74) = g_walkCallback;
+            }
+            g_cj_0054205c = *(int *)((int)g_matrixStackTop * 4);
+            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+            g_matrixStackTop = g_matrixStackTop + -2;
+          }
+          return;
+        }
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void CjFieldCopyCascade(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -176,3 +226,4 @@ __declspec(naked) void CjFieldCopyCascade(void) {
         ret
     }
 }
+#endif

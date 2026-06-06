@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,20 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_counter_0053a51c;
 extern void PendingMatch_SwapOrPassSet(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleEntryGate(void)
+
+{
+  g_walkCallback = g_fightStateProgress;
+  if (0x10000 < g_fightStateProgress) {
+    g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+    return;
+  }
+  PendingMatch_SwapOrPassSet();
+  return;
+}
+#else
 __declspec(naked) void TripleEntryGate(void) {
     __asm {
         mov     eax, dword ptr [g_fightStateProgress]
@@ -162,3 +177,4 @@ __declspec(naked) void TripleEntryGate(void) {
         jmp     PendingMatch_SwapOrPassSet
     }
 }
+#endif

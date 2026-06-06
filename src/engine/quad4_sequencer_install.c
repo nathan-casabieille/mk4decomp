@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,17 @@ extern void GateDispatch6c(void);
 extern void GatedScaledChainSetup(void);
 extern void InstallSelfDualEntry(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Quad4SequencerInstall(void)
+
+{
+  g_walkCallback = 0x28f;
+  MK4_NODE_AT(undefined4, g_cj_0054205c, 0x4c) = 0x28f;
+  ArgSarStoreJmp(0x4ef350);
+  return;
+}
+#else
 __declspec(naked) void Quad4SequencerInstall(void) {
     __asm {
         mov     ecx, dword ptr [g_fightGroupHead]
@@ -183,3 +195,4 @@ __declspec(naked) void Quad4SequencerInstall(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,28 @@ extern void GateDispatch6c(void);
 extern void PackedAdvanceCallContinue(void);
 extern void ScaledInitWithCounterAndType_00446940(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleStringPauseChain(void)
+
+{
+  PackedAdvanceCallContinue(&(*(unsigned int *)MK4_VA(unsigned int, 0x4e5468)));
+  if (g_framePauseFlag == 0) {
+    PackedAdvanceCallContinue(&(*(unsigned int *)MK4_VA(unsigned int, 0x4e5470)));
+    if (g_framePauseFlag == 0) {
+      PackedAdvanceCallContinue(&(*(unsigned int *)MK4_VA(unsigned int, 0x4e5478)));
+      if (g_framePauseFlag == 0) {
+        Cmp2OrSet0b();
+        if (g_framePauseFlag == 0) {
+          g_walkCallback = 0xfff;
+          g_phaseTimer = 0xfff;
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void TripleStringPauseChain(void) {
     __asm {
         push    0x004e5468
@@ -160,3 +183,4 @@ __declspec(naked) void TripleStringPauseChain(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,17 @@ extern void InstallSelfCmpJgJmp(void);
 extern void ScaledChainTwoStores(void);
 extern void Vec2ChainComputeStores(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PairedSubInstallSelfBigChain(void)
+
+{
+  g_walkCallback = 0x20e;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x20e;
+  ArgSarStoreJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4ed2a0)));
+  return;
+}
+#else
 __declspec(naked) void PairedSubInstallSelfBigChain(void)
 {
     __asm
@@ -223,3 +235,4 @@ __declspec(naked) void PairedSubInstallSelfBigChain(void)
         ret
     }
 }
+#endif

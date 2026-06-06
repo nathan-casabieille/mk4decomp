@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -186,6 +187,43 @@ void DualGuardStateMachine(void) {
  *   [scaledInit*4+4] field instead of 0x266 and [scaledInit*4+0]. Initial path differs: jmp Wrapper_SaveCallRestore.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualGuardStateMachine_SaveCallRestore(void)
+
+{
+  g_walkCallback = g_dlMode;
+  if (g_dlMode == 0) {
+    Wrapper_SaveCallRestore();
+    return;
+  }
+  g_walkCallback = g_state2_0053a354;
+  if (g_state2_0053a354 != 0) {
+    SaveCallRestore();
+    return;
+  }
+  SaveCallRestoreOrXor(0x267);
+  if (((byte)g_xformDirtyFlags & 4) != 0) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_audioBitField, 4);
+    g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
+    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+    if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+      MStackCall_MStackPush2ChainInsert_004062a0();
+      if (g_framePauseFlag == 0) {
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x267;
+        g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        g_walkCallback = 4;
+        ThrowFlowSetupCluster();
+        if (g_framePauseFlag == 0) {
+          g_walkCallback = 0x28f;
+          MK4_NODE_AT(undefined4, g_eventQueuePending, 0x5c) = 0x28f;
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DualGuardStateMachine_SaveCallRestore(void) {
     __asm {
         mov     eax, dword ptr [g_dlMode]
@@ -249,3 +287,4 @@ __declspec(naked) void DualGuardStateMachine_SaveCallRestore(void) {
         ret
     }
 }
+#endif

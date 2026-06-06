@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,25 @@ extern void ScaledDualPropagateJmp(void);
 extern void ScaledZero44(void);
 extern void TableLookupCall_g_eventTbl_50(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GuardedThenCjCascade(void)
+
+{
+  g_eventQueueNotMask = 0;
+  EntryThunkBodyStateMachine();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 0x13;
+    TableLookupCall_g_eventTbl_50();
+    ScaledDualPropagateJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4ed420)));
+    if (g_framePauseFlag == 0) {
+      FiveCallGuardSetTail();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void GuardedThenCjCascade(void) {
     __asm {
         mov     dword ptr [g_eventQueueNotMask], 0
@@ -196,3 +216,4 @@ __declspec(naked) void GuardedThenCjCascade(void) {
         ret
     }
 }
+#endif

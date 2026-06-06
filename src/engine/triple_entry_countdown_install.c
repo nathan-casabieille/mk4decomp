@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -139,6 +140,16 @@ extern void MStackInstallBodyChain(void);
 extern void State6Latch(void);
 extern void Wrapper_ArgSarStoreJmp_004eba28(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleEntryCountdownInstall(void)
+
+{
+  g_eventQueueNotMask = 0x20012;
+  HitReactionDispatcher();
+  return;
+}
+#else
 __declspec(naked) void TripleEntryCountdownInstall(void) {
     __asm {
         mov     dword ptr [g_eventQueueNotMask], 0x20012
@@ -230,3 +241,4 @@ __declspec(naked) void TripleEntryCountdownInstall(void) {
         ret
     }
 }
+#endif

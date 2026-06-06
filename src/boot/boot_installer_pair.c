@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,15 @@ extern void GuardedSeq_MStackCall_then_CallSetPause_00471670(void);
 extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void CallSetPause(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootInstallerPair(void)
+
+{
+  StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x410210)),0x88);
+  return;
+}
+#else
 __declspec(naked) void BootInstallerPair(void) {
     __asm {
         /* sub-1: trampoline */
@@ -217,3 +227,4 @@ __declspec(naked) void BootInstallerPair(void) {
         ret
     }
 }
+#endif

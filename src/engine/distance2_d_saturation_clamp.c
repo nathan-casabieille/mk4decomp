@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,54 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_distRefX;
 extern unsigned int g_distRefZ;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Distance2DSaturationClamp(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  g_walkCallback = g_distRefX;
+  g_eventQueueCurrent = g_distRefZ;
+  g_eventQueueWorkType = MK4_NODE_AT(int, g_cj_0054205c, 0x54) - g_distRefX;
+  g_chainAccumCur = MK4_NODE_AT(int, g_cj_0054205c, 0x5c) - g_distRefZ;
+  g_eventQueueWorkType = Mul10Tail(g_eventQueueWorkType,g_eventQueueWorkType);
+  iVar2 = Mul10Tail(g_chainAccumCur,g_chainAccumCur);
+  g_chainAccumCur = iVar2 + g_eventQueueWorkType;
+  if (g_chainAccumCur < 0x370001) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player1NodeIdx;
+    g_eventQueuePending = g_player2NodeIdx;
+    iVar2 = MK4_NODE_AT(int, g_player1NodeIdx, 0x58);
+    iVar1 = MK4_NODE_AT(int, g_player2NodeIdx, 0x58);
+    if (iVar1 < iVar2) {
+      iVar2 = iVar1;
+    }
+    if (iVar2 < -0x1ffff) {
+      uVar3 = 0xfffff852;
+      g_walkCallback = 0xfffff852;
+      g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x58);
+      if (g_eventQueueCurrent < -0x1cccc) {
+        uVar3 = 0;
+        g_walkCallback = 0;
+      }
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x70) = uVar3;
+      return;
+    }
+  }
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x58);
+  if (-0x18001 < g_eventQueueCurrent) {
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58) = 0xfffe8000;
+    g_walkCallback = 0;
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x70) = 0;
+    return;
+  }
+  g_walkCallback = 0x7ae;
+  MK4_NODE_AT(undefined4, g_cj_0054205c, 0x70) = 0x7ae;
+  return;
+}
+#else
 __declspec(naked) void Distance2DSaturationClamp(void) {
     __asm {
         mov     ecx, dword ptr [g_distRefX]
@@ -202,3 +251,4 @@ __declspec(naked) void Distance2DSaturationClamp(void) {
         ret
     }
 }
+#endif

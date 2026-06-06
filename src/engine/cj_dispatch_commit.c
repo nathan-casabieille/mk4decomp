@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,31 @@ extern void PendingMatch_MStackBracket3_ChainSwapAdvance(void);
  * eax=0x538158 (a3 store to g_currentNodeIdx), ecx=0x53815c (89 0d store
  * to g_xformEntityIdx). Register-to-symbol binding is not coaxable from C.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CjDispatchCommit(void)
+
+{
+  int iVar1;
+  
+  g_cj_00542058 = g_cj_0054205c;
+  ScaledZeroFour();
+  if (g_framePauseFlag == 0) {
+    func_0x0041d770();
+    if (g_framePauseFlag == 0) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e056;
+      g_eventQueuePending = 0x14e057;
+      iVar1 = 0x14e056;
+      if (g_cj_00542058 != g_player1NodeIdx) {
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e057;
+        iVar1 = 0x14e057;
+      }
+      MK4_NODE_AT(int, iVar1, 0) = g_cj_0054205c;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void CjDispatchCommit(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
@@ -156,3 +182,4 @@ done:
         ret
     }
 }
+#endif

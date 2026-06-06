@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,46 @@ extern unsigned int g_fightAxisPosY;
  *   Pop edi/esi; ret.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void LoopUnrolledTripleMul10(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  g_eventQueueCurrent = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
+    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+    g_walkCallback = MK4_NODE_AT(undefined4, g_eventQueuePending, 0);
+    iVar2 = g_eventQueuePending * 4;
+    uVar3 = Mul10Tail(*(undefined4 *)(iVar1 + 0x10),g_walkCallback);
+    *(undefined4 *)(iVar1 + 0x10) = uVar3;
+    g_walkCallback = *(undefined4 *)(iVar2 + 4);
+    uVar3 = Mul10Tail(*(undefined4 *)(iVar1 + 0x14),g_walkCallback);
+    *(undefined4 *)(iVar1 + 0x14) = uVar3;
+    g_walkCallback = *(undefined4 *)(iVar2 + 8);
+    g_walkCallback = Mul10Tail(*(undefined4 *)(iVar1 + 0x18),g_walkCallback);
+    *(undefined4 *)(iVar1 + 0x18) = g_walkCallback;
+    for ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4); (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4)) {
+      iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+      g_walkCallback = MK4_NODE_AT(undefined4, g_eventQueuePending, 0);
+      iVar2 = g_eventQueuePending * 4;
+      uVar3 = Mul10Tail(*(undefined4 *)(iVar1 + 0x10),g_walkCallback);
+      *(undefined4 *)(iVar1 + 0x10) = uVar3;
+      g_walkCallback = *(undefined4 *)(iVar2 + 4);
+      uVar3 = Mul10Tail(*(undefined4 *)(iVar1 + 0x14),g_walkCallback);
+      *(undefined4 *)(iVar1 + 0x14) = uVar3;
+      g_walkCallback = *(undefined4 *)(iVar2 + 8);
+      g_walkCallback = Mul10Tail(*(undefined4 *)(iVar1 + 0x18),g_walkCallback);
+      *(undefined4 *)(iVar1 + 0x18) = g_walkCallback;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void LoopUnrolledTripleMul10(void) {
     __asm {
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -215,3 +256,4 @@ __declspec(naked) void LoopUnrolledTripleMul10(void) {
         ret
     }
 }
+#endif

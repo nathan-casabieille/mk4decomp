@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,20 @@ extern void CallPauseInc(void);
 extern void InstallSelfTableDispatch(void);
 extern void StorePauseImulShr16(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleBlockInstallSelfThunk(void)
+
+{
+  StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x461a00)),0x30);
+  g_walkCallback = 0;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = 0;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) = g_walkCallback;
+  g_walkCallback = 1;
+  g_save_0053a748 = 1;
+  return;
+}
+#else
 __declspec(naked) void TripleBlockInstallSelfThunk(void) {
     __asm {
         push    0x30
@@ -213,3 +228,4 @@ __declspec(naked) void TripleBlockInstallSelfThunk(void) {
         ret
     }
 }
+#endif

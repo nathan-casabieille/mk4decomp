@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,29 @@ extern unsigned int g_vertexInitFlag;
 extern unsigned int g_vertexInitVar;
 extern void VertexSlotInitFlagWalk(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualEntryInitCmp(void)
+
+{
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_vertexInitFlagAlt;
+  g_eventQueuePending = 0;
+  g_dualC = 0x800;
+  g_dualD = g_vertexInitFlag;
+  g_cj_00542054 = 1;
+  VertexSlotInitFlagWalk();
+  if (g_framePauseFlag == 0) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_vertexInitFlagAlt;
+    g_walkCallback = 0x7fc;
+    MK4_NODE_AT(undefined4, g_vertexInitFlagAlt, 0xc) = 0x7fc;
+    g_dualD = g_vertexInitVar;
+    g_cj_00542054 = 0;
+    VertexSlotInitFlagWalk();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void DualEntryInitCmp(void) {
     __asm {
         mov     eax, dword ptr [g_vertexInitFlagAlt]
@@ -166,3 +190,4 @@ __declspec(naked) void DualEntryInitCmp(void) {
         ret
     }
 }
+#endif

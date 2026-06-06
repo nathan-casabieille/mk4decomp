@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -128,6 +129,20 @@ extern void IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0(void);
 extern void MStackPushMul10TailSqrt(void);
 extern void Wrapper_IterLoad_0048fd30_004f12ac(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GameInstall2BodyMul10ScaledInit(void)
+
+{
+  g_walkCallback = MK4_NODE_AT(undefined4, g_cj_00542054, 0x30);
+  SetJmp_Thunk_LinkedListBitMaskSearch();
+  if (g_framePauseFlag == 0) {
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = g_currentNodeFlags;
+    IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0(&(*(unsigned int *)MK4_VA(unsigned int, 0x4ec890)));
+  }
+  return;
+}
+#else
 __declspec(naked) void GameInstall2BodyMul10ScaledInit(void)
 {
     __asm
@@ -213,3 +228,4 @@ __declspec(naked) void GameInstall2BodyMul10ScaledInit(void)
         ret
     }
 }
+#endif

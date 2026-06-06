@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,27 @@ extern void CmpP1DualInitStore_00482ab0(void);
 extern void GateDispatch6c(void);
 extern void TripleBlockInstallSelfMidBody(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Chain3CallGuarded(void)
+
+{
+  g_walkCallback = 0x8000;
+  CmpP1DualInitStore_00482ab0();
+  if (g_framePauseFlag == 0) {
+    GateDispatch6c();
+    if (g_framePauseFlag == 0) {
+      CmpDualPatchCallJmp();
+      if (g_framePauseFlag == 0) {
+        g_walkCallback = 0x4003;
+        MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x4003;
+        ArgSarStoreJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4ee370)));
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Chain3CallGuarded(void) {
     __asm {
         mov     dword ptr [g_walkCallback], 0x00008000
@@ -156,3 +178,4 @@ __declspec(naked) void Chain3CallGuarded(void) {
         jmp     TripleBlockInstallSelfMidBody
     }
 }
+#endif

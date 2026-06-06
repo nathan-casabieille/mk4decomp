@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,31 @@ extern void LinearSearchByEsi(void);
 
 extern unsigned int g_arr_459200;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ThreeCharNormalize(void)
+
+{
+  g_cj_00542054 = 0x14e02c;
+  g_dispatchArg = 0;
+  while( true ) {
+    g_walkCallback = *(int *)((g_cj_00542054 + g_dispatchArg) * 4);
+    if ((g_walkCallback < 0) ||
+       ((((0x5f < g_walkCallback && (g_walkCallback != 0x7b)) && (g_walkCallback != 0x7c)) &&
+        (g_walkCallback != 0x7d)))) {
+      g_walkCallback = 0;
+    }
+    LinearSearchByEsi();
+    if (g_framePauseFlag != 0) break;
+    *(int *)((g_cj_00542054 + g_dispatchArg) * 4) = g_walkCallback;
+    g_dispatchArg = g_dispatchArg + 1;
+    if (2 < g_dispatchArg) {
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void ThreeCharNormalize(void) {
     __asm {
         mov     ecx, offset g_stateChangeBase
@@ -170,3 +196,4 @@ __declspec(naked) void ThreeCharNormalize(void) {
         ret
     }
 }
+#endif

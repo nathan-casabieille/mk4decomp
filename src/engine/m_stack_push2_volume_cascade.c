@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,89 @@ extern unsigned int g_matrixStack_arr;
 extern void AudioVolumeRescale(void);
 extern void PendingMatch_PushSetXfmMaskCallPop_00444ef0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackPush2VolumeCascade(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueWorkType;
+  g_walkCallback = 100;
+  AudioVolumeRescale();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  if (((byte)g_xformDirtyFlags & 1) == 0) {
+    g_walkCallback = 0x13977e;
+  }
+  else {
+    g_walkCallback = 0x15e;
+    AudioVolumeRescale();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 1) == 0) {
+      g_walkCallback = 0x200;
+      AudioVolumeRescale();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      if (((byte)g_xformDirtyFlags & 1) == 0) {
+        g_walkCallback = 0x139772;
+      }
+      else {
+        g_walkCallback = 0x139764;
+      }
+    }
+    else {
+      g_walkCallback = 0x139756;
+    }
+  }
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
+  PushSetXfmMaskCallPop();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  g_cj_0054205c = *(int *)((int)g_matrixStackTop * 4);
+  g_matrixStackTop = g_matrixStackTop + -1;
+  if (((byte)g_xformDirtyFlags & 4) == 0) {
+    MStackCall_MStackPush2ChainPrepend_00406600();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    iVar1 = g_cj_0054205c * 4;
+    iVar2 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+    *(undefined4 *)(iVar2 + 0x54) = *(undefined4 *)(iVar1 + 0x54);
+    *(undefined4 *)(iVar2 + 0x58) = *(undefined4 *)(iVar1 + 0x58);
+    *(undefined4 *)(iVar2 + 0x5c) = *(undefined4 *)(iVar1 + 0x5c);
+    g_walkCallback = *(undefined4 *)(iVar1 + 0x6c);
+    uVar3 = Mul10Tail(0x4ccc,g_walkCallback);
+    *(undefined4 *)(iVar2 + 0x6c) = uVar3;
+    g_walkCallback = *(undefined4 *)(iVar1 + 0x74);
+    uVar3 = Mul10Tail(0x4ccc,g_walkCallback);
+    *(undefined4 *)(iVar2 + 0x74) = uVar3;
+    g_walkCallback = 0xfffff5c3;
+    *(undefined4 *)(iVar2 + 0x70) = 0xfffff5c3;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 0x1b;
+    g_eventQueueWorkType = 0x28f;
+    TripleVecAccCallStore();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+  }
+  g_eventQueueWorkType = *(undefined4 *)((int)g_matrixStackTop * 4);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+  g_matrixStackTop = g_matrixStackTop + -2;
+  return;
+}
+#else
 __declspec(naked) void MStackPush2VolumeCascade(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -178,3 +262,4 @@ __declspec(naked) void MStackPush2VolumeCascade(void) {
         ret
     }
 }
+#endif

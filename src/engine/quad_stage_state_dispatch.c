@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,46 @@ extern void DirtyToggleByBaseSel(void);
 extern void ScaledChain3c74(void);
 extern void WeightedSumClampHelper(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void QuadStageStateDispatch(void)
+
+{
+  ScaledChain3c74();
+  if (g_framePauseFlag == 0) {
+    if (g_walkCallback == 0x1003) {
+      g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+    }
+    else {
+      DirtyToggleByGate();
+      if (g_framePauseFlag == 0) {
+        if ((g_xformDirtyFlags & 4) != 0) {
+          g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+          return;
+        }
+        DirtyToggleByBaseSel();
+        if (g_framePauseFlag == 0) {
+          if ((g_xformDirtyFlags & 4) == 0) {
+            g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+            return;
+          }
+          g_walkCallback = g_clamp_0053a6dc;
+          if (g_cj_0054205c == g_player1NodeIdx) {
+            g_walkCallback = g_clamp_00537f2c;
+          }
+          if (g_walkCallback == 0) {
+            g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+            return;
+          }
+          WeightedSumClampHelper();
+          return;
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void QuadStageStateDispatch(void) {
     __asm {
         call    ScaledChain3c74
@@ -179,3 +220,4 @@ __declspec(naked) void QuadStageStateDispatch(void) {
         jmp     WeightedSumClampHelper
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,23 @@ extern void FiveCallGuardSetTail(void);
 extern void MStackPushSet0008(void);
 extern void ScaledMove48to58(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualEntryInstallSelfChain(void)
+
+{
+  MStackPushSet0008();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 0x1008;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x1008;
+    ScaledMove48to58();
+    if (g_framePauseFlag == 0) {
+      ArgSarStoreJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4eef08)));
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DualEntryInstallSelfChain(void) {
     __asm {
         call    MStackPushSet0008
@@ -194,3 +212,4 @@ __declspec(naked) void DualEntryInstallSelfChain(void) {
         ret
     }
 }
+#endif

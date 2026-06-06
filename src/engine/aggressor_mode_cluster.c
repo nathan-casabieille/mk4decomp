@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -128,6 +129,15 @@ extern void StreamInitCountdownBody(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 extern void TableLookupCall_g_eventTbl_65(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AggressorModeCluster(void)
+
+{
+  ArgSarStoreJmp(0x4ed518);
+  return;
+}
+#else
 __declspec(naked) void AggressorModeCluster(void)
 {
     __asm {
@@ -272,3 +282,4 @@ __declspec(naked) void AggressorModeCluster(void)
         ret
     }
 }
+#endif

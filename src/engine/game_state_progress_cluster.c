@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,20 @@ extern void InstallSelfDoubleMStack(void);
 extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 extern void StateMachine4ArmCascade(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GameStateProgressCluster(void)
+
+{
+  g_eventQueueWorkType = 0x5fa;
+  Push16Call();
+  FiveCallScaledChainTailJmp();
+  if (g_framePauseFlag == 0) {
+    ArgSarStoreJmp(&g_dispatchSave604);
+  }
+  return;
+}
+#else
 __declspec(naked) void GameStateProgressCluster(void)
 {
     __asm {
@@ -243,3 +258,4 @@ __declspec(naked) void GameStateProgressCluster(void)
         ret
     }
 }
+#endif

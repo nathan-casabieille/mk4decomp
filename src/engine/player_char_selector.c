@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,63 @@ extern s32 g_dlChar24;
 extern void BitShiftExtract(void);
 extern void DownloadPlayerChar(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int PlayerCharSelector(void)
+
+{
+  int iVar1;
+  
+  BitShiftExtract();
+  iVar1 = g_framePauseFlag;
+  if (g_framePauseFlag == 0) {
+    if (g_active_0053a408 == 0) {
+      g_dlChar13 = 0;
+      if ((g_dlNalt2 == 0xf) && (g_walkCallback == 0xf)) {
+        g_walkCallback = 6;
+      }
+      if (g_walkCallback == 6) {
+        g_installState = 8;
+      }
+      if (g_walkCallback == 0xf) {
+        g_installState = 0xe;
+      }
+      if (g_walkCallback == 8) {
+        g_installState = 10;
+      }
+      g_dlNalt3 = g_installState;
+      g_cj_00542054 = 0x14d73f;
+      g_eventQueueCurrent = 0;
+      g_dlNalt1 = g_walkCallback;
+      DownloadPlayerChar();
+      return g_framePauseFlag;
+    }
+    g_dlChar24 = 0;
+    if ((g_dlNalt1 == 0xf) && (g_walkCallback == 0xf)) {
+      g_walkCallback = 6;
+    }
+    if (g_walkCallback == 6) {
+      g_installState = 8;
+    }
+    if (g_walkCallback == 0xf) {
+      g_installState = 0xe;
+    }
+    if (g_walkCallback == 8) {
+      g_installState = 10;
+    }
+    g_dlNalt4 = g_installState;
+    g_cj_00542054 = 0x14e874;
+    g_eventQueueCurrent = 1;
+    g_dlNalt2 = g_walkCallback;
+    iVar1 = DownloadPlayerChar();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0;
+      g_active_00537e88 = 0;
+    }
+  }
+  return iVar1;
+}
+#else
 __declspec(naked) void PlayerCharSelector(void) {
     __asm {
         push    esi
@@ -220,3 +278,4 @@ __declspec(naked) void PlayerCharSelector(void) {
         ret
     }
 }
+#endif

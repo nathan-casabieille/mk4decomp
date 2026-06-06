@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,25 @@ extern void ArgSarStoreJmp(void);
 extern void DecCallPushCall(void);
 extern void MoveStackPipeline(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualScaledChainPush(void)
+
+{
+  int iVar1;
+  
+  func_0x004660d0();
+  if (g_framePauseFlag == 0) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
+    iVar1 = g_baseSel * 4;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    ArgSarStoreJmp(0x4ea978);
+  }
+  return;
+}
+#else
 __declspec(naked) void DualScaledChainPush(void) {
     __asm {
         call    MoveStackPipeline
@@ -164,3 +184,4 @@ __declspec(naked) void DualScaledChainPush(void) {
         jmp     DecCallPushCall
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,21 @@ extern void SlotEvent3EntryChain(void);
 extern void ZeroSixStores6080(void);
 extern void ZeroThreeSlots_00490780(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StageEventStartCluster(void)
+
+{
+  DualSetCallPair();
+  if (g_framePauseFlag == 0) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined1 **)((int)g_matrixStackTop * 4) = &(*(unsigned int *)MK4_VA(unsigned int, 0x47ffb0));
+    InstallSelfIndirectJmpNeg();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void StageEventStartCluster(void)
 {
     __asm {
@@ -291,3 +307,4 @@ __declspec(naked) void StageEventStartCluster(void)
         ret
     }
 }
+#endif

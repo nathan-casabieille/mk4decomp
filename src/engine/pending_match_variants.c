@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -7240,6 +7241,19 @@ __declspec(naked) void PendingMatch_MStackPush2BitLoop(void)
     }
 }
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_Ten404c40_404bd0(void)
+
+{
+  if ((g_currentNodeFlags < 0x10001) && (0 < g_currentNodeFlags)) {
+    g_xformDirtyFlags = g_xformDirtyFlags | 1;
+    return;
+  }
+  g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_Ten404c40_404bd0(void)
 {
     __asm {
@@ -7613,8 +7627,19 @@ __declspec(naked) void PendingMatch_Ten404c40_404bd0(void)
         ret      
     }
 }
+#endif
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_QuadCallPhase2(void)
+
+{
+  g_walkCallback = 0x4ccc;
+  EsiEdiAliasDualMul10();
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_QuadCallPhase2(void)
 {
     __asm {
@@ -7991,6 +8016,7 @@ __declspec(naked) void PendingMatch_QuadCallPhase2(void)
         jmp      PendingMatch_TaggedSceneDispatch
     }
 }
+#endif
 
 
 __declspec(naked) void PendingMatch_CondPlayerLookup(void)
@@ -8896,6 +8922,27 @@ __declspec(naked) void PendingMatch_SlotEvent3EntryChain(void)
     }
 }
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_DispatcherComplex138(void)
+
+{
+  g_dispatchVar17 = MK4_NODE_AT(int, g_cj_00542054, 0x58) - MK4_NODE_AT(int, g_cj_00542054, 0x48);
+  g_dispatchVar18 = MK4_NODE_AT(undefined4, g_cj_00542054, 0x54);
+  g_dispatchVar16 = MK4_NODE_AT(undefined4, g_cj_00542054, 0x5c);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0;
+  g_walkCallback = 0x93;
+  DispatcherComplex138_00476060();
+  while ((g_framePauseFlag == 0 && (((byte)g_xformDirtyFlags & 4) == 0))) {
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = g_dispatchVar18;
+    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = g_dispatchVar17;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_dispatchVar16;
+    g_walkCallback = 0x93;
+    DispatcherComplex138_00476060();
+  }
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_DispatcherComplex138(void)
 {
     __asm {
@@ -9327,7 +9374,42 @@ __declspec(naked) void PendingMatch_DispatcherComplex138(void)
         jmp      InstallSelfIndexWalk
     }
 }
+#endif
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_ZeroAndDirty4_00471e00(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueNotMask;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_cj_00542058;
+  g_cj_00542054 = g_cj_0054205c;
+  g_cj_00542058 = 0x13b0c4;
+  g_walkCallback = 0xc000;
+  ZeroAndDirty4();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 4) == 0) {
+      g_walkCallback = 0xd999;
+      g_cj_00542058 = 0x13b0d8;
+      ZeroAndDirty4();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      if (((byte)g_xformDirtyFlags & 4) == 0) {
+        g_cj_00542058 = 0x13b0ec;
+      }
+    }
+    g_eventQueueNotMask = 0xc1;
+    StoreTwoCall(&g_orphanConst_0049db40,0xc0);
+    g_cj_00542058 = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_eventQueueNotMask = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+    g_matrixStackTop = g_matrixStackTop + -2;
+  }
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_ZeroAndDirty4_00471e00(void)
 {
     __asm {
@@ -9776,6 +9858,7 @@ __declspec(naked) void PendingMatch_ZeroAndDirty4_00471e00(void)
         ret      
     }
 }
+#endif
 
 __declspec(naked) void PendingMatch_StackPopDispatchTagged_00466fc0(void)
 {
@@ -10304,6 +10387,30 @@ __declspec(naked) void PendingMatch_DoubleScaledCrossStore(void)
 }
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_MStackPush2RunCountdown_0044baa0(void)
+
+{
+  g_cj_0054205c = MK4_NODE_AT(undefined4, g_baseSel, 100);
+  MStackPush2RunCountdown();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 2;
+    ChainDirtyBitWalker();
+    if (g_framePauseFlag == 0) {
+      MK4_NODE_AT(uint, g_eventQueuePending, 0) = MK4_NODE_AT(uint, g_eventQueuePending, 0) | 4;
+      g_walkCallback = 0xa0000;
+      MK4_NODE_AT(undefined4, g_eventQueuePending, 0x34) = 0xa0000;
+      MStackBracket7_DispatchAndChain();
+      if (g_framePauseFlag == 0) {
+        g_walkCallback = 2;
+        g_chainAccumCur = 3;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_MStackPush2RunCountdown_0044baa0(void)
 {
     __asm {
@@ -10913,9 +11020,51 @@ __declspec(naked) void PendingMatch_MStackPush2RunCountdown_0044baa0(void)
         ret      
     }
 }
+#endif
 
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_Thunk_ScaledNeg1SetPause(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_cj_00542058;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  iVar2 = g_cj_00542054 * 4;
+  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+  *(undefined4 *)(iVar1 + 0x60) = *(undefined4 *)(iVar2 + 0x60);
+  *(undefined4 *)(iVar1 + 100) = *(undefined4 *)(iVar2 + 100);
+  *(undefined4 *)(iVar1 + 0x68) = *(undefined4 *)(iVar2 + 0x68);
+  g_walkCallback = 0;
+  *(undefined4 *)(iVar1 + 0x78) = 0;
+  *(undefined4 *)(iVar1 + 0x7c) = g_walkCallback;
+  *(undefined4 *)(iVar1 + 0x80) = g_walkCallback;
+  *(undefined4 *)(iVar1 + 0x6c) = g_walkCallback;
+  *(undefined4 *)(iVar1 + 0x70) = g_walkCallback;
+  *(undefined4 *)(iVar1 + 0x74) = g_walkCallback;
+  iVar2 = *(int *)(iVar1 + 0x18) * 4;
+  iVar3 = g_dualD * 4;
+  *(uint *)(iVar2 + 0x20) = *(uint *)(*(int *)(iVar1 + 0x18) * 4 + 0x20) & 0xfaffffff | 0xa000000;
+  *(undefined4 *)(iVar2 + 0x3c) = *(undefined4 *)(iVar3 + 0x14);
+  *(undefined4 *)(iVar2 + 0x40) = *(undefined4 *)(iVar3 + 0x18);
+  g_walkCallback = *(undefined4 *)(iVar3 + 0x1c);
+  *(undefined4 *)(iVar2 + 0x44) = g_walkCallback;
+  g_eventQueueCurrent = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_cj_00542058 = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+  g_eventQueuePending = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+  g_matrixStackTop = g_matrixStackTop + -3;
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_Thunk_ScaledNeg1SetPause(void)
 {
     __asm {
@@ -11533,7 +11682,25 @@ __declspec(naked) void PendingMatch_Thunk_ScaledNeg1SetPause(void)
         jmp      Thunk_ScaledNeg1SetPause
     }
 }
+#endif
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_ScaledIterStep(void)
+
+{
+  if (((byte)g_xformDirtyFlags & 1) != 0) {
+    MoveListCursorCluster();
+    return;
+  }
+  ScaledIterStep_0045c020();
+  if (g_framePauseFlag == 0) {
+    PendingMatch_00459510();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_ScaledIterStep(void)
 {
     __asm {
@@ -12079,3 +12246,4 @@ __declspec(naked) void PendingMatch_ScaledIterStep(void)
         ret      
     }
 }
+#endif

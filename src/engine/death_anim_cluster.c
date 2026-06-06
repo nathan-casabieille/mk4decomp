@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,80 @@ extern void GameMusicState4Way(void);
 extern void GuardedDualPushTailJmp(void);
 extern void ScaledLoadOrSetJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DeathAnimCluster(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  g_eventQueueCurrent = g_zerotriple_00541dec;
+  *(int *)((int)g_matrixStackTop * 4) = g_zerotriple_00541de8;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  g_zerotriple_00541de8 = 0;
+  g_zerotriple_00541dec = 0;
+  if (g_eventMusicSlot2 == 1) {
+    g_walkCallback = g_dlNalt2;
+    g_eventQueueWorkType = g_dlSomeFlag2;
+  }
+  else {
+    g_walkCallback = g_dlNalt1;
+    g_eventQueueWorkType = g_dlSomeFlag1;
+  }
+  g_eventQueueCurrent = 0;
+  GuardedDualPushTailJmp();
+  if (g_framePauseFlag == 0) {
+    g_zerotriple_00541dec = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_zerotriple_00541de8 = *(int *)((int)(g_matrixStackTop + -1) * 4);
+    g_matrixStackTop = g_matrixStackTop + -2;
+    g_walkCallback = g_zerotriple_00541de8;
+    g_eventQueueCurrent = g_zerotriple_00541dec;
+    GameMusicState4Way();
+    iVar2 = g_cj_0054205c;
+    if (g_framePauseFlag == 0) {
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x30) = 0x23c;
+      MK4_NODE_AT(undefined4, iVar2, 0x54) = 0;
+      MK4_NODE_AT(undefined4, iVar2, 0x58) = 0;
+      iVar1 = iVar2 * 4;
+      *(uint *)(iVar1 + 0x34) = MK4_NODE_AT(uint, iVar2, 0x34) | 0x180000;
+      *(undefined4 *)(iVar1 + 100) = 0;
+      *(undefined4 *)(iVar1 + 0x68) = 0;
+      *(undefined4 *)(iVar1 + 0x5c) = 0xfffd0000;
+      *(undefined4 *)(iVar1 + 0x60) = 0x4b333;
+      uVar3 = 0x13ff93;
+      g_walkCallback = 0x13ff93;
+      if ((g_audioBankSel == 2) && (g_dlNalt1 == 0xf)) {
+        uVar3 = 0x14065c;
+        g_walkCallback = 0x14065c;
+      }
+      if ((g_audioBankSel == 1) && (g_dlNalt2 == 0xf)) {
+        uVar3 = 0x14065c;
+        g_walkCallback = 0x14065c;
+      }
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x24) = uVar3;
+      MK4_NODE_AT(int, g_cj_0054205c, 0x28) = g_walkCallback;
+      ScaledLoadOrSetJmp();
+      if (g_framePauseFlag == 0) {
+        g_eventQueuePending = g_bootHeavyState;
+        MK4_NODE_AT(undefined4, g_bootHeavyState, 0x54) = 0;
+        MK4_NODE_AT(undefined4, g_eventQueuePending, 0x58) = 0;
+        g_walkCallback = -0x68000;
+        MK4_NODE_AT(undefined4, g_eventQueuePending, 0x5c) = 0xfff98000;
+        MK4_NODE_AT(int, g_cj_0054205c, 0x3c) = g_eventQueuePending;
+        g_eventQueuePending = *(undefined4 *)((int)g_matrixStackTop * 4);
+        g_matrixStackTop = g_matrixStackTop + -1;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void DeathAnimCluster(void)
 {
     __asm {
@@ -283,3 +358,4 @@ __declspec(naked) void DeathAnimCluster(void)
         jmp      Cmp7CondStateUpdate
     }
 }
+#endif

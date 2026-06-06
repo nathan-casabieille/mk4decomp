@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -115,6 +116,62 @@ extern void AudioMixerStep(void);
 extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void PushSetXfmMaskCallPop(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackBracket3PackedSlotInit(void)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_walkCallback;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  g_walkCallback = 0x13b226;
+  PushSetXfmMaskCallPop();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 4) != 0) {
+      g_eventQueueCurrent = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_walkCallback = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_cj_0054205c = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+      g_matrixStackTop = g_matrixStackTop + -3;
+      return;
+    }
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x3c) = g_particleEmitterNode;
+    g_walkCallback = 0x7f;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x7f;
+    MStackCall_MStackPush2ChainPrepend_00406340();
+    if (g_framePauseFlag == 0) {
+      g_matrixStackTop = g_matrixStackTop + 1;
+      iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+      *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+      *(uint *)(*(int *)(iVar1 + 0x18) * 4 + 0x20) =
+           *(uint *)(*(int *)(iVar1 + 0x18) * 4 + 0x20) & 0xfffff9ff;
+      g_eventQueuePending = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_matrixStackTop = g_matrixStackTop + -1;
+      *(undefined4 *)(iVar1 + 0x60) = 0x1921f;
+      g_walkCallback = g_pendingMatchVar;
+      AudioMixerStep();
+      if (g_framePauseFlag == 0) {
+        *(undefined4 *)(iVar1 + 100) = g_walkCallback;
+        *(undefined4 *)(iVar1 + 0x58) = 0xfffffae2;
+        puVar2 = (undefined4 *)((int)g_matrixStackTop * 4);
+        g_matrixStackTop = g_matrixStackTop + -1;
+        *(undefined4 *)(iVar1 + 0x5c) = *puVar2;
+        g_walkCallback = *(undefined4 *)((int)g_matrixStackTop * 4);
+        g_matrixStackTop = g_matrixStackTop + -1;
+        *(undefined4 *)(iVar1 + 0x54) = g_walkCallback;
+        g_cj_0054205c = *(int *)((int)g_matrixStackTop * 4);
+        g_matrixStackTop = g_matrixStackTop + -1;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void MStackBracket3PackedSlotInit(void)
 {
     __asm
@@ -223,3 +280,4 @@ __declspec(naked) void MStackBracket3PackedSlotInit(void)
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,24 @@ extern void ScaledChainSignDirtyToggle(void);
 extern void Wrapper_PackedAdvanceCallTailJmp_004e4708(void);
 extern void Wrapper_PackedAdvanceCallTailJmp_004e4718(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualEntry5WayThreshold(void)
+
+{
+  g_walkCallback = g_fightStateProgress;
+  if (0x3cccc < g_fightStateProgress) {
+    GuardedSeq_PackedSelectLoad6_then_GuardedSeq();
+    return;
+  }
+  if (g_fightStateProgress < 0x18000) {
+    CallPauseMStackPushSet2Jmp();
+    return;
+  }
+  PackedAdvanceCallTailJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4e46f0)));
+  return;
+}
+#else
 __declspec(naked) void DualEntry5WayThreshold(void) {
     __asm {
         mov     eax, dword ptr [g_fightStateProgress]
@@ -169,3 +188,4 @@ __declspec(naked) void DualEntry5WayThreshold(void) {
         ret
     }
 }
+#endif

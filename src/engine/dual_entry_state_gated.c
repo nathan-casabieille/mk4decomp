@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,34 @@ extern unsigned int g_fightAxisPosY;
 extern void ScaledChainAndF000DirtyToggle(void);
 extern void StateDispatchYield(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualEntryStateGated(void)
+
+{
+  g_eventQueueCurrent = 0xb;
+  ScaledChainAndF000DirtyToggle();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  if (((byte)g_xformDirtyFlags & 1) == 0) {
+    g_walkCallback = g_fightStateProgress;
+    if (g_fightStateProgress < 0xcccd) {
+      g_eventQueueCurrent = 9;
+    }
+    MStackPush3CmpCall();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      g_eventQueueCurrent = 0xb;
+    }
+  }
+  g_walkCallback = g_eventQueueCurrent;
+  StateDispatchYield();
+  return;
+}
+#else
 __declspec(naked) void DualEntryStateGated(void) {
     __asm {
         mov     dword ptr [g_eventQueueCurrent], 0x0b
@@ -154,3 +183,4 @@ __declspec(naked) void DualEntryStateGated(void) {
         jmp     StateDispatchYield
     }
 }
+#endif

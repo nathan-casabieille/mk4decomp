@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,44 @@ extern void CallPauseLoadAndDispatch(void);
 extern void InstallSelfPause2(void);
 extern void FixedDiv16(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PvpAngleDistSeed(void)
+
+{
+  int iVar1;
+  
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player1NodeIdx;
+  g_eventQueuePending = g_player2NodeIdx;
+  g_chainAccumCur = MK4_NODE_AT(int, g_player1NodeIdx, 0x54);
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_player1NodeIdx, 0x5c);
+  g_eventQueueWorkType = MK4_NODE_AT(int, g_player2NodeIdx, 0x54) - g_chainAccumCur;
+  g_walkCallback = MK4_NODE_AT(int, g_player2NodeIdx, 0x5c) - g_eventQueueCurrent;
+  g_eventQueueNotMask = g_eventQueueWorkType;
+  g_eventQueueChild = g_walkCallback;
+  g_eventQueueWorkType = Mul10Tail(g_eventQueueWorkType,g_eventQueueWorkType);
+  g_walkCallback = Mul10Tail(g_walkCallback,g_walkCallback);
+  g_eventQueueWorkType = g_eventQueueWorkType + g_walkCallback;
+  FpuSqrtMul();
+  iVar1 = g_walkCallback;
+  if (g_framePauseFlag == 0) {
+    g_currentNodeFlags = g_walkCallback;
+    g_walkCallback = g_eventQueueNotMask;
+    g_eventQueueCurrent = iVar1;
+    FixedDiv16();
+    if (g_framePauseFlag == 0) {
+      g_eventQueueNotMask = g_walkCallback;
+      g_walkCallback = g_eventQueueChild;
+      g_eventQueueCurrent = g_currentNodeFlags;
+      FixedDiv16();
+      if (g_framePauseFlag == 0) {
+        g_eventQueueChild = g_walkCallback;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void PvpAngleDistSeed(void)
 {
     __asm {
@@ -304,3 +343,4 @@ __declspec(naked) void PvpAngleDistSeed(void)
         jmp      InstallSelfPause2
     }
 }
+#endif

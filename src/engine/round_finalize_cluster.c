@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -128,6 +129,56 @@ extern void ScaledStackCallPause(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 extern void ThreeChanPackClamp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void RoundFinalizeCluster(void)
+
+{
+  int iVar1;
+  
+  iVar1 = MK4_NODE_AT(int, g_baseSel, 0x68);
+  g_walkCallback = iVar1;
+  if (iVar1 == 0) {
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+    return;
+  }
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1;
+  g_eventQueuePending = MK4_NODE_AT(int, iVar1, 0);
+  if (g_eventQueuePending != 0) {
+    g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0x1c);
+    if (g_walkCallback != 3) {
+      g_eventQueuePending = 0;
+    }
+    MK4_NODE_AT(int, g_baseSel, 0x68) = g_eventQueuePending;
+    g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_eventQueuePending = 4;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    if ((((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) || (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0)) ||
+       (MStackBracket5_LinkedListUnlink(), iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), g_framePauseFlag == 0)) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualC;
+      g_dualD = iVar1;
+      MStackBracket2_TreeWalkRecursive();
+      if (g_framePauseFlag == 0) {
+        g_eq = (uint)(g_dualD == 0);
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualD;
+        g_walkCallback = -0x94a7;
+        MK4_NODE_AT(undefined4, g_dualD, 0x38) = 0xffff6b59;
+        g_eventQueuePending = MK4_NODE_AT(undefined4, g_baseSel, 100);
+        if (((g_eq != 0) || (MStackPush2ChainPrepend(), g_framePauseFlag == 0)) &&
+           (ChainWalkInstall(), g_framePauseFlag == 0)) {
+          g_walkCallback = 1;
+          g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffb;
+        }
+      }
+    }
+    return;
+  }
+  g_xformDirtyFlags = g_xformDirtyFlags | 4;
+  return;
+}
+#else
 __declspec(naked) void RoundFinalizeCluster(void)
 {
     __asm {
@@ -356,3 +407,4 @@ __declspec(naked) void RoundFinalizeCluster(void)
         ret
     }
 }
+#endif

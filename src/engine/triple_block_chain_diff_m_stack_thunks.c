@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -129,6 +130,30 @@ extern void ScaledStackCallPause(void);
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleBlockChainDiffMStackThunks(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueChild;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x38);
+  g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x54);
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x5c);
+  g_eventQueueWorkType = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) - g_walkCallback;
+  g_chainAccumCur = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) - g_eventQueueCurrent;
+  Atan2QuadrantLookup();
+  if (g_framePauseFlag == 0) {
+    BootMod6487eClampAndChainMul10();
+    if (g_framePauseFlag == 0) {
+      MK4_NODE_AT(int, g_baseSel, 0x70) = g_walkCallback;
+      g_eventQueueChild = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_matrixStackTop = g_matrixStackTop + -1;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void TripleBlockChainDiffMStackThunks(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -222,3 +247,4 @@ __declspec(naked) void TripleBlockChainDiffMStackThunks(void) {
         ret
     }
 }
+#endif

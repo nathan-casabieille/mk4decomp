@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,16 @@ extern void ScaledLoadTwoCallLit_MStackPush2RunCountdown_then_MStackBracket7_Dis
 extern void Set2CallIncJmp(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void JuggleFsmCluster(void)
+
+{
+  g_chainAccumCur = 0xb;
+  GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d();
+  return;
+}
+#else
 __declspec(naked) void JuggleFsmCluster(void)
 {
     __asm {
@@ -331,3 +342,4 @@ __declspec(naked) void JuggleFsmCluster(void)
         _emit 0x00
     }
 }
+#endif

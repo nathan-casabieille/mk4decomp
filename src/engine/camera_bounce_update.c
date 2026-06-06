@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -115,6 +116,80 @@ extern void ScaledAddStore(void);
 extern void SetJmp_AudioBridgeMStackChainCopy_00440720(void);
 extern void StoreDoubleNegPauseSubStore(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int CameraBounceUpdate(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  func_0x004406e0();
+  iVar1 = g_framePauseFlag;
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58);
+    if (g_walkCallback < 0) {
+      if (-0xccd < g_walkCallback) {
+        return 0;
+      }
+      SetJmp_AudioBridgeMStackChainCopy_00440720();
+      return g_framePauseFlag;
+    }
+    iVar1 = 0;
+    if (g_walkCallback != 0) {
+      g_walkCallback = 0;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0;
+      g_eventQueueCurrent = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70);
+      g_eventQueueCurrent = Mul10Tail(0xffff999a,g_eventQueueCurrent);
+      iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      if (-0x28f < g_eventQueueCurrent) {
+        g_walkCallback = 0;
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) = 0;
+        iVar1 = iVar1 * 4;
+        *(int *)(iVar1 + 0x70) = g_walkCallback;
+        *(int *)(iVar1 + 0x74) = g_walkCallback;
+        *(int *)(iVar1 + 0x78) = g_walkCallback;
+        *(int *)(iVar1 + 0x7c) = g_walkCallback;
+        *(int *)(iVar1 + 0x80) = g_walkCallback;
+        *(int *)(iVar1 + 0x4c) = g_walkCallback;
+        g_walkCallback = *(undefined4 *)(iVar1 + 0x54);
+        *(undefined4 *)(iVar1 + 0x58) = 0xfffffae2;
+        g_eventQueueCurrent = *(undefined4 *)(iVar1 + 0x5c);
+        MStackBracketed3StoreCall();
+        return g_framePauseFlag;
+      }
+      g_walkCallback = 0x19;
+      iVar1 = GatedWordPushCall();
+      if (g_framePauseFlag == 0) {
+        g_walkCallback = 0x20c;
+        iVar1 = StoreDoubleNegPauseSubStore();
+        if (g_framePauseFlag == 0) {
+          *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = g_eventQueueCurrent + g_walkCallback;
+          g_eventQueueCurrent = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c);
+          g_eventQueueCurrent = Mul10Tail(0x6666,g_eventQueueCurrent);
+          g_walkCallback = 0x20000;
+          iVar1 = AudioMixerStep();
+          if (g_framePauseFlag == 0) {
+            uVar2 = Mul10Tail(g_walkCallback,g_eventQueueCurrent);
+            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) = uVar2;
+            g_eventQueueCurrent = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74);
+            g_eventQueueCurrent = Mul10Tail(0x6666,g_eventQueueCurrent);
+            g_walkCallback = 0x30000;
+            iVar1 = AudioMixerStep();
+            if (g_framePauseFlag == 0) {
+              uVar2 = Mul10Tail(g_walkCallback,g_eventQueueCurrent);
+              *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74) = uVar2;
+              g_eventQueueCurrent = -0xf333;
+              iVar1 = EsiTripleMul10Vec();
+            }
+          }
+        }
+      }
+    }
+  }
+  return iVar1;
+}
+#else
 __declspec(naked) void CameraBounceUpdate(void)
 {
     __asm {
@@ -240,3 +315,4 @@ __declspec(naked) void CameraBounceUpdate(void)
         ret
     }
 }
+#endif

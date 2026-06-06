@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,16 @@ extern void ScaledDecOrZero(void);
 extern void SixBlockCjCascade(void);
 extern void Wrapper_ScaledChainPushCall_004ef8e0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void IncThunkPlusCjDispatch(void)
+
+{
+  g_walkCallback = MK4_NODE_AT(int, g_baseSel, 0x7c) + 1;
+  MK4_NODE_AT(int, g_baseSel, 0x7c) = g_walkCallback;
+  return;
+}
+#else
 __declspec(naked) void IncThunkPlusCjDispatch(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
@@ -215,3 +226,4 @@ __declspec(naked) void IncThunkPlusCjDispatch(void) {
         ret
     }
 }
+#endif
