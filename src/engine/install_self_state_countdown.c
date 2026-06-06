@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -24703,6 +24704,52 @@ void MStackPush3DualCallHalve(void) {
  *   state 2 init: g_eventQueueChild=0x1e; install-self; chain[+0x84]=2; g_pendingNodeType=1;
  *     pause=1; ret.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfStateCountdown(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 == 0) {
+    *(code **)(iVar2 + 8) = InstallSelfStateCountdown;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1434db0;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    MStackPushSet0Jmp();
+    g_framePauseFlag = 1;
+    return;
+  }
+  if (iVar1 == 1) {
+    g_eventQueueChild = 0x1e;
+  }
+  else {
+    g_eventQueueChild = g_eventQueueChild + -1;
+    if (g_eventQueueChild == 0) {
+      MStackPushPtr1Jmp_00438ef0();
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x38);
+    g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58);
+    if (-0x10001 < g_walkCallback) {
+      PushCallPauseSet1Jmp();
+      return;
+    }
+  }
+  *(code **)(iVar2 + 8) = InstallSelfStateCountdown;
+  *(undefined4 *)(iVar2 + 0x84) = 2;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfStateCountdown(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -24763,6 +24810,7 @@ __declspec(naked) void InstallSelfStateCountdown(void) {
         ret
     }
 }
+#endif
 
 
 /* @addr 0x004230b0 (246b game) - 4-call guarded sequence (sibling of 0x00422fc0).

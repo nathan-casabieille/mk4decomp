@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,40 @@ extern void SfxAttenuateAndApply(void);
 extern void StreamFlagPackedSelectChain(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MatchStartFsmCluster(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 == 0) {
+    *(code **)(iVar2 + 8) = MatchStartFsmCluster;
+    *(undefined4 *)(iVar2 + 0x84) = 1;
+    g_dualC = 0x14;
+    g_framePauseFlag = 1;
+    return;
+  }
+  if (iVar1 != 1) {
+    FiveCallGuardSetTail();
+    return;
+  }
+  *(code **)(iVar2 + 8) = MatchStartFsmCluster;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x2468eb0;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  ScaledLoadJmp_00429390();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void MatchStartFsmCluster(void)
 {
     __asm {
@@ -422,3 +457,4 @@ __declspec(naked) void MatchStartFsmCluster(void)
         jmp      StreamFlagPackedSelectChain
     }
 }
+#endif

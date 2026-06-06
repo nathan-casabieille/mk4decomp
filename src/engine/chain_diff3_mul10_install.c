@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -110,6 +111,48 @@ extern unsigned int g_fightAxisPosY;
 
 extern void DivLongPushCall(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ChainDiff3Mul10Install(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  iVar3 = g_cj_0054205c;
+  if (iVar2 != 0) {
+    g_walkCallback = 0;
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x6c) = 0;
+    MK4_NODE_AT(int, iVar3, 0x70) = g_walkCallback;
+    MK4_NODE_AT(int, iVar3, 0x74) = g_walkCallback;
+    StackPopDispatchTagged();
+    return;
+  }
+  iVar2 = g_cj_0054205c * 4;
+  g_eventQueueChild = g_eventQueueNotMask - MK4_NODE_AT(int, g_cj_0054205c, 0x54);
+  g_currentNodeFlags = g_eventQueueCurrent - *(int *)(iVar2 + 0x58);
+  g_xformScratch2088 = g_eventQueueWorkType - *(int *)(iVar2 + 0x5c);
+  g_walkCallback = g_chainAccumCur << 0x10;
+  DivLongPushCall();
+  if (g_framePauseFlag == 0) {
+    g_eventQueueChild = Mul10Tail(g_walkCallback,g_eventQueueChild);
+    g_currentNodeFlags = Mul10Tail(g_walkCallback,g_currentNodeFlags);
+    g_xformScratch2088 = Mul10Tail(g_walkCallback,g_xformScratch2088);
+    *(int *)(iVar2 + 0x6c) = g_eventQueueChild;
+    *(int *)(iVar2 + 0x70) = g_currentNodeFlags;
+    *(int *)(iVar2 + 0x74) = g_xformScratch2088;
+    g_dualC = g_chainAccumCur;
+    *(code **)(iVar1 + 8) = ChainDiff3Mul10Install;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void ChainDiff3Mul10Install(void)
 {
     __asm
@@ -197,3 +240,4 @@ __declspec(naked) void ChainDiff3Mul10Install(void)
         ret
     }
 }
+#endif

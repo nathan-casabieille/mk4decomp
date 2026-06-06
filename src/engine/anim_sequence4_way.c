@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,74 @@ extern void SetJmp_JuggleFsmCluster_00451b80(void);
 
 extern void SetJmp_ZeroAndDirty4(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AnimSequence4Way(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  iVar1 = g_baseSel * 4;
+  uVar2 = MK4_NODE_AT(undefined4, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  switch(uVar2) {
+  case 0:
+    MStackPush2RunCountdown();
+    if ((((g_framePauseFlag == 0) && (MStackBracket7_DispatchAndChain(), g_framePauseFlag == 0)) &&
+        (SetJmp_SetJmp_00451ad0_00451aa0(), g_framePauseFlag == 0)) &&
+       ((SetJmp_ZeroAndDirty4(), g_framePauseFlag == 0 &&
+        ((((byte)g_xformDirtyFlags & 4) == 0 ||
+         ((SetJmp_SetJmp_00451b10_00451ae0(), g_framePauseFlag == 0 && (SetJmp_SetJmp_00451ad0_00451ab0(), g_framePauseFlag == 0)))))))) {
+      *(code **)(iVar1 + 8) = AnimSequence4Way;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  case 1:
+    SetJmp_SetJmp_00451b10_00451af0();
+    if (((g_framePauseFlag == 0) && (SetJmp_ZeroAndDirty4(), g_framePauseFlag == 0)) &&
+       ((((byte)g_xformDirtyFlags & 4) == 0 ||
+        ((SetJmp_SetJmp_00451ad0_00451ac0(), g_framePauseFlag == 0 && (SetJmp_SetJmp_00451b10_00451b00(), g_framePauseFlag == 0)))))) {
+      *(code **)(iVar1 + 8) = AnimSequence4Way;
+      *(undefined4 *)(iVar1 + 0x84) = 2;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  case 2:
+    SetJmp_SetJmp_00451b50_00451b20();
+    if (((g_framePauseFlag == 0) && (SetJmp_ZeroAndDirty4(), g_framePauseFlag == 0)) &&
+       ((((byte)g_xformDirtyFlags & 4) == 0 ||
+        ((SetJmp_JuggleFsmCluster_00451b60(), g_framePauseFlag == 0 && (SetJmp_SetJmp_00451b50_00451b30(), g_framePauseFlag == 0)))))) {
+      *(code **)(iVar1 + 8) = AnimSequence4Way;
+      *(undefined4 *)(iVar1 + 0x84) = 3;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  case 3:
+    SetJmp_JuggleFsmCluster_00451b70();
+    if (((g_framePauseFlag == 0) && (SetJmp_ZeroAndDirty4(), g_framePauseFlag == 0)) &&
+       ((((byte)g_xformDirtyFlags & 4) == 0 ||
+        ((SetJmp_SetJmp_00451b50_00451b40(), g_framePauseFlag == 0 && (SetJmp_JuggleFsmCluster_00451b80(), g_framePauseFlag == 0)))))) {
+      *(code **)(iVar1 + 8) = AnimSequence4Way;
+      *(undefined4 *)(iVar1 + 0x84) = 4;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  default:
+    StackPopDispatchTagged();
+  }
+  return;
+}
+#else
 __declspec(naked) void AnimSequence4Way(void)
 {
     __asm {
@@ -279,3 +348,4 @@ __declspec(naked) void AnimSequence4Way(void)
         _emit    0x00
     }
 }
+#endif

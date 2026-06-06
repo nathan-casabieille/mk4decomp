@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,36 @@ extern void KnockbackPositionReset(void);
 extern unsigned int g_arr_41aaf0_mstack;
 extern void FiveCallGuardSetTail(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfMStackPush_StackPopDispatchTagged(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    StackPopDispatchTagged();
+    return;
+  }
+  BootStateInitLongChain();
+  if (g_framePauseFlag == 0) {
+    *(code **)(iVar1 + 8) = InstallSelfMStackPush_StackPopDispatchTagged;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x141aaf0;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    KnockbackPositionReset();
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfMStackPush_StackPopDispatchTagged(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -160,3 +191,4 @@ __declspec(naked) void InstallSelfMStackPush_StackPopDispatchTagged(void) {
         ret
     }
 }
+#endif

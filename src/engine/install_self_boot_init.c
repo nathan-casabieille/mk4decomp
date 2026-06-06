@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,51 @@ extern void InstallSelfPackedF80(void);
 extern void InstallSelfTableWalk(void);
 extern void ScenegraphWalk(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfBootInit(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0;
+    g_scaledChainLoop = 1;
+    g_walkCallback = 2;
+    g_active_0053a408 = 2;
+    g_active_00537e88 = 2;
+    g_eventQueueWorkType = 4;
+    Push16Call();
+    if (g_framePauseFlag == 0) {
+      ScenegraphWalk();
+      g_eventQueueCurrent = 0xc;
+      *(code **)(iVar1 + 8) = InstallSelfBootInit;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1462980;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      InstallSelfPackedF80();
+      g_framePauseFlag = 1;
+    }
+  }
+  else {
+    BootInitGuardedCallChain();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0x1000;
+      MK4_NODE_AT(undefined4, g_baseSel, 0xc) = 0x1000;
+      InstallSelfTableWalk();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfBootInit(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -186,3 +232,4 @@ __declspec(naked) void InstallSelfBootInit(void) {
         ret
     }
 }
+#endif

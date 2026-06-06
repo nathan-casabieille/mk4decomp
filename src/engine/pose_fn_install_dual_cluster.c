@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -115,6 +116,57 @@ extern void PendingMatch_ThreeMul10Stores(void);
 extern void FixedDiv16(void);
 extern void SaveCallRestoreOrXor(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PoseFnInstallDualCluster(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    StackPopDispatchTagged();
+    return;
+  }
+  MK4_NODE_AT(undefined4, g_baseSel, 0x30) = g_cj_00542058;
+  g_walkCallback = g_cj_00542054;
+  MStackChainCountdownLoop();
+  if (g_framePauseFlag == 0) {
+    MK4_NODE_AT(undefined4, g_baseSel, 0x34) = g_eventQueueCurrent;
+    g_walkCallback = 27000;
+    g_eventQueueCurrent = 0x20000;
+    FixedDiv16();
+    if (g_framePauseFlag == 0) {
+      g_eventQueueWorkType = g_eventQueueWorkType - g_walkCallback;
+      MK4_NODE_AT(int, g_baseSel, 0x38) = g_eventQueueWorkType;
+      g_walkCallback = 0;
+      MStackChainCountdownLoop();
+      if (g_framePauseFlag == 0) {
+        g_chainAccumCur = g_chainAccumCur + -0x20000;
+        MK4_NODE_AT(int, g_baseSel, 0x3c) = g_chainAccumCur;
+        g_cj_0054205c = g_eventQueueSeed;
+        MK4_NODE_AT(undefined4, g_baseSel, 0x40) = MK4_NODE_AT(undefined4, g_eventQueueSeed, 0x60);
+        MK4_NODE_AT(undefined4, g_baseSel, 0x44) = 0;
+        g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x68);
+        MK4_NODE_AT(int, g_baseSel, 0x48) = g_walkCallback;
+        *(code **)(iVar1 + 8) = PoseFnInstallDualCluster;
+        MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1463090;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+        *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+        PendingMatch_ThreeMul10Stores();
+        g_framePauseFlag = 1;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void PoseFnInstallDualCluster(void)
 {
     __asm {
@@ -279,3 +331,4 @@ __declspec(naked) void PoseFnInstallDualCluster(void)
         ret
     }
 }
+#endif

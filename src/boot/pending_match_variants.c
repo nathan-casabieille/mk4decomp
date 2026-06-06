@@ -4962,6 +4962,209 @@ __declspec(naked) void PendingMatch_StoreTwoCall_00411210(void)
     }
 }
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_Push16Call_00402540(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  
+  iVar1 = g_baseSel * 4;
+  uVar2 = *(undefined4 *)(iVar1 + 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  switch(uVar2) {
+  case 0:
+    FiveTableWalkInit();
+    if (g_framePauseFlag == 0) {
+      g_phaseIdx = 4;
+      StoreTwoCall(&g_dispatchSave509,0);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b0e;
+      LoadGeoAsset_Default();
+      if (g_framePauseFlag == 0) {
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b0e;
+        LoadGeoAsset_Default();
+        if (g_framePauseFlag == 0) {
+          g_eventQueuePending = 0x1420d0;
+          DispatcherComplex260_FramePauseScaledStore();
+          if (g_framePauseFlag == 0) {
+            if (((byte)g_xformDirtyFlags & 4) != 0) goto switchD_0040256a_caseD_8;
+            iVar3 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+            *(undefined4 *)(iVar3 + 0x54) = 0;
+            *(undefined **)(iVar3 + 0x58) = &(*(unsigned int *)MK4_VA(unsigned int, 0x640000));
+            g_walkCallback = 0x28f;
+            *(undefined4 *)(iVar3 + 0x30) = 0x28f;
+            MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
+            if (g_framePauseFlag == 0) {
+              g_eventQueuePending = 0x141b66;
+              DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+              iVar3 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+              if (g_framePauseFlag == 0) {
+                *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0;
+                MK4_NODE_AT(undefined4, iVar3, 0x58) = 0;
+                MK4_NODE_AT(undefined4, iVar3, 100) = 0xa3d;
+                MK4_NODE_AT(undefined4, iVar3, 0x5c) = 0xfff9b334;
+                g_walkCallback = 0x31;
+                *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x31;
+                MStackCall_MStackPush2ChainPrepend_00406340();
+                if (g_framePauseFlag == 0) {
+                  if (((byte)g_xformDirtyFlags & 4) != 0) goto switchD_0040256a_caseD_8;
+                  RegistryPushBindPop();
+                  if (g_framePauseFlag == 0) {
+                    *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34) =
+                         *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34) | 0x80000;
+                    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x60) = 0x32439;
+                    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74) = 0x11eb;
+                    g_walkCallback = 0xccc;
+                    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x78) = 0xccc;
+                    g_eventQueueWorkType = 0x131;
+                    Push16Call();
+                    if (g_framePauseFlag == 0) {
+                      *(code **)(iVar1 + 8) = PendingMatch_Push16Call_00402540;
+                      *(undefined4 *)(iVar1 + 0x84) = 1;
+                      g_dualC = 1;
+                      g_framePauseFlag = 1;
+                      return;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    break;
+  case 1:
+    g_eventQueueWorkType = 8;
+    Push16Call();
+    if (g_framePauseFlag == 0) {
+      *(code **)(iVar1 + 8) = PendingMatch_Push16Call_00402540;
+      *(undefined4 *)(iVar1 + 0x84) = 2;
+      g_dualC = 0xba;
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  case 2:
+    g_eventQueuePending = 0x1420d7;
+    DispatcherComplex260_FramePauseScaledStore();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 4) != 0) goto switchD_0040256a_caseD_8;
+      MK4_NODE_AT(int, g_baseSel, 100) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0;
+      g_walkCallback = 0x10000;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0x10000;
+      MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
+      if (g_framePauseFlag == 0) {
+        SaveCallRestore(0x31);
+        *(code **)(iVar1 + 8) = PendingMatch_Push16Call_00402540;
+        *(undefined4 *)(iVar1 + 0x84) = 3;
+        g_dualC = 0x3c;
+        g_framePauseFlag = 1;
+        return;
+      }
+    }
+    break;
+  case 3:
+    g_eventQueuePending = 0x1420b4;
+    DispatcherComplex260_FramePauseScaledStore();
+    if (g_framePauseFlag == 0) {
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0xfed40000;
+      MK4_NODE_AT(int, g_baseSel, 0x5c) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_walkCallback = 0x1f;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+      MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
+      if (g_framePauseFlag == 0) {
+        g_walkCallback = 0xa0000;
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) = 0xa0000;
+        g_cj_00542054 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        RegistryPushBindPop();
+        if (g_framePauseFlag == 0) {
+          g_eventQueuePending = 0x1420bb;
+          DispatcherComplex260_FramePauseScaledStore();
+          if (g_framePauseFlag == 0) {
+            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0x12b0000;
+            MK4_NODE_AT(int, g_baseSel, 0x60) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+            g_walkCallback = 0x1f;
+            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+            MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
+            if (g_framePauseFlag == 0) {
+              g_cj_00542058 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+              g_walkCallback = 0xfff60000;
+              *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) = 0xfff60000;
+              RegistryPushBindPop();
+              if (g_framePauseFlag == 0) {
+                *(code **)(iVar1 + 8) = PendingMatch_Push16Call_00402540;
+                *(undefined4 *)(iVar1 + 0x84) = 4;
+                g_dualC = 0x14;
+                g_framePauseFlag = 1;
+                return;
+              }
+            }
+          }
+        }
+      }
+    }
+    break;
+  case 4:
+    MK4_NODE_AT(undefined4, g_cj_00542054, 0x6c) = 0;
+    g_walkCallback = 0;
+    MK4_NODE_AT(undefined4, g_cj_00542058, 0x6c) = 0;
+    SaveCallRestore(0x28f);
+    g_eventQueueWorkType = 9;
+    Push16Call();
+    if (g_framePauseFlag == 0) {
+      *(code **)(iVar1 + 8) = PendingMatch_Push16Call_00402540;
+      *(undefined4 *)(iVar1 + 0x84) = 5;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  case 5:
+    *(code **)(iVar1 + 8) = PendingMatch_Push16Call_00402540;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 6;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x6402540;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    InstallSelfSearchAccum();
+    g_framePauseFlag = 1;
+    return;
+  case 6:
+    *(code **)(iVar1 + 8) = PendingMatch_Push16Call_00402540;
+    *(undefined4 *)(iVar1 + 0x84) = 7;
+    g_dualC = 0x5a;
+    g_framePauseFlag = 1;
+    return;
+  case 7:
+    *(code **)(iVar1 + 8) = PendingMatch_Push16Call_00402540;
+    *(undefined4 *)(iVar1 + 0x84) = 8;
+    g_dualC = 0x1a4;
+    g_framePauseFlag = 1;
+    return;
+  case 8:
+switchD_0040256a_caseD_8:
+    g_eventQueueCurrent = 10;
+    *(code **)(iVar1 + 8) = PendingMatch_Push16Call_00402540;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 9;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x9402540;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    InstallSelfPackedF80();
+    g_framePauseFlag = 1;
+    return;
+  default:
+    StackPopDispatchTagged();
+  }
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_Push16Call_00402540(void)
 {
     __asm {
@@ -5296,6 +5499,7 @@ __declspec(naked) void PendingMatch_Push16Call_00402540(void)
         _emit    0x00
     }
 }
+#endif
 
 __declspec(naked) void PendingMatch_StoreTwoCall_004108a0(void)
 {

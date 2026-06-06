@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,35 @@ extern void PendingMatch_DualCmpSwapStore(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ThreeChanPackClamp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualBlockInstallMul10Tail(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    FiveCallGuardSetTail();
+    return;
+  }
+  g_walkCallback = 0x1016;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x1016;
+  *(code **)(iVar2 + 8) = DualBlockInstallMul10Tail;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x149a4e0;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  ScaledLoadJmp_00428d20();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void DualBlockInstallMul10Tail(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -215,3 +245,4 @@ __declspec(naked) void DualBlockInstallMul10Tail(void) {
         ret
     }
 }
+#endif

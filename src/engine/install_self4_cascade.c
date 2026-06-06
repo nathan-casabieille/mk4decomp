@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,46 @@ extern void MStackPushSet0008(void);
 extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
 extern void ScaledInitOrSelfPtrSetType_0047a620(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelf4Cascade(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    ScaledInitOrSelfPtrSetType_0047a620();
+    return;
+  }
+  g_walkCallback = 0x18;
+  CmpEqInitCallElseJmp();
+  if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 1) != 0)) {
+    g_eventQueueChild = 0x13;
+    ScaledArrStore_GuardedChainCmpDualBitXor_00429980();
+    if (g_framePauseFlag == 0) {
+      ScaledZeroFour();
+      if (g_framePauseFlag == 0) {
+        MStackPushSet0008();
+        if (g_framePauseFlag == 0) {
+          if (g_xformScratch2088 != 1) {
+            ScaledInitOrSelfPtrSetType_0047a620();
+            return;
+          }
+          *(code **)(iVar1 + 8) = InstallSelf4Cascade;
+          *(undefined4 *)(iVar1 + 0x84) = 1;
+          g_dualC = 5;
+          g_framePauseFlag = 1;
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelf4Cascade(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -179,3 +220,4 @@ __declspec(naked) void InstallSelf4Cascade(void) {
         ret
     }
 }
+#endif

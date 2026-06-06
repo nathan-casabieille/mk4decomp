@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,78 @@ extern void CjInstallSelfRouter(void);
 extern void AudioVolumeRescale(void);
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GameStateDispatch4Way(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  iVar1 = g_baseSel * 4;
+  uVar2 = MK4_NODE_AT(undefined4, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  switch(uVar2) {
+  case 0:
+    Push80SetWalkDualCallPop();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(code **)(iVar1 + 8) = GameStateDispatch4Way;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    uVar2 = 0x1436e50;
+    break;
+  case 1:
+    Push80SetWalkNegDualCallPop();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(code **)(iVar1 + 8) = GameStateDispatch4Way;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    uVar2 = 0x2436e50;
+    break;
+  case 2:
+    g_walkCallback = 500;
+    AudioVolumeRescale();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 1) != 0) goto switchD_00436e76_default;
+    Push80SetWalkDualCallPop();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(code **)(iVar1 + 8) = GameStateDispatch4Way;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 3;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    uVar2 = 0x3436e50;
+    break;
+  case 3:
+    Push80SetWalkNegDualCallPop();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(code **)(iVar1 + 8) = GameStateDispatch4Way;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 4;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    uVar2 = 0x4436e50;
+    break;
+  default:
+switchD_00436e76_default:
+    CjInstallSelfRouter();
+    return;
+  }
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = uVar2;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  Set14CallAddJmp();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void GameStateDispatch4Way(void)
 {
     __asm {
@@ -224,3 +297,4 @@ __declspec(naked) void GameStateDispatch4Way(void)
         _emit    0x00
     }
 }
+#endif

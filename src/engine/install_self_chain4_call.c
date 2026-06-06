@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -115,6 +116,46 @@ extern void HitReactionStateCluster(void);
 extern void MStackPushSet4Jmp(void);
 extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4810(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfChain4Call(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    HitReactionStateCluster();
+    return;
+  }
+  LeaPlus22StoreSelf();
+  if (g_framePauseFlag == 0) {
+    DualBlockPauseAbsDirty();
+    if (g_framePauseFlag == 0) {
+      if (g_walkCallback < 0x140000) {
+        Wrapper_CmpDualPatchScaledRangeJmp_004e4810();
+        return;
+      }
+      DualScaledInitClear();
+      if (g_framePauseFlag == 0) {
+        *(code **)(iVar1 + 8) = InstallSelfChain4Call;
+        MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14376f0;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+        *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+        MStackPushSet4Jmp();
+        g_framePauseFlag = 1;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfChain4Call(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -177,3 +218,4 @@ __declspec(naked) void InstallSelfChain4Call(void) {
         ret
     }
 }
+#endif

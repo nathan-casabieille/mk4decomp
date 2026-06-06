@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,48 @@ extern void DecOrZeroDirty4(void);
 extern void GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged(void);
 extern void Push84CallTestInstallJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfMultiCascade(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  
+  iVar3 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar3 + 0x84);
+  *(undefined4 *)(iVar3 + 0x84) = 0;
+  if (iVar1 == 0) {
+    *(code **)(iVar3 + 8) = InstallSelfMultiCascade;
+    *(undefined4 *)(iVar3 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  else {
+    DecOrZeroDirty4();
+    uVar2 = g_eventQueueChild;
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 4) != 0) {
+        GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged();
+        return;
+      }
+      Push84CallTestInstallJmp();
+      if (g_framePauseFlag == 0) {
+        DecJneSetCallSetJmp();
+        if (g_framePauseFlag == 0) {
+          g_matrixStackTop = g_matrixStackTop + 1;
+          g_eventQueueChild = uVar2;
+          *(undefined1 **)((int)g_matrixStackTop * 4) = &(*(unsigned int *)MK4_VA(unsigned int, 0x438990));
+          GameDispatchValidateState();
+          return;
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfMultiCascade(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -178,3 +221,4 @@ __declspec(naked) void InstallSelfMultiCascade(void) {
         jmp     GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged
     }
 }
+#endif

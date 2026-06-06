@@ -578,6 +578,41 @@ void func_Vec2SumMul10ChainCompute_then_ScaledIndirectJmp(void) {
  * `mov [esi+8], OFFSET L_8b20` installs the function's own internal
  * label as a callback (DIR32 reloc to mid-function address - not
  * expressible in pure C). */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void func_TableLookupCall_g_table_00498b20(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    MStackCall_MStackPush2ChainLLInsert();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0x48;
+      TableLookupCall_g_eventTbl_112();
+      if (g_framePauseFlag == 0) {
+        *(code **)(iVar1 + 8) = func_TableLookupCall_g_table_00498b20;
+        *(undefined4 *)(iVar1 + 0x84) = 1;
+        g_dualC = 10;
+        g_framePauseFlag = 1;
+      }
+    }
+  }
+  else {
+    g_walkCallback = 0x49;
+    TableLookupCall_g_eventTbl_112();
+    if (g_framePauseFlag == 0) {
+      CallSetPause();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void func_TableLookupCall_g_table_00498b20(void)
 {
     __asm {
@@ -618,6 +653,7 @@ __declspec(naked) void func_TableLookupCall_g_table_00498b20(void)
         ret
     }
 }
+#endif
 
 /* h6 @ 0x00498bb0 (32b): MStackCall + pause-test -> tail-jmp
  * CallSetPause. Standard TCO wrapper. */
@@ -832,6 +868,48 @@ void func_call_ArgSarStoreJmp_with_g_dispatchSave752(void) {
 /* h8 @ 0x004822e0 (128b naked): pose-fn install state 1.
  * Keep naked: self-ref `mov [eax+8], OFFSET L_22e0` + `mov edi,
  * OFFSET L_22e0` (DIR32 reloc to function's own entry label). */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void func_GuardedDispatch4(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 == 0) {
+    *(code **)(iVar2 + 8) = func_GuardedDispatch4;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14822e0;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    func_0x00489080();
+    g_framePauseFlag = 1;
+    return;
+  }
+  g_walkCallback = 0x200b;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x200b;
+  ScaledMove48to58();
+  if ((((g_framePauseFlag == 0) && (iVar1 = DualGatedStateYield(), iVar1 == 0)) &&
+      (SlotPhaseResetInstallChain(), g_framePauseFlag == 0)) && (DirtyToggleByGate(), g_framePauseFlag == 0)) {
+    if ((((byte)g_xformDirtyFlags & 4) != 0) && (DualScaledInitClear(), g_framePauseFlag != 0)) {
+      return;
+    }
+    StateDispatchTable();
+    if (g_framePauseFlag == 0) {
+      g_xformScratch2088 = 0x3333;
+      g_cj_00542054 = g_walkCallback;
+      BitGateInstallChainJmp();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void func_GuardedDispatch4(void)
 {
     __asm {
@@ -867,6 +945,7 @@ __declspec(naked) void func_GuardedDispatch4(void)
         ret
     }
 }
+#endif
 
 /* h9 @ 0x00482360 (80b): 0x8000 + CmpP1DualInitStore + chain + event
  * 004edca8. (Comment said 0x482350 but real addr is 0x482360.) */

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -129,6 +130,66 @@ extern void PushCallPauseSetMaxThenCallPauseJmp(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 extern void ScaledLoadJmp_00428d20(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int StoryCharIntroFsmCluster(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    if ((g_gtModeFlag == '\x01') && (g_audioBankSel == 1)) {
+      g_installSelfCounter = g_installSelfCounter + 1;
+    }
+    if ((g_gtModeFlag == '\x02') && (g_audioBankSel == 2)) {
+      g_installSelfCounter = g_installSelfCounter + 1;
+    }
+    GateDispatch6c();
+    iVar2 = g_framePauseFlag;
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0x20;
+      g_audioStreamState = 0x20;
+      PushCallPauseSetMaxThenCallPauseJmp();
+      iVar2 = g_framePauseFlag;
+      if (g_framePauseFlag == 0) {
+        if (g_tickFlagF == 2) {
+          g_handWalkState148 = 1;
+        }
+        iVar2 = StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x468200)),0);
+        *(code **)(iVar1 + 8) = StoryCharIntroFsmCluster;
+        *(undefined4 *)(iVar1 + 0x84) = 1;
+        g_dualC = 0x1e;
+        g_framePauseFlag = 1;
+      }
+    }
+  }
+  else {
+    if (iVar2 == 1) {
+      *(code **)(iVar1 + 8) = StoryCharIntroFsmCluster;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x2467ed0;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      iVar1 = PendingMatch_ArgScaledTestStore();
+      g_framePauseFlag = 1;
+      return iVar1;
+    }
+    LoadSetFpJmp_g_bootChainScaled1();
+    iVar2 = g_framePauseFlag;
+    if (g_framePauseFlag == 0) {
+      ArgSarStoreJmp(&g_dispatchSave704);
+      return g_framePauseFlag;
+    }
+  }
+  return iVar2;
+}
+#else
 __declspec(naked) void StoryCharIntroFsmCluster(void)
 {
     __asm {
@@ -448,3 +509,4 @@ __declspec(naked) void StoryCharIntroFsmCluster(void)
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,35 @@ extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void);
 extern unsigned int g_chain_arr_4348f0;
 extern void FiveCallGuardSetTail(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfStatePush_InstallSelf3StateDualBody_00434990(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_dispatchSave1580 = 1;
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    g_eventQueueNotMask = 0x10041;
+    HitReactionDispatcher();
+    return;
+  }
+  *(code **)(iVar2 + 8) = InstallSelfStatePush_InstallSelf3StateDualBody_00434990;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1434990;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  InstallSelf3StateDualBody();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfStatePush_InstallSelf3StateDualBody_00434990(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -155,8 +185,38 @@ __declspec(naked) void InstallSelfStatePush_InstallSelf3StateDualBody_00434990(v
         ret
     }
 }
+#endif
 
 /* @addr 0x00435d40 (148b game) - install-self twin (0x1cccc/0x3c). */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435d40(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    Wrapper_CmpDualPatchScaledRangeJmp_004e4990();
+    return;
+  }
+  g_currentNodeFlags = 0x1cccc;
+  g_eventQueueChild = 0x3c;
+  *(code **)(iVar2 + 8) = InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435d40;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1435d40;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435d40(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -191,11 +251,41 @@ __declspec(naked) void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalk
         ret
     }
 }
+#endif
 
 /* @addr 0x00435b00 (148b game) - install-self twin (0x34ccc/0x3c):
  *   Same shape as InstallSelfStatePush variants, but sets g_currentNodeFlags
  *   = 0x34ccc, g_eventQueueChild = 0x3c, calls CallPauseConstStoreJmp at tail.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435b00(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    Wrapper_CmpDualPatchScaledRangeJmp_004e4990();
+    return;
+  }
+  g_currentNodeFlags = 0x34ccc;
+  g_eventQueueChild = 0x3c;
+  *(code **)(iVar2 + 8) = InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435b00;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1435b00;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435b00(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -230,6 +320,7 @@ __declspec(naked) void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalk
         ret
     }
 }
+#endif
 
 /* @addr 0x004348f0 (148b) - install-self with state push:
  *   g_dispatchSave1580 = 1; if chain[sel].slot84 != 0: g_eventQueueNotMask = 0x10042; jmp F.
@@ -237,6 +328,35 @@ __declspec(naked) void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalk
  *   into mstack-like arr at scaledInit; clear chain[sel].slot84 in g_x array;
  *   call F2; g_framePauseFlag = 1; ret.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfStatePush_InstallSelf3StateDualBody_004348f0(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_dispatchSave1580 = 1;
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    g_eventQueueNotMask = 0x10042;
+    HitReactionDispatcher();
+    return;
+  }
+  *(code **)(iVar2 + 8) = InstallSelfStatePush_InstallSelf3StateDualBody_004348f0;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14348f0;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  InstallSelf3StateDualBody();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfStatePush_InstallSelf3StateDualBody_004348f0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -271,3 +391,4 @@ __declspec(naked) void InstallSelfStatePush_InstallSelf3StateDualBody_004348f0(v
         ret
     }
 }
+#endif

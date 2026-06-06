@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -134,6 +135,44 @@ extern void InstallSelfThreeStateLeaPlus22(void);
 extern void MStackPushPtr1Jmp_00438e70(void);
 extern void StoreCallPauseDirtyStoreJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfCascadeSequence(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    MStackPushPtr1Jmp_00438e70();
+    return;
+  }
+  iVar2 = Cmp2CallDirtyCall();
+  if (iVar2 == 0) {
+    StoreCallPauseDirtyStoreJmp();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 1) == 0) {
+        GuardedSeq_PackedSelectLoad6_then_GuardedSeq();
+        return;
+      }
+      g_currentNodeFlags = 0x78000;
+      *(code **)(iVar1 + 8) = InstallSelfCascadeSequence;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1434350;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      EsiInstallTwoCallCmpInstall();
+      g_framePauseFlag = 1;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfCascadeSequence(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -229,3 +268,4 @@ __declspec(naked) void InstallSelfCascadeSequence(void) {
         jmp     InstallSelfChainSetB333v2
     }
 }
+#endif

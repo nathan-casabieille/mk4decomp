@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,84 @@ extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0
 extern void TripleFieldCopyHi(void);
 extern void TripleFieldCopyJmpHi(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TriPhaseDecCounterListAdvance(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    if (g_xformScratch2088 == 1) {
+      InstallSelfPauseTwoCall();
+      return;
+    }
+    MStackPush3CmpCall();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      func_0x0047aef0();
+      return;
+    }
+    g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x28);
+    if (g_walkCallback < 0x19) {
+      g_walkCallback = 0x18;
+    }
+    MK4_NODE_AT(int, g_cj_0054205c, 0x28) = g_walkCallback;
+    g_eventQueueChild = 2;
+  }
+  else {
+    if (iVar2 == 1) {
+      func_0x0048f7b0();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_walkCallback = 0xe666;
+      EsiEdiAliasDualMul10();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      *(code **)(iVar1 + 8) = TriPhaseDecCounterListAdvance;
+      *(undefined4 *)(iVar1 + 0x84) = 2;
+      g_dualC = 5;
+      g_framePauseFlag = 1;
+      return;
+    }
+    g_walkCallback = 0x9d;
+    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
+    g_eventQueueChild = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    MK4_NODE_AT(int, g_baseSel, 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_eventQueueChild = g_eventQueueChild + -1;
+    if (g_eventQueueChild == 0) {
+      func_0x0047aef0();
+      return;
+    }
+  }
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
+  iVar2 = g_baseSel * 4;
+  *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_eventQueueChild;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_eventQueueNotMask = 6;
+  EntryThunkBodyStateMachine();
+  if ((g_framePauseFlag == 0) && (TripleFieldCopyJmpHi(), g_framePauseFlag == 0)) {
+    *(code **)(iVar1 + 8) = TriPhaseDecCounterListAdvance;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 5;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void TriPhaseDecCounterListAdvance(void)
 {
     __asm
@@ -227,3 +306,4 @@ __declspec(naked) void TriPhaseDecCounterListAdvance(void)
         ret
     }
 }
+#endif

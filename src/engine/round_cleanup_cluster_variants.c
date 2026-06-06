@@ -237,6 +237,22 @@ loopPoll:
 #endif
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void RoundCleanupCluster_TableLookupCall_g_table(void)
+
+{
+  int iVar1;
+  
+  iVar1 = g_baseSel * 4;
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  *(code **)(iVar1 + 8) = RoundCleanupCluster_TableLookupCall_g_table;
+  *(undefined4 *)(iVar1 + 0x84) = 1;
+  g_dualC = 0x28;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void RoundCleanupCluster_TableLookupCall_g_table(void)
 {
     __asm {
@@ -385,6 +401,7 @@ __declspec(naked) void RoundCleanupCluster_TableLookupCall_g_table(void)
         ret
     }
 }
+#endif
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */

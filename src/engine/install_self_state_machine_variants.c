@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -127,6 +128,41 @@ extern void TripleFieldCopyJmpHi(void);
 
 extern void FiveCallGuardSetTail(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfStateMachine_SwapOrPassSet(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    BootInitGuardedCallChain();
+    if (g_framePauseFlag == 0) {
+      *(code **)(iVar1 + 8) = InstallSelfStateMachine_SwapOrPassSet;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 0xfa;
+      g_framePauseFlag = 1;
+    }
+    return;
+  }
+  if (iVar2 == 1) {
+    SwapOrPassSet();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_eventQueueNotMask = g_dlNalt1;
+    if (g_dualC != g_player1NodeIdx) {
+      g_eventQueueNotMask = g_dlNalt2;
+    }
+  }
+  StackPopDispatchTagged();
+  return;
+}
+#else
 __declspec(naked) void InstallSelfStateMachine_SwapOrPassSet(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -171,6 +207,7 @@ __declspec(naked) void InstallSelfStateMachine_SwapOrPassSet(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x0047f3f0 (237b game) - install-self with 3-state dispatch by [+0x84].
  *   B0 ([+0x84]==0): mov 0x4ccc, 0xffffb334 locals; call DualHelperCallStoreCjFields; if !pause
@@ -182,6 +219,56 @@ __declspec(naked) void InstallSelfStateMachine_SwapOrPassSet(void) {
  *   B2 ([+0x84]==2+): set g_eventQueueChild=0x11; call ScaledArrStore_GuardedChainCmpDualBitXor_00429980;
  *     if !pause: tail-call StackPopDispatchTagged; ret.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfStateMachine_ScaledArrStore_GuardedChainCmpDualBitXor(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_walkCallback = 0x4ccc;
+    g_eventQueueCurrent = 0xffffb334;
+    DualHelperCallStoreCjFields();
+    if (g_framePauseFlag == 0) {
+      TripleFieldCopyJmpHi();
+      if (g_framePauseFlag == 0) {
+        *(code **)(iVar1 + 8) = InstallSelfStateMachine_ScaledArrStore_GuardedChainCmpDualBitXor;
+        *(undefined4 *)(iVar1 + 0x84) = 1;
+        g_dualC = 4;
+        g_framePauseFlag = 1;
+      }
+    }
+  }
+  else if (iVar2 == 1) {
+    func_0x0048f7b0();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0xe666;
+      EsiEdiAliasDualMul10();
+      if (g_framePauseFlag == 0) {
+        *(code **)(iVar1 + 8) = InstallSelfStateMachine_ScaledArrStore_GuardedChainCmpDualBitXor;
+        *(undefined4 *)(iVar1 + 0x84) = 2;
+        g_dualC = 4;
+        g_framePauseFlag = 1;
+        return;
+      }
+    }
+  }
+  else {
+    g_eventQueueChild = 0x11;
+    ScaledArrStore_GuardedChainCmpDualBitXor_00429980();
+    if (g_framePauseFlag == 0) {
+      StackPopDispatchTagged();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfStateMachine_ScaledArrStore_GuardedChainCmpDualBitXor(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -250,3 +337,4 @@ __declspec(naked) void InstallSelfStateMachine_ScaledArrStore_GuardedChainCmpDua
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,40 @@ extern void GuardedSeq_MStackCall_then_CallSetPause_0049a650(void);
 extern void Set43DualCallJmp(void);
 extern void Vec2SumMul10ChainCompute(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EsiInstallQuadCallBitDispatch(void)
+
+{
+  int iVar1;
+  
+  iVar1 = g_baseSel;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  ClampNegPair();
+  if (g_framePauseFlag == 0) {
+    Vec2SumMul10ChainCompute();
+    if (g_framePauseFlag == 0) {
+      if (g_eventQueueWorkType < g_eventQueueCurrent) {
+        GuardedSeq_MStackCall_then_CallSetPause_0049a650();
+        return;
+      }
+      g_walkCallback = 0x10;
+      AtanDualDeltaThreshold();
+      if (g_framePauseFlag == 0) {
+        if (((byte)g_xformDirtyFlags & 1) != 0) {
+          Set43DualCallJmp();
+          return;
+        }
+        *(code **)(iVar1 * 4 + 8) = EsiInstallQuadCallBitDispatch;
+        MK4_NODE_AT(undefined4, iVar1, 0x84) = 1;
+        g_dualC = 1;
+        g_framePauseFlag = 1;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void EsiInstallQuadCallBitDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -164,3 +199,4 @@ __declspec(naked) void EsiInstallQuadCallBitDispatch(void) {
         ret
     }
 }
+#endif

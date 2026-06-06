@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,37 @@ extern unsigned int g_fightAxisPosY;
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void ScaledInitOrSelfPtr_func_0041f780_z(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfReentry(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(code **)((int)g_matrixStackTop * 4) = InstallSelfReentry;
+    GameDispatchValidateState();
+    return;
+  }
+  GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      func_0x00489130();
+      return;
+    }
+    *(code **)(iVar1 + 8) = InstallSelfReentry;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfReentry(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -163,3 +195,4 @@ epi:
         ret
     }
 }
+#endif

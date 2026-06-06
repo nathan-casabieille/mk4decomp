@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,63 @@ extern void MoveSelectorCluster(void);
 extern void ScaledAndAldf(void);
 extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelf3StateFieldSet(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    ScaledAndAldf();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (g_xformScratch2088 == 1) {
+      MoveSelectorCluster();
+      return;
+    }
+    *(code **)(iVar1 + 8) = InstallSelf3StateFieldSet;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    uVar3 = 0x147a090;
+  }
+  else {
+    if (iVar2 != 1) {
+      g_walkCallback = 0x5f;
+      ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_walkCallback = 0x51e;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x4c) = 0x51e;
+      func_0x0047a1c0();
+      return;
+    }
+    g_walkCallback = 0x5e;
+    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(code **)(iVar1 + 8) = InstallSelf3StateFieldSet;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    uVar3 = 0x247a090;
+  }
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = uVar3;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  func_0x0047a2e0();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelf3StateFieldSet(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -209,3 +267,4 @@ __declspec(naked) void InstallSelf3StateFieldSet(void) {
         ret
     }
 }
+#endif

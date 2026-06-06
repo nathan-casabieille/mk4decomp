@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,53 @@ extern void FiveTableWalkInit(void);
 extern void InstallSelfPackedF80(void);
 extern void TwinMStackPushScaledChain(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootDualStateInstallSelf(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_eventQueueWorkType = 0;
+    Push16Call();
+    if (g_framePauseFlag == 0) {
+      *(code **)(iVar1 + 8) = BootDualStateInstallSelf;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+    }
+  }
+  else if (iVar2 == 1) {
+    TwinMStackPushScaledChain();
+    if (g_framePauseFlag == 0) {
+      g_eventQueueCurrent = 5;
+      *(code **)(iVar1 + 8) = BootDualStateInstallSelf;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x2403070;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      InstallSelfPackedF80();
+      g_framePauseFlag = 1;
+      return;
+    }
+  }
+  else {
+    FiveTableWalkInit();
+    if (g_framePauseFlag == 0) {
+      StackPopDispatchTagged();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void BootDualStateInstallSelf(void)
 {
     __asm
@@ -182,3 +230,4 @@ __declspec(naked) void BootDualStateInstallSelf(void)
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,38 @@ extern void ScaledArrStore_ScaledChainJmp_00429450(void);
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfPushArg(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    CallPauseScaledStorePushCall();
+    return;
+  }
+  g_walkCallback = 0x2001;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x2001;
+  ArgScaledTestStore(&(*(unsigned int *)MK4_VA(unsigned int, 0x542970)));
+  if (g_framePauseFlag == 0) {
+    *(code **)(iVar1 + 8) = InstallSelfPushArg;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1460190;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    ScaledArrStore_ScaledChainJmp_00429450();
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfPushArg(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -165,3 +198,4 @@ __declspec(naked) void InstallSelfPushArg(void) {
         ret
     }
 }
+#endif

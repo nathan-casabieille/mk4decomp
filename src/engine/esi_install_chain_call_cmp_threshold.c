@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -114,6 +115,43 @@ extern void DualMul10ChainAcc7C(void);
 extern void DualMulScaleStore(void);
 extern void PhaseInstall2DInterpDispatch(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EsiInstallChainCallCmpThreshold(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    DualMulScaleStore();
+    if (g_framePauseFlag == 0) {
+      *(code **)(iVar1 + 8) = EsiInstallChainCallCmpThreshold;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+    }
+  }
+  else {
+    DualMul10ChainAcc7C();
+    if (g_framePauseFlag == 0) {
+      if (g_eventQueueNotMask < 0x300000) {
+        PhaseInstall2DInterpDispatch();
+        return;
+      }
+      g_walkCallback = 0;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x6c) = 0;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x74) = g_walkCallback;
+      PhaseInstall2DInterpDispatch();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void EsiInstallChainCallCmpThreshold(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -158,3 +196,4 @@ __declspec(naked) void EsiInstallChainCallCmpThreshold(void) {
         ret
     }
 }
+#endif

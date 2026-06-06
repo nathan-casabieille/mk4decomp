@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,42 @@ extern void ScaledChainNegStore(void);
 extern void SlotEvent3EntryChain(void);
 extern void SlotPhaseResetInstallChain(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PhaseDispatchPair(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    g_walkCallback = 0x13;
+    CmpEqInitCallElseJmp();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      MoveSelectorCluster();
+      return;
+    }
+    g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x70);
+    if (-0x290 < g_walkCallback) {
+      g_matrixStackTop = g_matrixStackTop + 1;
+      *(undefined1 **)((int)g_matrixStackTop * 4) = &(*(unsigned int *)MK4_VA(unsigned int, 0x479a70));
+      InstallSelfIndirectJmp();
+      return;
+    }
+  }
+  *(code **)(iVar1 + 8) = PhaseDispatchPair;
+  *(undefined4 *)(iVar1 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void PhaseDispatchPair(void)
 {
     __asm
@@ -229,3 +266,4 @@ __declspec(naked) void PhaseDispatchPair(void)
         ret
     }
 }
+#endif

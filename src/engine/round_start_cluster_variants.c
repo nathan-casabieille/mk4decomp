@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -139,6 +140,61 @@ extern void Ten404c40_404bd0(void);
 extern void UpperBodyComboFsmCluster(void);
 extern void ZeroTripleJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void RoundStartCluster_CjInstallSelfRouter(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    MStackPushSet0008();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0x100e;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x100e;
+      *(code **)(iVar1 + 8) = RoundStartCluster_CjInstallSelfRouter;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x147b900;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain();
+      g_framePauseFlag = 1;
+    }
+  }
+  else {
+    if (iVar2 != 1) {
+      CjInstallSelfRouter();
+      return;
+    }
+    ScaledZeroFour();
+    if (g_framePauseFlag == 0) {
+      StateDispatchTable();
+      if (g_framePauseFlag == 0) {
+        g_eventQueueNotMask = 0;
+        g_cj_00542054 = g_walkCallback;
+        g_currentNodeFlags = 0xccc;
+        *(code **)(iVar1 + 8) = RoundStartCluster_CjInstallSelfRouter;
+        MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x247b900;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+        *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+        EsiInstallClampAddCall();
+        g_framePauseFlag = 1;
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void RoundStartCluster_CjInstallSelfRouter(void)
 {
     __asm {
@@ -268,7 +324,94 @@ __declspec(naked) void RoundStartCluster_CjInstallSelfRouter(void)
         ret
     }
 }
+#endif
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void RoundStartCluster_RemapWalkAndJmp(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  iVar1 = g_baseSel * 4;
+  uVar2 = *(undefined4 *)(iVar1 + 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  switch(uVar2) {
+  case 0:
+    ZeroTripleJmp();
+    if ((g_framePauseFlag == 0) && (DualSectionInit(), g_framePauseFlag == 0)) {
+      StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x491c20)),0x25f);
+      *(code **)(iVar1 + 8) = RoundStartCluster_RemapWalkAndJmp;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  case 1:
+    RemapWalkAndJmp_00491e70();
+    if (g_framePauseFlag == 0) {
+      g_cj_00542054 = g_eventQueuePending;
+      RemapWalkAndJmp_00491ec0();
+      if (g_framePauseFlag == 0) {
+        g_cj_00542058 = g_eventQueuePending;
+        GuardedSetupTailMStackJmp();
+        if (((g_framePauseFlag == 0) && (MStackLoopFieldInit(), g_framePauseFlag == 0)) &&
+           (MStackPushChainDispatchInit5(), g_framePauseFlag == 0)) {
+          StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x492b60)),0x1a);
+          StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x492cd0)),0x1a);
+          g_eventQueueWorkType = 0x48;
+          Push16Call();
+          if (g_framePauseFlag == 0) {
+            MK4_NODE_AT(undefined4, g_cj_00542054, 0x6c) = 0x62e97;
+            g_walkCallback = 0xfff9d169;
+            MK4_NODE_AT(undefined4, g_cj_00542058, 0x6c) = 0xfff9d169;
+            *(code **)(iVar1 + 8) = RoundStartCluster_RemapWalkAndJmp;
+            *(undefined4 *)(iVar1 + 0x84) = 2;
+            g_dualC = 0x25;
+            g_framePauseFlag = 1;
+            return;
+          }
+        }
+      }
+    }
+    break;
+  case 2:
+    MK4_NODE_AT(undefined4, g_cj_00542054, 0x6c) = 0;
+    g_walkCallback = 0;
+    MK4_NODE_AT(undefined4, g_cj_00542058, 0x6c) = 0;
+    *(code **)(iVar1 + 8) = RoundStartCluster_RemapWalkAndJmp;
+    *(undefined4 *)(iVar1 + 0x84) = 3;
+    g_dualC = 0x8c;
+    g_framePauseFlag = 1;
+    return;
+  case 3:
+    g_walkCallback = 1;
+    g_dispatchWalkVar = 1;
+    UpperBodyComboFsmCluster();
+    if (g_framePauseFlag == 0) {
+      *(code **)(iVar1 + 8) = RoundStartCluster_RemapWalkAndJmp;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 4;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x44919c0;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      AudioInstallSelfStatePush();
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  default:
+    BootInitGuardedCallChain();
+    if (g_framePauseFlag == 0) {
+      StackPopDispatchTagged();
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void RoundStartCluster_RemapWalkAndJmp(void)
 {
     __asm {
@@ -541,3 +684,4 @@ __declspec(naked) void RoundStartCluster_RemapWalkAndJmp(void)
         ret      
     }
 }
+#endif

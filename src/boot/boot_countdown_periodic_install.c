@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -128,6 +129,58 @@ extern void MStackPush2ChainLLInsert(void);
 extern void SetDirty4XorScaledLoad(void);
 extern void TableHitOrSchedule(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootCountdownPeriodicInstall(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    TableHitOrSchedule(0x13c9);
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542058;
+    SetDirty4XorScaledLoad();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+    SetDirty4XorScaledLoad();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_eventQueueNotMask = 0x1e;
+  }
+  else {
+    g_eventQueueNotMask = g_eventQueueNotMask + -1;
+    if (g_eventQueueNotMask < 1) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542058;
+      MStackPush2ChainLLInsert();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_xformDirtyFlags = g_xformDirtyFlags | 4;
+      if (((g_cj_0054205c != 0) && (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, g_cj_0054205c != 0)) &&
+         (MStackCall_MStackPush2ChainLLInsert(), g_framePauseFlag != 0)) {
+        return;
+      }
+      CallSetPause();
+      return;
+    }
+  }
+  LinkSiblingsAndInstallSelf();
+  if (g_framePauseFlag == 0) {
+    *(code **)(iVar1 + 8) = BootCountdownPeriodicInstall;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void BootCountdownPeriodicInstall(void)
 {
     __asm
@@ -203,3 +256,4 @@ __declspec(naked) void BootCountdownPeriodicInstall(void)
         ret
     }
 }
+#endif

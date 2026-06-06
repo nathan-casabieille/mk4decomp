@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -131,6 +132,66 @@ extern void ThreeMul10Stores(void);
 extern void TripleAddVec3(void);
 extern void TripleSubVec3(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelf5CallVecChain(void)
+
+{
+  int iVar1;
+  
+  iVar1 = g_baseSel;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  g_dualC = g_baseSel + 0xc;
+  g_eventQueuePending = g_installVecChainVar;
+  g_dualD = MK4_NODE_AT(int, g_cj_00542054, 0);
+  if (g_dualD != 0) {
+    g_dualD = g_dualD + 0x15;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_savedNode;
+    QuadInterpolatorV2();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    if (g_dualD != 0) {
+      g_dualC = MK4_NODE_AT(int, g_cj_00542058, 0) + 0x15;
+      TripleSubVec3();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_walkCallback = 0xcccc;
+      g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      ThreeMul10Stores();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_dualC = MK4_NODE_AT(int, g_cj_00542058, 0) + 0x1b;
+      TripleSubVec3();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_walkCallback = 0x4ccc;
+      g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      ThreeClampLoop();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_00542058, 0) + 0x1b;
+      g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      TripleAddVec3();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+    }
+  }
+  *(code **)(iVar1 * 4 + 8) = InstallSelf5CallVecChain;
+  MK4_NODE_AT(undefined4, iVar1, 0x84) = 1;
+  g_dualC = 2;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelf5CallVecChain(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -214,3 +275,4 @@ __declspec(naked) void InstallSelf5CallVecChain(void) {
         ret
     }
 }
+#endif

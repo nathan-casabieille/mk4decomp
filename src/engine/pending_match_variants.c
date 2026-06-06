@@ -8389,6 +8389,33 @@ __declspec(naked) void PendingMatch_CondPlayerLookup(void)
     }
 }
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_SlotEvent3EntryChain(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    FiveCallGuardSetTail();
+    return;
+  }
+  *(code **)(iVar2 + 8) = PendingMatch_SlotEvent3EntryChain;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x146e2e0;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  SlotEvent3EntryChain();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_SlotEvent3EntryChain(void)
 {
     __asm {
@@ -8921,6 +8948,7 @@ __declspec(naked) void PendingMatch_SlotEvent3EntryChain(void)
         ret      
     }
 }
+#endif
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
@@ -10341,6 +10369,41 @@ __declspec(naked) void PendingMatch_StackPopDispatchTagged_00466fc0(void)
     }
 }
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int PendingMatch_DoubleScaledCrossStore(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = *(int *)(iVar1 + 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_cj_00542054 = 0x14044c;
+    *(code **)(iVar1 + 8) = PendingMatch_DoubleScaledCrossStore;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1448750;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    iVar2 = SetJmp_InstallSelfChainEsi();
+    g_framePauseFlag = 1;
+  }
+  else {
+    DoubleScaledCrossStore();
+    iVar2 = g_framePauseFlag;
+    if (g_framePauseFlag == 0) {
+      g_cj_0054205c = g_cj_00542054;
+      ArgSarStoreJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4e62b8)));
+      return g_framePauseFlag;
+    }
+  }
+  return iVar2;
+}
+#else
 __declspec(naked) void PendingMatch_DoubleScaledCrossStore(void)
 {
     __asm {
@@ -10385,6 +10448,7 @@ __declspec(naked) void PendingMatch_DoubleScaledCrossStore(void)
         ret      
     }
 }
+#endif
 
 
 #ifdef NON_MATCHING

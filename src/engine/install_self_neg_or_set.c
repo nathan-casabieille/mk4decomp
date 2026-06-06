@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,45 @@ extern void CinematicFsmCluster(void);
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfNegOrSet(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_currentNodeFlags = 0xccc;
+    func_0x0047aaf0();
+    if (g_framePauseFlag == 0) {
+      *(code **)(iVar1 + 8) = InstallSelfNegOrSet;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 2;
+      g_framePauseFlag = 1;
+    }
+  }
+  else {
+    if (iVar2 != 1) {
+      StackPopDispatchTagged();
+      return;
+    }
+    g_currentNodeFlags = -g_currentNodeFlags;
+    func_0x0047aaf0();
+    if (g_framePauseFlag == 0) {
+      *(code **)(iVar1 + 8) = InstallSelfNegOrSet;
+      *(undefined4 *)(iVar1 + 0x84) = 2;
+      g_dualC = 2;
+      g_framePauseFlag = 1;
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfNegOrSet(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -166,3 +206,4 @@ __declspec(naked) void InstallSelfNegOrSet(void) {
         ret
     }
 }
+#endif

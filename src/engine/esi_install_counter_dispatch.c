@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,45 @@ extern unsigned int g_fightAxisPosY;
 extern void TripleFieldCopyJmpLo(void);
 extern void TripleFieldCopyLo(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EsiInstallCounterDispatch(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    TripleFieldCopyJmpLo();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0x320000;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58) = 0x320000;
+      *(code **)(iVar1 + 8) = EsiInstallCounterDispatch;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 3;
+      g_framePauseFlag = 1;
+    }
+  }
+  else {
+    if (iVar2 != 1) {
+      StackPopDispatchTagged();
+      return;
+    }
+    TripleFieldCopyLo();
+    if (g_framePauseFlag == 0) {
+      *(code **)(iVar1 + 8) = EsiInstallCounterDispatch;
+      *(undefined4 *)(iVar1 + 0x84) = 2;
+      g_dualC = 3;
+      g_framePauseFlag = 1;
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void EsiInstallCounterDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -161,3 +201,4 @@ __declspec(naked) void EsiInstallCounterDispatch(void) {
         ret
     }
 }
+#endif

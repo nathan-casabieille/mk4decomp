@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -134,6 +135,41 @@ extern void ChainDispatcher4Call(void);
 extern void ScaledTestCallPauseJmpFar(void);
 extern void TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase3Packed3EntryDispatch(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 == 0) {
+    MK4_NODE_AT(int, g_cj_0054205c, 0x58) = MK4_NODE_AT(int, g_cj_0054205c, 0x58) - g_currentNodeFlags;
+    g_walkCallback = MK4_NODE_AT(int, g_cj_00542054, 0x58) - g_currentNodeFlags;
+    MK4_NODE_AT(int, g_cj_00542054, 0x58) = g_walkCallback;
+    *(code **)(iVar2 + 8) = Phase3Packed3EntryDispatch;
+    *(undefined4 *)(iVar2 + 0x84) = 1;
+    g_dualC = 3;
+    g_framePauseFlag = 1;
+    return;
+  }
+  if (iVar1 != 1) {
+    StackPopDispatchTagged();
+    return;
+  }
+  MK4_NODE_AT(int, g_cj_0054205c, 0x58) = g_currentNodeFlags + MK4_NODE_AT(int, g_cj_0054205c, 0x58);
+  g_walkCallback = g_currentNodeFlags + MK4_NODE_AT(int, g_cj_00542054, 0x58);
+  MK4_NODE_AT(int, g_cj_00542054, 0x58) = g_walkCallback;
+  *(code **)(iVar2 + 8) = Phase3Packed3EntryDispatch;
+  *(undefined4 *)(iVar2 + 0x84) = 2;
+  g_dualC = 3;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void Phase3Packed3EntryDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -235,3 +271,4 @@ __declspec(naked) void Phase3Packed3EntryDispatch(void) {
         jmp     ChainDispatcher4Call
     }
 }
+#endif

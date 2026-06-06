@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -131,6 +132,58 @@ extern void GuardedPackedSlotInit(void);
 extern void GuardedSeq_CopyJmp_then_GuardedLoopWithCallback(void);
 extern void ThrowFsmCluster_InstallSelfIndirectJmpNeg(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase3PackedInstallSelf(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    GuardedPackedSlotInit(&g_dispatchSave31);
+    if (g_framePauseFlag == 0) {
+      g_eventQueueChild = 2;
+      g_cj_00542058 = 0x140302;
+      *(code **)(iVar1 + 8) = Phase3PackedInstallSelf;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x146ff80;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      GuardedSeq_CopyJmp_then_GuardedLoopWithCallback();
+      g_framePauseFlag = 1;
+    }
+  }
+  else {
+    if (iVar2 != 1) {
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x78) = g_xformScratch2088;
+      ThrowFsmCluster_InstallSelfIndirectJmpNeg();
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x13b030;
+    GuardedDirtyXformFromTable();
+    if (g_framePauseFlag == 0) {
+      g_eventQueueChild = 4;
+      *(code **)(iVar1 + 8) = Phase3PackedInstallSelf;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x246ff80;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      GuardedSeq_CopyJmp_then_GuardedLoopWithCallback();
+      g_framePauseFlag = 1;
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Phase3PackedInstallSelf(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -207,3 +260,4 @@ __declspec(naked) void Phase3PackedInstallSelf(void) {
         ret
     }
 }
+#endif

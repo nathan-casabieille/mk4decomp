@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,28 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void CleanupCallTwice(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int ChainWalkCleanup(void)
+
+{
+  while( true ) {
+    if (*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x48) != 0) {
+      CleanupCallTwice((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x48);
+    }
+    if (*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) == 0) break;
+    if (*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc) != 1) {
+      g_walkCallback = ChainWalkCleanup;
+      Helper_TickAlt();
+      return g_framePauseFlag;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    g_walkCallback = (code *)0x1;
+  }
+  g_walkCallback = (code *)*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  return (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+}
+#else
 __declspec(naked) void ChainWalkCleanup(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -150,3 +173,4 @@ tailRecurse:
         jmp     ChainWalkCleanup
     }
 }
+#endif

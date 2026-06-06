@@ -36,7 +36,10 @@ ROOT = Path(__file__).resolve().parents[2]
 # Word-boundary tokens that mean the twin can't compile cleanly / portably:
 # Ghidra sub-register intrinsics, register-input artifacts, code fn-ptrs,
 # odd-width undefineds, and C99 bool/true/false (not assumed available).
-BAIL_TOKENS = ('code', 'CONCAT', 'SUB4', 'SUB8', 'SUB2', 'ZEXT', 'SEXT',
+# `code` was here but is now typedef'd (unsigned char) in ghidra_types.h:
+# code-pointer store/loads compile, while a genuine indirect call through a
+# `code *` stays a compile error -> the compile gate bails on it for us.
+BAIL_TOKENS = ('CONCAT', 'SUB4', 'SUB8', 'SUB2', 'ZEXT', 'SEXT',
                'in_EAX', 'in_ECX', 'unaff_', 'extraout_', 'halt_baddata',
                'undefined3', 'undefined5', 'undefined6', 'undefined7')
 # Leftover Ghidra placeholders (unmapped global/func, code label, jump

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -189,6 +190,48 @@ __declspec(naked) void InstallSelfChainExtendCall_MStackPushSet6Jmp(void) {
 
 /* @addr 0x0047de60 (128b) - install-self chain extension variant
  *   w/ FiveCallGuardSetTail bypass + ScaledChainJmp tail. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfChainExtendCall_ScaledChainJmp(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 == 0) {
+    *(code **)(iVar2 + 8) = InstallSelfChainExtendCall_ScaledChainJmp;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x147de60;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    ScaledChainJmp_00429470();
+    g_framePauseFlag = 1;
+    return;
+  }
+  g_walkCallback = 0x200b;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x200b;
+  ScaledMove48to58();
+  if ((((g_framePauseFlag == 0) && (iVar1 = DualGatedStateYield(), iVar1 == 0)) &&
+      (SlotPhaseResetInstallChain(), g_framePauseFlag == 0)) && (DirtyToggleByGate(), g_framePauseFlag == 0)) {
+    if ((((byte)g_xformDirtyFlags & 4) != 0) && (DualScaledInitClear(), g_framePauseFlag != 0)) {
+      return;
+    }
+    StateDispatchTable();
+    if (g_framePauseFlag == 0) {
+      g_xformScratch2088 = 0x3333;
+      g_cj_00542054 = g_walkCallback;
+      BitGateInstallChainJmp();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfChainExtendCall_ScaledChainJmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -221,9 +264,37 @@ __declspec(naked) void InstallSelfChainExtendCall_ScaledChainJmp(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x00481eb0 (128b) - twin of 0x0047de60 with helper
  *   ScaledInitWithCounterAndType + tail GameModeAdvanceCluster. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfChainExtendCall_GameModeAdvanceCluster(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    ScaledInitWithCounterAndType_004314f0();
+    return;
+  }
+  *(code **)(iVar2 + 8) = InstallSelfChainExtendCall_GameModeAdvanceCluster;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1481eb0;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  GameModeAdvanceCluster();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfChainExtendCall_GameModeAdvanceCluster(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -256,9 +327,37 @@ __declspec(naked) void InstallSelfChainExtendCall_GameModeAdvanceCluster(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x004945f0 (128b) - twin of 0x0047de60 with bypass to
  *   CallSetPause + tail InitZeroChainLookupJmp. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfChainExtendCall_InitZeroChainLookupJmp(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    CallSetPause();
+    return;
+  }
+  *(code **)(iVar2 + 8) = InstallSelfChainExtendCall_InitZeroChainLookupJmp;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14945f0;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  InitZeroChainLookupJmp();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfChainExtendCall_InitZeroChainLookupJmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -291,3 +390,4 @@ __declspec(naked) void InstallSelfChainExtendCall_InitZeroChainLookupJmp(void) {
         ret
     }
 }
+#endif

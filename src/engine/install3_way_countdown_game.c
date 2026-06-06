@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -113,6 +114,49 @@ extern u32 g_texXorKey;
 extern void DecBoundCheckCallJmp(void);
 extern void ScaledStoreE0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Install3WayCountdownGame(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    ScaledStoreE0(0x1000);
+    g_eventQueueChild = 0x23;
+    g_gameCountdown = (-(uint)(g_texXorKey != 0) & 0x5a) + 0x18 ^ 0x7b;
+    g_walkCallback = g_gameCountdown;
+  }
+  else {
+    if (g_gtState438 == 0) {
+      g_eventQueueChild = g_eventQueueChild + -1;
+    }
+    if ((g_eventQueueChild == 0) && (DecBoundCheckCallJmp(), g_framePauseFlag != 0)) {
+      return;
+    }
+    if (g_walkCallback == 0) {
+      g_eventQueueCurrent = 0;
+      StackPopDispatchTagged();
+      return;
+    }
+    g_walkCallback = g_audioBankSel;
+    if (g_audioBankSel != 0) {
+      g_eventQueueCurrent = 1;
+      StackPopDispatchTagged();
+      return;
+    }
+  }
+  *(code **)(iVar1 + 8) = Install3WayCountdownGame;
+  *(undefined4 *)(iVar1 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void Install3WayCountdownGame(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -179,3 +223,4 @@ __declspec(naked) void Install3WayCountdownGame(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -129,6 +130,69 @@ extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0
 extern void SfxAttenuateAndApply(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Install3StateLongSeq(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    MStackChainBit2Cascade();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 1) != 0) {
+        InstallSelfCascadingCalls();
+        return;
+      }
+      ScaledZeroFour();
+      if (g_framePauseFlag == 0) {
+        g_walkCallback = 5;
+        DispatcherComplex131_00431530();
+        if (g_framePauseFlag == 0) {
+          MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x1000;
+          g_walkCallback = 0x62;
+          ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0();
+          if (g_framePauseFlag == 0) {
+            g_walkCallback = 0x3e;
+            TableLookupCall_g_eventTbl_112();
+            if (g_framePauseFlag == 0) {
+              *(code **)(iVar1 + 8) = Install3StateLongSeq;
+              *(undefined4 *)(iVar1 + 0x84) = 1;
+              g_dualC = 0x33;
+              g_framePauseFlag = 1;
+            }
+          }
+        }
+      }
+    }
+  }
+  else {
+    if (iVar2 != 1) {
+      FiveCallGuardSetTail();
+      return;
+    }
+    MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0;
+    g_walkCallback = 0x1eb8;
+    SfxAttenuateAndApply();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 8;
+      ScaledIndexConditionalAdd();
+      if (g_framePauseFlag == 0) {
+        *(code **)(iVar1 + 8) = Install3StateLongSeq;
+        *(undefined4 *)(iVar1 + 0x84) = 2;
+        g_dualC = 0xe;
+        g_framePauseFlag = 1;
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Install3StateLongSeq(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -223,3 +287,4 @@ __declspec(naked) void Install3StateLongSeq(void) {
         ret
     }
 }
+#endif

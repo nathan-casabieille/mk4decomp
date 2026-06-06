@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,96 @@ extern void SetJmp_JuggleFsmCluster_00451b60(void);
 extern void SetJmp_JuggleFsmCluster_00451b70(void);
 extern void SetJmp_JuggleFsmCluster_00451b80(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void State6CycleFsm(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  iVar1 = g_baseSel * 4;
+  uVar2 = MK4_NODE_AT(undefined4, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  switch(uVar2) {
+  case 0:
+    CallPauseTestByte4ZeroCB();
+    if ((g_framePauseFlag == 0) &&
+       ((((byte)g_xformDirtyFlags & 4) == 0 ||
+        ((SetJmp_SetJmp_00451ad0_00451aa0(), g_framePauseFlag == 0 && (SetJmp_SetJmp_00451b10_00451ae0(), g_framePauseFlag == 0)))))) {
+      *(code **)(iVar1 + 8) = State6CycleFsm;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  case 1:
+    CallPauseTestByte4ZeroCB();
+    if ((g_framePauseFlag == 0) &&
+       ((((byte)g_xformDirtyFlags & 4) == 0 ||
+        ((SetJmp_SetJmp_00451ad0_00451ab0(), g_framePauseFlag == 0 && (SetJmp_SetJmp_00451b10_00451af0(), g_framePauseFlag == 0)))))) {
+      *(code **)(iVar1 + 8) = State6CycleFsm;
+      *(undefined4 *)(iVar1 + 0x84) = 2;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  case 2:
+    CallPauseTestByte4ZeroCB();
+    if ((g_framePauseFlag == 0) &&
+       ((((byte)g_xformDirtyFlags & 4) == 0 ||
+        ((SetJmp_SetJmp_00451ad0_00451ac0(), g_framePauseFlag == 0 && (SetJmp_SetJmp_00451b10_00451b00(), g_framePauseFlag == 0)))))) {
+      *(code **)(iVar1 + 8) = State6CycleFsm;
+      *(undefined4 *)(iVar1 + 0x84) = 3;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  case 3:
+    CallPauseTestByte4ZeroCB();
+    if ((g_framePauseFlag == 0) &&
+       ((((byte)g_xformDirtyFlags & 4) == 0 ||
+        ((SetJmp_SetJmp_00451b50_00451b20(), g_framePauseFlag == 0 && (SetJmp_JuggleFsmCluster_00451b60(), g_framePauseFlag == 0)))))) {
+      *(code **)(iVar1 + 8) = State6CycleFsm;
+      *(undefined4 *)(iVar1 + 0x84) = 4;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  case 4:
+    CallPauseTestByte4ZeroCB();
+    if ((g_framePauseFlag == 0) &&
+       ((((byte)g_xformDirtyFlags & 4) == 0 ||
+        ((SetJmp_SetJmp_00451b50_00451b30(), g_framePauseFlag == 0 && (SetJmp_JuggleFsmCluster_00451b70(), g_framePauseFlag == 0)))))) {
+      *(code **)(iVar1 + 8) = State6CycleFsm;
+      *(undefined4 *)(iVar1 + 0x84) = 5;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  case 5:
+    CallPauseTestByte4ZeroCB();
+    if ((g_framePauseFlag == 0) &&
+       ((((byte)g_xformDirtyFlags & 4) == 0 ||
+        ((SetJmp_SetJmp_00451b50_00451b40(), g_framePauseFlag == 0 && (SetJmp_JuggleFsmCluster_00451b80(), g_framePauseFlag == 0)))))) {
+      *(code **)(iVar1 + 8) = State6CycleFsm;
+      *(undefined4 *)(iVar1 + 0x84) = 6;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  default:
+    StackPopDispatchTagged();
+  }
+  return;
+}
+#else
 __declspec(naked) void State6CycleFsm(void)
 {
     __asm {
@@ -313,3 +404,4 @@ __declspec(naked) void State6CycleFsm(void)
         _emit 0x00
     }
 }
+#endif

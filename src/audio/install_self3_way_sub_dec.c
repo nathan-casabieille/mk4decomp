@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,40 @@ extern void GuardedCallDirtyJmpInit(void);
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelf3WaySubDec(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 == 0) {
+    *(code **)(iVar2 + 8) = InstallSelf3WaySubDec;
+    *(undefined4 *)(iVar2 + 0x84) = 1;
+    g_dualC = 0x1e;
+    g_framePauseFlag = 1;
+    return;
+  }
+  if (iVar1 != 1) {
+    CallSetPause();
+    return;
+  }
+  *(code **)(iVar2 + 8) = InstallSelf3WaySubDec;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x24a1320;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  GuardedCallDirtyJmpInit();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelf3WaySubDec(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -164,3 +199,4 @@ __declspec(naked) void InstallSelf3WaySubDec(void) {
         ret
     }
 }
+#endif

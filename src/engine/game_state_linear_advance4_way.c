@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -113,6 +114,68 @@ extern void EsiAliasInstallSelf(void);
 extern void RunFsmCluster(void);
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GameStateLinearAdvance4Way(void)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  uVar1 = *(undefined4 *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  switch(uVar1) {
+  case 0:
+    *(code **)(iVar2 + 8) = GameStateLinearAdvance4Way;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1484480;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    RunFsmCluster();
+    g_framePauseFlag = 1;
+    return;
+  case 1:
+    *(code **)(iVar2 + 8) = GameStateLinearAdvance4Way;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x2484480;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    RunFsmCluster();
+    g_framePauseFlag = 1;
+    return;
+  case 2:
+    *(code **)(iVar2 + 8) = GameStateLinearAdvance4Way;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 3;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x3484480;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    RunFsmCluster();
+    g_framePauseFlag = 1;
+    return;
+  case 3:
+    *(code **)(iVar2 + 8) = GameStateLinearAdvance4Way;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 4;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x4484480;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    RunFsmCluster();
+    g_framePauseFlag = 1;
+    return;
+  default:
+    EsiAliasInstallSelf();
+    return;
+  }
+}
+#else
 __declspec(naked) void GameStateLinearAdvance4Way(void)
 {
     __asm {
@@ -235,3 +298,4 @@ __declspec(naked) void GameStateLinearAdvance4Way(void)
         _emit    0x00
     }
 }
+#endif

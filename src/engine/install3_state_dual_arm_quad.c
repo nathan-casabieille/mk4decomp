@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -128,6 +129,76 @@ extern void PushCallStoreClearJmp(void);
 extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
 extern void SlotPhaseResetInstallChain(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Install3StateDualArmQuad(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    SlotPhaseResetInstallChain();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    ScaledInit_GuardedDirtyXformFromTable_g_scaledInit();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    PushCallStoreClearJmp();
+  }
+  else {
+    if (iVar2 != 1) {
+      CjInstallSelfRouter();
+      return;
+    }
+    iVar2 = DualGatedStateYield();
+    if (iVar2 != 0) {
+      return;
+    }
+    CjMaskedFlagProbe();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 1) == 0) {
+      SlotPhaseResetInstallChain();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      *(code **)(iVar1 + 8) = Install3StateDualArmQuad;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x24602b0;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      Init3333Jmp();
+      g_framePauseFlag = 1;
+      return;
+    }
+    GuardedDualConst2AndToggle();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      CallPauseMStackPushSet0Jmp();
+      return;
+    }
+    CallPauseTriCmpJmp();
+  }
+  if (g_framePauseFlag == 0) {
+    *(code **)(iVar1 + 8) = Install3StateDualArmQuad;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void Install3StateDualArmQuad(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -244,3 +315,4 @@ __declspec(naked) void Install3StateDualArmQuad(void) {
         ret
     }
 }
+#endif

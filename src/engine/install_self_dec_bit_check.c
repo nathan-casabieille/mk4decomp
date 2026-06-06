@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -112,6 +113,34 @@ extern unsigned int g_fightAxisPosY;
  *   guard + chain[+0x74] & 0xf00 check before install.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfDecBitCheck(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if ((iVar1 != 0) && (g_eventQueueChild = g_eventQueueChild + -1, g_eventQueueChild == 0)) {
+    StackPopDispatchTagged();
+    return;
+  }
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x3c);
+  g_walkCallback = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74) & 0xf00;
+  if (g_walkCallback == 0) {
+    StackPopDispatchTagged();
+    return;
+  }
+  *(code **)(iVar2 + 8) = InstallSelfDecBitCheck;
+  *(undefined4 *)(iVar2 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfDecBitCheck(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -144,3 +173,4 @@ __declspec(naked) void InstallSelfDecBitCheck(void) {
         ret
     }
 }
+#endif

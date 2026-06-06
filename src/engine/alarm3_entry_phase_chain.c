@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -157,6 +158,54 @@ void Alarm3PhaseChainEntry2(void) {
 }
 
 /* entry 3 / body (offset 0x90, 211b) */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Alarm3PhaseChainBody(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    g_walkCallback = 2;
+    CmpEqInitCallElseJmp();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      TriPhaseDualPathInstallChain();
+      return;
+    }
+    TailJmpInstallSelfPair();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (0x26665 < g_walkCallback) {
+      ScaledAndAldf();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_walkCallback = 0x4ccc;
+      EsiEdiAliasDualMul10();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_walkCallback = 0x28f;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x4c) = 0x28f;
+      InstallSelfThresholdDispatch();
+      return;
+    }
+  }
+  *(code **)(iVar1 + 8) = Alarm3PhaseChainBody;
+  *(undefined4 *)(iVar1 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void Alarm3PhaseChainBody(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -214,3 +263,4 @@ __declspec(naked) void Alarm3PhaseChainBody(void) {
         ret
     }
 }
+#endif

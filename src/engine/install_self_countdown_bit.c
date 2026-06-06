@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,47 @@ extern unsigned int g_matrixStack_arr;
 extern void AtanDualDeltaThreshold(void);
 extern void RoundOverFsmCluster(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfCountdownBit(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(int *)((int)g_matrixStackTop * 4) = g_eventQueueNotMask;
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueChild;
+    g_walkCallback = 6;
+    AtanDualDeltaThreshold();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_eventQueueChild = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_eventQueueNotMask = *(int *)((int)(g_matrixStackTop + -1) * 4);
+    g_matrixStackTop = g_matrixStackTop + -2;
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      RoundOverFsmCluster();
+      return;
+    }
+    g_eventQueueNotMask = g_eventQueueNotMask + -1;
+    if (g_eventQueueNotMask == 0) {
+      StackPopDispatchTagged();
+      return;
+    }
+  }
+  *(code **)(iVar1 + 8) = InstallSelfCountdownBit;
+  *(undefined4 *)(iVar1 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfCountdownBit(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -186,3 +228,4 @@ __declspec(naked) void InstallSelfCountdownBit(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -128,6 +129,48 @@ extern void QuadCmpBitGateJmp(void);
 extern void ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain(void);
 extern void ScaledMove48to58(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfMultiThunkDispatch(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = *(int *)(iVar1 + 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    *(code **)(iVar1 + 8) = InstallSelfMultiThunkDispatch;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x146c3d0;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain();
+    g_framePauseFlag = 1;
+    return;
+  }
+  g_walkCallback = 0x200b;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x200b;
+  ScaledMove48to58();
+  if ((((g_framePauseFlag == 0) && (iVar2 = DualGatedStateYield(), iVar2 == 0)) &&
+      (SlotPhaseResetInstallChain(), g_framePauseFlag == 0)) && (DirtyToggleByGate(), g_framePauseFlag == 0)) {
+    if ((((byte)g_xformDirtyFlags & 4) != 0) && (DualScaledInitClear(), g_framePauseFlag != 0)) {
+      return;
+    }
+    StateDispatchTable();
+    if (g_framePauseFlag == 0) {
+      g_xformScratch2088 = 0x3333;
+      g_cj_00542054 = g_walkCallback;
+      BitGateInstallChainJmp();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfMultiThunkDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -224,3 +267,4 @@ __declspec(naked) void InstallSelfMultiThunkDispatch(void) {
         ret
     }
 }
+#endif

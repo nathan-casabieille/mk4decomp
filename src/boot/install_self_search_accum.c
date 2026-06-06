@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,41 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfSearchAccum(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_eventQueueWorkType = 0x34d;
+    Push16Call();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_cj_0054205c = 0x1355d8;
+  }
+  g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0);
+  g_cj_0054205c = g_cj_0054205c + 1;
+  if (g_walkCallback != 0) {
+    g_eventQueueCurrent = g_walkCallback + MK4_NODE_AT(int, g_cj_00542054, 0x58);
+    MK4_NODE_AT(int, g_cj_00542054, 0x58) = g_eventQueueCurrent;
+    MK4_NODE_AT(int, g_cj_00542058, 0x58) = g_eventQueueCurrent;
+    *(code **)(iVar1 + 8) = InstallSelfSearchAccum;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 2;
+    g_framePauseFlag = 1;
+    return;
+  }
+  StackPopDispatchTagged();
+  return;
+}
+#else
 __declspec(naked) void InstallSelfSearchAccum(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -176,3 +212,4 @@ __declspec(naked) void InstallSelfSearchAccum(void) {
         ret
     }
 }
+#endif

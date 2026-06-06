@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -127,6 +128,35 @@ extern void PrefixThunkInstallSelf3State(void);
 extern void ProneFsmCluster(void);
 extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4990(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleBlockInstallThresholdMasked(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    Wrapper_CmpDualPatchScaledRangeJmp_004e4990();
+    return;
+  }
+  g_currentNodeFlags = 0x5cccc;
+  g_eventQueueChild = 0x3c;
+  *(code **)(iVar2 + 8) = TripleBlockInstallThresholdMasked;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1435df0;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void TripleBlockInstallThresholdMasked(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -213,3 +243,4 @@ __declspec(naked) void TripleBlockInstallThresholdMasked(void) {
         ret
     }
 }
+#endif

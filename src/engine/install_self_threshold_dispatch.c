@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,54 @@ extern void FiveCallGuardSetTail(void);
 extern void ScaledArrStore_ScaledChainJmp_00429450(void);
 extern void TailJmpInstallSelfPair(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfThresholdDispatch(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    if (iVar2 != 1) {
+      FiveCallGuardSetTail();
+      return;
+    }
+    g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x70);
+    if (-1 < g_walkCallback) {
+      func_0x0047e690();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      if (g_walkCallback < 0x18ccd) {
+        CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        g_eventQueuePending = 0x140053;
+        *(code **)(iVar1 + 8) = InstallSelfThresholdDispatch;
+        MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x247e310;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+        *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+        ScaledArrStore_ScaledChainJmp_00429450();
+        g_framePauseFlag = 1;
+        return;
+      }
+    }
+  }
+  *(code **)(iVar1 + 8) = InstallSelfThresholdDispatch;
+  *(undefined4 *)(iVar1 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfThresholdDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -210,3 +259,4 @@ __declspec(naked) void InstallSelfThresholdDispatch(void) {
         ret
     }
 }
+#endif

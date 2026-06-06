@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,49 @@ extern void ScaledInitOrSelfPtr_StackPopDispatchTagged(void);
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelf3WayChainCmp(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    if (iVar2 != 1) {
+      StackPopDispatchTagged();
+      return;
+    }
+    g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x28);
+    if (g_eventQueueChild <= g_eventQueueCurrent) {
+      GuardedChainCmpDualBitXor();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      *(code **)(iVar1 + 8) = InstallSelf3WayChainCmp;
+      *(undefined4 *)(iVar1 + 0x84) = 2;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+  }
+  GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      ScaledInitOrSelfPtr_StackPopDispatchTagged();
+      return;
+    }
+    *(code **)(iVar1 + 8) = InstallSelf3WayChainCmp;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelf3WayChainCmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -176,3 +220,4 @@ __declspec(naked) void InstallSelf3WayChainCmp(void) {
         ret
     }
 }
+#endif

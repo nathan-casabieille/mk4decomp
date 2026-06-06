@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesOO.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
@@ -20,6 +21,32 @@ extern void func_00428950_oo(void);
 extern void GameDispatchValidateState(void);
 extern void InstallSelfCallBitGate(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CallPauseDirty1JmpDirty4StackPush_GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void)
+
+{
+  GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      ScaledInitOrSelfPtr_StackPopDispatchTagged();
+      return;
+    }
+    DirtyToggleByGate();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 4) != 0) {
+        g_matrixStackTop = g_matrixStackTop + 1;
+        *(code **)((int)g_matrixStackTop * 4) = ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush;
+        GameDispatchValidateState();
+        return;
+      }
+      ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void) {
     __asm {
         call    GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp
@@ -52,6 +79,7 @@ __declspec(naked) void CallPauseDirty1JmpDirty4StackPush_GuardedSeq_GuardedChain
         ret
     }
 }
+#endif
 
 /* @addr 0x00483a80 (84b): same shape, push 0x00483ae0 instead of 0x00428950 */
 extern void GuardedDoubleIncCmpJmp(void);

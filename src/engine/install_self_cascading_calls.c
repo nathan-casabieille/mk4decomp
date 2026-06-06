@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,48 @@ extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfCascadingCalls(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x1015;
+    g_walkCallback = 7;
+    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0();
+    if (g_framePauseFlag == 0) {
+      MStackPushSet0008();
+      if (g_framePauseFlag == 0) {
+        ScaledZeroFour();
+        if (g_framePauseFlag == 0) {
+          IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(&(*(unsigned int *)MK4_VA(unsigned int, 0x542bac)));
+          if (g_framePauseFlag == 0) {
+            *(code **)(iVar1 + 8) = InstallSelfCascadingCalls;
+            *(undefined4 *)(iVar1 + 0x84) = 1;
+            g_dualC = 0x3c;
+            g_framePauseFlag = 1;
+          }
+        }
+      }
+    }
+  }
+  else {
+    g_walkCallback = 8;
+    ScaledIndexConditionalAdd();
+    if (g_framePauseFlag == 0) {
+      FiveCallGuardSetTail();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfCascadingCalls(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -182,3 +225,4 @@ __declspec(naked) void InstallSelfCascadingCalls(void) {
         ret
     }
 }
+#endif

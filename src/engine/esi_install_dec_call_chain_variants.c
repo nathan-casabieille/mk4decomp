@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,35 @@ extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void ScaledInitOrSelfPtr_StackPopDispatchTagged(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EsiInstallDecCallChain_StackPopDispatchTagged_004293d0(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if ((iVar2 != 0) && (g_eventQueueChild = g_eventQueueChild + -1, g_eventQueueChild == 0)) {
+    StackPopDispatchTagged();
+    return;
+  }
+  CallPauseScaledDecJmp();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      ScaledInitOrSelfPtr_StackPopDispatchTagged();
+      return;
+    }
+    *(code **)(iVar1 + 8) = EsiInstallDecCallChain_StackPopDispatchTagged_004293d0;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void EsiInstallDecCallChain_StackPopDispatchTagged_004293d0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -166,8 +196,47 @@ __declspec(naked) void EsiInstallDecCallChain_StackPopDispatchTagged_004293d0(vo
         ret
     }
 }
+#endif
 
 /* @addr 0x004294a0 (129b) - install-self pattern w/ dec g_eventQueueChild. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EsiInstallDecCallChain_StackPopDispatchTagged_004294a0(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+  }
+  else {
+    g_eventQueueChild = g_eventQueueChild + -1;
+    if (g_eventQueueChild == 0) {
+      StackPopDispatchTagged();
+      return;
+    }
+  }
+  GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      ScaledInitOrSelfPtr_StackPopDispatchTagged();
+      return;
+    }
+    *(code **)(iVar1 + 8) = EsiInstallDecCallChain_StackPopDispatchTagged_004294a0;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void EsiInstallDecCallChain_StackPopDispatchTagged_004294a0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -213,3 +282,4 @@ __declspec(naked) void EsiInstallDecCallChain_StackPopDispatchTagged_004294a0(vo
         ret
     }
 }
+#endif

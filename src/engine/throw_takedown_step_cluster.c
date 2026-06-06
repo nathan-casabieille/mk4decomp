@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,47 @@ extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
 extern void ScaledChainJmp_00429470(void);
 extern void ScoreAiStatusFsmCluster(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ThrowTakedownStepCluster(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    ScaledZeroFour();
+    if (g_framePauseFlag == 0) {
+      g_eventQueueChild = 0x18;
+      ScaledArrStore_GuardedChainCmpDualBitXor_00429980();
+      if (g_framePauseFlag == 0) {
+        *(code **)(iVar1 + 8) = ThrowTakedownStepCluster;
+        *(undefined4 *)(iVar1 + 0x84) = 1;
+        g_dualC = 10;
+        g_framePauseFlag = 1;
+      }
+    }
+    return;
+  }
+  if (iVar2 != 1) {
+    FiveCallGuardSetTail();
+    return;
+  }
+  *(code **)(iVar1 + 8) = ThrowTakedownStepCluster;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x2479e40;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  ScaledChainJmp_00429470();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void ThrowTakedownStepCluster(void)
 {
     __asm {
@@ -282,3 +324,4 @@ __declspec(naked) void ThrowTakedownStepCluster(void)
         ret
     }
 }
+#endif

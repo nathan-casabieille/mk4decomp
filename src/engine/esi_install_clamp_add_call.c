@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -112,6 +113,44 @@ extern unsigned int g_fightAxisPosY;
  *   g_currentNodeFlags clamped to 0x10000 + MStackPushZeroCallPop tail.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EsiInstallClampAddCall(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    GuardedChainCmpDualBitXor();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_xformScratch2088 = 0;
+  }
+  else if (0xffff < g_xformScratch2088) {
+    StackPopDispatchTagged();
+    return;
+  }
+  g_xformScratch2088 = g_xformScratch2088 + g_currentNodeFlags;
+  if (0xffff < g_xformScratch2088) {
+    g_xformScratch2088 = 0x10000;
+  }
+  g_eventQueueCurrent = g_eventQueueNotMask;
+  g_walkCallback = g_xformScratch2088;
+  MStackPushZeroCallPop_PendingMatch();
+  if (g_framePauseFlag == 0) {
+    *(code **)(iVar1 + 8) = EsiInstallClampAddCall;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void EsiInstallClampAddCall(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -159,3 +198,4 @@ __declspec(naked) void EsiInstallClampAddCall(void) {
         ret
     }
 }
+#endif

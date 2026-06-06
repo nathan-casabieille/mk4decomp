@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,58 @@ extern void CallSetPause(void);
 extern void EsiInstallCounterDispatch(void);
 extern void MStackPush2ChainLLInsert(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfFourStatePauseChain(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    ScaledZeroFour();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(code **)(iVar1 + 8) = InstallSelfFourStatePauseChain;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    uVar3 = 0x149b000;
+  }
+  else if (iVar2 == 1) {
+    *(code **)(iVar1 + 8) = InstallSelfFourStatePauseChain;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    uVar3 = 0x249b000;
+  }
+  else {
+    if (iVar2 != 2) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+      MStackPush2ChainLLInsert();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      CallSetPause();
+      return;
+    }
+    *(code **)(iVar1 + 8) = InstallSelfFourStatePauseChain;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 3;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    uVar3 = 0x349b000;
+  }
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = uVar3;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  EsiInstallCounterDispatch();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfFourStatePauseChain(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -199,3 +252,4 @@ __declspec(naked) void InstallSelfFourStatePauseChain(void) {
         ret
     }
 }
+#endif

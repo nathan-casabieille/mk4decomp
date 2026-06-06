@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,34 @@ extern void GuardedDoubleIncCmpJmp(void);
 extern void CallPauseScaledDecJmp(void);
 extern void ScaledInitOrSelfPtr_StackPopDispatchTagged(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429530(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if ((iVar2 == 0) && (CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(), g_framePauseFlag != 0)) {
+    return;
+  }
+  GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      ScaledInitOrSelfPtr_StackPopDispatchTagged();
+      return;
+    }
+    *(code **)(iVar1 + 8) = EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429530;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429530(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -162,8 +191,37 @@ __declspec(naked) void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop
         ret
     }
 }
+#endif
 
 /* @addr 0x004295a0 (109b) - twin of 0x00429530 with self-addr 0x4295a0. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_004295a0(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if ((iVar2 == 0) && (CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(), g_framePauseFlag != 0)) {
+    return;
+  }
+  GuardedDoubleIncCmpJmp();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      ScaledInitOrSelfPtr_StackPopDispatchTagged();
+      return;
+    }
+    *(code **)(iVar1 + 8) = EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_004295a0;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_004295a0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -201,8 +259,37 @@ __declspec(naked) void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop
         ret
     }
 }
+#endif
 
 /* @addr 0x00429610 (109b) - twin of 0x00429530 with self-addr 0x429610. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429610(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if ((iVar2 == 0) && (CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(), g_framePauseFlag != 0)) {
+    return;
+  }
+  CallPauseScaledDecJmp();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      ScaledInitOrSelfPtr_StackPopDispatchTagged();
+      return;
+    }
+    *(code **)(iVar1 + 8) = EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429610;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429610(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -240,3 +327,4 @@ __declspec(naked) void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop
         ret
     }
 }
+#endif

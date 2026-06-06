@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,38 @@ extern void PushPopScaledInit343c(void);
 
 extern void FiveCallGuardSetTail(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioInstallSelfStatePush(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    g_gameMode = (code *)0x0;
+    StackPopDispatchTagged();
+    return;
+  }
+  if (g_audioInitScaled != 0) {
+    StackPopDispatchTagged();
+    return;
+  }
+  PushPopScaledInit343c();
+  GuardedSetupCallTailJmp("LOADING",&(*(unsigned int *)MK4_VA(unsigned int, 0x640000)));
+  g_audioInitScaled = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_tickW1 = 0x100;
+  g_gameMode = AudioInstallSelfStatePush;
+  *(code **)(iVar1 + 8) = AudioInstallSelfStatePush;
+  *(undefined4 *)(iVar1 + 0x84) = 1;
+  g_dualC = 4;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void AudioInstallSelfStatePush(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -161,3 +194,4 @@ __declspec(naked) void AudioInstallSelfStatePush(void) {
         ret
     }
 }
+#endif

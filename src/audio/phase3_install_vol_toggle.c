@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -138,6 +139,75 @@ extern void ScaledChainStore24(void);
 extern void SetJmp_Push16Call_004a1ad0(void);
 extern void TripleCallByteCheck(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase3InstallVolToggle(void)
+
+{
+  int iVar1;
+  char cVar2;
+  int iVar3;
+  
+  iVar1 = g_baseSel * 4;
+  iVar3 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar3 == 0) {
+    g_tickFlagF = 2;
+    g_phaseIdx = 0xe;
+  }
+  else {
+    AudioSwap2ChainBank3State();
+    iVar3 = MK4_NODE_AT(int, g_baseSel, 0x30);
+    if (iVar3 == 3) {
+      g_cj_00542054 = *(undefined4 *)((g_baseSel + g_counter_0054359c) * 4 + 0x34);
+      g_eventQueueCurrent = g_counter_0054359c;
+    }
+    else if (iVar3 == 4) {
+      g_eventQueueCurrent = g_counter_005433c8 + 5;
+      g_cj_00542054 = *(undefined4 *)((g_baseSel + g_counter_005433c8) * 4 + 0x48);
+    }
+    DualListInit();
+    if (g_gtModeFlag == '\x01') {
+      DebugStub_NoOp_A();
+    }
+    else {
+      DebugStub_NoOp_B();
+    }
+    if (((g_audioStateDisp50b4 & 4) != 0) || ((g_audioStateDisp50b4 & 0x400) != 0)) {
+      SetJmp_Push16Call_004a1ad0();
+      iVar3 = g_eventQueueCurrent;
+      cVar2 = (&g_audioBank2Base)[g_eventQueueCurrent * 0x18];
+      (&g_audioBank2Base)[g_eventQueueCurrent * 0x18] = cVar2 + -1;
+      if ((char)(cVar2 + -1) < '\0') {
+        (&g_audioBank2Base)[iVar3 * 0x18] = 0xe;
+      }
+    }
+    if (((g_audioStateDisp50b4 & 8) != 0) || ((g_audioStateDisp50b4 & 0x800) != 0)) {
+      SetJmp_Push16Call_004a1ad0();
+      iVar3 = g_eventQueueCurrent;
+      cVar2 = (&g_audioBank2Base)[g_eventQueueCurrent * 0x18];
+      (&g_audioBank2Base)[g_eventQueueCurrent * 0x18] = cVar2 + '\x01';
+      if ((char)(cVar2 + '\x01') == '\x0f') {
+        (&g_audioBank2Base)[iVar3 * 0x18] = 0;
+      }
+    }
+    iVar3 = TripleCallByteCheck();
+    if (iVar3 != 0) {
+      AudioMicroEntries((int)(char)(&g_audioBank2Base)[g_eventQueueCurrent * 0x18]);
+      StackPopDispatchTagged();
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542054;
+    g_walkCallback = (int)(char)(&g_audioBank2Base)[g_eventQueueCurrent * 0x18];
+    ScaledChainStore24();
+  }
+  *(code **)(iVar1 + 8) = Phase3InstallVolToggle;
+  *(undefined4 *)(iVar1 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void Phase3InstallVolToggle(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -242,3 +312,4 @@ __declspec(naked) void Phase3InstallVolToggle(void) {
         ret
     }
 }
+#endif

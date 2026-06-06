@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,41 @@ extern unsigned int g_audioStreamState;
 extern unsigned int g_arr_421f40;
 extern void FiveCallGuardSetTail(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfStackReset(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    g_walkCallback = 0;
+    g_audioBank2State = 0;
+    g_eventQueueChild = 1;
+    StackPopDispatchTagged();
+    return;
+  }
+  g_walkCallback = g_audioStreamState;
+  if (g_audioStreamState != 0) {
+    g_walkCallback = g_audioStreamState + -1;
+    if (g_walkCallback < 0) {
+      g_walkCallback = 0;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_walkCallback + 0x137f26;
+    g_dualC = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    *(code **)(iVar1 + 8) = InstallSelfStackReset;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_framePauseFlag = 1;
+    return;
+  }
+  StackPopDispatchTagged();
+  return;
+}
+#else
 __declspec(naked) void InstallSelfStackReset(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -161,3 +197,4 @@ __declspec(naked) void InstallSelfStackReset(void) {
         jmp     StackPopDispatchTagged
     }
 }
+#endif

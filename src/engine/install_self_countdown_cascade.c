@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,53 @@ extern void PushPop84TripleCall(void);
 extern void ScaledChain3c74(void);
 extern void TriStageChainGate(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfCountdownCascade(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    PendingMatch_SwapOrPassSet();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 1) == 0) {
+      return;
+    }
+    g_dispatchState = 1;
+    PushPop84TripleCall();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_eventQueueChild = 0x78;
+  }
+  else {
+    g_eventQueueChild = g_eventQueueChild + -1;
+    if (g_eventQueueChild == 0) {
+      InstallSelfChainSetB333();
+      return;
+    }
+  }
+  ScaledChain3c74();
+  if (g_framePauseFlag == 0) {
+    if (g_walkCallback == 0x1009) {
+      TriStageChainGate();
+      return;
+    }
+    *(code **)(iVar1 + 8) = InstallSelfCountdownCascade;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfCountdownCascade(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -178,3 +226,4 @@ __declspec(naked) void InstallSelfCountdownCascade(void) {
         ret
     }
 }
+#endif

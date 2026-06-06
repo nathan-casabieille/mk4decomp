@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -128,6 +129,55 @@ extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0
 extern void ScaledMove48to58(void);
 extern void Wrapper_OrListLoop_004de3f8(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfStateCounter(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    if ((g_gtModeFlag == '\x01') && (g_audioBankSel == 1)) {
+      g_installSelfCounter = g_installSelfCounter + 1;
+    }
+    if ((g_gtModeFlag == '\x02') && (g_audioBankSel == 2)) {
+      g_installSelfCounter = g_installSelfCounter + 1;
+    }
+    g_walkCallback = 0xac;
+    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0();
+    if ((((g_framePauseFlag == 0) && (GateDispatch6c(), g_framePauseFlag == 0)) &&
+        (ScaledMove48to58(), g_framePauseFlag == 0)) && (CallPauseScaledStoreCopyJmp(), g_framePauseFlag == 0)) {
+      *(code **)(iVar1 + 8) = InstallSelfStateCounter;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 8;
+      g_framePauseFlag = 1;
+    }
+    return;
+  }
+  if (iVar2 == 1) {
+    CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_walkCallback = MK4_NODE_AT(int, g_baseSel, 0x34);
+    if (g_walkCallback == 0x10) {
+      g_walkCallback = 2;
+    }
+    if (g_walkCallback == 0x11) {
+      g_walkCallback = 7;
+    }
+    MK4_NODE_AT(int, g_baseSel, 0x34) = g_walkCallback;
+    g_walkCallback = g_walkCallback + 1;
+  }
+  Wrapper_OrListLoop_004de3f8();
+  DualBlockChainInitBody();
+  return;
+}
+#else
 __declspec(naked) void InstallSelfStateCounter(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -216,3 +266,4 @@ __declspec(naked) void InstallSelfStateCounter(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,36 @@ extern unsigned int g_chain_disp_64_440d20;
 extern unsigned int g_matrixStack_arr;
 extern void FiveCallGuardSetTail(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfSnapshot64(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    g_cj_00542054 = MK4_NODE_AT(undefined4, g_baseSel, 100);
+    StackPopDispatchTagged();
+    return;
+  }
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueNotMask;
+  BackdashSetupCluster();
+  if (g_framePauseFlag == 0) {
+    g_eventQueueNotMask = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    *(code **)(iVar1 + 8) = InstallSelfSnapshot64;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfSnapshot64(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -160,3 +191,4 @@ __declspec(naked) void InstallSelfSnapshot64(void) {
         ret
     }
 }
+#endif

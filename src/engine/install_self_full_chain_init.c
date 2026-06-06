@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,46 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_eventQueueSeed;
 extern void PendingMatch_ThreeMul10Stores(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfFullChainInit(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar1 = g_baseSel * 4;
+  iVar3 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  iVar2 = g_baseSel;
+  if (iVar3 != 0) {
+    StackPopDispatchTagged();
+    return;
+  }
+  MK4_NODE_AT(undefined4, g_baseSel, 0x30) = 0x8c;
+  iVar2 = iVar2 * 4;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x34) = 0;
+  *(undefined4 *)(iVar2 + 0x38) = 0xfffe0000;
+  *(undefined4 *)(iVar2 + 0x3c) = 0xfff5cccd;
+  g_cj_0054205c = g_eventQueueSeed;
+  iVar3 = g_eventQueueSeed * 4;
+  *(undefined4 *)(iVar2 + 0x40) = *(undefined4 *)(iVar3 + 0x60);
+  *(undefined4 *)(iVar2 + 0x44) = 0;
+  g_walkCallback = *(undefined4 *)(iVar3 + 0x68);
+  *(undefined4 *)(iVar2 + 0x48) = g_walkCallback;
+  *(code **)(iVar1 + 8) = InstallSelfFullChainInit;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1462470;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  PendingMatch_ThreeMul10Stores();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfFullChainInit(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -173,3 +214,4 @@ __declspec(naked) void InstallSelfFullChainInit(void) {
         ret
     }
 }
+#endif

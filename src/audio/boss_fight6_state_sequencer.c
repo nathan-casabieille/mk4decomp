@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,85 @@ extern void BootInitGuardedCallChain(void);
 extern void GuardedSetupCallTailJmp(void);
 extern void TwoCallsTwoBranchTail(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Match_OutcomeScreen(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  
+  iVar1 = g_baseSel * 4;
+  uVar2 = MK4_NODE_AT(undefined4, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  switch(uVar2) {
+  case 0:
+    GuardedSetupCallTailJmp("Game Over",0xffec0000);
+    *(char **)(g_baseSel * 4 + 0x30) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = "Player 1 Wins";
+    if (g_audioBankSel != 1) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = "Player 2 Wins";
+    }
+    GuardedSetupCallTailJmp((*(unsigned int *)MK4_VA(unsigned int, 0x542044)),0x140000);
+    *(char **)(g_baseSel * 4 + 0x34) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x30) * 4 + 0x5c) = 0xa0000;
+    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x34) * 4 + 0x5c) = 0xa0000;
+    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x34) * 4 + 0x58) = 0xf0600000;
+    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x30) * 4 + 0x74) = 0xffffc000;
+    *(code **)(iVar1 + 8) = Match_OutcomeScreen;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 0x24;
+    g_framePauseFlag = 1;
+    return;
+  case 1:
+    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x30) * 4 + 0x74) = 0;
+    if (g_audioStreamState == 0) {
+      TwoCallsTwoBranchTail();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      *(code **)(iVar1 + 8) = Match_OutcomeScreen;
+      *(undefined4 *)(iVar1 + 0x84) = 2;
+      g_dualC = 0x1e;
+      g_framePauseFlag = 1;
+      return;
+    }
+switchD_004a3d06_caseD_2:
+    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x34) * 4 + 0x58) = 0x140000;
+    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x34) * 4 + 0x74) = 0xffffc000;
+    *(code **)(iVar1 + 8) = Match_OutcomeScreen;
+    *(undefined4 *)(iVar1 + 0x84) = 3;
+    g_dualC = 0x24;
+    g_framePauseFlag = 1;
+    return;
+  case 2:
+    goto switchD_004a3d06_caseD_2;
+  case 3:
+    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x34) * 4 + 0x74) = 0;
+    *(code **)(iVar1 + 8) = Match_OutcomeScreen;
+    *(undefined4 *)(iVar1 + 0x84) = 4;
+    g_dualC = 0x3c;
+    g_framePauseFlag = 1;
+    return;
+  case 4:
+    *(code **)(iVar1 + 8) = Match_OutcomeScreen;
+    *(undefined4 *)(iVar1 + 0x84) = 5;
+    g_dualC = 0x3c;
+    g_framePauseFlag = 1;
+    return;
+  case 5:
+    *(code **)(iVar1 + 8) = Match_OutcomeScreen;
+    *(undefined4 *)(iVar1 + 0x84) = 6;
+    g_dualC = 0xf0;
+    g_framePauseFlag = 1;
+    return;
+  default:
+    BootInitGuardedCallChain();
+    AudioInitInstallerPair();
+    return;
+  }
+}
+#else
 __declspec(naked) void Match_OutcomeScreen(void)
 {
     __asm {
@@ -274,3 +354,4 @@ __declspec(naked) void Match_OutcomeScreen(void)
         _emit 0x00
     }
 }
+#endif

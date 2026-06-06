@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -112,6 +113,40 @@ extern unsigned int g_fightAxisPosY;
  *   GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp + dec popped value to install or dispatch. */
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EsiInstallPushDecPopJmp(void)
+
+{
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  
+  iVar1 = g_baseSel * 4;
+  iVar3 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar3 != 0) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(int *)((int)g_matrixStackTop * 4) = g_eventQueueNotMask;
+    GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    piVar2 = (int *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    g_eventQueueNotMask = *piVar2 + -1;
+    if (g_eventQueueNotMask == 0) {
+      StackPopDispatchTagged();
+      return;
+    }
+  }
+  *(code **)(iVar1 + 8) = EsiInstallPushDecPopJmp;
+  *(undefined4 *)(iVar1 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void EsiInstallPushDecPopJmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -152,3 +187,4 @@ __declspec(naked) void EsiInstallPushDecPopJmp(void) {
         ret
     }
 }
+#endif

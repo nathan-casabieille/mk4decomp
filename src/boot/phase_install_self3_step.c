@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,80 @@ void PhaseInstallSelf3Step(void);
 extern unsigned int g_phaseIdx;
 extern void BootInitGuardedCallChain(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PhaseInstallSelf3Step(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    BootInitGuardedCallChain();
+    if (g_framePauseFlag == 0) {
+      g_phaseIdx = 3;
+      StoreTwoCall(&g_dispatchSave509,0);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b0b;
+      LoadGeoAsset_Default();
+      if (g_framePauseFlag == 0) {
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b0b;
+        LoadGeoAsset_Default();
+        if (g_framePauseFlag == 0) {
+          g_eventQueuePending = 0x1420c2;
+          DispatcherComplex260_FramePauseScaledStore();
+          if (g_framePauseFlag == 0) {
+            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0xffb00000;
+            g_walkCallback = 0x1f;
+            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+            PushSetCallPop();
+            if (g_framePauseFlag == 0) {
+              RegistryPushBindPop();
+              if (g_framePauseFlag == 0) {
+                g_eventQueuePending = 0x1420c9;
+                DispatcherComplex260_FramePauseScaledStore();
+                if (g_framePauseFlag == 0) {
+                  *(undefined **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = &(*(unsigned int *)MK4_VA(unsigned int, 0x770000));
+                  g_walkCallback = 0x1f;
+                  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+                  PushSetCallPop();
+                  if (g_framePauseFlag == 0) {
+                    RegistryPushBindPop();
+                    if (g_framePauseFlag == 0) {
+                      *(code **)(iVar1 + 8) = PhaseInstallSelf3Step;
+                      *(undefined4 *)(iVar1 + 0x84) = 1;
+                      g_dualC = 0x1e0;
+                      g_framePauseFlag = 1;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return;
+  }
+  if (iVar2 != 1) {
+    StackPopDispatchTagged();
+    return;
+  }
+  g_eventQueueCurrent = 4;
+  *(code **)(iVar1 + 8) = PhaseInstallSelf3Step;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x2402350;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  InstallSelfPackedF80();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void PhaseInstallSelf3Step(void)
 {
     __asm {
@@ -237,3 +312,4 @@ __declspec(naked) void PhaseInstallSelf3Step(void)
         ret
     }
 }
+#endif

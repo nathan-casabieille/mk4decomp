@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -112,6 +113,67 @@ extern void Eleven404b90_404c00(void);
 extern void InstallSelfCountedAccum(void);
 extern void Ten404c40_404bd0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootMStackPopPush3Install(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 == 0) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
+    iVar1 = g_baseSel * 4;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_cj_00542054;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
+    iVar1 = g_baseSel * 4;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_cj_00542058;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
+    iVar1 = g_baseSel * 4;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_cj_0054205c;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    Eleven404b90_404c00();
+    if (g_framePauseFlag == 0) {
+      g_eventQueueWorkType = 300;
+      Push16Call();
+      if (g_framePauseFlag == 0) {
+        *(code **)(iVar2 + 8) = BootMStackPopPush3Install;
+        MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14046d0;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+        *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+        InstallSelfCountedAccum();
+        g_framePauseFlag = 1;
+      }
+    }
+  }
+  else {
+    Ten404c40_404bd0();
+    if (g_framePauseFlag == 0) {
+      iVar2 = MK4_NODE_AT(int, g_baseSel, 4) + -1;
+      g_cj_0054205c = MK4_NODE_AT(undefined4, iVar2, 0);
+      MK4_NODE_AT(int, g_baseSel, 4) = iVar2;
+      iVar2 = MK4_NODE_AT(int, g_baseSel, 4) + -1;
+      g_cj_00542058 = MK4_NODE_AT(undefined4, iVar2, 0);
+      MK4_NODE_AT(int, g_baseSel, 4) = iVar2;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
+      g_cj_00542054 = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+      MK4_NODE_AT(int, g_baseSel, 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      StackPopDispatchTagged();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void BootMStackPopPush3Install(void)
 {
     __asm
@@ -212,3 +274,4 @@ __declspec(naked) void BootMStackPopPush3Install(void)
         ret
     }
 }
+#endif

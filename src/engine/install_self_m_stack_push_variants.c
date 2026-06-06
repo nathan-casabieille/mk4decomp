@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,37 @@ extern void Wrapper_ScaledChainPushCall_004ef898(void);
 
 extern unsigned int g_arr_41aaf0_mstack;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfMStackPush_CjInstallSelfRouter(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    CjInstallSelfRouter();
+    return;
+  }
+  Wrapper_ScaledChainPushCall_004ef898();
+  if (g_framePauseFlag == 0) {
+    g_eventQueueCurrent = 0x17;
+    *(code **)(iVar1 + 8) = InstallSelfMStackPush_CjInstallSelfRouter;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x146cc80;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    ScaledArrStore_EsiInstallBitCallChain_00428e70();
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfMStackPush_CjInstallSelfRouter(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -163,10 +195,41 @@ __declspec(naked) void InstallSelfMStackPush_CjInstallSelfRouter(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x00496630 (152b game) - install-self twin of 0x41aaf0 with
  *   different early-out / second call targets.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfMStackPush_FiveCallGuardSetTail_00496630(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    FiveCallGuardSetTail();
+    return;
+  }
+  PushPopWalkSet1006();
+  if (g_framePauseFlag == 0) {
+    *(code **)(iVar1 + 8) = InstallSelfMStackPush_FiveCallGuardSetTail_00496630;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1496630;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    ScaledLoadJmp_00428d20();
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfMStackPush_FiveCallGuardSetTail_00496630(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -205,8 +268,39 @@ __declspec(naked) void InstallSelfMStackPush_FiveCallGuardSetTail_00496630(void)
         ret
     }
 }
+#endif
 
 /* @addr 0x004968a0 (152b game) - install-self twin of 0x496630. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfMStackPush_FiveCallGuardSetTail_004968a0(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    FiveCallGuardSetTail();
+    return;
+  }
+  PushPopWalkSet1006();
+  if (g_framePauseFlag == 0) {
+    *(code **)(iVar1 + 8) = InstallSelfMStackPush_FiveCallGuardSetTail_004968a0;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14968a0;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    ScaledLoadJmp_00428d20();
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfMStackPush_FiveCallGuardSetTail_004968a0(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -245,3 +339,4 @@ __declspec(naked) void InstallSelfMStackPush_FiveCallGuardSetTail_004968a0(void)
         ret
     }
 }
+#endif

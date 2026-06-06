@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,34 @@ extern unsigned int g_fightAxisPosY;
 extern void PushPop84TripleCall(void);
 extern void StoreCallPauseDirtyStoreJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfBitGate(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if ((iVar2 == 0) && (PushPop84TripleCall(), g_framePauseFlag != 0)) {
+    return;
+  }
+  StoreCallPauseDirtyStoreJmp();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      StackPopDispatchTagged();
+      return;
+    }
+    *(code **)(iVar1 + 8) = InstallSelfBitGate;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfBitGate(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -160,3 +189,4 @@ epi:
         ret
     }
 }
+#endif

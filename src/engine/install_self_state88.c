@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,47 @@ extern unsigned int g_fightAxisPosY;
 extern void DualMul10AccumState88(void);
 extern void ScaledInitWithCounterAndType_004314f0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfState88(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_xformScratch2088 = 0x3243f;
+  }
+  else {
+    uVar3 = 0xfffffd71;
+    g_walkCallback = 0xfffffd71;
+    g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x58);
+    if (g_eventQueueCurrent < -0x28000) {
+      uVar3 = 0;
+      g_walkCallback = 0;
+    }
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x70) = uVar3;
+    g_xformScratch2088 = g_xformScratch2088 + -0x51e;
+    if (g_xformScratch2088 < -0x3243e) {
+      ScaledInitWithCounterAndType_004314f0();
+      return;
+    }
+  }
+  g_chainAccumCur = 0x70ccc;
+  func_0x00431dd0();
+  if (g_framePauseFlag == 0) {
+    *(code **)(iVar1 + 8) = InstallSelfState88;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfState88(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -164,3 +206,4 @@ __declspec(naked) void InstallSelfState88(void) {
         ret
     }
 }
+#endif

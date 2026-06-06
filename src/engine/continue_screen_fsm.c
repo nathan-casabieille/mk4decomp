@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,104 @@ extern void InstallSelfPackedF80(void);
 extern void OpcodeStreamDispatch(void);
 extern void RegistryPushBindPop(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ContinueScreenFsm(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    BootInitGuardedCallChain();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0;
+      CopyGlobal();
+      if (g_framePauseFlag == 0) {
+        *(code **)(iVar1 + 8) = ContinueScreenFsm;
+        *(undefined4 *)(iVar1 + 0x84) = 1;
+        g_dualC = 8;
+        g_framePauseFlag = 1;
+      }
+    }
+  }
+  else if (iVar2 == 1) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b05;
+    LoadGeoAsset_Default();
+    if (g_framePauseFlag == 0) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b05;
+      LoadGeoAsset_Default();
+      if (g_framePauseFlag == 0) {
+        g_eventQueuePending = 0x14203d;
+        DispatcherComplex260_FramePauseScaledStore();
+        if (g_framePauseFlag == 0) {
+          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0;
+          g_walkCallback = 0x1f;
+          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+          PushSetCallPop();
+          if (g_framePauseFlag == 0) {
+            RegistryPushBindPop();
+            if (g_framePauseFlag == 0) {
+              *(code **)(iVar1 + 8) = ContinueScreenFsm;
+              *(undefined4 *)(iVar1 + 0x84) = 2;
+              g_dualC = 0xf0;
+              g_framePauseFlag = 1;
+              return;
+            }
+          }
+        }
+      }
+    }
+  }
+  else {
+    if (iVar2 == 2) {
+      g_eventQueueCurrent = 4;
+      *(code **)(iVar1 + 8) = ContinueScreenFsm;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 3;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x3423c20;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      InstallSelfPackedF80();
+      g_framePauseFlag = 1;
+      return;
+    }
+    BootInitGuardedCallChain();
+    if (g_framePauseFlag == 0) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b05;
+      LoadGeoAsset_Default();
+      if (g_framePauseFlag == 0) {
+        g_eventQueueWorkType = 0x25;
+        Push16Call();
+        if (g_framePauseFlag == 0) {
+          g_walkCallback = 0;
+          CopyGlobal();
+          if (g_framePauseFlag == 0) {
+            g_walkCallback = 10;
+            g_eventQueuePending = 0x137b86;
+            g_eventQueueCurrent = 4;
+            g_chainAccumCur = 0;
+            g_eventQueueNotMask = 0xff9c0000;
+            Push70CallScaleArith();
+            if (g_framePauseFlag == 0) {
+              g_walkCallback = 0x10000;
+              *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0x10000;
+              g_cj_00542058 = 0x137e68;
+              OpcodeStreamDispatch();
+              return;
+            }
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void ContinueScreenFsm(void)
 {
     __asm {
@@ -251,3 +350,4 @@ __declspec(naked) void ContinueScreenFsm(void)
         ret
     }
 }
+#endif

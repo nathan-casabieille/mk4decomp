@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,44 @@ extern unsigned int g_fightAxisPosY;
  *   install: state=1; [ecx+8]=self; g_pendingNodeType=1; g_pause=1; ret.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfScaledAdv3d7Cmp(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_walkCallback = MK4_NODE_AT(int, g_cj_00542054, 0x58);
+    MK4_NODE_AT(int, g_baseSel, 0x5c) = g_walkCallback;
+    MK4_NODE_AT(undefined4, g_cj_00542054, 0x70) = g_chainAccumCur;
+  }
+  else {
+    MK4_NODE_AT(int, g_cj_00542054, 0x70) = MK4_NODE_AT(int, g_cj_00542054, 0x70) + 0x3d7;
+    g_walkCallback = MK4_NODE_AT(int, g_cj_00542054, 0x58);
+    g_eventQueueCurrent = MK4_NODE_AT(int, g_baseSel, 0x5c);
+    if (g_eventQueueCurrent <= g_walkCallback) {
+      g_walkCallback = 0;
+      MK4_NODE_AT(undefined4, g_cj_00542054, 0x6c) = 0;
+      MK4_NODE_AT(int, g_cj_00542054, 0x70) = g_walkCallback;
+      MK4_NODE_AT(int, g_cj_00542054, 0x74) = g_walkCallback;
+      g_walkCallback = MK4_NODE_AT(undefined4, g_baseSel, 0x5c);
+      MK4_NODE_AT(int, g_cj_00542054, 0x58) = g_walkCallback;
+      StackPopDispatchTagged();
+      return;
+    }
+  }
+  *(code **)(iVar1 + 8) = InstallSelfScaledAdv3d7Cmp;
+  *(undefined4 *)(iVar1 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfScaledAdv3d7Cmp(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -174,3 +213,4 @@ __declspec(naked) void InstallSelfScaledAdv3d7Cmp(void) {
         ret
     }
 }
+#endif

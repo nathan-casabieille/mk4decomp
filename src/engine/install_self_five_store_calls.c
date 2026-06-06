@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,33 @@ extern unsigned int g_dispatchSave1145;
 
 extern void FiveCallGuardSetTail(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfFiveStoreCalls(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    StackPopDispatchTagged();
+    return;
+  }
+  StoreTwoCall(&g_dispatchSave1141,0x267);
+  StoreTwoCall(&g_dispatchSave1142,0x267);
+  StoreTwoCall(&g_dispatchSave1144,0x267);
+  StoreTwoCall(&g_dispatchSave1143,0x267);
+  StoreTwoCall(&g_dispatchSave1145,0x267);
+  *(code **)(iVar1 + 8) = InstallSelfFiveStoreCalls;
+  *(undefined4 *)(iVar1 + 0x84) = 1;
+  g_dualC = 0xa0;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfFiveStoreCalls(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -163,3 +191,4 @@ __declspec(naked) void InstallSelfFiveStoreCalls(void) {
         ret
     }
 }
+#endif

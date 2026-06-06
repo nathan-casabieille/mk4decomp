@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,63 @@ extern void InstallSelfThreeStateScaledLoad(void);
 extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
 extern void ThrowGrabPoseCopyCluster(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Install4StateMerge(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    if (g_xformScratch2088 == 1) {
+      func_0x0047f4e0();
+      return;
+    }
+    *(code **)(iVar1 + 8) = Install4StateMerge;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    uVar3 = 0x147f1a0;
+  }
+  else if (iVar2 == 1) {
+    g_walkCallback = 0x5e;
+    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(code **)(iVar1 + 8) = Install4StateMerge;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    uVar3 = 0x247f1a0;
+  }
+  else {
+    if (iVar2 != 2) {
+      InstallSelfThreeStateScaledLoad();
+      return;
+    }
+    g_walkCallback = 0x5f;
+    ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(code **)(iVar1 + 8) = Install4StateMerge;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 3;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    uVar3 = 0x347f1a0;
+  }
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = uVar3;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+  InstallSelfStateMachine_ScaledArrStore_GuardedChainCmpDualBitXor();
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void Install4StateMerge(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -215,3 +273,4 @@ __declspec(naked) void Install4StateMerge(void) {
         ret
     }
 }
+#endif
