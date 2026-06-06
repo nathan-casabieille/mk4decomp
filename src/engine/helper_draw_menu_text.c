@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004b21d0 (272b engine.app) - per-char glyph emitter for HUD text.
@@ -24,6 +25,48 @@ extern unsigned int g_dispatchSave1619;
 extern unsigned int g_callocInitFlag;
 extern void Helper_DrawCursor(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int Helper_DrawMenuText(int param_1,short param_2,char *param_3,char param_4,undefined2 param_5)
+
+{
+  char cVar1;
+  uint uVar2;
+  
+  cVar1 = *param_3;
+  if (cVar1 == '\0') {
+    g_callocInitFlag = 0;
+    return param_1;
+  }
+  do {
+    if ((cVar1 < '!') || (cVar1 == '\x7f')) {
+      uVar2 = 0;
+    }
+    else {
+      uVar2 = (uint)(byte)(cVar1 - 0x21);
+    }
+    if (uVar2 != 0) {
+      g_dispatchSave1609 = (short)param_1;
+      g_dispatchSave1611 = g_dispatchSave1609 + 9;
+      g_dispatchSave1610 = param_2;
+      g_dispatchSave1612 = param_2 + 10;
+      g_dispatchSave1617 = 0;
+      g_dispatchSave1618 = param_5;
+      g_dispatchSave1613 = (char)((ulonglong)uVar2 % 0x1c) * '\t';
+      g_dispatchSave1615 = g_dispatchSave1613 + '\t';
+      g_dispatchSave1614 = (char)(uVar2 / 0x1c) * '\n';
+      g_dispatchSave1616 = g_dispatchSave1614 + '\n';
+      g_dispatchSave1619 = (-(ushort)(param_4 != '\0') & 3) << 7 | 0x22f;
+      Helper_DrawCursor(&g_dispatchSave1609);
+    }
+    param_1 = param_1 + 9;
+    param_3 = param_3 + 1;
+    cVar1 = *param_3;
+  } while (cVar1 != '\0');
+  g_callocInitFlag = cVar1;
+  return param_1;
+}
+#else
 __declspec(naked) void Helper_DrawMenuText(void) {
     __asm {
         mov     eax, [esp + 0xc]
@@ -117,4 +160,5 @@ __declspec(naked) void Helper_DrawMenuText(void) {
         ret
     }
 }
+#endif
 

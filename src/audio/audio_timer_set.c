@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004ac650 (290b audio) - MIDI MCI playback position setter.
@@ -26,6 +27,39 @@ extern u32 g_audioPreState;
 extern void Audio_TimerTeardown(void);
 extern void Helper_AuxAudio_PostInit(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Audio_TimerSet(uint param_1,int param_2,int param_3,undefined4 param_4)
+
+{
+  int iVar1;
+  MCIERROR MVar2;
+  undefined1 local_18 [4];
+  uint local_14;
+  uint local_10;
+  undefined1 local_c [4];
+  undefined4 local_8;
+  
+  Audio_TimerTeardown();
+  g_timerHandle = param_4;
+  g_timerActive = param_1;
+  g_timerStartSec = param_2;
+  g_timerEndSec = param_3;
+  if (g_audioState0C == 0) {
+    iVar1 = Helper_AuxAudio_PostInit();
+    if ((iVar1 != 0) && (g_timerFlag == 0)) {
+      local_8 = 10;
+      mciSendCommandA(g_audioPreState,0x80d,0x400,(DWORD_PTR)local_c);
+      local_14 = (param_2 / 0x3c & 0xffffU | (param_2 % 0x3c & 0xffU) << 8) << 8 | param_1 & 0xff;
+      local_10 = (param_3 / 0x3c & 0xffffU | (param_3 % 0x3c & 0xffU) << 8) << 8 | param_1 & 0xff;
+      MVar2 = mciSendCommandA(g_audioPreState,0x806,0xc,(DWORD_PTR)local_18);
+      g_timerFlag = (uint)(MVar2 == 0);
+    }
+  }
+  g_timerLastNow = timeGetTime();
+  return;
+}
+#else
 __declspec(naked) void Audio_TimerSet(void) {
     __asm {
         sub     esp, 0x18
@@ -122,4 +156,5 @@ __declspec(naked) void Audio_TimerSet(void) {
         ret
     }
 }
+#endif
 

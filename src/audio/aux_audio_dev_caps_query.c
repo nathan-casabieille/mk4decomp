@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,39 @@ extern unsigned int g_iat_mciSendCommandA;
 extern u32 g_audioPreState;
 extern void Helper_AuxAudio_PostInit(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int AuxAudioDevCapsQuery(undefined4 param_1)
+
+{
+  int iVar1;
+  MCIERROR MVar2;
+  undefined1 local_1c [4];
+  undefined4 local_18;
+  undefined1 local_10 [4];
+  uint local_c;
+  undefined4 local_8;
+  undefined4 local_4;
+  
+  iVar1 = Helper_AuxAudio_PostInit();
+  if (iVar1 != 0) {
+    local_8 = 0x4001;
+    local_4 = param_1;
+    MVar2 = mciSendCommandA(g_audioPreState,0x814,0x110,(DWORD_PTR)local_10);
+    if ((MVar2 == 0) && (local_c == 0x440)) {
+      local_18 = 2;
+      mciSendCommandA(g_audioPreState,0x80d,0x400,(DWORD_PTR)local_1c);
+      local_8 = 1;
+      local_4 = param_1;
+      MVar2 = mciSendCommandA(g_audioPreState,0x814,0x110,(DWORD_PTR)local_10);
+      if (MVar2 == 0) {
+        return (local_c >> 8 & 0xff) + (local_c & 0xff) * 0x3c;
+      }
+    }
+  }
+  return 0;
+}
+#else
 __declspec(naked) void AuxAudioDevCapsQuery(void) {
     __asm {
         sub     esp, 0x1c
@@ -194,3 +228,4 @@ __declspec(naked) void AuxAudioDevCapsQuery(void) {
         ret
     }
 }
+#endif

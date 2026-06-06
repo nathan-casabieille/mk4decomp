@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004ac780 (357b audio) - MIDI tempo/time-event pack&send.
@@ -31,6 +32,49 @@ extern u32 g_timerFlag;
 extern u32 g_audioState0C;
 extern void Helper_AuxAudio_PostInit(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_TitleEnterStateA(void)
+
+{
+  int iVar1;
+  DWORD DVar2;
+  MCIERROR MVar3;
+  uint uVar4;
+  undefined1 local_18 [4];
+  uint local_14;
+  uint local_10;
+  undefined1 local_c [4];
+  undefined4 local_8;
+  
+  g_audioState0C = 0;
+  if ((g_timerFlag == 0) && (g_timerActive != 0)) {
+    iVar1 = Helper_AuxAudio_PostInit();
+    if (iVar1 != 0) {
+      local_8 = 10;
+      mciSendCommandA(g_audioPreState,0x80d,0x400,(DWORD_PTR)local_c);
+      DVar2 = g_audioState00;
+      if (g_audioState00 == 0) {
+        DVar2 = timeGetTime();
+      }
+      uVar4 = (int)(DVar2 - g_timerLastNow) >> 0x1f;
+      iVar1 = (int)((DVar2 - g_timerLastNow ^ uVar4) - uVar4) / 1000 + g_timerStartSec;
+      local_14 = (iVar1 / 0x3c & 0xffffU | (iVar1 % 0x3c & 0xffU) << 8) << 8 | g_timerActive & 0xff;
+      local_10 = (g_timerEndSec / 0x3c & 0xffffU | (g_timerEndSec % 0x3c & 0xffU) << 8) << 8 |
+                 g_timerActive & 0xff;
+      MVar3 = mciSendCommandA(g_audioPreState,0x806,0xc,(DWORD_PTR)local_18);
+      g_timerFlag = (uint)(MVar3 == 0);
+    }
+    if (g_audioState00 != 0) {
+      DVar2 = timeGetTime();
+      iVar1 = DVar2 - g_audioState00;
+      g_audioState00 = 0;
+      g_timerLastNow = g_timerLastNow + iVar1;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Helper_TitleEnterStateA(void) {
     __asm {
         mov     eax, dword ptr [g_timerFlag]
@@ -150,4 +194,5 @@ __declspec(naked) void Helper_TitleEnterStateA(void) {
         ret
     }
 }
+#endif
 

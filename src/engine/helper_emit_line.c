@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004b2d20 (338b engine.app) - 3D vertex transform + perspective project.
@@ -34,6 +35,43 @@ extern s32 g_vtxValid;
 extern unsigned int g_triStripRingA;
 extern s16 g_vtxScreenP1Y;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_EmitLine(int param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_vtxValid = 1;
+  *(int *)(&g_vtxOut1_x + param_1 * 2) =
+       (int)(short)((short)((int)g_mat3x3_007af990 * (int)(short)(&g_dispatchSave1626)[param_1] +
+                            (int)g_mat3x3_007af992 * (int)*(short *)(&g_vtxIn1_y + param_1 * 2) +
+                            (int)g_mat3x3_007af994 * (int)(short)(&g_vtxIn2_y)[param_1] >> 0xc) +
+                   (short)g_vtxTransX);
+  *(int *)(&g_vtxOut1_y + param_1 * 2) =
+       (int)(short)((short)((int)g_mat3x3_007af996 * (int)(short)(&g_dispatchSave1626)[param_1] +
+                            (int)g_mat3x3_007af998 * (int)*(short *)(&g_vtxIn1_y + param_1 * 2) +
+                            (int)g_mat3x3_007af99a * (int)(short)(&g_vtxIn2_y)[param_1] >> 0xc) +
+                   (short)g_vtxTransY);
+  iVar2 = (int)(short)((short)((int)g_mat3x3_007af99c * (int)(short)(&g_dispatchSave1626)[param_1] +
+                               (int)g_mat3x3_007af99e * (int)*(short *)(&g_vtxIn1_y + param_1 * 2) +
+                               (int)g_mat3x3_007af9a0 * (int)(short)(&g_vtxIn2_y)[param_1] >> 0xc) +
+                      (short)g_vtxTransZ);
+  (&g_min_007af984)[param_1] = iVar2;
+  iVar1 = 0x2000000;
+  if (1 < iVar2) {
+    iVar1 = (int)(0x2000000 / (longlong)iVar2);
+  }
+  *(short *)(&g_triStripRingA + param_1) =
+       (short)((uint)((iVar1 * *(int *)(&g_vtxOut1_x + param_1 * 2) >> 0x10) * 0x1999a) >> 0x10) +
+       0x140;
+  *(short *)((int)&g_triStripRingA + param_1 * 4 + 2) =
+       (short)((uint)((iVar1 * *(int *)(&g_vtxOut1_y + param_1 * 2) >> 0x10) * 0x1e000) >> 0x10) +
+       0xf0;
+  return;
+}
+#else
 __declspec(naked) void Helper_EmitLine(void) {
     __asm {
         mov     ecx, [esp + 4]
@@ -112,4 +150,5 @@ __declspec(naked) void Helper_EmitLine(void) {
         ret
     }
 }
+#endif
 

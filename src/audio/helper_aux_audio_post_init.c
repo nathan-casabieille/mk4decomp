@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /*
@@ -14,6 +15,36 @@ extern u32 g_audioPreState;
 extern u32 g_audioState08;
 extern unsigned int g_iat_mciSendCommandA;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 Helper_AuxAudio_PostInit(void)
+
+{
+  MCIERROR MVar1;
+  undefined1 local_24 [4];
+  int local_20;
+  undefined4 local_1c;
+  undefined1 local_14 [4];
+  MCIDEVICEID local_10;
+  char *local_c;
+  
+  if (g_audioState08 == 0) {
+    local_c = MK4_VA(char, 0x004f4684);
+    MVar1 = mciSendCommandA(0,0x803,0x2100,(DWORD_PTR)local_14);
+    g_audioState08 = (uint)(MVar1 == 0);
+    if (MVar1 != 0) {
+      return 0;
+    }
+    g_audioPreState = local_10;
+  }
+  local_1c = 5;
+  MVar1 = mciSendCommandA(g_audioPreState,0x814,0x100,(DWORD_PTR)local_24);
+  if ((MVar1 == 0) && (local_20 != 0)) {
+    return 1;
+  }
+  return 0;
+}
+#else
 __declspec(naked) void Helper_AuxAudio_PostInit(void) {
     __asm {
         mov     eax, dword ptr [g_audioState08]
@@ -61,4 +92,5 @@ failPath:
         ret
     }
 }
+#endif
 

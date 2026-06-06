@@ -40,6 +40,8 @@ typedef unsigned char      code;
 typedef long double        float10;
 typedef long double        unkbyte10;
 typedef signed char        sbyte;
+typedef long long          longlong;
+typedef unsigned long long ulonglong;
 
 /* Ghidra CONCAT<a><b>(hi, lo): build an (a+b)-byte value from an a-byte
  * high part and a b-byte low part (hi << b*8 | lo, each masked to width).
@@ -67,6 +69,9 @@ typedef int bool;
 #define true  1
 #define false 0
 #endif
+
+/* Win32 ABI type seam (platform-glue twins) - NON_MATCHING-only too. */
+#include "win32_types.h"
 
 #endif /* NON_MATCHING */
 

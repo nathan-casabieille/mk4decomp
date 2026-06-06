@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -157,6 +158,122 @@ extern void Mat3x3VecMul6Bit(void);
 extern void PackColor(void);
 extern void Vec3NormalizeScaleStore(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CameraSetupAndCullFan(void)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  short sVar3;
+  undefined2 uVar4;
+  short sVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  uint uVar9;
+  int iVar10;
+  
+  uVar2 = g_dualC;
+  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_dispatchSave1575 = (uint)(g_tickX3 * 0x60) >> 8;
+  g_dispatchSave1576 = g_tickW1;
+  g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0x3c) >> 8;
+  if (g_walkCallback < 0x60) {
+    g_walkCallback = 0x60;
+  }
+  else if (0xa0 < g_walkCallback) {
+    g_walkCallback = 0xa0;
+  }
+  iVar7 = g_tickW1 * g_walkCallback * 8;
+  if (0x100 < g_walkCallback) {
+    g_walkCallback = 0x100;
+  }
+  g_dispatchSave1577 = g_tickW1 * g_walkCallback >> 8;
+  g_dispatchSave1504 = (undefined2)((uint)iVar7 >> 8);
+  iVar7 = iVar7 >> 9;
+  iVar6 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 0x15;
+  g_dispatchSave1505 = -(short)iVar7;
+  g_dualC = g_eventQueuePending + 0x15;
+  g_dispatchSave1525 = MK4_NODE_AT(int, iVar6, 0) - MK4_NODE_AT(int, g_dualC, 0) >> 8;
+  g_dispatchSave1526 = MK4_NODE_AT(int, iVar6, 4) - MK4_NODE_AT(int, g_dualC, 4) >> 8;
+  g_dispatchSave1527 = MK4_NODE_AT(int, iVar6, 8) - MK4_NODE_AT(int, g_dualC, 8) >> 8;
+  g_mat3x3_007af990 = g_dispatchSave1554;
+  g_mat3x3_007af994 = g_dispatchSave1555;
+  g_mat3x3_007af998 = g_dispatchSave1556;
+  g_mat3x3_007af99c = g_dispatchSave1557;
+  g_mat3x3_007af9a0 = g_dispatchSave1558;
+  g_eventQueuePending = iVar6;
+  g_dispatchSave1507 = g_dispatchSave1504;
+  g_dispatchSave1508 = g_dispatchSave1505;
+  g_dispatchSave1510 = g_dispatchSave1504;
+  g_dispatchSave1511 = g_dispatchSave1505;
+  Mat3x3VecMul6Bit(&g_dispatchSave1525,&g_dispatchSave1525);
+  g_dispatchSave1520 = (short)g_dispatchSave1526;
+  sVar3 = (short)g_dispatchSave1525;
+  sVar5 = (short)g_dispatchSave1527;
+  g_dispatchSave1519 = sVar3;
+  if (SQRT((double)((int)sVar3 * (int)sVar3 + (int)g_dispatchSave1520 * (int)g_dispatchSave1520 +
+                   (int)sVar5 * (int)sVar5)) != g_fpZeroCam) {
+    g_dispatchSave1521 = sVar5;
+    sVar3 = __ftol();
+    g_dispatchSave1519 = sVar3;
+    uVar4 = __ftol();
+    g_dispatchSave1520 = CONCAT22(g_dispatchSave1521,uVar4);
+    sVar5 = __ftol();
+  }
+  g_camRotXBam = -sVar3;
+  g_camRotYBam = -g_dispatchSave1520;
+  g_camRotZBam = -sVar5;
+  g_dispatchSave1521 = sVar5;
+  Vec3NormalizeScaleStore(0,(int)sVar3,(int)g_dispatchSave1520,-(int)sVar5);
+  Color15BitPacker(0x50,0x50,0x50);
+  PackColor(0,iVar7,iVar7,iVar7);
+  iVar7 = g_pointPosX - MK4_NODE_AT(int, g_eventQueuePending, 0);
+  g_dispatchSave1525 = iVar7 >> 8;
+  iVar8 = g_pointPosY - MK4_NODE_AT(int, g_eventQueuePending, 4);
+  uVar9 = iVar8 >> 8;
+  iVar10 = g_pointPosZ - MK4_NODE_AT(int, g_eventQueuePending, 8);
+  g_dispatchSave1527 = iVar10 >> 8;
+  iVar6 = (g_dispatchSave1527 * g_dispatchSave1527 >> 0xc) + ((int)(uVar9 * uVar9) >> 0xc) +
+          (g_dispatchSave1525 * g_dispatchSave1525 >> 0xc);
+  g_dispatchSave1526 = uVar9;
+  if (iVar6 != 0) {
+    sVar3 = (short)((uint)iVar7 >> 8);
+    g_dispatchSave1524 = (short)((uint)iVar10 >> 8);
+    g_dispatchSave1523 = (ushort)((uint)iVar8 >> 8);
+    iVar7 = (int)(0x180000 / (longlong)iVar6) >> 8;
+    g_dispatchSave1522 = sVar3;
+    if (SQRT((double)((int)sVar3 * (int)sVar3 +
+                      (int)(short)g_dispatchSave1523 * (int)(short)g_dispatchSave1523 +
+                     (int)g_dispatchSave1524 * (int)g_dispatchSave1524)) != g_fpZeroCam) {
+      sVar3 = __ftol();
+      g_dispatchSave1522 = sVar3;
+      g_dispatchSave1523 = __ftol();
+      uVar9 = (uint)g_dispatchSave1523;
+      g_dispatchSave1524 = __ftol();
+    }
+    if (0x100 < iVar7) {
+      iVar7 = 0x100;
+    }
+    sVar5 = (short)((uint)(iVar7 * g_tickX3) >> 8);
+    g_dispatchSave1506 = (short)((g_gtAxisX & 0xffff) - 0x8000 >> 8) * sVar5;
+    g_dispatchSave1509 = (short)((g_gtAxisY & 0xffff) - 0x8000 >> 8) * sVar5;
+    g_dispatchSave1512 = (short)((g_gtAxisZ & 0xffff) - 0x8000 >> 8) * sVar5;
+    Vec3NormalizeScaleStore(1,(int)sVar3,(int)(short)uVar9,(int)g_dispatchSave1524);
+    PackColor(1,(int)g_dispatchSave1506,(int)g_dispatchSave1509,(int)g_dispatchSave1512);
+  }
+  if (((g_cj_0054205c & 0x180000) != 0) && (g_tickFlagZ != 0)) {
+    g_dispatchSave1567 = g_dispatchSave1567 + 0x2b85;
+  }
+  if (((g_cj_0054205c & 0x1000) != 0) && (-1 < g_dispatchSave1574)) {
+    AltCamMatrixProject(&g_dispatchSave1550,0);
+  }
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1;
+  g_dualC = uVar2;
+  return;
+}
+#else
 __declspec(naked) void CameraSetupAndCullFan(void)
 {
     __asm {
@@ -474,3 +591,4 @@ __declspec(naked) void CameraSetupAndCullFan(void)
         ret
     }
 }
+#endif
