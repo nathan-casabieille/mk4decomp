@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_distRefX;
@@ -37,6 +38,206 @@ extern void Mul10Tail(void);
 extern void FixedDiv16(void);
 extern void ScaledStateNegCallPauseLoad(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_PerPlayerTick(void)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player1NodeIdx;
+  g_eventQueuePending = g_player2NodeIdx;
+  if ((g_player1NodeIdx != 0) && (g_player2NodeIdx != 0)) {
+    g_walkCallback = MK4_NODE_AT(uint, g_player1NodeIdx, 0x54);
+    g_eventQueueCurrent = MK4_NODE_AT(int, g_player1NodeIdx, 0x5c);
+    iVar1 = MK4_NODE_AT(int, g_player2NodeIdx, 0x54);
+    iVar3 = MK4_NODE_AT(int, g_player2NodeIdx, 0x5c);
+    g_eventQueueWorkType = iVar1 - g_walkCallback;
+    g_distRefX = (int)(iVar1 + g_walkCallback) >> 1;
+    g_distRefZ = (int)(iVar3 + g_eventQueueCurrent) >> 1;
+    g_chainAccumCur = iVar3 - g_eventQueueCurrent;
+    g_eventQueueNotMask = g_eventQueueWorkType;
+    g_eventQueueChild = g_chainAccumCur;
+    g_eventQueueWorkType = Mul10Tail(g_eventQueueWorkType,g_eventQueueWorkType);
+    g_chainAccumCur = Mul10Tail(g_chainAccumCur,g_chainAccumCur);
+    g_eventQueueWorkType = g_eventQueueWorkType + g_chainAccumCur;
+    FpuSqrtMul();
+    uVar2 = g_walkCallback;
+    if (g_framePauseFlag == 0) {
+      g_fightStateProgress = g_walkCallback;
+      if (g_walkCallback != 0) {
+        g_eventQueueWorkType = MK4_NODE_AT(uint, g_eventQueuePending, 0x40) | *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40);
+        g_xformScratch94 = g_eventQueueWorkType & 0x80;
+        if (g_xformScratch94 == 0) {
+          g_currentNodeFlags = g_walkCallback;
+          g_walkCallback = g_eventQueueNotMask;
+          g_eventQueueCurrent = uVar2;
+          FixedDiv16();
+          uVar2 = g_walkCallback;
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+          g_fightAxisPosX = g_walkCallback;
+          g_walkCallback = g_eventQueueChild;
+          g_fightAxisNegX = -uVar2;
+          g_eventQueueCurrent = g_currentNodeFlags;
+          FixedDiv16();
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+          g_fightAxisNegY = -g_walkCallback;
+          g_fightAxisPosY = g_walkCallback;
+          g_xformScratch94 =
+               (MK4_NODE_AT(uint, g_eventQueuePending, 0x40) | *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40)) & 0x80;
+          if (g_xformScratch94 == 0) {
+            g_phaseInstallSlot = g_phaseInstallSlot + -1;
+            if (g_phaseInstallSlot < 0) {
+              g_phaseInstallSlot = 0;
+            }
+            if (g_phaseInstallSlot == 0) {
+              g_phaseThunkSlot6 = g_walkCallback + g_distRefX;
+              g_dispatchVar35 = g_distRefX + g_fightAxisNegY;
+              g_phaseThunkSlot7 = g_distRefZ + g_fightAxisPosX;
+              g_audioBridgeSlot2 = g_distRefZ - g_fightAxisPosX;
+              g_eventQueueWorkType = g_phaseThunkSlot6 - g_walkBoundsSlot;
+              g_chainAccumCur = g_audioBridgeSlot2 - g_walkBoundsLimit;
+              g_walkCallback = g_walkBoundsSlot;
+              g_eventQueueCurrent = g_walkBoundsLimit;
+              g_eventQueueNotMask = g_dispatchVar35;
+              g_eventQueueChild = g_phaseThunkSlot7;
+              g_eventQueueWorkType = Mul10Tail(g_eventQueueWorkType,g_eventQueueWorkType);
+              g_chainAccumCur = Mul10Tail(g_chainAccumCur,g_chainAccumCur);
+              g_eventQueueWorkType = g_eventQueueWorkType + g_chainAccumCur;
+              g_eventQueueNotMask = g_eventQueueNotMask - g_walkCallback;
+              g_eventQueueChild = g_eventQueueChild - g_eventQueueCurrent;
+              g_eventQueueNotMask = Mul10Tail(g_eventQueueNotMask,g_eventQueueNotMask);
+              g_eventQueueChild = Mul10Tail(g_eventQueueChild,g_eventQueueChild);
+              g_eventQueueNotMask = g_eventQueueNotMask + g_eventQueueChild;
+              g_walkBoundsSlot = g_phaseThunkSlot6;
+              g_walkBoundsLimit = g_audioBridgeSlot2;
+              if ((int)g_eventQueueNotMask < (int)g_eventQueueWorkType) {
+                g_walkBoundsSlot = g_dispatchVar35;
+                g_walkBoundsLimit = g_phaseThunkSlot7;
+              }
+              g_scenegraphWalkEnd = g_walkBoundsLimit - g_distRefZ;
+              g_dispatchVar14 = g_walkBoundsSlot - g_distRefX;
+              g_eventQueueWorkType = g_distRefX;
+              g_chainAccumCur = g_distRefZ;
+            }
+          }
+        }
+      }
+      g_dualC = g_eventQueueSeed;
+      g_walkCallback = g_fightAxisPosY;
+      if (g_fightAxisPosY == 0) {
+        g_eventQueueChild = MK4_NODE_AT(uint, g_eventQueueSeed, 0x5c);
+        iVar1 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c);
+      }
+      else {
+        g_eventQueueCurrent = g_fightAxisPosX;
+        FixedDiv16();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        g_eventQueueWorkType = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54);
+        g_chainAccumCur = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c);
+        g_eventQueueNotMask = MK4_NODE_AT(int, g_dualC, 0x54) - g_eventQueueWorkType;
+        g_eventQueueChild = MK4_NODE_AT(int, g_dualC, 0x5c) - g_chainAccumCur;
+        iVar1 = Mul10Tail(g_walkCallback,g_eventQueueNotMask);
+      }
+      g_phaseThunkState = (uint)(iVar1 < (int)g_eventQueueChild);
+      g_primary_0052d74c = 0;
+      iVar1 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c);
+      uVar2 = g_fightAxisPosX;
+      if ((iVar1 != 0) ||
+         (iVar1 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74), uVar2 = g_fightAxisPosY, iVar1 != 0)) {
+        g_eventQueueWorkType = uVar2;
+        if ((int)uVar2 < 0) {
+          g_eventQueueWorkType = -uVar2;
+        }
+        iVar3 = iVar1;
+        if (iVar1 < 0) {
+          iVar3 = -iVar1;
+        }
+        g_chainAccumCur = iVar3 + g_eventQueueWorkType;
+        iVar1 = iVar1 + uVar2;
+        if (iVar1 < 0) {
+          iVar1 = -iVar1;
+        }
+        if (iVar1 == g_chainAccumCur) {
+          g_primary_0052d74c = 0x10000;
+        }
+        if (iVar1 < (int)g_chainAccumCur) {
+          g_primary_0052d74c = 0xffff0000;
+        }
+      }
+      g_secondary_00538068 = 0;
+      g_eventQueueNotMask = 0;
+      g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueuePending, 0x6c);
+      uVar2 = g_fightAxisNegX;
+      if ((g_eventQueueCurrent != 0) ||
+         (g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueuePending, 0x74), uVar2 = g_fightAxisNegY, g_eventQueueCurrent != 0)
+         ) {
+        g_eventQueueWorkType = uVar2;
+        if ((int)uVar2 < 0) {
+          g_eventQueueWorkType = -uVar2;
+        }
+        iVar1 = g_eventQueueCurrent;
+        if ((int)g_eventQueueCurrent < 0) {
+          iVar1 = -g_eventQueueCurrent;
+        }
+        g_chainAccumCur = iVar1 + g_eventQueueWorkType;
+        g_eventQueueCurrent = g_eventQueueCurrent + uVar2;
+        if ((int)g_eventQueueCurrent < 0) {
+          g_eventQueueCurrent = -g_eventQueueCurrent;
+        }
+        if (g_eventQueueCurrent == g_chainAccumCur) {
+          g_secondary_00538068 = 0x10000;
+          g_eventQueueNotMask = 0x10000;
+        }
+        if ((int)g_eventQueueCurrent < (int)g_chainAccumCur) {
+          g_secondary_00538068 = 0xffff0000;
+          g_eventQueueNotMask = 0xffff0000;
+        }
+      }
+      g_bootInitSaveSlot = (*(unsigned int *)MK4_VA(unsigned int, 0x537ef4)) - 1;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x537ef4)) = g_bootInitSaveSlot;
+      g_walkCallback = g_bootInitSaveSlot;
+      if ((int)g_bootInitSaveSlot < 0) {
+        g_walkCallback = 0;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x537ef4)) = g_walkCallback;
+        DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThresholdRevertAdvance();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        g_walkCallback = g_fightStateProgress;
+        if ((0x60000 < (int)g_fightStateProgress) && (ScaledStateNegCallPauseLoad(), g_framePauseFlag != 0)) {
+          return;
+        }
+      }
+      g_eventQueueCurrent = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58);
+      g_eventQueueWorkType = MK4_NODE_AT(int, g_eventQueuePending, 0x58) - g_eventQueueCurrent;
+      if ((int)g_eventQueueWorkType < 0) {
+        g_eventQueueWorkType = -g_eventQueueWorkType;
+      }
+      if (((int)g_eventQueueWorkType < 0xb334) &&
+         (g_bootInitSaveSlot = g_phaseTimer - 1, g_phaseTimer = g_bootInitSaveSlot, g_eventQueueWorkType = g_bootInitSaveSlot,
+         (int)g_bootInitSaveSlot < 0)) {
+        g_eventQueueWorkType = 0;
+        g_walkCallback = g_fightStateProgress;
+        g_phaseTimer = g_eventQueueWorkType;
+        if (((int)g_fightStateProgress < 0x8000) && (GeoTransformDispatchAndApply(), g_framePauseFlag != 0)) {
+          return;
+        }
+      }
+      DualInstallCallSwap_CjChainResetThreshold_then_CjChainResetThreshold();
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Helper_PerPlayerTick(void)
 {
     __asm {
@@ -431,4 +632,5 @@ __declspec(naked) void Helper_PerPlayerTick(void)
         ret      
     }
 }
+#endif
 

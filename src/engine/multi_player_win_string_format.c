@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -115,6 +116,331 @@ extern void Helper_Sprintf(void);
 extern void PushPopPendingTwoCalls(void);
 extern void ScaledStoreCallEpilogue(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MultiPlayerWinStringFormat(void)
+
+{
+  char cVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  uint uVar5;
+  char *pcVar6;
+  char *pcVar7;
+  char *pcVar8;
+  
+  PushPopPendingTwoCalls();
+  iVar2 = g_eventMusicSlot;
+  iVar4 = g_dispatchVar3;
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  g_walkCallback = g_eventMusicSlot2;
+  g_currentNodeFlags = 0x14000;
+  if (g_eventMusicSlot2 == 1) {
+    if ((g_active_0053a408 == 0) && (g_active_00537e88 == 1)) {
+      g_dispatchVar3 = g_dispatchVar3 + -1;
+      if (g_dispatchVar3 < 0) {
+        g_walkCallback = g_eventMusicSlot2;
+        g_currentNodeFlags = 0x14000;
+        return;
+      }
+      Helper_Sprintf(MK4_VA(unsigned int, 0x543450),&g_dispatchSave1178,iVar4);
+      pcVar6 = MK4_VA(char, 0x004d56e8);
+      if (g_dispatchVar3 < 1) {
+        pcVar6 = MK4_VA(char, 0x004d56f8);
+      }
+      uVar3 = 0xffffffff;
+      do {
+        pcVar8 = pcVar6;
+        if (uVar3 == 0) break;
+        uVar3 = uVar3 - 1;
+        pcVar8 = pcVar6 + 1;
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar8;
+      } while (cVar1 != '\0');
+      uVar3 = ~uVar3;
+      iVar4 = -1;
+      pcVar6 = (char *)MK4_VA(unsigned int, 0x543450);
+      do {
+        pcVar7 = pcVar6;
+        if (iVar4 == 0) break;
+        iVar4 = iVar4 + -1;
+        pcVar7 = pcVar6 + 1;
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar7;
+      } while (cVar1 != '\0');
+      pcVar6 = pcVar8 + -uVar3;
+      pcVar8 = pcVar7 + -1;
+      for (uVar5 = uVar3 >> 2; uVar5 != 0; uVar5 = uVar5 - 1) {
+        *(undefined4 *)pcVar8 = *(undefined4 *)pcVar6;
+        pcVar6 = pcVar6 + 4;
+        pcVar8 = pcVar8 + 4;
+      }
+      for (uVar3 = uVar3 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
+        *pcVar8 = *pcVar6;
+        pcVar6 = pcVar6 + 1;
+        pcVar8 = pcVar8 + 1;
+      }
+      uVar3 = 0xffffffff;
+      pcVar6 = MK4_VA(char, 0x004d5708);
+      do {
+        pcVar8 = pcVar6;
+        if (uVar3 == 0) break;
+        uVar3 = uVar3 - 1;
+        pcVar8 = pcVar6 + 1;
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar8;
+      } while (cVar1 != '\0');
+      uVar3 = ~uVar3;
+      iVar4 = -1;
+      pcVar6 = (char *)MK4_VA(unsigned int, 0x543450);
+      do {
+        pcVar7 = pcVar6;
+        if (iVar4 == 0) break;
+        iVar4 = iVar4 + -1;
+        pcVar7 = pcVar6 + 1;
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar7;
+      } while (cVar1 != '\0');
+      pcVar6 = pcVar8 + -uVar3;
+      pcVar8 = pcVar7 + -1;
+      for (uVar5 = uVar3 >> 2; uVar5 != 0; uVar5 = uVar5 - 1) {
+        *(undefined4 *)pcVar8 = *(undefined4 *)pcVar6;
+        pcVar6 = pcVar6 + 4;
+        pcVar8 = pcVar8 + 4;
+      }
+      for (uVar3 = uVar3 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
+        *pcVar8 = *pcVar6;
+        pcVar6 = pcVar6 + 1;
+        pcVar8 = pcVar8 + 1;
+      }
+      AllocSlotPushTripleGlobals();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_eventQueuePending = 0x150d14;
+      g_walkCallback = 0x238;
+      g_eventQueueCurrent = 4;
+      g_chainAccumCur = &g_imageBaseHi;
+      g_eventQueueNotMask = (undefined *)0x370000;
+      Push70CallScaleArith();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      MStackPop4Rewrite();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_currentNodeFlags;
+    }
+    AllocSlotPushTripleGlobals();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_walkCallback = 0x238;
+    g_eventQueuePending = 0x13555e;
+    g_eventQueueCurrent = 4;
+    g_chainAccumCur = &g_imageBaseHi;
+    g_eventQueueNotMask = MK4_VA(unsigned int, 0x500000);
+    Push70CallScaleArith();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    MStackPop4Rewrite();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_currentNodeFlags;
+    AllocSlotPushTripleGlobals();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_eventQueuePending = 0x135562;
+    g_walkCallback = 0x238;
+    g_eventQueueCurrent = 4;
+    g_chainAccumCur = MK4_VA(unsigned int, 0x610000);
+    g_eventQueueNotMask = MK4_VA(unsigned int, 0x640000);
+    Push70CallScaleArith();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    MStackPop4Rewrite();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_currentNodeFlags;
+    AllocSlotPushTripleGlobals();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_walkCallback = 0x238;
+    g_eventQueuePending = 0x13558a;
+    g_eventQueueCurrent = 4;
+    g_chainAccumCur = MK4_VA(unsigned int, 0x610000);
+    g_eventQueueNotMask = (undefined *)0x780000;
+    Push70CallScaleArith();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    MStackPop4Rewrite();
+  }
+  else {
+    if ((g_active_0053a408 == 1) && (g_active_00537e88 == 0)) {
+      g_eventMusicSlot = g_eventMusicSlot + -1;
+      if (g_eventMusicSlot < 0) {
+        g_walkCallback = g_eventMusicSlot2;
+        g_currentNodeFlags = 0x14000;
+        return;
+      }
+      Helper_Sprintf(MK4_VA(unsigned int, 0x543450),&g_dispatchSave1178,iVar2);
+      pcVar6 = MK4_VA(char, 0x004d56e8);
+      if (g_eventMusicSlot < 1) {
+        pcVar6 = MK4_VA(char, 0x004d56f8);
+      }
+      uVar3 = 0xffffffff;
+      do {
+        pcVar8 = pcVar6;
+        if (uVar3 == 0) break;
+        uVar3 = uVar3 - 1;
+        pcVar8 = pcVar6 + 1;
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar8;
+      } while (cVar1 != '\0');
+      uVar3 = ~uVar3;
+      iVar4 = -1;
+      pcVar6 = (char *)MK4_VA(unsigned int, 0x543450);
+      do {
+        pcVar7 = pcVar6;
+        if (iVar4 == 0) break;
+        iVar4 = iVar4 + -1;
+        pcVar7 = pcVar6 + 1;
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar7;
+      } while (cVar1 != '\0');
+      pcVar6 = pcVar8 + -uVar3;
+      pcVar8 = pcVar7 + -1;
+      for (uVar5 = uVar3 >> 2; uVar5 != 0; uVar5 = uVar5 - 1) {
+        *(undefined4 *)pcVar8 = *(undefined4 *)pcVar6;
+        pcVar6 = pcVar6 + 4;
+        pcVar8 = pcVar8 + 4;
+      }
+      for (uVar3 = uVar3 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
+        *pcVar8 = *pcVar6;
+        pcVar6 = pcVar6 + 1;
+        pcVar8 = pcVar8 + 1;
+      }
+      uVar3 = 0xffffffff;
+      pcVar6 = MK4_VA(char, 0x004d5708);
+      do {
+        pcVar8 = pcVar6;
+        if (uVar3 == 0) break;
+        uVar3 = uVar3 - 1;
+        pcVar8 = pcVar6 + 1;
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar8;
+      } while (cVar1 != '\0');
+      uVar3 = ~uVar3;
+      iVar4 = -1;
+      pcVar6 = (char *)MK4_VA(unsigned int, 0x543450);
+      do {
+        pcVar7 = pcVar6;
+        if (iVar4 == 0) break;
+        iVar4 = iVar4 + -1;
+        pcVar7 = pcVar6 + 1;
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar7;
+      } while (cVar1 != '\0');
+      pcVar6 = pcVar8 + -uVar3;
+      pcVar8 = pcVar7 + -1;
+      for (uVar5 = uVar3 >> 2; uVar5 != 0; uVar5 = uVar5 - 1) {
+        *(undefined4 *)pcVar8 = *(undefined4 *)pcVar6;
+        pcVar6 = pcVar6 + 4;
+        pcVar8 = pcVar8 + 4;
+      }
+      for (uVar3 = uVar3 & 3; uVar3 != 0; uVar3 = uVar3 - 1) {
+        *pcVar8 = *pcVar6;
+        pcVar6 = pcVar6 + 1;
+        pcVar8 = pcVar8 + 1;
+      }
+      AllocSlotPushTripleGlobals();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_eventQueuePending = 0x150d14;
+      g_walkCallback = 0x238;
+      g_eventQueueCurrent = 4;
+      g_chainAccumCur = (undefined *)0xffa60000;
+      g_eventQueueNotMask = (undefined *)0x370000;
+      Push70CallScaleArith();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      MStackPop4Rewrite();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_currentNodeFlags;
+    }
+    AllocSlotPushTripleGlobals();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_walkCallback = 0x238;
+    g_eventQueuePending = 0x13555a;
+    g_eventQueueCurrent = 4;
+    g_chainAccumCur = (undefined *)0xffa60000;
+    g_eventQueueNotMask = MK4_VA(unsigned int, 0x500000);
+    Push70CallScaleArith();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    MStackPop4Rewrite();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_currentNodeFlags;
+    AllocSlotPushTripleGlobals();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_eventQueuePending = 0x135562;
+    g_walkCallback = 0x238;
+    g_eventQueueCurrent = 4;
+    g_chainAccumCur = (undefined *)0xff9f0000;
+    g_eventQueueNotMask = MK4_VA(unsigned int, 0x640000);
+    Push70CallScaleArith();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    MStackPop4Rewrite();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_currentNodeFlags;
+    AllocSlotPushTripleGlobals();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_walkCallback = 0x238;
+    g_eventQueuePending = 0x13558a;
+    g_eventQueueCurrent = 4;
+    g_chainAccumCur = (undefined *)0xff9f0000;
+    g_eventQueueNotMask = (undefined *)0x780000;
+    Push70CallScaleArith();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    MStackPop4Rewrite();
+  }
+  if (g_framePauseFlag == 0) {
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_currentNodeFlags;
+    Event23bMusicCluster();
+  }
+  return;
+}
+#else
 __declspec(naked) void MultiPlayerWinStringFormat(void)
 {
     __asm {
@@ -574,3 +900,4 @@ __declspec(naked) void MultiPlayerWinStringFormat(void)
         _emit    0x18
     }
 }
+#endif

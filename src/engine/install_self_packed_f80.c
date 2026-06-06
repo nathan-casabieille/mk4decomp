@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,43 @@ extern void DivBy(void);
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfPackedF80(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_phaseThunkScratch = g_eventQueueCurrent;
+    DispatcherChainRampClamp();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 4) != 0) goto LAB_00426049;
+      *(undefined **)(g_eventQueuePending * 4 + 0x10) = MK4_VA(unsigned int, 0x426190);
+      MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0x80;
+      g_eventQueueCurrent = g_phaseThunkScratch;
+      g_walkCallback = 0x80;
+      DivBy();
+      if (g_framePauseFlag == 0) {
+        g_dualC = g_walkCallback + 6;
+        g_walkCallback = g_dualC;
+        *(code **)(iVar1 + 8) = InstallSelfPackedF80;
+        *(undefined4 *)(iVar1 + 0x84) = 1;
+        g_framePauseFlag = 1;
+      }
+    }
+    return;
+  }
+LAB_00426049:
+  g_tickW1 = 0;
+  StackPopDispatchTagged();
+  return;
+}
+#else
 __declspec(naked) void InstallSelfPackedF80(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -179,3 +217,4 @@ __declspec(naked) void InstallSelfPackedF80(void) {
         ret
     }
 }
+#endif

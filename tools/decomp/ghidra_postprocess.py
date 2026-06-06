@@ -113,21 +113,36 @@ def postprocess(text, fn_by_va, gl_by_va):
     # a function actually dereferences it (type mismatch vs our scalar
     # global), the injector's compile gate rejects that function - so this
     # is safe: correct where it is a value read, filtered out otherwise.
+    # m.group(1) = optional '&', m.group(2) = optional '_' narrowed-read
+    # modifier, m.group(3) = VA. The leading `_` (Ghidra `_DAT_<va>`) is a
+    # sub-element / narrowed read; the VA is still the exact access address.
     def dat_sub(m):
-        va = int(m.group(2), 16)
+        amp, narrow, va = m.group(1), m.group(2), int(m.group(3), 16)
         name = gl_by_va.get(va)
-        if not name:
-            return m.group(0)
-        return (m.group(1) or '') + name
-    # The optional leading `_` is Ghidra's sub-element / narrowed-read
-    # modifier (`_DAT_<va>` reads fewer bytes than the 4-byte datum at va);
-    # the embedded VA is still the exact access address, so reconcile by it
-    # and drop the `_` (otherwise it stranded in front of our name, e.g.
-    # `_g_xformScratch94`, which is undeclared). PTR first so its inner DAT_
-    # is not rewritten early.
-    text = re.sub(r'(&)?_?PTR_DAT_([0-9a-fA-F]{8})', dat_sub, text)
-    # &DAT_00xxxxxx -> &g_name ; DAT_00xxxxxx / _DAT_00xxxxxx -> g_name
-    text = re.sub(r'(&)?_?DAT_([0-9a-fA-F]{8})', dat_sub, text)
+        if name:
+            return (amp or '') + name      # reconcile by address, drop the `_`
+        return (amp or '') + m.group(0).lstrip('&')  # unmapped: leave to bail
+    # PTR_DAT first so its inner DAT_ is not rewritten early. PTR_DAT/_PTR_DAT
+    # that we cannot name stays as-is and the injector bails (indirect thunk).
+    text = re.sub(r'(&)?(_)?PTR_DAT_([0-9a-fA-F]{8})', dat_sub, text)
+
+    # &DAT_00xxxxxx -> &g_name ; DAT_/_DAT_ -> g_name when we name the VA.
+    # When we DON'T name it, route the raw fixed VA through the seam
+    # (Phase B "route remaining DAT_ via the seam") so the access compiles
+    # and stays behavior-correct (arena read/write at that VA). Only the
+    # FULL-WIDTH form (no `_`) is routed: a narrowed `_DAT_` write would
+    # clobber adjacent bytes if forced to 4 bytes, so those keep bailing.
+    def dat_seam(m):
+        amp, narrow, va = m.group(1), m.group(2), int(m.group(3), 16)
+        name = gl_by_va.get(va)
+        if name:
+            return (amp or '') + name
+        if narrow:
+            return m.group(0)              # narrowed unmapped -> bail
+        if amp == '&':
+            return 'MK4_VA(unsigned int, 0x%x)' % va
+        return '(*(unsigned int *)MK4_VA(unsigned int, 0x%x))' % va
+    text = re.sub(r'(&)?(_)?DAT_([0-9a-fA-F]{8})', dat_seam, text)
 
     # Ghidra string-literal autonames: s_<sanitized text>_<8-hex VA> (and the
     # wide-string u_ variant) are pointers to .rdata bytes at that VA. Route

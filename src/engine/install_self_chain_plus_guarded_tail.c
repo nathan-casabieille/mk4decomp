@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,41 @@ extern void ScaledInitWithCounterAndType_004314f0(void);
 extern void ScaledLoadJmp_00428d20(void);
 extern void ScaledLoadOrSetJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfChainPlusGuardedTail(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    ScaledInitWithCounterAndType_004314f0();
+    return;
+  }
+  ScaledZeroFour();
+  if (g_framePauseFlag == 0) {
+    GuardedPackedSlotInit(MK4_VA(unsigned int, 0x542be4));
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0x14;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x28) = 0x14;
+      *(code **)(iVar1 + 8) = InstallSelfChainPlusGuardedTail;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1488ca0;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      ScaledLoadJmp_00428d20();
+      g_framePauseFlag = 1;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfChainPlusGuardedTail(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -201,3 +237,4 @@ __declspec(naked) void InstallSelfChainPlusGuardedTail(void) {
         ret
     }
 }
+#endif
