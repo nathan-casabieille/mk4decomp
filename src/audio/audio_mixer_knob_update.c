@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,90 @@ extern unsigned int g_audioBank2Base;
 extern void ScaledChainStore24(void);
 extern void SetJmp_Push16Call_004a1ad0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioMixerKnobUpdate(void)
+
+{
+  char cVar1;
+  int iVar2;
+  
+  if (g_audioMixerKnob2 == 0) {
+    if (((g_audioStateDisp50b4 & 4) != 0) && (0 < g_counter_0054359c)) {
+      SetJmp_Push16Call_004a1ad0();
+      g_counter_0054359c = g_counter_0054359c + -1;
+    }
+    if (((g_audioStateDisp50b4 & 8) != 0) && (g_counter_0054359c < g_audioStateMachine0 + -1)) {
+      SetJmp_Push16Call_004a1ad0();
+      g_counter_0054359c = g_counter_0054359c + 1;
+    }
+  }
+  if (g_audioMixerKnob2 == 1) {
+    g_eventQueueCurrent = g_counter_0054359c;
+    iVar2 = g_counter_0054359c;
+    if ((g_audioStateDisp50b4 & 4) != 0) {
+      SetJmp_Push16Call_004a1ad0();
+      iVar2 = g_eventQueueCurrent;
+      cVar1 = (&g_audioBank2Base)[g_eventQueueCurrent * 0x18];
+      (&g_audioBank2Base)[g_eventQueueCurrent * 0x18] = cVar1 + -1;
+      if ((char)(cVar1 + -1) < '\0') {
+        (&g_audioBank2Base)[iVar2 * 0x18] = 0xe;
+      }
+    }
+    if ((g_audioStateDisp50b4 & 8) != 0) {
+      SetJmp_Push16Call_004a1ad0();
+      iVar2 = g_eventQueueCurrent;
+      cVar1 = (&g_audioBank2Base)[g_eventQueueCurrent * 0x18];
+      (&g_audioBank2Base)[g_eventQueueCurrent * 0x18] = cVar1 + '\x01';
+      if ((char)(cVar1 + '\x01') == '\x0f') {
+        (&g_audioBank2Base)[iVar2 * 0x18] = 0;
+      }
+    }
+    g_walkCallback = (int)(char)(&g_audioBank2Base)[iVar2 * 0x18];
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((g_counter_0054359c + g_baseSel) * 4 + 0x34);
+    ScaledChainStore24();
+  }
+  if (g_audioMixerKnob == 0) {
+    if (((g_audioStateDisp50b4 & 0x400) != 0) && (0 < g_counter_005433c8)) {
+      SetJmp_Push16Call_004a1ad0();
+      g_counter_005433c8 = g_counter_005433c8 + -1;
+    }
+    if (((g_audioStateDisp50b4 & 0x800) != 0) && (g_counter_005433c8 < g_audioStateMachine1 + -1)) {
+      SetJmp_Push16Call_004a1ad0();
+      g_counter_005433c8 = g_counter_005433c8 + 1;
+    }
+  }
+  if (g_audioMixerKnob == 1) {
+    iVar2 = g_counter_005433c8 + 5;
+    g_eventQueueCurrent = iVar2;
+    if ((g_audioStateDisp50b4 & 0x400) != 0) {
+      SetJmp_Push16Call_004a1ad0();
+      iVar2 = g_eventQueueCurrent;
+      cVar1 = (&g_audioBank2Base)[g_eventQueueCurrent * 0x18];
+      (&g_audioBank2Base)[g_eventQueueCurrent * 0x18] = cVar1 + -1;
+      if ((char)(cVar1 + -1) < '\0') {
+        (&g_audioBank2Base)[iVar2 * 0x18] = 0xe;
+      }
+    }
+    if ((g_audioStateDisp50b4 & 0x800) != 0) {
+      SetJmp_Push16Call_004a1ad0();
+      iVar2 = g_eventQueueCurrent;
+      cVar1 = (&g_audioBank2Base)[g_eventQueueCurrent * 0x18];
+      (&g_audioBank2Base)[g_eventQueueCurrent * 0x18] = cVar1 + '\x01';
+      if ((char)(cVar1 + '\x01') == '\x0f') {
+        (&g_audioBank2Base)[iVar2 * 0x18] = 0;
+      }
+    }
+    g_walkCallback = (int)(char)(&g_audioBank2Base)[iVar2 * 0x18];
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((g_counter_005433c8 + g_baseSel) * 4 + 0x48);
+    g_eventQueuePending = *(int *)(*(uint *)((g_walkCallback + 0x14283c) * 4) & 0xffffff) >> 2 & 0x3fffff;
+    g_cj_0054205c = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18);
+    MK4_NODE_AT(uint, g_cj_0054205c, 0x24) = g_eventQueuePending;
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void AudioMixerKnobUpdate(void)
 {
     __asm {
@@ -247,3 +332,4 @@ __declspec(naked) void AudioMixerKnobUpdate(void)
         ret
     }
 }
+#endif

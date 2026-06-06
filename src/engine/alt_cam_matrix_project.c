@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -145,6 +146,69 @@ extern unsigned int g_dispatchSave1558;
 extern unsigned int g_dispatchSave1569;
 extern void Mat3x3VecMul6Bit(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AltCamMatrixProject(undefined4 *param_1,int param_2)
+
+{
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  undefined2 uVar4;
+  undefined4 local_2c;
+  int local_28;
+  int local_24;
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  undefined4 local_14;
+  undefined2 local_10;
+  
+  uVar4 = g_mat3x3_007af9a0;
+  uVar3 = g_mat3x3_007af99c;
+  uVar2 = g_mat3x3_007af998;
+  uVar1 = g_mat3x3_007af994;
+  if (param_2 == 0) {
+    local_2c = *param_1;
+    local_24 = param_1[2];
+  }
+  else {
+    local_20 = g_mat3x3_007af990;
+    g_mat3x3_007af990 = g_dispatchSave1554;
+    g_mat3x3_007af998 = g_dispatchSave1556;
+    g_mat3x3_007af99c = g_dispatchSave1557;
+    g_mat3x3_007af994 = g_dispatchSave1555;
+    g_mat3x3_007af9a0 = g_dispatchSave1558;
+    Mat3x3VecMul6Bit(param_1,&local_2c);
+    local_18 = uVar2;
+    local_1c = uVar1;
+    local_14 = uVar3;
+    local_10 = uVar4;
+  }
+  g_mat3x3_007af990 = g_vtxMatBase;
+  g_mat3x3_007af994 = g_dispatchSave1530;
+  local_28 = -g_dispatchSave1569;
+  g_mat3x3_007af99c = g_dispatchSave1532;
+  g_mat3x3_007af998 = g_dispatchSave1531;
+  g_mat3x3_007af9a0 = g_dispatchSave1533;
+  Mat3x3VecMul6Bit(&local_2c,&local_2c);
+  if (param_2 != 0) {
+    g_mat3x3_007af990 = local_20;
+    g_mat3x3_007af994 = local_1c;
+    g_mat3x3_007af998 = local_18;
+    g_mat3x3_007af99c = local_14;
+    g_mat3x3_007af9a0 = local_10;
+  }
+  g_screenH = 0x1e0;
+  if (0 < local_24) {
+    g_walkCallback = (((local_28 << 9) / local_24) * 0x1e000 >> 0x10) + 0xf0;
+    if ((0 < g_walkCallback) && (g_walkCallback < 0x1e0)) {
+      g_screenH = (undefined2)g_walkCallback;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void AltCamMatrixProject(void) {
     __asm {
         mov     eax, dword ptr [esp + 8]
@@ -246,3 +310,4 @@ __declspec(naked) void AltCamMatrixProject(void) {
         ret
     }
 }
+#endif

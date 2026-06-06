@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,29 @@ extern unsigned int g_phaseThunkVar;
 extern unsigned int g_dispatchAcc;
 extern unsigned int g_phaseCounter;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BitShiftExtract(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  iVar1 = *(int *)((*(int *)((g_phaseCounter * 4 + g_dispatchAcc) * 4 + 0xc) + g_stateCountdown + -1) * 4);
+  iVar2 = *(int *)((g_phaseCounter + g_phaseThunkVar) * 4);
+  g_dispatchVar34 = iVar1 >> (sbyte)((iVar2 - 2U & 3) << 3) & 0xff;
+  g_installState = g_dispatchVar34;
+  g_walkCallback = iVar1 >> ((char)iVar2 * '\b' & 0x1fU) & 0xff;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_eventQueueCurrent = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+  g_matrixStackTop = g_matrixStackTop + -2;
+  return;
+}
+#else
 __declspec(naked) void BitShiftExtract(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -182,3 +206,4 @@ __declspec(naked) void BitShiftExtract(void) {
         ret
     }
 }
+#endif

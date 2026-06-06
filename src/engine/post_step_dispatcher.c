@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,84 @@ extern void StoreDoubleNegPauseSubStore(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 extern void Wrapper_ScaledChainPushCall_004ef8c8(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PostStepDispatcher(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_walkCallback = 0x1999;
+    iVar2 = g_cj_0054205c * 4;
+    StoreDoubleNegPauseSubStore();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(uint *)(iVar2 + 0x6c) = g_walkCallback;
+    g_walkCallback = 0x1999;
+    StoreDoubleNegPauseSubStore();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(uint *)(iVar2 + 0x74) = g_walkCallback;
+    *(undefined4 *)(iVar2 + 0x70) = 0xffffdc29;
+    *(undefined4 *)(iVar2 + 0x80) = 0x4ccc;
+    *(undefined4 *)(iVar2 + 0x7c) = 0x28f;
+    g_walkCallback = 0x28f;
+    *(undefined4 *)(iVar2 + 0x78) = 0x28f;
+    g_cj_00542054 = 0x5a;
+LAB_00497920:
+    *(code **)(iVar1 + 8) = PostStepDispatcher;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  else {
+    iVar2 = g_cj_0054205c * 4;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+    g_walkCallback = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20);
+    g_xformScratch94 = g_walkCallback & 0x2000;
+    if (g_xformScratch94 != 0) {
+      func_0x00497b10();
+      return;
+    }
+    *(int *)(iVar2 + 0x70) = *(int *)(iVar2 + 0x70) + 0x168;
+    g_walkCallback = *(int *)(iVar2 + 0x58) + -0x1999;
+    g_cj_00542054 = g_cj_00542054 + -1;
+    if ((int)g_walkCallback < 0) {
+      if (-1 < g_cj_00542054) goto LAB_00497920;
+      if (-1 < (int)g_walkCallback) goto LAB_0049783e;
+    }
+    else {
+LAB_0049783e:
+      *(undefined4 *)(iVar2 + 0x70) = 0xfffff0a4;
+      g_walkCallback = -0x1999;
+      *(undefined4 *)(iVar2 + 0x58) = 0xffffe667;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c + 0x15;
+      g_eventQueuePending = g_cj_0054205c + 0x1b;
+      Phase2InitDispatchInstallSelf();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      Wrapper_ScaledChainPushCall_004ef8c8();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+    }
+    MStackCall_MStackPush2ChainLLInsert();
+    if (g_framePauseFlag == 0) {
+      CallSetPause();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void PostStepDispatcher(void)
 {
     __asm {
@@ -318,3 +397,4 @@ __declspec(naked) void PostStepDispatcher(void)
         ret      
     }
 }
+#endif

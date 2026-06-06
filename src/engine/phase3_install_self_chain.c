@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -144,6 +145,53 @@ extern void ScenegraphWalk(void);
 extern void SwapOrPassSet(void);
 extern void TwinMStackPushScaledChain(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase3InstallSelfChain(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_quadEntryGate = 1;
+    g_walkCallback = g_or;
+    g_xformScratch94 = g_or & 8;
+    if ((g_xformScratch94 == 0) && (TwinMStackPushScaledChain(), g_framePauseFlag != 0)) {
+      return;
+    }
+    *(code **)(iVar1 + 8) = Phase3InstallSelfChain;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1421380;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    RoundEndFsm();
+    g_framePauseFlag = 1;
+  }
+  else {
+    SwapOrPassSet();
+    if (g_framePauseFlag == 0) {
+      if (g_walkCallback == g_loaded) {
+        PendingMatch_0042d240();
+        return;
+      }
+      g_hitPhase = g_hitPhase + 1;
+      g_walkCallback = g_hitPhase;
+      CallPauseClear3CallTriple();
+      if ((g_framePauseFlag == 0) && (ScenegraphWalk(), g_framePauseFlag == 0)) {
+        Screen_ArcadeEnding();
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Phase3InstallSelfChain(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -253,3 +301,4 @@ __declspec(naked) void Phase3InstallSelfChain(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,96 @@ extern void PerSlotPhaseRouter_DualGatedStateYield_004605d0(void);
 extern void PerSlotPhaseRouter_DualGatedStateYield_00460770(void);
 extern void UnlinkChainInstall_00460dd0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SlotPhaseDispatcherBigSwitch(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = *(int *)(iVar1 + 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  while( true ) {
+    if (iVar2 == 0) {
+      iVar2 = DualGatedStateYield();
+      if (iVar2 == 0) {
+        g_eventQueueCurrent = g_phaseThunkState2;
+        if (g_phaseThunkState2 != 0) {
+          UnlinkChainInstall_00460dd0();
+          return;
+        }
+        *(code **)(iVar1 + 8) = SlotPhaseDispatcherBigSwitch;
+        *(undefined4 *)(iVar1 + 0x84) = 1;
+        g_dualC = 1;
+        g_framePauseFlag = 1;
+      }
+      return;
+    }
+    DirtyToggleByGate();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 4) != 0) {
+      CjInstallSelfRouter();
+      return;
+    }
+    CjMaskedFlagProbe();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+      GuardedDoubleCallSetJmp();
+      return;
+    }
+    NotShrCmp1Store();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_eventQueueCurrent = g_walkCallback & 9;
+    if (g_eventQueueCurrent == 9) break;
+    g_eventQueueCurrent = g_walkCallback & 5;
+    if (g_eventQueueCurrent == 5) {
+      GuardedDispatch_CallPauseMStackPushSet4Jmp();
+      return;
+    }
+    g_eventQueueCurrent = g_walkCallback & 1;
+    if (g_eventQueueCurrent == 1) {
+      CallPauseCallTestStackPushJmp();
+      return;
+    }
+    g_eventQueueCurrent = g_walkCallback & 8;
+    if (g_eventQueueCurrent == 8) {
+      PerSlotPhaseRouter_DualGatedStateYield_004605d0();
+      return;
+    }
+    g_eventQueueCurrent = g_walkCallback & 4;
+    if (g_eventQueueCurrent == 4) {
+      PerSlotPhaseRouter_DualGatedStateYield_00460770();
+      return;
+    }
+    g_xformScratch94 = g_walkCallback & 2;
+    if (g_xformScratch94 != 0) {
+      CallPauseMStackPushSet0Jmp();
+      return;
+    }
+    g_walkCallback = 0;
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x6c) = 0;
+    MK4_NODE_AT(uint, g_cj_0054205c, 0x70) = g_walkCallback;
+    MK4_NODE_AT(uint, g_cj_0054205c, 0x74) = g_walkCallback;
+    CallPauseTriCmpJmp();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    iVar1 = g_baseSel * 4;
+    iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+    *(undefined4 *)(iVar1 + 0x84) = 0;
+  }
+  GuardedDispatch_CallPauseMStackPushSet3Jmp();
+  return;
+}
+#else
 __declspec(naked) void SlotPhaseDispatcherBigSwitch(void)
 {
     __asm
@@ -273,3 +364,4 @@ __declspec(naked) void SlotPhaseDispatcherBigSwitch(void)
         ret
     }
 }
+#endif

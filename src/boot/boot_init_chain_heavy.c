@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -139,6 +140,106 @@ extern void ScaledChainAccumLoop(void);
 extern void Thunk_Helper_GeoLoadPre(void);
 extern void VertexSlotInitFlagWalk(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootInitChainHeavy(void)
+
+{
+  g_audioInitScaled = 0;
+  Helper_GeoLoadPre();
+  if (g_framePauseFlag == 0) {
+    thunk_Helper_GeoLoadPre();
+    if (g_framePauseFlag == 0) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dispatchSave82;
+      g_eventQueuePending = 0;
+      g_dualC = 0x21;
+      g_dualD = g_bootChainPair0;
+      g_cj_00542054 = 200;
+      LinkedListBuilder();
+      if (g_framePauseFlag == 0) {
+        g_cj_00542054 = 0;
+        g_dualD = g_bootChainPair1;
+        VertexSlotInitFlagWalk();
+        if (g_framePauseFlag == 0) {
+          g_cj_00542054 = 0;
+          g_dualD = g_bootChainScaled1;
+          VertexSlotInitFlagWalk();
+          if (g_framePauseFlag == 0) {
+            g_cj_00542054 = 0;
+            g_dualD = g_bootChainScaled2;
+            VertexSlotInitFlagWalk();
+            if (g_framePauseFlag == 0) {
+              g_cj_00542054 = 0;
+              g_dualD = g_bootChainState3;
+              VertexSlotInitFlagWalk();
+              if (g_framePauseFlag == 0) {
+                g_cj_00542054 = 0;
+                g_dualD = g_tickFrameNodeA;
+                VertexSlotInitFlagWalk();
+                if (g_framePauseFlag == 0) {
+                  g_cj_00542054 = 0;
+                  g_dualD = g_tickFrameNodeB;
+                  VertexSlotInitFlagWalk();
+                  if (g_framePauseFlag == 0) {
+                    g_cj_00542054 = 0;
+                    g_dualD = g_bootChainScaled4;
+                    VertexSlotInitFlagWalk();
+                    if (g_framePauseFlag == 0) {
+                      g_eventQueuePending = 3;
+                      g_dualD = g_bootChainScaled3;
+                      g_cj_00542054 = 0;
+                      VertexSlotInitFlagWalk();
+                      if (g_framePauseFlag == 0) {
+                        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dispatchSave81;
+                        g_eventQueuePending = 4;
+                        g_dualC = 0x13;
+                        g_dualD = g_bootChainSlot2;
+                        g_cj_00542054 = 0x1c2;
+                        LinkedListBuilder();
+                        if (g_framePauseFlag == 0) {
+                          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dispatchSave80;
+                          g_eventQueuePending = 0;
+                          g_dualC = 0x13;
+                          g_dualD = g_bootChainState4;
+                          g_cj_00542054 = 200;
+                          LinkedListBuilder();
+                          if (g_framePauseFlag == 0) {
+                            ScaledChainAccumLoop();
+                            if (g_framePauseFlag == 0) {
+                              BootPhaseGateBracketedInit();
+                              if (g_framePauseFlag == 0) {
+                                g_walkCallback = 0xc;
+                                *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0xc;
+                                g_eventQueueSeed = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+                                MStackCall_MStackPush2ChainPrepend_004063e0();
+                                if (g_framePauseFlag == 0) {
+                                  g_phaseThunkSlot8 = 0;
+                                  g_bootChainSlot3 = 0;
+                                  g_bootHeavyState = 0;
+                                  g_particleInitState = 0;
+                                  g_particleEmitterNode = 0;
+                                  g_dispatchSave523 = 0x7f000000;
+                                  g_walkCallback = 0;
+                                  AndShlStore();
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void BootInitChainHeavy(void)
 {
     __asm {
@@ -258,3 +359,4 @@ __declspec(naked) void BootInitChainHeavy(void)
         ret
     }
 }
+#endif

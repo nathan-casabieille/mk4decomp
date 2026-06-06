@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_texturedTriVar;
@@ -12,6 +13,113 @@ extern unsigned int g_dispatchSave1354;
 extern unsigned int g_dispatchSave1355;
 extern unsigned int g_dispatchSave1400;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_PaletteInit(int param_1)
+
+{
+  ushort uVar1;
+  bool bVar2;
+  uint uVar3;
+  ushort *puVar4;
+  int iVar5;
+  ushort *puVar6;
+  int iVar7;
+  short sVar8;
+  ushort uVar9;
+  int iVar10;
+  int local_d4;
+  int local_d0;
+  int local_cc;
+  int local_c8;
+  ushort local_c0 [32];
+  ushort local_80 [64];
+  
+  g_dispatchSave1352 = 0x1010101;
+  g_dispatchSave1353 = 0x1010101;
+  g_dispatchSave1354 = 0x1010101;
+  g_dispatchSave1355 = 0x1010101;
+  if (param_1 != g_texturedTriVar) {
+    if (param_1 == 0) {
+      iVar5 = 0;
+      do {
+        iVar5 = iVar5 + 2;
+        uVar9 = *(ushort *)(g_dispatchSave1400 + -2 + iVar5);
+        *(ushort *)(g_dispatchSave1400 + -2 + iVar5) = uVar9 >> 1 & 0x7fe0 | uVar9 & 0x1f;
+      } while (iVar5 < 0x200000);
+      local_d4 = 0;
+      local_d0 = 1;
+    }
+    else {
+      iVar5 = 0;
+      do {
+        iVar5 = iVar5 + 2;
+        uVar9 = *(ushort *)(g_dispatchSave1400 + -2 + iVar5);
+        *(ushort *)(g_dispatchSave1400 + -2 + iVar5) = (uVar9 & 0xffe0) << 1 | uVar9 & 0x3f;
+      } while (iVar5 < 0x200000);
+      local_d4 = 0;
+      local_d0 = 1;
+    }
+    do {
+      puVar6 = local_c0;
+      iVar7 = 0x20;
+      iVar5 = 0;
+      do {
+        *puVar6 = (ushort)(iVar5 >> 4) & 0x1f;
+        puVar6 = puVar6 + 1;
+        iVar7 = iVar7 + -1;
+        iVar5 = iVar5 + local_d0;
+      } while (iVar7 != 0);
+      puVar6 = local_80;
+      iVar7 = 0x40;
+      iVar5 = 0;
+      do {
+        *puVar6 = (ushort)(iVar5 >> 4) & 0x3f;
+        puVar6 = puVar6 + 1;
+        iVar7 = iVar7 + -1;
+        iVar5 = iVar5 + local_d0;
+      } while (iVar7 != 0);
+      iVar5 = 0;
+      puVar6 = local_c0;
+      uVar3 = -(uint)(param_1 != 0) & 0x20;
+      local_cc = 0x20;
+      do {
+        iVar7 = 0;
+        if (uVar3 != 0xffffffe0) {
+          do {
+            puVar4 = local_c0;
+            local_c8 = 0x20;
+            do {
+              if (param_1 == 0) {
+                uVar9 = local_c0[iVar7];
+                sVar8 = *puVar6 << 5;
+              }
+              else {
+                uVar9 = local_80[iVar7];
+                sVar8 = *puVar6 << 6;
+              }
+              uVar1 = *puVar4;
+              iVar10 = local_d4 + iVar5;
+              puVar4 = puVar4 + 1;
+              iVar5 = iVar5 + 1;
+              *(ushort *)(g_dispatchSave1340 + iVar10 * 2) = (uVar9 + sVar8) * 0x20 + uVar1;
+              local_c8 = local_c8 + -1;
+            } while (local_c8 != 0);
+            iVar7 = iVar7 + 1;
+          } while (iVar7 < (int)(uVar3 + 0x20));
+        }
+        puVar6 = puVar6 + 1;
+        local_cc = local_cc + -1;
+      } while (local_cc != 0);
+      local_d4 = local_d4 + 0x10000;
+      bVar2 = local_d0 < 0x10;
+      local_d0 = local_d0 + 1;
+    } while (bVar2);
+    g_texturedTriVar = param_1;
+  }
+  return;
+}
+#else
 __declspec(naked) void Helper_PaletteInit(void)
 {
     __asm {
@@ -168,4 +276,5 @@ __declspec(naked) void Helper_PaletteInit(void)
         ret
     }
 }
+#endif
 

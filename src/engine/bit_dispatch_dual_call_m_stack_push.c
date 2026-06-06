@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,54 @@ extern unsigned int g_fightAxisPosY;
 extern void DoublePushCallDoublePop(void);
 extern void GuardedSeq_DualCallPauseDirtyJmp_then_ScaledXorStore(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BitDispatchDualCallMStackPush(void)
+
+{
+  g_eventQueueCurrent = -g_walkCallback;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x38);
+  g_eventQueueWorkType = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34);
+  g_xformScratch94 = g_eventQueueWorkType & 1;
+  if (g_xformScratch94 == 0) {
+    DoublePushCallDoublePop();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 1) != 0) {
+        g_walkCallback = g_eventQueueCurrent;
+      }
+      g_matrixStackTop = g_matrixStackTop + 1;
+      *(int *)((int)g_matrixStackTop * 4) = g_walkCallback;
+      if ((((byte)g_xformDirtyFlags & 1) != 0) && (GuardedSeq_DualCallPauseDirtyJmp_then_ScaledXorStore(), g_framePauseFlag != 0)) {
+        return;
+      }
+      g_walkCallback = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_matrixStackTop = g_matrixStackTop + -1;
+      MStackFrameCdeclDouble();
+      return;
+    }
+  }
+  else {
+    DoublePushCallDoublePop();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 1) != 0) {
+        MStackFrameCdeclDouble();
+        return;
+      }
+      g_matrixStackTop = g_matrixStackTop + 1;
+      g_walkCallback = g_eventQueueCurrent;
+      *(int *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+      GuardedSeq_DualCallPauseDirtyJmp_then_ScaledXorStore();
+      if (g_framePauseFlag == 0) {
+        g_walkCallback = *(undefined4 *)((int)g_matrixStackTop * 4);
+        g_matrixStackTop = g_matrixStackTop + -1;
+        MStackFrameCdeclDouble();
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void BitDispatchDualCallMStackPush(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -199,3 +248,4 @@ __declspec(naked) void BitDispatchDualCallMStackPush(void) {
         ret
     }
 }
+#endif

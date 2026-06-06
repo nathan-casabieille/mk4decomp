@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,37 @@ extern void MStackSignedMod(void);
 extern void Mul10Triple0xd999Interp(void);
 extern void SubCmpCallPauseJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ChainFieldTest2Branch(void)
+
+{
+  bool bVar1;
+  
+  g_walkCallback = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40);
+  g_xformScratch94 = g_walkCallback & 0x40;
+  if (g_xformScratch94 != 0) {
+    bVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == g_player1NodeIdx;
+    g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player1NodeIdx;
+    if (bVar1) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player2NodeIdx;
+    }
+    MStackSignedMod();
+    if (g_framePauseFlag == 0) {
+      g_chainAccumCur = 0;
+      g_eventQueueWorkType = 0x4ccc;
+      if (0x4ccc < (int)g_walkCallback) {
+        SubCmpCallPauseJmp();
+        return;
+      }
+      Mul10Triple0xd999Interp();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void ChainFieldTest2Branch(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeIdx]
@@ -157,3 +189,4 @@ __declspec(naked) void ChainFieldTest2Branch(void) {
         ret
     }
 }
+#endif

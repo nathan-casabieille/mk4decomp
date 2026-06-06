@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -130,6 +131,65 @@ extern unsigned int g_installCountdownVar;
 extern unsigned int g_dispatchVar31;
 extern unsigned int g_dispatchTab63;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SqDistThresholdRevertAdvance(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_dualC * 4;
+  g_walkCallback = MK4_NODE_AT(undefined4, g_dualC, 0x54);
+  g_eventQueueCurrent = *(undefined4 *)(iVar1 + 0x5c);
+  g_chainAccumCur = g_walkCallback;
+  g_eventQueueNotMask = g_eventQueueCurrent;
+  g_walkCallback = Mul10Tail(g_walkCallback,g_walkCallback);
+  iVar2 = Mul10Tail(g_eventQueueCurrent,g_eventQueueCurrent);
+  g_walkCallback = g_walkCallback + iVar2;
+  MK4_NODE_AT(int, g_dualD, 0) = g_walkCallback;
+  if (g_walkCallback < g_rangeSqLimit) {
+    if (g_dualC == g_player1NodeIdx) {
+      g_dispatchVar32 = *(undefined4 *)(iVar1 + 0x5c);
+      g_dispatchTab64 = g_walkCallback;
+      g_installCountdownVar2 = *(undefined4 *)(iVar1 + 0x54);
+    }
+    else {
+      g_dispatchVar31 = *(undefined4 *)(iVar1 + 0x5c);
+      g_dispatchTab63 = g_walkCallback;
+      g_installCountdownVar = *(undefined4 *)(iVar1 + 0x54);
+    }
+    if (g_walkCallback < g_rangeSqLimit) {
+      g_eventQueueCurrent = g_rangeSqLimit;
+      return;
+    }
+  }
+  g_eventQueueWorkType = *(uint *)(iVar1 + 0x6c);
+  g_chainAccumCur = *(int *)(iVar1 + 0x74);
+  g_eventQueueNotMask = *(int *)(iVar1 + 0x54) + g_eventQueueWorkType;
+  g_eventQueueCurrent = *(int *)(iVar1 + 0x5c) + g_chainAccumCur;
+  g_eventQueueNotMask = Mul10Tail(g_eventQueueNotMask,g_eventQueueNotMask);
+  iVar2 = Mul10Tail(g_eventQueueCurrent,g_eventQueueCurrent);
+  g_eventQueueCurrent = iVar2 + g_eventQueueNotMask;
+  if (g_walkCallback < g_eventQueueCurrent) {
+    if (g_dualC == g_player1NodeIdx) {
+      *(undefined4 *)(iVar1 + 0x54) = g_installCountdownVar2;
+      *(undefined4 *)(iVar1 + 0x5c) = g_dispatchVar32;
+    }
+    else {
+      *(undefined4 *)(iVar1 + 0x54) = g_installCountdownVar;
+      *(undefined4 *)(iVar1 + 0x5c) = g_dispatchVar31;
+    }
+    g_eventQueueWorkType = *(uint *)(iVar1 + 0x40);
+    g_xformScratch94 = g_eventQueueWorkType & 0x80;
+    if (g_xformScratch94 == 0) {
+      *(undefined4 *)(iVar1 + 0x6c) = 0;
+      *(undefined4 *)(iVar1 + 0x74) = 0;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void SqDistThresholdRevertAdvance(void) {
     __asm {
         mov     eax, dword ptr [g_pendingNodeType]
@@ -238,3 +298,4 @@ __declspec(naked) void SqDistThresholdRevertAdvance(void) {
         ret
     }
 }
+#endif

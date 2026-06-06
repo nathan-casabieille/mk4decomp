@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,69 @@ extern void TableWalk3StrideCall(void);
 extern void TenThunkDualSave(void);
 extern void TripleBlockInstallSelfThunk(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int BitFlagEffectDispatch(void)
+
+{
+  int iVar1;
+  
+  g_walkCallback = g_or;
+  g_xformScratch94 = g_or & 0x4000;
+  if ((g_xformScratch94 == 0) || (Helper_SetState_1A(), iVar1 = g_framePauseFlag, g_framePauseFlag == 0)) {
+    g_walkCallback = g_or;
+    g_xformScratch94 = g_or & 0x1000;
+    if (((((g_xformScratch94 == 0) || (Helper_SetState_0E(), iVar1 = g_framePauseFlag, g_framePauseFlag == 0)) &&
+         ((g_xformScratch94 = g_or & 0x800, g_xformScratch94 == 0 ||
+          (g_walkCallback = g_or, Helper_SetState_0C(), iVar1 = g_framePauseFlag, g_framePauseFlag == 0))))
+        && (((((g_xformScratch94 = g_or & 0x200, g_xformScratch94 == 0 ||
+               (g_walkCallback = g_or, TenThunkDualSave(), iVar1 = g_framePauseFlag, g_framePauseFlag == 0
+               )) && ((((g_xformScratch94 = g_or & 0x100, g_xformScratch94 == 0 ||
+                        (g_walkCallback = g_or, Helper_SetState_09(), iVar1 = g_framePauseFlag,
+                        g_framePauseFlag == 0)) &&
+                       ((g_xformScratch94 = g_or & 2, g_xformScratch94 == 0 ||
+                        (g_walkCallback = g_or, TripleBlockInstallSelfThunk(), iVar1 = g_framePauseFlag,
+                        g_framePauseFlag == 0)))) &&
+                      ((g_xformScratch94 = g_or & 4, g_xformScratch94 == 0 ||
+                       (g_walkCallback = g_or, Helper_SetState_03(), iVar1 = g_framePauseFlag,
+                       g_framePauseFlag == 0)))))) &&
+             ((g_xformScratch94 = g_or & 0x400, g_xformScratch94 == 0 ||
+              (g_walkCallback = g_or, Helper_SetState_0B(), iVar1 = g_framePauseFlag, g_framePauseFlag == 0)
+              ))) && ((((g_xformScratch94 = g_or & 8, g_xformScratch94 == 0 ||
+                        (g_walkCallback = g_or, Helper_SetState_04(), iVar1 = g_framePauseFlag,
+                        g_framePauseFlag == 0)) &&
+                       ((g_xformScratch94 = g_or & 0x10, g_xformScratch94 == 0 ||
+                        (g_walkCallback = g_or, Helper_SetState_05(), iVar1 = g_framePauseFlag,
+                        g_framePauseFlag == 0)))) &&
+                      (((g_xformScratch94 = g_or & 0x20, g_xformScratch94 == 0 ||
+                        (g_walkCallback = g_or, Helper_SetState_06(), iVar1 = g_framePauseFlag,
+                        g_framePauseFlag == 0)) &&
+                       ((g_xformScratch94 = g_or & 0x40, g_xformScratch94 == 0 ||
+                        (g_walkCallback = g_or, Helper_SetState_07(), iVar1 = g_framePauseFlag,
+                        g_framePauseFlag == 0)))))))))) &&
+       ((g_xformScratch94 = g_or & 0x80, g_xformScratch94 == 0 ||
+        (g_walkCallback = g_or, TableWalk3StrideCall(), iVar1 = g_framePauseFlag, g_framePauseFlag == 0)))) {
+      g_walkCallback = g_or & 0x2001;
+      if (g_walkCallback == 0x2001) {
+        iVar1 = Helper_SetState_10();
+        return iVar1;
+      }
+      g_xformScratch94 = g_or & 1;
+      if ((g_xformScratch94 == 0) ||
+         (g_walkCallback = g_or, Helper_SetState_02(), iVar1 = g_framePauseFlag, g_framePauseFlag == 0)) {
+        g_xformScratch94 = g_or & 0x2000;
+        iVar1 = 0;
+        g_walkCallback = g_or;
+        if (g_xformScratch94 != 0) {
+          Helper_SetState_0F();
+          iVar1 = g_framePauseFlag;
+        }
+      }
+    }
+  }
+  return iVar1;
+}
+#else
 __declspec(naked) void BitFlagEffectDispatch(void)
 {
     __asm {
@@ -301,3 +365,4 @@ __declspec(naked) void BitFlagEffectDispatch(void)
         jmp      Helper_SetState_10
     }
 }
+#endif

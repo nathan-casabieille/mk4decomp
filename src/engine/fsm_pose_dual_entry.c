@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -113,6 +114,65 @@ extern void DualEntryRecursiveInstall(void);
 extern void GuardedSeq_MStackCall_then_CallSetPause_00471670(void);
 extern void TripleCallBitJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FsmPoseDualEntry(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+LAB_0047272d:
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x18);
+    ChainListVecAdd();
+    if (g_framePauseFlag == 0) {
+      *(code **)(iVar1 + 8) = FsmPoseDualEntry;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+    }
+    return;
+  }
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+  g_xformDirtyFlags = g_xformDirtyFlags | 4;
+  if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
+    g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+    if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) {
+      GuardedSeq_MStackCall_then_CallSetPause_00471670();
+      return;
+    }
+    *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) | 0x40;
+    g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x2c);
+    if (g_eventQueuePending != 0) {
+      g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueuePending, 0x14) + 0x1ca;
+      MK4_NODE_AT(int, g_eventQueuePending, 0x14) = g_eventQueueCurrent;
+      for (g_eventQueuePending = MK4_NODE_AT(int, g_eventQueuePending, 0); g_eventQueuePending != 0;
+          g_eventQueuePending = MK4_NODE_AT(int, g_eventQueuePending, 0)) {
+        g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueuePending, 0x14) + 0x1ca;
+        MK4_NODE_AT(int, g_eventQueuePending, 0x14) = g_eventQueueCurrent;
+      }
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+    g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
+    g_xformScratch94 = MK4_NODE_AT(uint, g_eventQueuePending, 0) & 0x400;
+    if (g_xformScratch94 != 0) {
+      iVar2 = MK4_NODE_AT(int, g_baseSel, 0x38) + -0x33;
+      if (iVar2 < 0) {
+        iVar2 = 0;
+      }
+      MK4_NODE_AT(int, g_baseSel, 0x38) = iVar2;
+    }
+    g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+    if (g_walkCallback != 0) goto LAB_0047272d;
+  }
+  GuardedSeq_MStackCall_then_CallSetPause_00471670();
+  return;
+}
+#else
 __declspec(naked) void FsmPoseDualEntry(void)
 {
     __asm {
@@ -281,3 +341,4 @@ __declspec(naked) void FsmPoseDualEntry(void)
         ret
     }
 }
+#endif

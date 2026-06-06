@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,134 @@ extern unsigned int g_dispatchSave1537;
 extern unsigned int g_dispatchSave1538;
 extern unsigned int g_dispatchSave1539;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GamepadSeqRecord(undefined *param_1,int param_2)
+
+{
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  
+  iVar1 = Renderer_GetMode();
+  if ((iVar1 == 2) || (iVar1 = Renderer_GetMode(), iVar1 == 1)) {
+    if (param_2 == 0) {
+      if (param_1 == &g_movesPanelEnd) {
+        g_dispatchSave1534 = g_dispatchSave1534 + 1;
+        g_dispatchSave1535 = g_dispatchSave1535 + -2;
+        g_dispatchSave1536 = g_dispatchSave1536 + 2;
+        g_dispatchSave1537 = g_dispatchSave1537 + -2;
+        g_dispatchSave1538 = g_dispatchSave1538 + 2;
+        g_dispatchSave1539 = g_dispatchSave1539 + -1;
+      }
+      if (param_1 == &g_dispatchCmpEnd) {
+        g_dispatchSave1535 = g_dispatchSave1535 + -2;
+        g_dispatchSave1536 = g_dispatchSave1536 + 2;
+        g_dispatchSave1537 = g_dispatchSave1537 + -2;
+        g_dispatchSave1538 = g_dispatchSave1538 + 2;
+        g_dispatchSave1539 = g_dispatchSave1539 + -1;
+      }
+      if (param_1 == &g_installCountdownEnd) {
+        g_dispatchSave1534 = g_dispatchSave1534 + 1;
+        g_dispatchSave1536 = g_dispatchSave1536 + 1;
+        g_dispatchSave1538 = g_dispatchSave1538 + 1;
+      }
+      if (param_1 == &g_dispatchCmpEnd2) {
+        g_dispatchSave1538 = g_dispatchSave1538 + 2;
+        g_dispatchSave1536 = g_dispatchSave1536 + 2;
+        uVar2 = (int)g_dispatchSave1538 - (int)(short)(g_dispatchSave1534 + -1);
+        uVar3 = (int)uVar2 >> 0x1f;
+        g_dispatchSave1534 = g_dispatchSave1534 + -1;
+        if ((int)((uVar2 ^ uVar3) - uVar3) < 4) {
+          g_dispatchSave1536 = g_dispatchSave1538;
+          g_dispatchSave1534 = g_dispatchSave1538;
+          return;
+        }
+      }
+    }
+    else {
+      if (param_1 == &g_movesPanelEnd) {
+        g_dispatchSave1534 = g_dispatchSave1534 + 1;
+        g_dispatchSave1535 = g_dispatchSave1535 + -2;
+        g_dispatchSave1536 = g_dispatchSave1536 + 1;
+        g_dispatchSave1537 = g_dispatchSave1537 + -1;
+        g_dispatchSave1538 = g_dispatchSave1538 + 2;
+        g_dispatchSave1539 = g_dispatchSave1539 + -1;
+      }
+      if (param_1 == &g_dispatchCmpEnd) {
+        g_dispatchSave1535 = g_dispatchSave1535 + -2;
+        g_dispatchSave1537 = g_dispatchSave1537 + -1;
+        g_dispatchSave1538 = g_dispatchSave1538 + 2;
+        g_dispatchSave1539 = g_dispatchSave1539 + -1;
+      }
+      if (param_1 == &g_installCountdownEnd) {
+        g_dispatchSave1534 = g_dispatchSave1534 + 1;
+        g_dispatchSave1536 = g_dispatchSave1536 + 1;
+        g_dispatchSave1538 = g_dispatchSave1538 + 1;
+      }
+      if (param_1 == &g_dispatchCmpEnd2) {
+        g_dispatchSave1538 = g_dispatchSave1538 + 2;
+        g_dispatchSave1536 = g_dispatchSave1536 + -1;
+        uVar2 = (int)g_dispatchSave1538 - (int)(short)(g_dispatchSave1534 + -1);
+        uVar3 = (int)uVar2 >> 0x1f;
+        g_dispatchSave1534 = g_dispatchSave1534 + -1;
+        if ((int)((uVar2 ^ uVar3) - uVar3) < 4) {
+          g_dispatchSave1534 = g_dispatchSave1538;
+          g_dispatchSave1536 = g_dispatchSave1538;
+        }
+      }
+    }
+  }
+  else if (param_2 == 0) {
+    if (param_1 == &g_movesPanelEnd) {
+      g_dispatchSave1534 = g_dispatchSave1534 + 1;
+      g_dispatchSave1536 = g_dispatchSave1536 + 3;
+      g_dispatchSave1538 = g_dispatchSave1538 + 3;
+    }
+    if (param_1 == &g_dispatchCmpEnd) {
+      g_dispatchSave1536 = g_dispatchSave1536 + 2;
+      g_dispatchSave1538 = g_dispatchSave1538 + 2;
+    }
+    if (param_1 == &g_installCountdownEnd) {
+      g_dispatchSave1534 = g_dispatchSave1534 + 1;
+      g_dispatchSave1536 = g_dispatchSave1536 + 1;
+      g_dispatchSave1538 = g_dispatchSave1538 + 1;
+      g_dispatchSave1539 = g_dispatchSave1539 + 1;
+    }
+    if (param_1 == &g_dispatchCmpEnd2) {
+      g_dispatchSave1536 = g_dispatchSave1536 + 2;
+LAB_004bcd7f:
+      g_dispatchSave1534 = g_dispatchSave1534 + 1;
+      g_dispatchSave1537 = g_dispatchSave1537 + 1;
+      g_dispatchSave1538 = g_dispatchSave1538 + 2;
+      g_dispatchSave1539 = g_dispatchSave1539 + 1;
+      return;
+    }
+  }
+  else {
+    if (param_1 == &g_movesPanelEnd) {
+      g_dispatchSave1534 = g_dispatchSave1534 + 1;
+      g_dispatchSave1536 = g_dispatchSave1536 + 1;
+      g_dispatchSave1538 = g_dispatchSave1538 + 3;
+    }
+    if (param_1 == &g_dispatchCmpEnd) {
+      g_dispatchSave1538 = g_dispatchSave1538 + 2;
+    }
+    if (param_1 == &g_installCountdownEnd) {
+      g_dispatchSave1534 = g_dispatchSave1534 + 1;
+      g_dispatchSave1536 = g_dispatchSave1536 + 1;
+      g_dispatchSave1537 = g_dispatchSave1537 + 1;
+      g_dispatchSave1538 = g_dispatchSave1538 + 1;
+      g_dispatchSave1539 = g_dispatchSave1539 + 1;
+    }
+    if (param_1 == &g_dispatchCmpEnd2) {
+      g_dispatchSave1536 = g_dispatchSave1536 + 1;
+      goto LAB_004bcd7f;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void GamepadSeqRecord(void)
 {
     __asm {
@@ -296,3 +425,4 @@ __declspec(naked) void GamepadSeqRecord(void)
         ret
     }
 }
+#endif

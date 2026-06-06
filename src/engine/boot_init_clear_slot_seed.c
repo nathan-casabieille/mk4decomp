@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -146,6 +147,72 @@ extern void DownloadPlayerChar(void);
 extern void TableWalkBoundedCmp(void);
 extern void ZeroThreeFields_00404ed0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootInitClearSlotSeed(void)
+
+{
+  undefined4 uVar1;
+  undefined4 uVar2;
+  int iVar3;
+  
+  BootInitGuardedCallChain();
+  if (g_framePauseFlag == 0) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_eventQueueSeed;
+    iVar3 = g_eventQueueSeed * 4;
+    ZeroThreeFields_00404ed0();
+    *(undefined4 *)(iVar3 + 0x54) = 0;
+    *(undefined4 *)(iVar3 + 0x58) = 0;
+    *(undefined4 *)(iVar3 + 0x5c) = 0xfffc0000;
+    g_cj_00542054 = g_particleEmitterNode;
+    iVar3 = g_particleEmitterNode * 4;
+    *(undefined4 *)(iVar3 + 0x54) = 0;
+    *(undefined4 *)(iVar3 + 0x58) = 0;
+    *(undefined4 *)(iVar3 + 0x5c) = 0x10000;
+    *(undefined4 *)(iVar3 + 0x34) = 0;
+    g_phaseThunkVar4 = 0;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dispatchVar7;
+    g_eventMusicVar = 0;
+    g_dispatchSave96 = 2;
+    g_walkCallback = 0;
+    g_xformLoopCounter = 10;
+    do {
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      g_xformLoopCounter = g_xformLoopCounter + -1;
+    } while (-1 < g_xformLoopCounter);
+    g_phaseThunkVar2 = 10;
+    g_walkCallback = 0;
+    CopyGlobal();
+    uVar2 = g_eventQueueCurrent;
+    uVar1 = g_walkCallback;
+    if (g_framePauseFlag == 0) {
+      TableWalkBoundedCmp(2);
+      g_dlEnabledFlag = 1;
+      g_walkCallback = g_dlNalt1;
+      g_eventQueueCurrent = 0;
+      DownloadPlayerChar();
+      if (g_framePauseFlag == 0) {
+        g_eventQueueCurrent = 1;
+        g_walkCallback = g_dlNalt2;
+        DownloadPlayerChar();
+        if (g_framePauseFlag == 0) {
+          g_dlEnabledFlag = 0;
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x142c85;
+          g_walkCallback = uVar1;
+          g_eventQueueCurrent = uVar2;
+          LoadGeoAsset_Default();
+          if (g_framePauseFlag == 0) {
+            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x142c85;
+            LoadGeoAsset_Default();
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void BootInitClearSlotSeed(void) {
     __asm {
         push    ebx
@@ -232,3 +299,4 @@ __declspec(naked) void BootInitClearSlotSeed(void) {
         ret
     }
 }
+#endif

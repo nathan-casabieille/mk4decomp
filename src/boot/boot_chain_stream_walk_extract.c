@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,59 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_eq;
 extern void ExtractBitsToVec3(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootChainStreamWalkExtract(void)
+
+{
+  int *piVar1;
+  uint uVar2;
+  int iVar3;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_dualD;
+  g_dualD = g_dualC - 1;
+  piVar1 = (int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  iVar3 = *piVar1 + (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_eventQueueWorkType = iVar3;
+  if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) < iVar3) {
+    do {
+      while( true ) {
+        g_walkCallback = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+        if (-1 < (int)g_walkCallback) break;
+LAB_00407bae:
+        g_eq = (uint)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) < iVar3);
+        g_eventQueuePending = g_eventQueuePending + 1;
+        if ((g_eq == 0) || (g_dualD = g_dualD + -1, g_dualD < 0))
+        goto LAB_00407be5;
+      }
+      g_eq = (uint)(g_walkCallback == 0);
+      g_dualC = g_walkCallback;
+      if (g_eq == 0) {
+        uVar2 = MK4_NODE_AT(uint, g_walkCallback, 0x20);
+        g_dualC = g_walkCallback + 0xf;
+        g_xformScratch94 = uVar2 & 0x100;
+        g_walkCallback = uVar2;
+        if (g_xformScratch94 != 0) {
+          g_walkCallback = MK4_NODE_AT(uint, g_eventQueuePending, 0);
+          ExtractBitsToVec3();
+          iVar3 = g_eventQueueWorkType;
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+          goto LAB_00407bae;
+        }
+      }
+    } while ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) < iVar3);
+  }
+LAB_00407be5:
+  g_dualD = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_matrixStackTop = g_matrixStackTop + -1;
+  return;
+}
+#else
 __declspec(naked) void BootChainStreamWalkExtract(void)
 {
     __asm
@@ -206,3 +260,4 @@ __declspec(naked) void BootChainStreamWalkExtract(void)
         ret
     }
 }
+#endif

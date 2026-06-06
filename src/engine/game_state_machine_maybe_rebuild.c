@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_phaseThunkInst;
@@ -32,6 +33,69 @@ extern void Input_GetAsyncKey(void);
 extern void Input_PollPlayerJoystick(void);
 extern void Input_PollPlayerKeyboard(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Input_TickPlayers(void)
+
+{
+  int iVar1;
+  
+  g_fightTableC2 = 0;
+  g_fightTableC0 = 0;
+  g_fightTableC1 = 0;
+  g_phaseThunkInst = 0;
+  if ((g_demoModeFlag != 0) && (g_gameStateResult == 0)) {
+    Input_PollPlayerKeyboard(0);
+    Input_PollPlayerKeyboard(1);
+    Input_PollPlayerJoystick(0);
+    Input_PollPlayerJoystick(1);
+    if (g_dispatchSave1323 != 0) {
+      if ((((g_fightTableC2 == 0) && (g_fightTableC0 == 0)) && (g_fightTableC1 == 0)) &&
+         (g_phaseThunkInst == 0)) {
+        iVar1 = Input_GetAsyncKey(0x1b);
+        if (iVar1 == 0) {
+          iVar1 = Input_GetAsyncKey(0x20);
+          if (iVar1 == 0) {
+            iVar1 = Input_GetAsyncKey(0xd);
+            if (iVar1 == 0) {
+              g_dispatchSave1323 = 0;
+            }
+          }
+        }
+      }
+      g_fightTableC2 = 0;
+      g_fightTableC0 = 0;
+      g_fightTableC1 = 0;
+      g_phaseThunkInst = 0;
+    }
+    if (g_appInitFlag1 != 0) {
+      *(uint *)g_renderer2_var6 = *(uint *)g_renderer2_var6 & ~g_renderer2_var7;
+      *(uint *)g_dispatchSave517 = *(uint *)g_dispatchSave517 & ~g_dispatchSave518;
+    }
+  }
+  if ((*(uint *)g_dispatchSave536 & g_dispatchSave537) != 0) {
+    *(uint *)g_dispatchSave534 = *(uint *)g_dispatchSave534 & ~g_dispatchSave535;
+  }
+  if ((*(uint *)g_dispatchSave629 & g_dispatchSave630) != 0) {
+    *(uint *)g_dispatchSave627 = *(uint *)g_dispatchSave627 & ~g_dispatchSave628;
+  }
+  if ((*(uint *)g_renderer2_var6 & g_renderer2_var7) != 0) {
+    *(uint *)g_dispatchSave532 = *(uint *)g_dispatchSave532 & ~g_dispatchSave533;
+  }
+  if ((*(uint *)g_dispatchSave517 & g_dispatchSave518) != 0) {
+    *(uint *)g_dispatchSave625 = *(uint *)g_dispatchSave625 & ~g_dispatchSave626;
+  }
+  g_phaseThunkInst = ~g_phaseThunkInst;
+  g_fightTableC2 = ~g_fightTableC2;
+  g_fightTableC0 = ~g_fightTableC0;
+  g_fightTableC1 = ~g_fightTableC1;
+  g_dispatchSave27 = g_phaseThunkInst;
+  g_dispatchVar39 = g_fightTableC2;
+  g_dispatchSave26 = g_fightTableC0;
+  g_dispatchSave25 = g_fightTableC1;
+  return;
+}
+#else
 __declspec(naked) void Input_TickPlayers(void)
 {
     __asm {
@@ -162,4 +226,5 @@ __declspec(naked) void Input_TickPlayers(void)
         ret
     }
 }
+#endif
 

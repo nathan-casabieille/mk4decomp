@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,42 @@ extern unsigned int g_dispatchSave89;
 extern unsigned int g_packedTripleSlot2;
 extern void QuadInterpolator(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Vec3PackedTripleCallBracket(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_dualC;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueWorkType;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_chainAccumCur;
+  g_packedTripleSlot = MK4_NODE_AT(int, g_eventQueueSeed, 0x54) - MK4_NODE_AT(int, g_dualC, 0);
+  g_dispatchSave90 = MK4_NODE_AT(int, g_eventQueueSeed, 0x58) - MK4_NODE_AT(int, g_dualC, 4);
+  g_walkCallback = MK4_NODE_AT(int, g_dualC, 8);
+  g_dispatchSave89 = MK4_NODE_AT(int, g_eventQueueSeed, 0x5c) - g_walkCallback;
+  g_dualC = 0x14e908;
+  g_eventQueuePending = g_packedTripleSlot2;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e026;
+  g_eventQueueWorkType = g_dispatchSave89;
+  QuadInterpolator();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = g_dispatchSave97;
+    g_chainAccumCur = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_eventQueueWorkType = *(int *)((int)(g_matrixStackTop + -1) * 4);
+    g_dualC = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+    g_eventQueuePending = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -4) * 4);
+    g_matrixStackTop = g_matrixStackTop + -5;
+  }
+  return;
+}
+#else
 __declspec(naked) void Vec3PackedTripleCallBracket(void)
 {
     __asm
@@ -208,3 +245,4 @@ __declspec(naked) void Vec3PackedTripleCallBracket(void)
         ret
     }
 }
+#endif

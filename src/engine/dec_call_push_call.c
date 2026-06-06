@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesY.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_baseSel;
@@ -19,6 +20,25 @@ extern void AndShlStore(void);
 extern int ArgSarStoreJmp(void *);
 extern unsigned int g_dispatchSave1278;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DecCallPushCall(void)
+
+{
+  g_dispatchVar15 = g_walkCallback + -1;
+  if (g_dispatchVar15 != 0) {
+    g_walkCallback = g_dispatchVar15;
+    ArgSarStoreJmp(0x4ea948);
+    return;
+  }
+  g_walkCallback = 6;
+  AndShlStore();
+  if (g_framePauseFlag == 0) {
+    ArgSarStoreJmp(0x4ea990);
+  }
+  return;
+}
+#else
 __declspec(naked) void DecCallPushCall(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -40,3 +60,4 @@ L_dcpc_ret:
         ret
     }
 }
+#endif

@@ -119,9 +119,15 @@ def postprocess(text, fn_by_va, gl_by_va):
         if not name:
             return m.group(0)
         return (m.group(1) or '') + name
-    text = re.sub(r'(&)?PTR_DAT_([0-9a-fA-F]{8})', dat_sub, text)
-    # &DAT_00xxxxxx -> &g_name ; DAT_00xxxxxx -> g_name
-    text = re.sub(r'(&)?DAT_([0-9a-fA-F]{8})', dat_sub, text)
+    # The optional leading `_` is Ghidra's sub-element / narrowed-read
+    # modifier (`_DAT_<va>` reads fewer bytes than the 4-byte datum at va);
+    # the embedded VA is still the exact access address, so reconcile by it
+    # and drop the `_` (otherwise it stranded in front of our name, e.g.
+    # `_g_xformScratch94`, which is undeclared). PTR first so its inner DAT_
+    # is not rewritten early.
+    text = re.sub(r'(&)?_?PTR_DAT_([0-9a-fA-F]{8})', dat_sub, text)
+    # &DAT_00xxxxxx -> &g_name ; DAT_00xxxxxx / _DAT_00xxxxxx -> g_name
+    text = re.sub(r'(&)?_?DAT_([0-9a-fA-F]{8})', dat_sub, text)
 
     # Ghidra string-literal autonames: s_<sanitized text>_<8-hex VA> (and the
     # wide-string u_ variant) are pointers to .rdata bytes at that VA. Route

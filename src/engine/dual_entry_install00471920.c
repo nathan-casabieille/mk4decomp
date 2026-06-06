@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,58 @@ extern void GuardedSeq_MStackCall_then_CallSetPause_00471670(void);
 extern void InstallSelfBranchCascade(void);
 extern void TripleCallBitJmp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualEntryInstall00471920(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+  if (g_walkCallback == 0) {
+    MStackCall_MStackPush2ChainLLInsert();
+    if (g_framePauseFlag == 0) {
+      CallSetPause();
+      return;
+    }
+    return;
+  }
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x18);
+    ChainListVecAdd();
+    if (g_framePauseFlag == 0) {
+      *(undefined4 *)(iVar1 + 8) = 0x471840;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+    }
+    return;
+  }
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+  if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) {
+    GuardedSeq_MStackCall_then_CallSetPause_00471670();
+    return;
+  }
+  g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
+  g_walkCallback = MK4_NODE_AT(uint, g_eventQueuePending, 0);
+  g_xformScratch94 = g_walkCallback & 0x400;
+  if (g_xformScratch94 == 0) {
+    DualEntryInstall00471920();
+    return;
+  }
+  g_walkCallback = MK4_NODE_AT(int, g_baseSel, 0x38) + -0x33;
+  if ((int)g_walkCallback < 0) {
+    g_walkCallback = 0;
+  }
+  MK4_NODE_AT(uint, g_baseSel, 0x38) = g_walkCallback;
+  DualEntryInstall00471920();
+  return;
+}
+#else
 __declspec(naked) void DualEntryInstall00471920(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
@@ -167,3 +220,4 @@ __declspec(naked) void DualEntryInstall00471920(void) {
         ret
     }
 }
+#endif

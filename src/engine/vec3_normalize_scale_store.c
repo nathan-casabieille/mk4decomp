@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,30 @@ extern unsigned int g_fpNormalizeZero;
 extern unsigned int g_fpNormalizeScale4096;
 extern void DoubleToInt64(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Vec3NormalizeScaleStore(int param_1,int param_2,int param_3,int param_4)
+
+{
+  short sVar1;
+  
+  if (SQRT((double)(param_2 * param_2 + param_3 * param_3 + param_4 * param_4)) != g_fpNormalizeZero) {
+    sVar1 = __ftol();
+    param_2 = (int)sVar1;
+    sVar1 = __ftol();
+    param_3 = (int)sVar1;
+    sVar1 = __ftol();
+    param_4 = (int)sVar1;
+  }
+  (&g_lightMat00)[param_1 * 3] = param_2;
+  (&g_lightMat20)[param_1 * 3] = param_2;
+  (&g_lightMat01)[param_1 * 3] = param_3;
+  (&g_lightMat21)[param_1 * 3] = param_3;
+  (&g_lightMat02)[param_1 * 3] = param_4;
+  (&g_lightMat22)[param_1 * 3] = param_4;
+  return;
+}
+#else
 __declspec(naked) void Vec3NormalizeScaleStore(void) {
     __asm {
         push    ecx
@@ -181,3 +206,4 @@ __declspec(naked) void Vec3NormalizeScaleStore(void) {
         ret
     }
 }
+#endif

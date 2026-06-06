@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -129,6 +130,51 @@ extern unsigned int g_dispatchSave552;
 extern void DoubleToInt64(void);
 extern void Transform9Words(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void VibrationFrameUpdate(int param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  int local_c;
+  int local_8;
+  int local_4;
+  
+  if ((g_cj_0054205c & 0x180000) != 0) {
+    iVar2 = MK4_NODE_AT(int, param_1, 0x1c);
+    if (iVar2 == -0x14) {
+      iVar2 = 2;
+    }
+    if ((0 < iVar2) && (iVar2 < 0x19)) {
+      g_walkCallback = *(int *)(&g_dispatchSave554 + iVar2 * 4);
+      if (g_walkCallback != 0x10000) {
+        iVar1 = g_dualC * 4;
+        if (iVar2 == 2) {
+          g_fpuConst = g_dispatchSave502 + g_fpuConst;
+          if (g_fpuConst < g_dispatchSave887) {
+            g_fpuConst = 0.9;
+            g_dispatchSave502 = 0xd2f1a9fc;
+            g_dispatchSave552 = 0x3f90624d;
+          }
+          if (g_dispatchSave888 < g_fpuConst) {
+            g_fpuConst = 1.1;
+            g_dispatchSave502 = 0xbc6a7efa;
+            g_dispatchSave552 = 0xbf789374;
+          }
+          g_walkCallback = __ftol();
+        }
+        local_c = g_walkCallback >> 4;
+        local_8 = local_c;
+        local_4 = local_c;
+        Transform9Words(iVar1,&local_c);
+        g_xformDirtyFlags = g_xformDirtyFlags | 0x30;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void VibrationFrameUpdate(void) {
     __asm {
         mov     eax, dword ptr [g_fightGroupHead]
@@ -200,3 +246,4 @@ __declspec(naked) void VibrationFrameUpdate(void) {
         ret
     }
 }
+#endif

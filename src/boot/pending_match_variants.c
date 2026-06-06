@@ -5501,6 +5501,47 @@ __declspec(naked) void PendingMatch_Push16Call_00402540(void)
 }
 #endif
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_StoreTwoCall_004108a0(void)
+
+{
+  uint uVar1;
+  
+  g_cj_00542058 = g_walkCallback;
+  StoreTwoCall(0x4109b0,0x2f);
+  g_baseSel = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  CmpP1ScaledInitB();
+  if (g_framePauseFlag == 0) {
+    g_eventQueueWorkType = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 100);
+    if ((int)g_eventQueueWorkType < 0) {
+      g_eventQueueWorkType = g_eventQueueWorkType + ((0x6487d - g_eventQueueWorkType) / 0x6487e) * 0x6487e;
+    }
+    if (0x6487d < (int)g_eventQueueWorkType) {
+      uVar1 = g_eventQueueWorkType / 0x6487e;
+      do {
+        g_eventQueueWorkType = g_eventQueueWorkType - 0x6487e;
+        uVar1 = uVar1 - 1;
+      } while (uVar1 != 0);
+    }
+    g_dualC = g_dispatchSave6;
+    MStackPush2DualModMul10Pop2();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualC;
+      g_xformScratch94 = g_walkCallback & 1;
+      if ((g_xformScratch94 == 0) || (NegateThree(), g_framePauseFlag == 0)) {
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_baseSel + 0xc;
+        g_eventQueuePending = g_dualC;
+        g_dualC = g_cj_00542058 + 9;
+        QuadInterpolator();
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_StoreTwoCall_004108a0(void)
 {
     __asm {
@@ -5945,6 +5986,7 @@ __declspec(naked) void PendingMatch_StoreTwoCall_004108a0(void)
         ret      
     }
 }
+#endif
 
 
 __declspec(naked) void PendingMatch_MStackPush8_0040a8d0(void)

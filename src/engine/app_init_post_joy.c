@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004b5a10 (84b engine.geo) - fill 0x7b01a0..0x7b41a0 (16KB) with
@@ -16,6 +17,28 @@ extern unsigned int g_fpRoundBiasNegHalf;
 extern void CrtPowCluster(void);
 extern void DoubleToInt64(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AppInit_PostJoy(void)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  int local_4;
+  
+  local_4 = 0;
+  CrtPowCluster();
+  puVar2 = &g_buf_007b01a0;
+  do {
+    fcos((float10)local_4 * (float10)g_fpRadianPerBam);
+    uVar1 = __ftol();
+    *puVar2 = uVar1;
+    puVar2 = puVar2 + 1;
+    local_4 = local_4 + 1;
+  } while ((int)puVar2 < 0x7b41a0);
+  return;
+}
+#else
 __declspec(naked) void AppInit_PostJoy(void) {
     __asm {
         push    ecx
@@ -46,4 +69,5 @@ loop4b5a10:
         ret
     }
 }
+#endif
 
