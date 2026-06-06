@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,111 @@ extern void FixedDiv16(void);
 extern void RegistryPushBindPop(void);
 extern void Thunk_BootMod6487eClampAndChainMul10(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+uint CameraProjectionInitSweep(void)
+
+{
+  uint uVar1;
+  
+  g_walkCallback = 0x6487e;
+  g_eventQueueCurrent = 0x280000;
+  FixedDiv16();
+  uVar1 = g_framePauseFlag;
+  if (g_framePauseFlag == 0) {
+    g_currentNodeFlags = g_walkCallback;
+    g_dualC = 0x150902;
+    BootPhaseGateBracketedInit();
+    uVar1 = g_framePauseFlag;
+    if ((g_framePauseFlag == 0) && (uVar1 = (uint)(byte)g_xformDirtyFlags, ((byte)g_xformDirtyFlags & 4) == 0)) {
+      g_dualD = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_cameraProjSlot = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_eventQueuePending = 0x13a1b6;
+      FramePauseScaledStore();
+      uVar1 = g_framePauseFlag;
+      if (g_framePauseFlag == 0) {
+        if (((byte)g_xformDirtyFlags & 4) == 0) {
+          MK4_NODE_AT(int, g_dualD, 0x18) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+          *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18) = g_dualD;
+          g_dualD = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+          g_audioVoiceCounter = 0x28;
+          g_chainAccumCur = 0;
+          g_eventQueueNotMask = 0;
+          g_xformScratch2088 = 0x3243f;
+          g_eventQueueChild = 0x50000;
+          g_dispatchArg = 1;
+          do {
+            g_eventQueuePending = MK4_NODE_AT(int, g_dualC, 0);
+            g_dualC = g_dualC + 1;
+            if (g_eventQueuePending == 0) {
+              g_eventQueuePending = g_installCountdownArr3;
+              g_dualC = 0x150903;
+            }
+            FramePauseScaledStore();
+            if (g_framePauseFlag != 0) {
+              return g_framePauseFlag;
+            }
+            if (((byte)g_xformDirtyFlags & 4) != 0) goto LAB_0045840c;
+            g_eventQueuePending = g_dualD;
+            MStackPush2ChainPrepend();
+            if (g_framePauseFlag != 0) {
+              return g_framePauseFlag;
+            }
+            g_eventQueueWorkType = g_xformScratch2088;
+            Chain2CallMul10Accum();
+            if (g_framePauseFlag != 0) {
+              return g_framePauseFlag;
+            }
+            *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = g_walkCallback;
+            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x38) = g_eventQueueCurrent;
+            g_walkCallback = 0x3243f - g_xformScratch2088;
+            thunk_BootMod6487eClampAndChainMul10();
+            if (g_framePauseFlag != 0) {
+              return g_framePauseFlag;
+            }
+            *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40) = g_walkCallback;
+            g_walkCallback = g_xformScratch2088 - g_currentNodeFlags;
+            g_xformScratch2088 = g_walkCallback;
+            thunk_BootMod6487eClampAndChainMul10();
+            if (g_framePauseFlag != 0) {
+              return g_framePauseFlag;
+            }
+            g_dispatchArg = g_dispatchArg + 1;
+            g_xformScratch2088 = g_walkCallback;
+            *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = g_dispatchArg;
+            g_audioVoiceCounter = g_audioVoiceCounter + -1;
+          } while (g_audioVoiceCounter != 0);
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cameraProjSlot;
+          MK4_NODE_AT(undefined4, g_cameraProjSlot, 0x30) = 0x270;
+          g_walkCallback = 0x18000;
+          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0x18000;
+          MStackCall_MStackPush2ChainPrepend_00406340();
+          uVar1 = g_framePauseFlag;
+          if (g_framePauseFlag == 0) {
+            g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+            RegistryPushBindPop();
+            uVar1 = g_framePauseFlag;
+            if (g_framePauseFlag == 0) {
+              MStackBracket4_ListInsertZeroFill();
+              return g_framePauseFlag;
+            }
+          }
+        }
+        else {
+LAB_0045840c:
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cameraProjSlot;
+          MStackPush2ChainLLInsert();
+          uVar1 = g_framePauseFlag;
+          if (g_framePauseFlag == 0) {
+            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0;
+          }
+        }
+      }
+    }
+  }
+  return uVar1;
+}
+#else
 __declspec(naked) void CameraProjectionInitSweep(void)
 {
     __asm {
@@ -279,3 +385,4 @@ __declspec(naked) void CameraProjectionInitSweep(void)
         ret
     }
 }
+#endif

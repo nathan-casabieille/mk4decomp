@@ -42,15 +42,33 @@ ROOT = Path(__file__).resolve().parents[2]
 BAIL_TOKENS = ('CONCAT', 'SUB4', 'SUB8', 'SUB2', 'ZEXT', 'SEXT',
                'in_EAX', 'in_ECX', 'unaff_', 'extraout_', 'halt_baddata',
                'undefined3', 'undefined5', 'undefined6', 'undefined7')
-# Leftover Ghidra placeholders (unmapped global/func, code label, jump
-# table, or a PTR_<sym> indirect thunk) -> bail, keep the function naked.
+# Leftover Ghidra placeholders (unmapped global/func, jump table, or a
+# PTR_<sym> indirect thunk) -> bail, keep the function naked. LAB_ is NOT
+# here: a LAB_<va> used as a `goto`/label is ordinary structured control
+# flow and compiles fine; only LAB_ used as an *address value* (an FSM
+# `node->resume = &label` continuation) must bail - see lab_as_value().
 UNMAPPED = re.compile(
-    r'\b(FUN|DAT|LAB|UNK|switchD|JUMP)_?[0-9a-fA-F]{4,}\b|\bPTR_\w+'
+    r'\b(FUN|DAT|UNK|switchD|JUMP)_?[0-9a-fA-F]{4,}\b|\bPTR_\w+'
     r'|\bUNRESOLVED_[0-9a-fA-F]{8}\b')
+LAB = re.compile(r'\bLAB_[0-9a-fA-F]{4,}\b')
+
+
+def lab_as_value(c):
+    """True if any LAB_<va> is used as an address value rather than as a
+    plain goto label/target. `LAB_x:` (definition) and `goto LAB_x;`
+    (target) are fine; anything else (`= LAB_x`, `(code *)LAB_x`, ...) is an
+    FSM continuation address and must stay naked for the Phase-C cluster."""
+    for m in LAB.finditer(c):
+        if c[m.end():m.end() + 1] == ':':
+            continue                            # label definition
+        if re.search(r'goto\s*$', c[:m.start()]):
+            continue                            # goto target
+        return True
+    return False
 
 
 def has_bail(c):
-    if UNMAPPED.search(c):
+    if UNMAPPED.search(c) or lab_as_value(c):
         return True
     return any(re.search(r'\b%s' % re.escape(t), c) for t in BAIL_TOKENS)
 

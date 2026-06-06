@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,45 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_arr_425a80_dst;
 extern unsigned int g_arr_425a80_src;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ThreeClampLoop(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_xformLoopCounter = 2;
+  g_eventQueueCurrent = -g_walkCallback;
+  iVar2 = 3;
+  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  do {
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1;
+    g_eventQueueWorkType = MK4_NODE_AT(int, g_eventQueuePending, 0);
+    g_eventQueuePending = g_eventQueuePending + 1;
+    if (g_eventQueueWorkType < 0) {
+      iVar1 = g_eventQueueCurrent;
+      if (g_eventQueueWorkType < g_eventQueueCurrent) {
+LAB_00425ad6:
+        g_eventQueueWorkType = iVar1;
+      }
+    }
+    else {
+      iVar1 = g_walkCallback;
+      if (g_walkCallback < g_eventQueueWorkType) goto LAB_00425ad6;
+    }
+    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_eventQueueWorkType;
+    g_xformLoopCounter = g_xformLoopCounter + -1;
+    iVar2 = iVar2 + -1;
+    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    if (iVar2 == 0) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -2;
+      g_eventQueuePending = g_eventQueuePending + -3;
+      return;
+    }
+  } while( true );
+}
+#else
 __declspec(naked) void ThreeClampLoop(void) {
     __asm {
         push    ebx
@@ -177,3 +217,4 @@ afterReload:
         ret
     }
 }
+#endif

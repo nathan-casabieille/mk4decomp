@@ -8019,6 +8019,150 @@ __declspec(naked) void PendingMatch_QuadCallPhase2(void)
 #endif
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_CondPlayerLookup(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    CondPlayerLookup_004ac120();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    MK4_NODE_AT(int, g_baseSel, 0x30) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(int, g_baseSel, 0x34) = g_cj_0054205c;
+    ScaledShrAnd();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    MK4_NODE_AT(int, g_baseSel, 0x3c) = g_walkCallback;
+    g_eventQueueCurrent = g_walkCallback;
+    MK4_NODE_AT(int, g_baseSel, 0x40) = g_walkCallback;
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(int *)((int)g_matrixStackTop * 4) = g_cj_00542054;
+    g_walkCallback = g_eventQueueNotMask;
+    g_cj_00542054 = 0x14dfd0;
+    g_dlEnabledFlag = 1;
+    DownloadPlayerChar();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_dlEnabledFlag = 0;
+    g_walkCallback = *(int *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    if (0 < g_walkCallback) {
+      g_dualC = g_walkCallback;
+      *(code **)(iVar1 + 8) = PendingMatch_CondPlayerLookup;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+  }
+  else if (iVar2 != 1) goto LAB_0048c6de;
+  ScaledOrAh8CallPauseJmp();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  g_cj_00542054 = 0x14e944;
+  g_cj_00542058 = 0x14dfd2;
+  if (g_cj_0054205c != g_player1NodeIdx) {
+    g_cj_00542058 = 0x14e038;
+    g_cj_00542054 = 0x14aabf;
+  }
+LAB_0048c6de:
+  GuardedBitMaskFlagOrClear();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  if ((g_xformDirtyFlags & 4) == 0) {
+    MK4_NODE_AT(undefined4, g_baseSel, 0x38) = MK4_NODE_AT(undefined4, g_cj_00542058, 0);
+    MK4_NODE_AT(undefined4, g_cj_00542058, 0) = g_eventQueueNotMask;
+    g_walkCallback = g_eventQueueNotMask;
+    g_eventQueueWorkType = MK4_NODE_AT(undefined4, g_cj_00542054, 0);
+    g_eventQueueCurrent = MK4_NODE_AT(int, g_baseSel, 0x3c);
+    MStackPush2BiasResolveChain();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if ((g_xformDirtyFlags & 4) == 0) {
+      g_walkCallback = MK4_NODE_AT(undefined4, g_baseSel, 0x40);
+      PushBitFieldMergePop();
+      if (g_framePauseFlag == 0) {
+        *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x30) * 4 + 0x34) =
+             MK4_NODE_AT(undefined4, g_cj_00542058, 0);
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+        g_cj_00542058 = MK4_NODE_AT(int, g_baseSel, 0x34);
+        g_eventQueuePending = MK4_NODE_AT(int, g_cj_00542058, 0x18);
+        MK4_NODE_AT(int, g_cj_00542058, 0x18) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18) = g_cj_00542058;
+        MK4_NODE_AT(int, g_cj_0054205c, 0x18) = g_eventQueuePending;
+        MK4_NODE_AT(int, g_eventQueuePending, 0x18) = g_cj_0054205c;
+        g_walkCallback = MK4_NODE_AT(undefined4, g_cj_00542058, 0x1c);
+        g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x1c);
+        MK4_NODE_AT(int, g_cj_00542058, 0x1c) = g_eventQueueCurrent;
+        MK4_NODE_AT(int, g_cj_0054205c, 0x1c) = g_walkCallback;
+        g_walkCallback = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58);
+        MK4_NODE_AT(int, g_cj_00542058, 0x58) = g_walkCallback;
+        MK4_NODE_AT(int, g_cj_00542058, 0x48) = g_walkCallback;
+        g_xformDirtyFlags = g_xformDirtyFlags | 4;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(MK4_NODE_AT(int, g_cj_0054205c, 0x1c) * 4 + 4);
+        if (((((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) || (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) < 1)) ||
+            (BootChainBidirRecurseWalk(), g_framePauseFlag == 0)) && (MStackCall_MStackPush2ChainLLInsert(), g_framePauseFlag == 0)) {
+          g_xformDirtyFlags = g_xformDirtyFlags | 4;
+          g_cj_0054205c = g_cj_00542058;
+          if (((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) && (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, 0 < (*(unsigned int *)MK4_VA(unsigned int, 0x542044)))) {
+            g_matrixStackTop = g_matrixStackTop + 1;
+            *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+            g_walkCallback = 10;
+            DirtyDoubleDeref();
+            if (g_framePauseFlag != 0) {
+              return;
+            }
+            g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((int)g_matrixStackTop * 4);
+            g_matrixStackTop = g_matrixStackTop + -1;
+            MStackPush2ChainPrepend();
+            if (g_framePauseFlag != 0) {
+              return;
+            }
+            g_eventQueuePending = MK4_NODE_AT(int, g_cj_0054205c, 0x1c);
+            PushSetCallCleanup();
+            if (g_framePauseFlag != 0) {
+              return;
+            }
+          }
+          MK4_NODE_AT(uint, g_cj_0054205c, 0x34) = MK4_NODE_AT(uint, g_cj_0054205c, 0x34) & 0xfffff7ff;
+          BootMStackBracket3SubdispatchPair();
+          if (g_framePauseFlag == 0) {
+            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+            g_walkCallback = g_eventQueueNotMask;
+            g_eventQueueWorkType = MK4_NODE_AT(undefined4, g_cj_00542054, 0);
+            PushCallPopScaledJmpIndirect();
+            if ((g_framePauseFlag == 0) && (TwoCallJmp(), g_framePauseFlag == 0)) {
+              StackPopDispatchTagged();
+              return;
+            }
+          }
+        }
+      }
+      return;
+    }
+    g_walkCallback = MK4_NODE_AT(int, g_baseSel, 0x38);
+    MK4_NODE_AT(int, g_cj_00542058, 0) = g_walkCallback;
+  }
+  *(code **)(iVar1 + 8) = PendingMatch_CondPlayerLookup;
+  *(undefined4 *)(iVar1 + 0x84) = 2;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void PendingMatch_CondPlayerLookup(void)
 {
     __asm {
@@ -8388,6 +8532,7 @@ __declspec(naked) void PendingMatch_CondPlayerLookup(void)
         jmp      L_cb44
     }
 }
+#endif
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
@@ -9888,6 +10033,62 @@ __declspec(naked) void PendingMatch_ZeroAndDirty4_00471e00(void)
 }
 #endif
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PendingMatch_StackPopDispatchTagged_00466fc0(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = *(int *)(iVar1 + 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_cj_00542054 = 3;
+    g_currentNodeFlags = 0x28f;
+  }
+  iVar2 = MK4_NODE_AT(int, g_cj_0054205c, 0x58);
+  do {
+    if (iVar2 < -0xccb) {
+      g_walkCallback = g_currentNodeFlags + MK4_NODE_AT(int, g_cj_0054205c, 0x70);
+      MK4_NODE_AT(int, g_cj_0054205c, 0x70) = g_walkCallback;
+      *(code **)(iVar1 + 8) = PendingMatch_StackPopDispatchTagged_00466fc0;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 1;
+      g_framePauseFlag = 1;
+      return;
+    }
+    iVar2 = g_cj_0054205c * 4;
+    *(undefined4 *)(iVar2 + 0x70) = 0;
+    *(undefined4 *)(iVar2 + 0x58) = 0xfffff0a4;
+    iVar2 = *(int *)(iVar2 + 0x78);
+    if (iVar2 != 0) {
+      if (iVar2 < 1) {
+        iVar2 = iVar2 + 0x3333;
+        if (-0xccd < iVar2) goto LAB_00467058;
+      }
+      else {
+        iVar2 = iVar2 + -0x3333;
+        if (iVar2 < 0xccd) {
+LAB_00467058:
+          iVar2 = 0;
+        }
+      }
+    }
+    MK4_NODE_AT(int, g_cj_0054205c, 0x78) = iVar2;
+    g_cj_00542054 = g_cj_00542054 + -1;
+    if (g_cj_00542054 == 0) {
+      g_walkCallback = 0;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x6c) = 0;
+      StackPopDispatchTagged();
+      return;
+    }
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x70) = 0xffffee15;
+    iVar2 = MK4_NODE_AT(int, g_cj_0054205c, 0x58);
+  } while( true );
+}
+#else
 __declspec(naked) void PendingMatch_StackPopDispatchTagged_00466fc0(void)
 {
     __asm {
@@ -10368,6 +10569,7 @@ __declspec(naked) void PendingMatch_StackPopDispatchTagged_00466fc0(void)
         ret      
     }
 }
+#endif
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */

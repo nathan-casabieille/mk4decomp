@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,47 @@ extern void CallSetPause(void);
 extern void InitZeroChainLookupJmp(void);
 extern void StateMachineInit(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfTableDispatch(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    if (g_walkCallback == 2) {
+      g_walkCallback = 6;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((g_walkCallback + 0x150c80) * 4);
+    g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    g_eventQueuePending = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4);
+    StateMachineInit();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 4) != 0) goto LAB_00461ae8;
+      g_cj_00542054 = g_cj_0054205c;
+      g_walkCallback = -0x50000;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58) = 0xfffb0000;
+      *(code **)(iVar1 + 8) = InstallSelfTableDispatch;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1461a60;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      InitZeroChainLookupJmp();
+      g_framePauseFlag = 1;
+    }
+    return;
+  }
+LAB_00461ae8:
+  CallSetPause();
+  return;
+}
+#else
 __declspec(naked) void InstallSelfTableDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -186,3 +228,4 @@ __declspec(naked) void InstallSelfTableDispatch(void) {
         ret
     }
 }
+#endif

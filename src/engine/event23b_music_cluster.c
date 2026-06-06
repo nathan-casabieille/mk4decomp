@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -125,6 +126,67 @@ extern void SaveCallRestore(void);
 extern void SetWalkCurCallPauseDirty(void);
 extern void StoreIncrMStackPush6(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Event23bMusicCluster(void)
+
+{
+  SaveCallRestore(0x23b);
+  if ((((g_active_0053a408 == 1) && (g_active_00537e88 == 0)) && (g_eventMusicSlot2 == 2)) && (g_eventMusicSlot < 0)) {
+    return;
+  }
+  if ((g_active_0053a408 == 0) && (g_active_00537e88 == 1)) {
+    if (g_eventMusicSlot2 == 1) {
+      if (g_dispatchVar3 < 0) {
+        return;
+      }
+      goto LAB_0042f599;
+    }
+  }
+  else {
+LAB_0042f599:
+    if (g_eventMusicSlot2 == 1) {
+      g_walkCallback = g_phaseThunkVar2;
+      StoreIncrMStackPush6();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_eventQueueCurrent = 4;
+      g_eventQueueWorkType = 0x23b;
+      g_chainAccumCur = &g_dispatchTab61;
+      g_eventQueueNotMask = &g_dispatchSave1705;
+      g_currentNodeFlags = 1;
+      DispatcherComplex181_StreamChainStringInstall();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      RoundCleanupCluster_Ten404c40_404bd0();
+      goto joined_r0x0042f60a;
+    }
+  }
+  g_walkCallback = g_phaseThunkVar2;
+  StoreIncrMStackPush6();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  g_eventQueueCurrent = 4;
+  g_eventQueueWorkType = 0x23b;
+  g_chainAccumCur = (undefined *)0xff920000;
+  g_eventQueueNotMask = &g_dispatchSave1705;
+  g_currentNodeFlags = 1;
+  DispatcherComplex181_StreamChainStringInstall();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  RoundCleanupCluster_Ten404c40_404bd0();
+joined_r0x0042f60a:
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 0x14000;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0x14000;
+  }
+  return;
+}
+#else
 __declspec(naked) void Event23bMusicCluster(void)
 {
     __asm {
@@ -278,3 +340,4 @@ __declspec(naked) void Event23bMusicCluster(void)
         ret
     }
 }
+#endif

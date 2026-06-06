@@ -44,6 +44,7 @@
  *   ret
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_dispatchSave_0053a2c0;
@@ -96,6 +97,30 @@ __declspec(naked) void DispatcherComplex138_00476060(void) {
 }
 
 /* @addr 0x004760f0 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DispatcherComplex138_004760f0(void)
+
+{
+  int iVar1;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  iVar1 = g_cj_00535df0;
+  if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) goto LAB_00476136;
+  while (((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1, iVar1 != 0 && (g_walkCallback != MK4_NODE_AT(int, iVar1, 0x30)))) {
+LAB_00476136:
+    iVar1 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  }
+  g_eventQueueCurrent = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_matrixStackTop = g_matrixStackTop + -1;
+  g_xformDirtyFlags = g_xformDirtyFlags | 4;
+  if (iVar1 != 0) {
+    g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+  }
+  return;
+}
+#else
 __declspec(naked) void DispatcherComplex138_004760f0(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -139,3 +164,4 @@ __declspec(naked) void DispatcherComplex138_004760f0(void) {
         ret
     }
 }
+#endif

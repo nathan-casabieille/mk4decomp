@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,38 @@ extern void CrtFreeLocaleInfo(void);
 extern void FreeImpl(void);
 extern void LocaleInfoFill(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StringStripSlotReplace(char *param_1)
+
+{
+  char *pcVar1;
+  char cVar2;
+  char *pcVar3;
+  
+  cVar2 = *param_1;
+  do {
+    if (cVar2 == '\0') {
+      return;
+    }
+    if ((cVar2 < '0') || ('9' < cVar2)) {
+      pcVar3 = param_1;
+      if (cVar2 != ';') goto LAB_004d0156;
+      do {
+        *pcVar3 = pcVar3[1];
+        pcVar1 = pcVar3 + 1;
+        pcVar3 = pcVar3 + 1;
+      } while (*pcVar1 != '\0');
+    }
+    else {
+      *param_1 = cVar2 + -0x30;
+LAB_004d0156:
+      param_1 = param_1 + 1;
+    }
+    cVar2 = *param_1;
+  } while( true );
+}
+#else
 __declspec(naked) void StringStripSlotReplace(void) {
     __asm {
         /* sub-1 (in-place string strip) */
@@ -247,3 +280,4 @@ __declspec(naked) void StringStripSlotReplace(void) {
         ret
     }
 }
+#endif

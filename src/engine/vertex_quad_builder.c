@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,67 @@ extern unsigned int g_dispatchSave1572;
 extern void LeaScaledCall(void);
 extern void Mem_Malloc(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void VertexQuadBuilder(int param_1,int param_2)
+
+{
+  int *piVar1;
+  int iVar2;
+  int iVar3;
+  char *pcVar4;
+  uint *puVar5;
+  int iVar6;
+  uint uVar7;
+  uint uVar8;
+  uint uVar9;
+  uint *puVar10;
+  
+  iVar2 = g_eventQueuePending;
+  uVar7 = (uint)*(ushort *)(param_1 * 0x10 + 0xe + *(int *)(g_eventQueuePending + 4));
+  iVar6 = param_1 * 0x10 + 0xc + *(int *)(g_eventQueuePending + 4);
+  if (uVar7 != 0) {
+    piVar1 = (int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x48);
+    uVar8 = g_cj_0054205c >> 0x10 & 8U | g_dispatchSave1572;
+    uVar9 = uVar7 * 0x1c;
+    if (param_2 != 0) {
+      puVar5 = (uint *)*piVar1;
+      if (((*puVar5 & 9) == uVar8) && ((int)uVar9 <= (int)puVar5[1])) goto LAB_004bc520;
+      LeaScaledCall(2);
+    }
+    puVar5 = (uint *)Mem_Malloc(piVar1,uVar9 + 0xc,2);
+    if (puVar5 != (uint *)0x0) {
+      puVar5[1] = uVar9;
+LAB_004bc520:
+      g_dualC = puVar5;
+      *puVar5 = iVar6 * 0x20 | uVar8;
+      iVar2 = *(int *)(iVar2 + 4);
+      iVar3 = *(int *)(iVar2 + 4);
+      puVar5 = puVar5 + 2;
+      pcVar4 = (char *)(*(int *)(iVar6 + 0xc) + 0xc + iVar6);
+      for (; uVar7 != 0; uVar7 = uVar7 - 1) {
+        puVar10 = puVar5;
+        for (iVar6 = 7; iVar6 != 0; iVar6 = iVar6 + -1) {
+          *puVar10 = 0;
+          puVar10 = puVar10 + 1;
+        }
+        *(undefined2 *)(puVar5 + 3) = *(undefined2 *)(pcVar4 + 2);
+        *(undefined2 *)((int)puVar5 + 0xe) = *(undefined2 *)(pcVar4 + 4);
+        *(undefined2 *)(puVar5 + 4) = *(undefined2 *)(pcVar4 + 6);
+        *(ushort *)((int)puVar5 + 0x1a) =
+             *(byte *)(iVar3 + iVar2 + 10 + *pcVar4 * 4) & 0xff0f |
+             *(ushort *)((int)puVar5 + 0x1a) & 0xfff0;
+        puVar5 = puVar5 + 7;
+        pcVar4 = pcVar4 + 8;
+      }
+      return;
+    }
+  }
+  g_dualC = (uint *)0x0;
+  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x48) = 0;
+  return;
+}
+#else
 __declspec(naked) void VertexQuadBuilder(void) {
     __asm {
         push    ecx
@@ -234,3 +296,4 @@ __declspec(naked) void VertexQuadBuilder(void) {
         ret
     }
 }
+#endif

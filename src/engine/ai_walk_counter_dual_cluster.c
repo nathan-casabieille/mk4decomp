@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,46 @@ extern void SaveCallRestoreOrXor(void);
 extern void ScaledLoadGuardedJmp(void);
 extern void SwapOrPassSet(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AiWalkCounterDualCluster(void)
+
+{
+  undefined4 *puVar1;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(uint *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  SwapOrPassSet();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  if (g_walkCallback == g_loaded) {
+    if (g_dualC == g_player1NodeIdx) {
+      g_walkCallback = g_active_0053a408;
+      if (g_active_0053a408 == 0) goto LAB_00477ec2;
+      puVar1 = &g_player1State;
+    }
+    else {
+      g_walkCallback = g_active_00537e88;
+      if (g_active_00537e88 == 0) goto LAB_00477ec2;
+      puVar1 = &g_player2State;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (uint)puVar1 >> 2;
+    g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) + 1;
+    if (g_walkCallback < 999) {
+      *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
+      MultiGateDispatchCallJmp();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+    }
+  }
+LAB_00477ec2:
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_matrixStackTop = g_matrixStackTop + -1;
+  return;
+}
+#else
 __declspec(naked) void AiWalkCounterDualCluster(void)
 {
     __asm {
@@ -326,3 +367,4 @@ __declspec(naked) void AiWalkCounterDualCluster(void)
         ret
     }
 }
+#endif

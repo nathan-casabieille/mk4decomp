@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,113 @@ extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void PushPopScaledInit343c(void);
 extern void SceneFrameStepWithInputs(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfStateMachine6(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 uVar3;
+  
+  iVar1 = g_baseSel * 4;
+  uVar3 = *(undefined4 *)(iVar1 + 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  switch(uVar3) {
+  case 0:
+    g_tickFlagF = 2;
+    g_phaseIdx = 0x10;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x30) = 0;
+    BootInitGuardedCallChain();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b11;
+    LoadGeoAsset_Default();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_eventQueuePending = (uint)(&g_dispatchSave814)[MK4_NODE_AT(int, g_baseSel, 0x30)] >> 2;
+    DispatcherComplex260_FramePauseScaledStore();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0;
+    g_walkCallback = 0x1f;
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+    MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_cj_00542058 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_tickW1 = 0x100;
+    *(code **)(iVar1 + 8) = InstallSelfStateMachine6;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 0xf0;
+    g_framePauseFlag = 1;
+    return;
+  case 1:
+  case 2:
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542058;
+    MStackPush2ChainLLInsert();
+    g_tickW1 = 0x100;
+    PushPopScaledInit343c();
+    *(code **)(iVar1 + 8) = InstallSelfStateMachine6;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 3;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x34a48e0;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    AudioInstallSelfStatePush();
+    g_framePauseFlag = 1;
+    return;
+  case 3:
+    iVar2 = SceneFrameStepWithInputs(1,1);
+    if (iVar2 != 9) {
+      PushPopScaledInit343c();
+      *(code **)(iVar1 + 8) = InstallSelfStateMachine6;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 4;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      uVar3 = 0x44a48e0;
+LAB_004a4a15:
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = uVar3;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      AudioInstallSelfStatePush();
+      g_framePauseFlag = 1;
+      return;
+    }
+    break;
+  case 4:
+    iVar2 = SceneFrameStepWithInputs(2,1);
+    if (iVar2 != 9) {
+      PushPopScaledInit343c();
+      *(code **)(iVar1 + 8) = InstallSelfStateMachine6;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 5;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      uVar3 = 0x54a48e0;
+      goto LAB_004a4a15;
+    }
+    break;
+  case 5:
+    SceneFrameStepWithInputs(0x23,1);
+    break;
+  default:
+    goto switchD_004a490b_default;
+  }
+  FiveTableWalkInit();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+switchD_004a490b_default:
+  g_tickFlagF = 2;
+  g_phaseIdx = 1;
+  StackPopDispatchTagged();
+  return;
+}
+#else
 __declspec(naked) void InstallSelfStateMachine6(void)
 {
     __asm {
@@ -373,3 +481,4 @@ __declspec(naked) void InstallSelfStateMachine6(void)
         ret      
     }
 }
+#endif

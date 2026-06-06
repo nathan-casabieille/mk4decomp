@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -127,6 +128,45 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ScaledSearchSum(void)
+
+{
+  int *piVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  
+  iVar2 = MK4_NODE_AT(int, g_dualC, 0);
+  piVar3 = (int *)(g_dualC * 4);
+  iVar6 = 0;
+  iVar4 = 0;
+  while( true ) {
+    if (iVar2 == 0) {
+      iVar6 = 0;
+      for (iVar5 = iVar4; g_chainAccumCur = 0, *(int *)((iVar5 + g_dualC) * 4) != 0;
+          iVar5 = iVar5 + 1) {
+LAB_00457897:
+      }
+      g_eventQueuePending = *(undefined4 *)((iVar5 + iVar6 + g_dualC) * 4 + 8);
+      return;
+    }
+    piVar1 = piVar3 + 1;
+    iVar5 = iVar4 + 1;
+    if ((iVar2 <= g_walkCallback) && (g_walkCallback <= *piVar1)) break;
+    piVar3 = piVar3 + 2;
+    iVar5 = *piVar1 - iVar2;
+    iVar4 = iVar4 + 2;
+    iVar2 = *piVar3;
+    iVar6 = iVar6 + 1 + iVar5;
+  }
+  iVar6 = iVar6 + (g_walkCallback - iVar2);
+  goto LAB_00457897;
+}
+#else
 __declspec(naked) void ScaledSearchSum(void) {
     __asm {
         push    ecx
@@ -194,3 +234,4 @@ __declspec(naked) void ScaledSearchSum(void) {
         ret
     }
 }
+#endif

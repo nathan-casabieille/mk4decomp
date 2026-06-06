@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -124,6 +125,94 @@ extern unsigned int g_dispatchSave568;
 extern unsigned int g_primary_0052d74c;
 extern unsigned int g_secondary_00538068;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StageEventComplexFsm(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  while (iVar1 != 0) {
+    g_walkCallback = g_audioBankSel;
+    if (g_audioBankSel != 0) goto LAB_0047c82f;
+    NotShrCmp1Store();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_eventQueueCurrent = g_walkCallback & 9;
+    if (g_eventQueueCurrent == 9) {
+      GuardedDispatch_CallPauseMStackPushSet3Jmp();
+      return;
+    }
+    g_eventQueueCurrent = g_walkCallback & 5;
+    if (g_eventQueueCurrent == 5) {
+      GuardedDispatch_CallPauseMStackPushSet4Jmp();
+      return;
+    }
+    g_walkCallback = 0xb333;
+    EsiEdiAliasDualMul10();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_xformScratch2088 = 0x18000;
+    PunchAnimCluster();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    DeltaAbsCompareBitToggle();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_walkCallback = 0x10000;
+    if (((byte)g_xformDirtyFlags & 1) == 0) {
+      g_walkCallback = 0x8000;
+    }
+    EsiEdiAliasDualMul10();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14b5d3;
+    g_eventQueuePending = 0x14e01a;
+    iVar2 = 0x14b5d3;
+    if (g_cj_0054205c != g_player1NodeIdx) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e01a;
+      iVar2 = 0x14e01a;
+    }
+    g_walkCallback = MK4_NODE_AT(int, iVar2, 0);
+    if (g_walkCallback == 0) {
+      func_0x0047c620();
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x13ff8a;
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x24) = 0x13ff8a;
+    g_walkCallback = MK4_NODE_AT(int, g_baseSel, 0x68) - 1;
+    if ((g_walkCallback == 0) && (TripleEntryTblPushJmp(), g_framePauseFlag != 0)) {
+      return;
+    }
+    MK4_NODE_AT(uint, g_baseSel, 0x68) = g_walkCallback;
+    iVar2 = g_baseSel * 4;
+    iVar1 = MK4_NODE_AT(int, g_baseSel, 0x84);
+    *(undefined4 *)(iVar2 + 0x84) = 0;
+  }
+  DirtyToggleByGate();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 4) != 0) {
+LAB_0047c82f:
+      func_0x0047cd50();
+      return;
+    }
+    *(code **)(iVar2 + 8) = StageEventComplexFsm;
+    *(undefined4 *)(iVar2 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void StageEventComplexFsm(void)
 {
     __asm {
@@ -265,3 +354,4 @@ __declspec(naked) void StageEventComplexFsm(void)
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,53 @@ extern unsigned int g_fightAxisPosY;
 extern void BitmapBlitRunLength(void);
 extern void ScaledMaskByte(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void NestedLoopDispatch(void)
+
+{
+  int iVar1;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueWorkType;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_dualC;
+  g_dualC = 0x14e94f;
+  g_eventQueueCurrent = 0xf;
+  do {
+    g_eventQueueWorkType = 3;
+    iVar1 = g_dualC;
+    do {
+      g_dualC = iVar1;
+      ScaledMaskByte();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      if (g_walkCallback < 0x20) {
+LAB_00458ff3:
+        BitmapBlitRunLength();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        goto LAB_00459001;
+      }
+      if ((g_walkCallback == 0x7b) || (g_walkCallback == 0x7c)) goto LAB_00459001;
+      if ((g_walkCallback != 0x7d) && (0x5f < g_walkCallback)) goto LAB_00458ff3;
+      g_eventQueueWorkType = g_eventQueueWorkType + -1;
+      iVar1 = g_dualC + 1;
+    } while (g_eventQueueWorkType != 0);
+    g_dualC = g_dualC + 2;
+    g_eventQueueCurrent = g_eventQueueCurrent + -1;
+    if (g_eventQueueCurrent == 0) {
+LAB_00459001:
+      g_eventQueueWorkType = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_dualC = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_matrixStackTop = g_matrixStackTop + -2;
+      return;
+    }
+  } while( true );
+}
+#else
 __declspec(naked) void NestedLoopDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -198,3 +246,4 @@ __declspec(naked) void NestedLoopDispatch(void) {
         ret
     }
 }
+#endif

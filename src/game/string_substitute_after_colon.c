@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesPP.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -12,6 +13,48 @@ extern unsigned int g_currentNodeIdx;
  *   arg1 (or ' ' if arg1 is empty). Effectively a one-shot
  *   substitute-after-delim helper.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Menu_FillColonField(undefined4 *param_1,char *param_2)
+
+{
+  char *pcVar1;
+  bool bVar2;
+  int iVar3;
+  char cVar4;
+  
+  bVar2 = false;
+  pcVar1 = (char *)*param_1;
+  iVar3 = 0;
+  cVar4 = *pcVar1;
+  do {
+    if (cVar4 == '\0') {
+      return;
+    }
+    if (pcVar1[iVar3] == ':') {
+      if (bVar2) {
+LAB_004b718d:
+        cVar4 = *param_2;
+        if (cVar4 == '\0') {
+          cVar4 = ' ';
+        }
+        else {
+          param_2 = param_2 + 1;
+        }
+        pcVar1[iVar3] = cVar4;
+      }
+      else {
+        bVar2 = true;
+        iVar3 = iVar3 + 1;
+      }
+    }
+    else if (bVar2) goto LAB_004b718d;
+    pcVar1 = (char *)*param_1;
+    iVar3 = iVar3 + 1;
+    cVar4 = pcVar1[iVar3];
+  } while( true );
+}
+#else
 __declspec(naked) void Menu_FillColonField(void) {
     __asm {
         push    ebp
@@ -58,3 +101,4 @@ loop_top:
         ret
     }
 }
+#endif

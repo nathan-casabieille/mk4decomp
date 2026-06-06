@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -110,6 +111,52 @@ extern unsigned int g_fightAxisPosY;
 
 extern void ScaledChainDouble(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Vec2ChainComputeStores(void)
+
+{
+  int *piVar1;
+  undefined *puVar2;
+  int iVar3;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_walkCallback;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  ScaledChainDouble();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  piVar1 = (int *)((int)g_matrixStackTop * 4);
+  puVar2 = g_matrixStackTop + -1;
+  g_matrixStackTop = g_matrixStackTop + -2;
+  g_walkCallback = *(int *)((int)puVar2 * 4) + g_eventQueueNotMask;
+  g_eventQueueCurrent = *piVar1 + g_eventQueueChild;
+  g_eventQueueWorkType = g_eventQueueNotMask + g_walkCallback;
+  g_chainAccumCur = g_eventQueueChild + g_eventQueueCurrent;
+  g_eventQueueWorkType = Mul10Tail(g_eventQueueWorkType,g_eventQueueWorkType);
+  iVar3 = Mul10Tail(g_chainAccumCur,g_chainAccumCur);
+  g_chainAccumCur = iVar3 + g_eventQueueWorkType;
+  g_eventQueueWorkType = 0x50000;
+  g_eventQueueWorkType = Mul10Tail(0x50000,0x50000);
+  if (g_chainAccumCur < g_eventQueueWorkType) {
+    g_eventQueueWorkType = g_walkCallback;
+    g_chainAccumCur = g_eventQueueCurrent;
+    g_eventQueueWorkType = Mul10Tail(g_walkCallback,g_walkCallback);
+    iVar3 = Mul10Tail(g_chainAccumCur,g_chainAccumCur);
+    g_chainAccumCur = iVar3 + g_eventQueueWorkType;
+    g_eventQueueWorkType = g_rangeSqLimit + -0x140000;
+    if (g_chainAccumCur < g_eventQueueWorkType) goto LAB_00480ceb;
+  }
+  g_walkCallback = g_walkCallback + g_eventQueueNotMask * -2;
+  g_eventQueueCurrent = g_eventQueueCurrent + g_eventQueueChild * -2;
+LAB_00480ceb:
+  MK4_NODE_AT(int, g_cj_0054205c, 0x54) = g_walkCallback;
+  MK4_NODE_AT(int, g_cj_0054205c, 0x5c) = g_eventQueueCurrent;
+  return;
+}
+#else
 __declspec(naked) void Vec2ChainComputeStores(void)
 {
     __asm
@@ -214,3 +261,4 @@ __declspec(naked) void Vec2ChainComputeStores(void)
         ret
     }
 }
+#endif

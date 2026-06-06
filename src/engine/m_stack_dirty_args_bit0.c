@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,36 @@ extern void DualPushSetCallDualPop(void);
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackDirtyArgsBit0(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  Cmp2DirtySetOrClear_0049fb10();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  if ((g_xformDirtyFlags & 1) == 0) {
+    Cmp2DirtySetOrClear_0049fb40();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (((((g_xformDirtyFlags & 1) == 0) && (DualPushSetCallDualPop(0x15), (g_xformDirtyFlags & 1) == 0)) &&
+        (DualPushSetCallDualPop(0x16), (g_xformDirtyFlags & 1) == 0)) &&
+       (DualPushSetCallDualPop(0x250), (g_xformDirtyFlags & 1) == 0)) {
+      g_xformDirtyFlags = g_xformDirtyFlags | 1;
+      goto LAB_0049faeb;
+    }
+  }
+  g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+LAB_0049faeb:
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_matrixStackTop = g_matrixStackTop + -1;
+  return;
+}
+#else
 __declspec(naked) void MStackDirtyArgsBit0(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -197,3 +228,4 @@ __declspec(naked) void MStackDirtyArgsBit0(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,79 @@ extern void FreeImpl(void);
 extern void LoadArgPushCall(void);
 extern void StringStripSlotReplace(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+uint CrtTimeFmtPrefsCluster(char *param_1,int param_2)
+
+{
+  char *pcVar1;
+  char cVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  undefined1 *puVar6;
+  char *pcVar7;
+  char *pcVar8;
+  int local_8;
+  int local_4;
+  
+  pcVar7 = param_1;
+  local_4 = 0;
+  local_8 = 0;
+  uVar3 = CrtGetLocaleInfo(0,param_1,0x23,&local_4);
+  uVar4 = CrtGetLocaleInfo(0,pcVar7,0x25,&local_8);
+  uVar5 = CrtGetLocaleInfo(1,pcVar7,0x1e,&param_1);
+  uVar5 = uVar3 | uVar4 | uVar5;
+  if (uVar5 != 0) {
+    return uVar5;
+  }
+  puVar6 = (undefined1 *)LoadArgPushCall(0xd);
+  *(undefined1 **)(param_2 + 0xa8) = puVar6;
+  if (local_4 == 0) {
+    *puVar6 = 0x68;
+    pcVar7 = puVar6 + 1;
+    if (local_8 == 0) goto LAB_004cfedc;
+    *pcVar7 = 'h';
+  }
+  else {
+    *puVar6 = 0x48;
+    pcVar7 = puVar6 + 1;
+    if (local_8 == 0) goto LAB_004cfedc;
+    *pcVar7 = 'H';
+  }
+  pcVar7 = puVar6 + 2;
+LAB_004cfedc:
+  cVar2 = *param_1;
+  pcVar8 = param_1;
+  while (cVar2 != '\0') {
+    *pcVar7 = cVar2;
+    pcVar1 = pcVar8 + 1;
+    pcVar7 = pcVar7 + 1;
+    pcVar8 = pcVar8 + 1;
+    cVar2 = *pcVar1;
+  }
+  *pcVar7 = 'm';
+  pcVar8 = pcVar7 + 1;
+  if (local_8 != 0) {
+    *pcVar8 = 'm';
+    pcVar8 = pcVar7 + 2;
+  }
+  cVar2 = *param_1;
+  pcVar7 = param_1;
+  while (cVar2 != '\0') {
+    *pcVar8 = cVar2;
+    pcVar1 = pcVar7 + 1;
+    pcVar8 = pcVar8 + 1;
+    pcVar7 = pcVar7 + 1;
+    cVar2 = *pcVar1;
+  }
+  *pcVar8 = 's';
+  pcVar8[1] = 's';
+  pcVar8[2] = '\0';
+  FreeImpl(param_1);
+  return 0;
+}
+#else
 __declspec(naked) void CrtTimeFmtPrefsCluster(void)
 {
     __asm {
@@ -408,3 +482,4 @@ __declspec(naked) void CrtTimeFmtPrefsCluster(void)
         ret
     }
 }
+#endif

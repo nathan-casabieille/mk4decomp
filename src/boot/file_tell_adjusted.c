@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,94 @@ extern void Crt_errno(void);
 extern void IOWrapper_CritSecLazyEnter_004c8dd0(void);
 extern unsigned int g_crtHandleTable;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int FileTellAdjusted(undefined4 *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  char *pcVar3;
+  int iVar4;
+  char *pcVar5;
+  undefined4 *puVar6;
+  char *pcVar7;
+  int iVar8;
+  int local_8;
+  int local_4;
+  
+  uVar1 = param_1[4];
+  if ((int)param_1[1] < 0) {
+    param_1[1] = 0;
+  }
+  local_4 = IOWrapper_CritSecLazyEnter_004c8dd0(uVar1,0,1);
+  if (local_4 < 0) {
+    return -1;
+  }
+  uVar2 = param_1[3];
+  if ((uVar2 & 0x108) == 0) {
+    return local_4 - param_1[1];
+  }
+  pcVar7 = (char *)*param_1;
+  pcVar3 = (char *)param_1[2];
+  local_8 = (int)pcVar7 - (int)pcVar3;
+  if ((uVar2 & 3) == 0) {
+    if ((uVar2 & 0x80) == 0) {
+      puVar6 = (undefined4 *)Crt_errno();
+      *puVar6 = 0x16;
+      return -1;
+    }
+  }
+  else {
+    pcVar5 = pcVar3;
+    if ((*(byte *)((&g_crtHandleTable)[(int)uVar1 >> 5] + 4 + (uVar1 & 0x1f) * 0x24) & 0x80) != 0) {
+      for (; pcVar5 < pcVar7; pcVar5 = pcVar5 + 1) {
+        if (*pcVar5 == '\n') {
+          local_8 = local_8 + 1;
+        }
+      }
+    }
+  }
+  if (local_4 == 0) {
+    return local_8;
+  }
+  if ((*(byte *)(param_1 + 3) & 1) == 0) goto LAB_004c5a57;
+  if (param_1[1] == 0) {
+    return local_4;
+  }
+  pcVar7 = pcVar7 + (param_1[1] - (int)pcVar3);
+  iVar8 = (uVar1 & 0x1f) * 0x24;
+  if ((*(byte *)(iVar8 + 4 + (&g_crtHandleTable)[(int)uVar1 >> 5]) & 0x80) != 0) {
+    iVar4 = IOWrapper_CritSecLazyEnter_004c8dd0(uVar1,0,2);
+    if (iVar4 == local_4) {
+      pcVar5 = (char *)param_1[2];
+      pcVar3 = pcVar5 + (int)pcVar7;
+      for (; pcVar5 < pcVar3; pcVar5 = pcVar5 + 1) {
+        if (*pcVar5 == '\n') {
+          pcVar7 = pcVar7 + 1;
+        }
+      }
+      if ((param_1[3] & 0x2000) != 0) {
+LAB_004c5a4e:
+        pcVar7 = pcVar7 + 1;
+      }
+    }
+    else {
+      IOWrapper_CritSecLazyEnter_004c8dd0(uVar1,local_4,0);
+      if (((pcVar7 < (char *)0x201) && ((param_1[3] & 8) != 0)) && ((param_1[3] & 0x400) == 0)) {
+        pcVar7 = (char *)0x200;
+      }
+      else {
+        pcVar7 = (char *)param_1[6];
+      }
+      if ((*(byte *)(iVar8 + 4 + (&g_crtHandleTable)[(int)uVar1 >> 5]) & 4) != 0) goto LAB_004c5a4e;
+    }
+  }
+  local_4 = local_4 - (int)pcVar7;
+LAB_004c5a57:
+  return local_4 + local_8;
+}
+#else
 __declspec(naked) void FileTellAdjusted(void)
 {
     __asm {
@@ -306,3 +395,4 @@ __declspec(naked) void FileTellAdjusted(void)
         ret
     }
 }
+#endif

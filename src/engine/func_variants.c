@@ -333,6 +333,62 @@ void func_MStackCall_then_CallSetPause_00498770(void) {
 /* h4 @ 0x00498790 (357b naked): pose-fn state machine. Keep naked:
  * self-ref via `mov [esi+8], offset L_qsv_main` (DIR32 reloc to
  * internal label) + callee-saved ebx/esi register caching. */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void func_MStackChainSwapTraversal(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_cj_00542054 = g_cj_0054205c;
+    g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x30);
+    if (g_walkCallback == 0x6c) {
+LAB_0049883c:
+      *(code **)(iVar1 + 8) = func_MStackChainSwapTraversal;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x2498790;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      InitZeroChainLookupJmp();
+      g_framePauseFlag = 1;
+      return;
+    }
+    g_walkCallback = 300;
+    AudioVolumeRescale();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 1) == 0) goto LAB_0049883c;
+      *(code **)(iVar1 + 8) = func_MStackChainSwapTraversal;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1498790;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+      func_0x004125e0();
+      g_framePauseFlag = 1;
+    }
+  }
+  else {
+    func_0x00493d00();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x30);
+      if ((g_walkCallback == 0x62) && (SlideAttackEventCluster(), g_framePauseFlag != 0)) {
+        return;
+      }
+      CallSetPause();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void func_MStackChainSwapTraversal(void)
 {
     __asm
@@ -423,6 +479,7 @@ __declspec(naked) void func_MStackChainSwapTraversal(void)
         ret
     }
 }
+#endif
 
 /* h2 @ 0x00498930 (80b): event 004f21d0 forwarder w/ 0x30b status.
  * Sister of h7 (different imm and event addr). */

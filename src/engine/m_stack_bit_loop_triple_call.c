@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -112,6 +113,49 @@ extern unsigned int g_fightAxisPosY;
 extern void AndStoreJmp(void);
 extern void Thunk_LoadShlDerefCallSkip(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackBitLoopTripleCall(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_eventQueueWorkType = g_walkCallback;
+  SetJmp_Thunk_LinkedListBitMaskSearch();
+  if (g_framePauseFlag == 0) {
+    while ((g_xformDirtyFlags & 4) == 0) {
+      if (g_cj_0054205c != *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x2c)) {
+        do {
+          g_xformDirtyFlags = g_xformDirtyFlags | 4;
+          if (((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) || (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0))
+          goto LAB_0049cd20;
+          g_eventQueueCurrent = 0xffffffff;
+          g_walkCallback = g_eventQueueWorkType;
+          AndStoreJmp();
+          if (g_framePauseFlag != 0) {
+            return;
+          }
+          if ((g_xformDirtyFlags & 4) != 0) goto LAB_0049cd20;
+        } while (g_cj_0054205c != *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x2c));
+      }
+      g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      thunk_LoadShlDerefCallSkip();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_walkCallback = g_eventQueueWorkType;
+      SetJmp_Thunk_LinkedListBitMaskSearch();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+    }
+LAB_0049cd20:
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+  }
+  return;
+}
+#else
 __declspec(naked) void MStackBitLoopTripleCall(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -204,3 +248,4 @@ __declspec(naked) void MStackBitLoopTripleCall(void) {
         ret
     }
 }
+#endif

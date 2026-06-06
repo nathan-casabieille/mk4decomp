@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,43 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void MStackPush2LLWalkCompare(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void FourCallBitGateChain(void)
+
+{
+  g_walkCallback = MK4_NODE_AT(undefined4, g_cj_00542058, 0);
+  MStackPush2LLWalkCompare();
+  if (g_framePauseFlag == 0) {
+    if ((g_xformDirtyFlags & 4) != 0) {
+LAB_004335a4:
+      g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+      return;
+    }
+    g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_walkCallback = MK4_NODE_AT(undefined4, g_cj_00542058, 4);
+    MStackPush2LLWalkCompare();
+    if (g_framePauseFlag == 0) {
+      if ((g_xformDirtyFlags & 4) != 0) goto LAB_004335a4;
+      g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_walkCallback = MK4_NODE_AT(undefined4, g_cj_00542058, 8);
+      MStackPush2LLWalkCompare();
+      if (g_framePauseFlag == 0) {
+        if ((g_xformDirtyFlags & 4) != 0) goto LAB_004335a4;
+        g_dualD = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        g_walkCallback = MK4_NODE_AT(undefined4, g_cj_00542058, 0xc);
+        MStackPush2LLWalkCompare();
+        if (g_framePauseFlag == 0) {
+          if ((g_xformDirtyFlags & 4) != 0) goto LAB_004335a4;
+          g_xformDirtyFlags = g_xformDirtyFlags | 1;
+          g_cj_00542054 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void FourCallBitGateChain(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueIdx]
@@ -198,3 +236,4 @@ __declspec(naked) void FourCallBitGateChain(void) {
         ret
     }
 }
+#endif
