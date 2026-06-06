@@ -84,8 +84,11 @@ def compile_ok(twin, name):
     externs for the globals/functions it references. Guards against shapes
     the token bail misses (floats, local arrays, strings, ...)."""
     globs = sorted(set(re.findall(r'\bg_[A-Za-z]\w*', twin)))
+    # Don't emit a bogus `extern int F();` for things that are actually
+    # macros from ghidra_types.h (CONCAT<a><b> bit-concat) - a function-style
+    # extern of a 2-arg macro fails to preprocess ("requires 2 arguments").
     calls = [f for f in sorted(set(re.findall(r'\b([A-Z]\w+)\s*\(', twin)) - {name})
-             if not f.startswith('MK4_')]
+             if not f.startswith('MK4_') and not re.match(r'CONCAT\d\d$', f)]
     h = ('#define NON_MATCHING 1\n#include "portable/ghidra_types.h"\n'
          '#include "portable/mem_model.h"\n')
     h += ''.join('extern unsigned int %s;\n' % g for g in globs)

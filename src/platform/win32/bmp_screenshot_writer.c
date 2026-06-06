@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -113,6 +114,105 @@ extern void Helper_FClose(void);
 extern void Helper_FOpen(void);
 extern void WrapThreeDispatch(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BmpScreenshotWriter(int param_1,byte *param_2,int param_3,int param_4,int param_5,int param_6)
+
+{
+  byte bVar1;
+  int iVar2;
+  int iVar3;
+  byte *pbVar4;
+  int iVar5;
+  byte *pbVar6;
+  int local_c3c;
+  undefined2 local_c38;
+  int local_c36;
+  undefined2 local_c32;
+  undefined2 local_c30;
+  undefined4 local_c2e;
+  undefined4 local_c28;
+  int local_c24;
+  int local_c20;
+  undefined2 local_c1c;
+  undefined2 local_c1a;
+  undefined4 local_c18;
+  int local_c14;
+  undefined4 local_c10;
+  undefined4 local_c0c;
+  undefined4 local_c08;
+  undefined4 local_c04;
+  undefined1 local_c00;
+  byte local_bff [3071];
+  
+  local_c38 = 0x4d42;
+  local_c2e = 0x36;
+  local_c28 = 0x28;
+  local_c14 = param_5 * param_4 * 3;
+  local_c24 = param_4;
+  local_c36 = (param_5 * param_4 + 0x12) * 3;
+  local_c20 = param_5;
+  local_c32 = 0;
+  local_c30 = 0;
+  local_c1c = 1;
+  local_c1a = 0x18;
+  local_c18 = 0;
+  local_c10 = 0;
+  local_c0c = 0;
+  local_c08 = 0;
+  local_c04 = 0;
+  if ((((param_1 != 0) && (param_2 != (byte *)0x0)) && (0 < param_3)) &&
+     (((param_4 < 0x401 && (0 < param_5)) &&
+      (iVar2 = Helper_FOpen(param_1,&g_dispatchSave830), iVar2 != 0)))) {
+    WrapThreeDispatch(&local_c38,0xe,1,iVar2);
+    WrapThreeDispatch(&local_c28,0x28,1,iVar2);
+    iVar3 = param_3 / 2;
+    param_2 = (byte *)((int)param_2 + (param_5 + -1) * iVar3 * 2);
+    if (0 < param_5) {
+      local_c3c = param_5;
+      do {
+        if (param_6 == 0) {
+          if (0 < param_4) {
+            pbVar4 = local_bff;
+            iVar5 = param_4;
+            pbVar6 = param_2;
+            do {
+              param_3 = CONCAT22((short)((uint)param_3 >> 0x10),*(undefined2 *)pbVar6);
+              pbVar4[1] = -((param_3 >> 10 & 1U) != 0) & 7U | (char)(param_3 >> 10) << 3;
+              bVar1 = *pbVar6;
+              *pbVar4 = -((param_3 >> 5 & 1U) != 0) & 7U | (char)(param_3 >> 5) << 3;
+              pbVar6 = pbVar6 + 2;
+              iVar5 = iVar5 + -1;
+              pbVar4[-1] = -((bVar1 & 1) != 0) & 7U | bVar1 << 3;
+              pbVar4 = pbVar4 + 3;
+            } while (iVar5 != 0);
+          }
+        }
+        else if (0 < param_4) {
+          pbVar4 = local_bff;
+          iVar5 = param_4;
+          pbVar6 = param_2;
+          do {
+            param_3 = CONCAT22((short)((uint)param_3 >> 0x10),*(undefined2 *)pbVar6);
+            pbVar4[1] = -((param_3 >> 0xb & 1U) != 0) & 7U | (char)(param_3 >> 0xb) << 3;
+            bVar1 = *pbVar6;
+            *pbVar4 = -((param_3 >> 5 & 1U) != 0) & 3U | (char)(param_3 >> 5) << 2;
+            pbVar6 = pbVar6 + 2;
+            iVar5 = iVar5 + -1;
+            pbVar4[-1] = -((bVar1 & 1) != 0) & 7U | bVar1 << 3;
+            pbVar4 = pbVar4 + 3;
+          } while (iVar5 != 0);
+        }
+        WrapThreeDispatch(&local_c00,param_4 * 3,1,iVar2);
+        param_2 = param_2 + iVar3 * -2;
+        local_c3c = local_c3c + -1;
+      } while (local_c3c != 0);
+    }
+    Helper_FClose(iVar2);
+  }
+  return;
+}
+#else
 __declspec(naked) void BmpScreenshotWriter(void)
 {
     __asm {
@@ -317,3 +417,4 @@ __declspec(naked) void BmpScreenshotWriter(void)
         ret
     }
 }
+#endif

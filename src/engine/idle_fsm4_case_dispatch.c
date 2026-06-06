@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,34 @@ extern void GuardedSetCallOrJmp(void);
 extern void StorePauseImulShr16(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void IdleFsm4CaseDispatch(void)
+
+{
+  g_walkCallback = 4;
+  StorePauseImulShr16();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  g_walkCallback = g_walkCallback + 0x3b;
+  if ((((g_walkCallback == 0x19) || (g_walkCallback == 0x17)) ||
+      ((4 < g_walkCallback && (g_walkCallback < 10)))) && (g_walkCallback == g_lastGatedValue)) {
+    if (g_lastGatedTick <= g_gtFightTickCounter + 1) {
+      return;
+    }
+  }
+  else {
+    g_lastGatedValue = g_walkCallback;
+    g_lastGatedTick = g_gtFightTickCounter;
+  }
+  if (-1 < g_walkCallback) {
+    TaggedSceneDispatch(CONCAT22((short)((uint)g_walkCallback >> 0x10),
+                          *(undefined2 *)(&g_walkTagTable + g_walkCallback * 2)));
+  }
+  return;
+}
+#else
 __declspec(naked) void IdleFsm4CaseDispatch(void)
 {
     __asm {
@@ -297,3 +326,4 @@ __declspec(naked) void IdleFsm4CaseDispatch(void)
         _emit 0x00
     }
 }
+#endif

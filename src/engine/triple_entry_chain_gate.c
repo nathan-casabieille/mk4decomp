@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,27 @@ extern void ArgSarStoreJmp(void);
 extern void CountdownInstallSelfMultiTail(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TripleEntryChainGate(void)
+
+{
+  g_walkCallback = 0x3e;
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_baseSel, 0x68) + -1;
+  if (g_eventQueueCurrent == 0) {
+    g_eventQueueCurrent = 0x46;
+  }
+  MK4_NODE_AT(int, g_baseSel, 0x68) = g_eventQueueCurrent;
+  if (g_eventQueueCurrent == 0x14) {
+    if ((g_walkCallback < 0x71) && (*(short *)(&g_eventTbl_112 + g_walkCallback * 2) != 0)) {
+      TaggedSceneDispatch(CONCAT22((short)(g_walkCallback >> 0x10),
+                            *(short *)(&g_eventTbl_112 + g_walkCallback * 2)));
+    }
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void TripleEntryChainGate(void) {
     __asm {
         mov     ecx, dword ptr [g_baseSel]
@@ -168,3 +190,4 @@ __declspec(naked) void TripleEntryChainGate(void) {
         ret
     }
 }
+#endif
