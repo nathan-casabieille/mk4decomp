@@ -122,47 +122,6 @@ extern void GuardedClampStoreJmp(void);
 
 extern void FiveCallGuardSetTail(void);
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void InstallSelfAccumOverflow(void)
-
-{
-  int iVar1;
-  int iVar2;
-  
-  iVar1 = g_baseSel * 4;
-  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
-  *(undefined4 *)(iVar1 + 0x84) = 0;
-  if (iVar2 == 0) {
-    GuardedClampStoreJmp();
-    if (g_framePauseFlag != 0) {
-      return;
-    }
-  }
-  else {
-    g_xformScratch2088 = g_xformScratch2088 + g_currentNodeFlags;
-    if (0x10000 < g_xformScratch2088) {
-      StackPopDispatchTagged();
-      return;
-    }
-  }
-  g_eventQueueCurrent = g_eventQueueChild;
-  g_walkCallback = g_xformScratch2088;
-  MStackPushZeroCallPop_PendingMatch();
-  if (g_framePauseFlag == 0) {
-    if (g_cj_00542058 != (code *)0x0) {
-      (*g_cj_00542058)();
-    }
-    if (g_framePauseFlag == 0) {
-      *(code **)(iVar1 + 8) = InstallSelfAccumOverflow;
-      *(undefined4 *)(iVar1 + 0x84) = 1;
-      g_dualC = 1;
-      g_framePauseFlag = 1;
-    }
-  }
-  return;
-}
-#else
 __declspec(naked) void InstallSelfAccumOverflow(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -215,4 +174,3 @@ __declspec(naked) void InstallSelfAccumOverflow(void) {
         ret
     }
 }
-#endif

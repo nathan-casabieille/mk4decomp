@@ -120,42 +120,6 @@ extern unsigned int g_bootInitSaveSlot;
 extern void Cmp2DirtyToggle(void);
 extern void TowerStageInitCluster(void);
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void StackPeekDispatchIndirect(void)
-
-{
-  int iVar1;
-  undefined4 uVar2;
-  
-  Cmp2DirtyToggle();
-  if (g_framePauseFlag != 0) {
-    return;
-  }
-  uVar2 = *(undefined4 *)((int)g_matrixStackTop * 4);
-  if (((byte)g_xformDirtyFlags & 1) != 0) {
-    g_matrixStackTop = g_matrixStackTop + -1;
-    g_bootInitSaveSlot = uVar2;
-    TripleScaledChainStore54(&g_dispatchSave1220);
-    if (g_framePauseFlag == 0) {
-      DispatchOrInitFightGroup();
-      return;
-    }
-    return;
-  }
-  g_matrixStackTop = g_matrixStackTop + -1;
-  iVar1 = g_baseSel * 4;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
-  g_dualC = uVar2;
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = uVar2;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-                    /* WARNING: Could not recover jumptable at 0x00430550. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
-  (*g_eventQueuePending)();
-  return;
-}
-#else
 __declspec(naked) void StackPeekDispatchIndirect(void) {
     __asm {
         call    Cmp2DirtyToggle
@@ -188,4 +152,3 @@ done:
         ret
     }
 }
-#endif
