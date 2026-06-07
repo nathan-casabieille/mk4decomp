@@ -9,6 +9,7 @@
  * height=480) - low-res hardcoded.
  */
 #include "engine/render.h"
+#include "portable/ghidra_types.h"
 
 /*
  * @addr 0x004b2e80
@@ -18,6 +19,37 @@
  * with a very specific order. Pure C wouldn't reproduce the dual
  * idiv result-reuse (eax: ratio for X, ecx: ratio for Y).
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ProjectVertex(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar1 = (int)g_triStripX0;
+  iVar3 = (int)g_triStripX1;
+  iVar4 = (int)g_triStripX2;
+  g_vtxValid = 1;
+  iVar2 = 0x2000000;
+  g_min_007af98c = (int)(short)((short)(g_mat3x3_007af99e * iVar3 + g_mat3x3_007af99c * iVar1 +
+                                      g_mat3x3_007af9a0 * iVar4 >> 0xc) + (short)g_vtxTransZ);
+  g_vtxOut_x =
+       (int)(short)((short)(g_mat3x3_007af992 * iVar3 + g_mat3x3_007af990 * iVar1 + g_mat3x3_007af994 * iVar4
+                           >> 0xc) + (short)g_vtxTransX);
+  g_vtxOut_y =
+       (int)(short)((short)(g_mat3x3_007af998 * iVar3 + g_mat3x3_007af996 * iVar1 + g_mat3x3_007af99a * iVar4 >>
+                           0xc) + (short)g_vtxTransY);
+  if (1 < g_min_007af98c) {
+    iVar2 = (int)(0x2000000 / (longlong)g_min_007af98c);
+  }
+  (*(unsigned short *)((char *)&g_vtxScreenX + 0)) = (short)((uint)((iVar2 * g_vtxOut_x >> 0x10) * 0x1999a) >> 0x10) + 0x140;
+  (*(unsigned short *)((char *)&g_vtxScreenX + 2)) = (short)((uint)((iVar2 * g_vtxOut_y >> 0x10) * 0x1e000) >> 0x10) + 0xf0;
+  return;
+}
+#else
 __declspec(naked) void ProjectVertex(void)
 {
     __asm {
@@ -94,3 +126,4 @@ skip_div:
         ret
     }
 }
+#endif

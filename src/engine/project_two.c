@@ -8,6 +8,7 @@
  * Helper_EmitLine(2) at the end.
  */
 #include "engine/render.h"
+#include "portable/ghidra_types.h"
 
 /*
  * @addr 0x004b2af0
@@ -18,6 +19,56 @@
  * divide. Pure C wouldn't reproduce the cross-vertex register
  * carry-over.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ProjectTwoVertices(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar4 = (int)g_vtxIn2_y;
+  iVar3 = (int)g_vtxIn1_y;
+  iVar1 = (int)g_dispatchSave1626;
+  g_vtxOut1_x =
+       (int)(short)((short)(iVar4 * g_mat3x3_007af994 + iVar3 * g_mat3x3_007af992 + iVar1 * g_mat3x3_007af990
+                           >> 0xc) + (short)g_vtxTransX);
+  g_vtxOut1_y =
+       (int)(short)((short)(g_mat3x3_007af99a * iVar4 + g_mat3x3_007af998 * iVar3 + g_mat3x3_007af996 * iVar1 >>
+                           0xc) + (short)g_vtxTransY);
+  iVar2 = 0x2000000;
+  g_min_007af984 = (int)(short)((short)(g_mat3x3_007af99e * iVar3 + g_mat3x3_007af99c * iVar1 +
+                                    g_mat3x3_007af9a0 * iVar4 >> 0xc) + (short)g_vtxTransZ);
+  if (1 < g_min_007af984) {
+    iVar2 = (int)(0x2000000 / (longlong)g_min_007af984);
+  }
+  iVar3 = (int)g_vtxIn1_z;
+  g_vtxValid = 1;
+  (*(unsigned short *)((char *)&g_triStripRingA + 2)) =
+       (short)((uint)((iVar2 * g_vtxOut1_y >> 0x10) * 0x1e000) >> 0x10) + 0xf0;
+  iVar1 = (int)g_vtxIn2_x;
+  (*(unsigned short *)((char *)&g_triStripRingA + 0)) =
+       (short)((uint)((iVar2 * g_vtxOut1_x >> 0x10) * 0x1999a) >> 0x10) + 0x140;
+  iVar2 = (int)g_vtxIn2_z;
+  g_vtxOut2_x = (int)(short)((short)(iVar1 * g_mat3x3_007af990 + iVar3 * g_mat3x3_007af992 +
+                                      iVar2 * g_mat3x3_007af994 >> 0xc) + (short)g_vtxTransX);
+  g_min_007af988 = (int)(short)((short)(iVar1 * g_mat3x3_007af99c + iVar3 * g_mat3x3_007af99e +
+                                      iVar2 * g_mat3x3_007af9a0 >> 0xc) + (short)g_vtxTransZ);
+  g_vtxOut2_y =
+       (int)(short)((short)(iVar1 * g_mat3x3_007af996 + iVar2 * g_mat3x3_007af99a + iVar3 * g_mat3x3_007af998 >>
+                           0xc) + (short)g_vtxTransY);
+  iVar1 = 0x2000000;
+  if (1 < g_min_007af988) {
+    iVar1 = (int)(0x2000000 / (longlong)g_min_007af988);
+  }
+  (*(unsigned short *)((char *)&g_vtxScreenP2X + 0)) = (short)((uint)((iVar1 * g_vtxOut2_x >> 0x10) * 0x1999a) >> 0x10) + 0x140;
+  (*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) = (short)((uint)((iVar1 * g_vtxOut2_y >> 0x10) * 0x1e000) >> 0x10) + 0xf0;
+  Helper_EmitLine(2);
+  return;
+}
+#else
 __declspec(naked) void ProjectTwoVertices(void)
 {
     __asm {
@@ -169,3 +220,4 @@ skip_div2:
         ret
     }
 }
+#endif

@@ -123,8 +123,19 @@ def compile_ok(twin, name):
     # called through (`(*g)()`, `g()`) needs a function-pointer type.
     # Scalar `unsigned int` is the default. (A wrong guess only fails the
     # gate conservatively; matching is unaffected either way.)
+    def unary_deref(g):
+        # `*g` where the `*` is NOT a binary multiply: check the last non-space
+        # char before each `*<spaces>g` is not an operand (`iVar * g` is mult,
+        # not deref - that mistype would wrongly fail the gate).
+        for m in re.finditer(r'\*\s*%s\b' % g, twin):
+            j = m.start() - 1
+            while j >= 0 and twin[j] in ' \t':
+                j -= 1
+            if j < 0 or twin[j] not in '_)]' and not twin[j].isalnum():
+                return True
+        return False
     for g in globs:
-        if re.search(r'\b%s\s*\[' % g, twin) or re.search(r'\*\s*%s\b' % g, twin):
+        if re.search(r'\b%s\s*\[' % g, twin) or unary_deref(g):
             h += 'extern unsigned int %s[];\n' % g
         elif re.search(r'\(\s*\*\s*%s\s*\)\s*\(' % g, twin) or re.search(r'\b%s\s*\(' % g, twin):
             h += 'extern int (*%s)();\n' % g

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -137,6 +138,74 @@ extern unsigned int g_dispatchSave1517;
 extern unsigned int g_dispatchSave1518;
 extern unsigned int g_dispatchSave1580;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BboxProjectAndStash(void)
+
+{
+  undefined2 uVar1;
+  int iVar2;
+  short sVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  short sVar9;
+  int iVar10;
+  int iVar11;
+  
+  iVar2 = g_tickX2;
+  g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0x1c);
+  if (((0 < g_walkCallback) && (g_walkCallback < 0x11)) &&
+     (iVar11 = g_walkCallback * 0x10, (&g_dispatchSave571)[iVar11] == '\0')) {
+    if (g_tickCurConfig == &g_dispatchSave722) {
+      if (g_dispatchSave1580 != 0) {
+        return;
+      }
+    }
+    else {
+      g_dispatchSave1580 = 0;
+      if (*g_tickCurConfig != '\x01') {
+        g_dispatchSave1580 = 0;
+        return;
+      }
+    }
+    iVar8 = (int)*(short *)(&g_dispatchSave570 + iVar11);
+    iVar4 = (int)*(short *)(&g_dispatchSave727 + iVar11);
+    g_dispatchSave1626 = 0;
+    iVar5 = (int)g_mat3x3_007af998;
+    iVar10 = (int)g_mat3x3_007af99a;
+    iVar6 = (int)g_mat3x3_007af99e;
+    (*(unsigned short *)((char *)&g_eventQueuePending + 0)) = (short)(iVar5 * iVar8 + iVar10 * iVar4 >> 0xc) + (short)g_vtxTransY;
+    iVar7 = (int)g_mat3x3_007af9a0;
+    sVar3 = (short)g_vtxTransZ;
+    (&g_dispatchSave1513)[g_tickX2 * 3] =
+         (short)(iVar8 * g_mat3x3_007af992 + iVar4 * g_mat3x3_007af994 >> 0xc) + (short)g_vtxTransX;
+    (&g_dispatchSave1514)[iVar2 * 3] = (short)g_eventQueuePending;
+    (&g_dispatchSave1515)[iVar2 * 3] = (short)(iVar7 * iVar4 + iVar6 * iVar8 >> 0xc) + sVar3;
+    g_vtxIn1_y = *(short *)(&g_dispatchSave726 + iVar11);
+    g_vtxIn2_y = *(short *)(&g_dispatchSave728 + iVar11);
+    iVar11 = (int)g_vtxIn1_y;
+    iVar4 = (int)g_vtxIn2_y;
+    sVar9 = (short)(iVar11 * g_mat3x3_007af992 + iVar4 * g_mat3x3_007af994 >> 0xc) + (short)g_vtxTransX;
+    sVar3 = (short)(iVar5 * iVar11 + iVar10 * iVar4 >> 0xc) + (short)g_vtxTransY;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (int)sVar9;
+    g_eventQueuePending = (int)sVar3;
+    g_eventQueueCurrent = (int)(short)((short)(iVar7 * iVar4 + iVar6 * iVar11 >> 0xc) + (short)g_vtxTransZ
+                               );
+    g_vtxOut1_x = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_vtxOut1_y = g_eventQueuePending;
+    g_min_007af984 = g_eventQueueCurrent;
+    (&g_dispatchSave1516)[iVar2 * 3] = sVar9;
+    uVar1 = (undefined2)g_min_007af984;
+    (&g_dispatchSave1517)[iVar2 * 3] = sVar3;
+    (&g_dispatchSave1518)[iVar2 * 3] = uVar1;
+    g_tickX2 = g_tickX2 + 2;
+  }
+  return;
+}
+#else
 __declspec(naked) void BboxProjectAndStash(void)
 {
     __asm {
@@ -280,3 +349,4 @@ __declspec(naked) void BboxProjectAndStash(void)
         ret
     }
 }
+#endif
