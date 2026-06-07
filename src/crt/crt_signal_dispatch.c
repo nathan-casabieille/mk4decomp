@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesPP.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -16,6 +17,36 @@ extern unsigned int g_dispatchSave1448;
 extern unsigned int g_iat_GetACP;
 extern unsigned int g_iat_GetOEMCP;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int CRTSignalDispatch(int param_1)
+
+{
+  int iVar1;
+  bool bVar2;
+  
+  if (param_1 == -2) {
+    g_dispatchSave1440 = 1;
+                    /* WARNING: Could not recover jumptable at 0x004c976d. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    iVar1 = GetOEMCP();
+    return iVar1;
+  }
+  if (param_1 == -3) {
+    g_dispatchSave1440 = 1;
+                    /* WARNING: Could not recover jumptable at 0x004c9782. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    iVar1 = GetACP();
+    return iVar1;
+  }
+  bVar2 = param_1 == -4;
+  if (bVar2) {
+    param_1 = g_dispatchSave1448;
+  }
+  g_dispatchSave1440 = (uint)bVar2;
+  return param_1;
+}
+#else
 __declspec(naked) void CRTSignalDispatch(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -38,3 +69,4 @@ __declspec(naked) void CRTSignalDispatch(void) {
         ret
     }
 }
+#endif

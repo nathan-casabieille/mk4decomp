@@ -74,6 +74,13 @@ def reconcile_names(text, ghidra_va, our_by_va):
         gva = ghidra_va.get(name)
         if gva is None:
             return name                      # not a Ghidra symbol; leave
+        if gva < 0x400000:
+            # Below the image base = an external import (the symbol dump
+            # gives Win32 API imports their ordinal, not a VA, e.g. SetMenu
+            # -> 76). Leave the name so it stays a real API call (declared by
+            # <windows.h> in the real build, externed by the gate) instead of
+            # being corrupted into a bogus MK4_VA(uint, <ordinal>) call.
+            return name
         ours = our_by_va.get(gva)
         if ours:
             return ours

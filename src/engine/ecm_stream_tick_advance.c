@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -135,6 +136,97 @@ extern void ECM_Cleanup(void);
 extern void EcmFrameDecode(void);
 extern int Helper_ECM_PostCleanup(int);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+uint EcmStreamTickAdvance(uint param_1,int param_2)
+
+{
+  DWORD DVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  
+  iVar3 = param_2;
+  if ((((g_ecmFile != 0) && (g_ecmFrameSizeDiv8 < g_dispatchSave1604)) && (param_1 != 0)) && (param_2 != 0)) {
+    Helper_ECM_PostCleanup(1);
+    if (g_ecmReserved != 0) {
+      g_ecmReserved = 0;
+      DVar1 = timeGetTime();
+      iVar2 = __ftol();
+      g_dispatchSave1602 = DVar1 - iVar2;
+      g_dispatchSave1605 = 0;
+      g_dispatchSave1603 = 0;
+    }
+    if ((g_ecmFrameSizeDiv8 % 0xf == 0) && (g_ecmThread != (HANDLE)0x0)) {
+      ResumeThread(g_ecmThread);
+    }
+    if (g_ecmFrameIdx < (int)g_ecmFrameTotal) {
+      g_ecmReserved = g_ecmReserved + 1;
+      if (g_ecmDSBuffer != (int *)0x0) {
+        (*(MK4ComMethod *)(*g_ecmDSBuffer + 0x48))(g_ecmDSBuffer);
+      }
+      iVar2 = 0;
+      if (g_ecmFrameIdx < (int)g_ecmFrameTotal) {
+        do {
+          if (2999 < iVar2) goto LAB_004b0eee;
+          Sleep(10);
+          iVar2 = iVar2 + 10;
+        } while (g_ecmFrameIdx < (int)g_ecmFrameTotal);
+      }
+      if (2999 < iVar2) {
+        ECM_Cleanup();
+        return 0;
+      }
+    }
+    if (g_ecmPlayState != 0) {
+LAB_004b0eee:
+      ECM_Cleanup();
+      return 0;
+    }
+    uVar4 = (int)g_ecmFrameTotal >> 0x1f;
+    iVar3 = EcmFrameDecode(&g_ecmAudioSlots +
+                         (((g_ecmFrameTotal ^ uVar4) - uVar4 & 3 ^ uVar4) - uVar4) * 0x5ab5c,
+                         g_ecmFrameSizeDiv8 % 0xf,iVar3,param_1);
+    if (iVar3 == 0) {
+      DVar1 = timeGetTime();
+      DVar1 = (g_dispatchSave1605 - DVar1) - 1;
+      if (0 < (int)DVar1) {
+        Sleep(DVar1);
+      }
+      if ((g_ecmDSBuffer != (int *)0x0) &&
+         ((*(MK4ComMethod *)(*g_ecmDSBuffer + 0x24))(g_ecmDSBuffer,&param_1), (param_1 & 1) == 0)) {
+        (*(MK4ComMethod *)(*g_ecmDSBuffer + 0x3c))(g_ecmDSBuffer,g_ecmVolumeFromFtol);
+        (*(MK4ComMethod *)(*g_ecmDSBuffer + 0x34))(g_ecmDSBuffer,(g_ecmFrameSizeDiv8 * 0xb7c) % 0x2b110);
+        (*(MK4ComMethod *)(*g_ecmDSBuffer + 0x30))(g_ecmDSBuffer,0,0,1);
+      }
+      if (g_ecmRunFlag != 0) {
+        g_dispatchSave1602 = timeGetTime();
+        g_ecmRunFlag = 0;
+      }
+      uVar4 = g_ecmFrameSizeDiv8;
+      DVar1 = g_dispatchSave1602;
+      iVar3 = __ftol();
+      g_dispatchSave1605 = DVar1 - iVar3;
+      if ((((g_dispatchSave1603 == 0) &&
+           (DVar1 = timeGetTime(), uVar4 = g_ecmFrameSizeDiv8, g_dispatchSave1605 <= DVar1)) &&
+          (g_ecmFrameSizeDiv8 != 0)) && (g_ecmFrameSizeDiv8 != g_dispatchSave1604 - 1)) {
+        g_dispatchSave1603 = 1;
+      }
+      else {
+        g_dispatchSave1603 = 0;
+      }
+      uVar4 = uVar4 + 1;
+      g_ecmFrameSizeDiv8 = uVar4;
+      g_ecmFrameTotal = uVar4 / 0xf;
+      if (g_dispatchSave1603 != 0) {
+        uVar4 = -uVar4;
+      }
+      return uVar4;
+    }
+  }
+  return 0;
+}
+#else
 __declspec(naked) void EcmStreamTickAdvance(void)
 {
     __asm {
@@ -382,3 +474,4 @@ __declspec(naked) void EcmStreamTickAdvance(void)
         ret
     }
 }
+#endif

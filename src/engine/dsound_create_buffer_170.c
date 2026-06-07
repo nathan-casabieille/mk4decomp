@@ -140,7 +140,29 @@ __declspec(naked) void DDraw5_PostCreate(void) {
 }
 
 /* @addr 0x004b4f60 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_GlideMode(void)
+
+{
+  if (g_b519_state == 0) {
+    g_b519_state = 1;
+    g_f60_bufdesc = 0x2c;
+    GetWindowPlacement(g_b519_secondary,(WINDOWPLACEMENT *)&g_f60_bufdesc);
+    if ((g_f60_qual == 3) || (g_f60_qual == 2)) {
+      ShowWindow(g_b519_secondary,9);
+    }
+    GetWindowRect(g_b519_secondary,(LPRECT)&g_b519_e3);
+    g_b519_iface = GetMenu(g_b519_secondary);
+    SetMenu(g_b519_secondary,(HMENU)0x0);
+    g_b519_config = GetWindowLongA(g_b519_secondary,-0x14);
+    g_b519_data = GetWindowLongA(g_b519_secondary,-0x10);
+  }
+  return;
+}
+#else
 __declspec(naked) void Helper_GlideMode(void) {
     DSBI_BODY(g_f60_state, g_f60_iface, g_f60_bufdesc, g_f60_qual,
               g_f60_pan, g_f60_sec, g_f60_d1, g_f60_d2)
 }
+#endif

@@ -2,6 +2,7 @@
  * Post-create-window IAT-driven driver query.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 
 /* @addr 0x004c4950 (75b)
  *   IAT-driven driver query: call IAT[0x4d21b8](0); if 0 -> ret.
@@ -13,6 +14,30 @@ extern unsigned int g_iat_GetDeviceCaps;
 extern unsigned int g_iat_ReleaseDC;
 extern unsigned int g_iat_GetDC;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 Helper_PostCreateWindow(void)
+
+{
+  HDC hdc;
+  int iVar1;
+  
+  hdc = GetDC((HWND)0x0);
+  if (hdc == (HDC)0x0) {
+    return 0;
+  }
+  iVar1 = GetDeviceCaps(hdc,0xc);
+  if (0xe < iVar1) {
+    iVar1 = GetDeviceCaps(hdc,0xe);
+    if (iVar1 == 1) {
+      ReleaseDC((HWND)0x0,hdc);
+      return 1;
+    }
+  }
+  ReleaseDC((HWND)0x0,hdc);
+  return 0;
+}
+#else
 __declspec(naked) void Helper_PostCreateWindow(void) {
     __asm {
         push    esi
@@ -56,3 +81,4 @@ __declspec(naked) void Helper_PostCreateWindow(void) {
         ret
     }
 }
+#endif

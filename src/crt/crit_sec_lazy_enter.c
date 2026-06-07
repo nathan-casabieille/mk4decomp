@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,28 @@ extern unsigned int g_crtHandleTable;
 extern void Lock(void);
 extern void TableLookupIatCall(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CritSecLazyEnter(uint param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = (param_1 & 0x1f) * 0x24;
+  iVar1 = (&g_crtHandleTable)[(int)param_1 >> 5] + iVar2;
+  if (*(int *)(iVar1 + 8) == 0) {
+    Lock(0x11);
+    if (*(int *)(iVar1 + 8) == 0) {
+      InitializeCriticalSection((LPCRITICAL_SECTION)(iVar1 + 0xc));
+      *(int *)(iVar1 + 8) = *(int *)(iVar1 + 8) + 1;
+    }
+    TableLookupIatCall(0x11);
+  }
+  EnterCriticalSection((LPCRITICAL_SECTION)((&g_crtHandleTable)[(int)param_1 >> 5] + 0xc + iVar2));
+  return;
+}
+#else
 __declspec(naked) void CritSecLazyEnter(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -163,3 +186,4 @@ enterCs:
         ret
     }
 }
+#endif

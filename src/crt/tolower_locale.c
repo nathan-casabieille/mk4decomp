@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -123,6 +124,35 @@ extern void Lock(void);
 extern void TableLookupIatCall(void);
 extern void Tolower(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int TolowerLocale(int param_1)
+
+{
+  bool bVar1;
+  
+  if (g_dispatchSave1444 == 0) {
+    if ((0x40 < param_1) && (param_1 < 0x5b)) {
+      return param_1 + 0x20;
+    }
+  }
+  else {
+    InterlockedIncrement((LONG *)&g_dispatchSave1464);
+    bVar1 = g_dispatchSave1463 != 0;
+    if (bVar1) {
+      InterlockedDecrement((LONG *)&g_dispatchSave1464);
+      Lock(0x13);
+    }
+    param_1 = Tolower(param_1);
+    if (bVar1) {
+      TableLookupIatCall(0x13);
+      return param_1;
+    }
+    InterlockedDecrement((LONG *)&g_dispatchSave1464);
+  }
+  return param_1;
+}
+#else
 __declspec(naked) void TolowerLocale(void) {
     __asm {
         mov     eax, dword ptr [g_dispatchSave1444]
@@ -181,3 +211,4 @@ bareRet:
         ret
     }
 }
+#endif

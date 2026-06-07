@@ -134,7 +134,27 @@ __declspec(naked) void DSoundBufferInit146_b290(void) {
 }
 
 /* @addr 0x004b5190 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DSoundBufferInit146_b519(void)
+
+{
+  if (g_b519_state != 0) {
+    g_b519_state = 0;
+    if (g_b519_iface != (HMENU)0x0) {
+      SetMenu(g_b519_secondary,g_b519_iface);
+      g_b519_iface = (HMENU)0x0;
+    }
+    SetWindowLongA(g_b519_secondary,-0x14,g_b519_config);
+    SetWindowLongA(g_b519_secondary,-0x10,g_b519_data);
+    SetWindowPos(g_b519_secondary,(HWND)0x0,g_b519_e3,g_b519_e2,g_b519_e4 - g_b519_e3,
+                 g_b519_e1 - g_b519_e2,0x14);
+  }
+  return;
+}
+#else
 __declspec(naked) void DSoundBufferInit146_b519(void) {
     DSOUND_BODY(g_b519_state, g_b519_iface, g_b519_secondary, g_b519_config,
                 g_b519_data, g_b519_e1, g_b519_e2, g_b519_e3, g_b519_e4)
 }
+#endif

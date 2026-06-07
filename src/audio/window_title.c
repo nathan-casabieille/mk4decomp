@@ -9,6 +9,7 @@
  * "current" values are scattered across the data segment.
  */
 #include "audio/sound.h"
+#include "portable/ghidra_types.h"
 #include "platform/win32.h"
 
 static const char $SG_titleWaiting[] = "Mortal Kombat 4 - Waiting";
@@ -23,6 +24,79 @@ static const char $SG_titleNormal[]  = "Mortal Kombat 4";
  * and the long-form jl + setne idioms in the tail don't survive
  * MSVC's natural scheduler.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void UpdateWindowTitle(void)
+
+{
+  char *lpString;
+  
+  if (g_appInitHwnd == (HWND)0x0) {
+    return;
+  }
+  if (((((g_titleSaved == g_pumpFlagF0) && ((*(unsigned int *)MK4_VA(unsigned int, 0x4f4ad4)) == g_pumpFlagE8)) &&
+       ((*(unsigned int *)MK4_VA(unsigned int, 0x4f4ad8)) == g_pumpFlagEC)) &&
+      (((*(unsigned int *)MK4_VA(unsigned int, 0x4f4adc)) == g_demoModeFlag && ((*(unsigned int *)MK4_VA(unsigned int, 0x4f4ae0)) == g_titleStateE)))) &&
+     (((*(unsigned int *)MK4_VA(unsigned int, 0x4f4ae4)) == g_resetCfgRegion &&
+      (((*(unsigned int *)MK4_VA(unsigned int, 0x4f4ae8)) == g_audioPostFlag && ((*(unsigned int *)MK4_VA(unsigned int, 0x4f4aec)) == g_audioMasterVol)))))) {
+    return;
+  }
+  if (g_pumpFlagEC != 0) {
+    Helper_TitleAudioReset();
+  }
+  if (((g_pumpFlagF0 < 2) || (g_pumpFlagE8 != 0)) || (g_pumpFlagEC != 0)) {
+    SetWindowTextA(g_appInitHwnd,MK4_VA(char, 0x004f4af0));
+    if ((g_pumpFlagF0 < 2) || (g_pumpFlagE8 != 0)) {
+      g_titleAudioFlag = 1;
+      Helper_TitleEnterStateC();
+      Helper_TitleAudioStop();
+      if (g_rendererCheckVal != 0) {
+        Helper_TitleAudioCleanup();
+      }
+    }
+  }
+  else {
+    lpString = MK4_VA(char, 0x004f4b28);
+    if (g_demoModeFlag == 0) {
+      lpString = MK4_VA(char, 0x004f4b0c);
+    }
+    SetWindowTextA(g_appInitHwnd,lpString);
+    if ((g_titleAudioFlag != 0) || (g_titleStateE != (*(unsigned int *)MK4_VA(unsigned int, 0x4f4ae0)))) {
+      if (g_titleStateE == 0) {
+        Helper_AudioStartFresh();
+      }
+      else {
+        Helper_AudioStart();
+      }
+    }
+    if ((g_titleAudioFlag != 0) || (g_resetCfgRegion != (*(unsigned int *)MK4_VA(unsigned int, 0x4f4ae4)))) {
+      if (g_resetCfgRegion != 0) {
+        Helper_TitleEnterStateA();
+        g_titleAudioFlag = 0;
+        goto LAB_004b245f;
+      }
+      Helper_TitleEnterStateB();
+    }
+    g_titleAudioFlag = 0;
+  }
+LAB_004b245f:
+  if ((*(unsigned int *)MK4_VA(unsigned int, 0x4f4ae8)) != g_audioPostFlag) {
+    Helper_TitleSetMaxVolume(g_audioPostFlag);
+  }
+  if ((*(unsigned int *)MK4_VA(unsigned int, 0x4f4aec)) != g_audioMasterVol) {
+    AuxAudio_SetVolume(g_audioMasterVol & 0xff);
+  }
+  (*(unsigned int *)MK4_VA(unsigned int, 0x4f4aec)) = g_audioMasterVol;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x4f4ae8)) = g_audioPostFlag;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x4f4ae4)) = g_resetCfgRegion;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x4f4ae0)) = g_titleStateE;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x4f4adc)) = g_demoModeFlag;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x4f4ad8)) = g_pumpFlagEC;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x4f4ad4)) = g_pumpFlagE8;
+  g_titleSaved = g_pumpFlagF0;
+  return;
+}
+#else
 __declspec(naked) void UpdateWindowTitle(void)
 {
     __asm {
@@ -174,3 +248,4 @@ done:
         ret
     }
 }
+#endif

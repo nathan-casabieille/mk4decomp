@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,30 @@ extern void FmodHelper_004ccb7d(void);
 extern void Thunk_004ca701_helper(void);
 extern void Thunk_004ca77b_helper(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 CloseAndThunksBundle(LPCSTR param_1,byte param_2)
+
+{
+  DWORD DVar1;
+  undefined4 *puVar2;
+  
+  DVar1 = GetFileAttributesA(param_1);
+  if (DVar1 == 0xffffffff) {
+    DVar1 = GetLastError();
+    DosMapErr(DVar1);
+    return 0xffffffff;
+  }
+  if (((DVar1 & 1) != 0) && ((param_2 & 2) != 0)) {
+    puVar2 = (undefined4 *)Crt_errno();
+    *puVar2 = 0xd;
+    puVar2 = (undefined4 *)Crt_doserrno();
+    *puVar2 = 5;
+    return 0xffffffff;
+  }
+  return 0;
+}
+#else
 __declspec(naked) void CloseAndThunksBundle(void) {
     __asm {
         /* sub-1: _close */
@@ -198,3 +223,4 @@ __declspec(naked) void CloseAndThunksBundle(void) {
         _emit   0cch
     }
 }
+#endif

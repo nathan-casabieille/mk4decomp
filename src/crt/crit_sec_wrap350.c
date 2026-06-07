@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,29 @@ extern void Lock(void);
 extern void TableLookupIatCall(void);
 extern void Wctomb(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 CritSecWrap350(undefined4 param_1,undefined4 param_2)
+
+{
+  undefined4 uVar1;
+  bool bVar2;
+  
+  InterlockedIncrement((LONG *)&g_dispatchSave1464);
+  bVar2 = g_dispatchSave1463 != 0;
+  if (bVar2) {
+    InterlockedDecrement((LONG *)&g_dispatchSave1464);
+    Lock(0x13);
+  }
+  uVar1 = Wctomb(param_1,param_2);
+  if (!bVar2) {
+    InterlockedDecrement((LONG *)&g_dispatchSave1464);
+    return uVar1;
+  }
+  TableLookupIatCall(0x13);
+  return uVar1;
+}
+#else
 __declspec(naked) void CritSecWrap350(void) {
     __asm {
         push    ebx
@@ -170,3 +194,4 @@ direct:
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,18 @@ extern int g_renderer2_present_rc;
 extern void DSCreateThunk_004d12d2(void);
 extern void DSEnumeratorThunk_004d12cc(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+bool DSoundInstallerPair(void)
+
+{
+  g_comret_0058c7dc = DirectDrawEnumerateA(0x4aee20,&g_comptr_0058c7ac);
+  if (g_comptr_0058c7ac == 0) {
+    g_comret_0058c7dc = DirectDrawCreate(0,&g_comptr_0058c7ac,0);
+  }
+  return g_comptr_0058c7ac != 0;
+}
+#else
 __declspec(naked) void DSoundInstallerPair(void) {
     __asm {
         /* sub-function 1 (0x4aede0 .. 0x4aee1d, plus 90h padding) */
@@ -206,3 +219,4 @@ __declspec(naked) void DSoundInstallerPair(void) {
         ret     0x10
     }
 }
+#endif

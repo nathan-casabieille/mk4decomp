@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -129,6 +130,33 @@ extern void CmpCallPushIATCall(void);
 extern void CrtParseCommandLine(void);
 extern void LoadArgPushCall(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void SetupArgv(void)
+
+{
+  int iVar1;
+  char *pcVar2;
+  int local_8;
+  int local_4;
+  
+  GetModuleFileNameA((HMODULE)0x0,&g_buf_00f9faf0,0x104);
+  g_dispatchSave1427 = &g_buf_00f9faf0;
+  pcVar2 = g_cmdline;
+  if (*g_cmdline == '\0') {
+    pcVar2 = &g_buf_00f9faf0;
+  }
+  CrtParseCommandLine(pcVar2,0,0,&local_8,&local_4);
+  iVar1 = LoadArgPushCall(local_4 + local_8 * 4);
+  if (iVar1 == 0) {
+    __amsg_exit(8);
+  }
+  CrtParseCommandLine(pcVar2,iVar1,iVar1 + local_8 * 4,&local_8,&local_4);
+  g_dispatchSave1425 = iVar1;
+  g_dispatchSave1424 = local_8 + -1;
+  return;
+}
+#else
 __declspec(naked) void SetupArgv(void) {
     __asm {
         sub     esp, 8
@@ -187,3 +215,4 @@ __declspec(naked) void SetupArgv(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_dispatchSave835;
@@ -70,6 +71,141 @@ extern unsigned int g_dispatchSave1653;
 extern unsigned int g_iat_LoadLibraryA;
 extern unsigned int g_iat_GetProcAddress;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 Helper_GlideOpen(void)
+
+{
+  if ((g_renderer1_active == 0) && (g_glideFnTable == (HMODULE)0x0)) {
+    g_glideFnTable = LoadLibraryA(MK4_VA(char, 0x004f4db8));
+    if (g_glideFnTable != (HMODULE)0x0) {
+      g_dispatchSave1632 = GetProcAddress(g_glideFnTable,MK4_VA(char, 0x004f4d9c));
+      if (g_dispatchSave1632 != (FARPROC)0x0) {
+        g_dispatchSave1633 = GetProcAddress(g_glideFnTable,MK4_VA(char, 0x004f4d88));
+        if (g_dispatchSave1633 != (FARPROC)0x0) {
+          g_fnptr_007b000c = GetProcAddress(g_glideFnTable,MK4_VA(char, 0x004f4d74));
+          if (g_fnptr_007b000c != (FARPROC)0x0) {
+            g_fnptr_007b0010 = GetProcAddress(g_glideFnTable,MK4_VA(char, 0x004f4d64));
+            if (g_fnptr_007b0010 != (FARPROC)0x0) {
+              g_dispatchSave1634 = GetProcAddress(g_glideFnTable,MK4_VA(char, 0x004f4d50));
+              if (g_dispatchSave1634 != (FARPROC)0x0) {
+                g_dispatchSave1635 = GetProcAddress(g_glideFnTable,MK4_VA(char, 0x004f4d3c));
+                if (g_dispatchSave1635 != (FARPROC)0x0) {
+                  g_dispatchSave1636 = GetProcAddress(g_glideFnTable,MK4_VA(char, 0x004f4d28));
+                  if (g_dispatchSave1636 != (FARPROC)0x0) {
+                    g_dispatchSave1637 = GetProcAddress(g_glideFnTable,MK4_VA(char, 0x004f4d14));
+                    if (g_dispatchSave1637 != (FARPROC)0x0) {
+                      g_dispatchSave1638 = GetProcAddress(g_glideFnTable,MK4_VA(char, 0x004f4d04));
+                      if (g_dispatchSave1638 != (FARPROC)0x0) {
+                        g_dispatchSave1639 = GetProcAddress(g_glideFnTable,MK4_VA(char, 0x004f4cec)
+                                                     );
+                        if (g_dispatchSave1639 != (FARPROC)0x0) {
+                          g_dispatchSave1640 = GetProcAddress(g_glideFnTable,MK4_VA(char, 0x004f4cdc));
+                          if (g_dispatchSave1640 != (FARPROC)0x0) {
+                            g_fnptr_007b0030 = GetProcAddress(g_glideFnTable,
+                                                          MK4_VA(char, 0x004f4cc0));
+                            if (g_fnptr_007b0030 != (FARPROC)0x0) {
+                              g_dispatchSave1641 = GetProcAddress(g_glideFnTable,MK4_VA(char, 0x004f4cb0));
+                              if (g_dispatchSave1641 != (FARPROC)0x0) {
+                                g_dispatchSave1642 = GetProcAddress(g_glideFnTable,
+                                                              MK4_VA(char, 0x004f4c9c));
+                                if (g_dispatchSave1642 != (FARPROC)0x0) {
+                                  g_PeekMessageA = GetProcAddress(g_glideFnTable,
+                                                                MK4_VA(char, 0x004f4c8c));
+                                  if (g_PeekMessageA != (FARPROC)0x0) {
+                                    g_fnptr_007b0040 = GetProcAddress(g_glideFnTable,
+                                                                  MK4_VA(char, 0x004f4c7c));
+                                    if (g_fnptr_007b0040 != (FARPROC)0x0) {
+                                      g_dispatchSave1643 = GetProcAddress(g_glideFnTable,
+                                                                    MK4_VA(char, 0x004f4c68));
+                                      if (g_dispatchSave1643 != (FARPROC)0x0) {
+                                        g_dispatchSave1644 = GetProcAddress(g_glideFnTable,
+                                                                                                                                            
+                                                  MK4_VA(char, 0x004f4c50));
+                                        if (g_dispatchSave1644 != (FARPROC)0x0) {
+                                          g_dispatchSave1645 = GetProcAddress(g_glideFnTable,
+                                                                        MK4_VA(char, 0x004f4c40));
+                                          if (g_dispatchSave1645 != (FARPROC)0x0) {
+                                            g_iat_indirect_007b0050 = GetProcAddress(g_glideFnTable,
+                                                                                                                                                    
+                                                  MK4_VA(char, 0x004f4c2c));
+                                            if (g_iat_indirect_007b0050 != (FARPROC)0x0) {
+                                              g_iat_indirect_007b0054 = GetProcAddress(g_glideFnTable,
+                                                                                                                                                        
+                                                  MK4_VA(char, 0x004f4c18));
+                                              if (g_iat_indirect_007b0054 != (FARPROC)0x0) {
+                                                g_dispatchSave1646 = GetProcAddress(g_glideFnTable,
+                                                                                                                                                            
+                                                  MK4_VA(char, 0x004f4bfc));
+                                                if (g_dispatchSave1646 != (FARPROC)0x0) {
+                                                  g_dispatchSave1647 = GetProcAddress(g_glideFnTable,
+                                                                                                                                                                
+                                                  MK4_VA(char, 0x004f4be8));
+                                                  if (g_dispatchSave1647 != (FARPROC)0x0) {
+                                                    g_iat_indirect_007b0060 = GetProcAddress(g_glideFnTable,
+                                                                                                                                                                    
+                                                  MK4_VA(char, 0x004f4bd0));
+                                                  if (g_iat_indirect_007b0060 != (FARPROC)0x0) {
+                                                    g_dispatchSave1648 = GetProcAddress(g_glideFnTable,
+                                                                                                                                                                    
+                                                  MK4_VA(char, 0x004f4bbc));
+                                                  if (g_dispatchSave1648 != (FARPROC)0x0) {
+                                                    g_dispatchSave1649 = GetProcAddress(g_glideFnTable,
+                                                                                                                                                                    
+                                                  MK4_VA(char, 0x004f4ba8));
+                                                  if (g_dispatchSave1649 != (FARPROC)0x0) {
+                                                    g_dispatchSave1650 = GetProcAddress(g_glideFnTable,
+                                                                                                                                                                    
+                                                  MK4_VA(char, 0x004f4b94));
+                                                  if (g_dispatchSave1650 != (FARPROC)0x0) {
+                                                    g_dispatchSave1651 = GetProcAddress(g_glideFnTable,
+                                                                                                                                                                    
+                                                  MK4_VA(char, 0x004f4b80));
+                                                  if (g_dispatchSave1651 != (FARPROC)0x0) {
+                                                    g_dispatchSave1652 = GetProcAddress(g_glideFnTable,
+                                                                                                                                                                    
+                                                  MK4_VA(char, 0x004f4b70));
+                                                  if (g_dispatchSave1652 != (FARPROC)0x0) {
+                                                    g_dispatchSave1653 = GetProcAddress(g_glideFnTable,
+                                                                                                                                                                    
+                                                  MK4_VA(char, 0x004f4b54));
+                                                  if (g_dispatchSave1653 != (FARPROC)0x0) {
+                                                    return 1;
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return 0;
+}
+#else
 __declspec(naked) void Helper_GlideOpen(void)
 {
     __asm {
@@ -304,4 +440,5 @@ __declspec(naked) void Helper_GlideOpen(void)
         ret
     }
 }
+#endif
 

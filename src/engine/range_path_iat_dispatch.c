@@ -36,6 +36,19 @@ extern int TableLookupIatCall(int);
 extern unsigned int g_iat_LeaveCriticalSection;
 extern unsigned int g_iat_EnterCriticalSection;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void RangePathIATDispatch_Lock(uint param_1)
+
+{
+  if ((0x5225ff < param_1) && (param_1 < 0x522861)) {
+    Lock(((int)(param_1 - 0x522600) >> 5) + 0x1c);
+    return;
+  }
+  EnterCriticalSection((LPCRITICAL_SECTION)(param_1 + 0x20));
+  return;
+}
+#else
 __declspec(naked) void RangePathIATDispatch_Lock(void) {
     __asm {
         push    ebp
@@ -62,8 +75,22 @@ __declspec(naked) void RangePathIATDispatch_Lock(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x004c7060 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void RangePathIATDispatch_TableLookupIatCall(uint param_1)
+
+{
+  if ((0x5225ff < param_1) && (param_1 < 0x522861)) {
+    TableLookupIatCall(((int)(param_1 - 0x522600) >> 5) + 0x1c);
+    return;
+  }
+  LeaveCriticalSection((LPCRITICAL_SECTION)(param_1 + 0x20));
+  return;
+}
+#else
 __declspec(naked) void RangePathIATDispatch_TableLookupIatCall(void) {
     __asm {
         push    ebp
@@ -90,3 +117,4 @@ __declspec(naked) void RangePathIATDispatch_TableLookupIatCall(void) {
         ret
     }
 }
+#endif

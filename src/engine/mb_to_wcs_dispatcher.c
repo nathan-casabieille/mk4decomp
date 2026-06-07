@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,66 @@ extern unsigned int g_iat_GetLocaleInfoA;
 extern void FreeImpl(void);
 extern void LoadArgPushCall(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int MbToWcsDispatcher(LCID param_1,LCTYPE param_2,LPWSTR param_3,int param_4,UINT param_5)
+
+{
+  int iVar1;
+  LPSTR lpLCData;
+  
+  if (g_dispatchSave1462 == 0) {
+    iVar1 = GetLocaleInfoW(0,1,(LPWSTR)0x0,0);
+    if (iVar1 == 0) {
+      iVar1 = GetLocaleInfoA(0,1,(LPSTR)0x0,0);
+      if (iVar1 == 0) {
+        return 0;
+      }
+      g_dispatchSave1462 = 2;
+    }
+    else {
+      g_dispatchSave1462 = 1;
+    }
+  }
+  if (g_dispatchSave1462 == 1) {
+    iVar1 = GetLocaleInfoW(param_1,param_2,param_3,param_4);
+    return iVar1;
+  }
+  if (g_dispatchSave1462 != 2) {
+    return g_dispatchSave1462;
+  }
+  if (param_5 == 0) {
+    param_5 = g_dispatchSave1448;
+  }
+  iVar1 = GetLocaleInfoA(param_1,param_2,(LPSTR)0x0,0);
+  if (iVar1 != 0) {
+    lpLCData = (LPSTR)LoadArgPushCall(iVar1);
+    if (lpLCData == (LPSTR)0x0) {
+      return 0;
+    }
+    iVar1 = GetLocaleInfoA(param_1,param_2,lpLCData,iVar1);
+    if (iVar1 != 0) {
+      if (param_4 == 0) {
+        iVar1 = MultiByteToWideChar(param_5,1,lpLCData,-1,(LPWSTR)0x0,0);
+        if (iVar1 != 0) {
+          FreeImpl(lpLCData);
+          return iVar1;
+        }
+      }
+      else {
+        iVar1 = MultiByteToWideChar(param_5,1,lpLCData,-1,param_3,param_4);
+        if (iVar1 != 0) {
+          FreeImpl(lpLCData);
+          return iVar1;
+        }
+      }
+    }
+    FreeImpl(lpLCData);
+    return 0;
+  }
+  return 0;
+}
+#else
 __declspec(naked) void MbToWcsDispatcher(void) {
     __asm {
         mov     eax, dword ptr [g_dispatchSave1462]
@@ -273,3 +334,4 @@ __declspec(naked) void MbToWcsDispatcher(void) {
         ret
     }
 }
+#endif
