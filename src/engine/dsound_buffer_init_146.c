@@ -116,22 +116,82 @@ extern unsigned int g_iat_SetWindowPos;
 
 /* @addr 0x004aea40 */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DSoundBufferInit146_a40(void)
+
+{
+  if (g_990_state != 0) {
+    g_990_state = 0;
+    if (g_990_sec != (HMENU)0x0) {
+      SetMenu(g_990_iface,g_990_sec);
+      g_990_sec = (HMENU)0x0;
+    }
+    SetWindowLongA(g_990_iface,-0x14,g_990_d1);
+    SetWindowLongA(g_990_iface,-0x10,g_990_d2);
+    SetWindowPos(g_990_iface,(HWND)0x0,g_990_pan,g_a40_e2,g_a40_e4 - g_990_pan,
+                 g_a40_e1 - g_a40_e2,0x14);
+  }
+  return;
+}
+#else
 __declspec(naked) void DSoundBufferInit146_a40(void) {
     DSOUND_BODY(g_a40_state, g_a40_iface, g_a40_secondary, g_a40_config,
                 g_a40_data, g_a40_e1, g_a40_e2, g_a40_e3, g_a40_e4)
 }
+#endif
 
 /* @addr 0x004afa60 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DSoundBufferInit146_a60(void)
+
+{
+  if (g_960_state != 0) {
+    g_960_state = 0;
+    if (g_960_sec != (HMENU)0x0) {
+      SetMenu(g_960_iface,g_960_sec);
+      g_960_sec = (HMENU)0x0;
+    }
+    SetWindowLongA(g_960_iface,-0x14,g_960_d1);
+    SetWindowLongA(g_960_iface,-0x10,g_960_d2);
+    SetWindowPos(g_960_iface,(HWND)0x0,g_960_pan,g_a60_e2,g_a60_e4 - g_960_pan,
+                 g_a60_e1 - g_a60_e2,0x14);
+  }
+  return;
+}
+#else
 __declspec(naked) void DSoundBufferInit146_a60(void) {
     DSOUND_BODY(g_a60_state, g_a60_iface, g_a60_secondary, g_a60_config,
                 g_a60_data, g_a60_e1, g_a60_e2, g_a60_e3, g_a60_e4)
 }
+#endif
 
 /* @addr 0x004b0290 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DSoundBufferInit146_b290(void)
+
+{
+  if (g_190_state != 0) {
+    g_190_state = 0;
+    if (g_190_sec != (HMENU)0x0) {
+      SetMenu(g_190_iface,g_190_sec);
+      g_190_sec = (HMENU)0x0;
+    }
+    SetWindowLongA(g_190_iface,-0x14,g_190_d1);
+    SetWindowLongA(g_190_iface,-0x10,g_190_d2);
+    SetWindowPos(g_190_iface,(HWND)0x0,g_190_pan,g_b290_e2,g_b290_e4 - g_190_pan,
+                 g_b290_e1 - g_b290_e2,0x14);
+  }
+  return;
+}
+#else
 __declspec(naked) void DSoundBufferInit146_b290(void) {
     DSOUND_BODY(g_b290_state, g_b290_iface, g_b290_secondary, g_b290_config,
                 g_b290_data, g_b290_e1, g_b290_e2, g_b290_e3, g_b290_e4)
 }
+#endif
 
 /* @addr 0x004b5190 */
 #ifdef NON_MATCHING

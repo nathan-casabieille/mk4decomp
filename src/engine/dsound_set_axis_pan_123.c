@@ -117,9 +117,40 @@ extern unsigned int g_iat_GetSystemMetrics;
     }
 
 /* @addr 0x004aec10 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DSoundSetAxisPan123_004aec10(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  if (g_990_state != 0) {
+    SetWindowLongA(g_990_iface,-0x14,8);
+    SetWindowLongA(g_990_iface,-0x10,-0x70000000);
+    iVar1 = GetSystemMetrics(1);
+    if (iVar1 < 0x1e0) {
+      iVar1 = 0x1e0;
+    }
+    else {
+      iVar1 = GetSystemMetrics(1);
+    }
+    iVar2 = GetSystemMetrics(0);
+    if (iVar2 < 0x280) {
+      iVar2 = 0x280;
+    }
+    else {
+      iVar2 = GetSystemMetrics(0);
+    }
+    SetWindowPos(g_990_iface,(HWND)0x0,0,0,iVar2,iVar1,0x44);
+  }
+  return;
+}
+#else
 __declspec(naked) void DSoundSetAxisPan123_004aec10(void) {
     DS_BODY(g_dsap_c10_state, g_dsap_c10_iface)
 }
+#endif
 
 /* @addr 0x004b50a0 */
 #ifdef NON_MATCHING

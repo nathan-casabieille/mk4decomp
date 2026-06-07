@@ -97,7 +97,9 @@ def compile_ok(twin, name):
     """Isolation syntax-check: a clean twin must compile with permissive
     externs for the globals/functions it references. Guards against shapes
     the token bail misses (floats, local arrays, strings, ...)."""
-    globs = sorted(set(re.findall(r'\bg_[A-Za-z]\w*', twin)))
+    # `g_\w+` (not g_[A-Za-z]...) so digit-prefixed globals like g_990_state
+    # / g_960_iface (the DSound/COM buffer globals) get externed too.
+    globs = sorted(set(re.findall(r'\bg_\w+', twin)))
     # Don't emit a bogus `extern int F();` for things that are actually
     # macros from ghidra_types.h (CONCAT<a><b> bit-concat) - a function-style
     # extern of a 2-arg macro fails to preprocess ("requires 2 arguments").

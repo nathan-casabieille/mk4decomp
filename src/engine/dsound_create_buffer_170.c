@@ -122,22 +122,88 @@ extern unsigned int g_iat_GetWindowPlacement;
     }
 
 /* @addr 0x004ae990 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void R2_Init3(void)
+
+{
+  if (g_990_state == 0) {
+    g_990_state = 1;
+    g_990_bufdesc = 0x2c;
+    GetWindowPlacement(g_990_iface,(WINDOWPLACEMENT *)&g_990_bufdesc);
+    if ((g_990_qual == 3) || (g_990_qual == 2)) {
+      ShowWindow(g_990_iface,9);
+    }
+    GetWindowRect(g_990_iface,(LPRECT)&g_990_pan);
+    g_990_sec = GetMenu(g_990_iface);
+    SetMenu(g_990_iface,(HMENU)0x0);
+    g_990_d1 = GetWindowLongA(g_990_iface,-0x14);
+    g_990_d2 = GetWindowLongA(g_990_iface,-0x10);
+  }
+  return;
+}
+#else
 __declspec(naked) void R2_Init3(void) {
     DSBI_BODY(g_990_state, g_990_iface, g_990_bufdesc, g_990_qual,
               g_990_pan, g_990_sec, g_990_d1, g_990_d2)
 }
+#endif
 
 /* @addr 0x004af960 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DDraw3_PostCreate(void)
+
+{
+  if (g_960_state == 0) {
+    g_960_state = 1;
+    g_960_bufdesc = 0x2c;
+    GetWindowPlacement(g_960_iface,(WINDOWPLACEMENT *)&g_960_bufdesc);
+    if ((g_960_qual == 3) || (g_960_qual == 2)) {
+      ShowWindow(g_960_iface,9);
+    }
+    GetWindowRect(g_960_iface,(LPRECT)&g_960_pan);
+    g_960_sec = GetMenu(g_960_iface);
+    SetMenu(g_960_iface,(HMENU)0x0);
+    g_960_d1 = GetWindowLongA(g_960_iface,-0x14);
+    g_960_d2 = GetWindowLongA(g_960_iface,-0x10);
+  }
+  return;
+}
+#else
 __declspec(naked) void DDraw3_PostCreate(void) {
     DSBI_BODY(g_960_state, g_960_iface, g_960_bufdesc, g_960_qual,
               g_960_pan, g_960_sec, g_960_d1, g_960_d2)
 }
+#endif
 
 /* @addr 0x004b0190 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DDraw5_PostCreate(void)
+
+{
+  if (g_190_state == 0) {
+    g_190_state = 1;
+    g_190_bufdesc = 0x2c;
+    GetWindowPlacement(g_190_iface,(WINDOWPLACEMENT *)&g_190_bufdesc);
+    if ((g_190_qual == 3) || (g_190_qual == 2)) {
+      ShowWindow(g_190_iface,9);
+    }
+    GetWindowRect(g_190_iface,(LPRECT)&g_190_pan);
+    g_190_sec = GetMenu(g_190_iface);
+    SetMenu(g_190_iface,(HMENU)0x0);
+    g_190_d1 = GetWindowLongA(g_190_iface,-0x14);
+    g_190_d2 = GetWindowLongA(g_190_iface,-0x10);
+  }
+  return;
+}
+#else
 __declspec(naked) void DDraw5_PostCreate(void) {
     DSBI_BODY(g_190_state, g_190_iface, g_190_bufdesc, g_190_qual,
               g_190_pan, g_190_sec, g_190_d1, g_190_d2)
 }
+#endif
 
 /* @addr 0x004b4f60 */
 #ifdef NON_MATCHING
