@@ -51,6 +51,35 @@ extern unsigned int g_retSlot_0058c8f8;
 
 /* @addr 0x004af6c0 */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ComSoundSetup_004af6c0(uint param_1)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  undefined4 local_28 [7];
+  int local_c;
+  
+  if (g_dsqc_730_state874 != 0) {
+    if (100 < (int)((param_1 ^ (int)param_1 >> 0x1f) - ((int)param_1 >> 0x1f))) {
+      param_1 = 100;
+    }
+    puVar2 = local_28;
+    for (iVar1 = 10; iVar1 != 0; iVar1 = iVar1 + -1) {
+      *puVar2 = 0;
+      puVar2 = puVar2 + 1;
+    }
+    local_c = param_1 * 5;
+    local_28[0] = 0x28;
+    local_28[1] = 0x20;
+    if (g_comptr_0058c870 != (int *)0x0) {
+      g_comret_0058c878 = (*(MK4ComMethod *)(*g_comptr_0058c870 + 0x10))(g_comptr_0058c870,local_28);
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void ComSoundSetup_004af6c0(void) {
     __asm {
         mov     eax, dword ptr [g_dsqc_730_state874]
@@ -93,8 +122,38 @@ __declspec(naked) void ComSoundSetup_004af6c0(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x004afef0 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ComSoundSetup_004afef0(uint param_1)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  undefined4 local_28 [7];
+  int local_c;
+  
+  if (g_dsqc_f60_state874 != 0) {
+    if (100 < (int)((param_1 ^ (int)param_1 >> 0x1f) - ((int)param_1 >> 0x1f))) {
+      param_1 = 100;
+    }
+    puVar2 = local_28;
+    for (iVar1 = 10; iVar1 != 0; iVar1 = iVar1 + -1) {
+      *puVar2 = 0;
+      puVar2 = puVar2 + 1;
+    }
+    local_c = param_1 * 5;
+    local_28[0] = 0x28;
+    local_28[1] = 0x20;
+    if (g_comptr_0058c8f0 != (int *)0x0) {
+      g_comret_0058c8f8 = (*(MK4ComMethod *)(*g_comptr_0058c8f0 + 0x10))(g_comptr_0058c8f0,local_28);
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void ComSoundSetup_004afef0(void) {
     __asm {
         mov     eax, dword ptr [g_dsqc_f60_state874]
@@ -137,3 +196,4 @@ __declspec(naked) void ComSoundSetup_004afef0(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,54 @@ extern unsigned int g_flags_00f8fade;
 extern unsigned int g_flags_00f8fadf;
 extern u16 g_audioChannelQueue[];
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Snd3DSourceCleanupFiltered(ushort param_1,byte param_2)
+
+{
+  short sVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  
+  if (param_1 < 0x898) {
+    iVar3 = (int)(short)param_1;
+    puVar4 = &g_audioChannelTable + iVar3 * 7;
+    if (((&g_audioChannelTable)[iVar3 * 7] != 0) && (((&g_flags_00f8fade)[iVar3 * 0x1c] & 1) != 0)) {
+      iVar2 = 0;
+      do {
+        (&g_flags_00f8fadf)[iVar3 * 0x1c + iVar2] = 0;
+        (*(MK4ComMethod *)(*(int *)*puVar4 + 0x48))((int *)*puVar4);
+        (*(MK4ComMethod *)(*(int *)*puVar4 + 0x34))((int *)*puVar4,0);
+        iVar2 = iVar2 + 1;
+        puVar4 = puVar4 + 1;
+      } while (iVar2 < 4);
+    }
+  }
+  else if (param_2 < 0x10) {
+    iVar3 = (int)(char)param_2;
+    if ((&g_audioChannelQueue)[iVar3 * 2] != -1) {
+      iVar2 = (int)(short)(&g_audioChannelQueue)[iVar3 * 2];
+      if (((&g_audioChannelTable)[iVar2 * 7] != 0) && (((&g_flags_00f8fade)[iVar2 * 0x1c] & 1) != 0)) {
+        (*(MK4ComMethod *)(*(int *)(&g_audioChannelTable)[iVar2 * 7 + (int)(short)(&g_dispatchSave1412)[iVar3 * 2]] +
+                    0x48))((int *)(&g_audioChannelTable)
+                                  [iVar2 * 7 + (int)(short)(&g_dispatchSave1412)[iVar3 * 2]]);
+        (*(MK4ComMethod *)(*(int *)(&g_audioChannelTable)
+                             [(short)(&g_audioChannelQueue)[iVar3 * 2] * 7 +
+                              (int)(short)(&g_dispatchSave1412)[iVar3 * 2]] + 0x34))
+                  ((int *)(&g_audioChannelTable)
+                          [(short)(&g_audioChannelQueue)[iVar3 * 2] * 7 +
+                           (int)(short)(&g_dispatchSave1412)[iVar3 * 2]],0);
+        sVar1 = (&g_audioChannelQueue)[iVar3 * 2];
+        (&g_audioChannelQueue)[iVar3 * 2] = 0xffff;
+        (&g_flags_00f8fadf)[sVar1 * 0x1c + (int)(short)(&g_dispatchSave1412)[iVar3 * 2]] = 0;
+        return;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Snd3DSourceCleanupFiltered(void) {
     __asm {
         mov     ax, word ptr [esp + 4]
@@ -211,3 +260,4 @@ __declspec(naked) void Snd3DSourceCleanupFiltered(void) {
         ret
     }
 }
+#endif

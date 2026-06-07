@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004c3710 (206b engine.render) - COM object slot release/dealloc by index.
@@ -27,6 +28,53 @@ extern unsigned int g_obj_size;
 extern unsigned int g_obj_table;
 extern unsigned int g_obj_used;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_AudioStop(ushort param_1)
+
+{
+  int *piVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  
+  if (param_1 < 0x898) {
+    iVar2 = (int)(short)param_1;
+    iVar4 = iVar2 * 0x1c;
+    piVar3 = &g_audioChannelTable + iVar2 * 7;
+    if ((&g_audioChannelTable)[iVar2 * 7] != 0) {
+      if (g_dispatchSave1417 == 0) {
+        iVar2 = 0;
+        do {
+          if (((*piVar3 != 0) && ((&g_flags_00f8fadf)[iVar4 + iVar2] != '\0')) &&
+             (((&g_flags_00f8fade)[iVar4] & 1) == 0)) {
+            (&g_flags_00f8fade)[iVar4] = (&g_flags_00f8fade)[iVar4] | 2;
+            return;
+          }
+          iVar2 = iVar2 + 1;
+          piVar3 = piVar3 + 1;
+        } while (iVar2 < 4);
+      }
+      piVar3 = (int *)(&g_obj_used + iVar4);
+      iVar2 = 4;
+      do {
+        piVar1 = (int *)*piVar3;
+        if (piVar1 != (int *)0x0) {
+          (*(MK4ComMethod *)(*piVar1 + 0x48))(piVar1);
+          (*(MK4ComMethod *)(*(int *)*piVar3 + 8))((int *)*piVar3);
+          *piVar3 = 0;
+        }
+        piVar3 = piVar3 + -1;
+        iVar2 = iVar2 + -1;
+      } while (iVar2 != 0);
+      g_dsoundFieldE4 = g_dsoundFieldE4 - *(int *)(&g_obj_size + iVar4);
+      g_dsoundFieldE8 = g_dsoundFieldE8 + -1;
+      g_dispatchSave1415 = g_dispatchSave1415 + 1;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Helper_AudioStop(void) {
     __asm {
         mov     ax, word ptr [esp + 4]
@@ -116,4 +164,5 @@ __declspec(naked) void Helper_AudioStop(void) {
         ret
     }
 }
+#endif
 

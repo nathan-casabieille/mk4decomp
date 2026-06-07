@@ -234,13 +234,145 @@
 
 /* @addr 0x004afb70 */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 DDraw3_SetCooperativeLevel(void)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  undefined4 uStack_90;
+  undefined4 auStack_8c [4];
+  int iStack_7c;
+  int iStack_78;
+  int iStack_74;
+  undefined4 local_6c [5];
+  undefined4 local_58;
+  undefined4 local_4;
+  
+  puVar2 = local_6c;
+  for (iVar1 = 0x1b; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar2 = 0;
+    puVar2 = puVar2 + 1;
+  }
+  local_6c[0] = 0x6c;
+  local_6c[1] = 0x21;
+  local_4 = 0x4218;
+  local_58 = 2;
+  if (g_comptr_0058c860 != (int *)0x0) {
+    g_comret_0058c878 = (*(MK4ComMethod *)(*g_comptr_0058c860 + 0x18))(g_comptr_0058c860,local_6c,&g_comptr_0058c864,0);
+  }
+  if ((g_comret_0058c878 != 0) && (local_58 = 1, g_comptr_0058c860 != (int *)0x0)) {
+    g_comret_0058c878 = (*(MK4ComMethod *)(*g_comptr_0058c860 + 0x18))(g_comptr_0058c860,local_6c,&g_comptr_0058c864,0);
+  }
+  uStack_90 = 4;
+  if (g_comptr_0058c864 != (int *)0x0) {
+    g_comret_0058c878 = (*(MK4ComMethod *)(*g_comptr_0058c864 + 0x30))(g_comptr_0058c864,&uStack_90,&g_comptr_0058c868);
+  }
+  puVar2 = auStack_8c;
+  for (iVar1 = 8; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar2 = 0;
+    puVar2 = puVar2 + 1;
+  }
+  auStack_8c[0] = 0x20;
+  if (g_comptr_0058c864 != (int *)0x0) {
+    g_comret_0058c878 = (*(MK4ComMethod *)(*g_comptr_0058c864 + 0x54))(g_comptr_0058c864,auStack_8c);
+  }
+  if (((iStack_7c == 0xf800) && (iStack_78 == 0x7e0)) && (iStack_74 == 0x1f)) {
+    g_dsmi_b70_flag = 1;
+  }
+  else {
+    if (iStack_7c != 0x7c00) {
+      return 0;
+    }
+    if (iStack_78 != 0x3e0) {
+      return 0;
+    }
+    if (iStack_74 != 0x1f) {
+      return 0;
+    }
+    g_dsmi_b70_flag = 0;
+  }
+  if ((g_comptr_0058c864 != (int *)0x0) && (g_comptr_0058c868 != 0)) {
+    return 1;
+  }
+  return 0;
+}
+#else
 __declspec(naked) void DDraw3_SetCooperativeLevel(void) {
     DSMI_BODY(g_dsmi_b70_main, g_dsmi_b70_sec, g_dsmi_b70_ret,
               g_dsmi_b70_extra, g_dsmi_b70_flag, g_dsmi_b70_sec3)
 }
+#endif
 
 /* @addr 0x004b03a0 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 DDraw5_SetCooperativeLevel(void)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  undefined4 uStack_90;
+  undefined4 auStack_8c [4];
+  int iStack_7c;
+  int iStack_78;
+  int iStack_74;
+  undefined4 local_6c [5];
+  undefined4 local_58;
+  undefined4 local_4;
+  
+  puVar2 = local_6c;
+  for (iVar1 = 0x1b; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar2 = 0;
+    puVar2 = puVar2 + 1;
+  }
+  local_6c[0] = 0x6c;
+  local_6c[1] = 0x21;
+  local_4 = 0x4218;
+  local_58 = 2;
+  if (g_comptr_0058c8e0 != (int *)0x0) {
+    g_comret_0058c8f8 = (*(MK4ComMethod *)(*g_comptr_0058c8e0 + 0x18))(g_comptr_0058c8e0,local_6c,&g_comptr_0058c8e4,0);
+  }
+  if ((g_comret_0058c8f8 != 0) && (local_58 = 1, g_comptr_0058c8e0 != (int *)0x0)) {
+    g_comret_0058c8f8 = (*(MK4ComMethod *)(*g_comptr_0058c8e0 + 0x18))(g_comptr_0058c8e0,local_6c,&g_comptr_0058c8e4,0);
+  }
+  uStack_90 = 4;
+  if (g_comptr_0058c8e4 != (int *)0x0) {
+    g_comret_0058c8f8 = (*(MK4ComMethod *)(*g_comptr_0058c8e4 + 0x30))(g_comptr_0058c8e4,&uStack_90,&g_comptr_0058c8e8);
+  }
+  puVar2 = auStack_8c;
+  for (iVar1 = 8; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar2 = 0;
+    puVar2 = puVar2 + 1;
+  }
+  auStack_8c[0] = 0x20;
+  if (g_comptr_0058c8e4 != (int *)0x0) {
+    g_comret_0058c8f8 = (*(MK4ComMethod *)(*g_comptr_0058c8e4 + 0x54))(g_comptr_0058c8e4,auStack_8c);
+  }
+  if (((iStack_7c == 0xf800) && (iStack_78 == 0x7e0)) && (iStack_74 == 0x1f)) {
+    g_dsmi_3a0_flag = 1;
+  }
+  else {
+    if (iStack_7c != 0x7c00) {
+      return 0;
+    }
+    if (iStack_78 != 0x3e0) {
+      return 0;
+    }
+    if (iStack_74 != 0x1f) {
+      return 0;
+    }
+    g_dsmi_3a0_flag = 0;
+  }
+  if ((g_comptr_0058c8e4 != (int *)0x0) && (g_comptr_0058c8e8 != 0)) {
+    return 1;
+  }
+  return 0;
+}
+#else
 __declspec(naked) void DDraw5_SetCooperativeLevel(void) {
     DSMI_BODY(g_dsmi_3a0_main, g_dsmi_3a0_sec, g_dsmi_3a0_ret,
               g_dsmi_3a0_extra, g_dsmi_3a0_flag, g_dsmi_3a0_sec3)
 }
+#endif

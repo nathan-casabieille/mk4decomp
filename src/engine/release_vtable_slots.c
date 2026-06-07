@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,31 @@ extern u8 g_renderer2_buf2[];
 extern u8 g_renderer2_buf1[];
 extern int g_renderer2_present_rc;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ReleaseVtableSlots(byte param_1)
+
+{
+  int *piVar1;
+  uint uVar2;
+  
+  if (param_1 < 0x10) {
+    uVar2 = (uint)param_1;
+    piVar1 = (int *)(&g_renderer2_buf3)[uVar2];
+    if (piVar1 != (int *)0x0) {
+      (*(MK4ComMethod *)(*piVar1 + 8))(piVar1);
+    }
+    piVar1 = (int *)(&g_renderer2_buf2)[uVar2];
+    (&g_renderer2_buf3)[uVar2] = 0;
+    if (piVar1 != (int *)0x0) {
+      g_comret_0058c7dc = (*(MK4ComMethod *)(*piVar1 + 8))(piVar1);
+    }
+    (&g_renderer2_buf2)[uVar2] = 0;
+    (&g_renderer2_buf1)[uVar2] = 0;
+  }
+  return;
+}
+#else
 __declspec(naked) void ReleaseVtableSlots(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -152,3 +178,4 @@ ret_only:
         ret
     }
 }
+#endif

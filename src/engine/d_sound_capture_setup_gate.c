@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,64 @@ extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
 extern int g_renderer2_paused;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 DSoundCaptureSetupGate(int param_1,int *param_2,int *param_3,undefined4 *param_4)
+
+{
+  int *piVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  undefined4 uVar4;
+  undefined4 local_6c [4];
+  int local_5c;
+  int local_48;
+  
+  if (g_renderer2_active == 0) {
+    return 0;
+  }
+  if (param_2 == (int *)0x0) {
+    return 0;
+  }
+  if (param_3 == (int *)0x0) {
+    return 0;
+  }
+  if (param_4 == (undefined4 *)0x0) {
+    return 0;
+  }
+  if (g_renderer2_paused != 0) {
+    return 0;
+  }
+  puVar3 = local_6c;
+  for (iVar2 = 0x1b; iVar2 != 0; iVar2 = iVar2 + -1) {
+    *puVar3 = 0;
+    puVar3 = puVar3 + 1;
+  }
+  local_6c[0] = 0x6c;
+  if (param_1 == 0) {
+    if (g_comptr_0058c7b0 == (int *)0x0) goto LAB_004ad53e;
+    iVar2 = *g_comptr_0058c7b0;
+    uVar4 = 0x11;
+    piVar1 = g_comptr_0058c7b0;
+  }
+  else {
+    if (g_comptr_0058c7b4 == (int *)0x0) goto LAB_004ad53e;
+    iVar2 = *g_comptr_0058c7b4;
+    uVar4 = 0x21;
+    piVar1 = g_comptr_0058c7b4;
+  }
+  g_comret_0058c7dc = (*(MK4ComMethod *)(iVar2 + 100))(piVar1,0,local_6c,uVar4,0);
+LAB_004ad53e:
+  if ((local_48 != 0) && (0x27f < local_5c)) {
+    *param_2 = local_48;
+    *param_3 = local_5c;
+    *param_4 = g_dispatchSave501;
+    g_renderer2_paused = (param_1 != 0) + 1;
+    return 1;
+  }
+  return 0;
+}
+#else
 __declspec(naked) void DSoundCaptureSetupGate(void) {
     __asm {
         mov     eax, dword ptr [g_renderer2_active]
@@ -211,3 +270,4 @@ __declspec(naked) void DSoundCaptureSetupGate(void) {
         ret
     }
 }
+#endif

@@ -72,6 +72,8 @@ typedef int bool;
 
 /* Win32 ABI type seam (platform-glue twins) - NON_MATCHING-only too. */
 #include "win32_types.h"
+/* COM vtable-call seam (DirectSound/DirectDraw/Direct3D method dispatch). */
+#include "com.h"
 
 #endif /* NON_MATCHING */
 

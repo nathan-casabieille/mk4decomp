@@ -303,15 +303,123 @@
 
 /* @addr 0x004af730 */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 Renderer3_BeginFrame_SW_FS(int param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  undefined4 auStack_d0 [4];
+  undefined4 uStack_c0;
+  undefined4 uStack_ac;
+  undefined4 local_64 [20];
+  undefined4 uStack_14;
+  
+  if ((((g_dsqc_730_state874 != 0) && (g_dsqc_730_state880 == 0)) && (param_2 != (undefined4 *)0x0)) &&
+     ((param_3 != (undefined4 *)0x0 && (param_4 != (undefined4 *)0x0)))) {
+    *param_3 = 0;
+    *param_2 = 0;
+    if ((g_comptr_0058c864 != (int *)0x0) &&
+       (iVar1 = (*(MK4ComMethod *)(*g_comptr_0058c864 + 0x60))(g_comptr_0058c864), iVar1 == -0x7789fe3e)) {
+      (*(MK4ComMethod *)(*g_comptr_0058c864 + 0x6c))(g_comptr_0058c864);
+    }
+    if (param_1 != 0) {
+      puVar2 = local_64;
+      for (iVar1 = 0x19; iVar1 != 0; iVar1 = iVar1 + -1) {
+        *puVar2 = 0;
+        puVar2 = puVar2 + 1;
+      }
+      local_64[0] = 100;
+      uStack_14 = 1;
+      if (g_comptr_0058c868 != (int *)0x0) {
+        g_comret_0058c878 = (*(MK4ComMethod *)(*g_comptr_0058c868 + 0x14))(g_comptr_0058c868,0,0,0,0x1000400,local_64);
+      }
+    }
+    puVar2 = auStack_d0;
+    for (iVar1 = 0x1b; iVar1 != 0; iVar1 = iVar1 + -1) {
+      *puVar2 = 0;
+      puVar2 = puVar2 + 1;
+    }
+    auStack_d0[0] = 0x6c;
+    if (g_comptr_0058c868 != (int *)0x0) {
+      g_comret_0058c878 = (*(MK4ComMethod *)(*g_comptr_0058c868 + 100))(g_comptr_0058c868,0,auStack_d0,1,0);
+    }
+    if (g_comret_0058c878 == 0) {
+      g_dsqc_730_state880 = 1;
+      *param_3 = uStack_c0;
+      *param_2 = uStack_ac;
+      *param_4 = g_dsmi_b70_flag;
+      return 1;
+    }
+  }
+  return 0;
+}
+#else
 __declspec(naked) void Renderer3_BeginFrame_SW_FS(void) {
     DSQC_BODY(g_dsqc_730_state874, g_dsqc_730_state880,
               g_dsqc_730_iface, g_dsqc_730_iface_arg,
               g_dsqc_730_ret, g_dsqc_730_flag)
 }
+#endif
 
 /* @addr 0x004aff60 */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 Renderer4_BeginFrame_SW_Win(int param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  undefined4 auStack_d0 [4];
+  undefined4 uStack_c0;
+  undefined4 uStack_ac;
+  undefined4 local_64 [20];
+  undefined4 uStack_14;
+  
+  if ((((g_dsqc_f60_state874 != 0) && (g_dsqc_f60_state880 == 0)) && (param_2 != (undefined4 *)0x0)) &&
+     ((param_3 != (undefined4 *)0x0 && (param_4 != (undefined4 *)0x0)))) {
+    *param_3 = 0;
+    *param_2 = 0;
+    if ((g_comptr_0058c8e4 != (int *)0x0) &&
+       (iVar1 = (*(MK4ComMethod *)(*g_comptr_0058c8e4 + 0x60))(g_comptr_0058c8e4), iVar1 == -0x7789fe3e)) {
+      (*(MK4ComMethod *)(*g_comptr_0058c8e4 + 0x6c))(g_comptr_0058c8e4);
+    }
+    if (param_1 != 0) {
+      puVar2 = local_64;
+      for (iVar1 = 0x19; iVar1 != 0; iVar1 = iVar1 + -1) {
+        *puVar2 = 0;
+        puVar2 = puVar2 + 1;
+      }
+      local_64[0] = 100;
+      uStack_14 = 1;
+      if (g_comptr_0058c8e8 != (int *)0x0) {
+        g_comret_0058c8f8 = (*(MK4ComMethod *)(*g_comptr_0058c8e8 + 0x14))(g_comptr_0058c8e8,0,0,0,0x1000400,local_64);
+      }
+    }
+    puVar2 = auStack_d0;
+    for (iVar1 = 0x1b; iVar1 != 0; iVar1 = iVar1 + -1) {
+      *puVar2 = 0;
+      puVar2 = puVar2 + 1;
+    }
+    auStack_d0[0] = 0x6c;
+    if (g_comptr_0058c8e8 != (int *)0x0) {
+      g_comret_0058c8f8 = (*(MK4ComMethod *)(*g_comptr_0058c8e8 + 100))(g_comptr_0058c8e8,0,auStack_d0,1,0);
+    }
+    if (g_comret_0058c8f8 == 0) {
+      g_dsqc_f60_state880 = 1;
+      *param_3 = uStack_c0;
+      *param_2 = uStack_ac;
+      *param_4 = g_dsmi_3a0_flag;
+      return 1;
+    }
+  }
+  return 0;
+}
+#else
 __declspec(naked) void Renderer4_BeginFrame_SW_Win(void) {
     DSQC_BODY(g_dsqc_f60_state874, g_dsqc_f60_state880,
               g_dsqc_f60_iface, g_dsqc_f60_iface_arg,
               g_dsqc_f60_ret, g_dsqc_f60_flag)
 }
+#endif

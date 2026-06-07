@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,84 @@ extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
 extern void R2_Init11(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 PadEnumDeviceRebind(uint param_1,ushort *param_2)
+
+{
+  ushort uVar1;
+  int *piVar2;
+  int iVar3;
+  ushort *puVar4;
+  uint uVar5;
+  undefined4 *puVar6;
+  undefined4 auStack_6c [4];
+  int iStack_5c;
+  undefined4 *puStack_48;
+  
+  if (((g_renderer2_active != 0) && ((byte)param_1 < 0x10)) && (param_2 != (ushort *)0x0)) {
+    R2_Init11(param_1);
+    uVar5 = param_1 & 0xff;
+    piVar2 = (int *)(&g_renderer2_buf2)[uVar5];
+    if ((piVar2 != (int *)0x0) &&
+       (iVar3 = (*(MK4ComMethod *)(*piVar2 + 0x60))(piVar2), iVar3 == -0x7789fe3e)) {
+      (*(MK4ComMethod *)(*(int *)(&g_renderer2_buf2)[uVar5] + 0x6c))((int *)(&g_renderer2_buf2)[uVar5]);
+    }
+    if ((g_renderer2_state9 != (int *)0x0) &&
+       (iVar3 = (*(MK4ComMethod *)(*g_renderer2_state9 + 0x60))(g_renderer2_state9), iVar3 == -0x7789fe3e)) {
+      (*(MK4ComMethod *)(*g_renderer2_state9 + 0x6c))(g_renderer2_state9);
+    }
+    puVar6 = auStack_6c;
+    for (iVar3 = 0x1b; iVar3 != 0; iVar3 = iVar3 + -1) {
+      *puVar6 = 0;
+      puVar6 = puVar6 + 1;
+    }
+    auStack_6c[0] = 0x6c;
+    if (g_renderer2_state9 != (int *)0x0) {
+      g_comret_0058c7dc = (*(MK4ComMethod *)(*g_renderer2_state9 + 100))(g_renderer2_state9,0,auStack_6c,0,0);
+    }
+    if (puStack_48 != (undefined4 *)0x0) {
+      param_1 = 0x100;
+      do {
+        if (g_renderer2_initVar == 0) {
+          puVar4 = param_2;
+          puVar6 = puStack_48;
+          for (iVar3 = 0x80; iVar3 != 0; iVar3 = iVar3 + -1) {
+            *puVar6 = *(undefined4 *)puVar4;
+            puVar4 = puVar4 + 2;
+            puVar6 = puVar6 + 1;
+          }
+        }
+        else {
+          iVar3 = 0x100;
+          puVar4 = param_2;
+          do {
+            uVar1 = *puVar4;
+            puVar4 = puVar4 + 1;
+            iVar3 = iVar3 + -1;
+            *(ushort *)((int)puStack_48 + (-2 - (int)param_2) + (int)puVar4) =
+                 (uVar1 & 0xffe0) << 1 | uVar1 & 0x3f;
+          } while (iVar3 != 0);
+        }
+        param_2 = param_2 + 0x100;
+        puStack_48 = (undefined4 *)((int)puStack_48 + iStack_5c);
+        param_1 = param_1 + -1;
+      } while (param_1 != 0);
+    }
+    if (g_renderer2_state9 != (int *)0x0) {
+      g_comret_0058c7dc = (*(MK4ComMethod *)(*g_renderer2_state9 + 0x80))(g_renderer2_state9,0);
+    }
+    if ((g_renderer2_var2 != 0) && (piVar2 = (int *)(&g_renderer2_buf3)[uVar5], piVar2 != (int *)0x0)) {
+      g_comret_0058c7dc = (*(MK4ComMethod *)(*piVar2 + 0x14))(piVar2,g_renderer2_var2);
+    }
+    if ((((&g_renderer2_buf2)[uVar5] != 0) && ((&g_renderer2_buf3)[uVar5] != 0)) &&
+       ((&g_renderer2_buf1)[uVar5] != 0)) {
+      return 1;
+    }
+  }
+  return 0;
+}
+#else
 __declspec(naked) void PadEnumDeviceRebind(void)
 {
     __asm {
@@ -274,3 +353,4 @@ __declspec(naked) void PadEnumDeviceRebind(void)
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-extracted during misc_matches reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 
 /* @addr 0x004c3eb0 (60b)
  *   if g_dsoundPrimary != 0:
@@ -13,6 +14,22 @@ extern void * g_dsoundPrimary;
 extern unsigned char g_audioChannelCount;
 extern short g_audioFrameTbl[];
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_TitleSetMaxVolume(byte param_1)
+
+{
+  if (g_dsoundPrimary != (int *)0x0) {
+    if (100 < param_1) {
+      param_1 = 100;
+    }
+    (*(MK4ComMethod *)(*g_dsoundPrimary + 0x3c))
+              (g_dsoundPrimary,(int)(short)(&g_audioFrameTbl)[(char)param_1 * 0xcc]);
+    g_audioChannelCount = param_1;
+  }
+  return;
+}
+#else
 __declspec(naked) void Helper_TitleSetMaxVolume(void) {
     __asm {
         mov     edx, dword ptr [g_dsoundPrimary]
@@ -42,4 +59,5 @@ __declspec(naked) void Helper_TitleSetMaxVolume(void) {
         ret
     }
 }
+#endif
 

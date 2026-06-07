@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004c4390 (133b platform.win32) - guarded second-init dispatch:
@@ -15,6 +16,33 @@ extern unsigned int g_audioVoiceQueue;
 extern unsigned int g_audioMute;
 extern u32 g_dsoundFieldE0;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_AudioStart(void)
+
+{
+  int iVar1;
+  short *psVar2;
+  
+  g_audioMute = '\0';
+  if (g_dsoundFieldE0 != 0) {
+    g_dsoundFieldE0 = 0;
+    psVar2 = &g_audioChannelQueue;
+    do {
+      if (*psVar2 != -1) {
+        iVar1 = (int)*psVar2;
+        if (((&g_audioChannelTable)[iVar1 * 7] != 0) && (g_audioMute == '\0')) {
+          (*(MK4ComMethod *)(*(int *)(&g_audioChannelTable)[(int)psVar2[1] + iVar1 * 7] + 0x30))
+                    ((int *)(&g_audioChannelTable)[(int)psVar2[1] + iVar1 * 7],0,0,
+                     (&g_flags_00f8fade)[iVar1 * 0x1c] & 1);
+        }
+      }
+      psVar2 = psVar2 + 2;
+    } while ((int)psVar2 < 0xf9ebc0);
+  }
+  return;
+}
+#else
 __declspec(naked) void Helper_AudioStart(void) {
     __asm {
         mov     eax, dword ptr [g_dsoundFieldE0]
@@ -65,4 +93,5 @@ loop4c4390:
         ret
     }
 }
+#endif
 

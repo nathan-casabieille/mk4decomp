@@ -8,6 +8,7 @@
  * the returned status byte and per-channel flags.
  */
 #include "audio/sound.h"
+#include "portable/ghidra_types.h"
 
 /*
  * @addr 0x004c37f0
@@ -19,6 +20,60 @@
  * the loop back-edge is a long jl that would force MSVC to lay
  * out the blocks differently from C source.
  */
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void __fastcall Audio_UpdateChannels(uint param_1)
+
+{
+  short sVar1;
+  byte bVar2;
+  int iVar3;
+  int iVar4;
+  short *psVar5;
+  uint local_4;
+  
+  psVar5 = &g_audioChannelQueue;
+  local_4 = param_1;
+  do {
+    sVar1 = *psVar5;
+    if (sVar1 != -1) {
+      iVar3 = (int)sVar1;
+      iVar4 = iVar3 * 0x1c;
+      if ((&g_audioChannelTable)[iVar3 * 7] == 0) {
+        *psVar5 = -1;
+      }
+      else {
+        (*(MK4ComMethod *)(*(int *)(&g_audioChannelTable)[iVar3 * 7 + (int)psVar5[1]] + 0x24))
+                  ((int *)(&g_audioChannelTable)[iVar3 * 7 + (int)psVar5[1]],&local_4);
+        if (((&g_flags_00f8fade)[iVar4] & 2) == 0) {
+LAB_004c3874:
+          bVar2 = (byte)local_4;
+          if (g_audioMute != '\0') goto LAB_004c38b7;
+        }
+        else if (((local_4 & 1) == 0) || (bVar2 = (byte)local_4, g_audioMute != '\0')) {
+          Helper_AudioStop(sVar1);
+          goto LAB_004c3874;
+        }
+        if (((bVar2 & 1) == 0) || ((bVar2 & 2) != 0)) {
+          (&g_flags_00f8fadf)[iVar4 + psVar5[1]] = 0;
+          *psVar5 = -1;
+          if ((bVar2 & 2) != 0) {
+            Helper_AudioStop(sVar1);
+            if (((&g_flags_00f8fade)[iVar4] & 2) == 0) {
+              Helper_AudioRelease(sVar1);
+            }
+          }
+        }
+      }
+    }
+LAB_004c38b7:
+    psVar5 = psVar5 + 2;
+    if (0xf9ebbf < (int)psVar5) {
+      return;
+    }
+  } while( true );
+}
+#else
 __declspec(naked) void Audio_UpdateChannels(void)
 {
     __asm {
@@ -109,3 +164,4 @@ next_chan_long:
         ret
     }
 }
+#endif

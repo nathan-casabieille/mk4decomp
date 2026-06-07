@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004af020 (263b engine.install) - DSound slot init: per-slot capture/buffer setup.
@@ -21,6 +22,64 @@ extern unsigned int g_iid;
 extern u8 g_renderer2_buf3[];
 extern u8 g_renderer2_buf2[];
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 R2_Init11(byte param_1)
+
+{
+  int *piVar1;
+  int *piVar2;
+  int *piVar3;
+  uint uVar4;
+  int iVar5;
+  undefined4 *puVar6;
+  undefined4 *puVar7;
+  bool bVar8;
+  undefined4 local_74;
+  undefined4 local_70;
+  undefined4 local_6c [27];
+  
+  piVar2 = g_comptr_0058c7ac;
+  if (param_1 < 0x10) {
+    uVar4 = (uint)param_1;
+    if ((&g_renderer2_buf1)[uVar4] != 0) {
+      return 1;
+    }
+    puVar6 = &g_installCountdownBase;
+    puVar7 = local_6c;
+    for (iVar5 = 0x1b; iVar5 != 0; iVar5 = iVar5 + -1) {
+      *puVar7 = *puVar6;
+      puVar6 = puVar6 + 1;
+      puVar7 = puVar7 + 1;
+    }
+    piVar1 = &g_renderer2_buf2 + uVar4;
+    bVar8 = g_comptr_0058c7ac != (int *)0x0;
+    *piVar1 = 0;
+    if (bVar8) {
+      g_comret_0058c7dc = (*(MK4ComMethod *)(*piVar2 + 0x18))(piVar2,local_6c,piVar1,0);
+    }
+    piVar2 = (int *)*piVar1;
+    local_74 = 0;
+    local_70 = 0;
+    if (piVar2 != (int *)0x0) {
+      g_comret_0058c7dc = (*(MK4ComMethod *)(*piVar2 + 0x74))(piVar2,8,&local_74);
+    }
+    puVar6 = (undefined4 *)*piVar1;
+    piVar2 = &g_renderer2_buf3 + uVar4;
+    *piVar2 = 0;
+    if (puVar6 != (undefined4 *)0x0) {
+      g_comret_0058c7dc = (*(MK4ComMethod *)*puVar6)(puVar6,&g_iid,piVar2);
+    }
+    if ((g_comptr_0058c7c0 != 0) && (piVar3 = (int *)*piVar2, piVar3 != (int *)0x0)) {
+      g_comret_0058c7dc = (*(MK4ComMethod *)(*piVar3 + 0xc))(piVar3,g_comptr_0058c7c0,&g_renderer2_buf1 + uVar4);
+    }
+    if (((*piVar1 != 0) && (*piVar2 != 0)) && ((&g_renderer2_buf1)[uVar4] != 0)) {
+      return 1;
+    }
+  }
+  return 0;
+}
+#else
 __declspec(naked) void R2_Init11(void) {
     __asm {
         mov     eax, [esp + 4]
@@ -124,4 +183,5 @@ __declspec(naked) void R2_Init11(void) {
         ret
     }
 }
+#endif
 

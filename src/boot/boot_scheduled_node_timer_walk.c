@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -111,6 +112,62 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave105;
 extern void NodeUnlink(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootScheduledNodeTimerWalk(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_extra_0052ab3c;
+  do {
+    while( true ) {
+      if (iVar2 == 0) {
+        g_framePauseFlag = 0;
+        return;
+      }
+      if (((g_gameMode == 0) || (g_gameMode == *(int *)(iVar2 + 0xd8))) ||
+         (*(int *)(iVar2 + 0xe0) == 0x11)) break;
+LAB_0041f6ef:
+      iVar2 = *(int *)(iVar2 + 0xe4);
+    }
+    *(short *)(iVar2 + 0xdc) = *(short *)(iVar2 + 0xdc) + -1;
+    if (*(short *)(iVar2 + 0xdc) < 1) {
+      g_baseSel = iVar2 >> 2;
+      g_eventQueueNotMask = MK4_NODE_AT(undefined4, g_baseSel, 0x14);
+      g_eventQueueChild = MK4_NODE_AT(undefined4, g_baseSel, 0x18);
+      g_cj_00542054 = MK4_NODE_AT(undefined4, g_baseSel, 0x24);
+      g_cj_00542058 = MK4_NODE_AT(undefined4, g_baseSel, 0x28);
+      g_walkCallback = MK4_NODE_AT(undefined4, g_baseSel, 8);
+      g_cj_0054205c = MK4_NODE_AT(undefined4, g_baseSel, 0x2c);
+      g_currentNodeFlags = MK4_NODE_AT(undefined4, g_baseSel, 0x1c);
+      g_xformScratch2088 = MK4_NODE_AT(undefined4, g_baseSel, 0x20);
+      *(undefined4 *)(iVar2 + 0xd8) = MK4_NODE_AT(undefined4, g_baseSel, 8);
+      g_framePauseFlag = 0;
+      g_dispatchSave105 = *(undefined4 *)(iVar2 + 0xd8);
+      (*(MK4ComMethod *)(iVar2 + 0xd8))();
+      if ((*(int *)(iVar2 + 0xd8) != -1) && (*(int *)(iVar2 + 0xd8) != 0)) {
+        *(undefined4 *)(iVar2 + 0xd8) = MK4_NODE_AT(undefined4, g_baseSel, 8);
+        iVar1 = g_baseSel * 4;
+        *(undefined4 *)(iVar1 + 0x14) = g_eventQueueNotMask;
+        *(undefined4 *)(iVar1 + 0x18) = g_eventQueueChild;
+        *(undefined4 *)(iVar1 + 0x1c) = g_currentNodeFlags;
+        *(undefined4 *)(iVar1 + 0x20) = g_xformScratch2088;
+        *(undefined4 *)(iVar1 + 0x10) = g_dualC;
+        *(undefined4 *)(iVar1 + 0x24) = g_cj_00542054;
+        *(undefined4 *)(iVar1 + 0x28) = g_cj_00542058;
+        *(undefined4 *)(iVar1 + 0x2c) = g_cj_0054205c;
+        *(undefined2 *)(iVar2 + 0xdc) = (undefined2)g_dualC;
+      }
+    }
+    if (*(int *)(iVar2 + 0xd8) != -1) goto LAB_0041f6ef;
+    iVar1 = *(int *)(iVar2 + 0xe4);
+    NodeUnlink(iVar2);
+    iVar2 = iVar1;
+  } while( true );
+}
+#else
 __declspec(naked) void BootScheduledNodeTimerWalk(void)
 {
     __asm
@@ -212,3 +269,4 @@ __declspec(naked) void BootScheduledNodeTimerWalk(void)
         ret
     }
 }
+#endif

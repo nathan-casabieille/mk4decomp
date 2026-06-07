@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /*
@@ -17,6 +18,46 @@ extern unsigned int g_renderer2SurfIface;
 extern unsigned int g_comptr_0058c7b4;
 extern int g_renderer2_present_rc;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+bool R2_Init6(void)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  undefined4 local_208 [9];
+  undefined4 local_1e4;
+  undefined4 local_1c4;
+  undefined1 auStack_1b4 [8];
+  undefined4 local_1ac [107];
+  
+  puVar2 = local_208;
+  for (iVar1 = 0x17; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar2 = 0;
+    puVar2 = puVar2 + 1;
+  }
+  puVar2 = local_1ac;
+  for (iVar1 = 0x6b; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar2 = 0;
+    puVar2 = puVar2 + 1;
+  }
+  local_208[0] = 0x5c;
+  local_208[1] = 0x1005;
+  local_208[3] = 2;
+  local_208[2] = 1;
+  local_1e4 = 0x38;
+  local_1c4 = 8;
+  local_1ac[0] = 0x1ac;
+  if (g_comptr_0058c7bc != (int *)0x0) {
+    g_comret_0058c7dc = (*(MK4ComMethod *)(*g_comptr_0058c7bc + 0x1c))(g_comptr_0058c7bc,local_208,local_1ac);
+    if (g_comptr_0058c7bc != (int *)0x0) {
+      g_comret_0058c7dc =
+           (*(MK4ComMethod *)(*g_comptr_0058c7bc + 0x20))(g_comptr_0058c7bc,auStack_1b4,g_comptr_0058c7b4,&g_comptr_0058c7c0);
+    }
+  }
+  return g_comptr_0058c7c0 != 0;
+}
+#else
 __declspec(naked) void R2_Init6(void)
 {
     __asm
@@ -70,4 +111,5 @@ __declspec(naked) void R2_Init6(void)
         ret
     }
 }
+#endif
 

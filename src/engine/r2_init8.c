@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004aec90 (274b engine.install) - DSound primary buffer + format callback pair.
@@ -21,6 +22,34 @@ extern unsigned int g_glideTileSize;
 extern unsigned int g_glideMipInit;
 extern unsigned int g_renderer2_obj;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 R2_Init8(void)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  
+  puVar2 = &g_installCountdownBase;
+  for (iVar1 = 0x1b; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar2 = 0;
+    puVar2 = puVar2 + 1;
+  }
+  if (g_comptr_0058c7c0 != (int *)0x0) {
+    (*(MK4ComMethod *)(*g_comptr_0058c7c0 + 0x24))(g_comptr_0058c7c0,0x4aed00,0);
+  }
+  if (g_dispatchInit1007 == 0) {
+    return 0;
+  }
+  g_installCountdownBase = 0x6c;
+  g_dispatchSave14 = 0x100;
+  g_dispatchSave15 = 0x100;
+  g_dispatchInit1007 = 0x1007;
+  g_glideMipInit = 0x4005000;
+  g_glideTileSize = 0x20;
+  return 1;
+}
+#else
 __declspec(naked) void R2_Init8(void) {
     __asm {
         push    edi
@@ -107,4 +136,5 @@ __declspec(naked) void R2_Init8(void) {
         ret     8
     }
 }
+#endif
 

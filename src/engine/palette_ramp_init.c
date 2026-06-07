@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,51 @@ extern unsigned int g_comptr_0058c7b8;
 extern int g_renderer2_present_rc;
 extern int g_renderer2_active;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void PaletteRampInit(uint param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 *puVar4;
+  undefined4 local_28 [7];
+  int local_c;
+  
+  if (g_renderer2_active != 0) {
+    if (100 < (int)((param_1 ^ (int)param_1 >> 0x1f) - ((int)param_1 >> 0x1f))) {
+      param_1 = 100;
+    }
+    puVar4 = local_28;
+    for (iVar1 = 10; iVar1 != 0; iVar1 = iVar1 + -1) {
+      *puVar4 = 0;
+      puVar4 = puVar4 + 1;
+    }
+    local_c = param_1 * 5;
+    local_28[0] = 0x28;
+    local_28[1] = 0x20;
+    if (g_comptr_0058c7b8 != (int *)0x0) {
+      g_comret_0058c7dc = (*(MK4ComMethod *)(*g_comptr_0058c7b8 + 0x10))(g_comptr_0058c7b8,local_28);
+    }
+    if (0x3c < (int)param_1) {
+      param_1 = 0x3c;
+    }
+    iVar1 = 0;
+    iVar3 = 0;
+    do {
+      iVar2 = iVar3 / 0x32;
+      if (0xfe < iVar2) {
+        iVar2 = 0xff;
+      }
+      (&g_palette)[iVar1] = (char)iVar2;
+      iVar1 = iVar1 + 1;
+      iVar3 = iVar3 + param_1;
+    } while (iVar1 < 0x100);
+  }
+  return;
+}
+#else
 __declspec(naked) void PaletteRampInit(void) {
     __asm {
         mov     eax, dword ptr [g_renderer2_active]
@@ -192,3 +238,4 @@ __declspec(naked) void PaletteRampInit(void) {
         ret
     }
 }
+#endif

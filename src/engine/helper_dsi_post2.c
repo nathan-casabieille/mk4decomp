@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /*
@@ -19,6 +20,27 @@ extern unsigned int g_dispatchSave1410;
 extern unsigned int g_dispatchSave1411;
 extern void * g_dsoundPrimary;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int Helper_DSI_post2(int param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_dispatchSave1410;
+  iVar2 = 0;
+  if (g_dsoundPrimary != (int *)0x0) {
+    g_wavFmtTag = 0x20001;
+    g_dispatchSave1410 = param_1;
+    g_dispatchSave1411 = param_1 * 4;
+    g_wavFmtBlockAlign = 0x100004;
+    (*(MK4ComMethod *)(*g_dsoundPrimary + 0x38))(g_dsoundPrimary,&g_wavFmtTag);
+    iVar2 = iVar1;
+  }
+  return iVar2;
+}
+#else
 __declspec(naked) void Helper_DSI_post2(void) {
     __asm {
         mov     eax, dword ptr [g_dsoundPrimary]
@@ -50,4 +72,5 @@ doneRet:
         ret
     }
 }
+#endif
 

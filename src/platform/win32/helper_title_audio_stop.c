@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004c42f0 (103b platform.win32) - 1-time init walking 16-slot table:
@@ -15,6 +16,30 @@ extern void Audio_UpdateChannels(void);
 
 extern unsigned int g_audioVoicePool;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_TitleAudioStop(void)
+
+{
+  short sVar1;
+  short *psVar2;
+  
+  if (g_dsoundFieldE0 == 0) {
+    g_dsoundFieldE0 = 1;
+    Audio_UpdateChannels();
+    psVar2 = &g_audioChannelQueue;
+    do {
+      sVar1 = *psVar2;
+      if ((sVar1 != -1) && ((&g_audioChannelTable)[sVar1 * 7] != 0)) {
+        (*(MK4ComMethod *)(*(int *)(&g_audioChannelTable)[sVar1 * 7 + (int)psVar2[1]] + 0x48))
+                  ((int *)(&g_audioChannelTable)[sVar1 * 7 + (int)psVar2[1]]);
+      }
+      psVar2 = psVar2 + 2;
+    } while ((int)psVar2 < 0xf9ebc0);
+  }
+  return;
+}
+#else
 __declspec(naked) void Helper_TitleAudioStop(void) {
     __asm {
         mov     eax, dword ptr [g_dsoundFieldE0]
@@ -53,4 +78,5 @@ loop4c42f0:
         ret
     }
 }
+#endif
 

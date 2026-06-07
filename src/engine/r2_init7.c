@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_comptr_0058c7bc;
@@ -10,6 +11,71 @@ extern unsigned int g_renderer2_state7;
 extern unsigned int g_renderer2_r7_data;
 extern int g_renderer2_present_rc;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 R2_Init7(void)
+
+{
+  int iVar1;
+  int *piVar2;
+  undefined4 *puVar3;
+  int local_80 [8];
+  undefined4 uStack_60;
+  undefined4 uStack_5c;
+  undefined4 uStack_58;
+  undefined4 uStack_54;
+  undefined4 auStack_50 [20];
+  
+  local_80[0] = 0;
+  if (g_comptr_0058c7bc != (int *)0x0) {
+    g_comret_0058c7dc = (*(MK4ComMethod *)(*g_comptr_0058c7bc + 0x18))(g_comptr_0058c7bc,&g_renderer2_state7,0);
+  }
+  if ((g_renderer2_state7 != (int *)0x0) && (g_comptr_0058c7c0 != (int *)0x0)) {
+    g_comret_0058c7dc = (*(MK4ComMethod *)(*g_comptr_0058c7c0 + 0x18))(g_comptr_0058c7c0,g_renderer2_state7);
+  }
+  piVar2 = local_80;
+  for (iVar1 = 0xb; piVar2 = (int *)((int)piVar2 + 4), iVar1 != 0; iVar1 = iVar1 + -1) {
+    *piVar2 = 0;
+  }
+  local_80[1] = 0x2c;
+  local_80[4] = 0x280;
+  local_80[5] = 0x1e0;
+  uStack_60 = 0x44200000;
+  uStack_5c = 0x43f00000;
+  uStack_58 = 0;
+  uStack_54 = 0x3f800000;
+  if (((g_renderer2_state7 != (int *)0x0) &&
+      (g_comret_0058c7dc = (*(MK4ComMethod *)(*g_renderer2_state7 + 0x44))(g_renderer2_state7,local_80 + 1),
+      g_renderer2_state7 != (int *)0x0)) && (g_comptr_0058c7c0 != (int *)0x0)) {
+    g_comret_0058c7dc = (*(MK4ComMethod *)(*g_comptr_0058c7c0 + 0x34))(g_comptr_0058c7c0,g_renderer2_state7);
+  }
+  if (g_comptr_0058c7bc != (int *)0x0) {
+    g_comret_0058c7dc = (*(MK4ComMethod *)(*g_comptr_0058c7bc + 0x14))(g_comptr_0058c7bc,&g_renderer2_r7_data,0);
+  }
+  puVar3 = auStack_50;
+  for (iVar1 = 0x14; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar3 = 0;
+    puVar3 = puVar3 + 1;
+  }
+  auStack_50[0] = 0x50;
+  if (g_renderer2_r7_data != (int *)0x0) {
+    g_comret_0058c7dc = (*(MK4ComMethod *)(*g_renderer2_r7_data + 0xc))(g_renderer2_r7_data,auStack_50);
+  }
+  if ((g_comptr_0058c7c0 != (int *)0x0) && (g_renderer2_r7_data != (int *)0x0)) {
+    g_comret_0058c7dc = (*(MK4ComMethod *)(*g_renderer2_r7_data + 0x14))(g_renderer2_r7_data,g_comptr_0058c7c0,local_80);
+  }
+  if (local_80[0] != 0) {
+    if (g_renderer2_state7 == (int *)0x0) {
+      return 0;
+    }
+    g_comret_0058c7dc = (*(MK4ComMethod *)(*g_renderer2_state7 + 0x20))(g_renderer2_state7,local_80[0]);
+  }
+  if (((g_renderer2_state7 != (int *)0x0) && (g_renderer2_r7_data != (int *)0x0)) && (local_80[0] != 0)) {
+    return 1;
+  }
+  return 0;
+}
+#else
 __declspec(naked) void R2_Init7(void)
 {
     __asm {
@@ -157,4 +223,5 @@ __declspec(naked) void R2_Init7(void)
         ret
     }
 }
+#endif
 

@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004c4110 (252b platform.win32) - DirectSound buffer create+release dispatcher.
@@ -21,6 +22,45 @@ extern unsigned int g_dispatchSave1419;
 extern unsigned int g_dispatchSave1420;
 extern unsigned int g_dispatchSave1421;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_DSI_post1(int param_1)
+
+{
+  int iVar1;
+  
+  if (g_dsoundPrimary != (int *)0x0) {
+    if (param_1 != 0) {
+      iVar1 = (*(MK4ComMethod *)(*g_dsoundPrimary + 0x14))(g_dsoundPrimary,&g_dispatchSave1414,0x400,0);
+      g_dispatchSave1421 = '\x01' - (iVar1 != 0);
+      iVar1 = (*(MK4ComMethod *)(*g_dsoundPrimary + 0x20))(g_dsoundPrimary,&g_dispatchSave1413);
+      g_dispatchSave1420 = '\x01' - (iVar1 != 0);
+      iVar1 = (*(MK4ComMethod *)(*g_dsoundPrimary + 0x1c))(g_dsoundPrimary,&g_dispatchSave1406);
+      g_dispatchSave1419 = '\x01' - (iVar1 != 0);
+      iVar1 = (*(MK4ComMethod *)(*g_dsoundPrimary + 0x18))(g_dsoundPrimary,&g_dispatchSave1409);
+      g_dispatchSave1418 = '\x01' - (iVar1 != 0);
+      return;
+    }
+    if (g_dispatchSave1421 != '\0') {
+      (*(MK4ComMethod *)(*g_dsoundPrimary + 0x38))(g_dsoundPrimary,&g_dispatchSave1414);
+    }
+    if (g_dispatchSave1420 != '\0') {
+      (*(MK4ComMethod *)(*g_dsoundPrimary + 0x44))(g_dsoundPrimary,g_dispatchSave1413);
+    }
+    if (g_dispatchSave1419 != '\0') {
+      (*(MK4ComMethod *)(*g_dsoundPrimary + 0x40))(g_dsoundPrimary,g_dispatchSave1406);
+    }
+    if (g_dispatchSave1418 != '\0') {
+      (*(MK4ComMethod *)(*g_dsoundPrimary + 0x3c))(g_dsoundPrimary,g_dispatchSave1409);
+    }
+    g_dispatchSave1421 = '\0';
+    g_dispatchSave1420 = '\0';
+    g_dispatchSave1419 = '\0';
+    g_dispatchSave1418 = '\0';
+  }
+  return;
+}
+#else
 __declspec(naked) void Helper_DSI_post1(void) {
     __asm {
         mov     eax, dword ptr [g_dsoundPrimary]
@@ -113,4 +153,5 @@ __declspec(naked) void Helper_DSI_post1(void) {
         ret
     }
 }
+#endif
 

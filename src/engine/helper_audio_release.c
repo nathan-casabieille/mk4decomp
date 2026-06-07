@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_dispatchSave569;
@@ -21,6 +22,131 @@ extern void Helper_Sprintf(void);
 
 extern unsigned int g_dispatchSave1407;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Helper_AudioRelease(uint param_1)
+
+{
+  int *piVar1;
+  int iVar2;
+  undefined4 uVar3;
+  int iVar4;
+  int iVar5;
+  int *piVar6;
+  ushort **ppuVar7;
+  int iVar8;
+  ushort *puStack_158;
+  ushort *puStack_154;
+  int *piStack_150;
+  ushort *puStack_14c;
+  undefined4 uStack_130;
+  int iStack_12c;
+  int iStack_128;
+  undefined4 uStack_124;
+  int iStack_120;
+  int aiStack_11c [4];
+  undefined4 uStack_10c;
+  undefined4 *puStack_108;
+  ushort auStack_104 [2];
+  ushort local_100 [128];
+  
+  if ((ushort)param_1 < 0x898) {
+    iVar2 = (int)(short)(ushort)param_1;
+    iVar5 = iVar2 * 0x1c;
+    if (((&g_flags_00f8fade)[iVar5] & 2) != 0) {
+      (&g_flags_00f8fade)[iVar5] = (&g_flags_00f8fade)[iVar5] & 0xfd;
+      return;
+    }
+    piVar1 = &g_audioChannelTable + iVar2 * 7;
+    if ((&g_audioChannelTable)[iVar2 * 7] == 0) {
+      piVar6 = piVar1;
+      for (iVar4 = 7; iVar4 != 0; iVar4 = iVar4 + -1) {
+        *piVar6 = 0;
+        piVar6 = piVar6 + 1;
+      }
+      if ((100 < g_dispatchSave1415) && (g_dispatchSave1415 = 0, g_dsoundContext != (ushort *)0x0)) {
+        puStack_14c = g_dsoundContext;
+        piStack_150 = (int *)0x4c351d;
+        (*(MK4ComMethod *)(*(int *)g_dsoundContext + 0x1c))();
+      }
+      puStack_14c = (ushort *)(param_1 & 0xffff);
+      puStack_154 = local_100;
+      piStack_150 = (int *)MK4_VA(char, 0x004ffd50);
+      puStack_158 = (ushort *)0x4c3533;
+      Helper_Sprintf();
+      puStack_14c = (ushort *)aiStack_11c;
+      piStack_150 = &iStack_120;
+      puStack_154 = auStack_104;
+      puStack_158 = local_100;
+      uVar3 = ESF_Open();
+      *(undefined4 *)(&g_obj_size + iVar5) = uVar3;
+      *(undefined2 *)(&g_dispatchSave1408 + iVar5) = 0;
+      iVar4 = 1;
+      (&g_flags_00f8fade)[iVar5] =
+           (aiStack_11c[0] != 0 ^ (&g_flags_00f8fade)[iVar5] & 0xf9) & 1 ^ (&g_flags_00f8fade)[iVar5] & 0xf9
+      ;
+      uStack_124 = CONCAT22(auStack_104[0],auStack_104[0] >> 3);
+      iStack_12c = iStack_120;
+      iStack_128 = iStack_120 * (uint)(auStack_104[0] >> 3);
+      aiStack_11c[3] = *(int *)(&g_obj_size + iVar5);
+      uStack_10c = 0;
+      puStack_108 = &uStack_130;
+      uStack_130 = 0x10001;
+      aiStack_11c[1] = 0x14;
+      aiStack_11c[2] = 0xe2;
+      if (g_dsoundContext != (ushort *)0x0) {
+        puStack_14c = (ushort *)0x0;
+        puStack_154 = (ushort *)(aiStack_11c + 1);
+        puStack_158 = g_dsoundContext;
+        piStack_150 = piVar1;
+        (*(MK4ComMethod *)(*(int *)g_dsoundContext + 0xc))();
+      }
+      piVar6 = (int *)*piVar1;
+      if (piVar6 != (int *)0x0) {
+        puStack_14c = (ushort *)0x0;
+        puStack_154 = (ushort *)0x4c362c;
+        piStack_150 = piVar6;
+        (*(MK4ComMethod *)(*piVar6 + 0x34))();
+        puStack_158 = (ushort *)*piVar1;
+        puStack_154 = (ushort *)0x0;
+        (*(MK4ComMethod *)(*(int *)puStack_158 + 0x44))();
+        (*(MK4ComMethod *)(*(int *)*piVar1 + 0x40))((int *)*piVar1,0);
+        (*(MK4ComMethod *)(*(int *)*piVar1 + 0x3c))((int *)*piVar1,0);
+        ppuVar7 = &puStack_158;
+        iVar8 = 0;
+        (*(MK4ComMethod *)(*(int *)*piVar1 + 0x2c))((int *)*piVar1,0,0,&puStack_154,ppuVar7,0,0,2);
+        if ((iVar8 != 0) && (*(ushort ***)(&g_obj_size + iVar5) <= ppuVar7)) {
+          ESF_ReadData(iVar8);
+        }
+        (*(MK4ComMethod *)(*(int *)*piVar1 + 0x4c))((int *)*piVar1,iVar8,ppuVar7,0,0);
+        piVar6 = &g_dispatchSave1407 + iVar2 * 7;
+        do {
+          piStack_150 = (int *)*piVar1;
+          puStack_154 = g_dsoundContext;
+          puStack_158 = (ushort *)0x4c36b6;
+          puStack_14c = (ushort *)piVar6;
+          (*(MK4ComMethod *)(*(int *)g_dsoundContext + 0x14))();
+          if (*piVar6 == 0) {
+            puStack_14c = (ushort *)param_1;
+            piStack_150 = (int *)0x4c36d3;
+            Helper_AudioStop();
+            break;
+          }
+          iVar4 = iVar4 + 1;
+          piVar6 = piVar6 + 1;
+        } while (iVar4 < 4);
+        if (*piVar1 != 0) {
+          g_dsoundFieldE4 = g_dsoundFieldE4 + *(int *)(&g_obj_size + iVar5);
+          g_dsoundFieldE8 = g_dsoundFieldE8 + 1;
+        }
+      }
+      puStack_14c = (ushort *)0x4c3700;
+      ESF_Close();
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Helper_AudioRelease(void)
 {
     __asm {
@@ -237,4 +363,5 @@ __declspec(naked) void Helper_AudioRelease(void)
         ret
     }
 }
+#endif
 

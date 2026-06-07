@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_renderer2_d3dInitByte;
@@ -20,6 +21,91 @@ extern int g_renderer2_active;
 extern int g_renderer2_surface;
 extern int g_renderer2_paused;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Renderer2_BeginFrame_D3D(int param_1)
+
+{
+  int *piVar1;
+  int iVar2;
+  int *piVar3;
+  undefined4 uStack_10;
+  undefined4 uStack_c;
+  undefined4 uStack_8;
+  undefined4 uStack_4;
+  
+  if (((g_renderer2_active != 0) && (g_renderer2_surface == 0)) && (g_renderer2_paused == 0)) {
+    if (g_comptr_0058c7b0 != (int *)0x0) {
+      iVar2 = (*(MK4ComMethod *)(*g_comptr_0058c7b0 + 0x60))(g_comptr_0058c7b0);
+      if (iVar2 == -0x7789fe3e) {
+        (*(MK4ComMethod *)(*g_comptr_0058c7b0 + 0x6c))(g_comptr_0058c7b0);
+      }
+    }
+    if (g_comptr_0058c7b4 != (int *)0x0) {
+      iVar2 = (*(MK4ComMethod *)(*g_comptr_0058c7b4 + 0x60))(g_comptr_0058c7b4);
+      if (iVar2 == -0x7789fe3e) {
+        (*(MK4ComMethod *)(*g_comptr_0058c7b4 + 0x6c))(g_comptr_0058c7b4);
+      }
+    }
+    piVar3 = &g_renderer2_buf2;
+    do {
+      piVar1 = (int *)*piVar3;
+      if (piVar1 != (int *)0x0) {
+        iVar2 = (*(MK4ComMethod *)(*piVar1 + 0x60))(piVar1);
+        if (iVar2 == -0x7789fe3e) {
+          (*(MK4ComMethod *)(*(int *)*piVar3 + 0x6c))((int *)*piVar3);
+        }
+      }
+      piVar3 = piVar3 + 1;
+    } while ((int)piVar3 < 0x58c760);
+    if (param_1 != 0) {
+      uStack_10 = 0;
+      uStack_c = 0;
+      uStack_8 = 0x280;
+      uStack_4 = 0x1e0;
+      if (g_renderer2_state7 != (int *)0x0) {
+        g_comret_0058c7dc = (*(MK4ComMethod *)(*g_renderer2_state7 + 0x30))(g_renderer2_state7,1,&uStack_10,1);
+      }
+    }
+    if (g_comptr_0058c7c0 != (int *)0x0) {
+      g_comret_0058c7dc = (*(MK4ComMethod *)(*g_comptr_0058c7c0 + 0x28))(g_comptr_0058c7c0);
+    }
+    g_renderer2_surface = 1;
+    g_renderer2_d3dInitByte = 0xff;
+    g_renderer2_d3dByte = 0;
+    if (g_comptr_0058c7c0 != (int *)0x0) {
+      g_comret_0058c7dc = (*(MK4ComMethod *)(*g_comptr_0058c7c0 + 0x5c))(g_comptr_0058c7c0,0x1f,1);
+      if (g_comptr_0058c7c0 != (int *)0x0) {
+        g_comret_0058c7dc =
+             (*(MK4ComMethod *)(*g_comptr_0058c7c0 + 0x5c))(g_comptr_0058c7c0,9,(g_dispatchSave829 != 0) + '\x01');
+        if (g_comptr_0058c7c0 != (int *)0x0) {
+          g_comret_0058c7dc = (*(MK4ComMethod *)(*g_comptr_0058c7c0 + 0x5c))(g_comptr_0058c7c0,0x1d,0);
+          if (g_comptr_0058c7c0 != (int *)0x0) {
+            g_comret_0058c7dc =
+                 (*(MK4ComMethod *)(*g_comptr_0058c7c0 + 0x5c))(g_comptr_0058c7c0,0x11,(g_dispatchSave555 != 0) + '\x01')
+            ;
+            if (g_comptr_0058c7c0 != (int *)0x0) {
+              g_comret_0058c7dc =
+                   (*(MK4ComMethod *)(*g_comptr_0058c7c0 + 0x5c))
+                             (g_comptr_0058c7c0,0x12,(g_dispatchSave555 != 0) + '\x01');
+              if (g_comptr_0058c7c0 != (int *)0x0) {
+                g_comret_0058c7dc = (*(MK4ComMethod *)(*g_comptr_0058c7c0 + 0x5c))(g_comptr_0058c7c0,0x1a,g_dispatchSave828);
+                if (g_comptr_0058c7c0 != (int *)0x0) {
+                  g_comret_0058c7dc = (*(MK4ComMethod *)(*g_comptr_0058c7c0 + 0x5c))(g_comptr_0058c7c0,0x29,1);
+                  if (g_comptr_0058c7c0 != (int *)0x0) {
+                    g_comret_0058c7dc = (*(MK4ComMethod *)(*g_comptr_0058c7c0 + 0x5c))(g_comptr_0058c7c0,0x1b,0);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Renderer2_BeginFrame_D3D(void)
 {
     __asm {
@@ -202,4 +288,5 @@ __declspec(naked) void Renderer2_BeginFrame_D3D(void)
         ret
     }
 }
+#endif
 

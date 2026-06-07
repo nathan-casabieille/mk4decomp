@@ -152,6 +152,13 @@ def postprocess(text, fn_by_va, gl_by_va):
     text = re.sub(r'\b[su]_\w+_([0-9a-fA-F]{8})\b',
                   lambda m: 'MK4_VA(char, 0x%s)' % m.group(1), text)
 
+    # COM vtable dispatch: Ghidra's `**(code **)(*iface + off)` lead-in is a
+    # double indirection through an interface's vtable. Retype it as a call
+    # through a __stdcall method pointer (see include/portable/com.h). Leaves
+    # the single-deref FSM form `*(code *)` (continuation address) untouched,
+    # so those still bail to Phase C.
+    text = re.sub(r'\*\*\(code \*\*\)', '*(MK4ComMethod *)', text)
+
     # packed-ptr node access -> seam (offset may be hex 0xN or decimal N)
     #   *(T *)(EXPR * 4 + N)
     text = re.sub(
