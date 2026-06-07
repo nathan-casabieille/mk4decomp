@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -132,6 +133,60 @@ extern void MStackPushNegMul10(void);
 extern void PushSetXfmMaskCallPop(void);
 extern void ScaledTripleCopy54(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackPush8SlotInitPop8(void)
+
+{
+  int iVar1;
+  
+  MStackPush8();
+  if (g_framePauseFlag == 0) {
+    g_cj_00542054 = g_cj_0054205c;
+    g_walkCallback = (code *)0x135e2a;
+    PushSetXfmMaskCallPop();
+    if (g_framePauseFlag == 0) {
+      if (((byte)g_xformDirtyFlags & 4) != 0) {
+LAB_0041516e:
+        g_baseSel = *(undefined4 *)((int)g_matrixStackTop * 4);
+        g_cj_0054205c = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+        g_cj_00542058 = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+        g_cj_00542054 = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
+        g_dualD = *(undefined4 *)((int)(g_matrixStackTop + -4) * 4);
+        g_dualC = *(undefined4 *)((int)(g_matrixStackTop + -5) * 4);
+        g_eventQueuePending = *(undefined4 *)((int)(g_matrixStackTop + -6) * 4);
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -7) * 4);
+        g_matrixStackTop = g_matrixStackTop + -8;
+        return;
+      }
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x30) = 0xa1;
+      g_walkCallback = *(code **)(g_cj_00542054 * 4 + 0x34);
+      *(code **)(g_cj_0054205c * 4 + 0x34) = g_walkCallback;
+      ScaledTripleCopy54();
+      if (g_framePauseFlag == 0) {
+        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x68) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x68);
+        g_walkCallback = (code *)0xfffffeb9;
+        MStackPushNegMul10();
+        iVar1 = g_cj_0054205c;
+        if (g_framePauseFlag == 0) {
+          *(code **)(g_cj_0054205c * 4 + 0x6c) = g_walkCallback;
+          MK4_NODE_AT(undefined4, iVar1, 0x74) = g_eventQueueCurrent;
+          g_eventQueuePending = *(int *)(MK4_NODE_AT(int, iVar1, 0x18) * 4 + 0x28);
+          MK4_NODE_AT(uint, g_eventQueuePending, 0) = MK4_NODE_AT(uint, g_eventQueuePending, 0) | 8;
+          MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48) = 0xe666;
+          MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0xff;
+          g_walkCallback = ClampMulShiftStore;
+          *(code **)(g_eventQueuePending * 4 + 0x10) = ClampMulShiftStore;
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+          MStackCall_MStackPush2ChainInsert_004065b0();
+          if (g_framePauseFlag == 0) goto LAB_0041516e;
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void MStackPush8SlotInitPop8(void) {
     __asm {
         call    MStackPush8
@@ -204,3 +259,4 @@ __declspec(naked) void MStackPush8SlotInitPop8(void) {
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -136,6 +137,49 @@ extern unsigned int g_dispatchVar9;
 extern unsigned int g_nodeUnlinkSlot;
 extern void ResetSceneCallbacks(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GlobalsResetInit(void)
+
+{
+  g_walkCallback = 0;
+  g_dispatchVar9 = 0;
+  g_dualC = GuardedSeq_ZeroTriple_then_PendingMatch;
+  g_eventQueueWorkType = 0x1000;
+  AllocNode();
+  if (g_framePauseFlag == 0) {
+    g_counter_0053a51c = 0;
+    g_dispatchSave108 = 0;
+    g_dispatchSave84 = 0;
+    g_player1NodeIdx = 0;
+    g_player2NodeIdx = 0;
+    g_phaseTimer = 0;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x537ef4)) = 0;
+    g_extra_00535e68 = 0;
+    g_extra_0053a280 = 0;
+    g_dispatchSave102 = 0;
+    g_dispatchVar38 = 0;
+    g_player1State = 0;
+    g_player2State = 0;
+    g_dst_0053a6e0 = 0;
+    g_dst_00537ea4 = 0;
+    g_dispatchSave91 = 0;
+    g_dispatchSave109 = 8;
+    g_walkCallback = 0xc;
+    g_pendingMatchAcc = 0xc;
+    ResetSceneCallbacks();
+    if (g_framePauseFlag == 0) {
+      g_walkCallback = 0;
+      g_nodeUnlinkSlot = 0;
+      g_dispatchSave94 = 0;
+      g_dispatchSave93 = 0;
+      g_distRefX = 0;
+      g_distRefZ = 0;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void GlobalsResetInit(void) {
     __asm {
         push    esi
@@ -186,3 +230,4 @@ __declspec(naked) void GlobalsResetInit(void) {
         ret
     }
 }
+#endif

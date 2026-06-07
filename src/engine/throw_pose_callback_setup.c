@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -117,6 +118,63 @@ extern void MStackPush3LinkedListWalk(void);
 extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 extern void ScaledOrStore_004903d0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ThrowPoseCallbackSetup(void)
+
+{
+  undefined4 uVar1;
+  
+  g_walkCallback = (code *)((int)g_walkCallback * 4);
+  g_eventQueuePending = *(int *)((int)(g_walkCallback + 0x13c4c0) * 4);
+  g_dualC = g_walkCallback + 0x13c4c1;
+  DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+  if (((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) &&
+     (MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(), g_framePauseFlag == 0)) {
+    g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_walkCallback = g_eventQueueCurrent;
+    if ((g_eventQueueCurrent != (code *)0x0) && (ScaledOrStore_004903d0(), g_framePauseFlag != 0)) {
+      return;
+    }
+    g_dualD = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18);
+    g_eventQueuePending = *(int *)((int)g_dualC * 4);
+    g_dualC = g_dualC + 1;
+    FramePauseScaledStore();
+    if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = 2;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0xfff70000;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34) = 0xd0000;
+      g_walkCallback = (code *)0x1999;
+      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x38) = 0x1999;
+      g_eventQueuePending = g_dualD;
+      MStackPush2ChainPrepend();
+      if (g_framePauseFlag == 0) {
+        g_walkCallback = *(code **)((int)g_dualC * 4);
+        g_dualC = g_dualC + 1;
+        uVar1 = Mul10Tail(g_eventQueueWorkType,g_walkCallback);
+        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54) = uVar1;
+        g_walkCallback = *(code **)((int)g_dualC * 4);
+        g_dualC = g_dualC + 1;
+        *(code **)(g_cj_0054205c * 4 + 0x58) = g_walkCallback;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+        MStackBracket4_ListInsertZeroFill();
+        if ((((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) &&
+            (MStackPush3LinkedListWalk(), g_framePauseFlag == 0)) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+          g_walkCallback = (code *)0x2;
+          ChainDirtyBitWalker();
+          if (g_framePauseFlag == 0) {
+            MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0x40;
+            g_walkCallback = ClampMulShiftStore;
+            *(code **)(g_eventQueuePending * 4 + 0x10) = ClampMulShiftStore;
+            g_eventQueuePending = g_cj_0054205c;
+          }
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void ThrowPoseCallbackSetup(void)
 {
     __asm {
@@ -237,3 +295,4 @@ __declspec(naked) void ThrowPoseCallbackSetup(void)
         ret
     }
 }
+#endif

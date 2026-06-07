@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,36 @@ extern void PushSetXfmMaskCallPop(void);
 extern void ScaledTripleCopy54(void);
 extern void ZeroAndDirty4(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413380(void)
+
+{
+  g_walkCallback = (code *)0x1359fe;
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_baseSel, 0x30);
+  if (g_eventQueueCurrent != 0) {
+    g_walkCallback = (code *)0x135a06;
+  }
+  PushSetXfmMaskCallPop();
+  if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+    g_walkCallback = (code *)(MK4_NODE_AT(uint, g_cj_00542054, 0x34) & 1 |
+                           MK4_NODE_AT(uint, g_cj_0054205c, 0x34));
+    *(code **)(g_cj_0054205c * 4 + 0x34) = g_walkCallback;
+    ScaledTripleCopy54();
+    if (g_framePauseFlag == 0) {
+      MK4_NODE_AT(int, g_cj_0054205c, 0x58) = MK4_NODE_AT(int, g_cj_0054205c, 0x58) + -0x1999;
+      g_eventQueuePending = *(int *)(MK4_NODE_AT(int, g_cj_0054205c, 0x18) * 4 + 0x28);
+      MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0xff;
+      g_walkCallback = ClampMulShiftStore;
+      *(code **)(g_eventQueuePending * 4 + 0x10) = ClampMulShiftStore;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+      MStackCall_MStackPush2ChainPrepend_00406600();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413380(void)
 {
     __asm
@@ -240,7 +271,45 @@ __declspec(naked) void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413380(voi
         ret
     }
 }
+#endif
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413580(void)
+
+{
+  g_walkCallback = (code *)0x135a02;
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_baseSel, 0x30);
+  if (g_eventQueueCurrent != 0) {
+    g_walkCallback = (code *)0x135a0a;
+  }
+  PushSetXfmMaskCallPop();
+  if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
+    g_walkCallback = (code *)(MK4_NODE_AT(uint, g_cj_00542054, 0x34) & 1 |
+                           MK4_NODE_AT(uint, g_cj_0054205c, 0x34));
+    *(code **)(g_cj_0054205c * 4 + 0x34) = g_walkCallback;
+    ScaledTripleCopy54();
+    if (g_framePauseFlag == 0) {
+      MK4_NODE_AT(int, g_cj_0054205c, 0x58) = MK4_NODE_AT(int, g_cj_0054205c, 0x58) + -0x1999;
+      g_eventQueuePending = *(int *)(MK4_NODE_AT(int, g_cj_0054205c, 0x18) * 4 + 0x28);
+      MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0xff;
+      g_walkCallback = ClampMulShiftStore;
+      *(code **)(g_eventQueuePending * 4 + 0x10) = ClampMulShiftStore;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+      g_matrixStackTop = g_matrixStackTop + 1;
+      *(int *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+      g_eventQueuePending = g_bootChainScaled2;
+      MStackPush2ChainPrepend();
+      if (g_framePauseFlag == 0) {
+        g_eventQueuePending = *(undefined4 *)((int)g_matrixStackTop * 4);
+        g_matrixStackTop = g_matrixStackTop + -1;
+      }
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413580(void)
 {
     __asm
@@ -361,3 +430,4 @@ __declspec(naked) void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413580(voi
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -118,6 +119,54 @@ extern unsigned int g_tickFlagF;
 extern void CmpEax1OrSetDirty(void);
 extern void SwapOrPassSet(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void DualCondMatchSet(void)
+
+{
+  g_walkCallback = g_tickFlagF;
+  if ((g_tickFlagF != 2) && (g_walkCallback = g_audioBankSel, g_audioBankSel != 0)) {
+    SwapOrPassSet();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    if (g_cj_0054205c != g_dualC) {
+      if (g_walkCallback == 1) {
+        g_xformDirtyFlags = g_xformDirtyFlags | 1;
+        return;
+      }
+      g_walkCallback = g_audioBank2State;
+      if (g_audioBank2State == 0) {
+        g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+        return;
+      }
+      g_xformDirtyFlags = g_xformDirtyFlags | 1;
+      return;
+    }
+    g_walkCallback = 0x1000;
+    SetJmp_Thunk_LinkedListBitMaskSearch();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+    if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
+      g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+      if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) {
+        g_xformDirtyFlags = g_xformDirtyFlags | 1;
+        return;
+      }
+      g_eventQueuePending = *(code **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 8);
+      g_dualC = InstallSelfStackReset;
+      if (g_eventQueuePending == InstallSelfStackReset) goto LAB_00488e83;
+    }
+    g_xformDirtyFlags = g_xformDirtyFlags | 1;
+    return;
+  }
+LAB_00488e83:
+  g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
+  return;
+}
+#else
 __declspec(naked) void DualCondMatchSet(void) {
     __asm {
         mov     eax, dword ptr [g_tickFlagF]
@@ -193,3 +242,4 @@ __declspec(naked) void DualCondMatchSet(void) {
         ret
     }
 }
+#endif

@@ -79,6 +79,20 @@ def has_bail(c):
 CC = 'i686-w64-mingw32-gcc'
 
 
+_FN_NAMES = None
+
+
+def _fn_names():
+    """Set of all our function names (from the symbol maps), cached. Lets the
+    gate extern functions used as *values* (function pointers, e.g.
+    `g_dispatch = SomeFn;`), which the call-only `Name(` scan below misses."""
+    global _FN_NAMES
+    if _FN_NAMES is None:
+        fn_by_va, _ = gp.load_maps()
+        _FN_NAMES = set(fn_by_va.values())
+    return _FN_NAMES
+
+
 def compile_ok(twin, name):
     """Isolation syntax-check: a clean twin must compile with permissive
     externs for the globals/functions it references. Guards against shapes
@@ -87,7 +101,13 @@ def compile_ok(twin, name):
     # Don't emit a bogus `extern int F();` for things that are actually
     # macros from ghidra_types.h (CONCAT<a><b> bit-concat) - a function-style
     # extern of a 2-arg macro fails to preprocess ("requires 2 arguments").
-    calls = [f for f in sorted(set(re.findall(r'\b([A-Z]\w+)\s*\(', twin)) - {name})
+    calls = set(re.findall(r'\b([A-Z]\w+)\s*\(', twin)) - {name}
+    # Also extern any known function name used as a bare value (taken as a
+    # function pointer): `g_x = SomeFn;`. Portable - a fn pointer is just a
+    # table index under WASM/clang.
+    calls |= ({t for t in re.findall(r'\b([A-Za-z_]\w*)\b', twin) if t in _fn_names()}
+              - {name})
+    calls = [f for f in sorted(calls)
              if not f.startswith('MK4_') and not re.match(r'CONCAT\d\d$', f)]
     # MK4_WIN32_SHIM activates win32_types.h's portable Win32 typedefs here
     # without pulling in the real <windows.h> (whose API prototypes would

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,89 @@ extern void SetJmp_ZeroAndDirty4(void);
 extern void SetJmp_BootStateTriple(void);
 extern void ThreeChanPackClamp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase1ChainExtendedInitLoop2(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  ThreeChanPackClamp(0x2010);
+  CopyThreeFields(g_cj_0054205c);
+  SetJmp_ZeroAndDirty4();
+  if (((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) != 0)) && (MStackPush8(), g_framePauseFlag == 0)) {
+    g_cj_00542058 = g_cj_0054205c;
+    g_walkCallback = 0x1357e8;
+    PushSetXfmMaskCallPop();
+    if (g_framePauseFlag == 0) {
+      if ((g_xformDirtyFlags & 4) == 0) {
+        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x30) = 0x42;
+        g_walkCallback = 0x60000;
+        AudioMixerStep();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        MK4_NODE_AT(int, g_cj_0054205c, 0x68) = g_walkCallback;
+        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x80) = 0x1999;
+        g_walkCallback = 0x41;
+        MStackPushNegMul10();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        iVar2 = g_cj_00542058 * 4;
+        iVar1 = g_cj_0054205c * 4;
+        *(int *)(iVar1 + 0x6c) = g_walkCallback;
+        *(int *)(iVar1 + 0x74) = g_eventQueueCurrent;
+        *(int *)(iVar1 + 0x54) = g_walkCallback * 0x78 + *(int *)(iVar2 + 0x54);
+        g_eventQueueCurrent = g_eventQueueCurrent * 0x78 + *(int *)(iVar2 + 0x5c);
+        *(int *)(iVar1 + 0x5c) = g_eventQueueCurrent;
+        g_walkCallback = *(int *)(iVar2 + 0x58) + -0x3333;
+        *(int *)(iVar1 + 0x58) = g_walkCallback;
+        SetJmp_BootStateTriple();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        MK4_NODE_AT(uint, g_eventQueuePending, 0) = MK4_NODE_AT(uint, g_eventQueuePending, 0) | 8;
+        MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48) = 0xa666;
+        MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0xff;
+        *(code **)(g_eventQueuePending * 4 + 0x10) = ClampMulShiftStore;
+        *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) | 0x4000;
+        g_walkCallback = 1;
+        CmpDivJmp();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+        if ((g_xformDirtyFlags & 4) == 0) {
+          g_eventQueueCurrent = 0;
+          g_eventQueueWorkType = 0;
+          do {
+            g_walkCallback = 0xfffe8000;
+            iVar1 = Mul10Tail(MK4_NODE_AT(undefined4, g_cj_00542058, 0x6c),0xfffe8000);
+            g_eventQueueCurrent = g_eventQueueCurrent + iVar1;
+            g_walkCallback = 0xfffe8000;
+            g_walkCallback = Mul10Tail(MK4_NODE_AT(undefined4, g_cj_00542058, 0x74),0xfffe8000);
+            g_eventQueueWorkType = g_eventQueueWorkType + g_walkCallback;
+            *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4) = g_eventQueueCurrent;
+            *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc) = g_eventQueueWorkType;
+            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+            g_xformDirtyFlags = g_xformDirtyFlags | 4;
+            if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) break;
+            g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+          } while ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0);
+        }
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+        MStackCall_MStackPush2ChainPrepend_00406600();
+        if (g_framePauseFlag != 0) {
+          return;
+        }
+      }
+      MStackPop8();
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void Phase1ChainExtendedInitLoop2(void)
 {
     __asm {
@@ -289,3 +373,4 @@ __declspec(naked) void Phase1ChainExtendedInitLoop2(void)
         ret
     }
 }
+#endif

@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,101 @@ extern void ScaledZero44(void);
 extern void TableLookupCall_g_eventTbl_112(void);
 extern void TwoPhaseInstallScaledPackedPtr(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void RunCluster(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_walkCallback = 0x4000;
+  EsiEdiAliasDualMul10();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  ScaledZero44();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  CopyJmp_SlotCmp3way_g_currentNodeIdx();
+  if (g_framePauseFlag != 0) {
+    return;
+  }
+  g_walkCallback = 0x28f;
+  g_eventQueueCurrent = 0;
+  if (((byte)g_xformDirtyFlags & 1) != 0) {
+    iVar2 = g_baseSel * 4;
+    iVar1 = MK4_NODE_AT(int, g_baseSel, 0x84);
+    *(undefined4 *)(iVar2 + 0x84) = 0;
+    if (iVar1 == 0) {
+      MK4_NODE_AT(int, g_cj_0054205c, 0x4c) = g_walkCallback;
+      g_walkCallback = 0x1005;
+      MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x1005;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x70) = g_eventQueueCurrent;
+      DualCallPauseDirtyJmp_00490c30();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      g_cj_00542058 = 0x14031d;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x24) = 0x14031d;
+      MK4_NODE_AT(undefined4, g_cj_0054205c, 0x28) = 7;
+    }
+    else {
+      if (iVar1 != 1) {
+        FiveCallGuardSetTail();
+        return;
+      }
+      CopyJmp_SlotCmp3way_g_currentNodeIdx();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      if (((byte)g_xformDirtyFlags & 1) == 0) {
+        g_walkCallback = 0x12;
+        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x28) = 0x12;
+        g_cj_00542058 = 0x14031d;
+        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x24) = 0x14031d;
+        *(code **)(iVar2 + 8) = TwoPhaseInstallScaledPackedPtr;
+        MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
+        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x2480d50;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+        *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+        ScaledLoadJmp_00428d20();
+        g_framePauseFlag = 1;
+        return;
+      }
+    }
+    g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x28);
+    if ((g_walkCallback < 0x12) && (CallDualStoreXorBit(), g_framePauseFlag != 0)) {
+      return;
+    }
+    *(code **)(iVar2 + 8) = TwoPhaseInstallScaledPackedPtr;
+    *(undefined4 *)(iVar2 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+    return;
+  }
+  g_walkCallback = 0x200b;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x200b;
+  ScaledMove48to58();
+  if ((((g_framePauseFlag == 0) && (iVar2 = DualGatedStateYield(), iVar2 == 0)) &&
+      (SlotPhaseResetInstallChain(), g_framePauseFlag == 0)) && (DirtyToggleByGate(), g_framePauseFlag == 0)) {
+    if ((((byte)g_xformDirtyFlags & 4) != 0) && (DualScaledInitClear(), g_framePauseFlag != 0)) {
+      return;
+    }
+    StateDispatchTable();
+    if (g_framePauseFlag == 0) {
+      g_xformScratch2088 = 0x3333;
+      g_cj_00542054 = g_walkCallback;
+      BitGateInstallChainJmp();
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void RunCluster(void)
 {
     __asm {
@@ -317,3 +413,4 @@ __declspec(naked) void RunCluster(void)
         ret
     }
 }
+#endif
