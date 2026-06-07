@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,29 @@ extern unsigned int g_dbl;
 extern void Fpclass(void);
 extern void RoundDouble(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+undefined4 FPIntegerTest(double param_1)
+
+{
+  uint uVar1;
+  float10 fVar2;
+  
+  uVar1 = Fpclass((*(unsigned int *)((char *)&param_1 + 0)),(*(unsigned int *)((char *)&param_1 + 4)));
+  if ((uVar1 & 0x90) == 0) {
+    fVar2 = (float10)RoundDouble((*(unsigned int *)((char *)&param_1 + 0)),(*(unsigned int *)((char *)&param_1 + 4)));
+    if ((double)fVar2 == param_1) {
+      param_1 = param_1 / g_dbl;
+      fVar2 = (float10)RoundDouble(param_1);
+      if (fVar2 == (float10)param_1) {
+        return 2;
+      }
+      return 1;
+    }
+  }
+  return 0;
+}
+#else
 __declspec(naked) void FPIntegerTest(void) {
     __asm {
         sub     esp, 8
@@ -175,3 +199,4 @@ zeroRet:
         ret
     }
 }
+#endif

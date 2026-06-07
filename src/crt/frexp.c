@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,58 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_crtMemMoveVar;
 extern void PackDoubleFromInts(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+float10 Frexp(uint param_1,uint param_2,int *param_3)
+
+{
+  ushort uVar1;
+  double dVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  float10 fVar6;
+  
+  if ((double)CONCAT17((*(unsigned char *)((char *)&param_2 + 3)),CONCAT16((*(unsigned char *)((char *)&param_2 + 2)),CONCAT24((undefined2)param_2,param_1)))
+      == g_crtMemMoveVar) {
+    *param_3 = 0;
+    return (float10)0.0;
+  }
+  if (((param_2 & 0x7ff00000) == 0) && (((param_2 & 0xfffff) != 0 || (param_1 != 0)))) {
+    dVar2 = (double)CONCAT17((*(unsigned char *)((char *)&param_2 + 3)),
+                             CONCAT16((*(unsigned char *)((char *)&param_2 + 2)),CONCAT24((undefined2)param_2,param_1)));
+    iVar5 = -0x3fd;
+    uVar4 = param_2;
+    uVar3 = param_2;
+    while ((uVar3 & 0x100000) == 0) {
+      uVar3 = uVar4 << 1;
+      (*(unsigned short *)((char *)&param_2 + 0)) = (undefined2)uVar3;
+      (*(unsigned char *)((char *)&param_2 + 2)) = (undefined1)(uVar3 >> 0x10);
+      (*(unsigned char *)((char *)&param_2 + 3)) = (byte)(uVar3 >> 0x18);
+      uVar4 = uVar3;
+      if ((param_1 & 0x80000000) != 0) {
+        uVar4 = uVar3 | 1;
+        (*(unsigned short *)((char *)&param_2 + 0)) = (undefined2)uVar4;
+      }
+      param_1 = param_1 << 1;
+      iVar5 = iVar5 + -1;
+    }
+    uVar1 = CONCAT11((*(unsigned char *)((char *)&param_2 + 3)),(*(unsigned char *)((char *)&param_2 + 2))) & 0xffef;
+    (*(unsigned char *)((char *)&param_2 + 2)) = (undefined1)uVar1;
+    (*(unsigned char *)((char *)&param_2 + 3)) = (byte)(uVar1 >> 8);
+    if (dVar2 < g_crtMemMoveVar) {
+      (*(unsigned char *)((char *)&param_2 + 3)) = (*(unsigned char *)((char *)&param_2 + 3)) | 0x80;
+    }
+    fVar6 = (float10)PackDoubleFromInts(param_1,CONCAT13((*(unsigned char *)((char *)&param_2 + 3)),
+                                                   CONCAT12((*(unsigned char *)((char *)&param_2 + 2)),(undefined2)param_2)),0);
+    *param_3 = iVar5;
+    return (float10)(double)fVar6;
+  }
+  fVar6 = (float10)PackDoubleFromInts(param_1,param_2,0);
+  *param_3 = (short)((ushort)(param_2 >> 0x14) & 0x7ff) + -0x3fe;
+  return (float10)(double)fVar6;
+}
+#else
 __declspec(naked) void Frexp(void) {
     __asm {
         fld     qword ptr [esp + 4]
@@ -224,3 +277,4 @@ __declspec(naked) void Frexp(void) {
         ret
     }
 }
+#endif

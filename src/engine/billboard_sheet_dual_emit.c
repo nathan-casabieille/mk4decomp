@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -143,6 +144,206 @@ extern void MaxOfThree(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void BillboardSheetDualEmit(int param_1,int param_2)
+
+{
+  int iVar1;
+  short sVar2;
+  short sVar3;
+  bool bVar4;
+  int iVar5;
+  int iVar6;
+  ushort uVar7;
+  ushort uVar8;
+  short sVar9;
+  uint uVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  int iVar14;
+  int iVar15;
+  undefined4 uVar16;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  char local_34;
+  char local_33;
+  char local_32;
+  char local_31;
+  char local_30;
+  char local_2f;
+  short local_2e;
+  ushort local_2c;
+  uint local_26;
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  char local_14;
+  char local_13;
+  char local_12;
+  char local_11;
+  char local_10;
+  char local_f;
+  short local_e;
+  ushort local_c;
+  undefined4 local_6;
+  
+  if (g_inLoopStep != 0) {
+    return;
+  }
+  if (g_dispatchSave1576 < 0x10) {
+    uVar10 = 0;
+  }
+  else {
+    uVar10 = ((int)(g_dispatchSave1576 + (g_dispatchSave1576 >> 0x1f & 7U)) >> 3) - 1;
+  }
+  local_2c = (ushort)uVar10 | (ushort)((uVar10 << 5 | uVar10) << 5);
+  g_vtxTransZ = g_dispatchSave1503 >> 7;
+  if (((byte)g_cj_0054205c & 0x60) == 0) {
+    g_vtxTransX = g_dispatchSave1501 >> 7;
+    g_vtxTransY = g_dispatchSave1502 >> 7;
+  }
+  else {
+    g_vtxTransX = g_dispatchSave1501 >> 0x10;
+    g_vtxTransY = g_dispatchSave1502 >> 0x10;
+  }
+  sVar2 = *(short *)(param_1 + 10);
+  iVar1 = *(int *)(*(int *)(g_eventQueuePending + 4) + 4) + 8 + *(int *)(g_eventQueuePending + 4);
+  uVar7 = (short)(char)((&g_dispatchSave531)[*(byte *)(param_1 + 1) & 3] & 3) << 7;
+  sVar3 = *(short *)(param_1 + 8);
+  uVar16 = CONCAT22((short)((uint)iVar1 >> 0x10),sVar3);
+  uVar8 = uVar7 ^ *(byte *)(iVar1 + 2 + (uint)*(byte *)(param_1 + 2) * 4) & 0xf;
+  local_6 = CONCAT22((*(unsigned short *)((char *)&local_6 + 2)),uVar8);
+  local_34 = *(char *)(param_1 + 0xc);
+  local_26 = CONCAT22((*(unsigned short *)((char *)&local_26 + 2)),uVar7 ^ uVar8 & 0xf);
+  local_33 = *(char *)(param_1 + 0xd);
+  local_2f = *(char *)(param_1 + 0xf) + local_33;
+  local_32 = *(char *)(param_1 + 0xe) + local_34;
+  g_vtxIn2_y = 0;
+  g_vtxIn2_x = sVar3 + *(short *)(param_1 + 4);
+  g_vtxIn2_z = 0;
+  g_triStripX0 = sVar3 + *(short *)(param_1 + 4);
+  g_triStripX1 = sVar2 + *(short *)(param_1 + 6);
+  g_triStripX2 = 0;
+  g_dispatchSave1626 = sVar3;
+  g_vtxIn1_y = sVar2;
+  g_vtxIn1_z = sVar2;
+  local_31 = local_33;
+  local_30 = local_32;
+  local_14 = local_34;
+  local_13 = local_33;
+  local_12 = local_32;
+  local_11 = local_2f;
+  local_10 = local_34;
+  local_f = local_2f;
+  local_c = local_2c;
+  ProjectTwoVertices();
+  local_2e = g_tickCurMask;
+  if (g_tickCurMask == 0) {
+    sVar9 = MaxOfThree();
+    local_2e = sVar9 / 2 + (short)(g_dispatchSave1559 << 5);
+  }
+  local_e = local_2e;
+  if ((g_currentNodeFlags & 0x40) == 0) {
+    local_40 = g_triStripRingA;
+    local_3c = g_vtxScreenP2X;
+    bVar4 = ((int)(*(unsigned short *)((char *)&g_vtxScreenX + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+            ((int)(short)g_vtxScreenP2X - (int)(short)g_triStripRingA) -
+            ((int)(*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+            ((int)(short)g_vtxScreenX - (int)(short)g_triStripRingA) < 1;
+    g_vtxValid = (uint)bVar4;
+    local_38 = g_vtxScreenX;
+    local_26 = CONCAT22((*(unsigned short *)((char *)&local_26 + 2)),(ushort)local_26 & 0xfbff | (ushort)bVar4 << 10);
+    if (((0 < g_min_007af984) && (0 < g_min_007af988)) && (0 < g_min_007af98c)) {
+      CopyArgs16ToGlobals(uVar16,sVar2 + *(short *)(param_1 + 6),0);
+      ProjectVertex();
+      local_20 = g_triStripRingA;
+      local_1c = g_vtxScreenP2X;
+      bVar4 = ((int)(*(unsigned short *)((char *)&g_vtxScreenX + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+              ((int)(short)g_vtxScreenP2X - (int)(short)g_triStripRingA) -
+              ((int)(*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+              ((int)(short)g_vtxScreenX - (int)(short)g_triStripRingA) < 1;
+      g_vtxValid = (uint)bVar4;
+      local_18 = g_vtxScreenX;
+      local_6 = CONCAT22((*(unsigned short *)((char *)&local_6 + 2)),(ushort)local_6 & 0xfbff | (ushort)bVar4 << 10);
+      if (((0 < g_min_007af984) && (0 < g_min_007af988)) && (0 < g_min_007af98c)) {
+        if (((*(unsigned short *)((char *)&local_40 + 2)) == (*(unsigned short *)((char *)&local_3c + 2))) && ((short)local_40 == (short)g_vtxScreenX)) {
+          if (((short)local_38 == (short)local_3c) && ((*(unsigned short *)((char *)&local_38 + 2)) == (*(unsigned short *)((char *)&g_vtxScreenX + 2)))) {
+            local_26 = local_26 | 0x20;
+            Helper_DrawCursor(&local_40);
+            local_26 = local_26 & 0xffffffdf;
+            goto LAB_004bc15a;
+          }
+        }
+        Helper_DrawCursor(&local_40);
+        Helper_DrawCursor(&local_20);
+      }
+    }
+  }
+LAB_004bc15a:
+  iVar6 = g_vtxTransZ;
+  iVar5 = g_vtxTransY;
+  iVar1 = g_vtxTransX;
+  for ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x2c); (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0;
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4)) {
+    iVar13 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4) >> 7;
+    iVar11 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 8) >> 7;
+    iVar12 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc) >> 7;
+    iVar14 = iVar11;
+    iVar15 = iVar13;
+    if ((g_currentNodeFlags & 0x4000) == 0) {
+      iVar15 = MK4_NODE_AT(short, param_2, 2) * iVar11 + MK4_NODE_AT(short, param_2, 0) * iVar13 +
+               MK4_NODE_AT(short, param_2, 4) * iVar12 >> 0xc;
+      iVar14 = MK4_NODE_AT(short, param_2, 6) * iVar13 + MK4_NODE_AT(short, param_2, 10) * iVar12 +
+               MK4_NODE_AT(short, param_2, 8) * iVar11 >> 0xc;
+      iVar12 = MK4_NODE_AT(short, param_2, 0xe) * iVar11 + MK4_NODE_AT(short, param_2, 0xc) * iVar13 +
+               MK4_NODE_AT(short, param_2, 0x10) * iVar12 >> 0xc;
+    }
+    g_vtxTransX = iVar15 + iVar1;
+    g_vtxTransY = iVar14 + iVar5;
+    g_vtxTransZ = iVar12 + iVar6;
+    g_vtxIn2_y = 0;
+    g_vtxIn2_x = sVar3 + *(short *)(param_1 + 4);
+    g_vtxIn2_z = 0;
+    g_triStripX0 = sVar3 + *(short *)(param_1 + 4);
+    g_triStripX1 = sVar2 + *(short *)(param_1 + 6);
+    g_triStripX2 = 0;
+    g_dispatchSave1626 = sVar3;
+    g_vtxIn1_y = sVar2;
+    g_vtxIn1_z = sVar2;
+    ProjectTwoVertices();
+    local_40 = g_triStripRingA;
+    local_3c = g_vtxScreenP2X;
+    bVar4 = ((int)(*(unsigned short *)((char *)&g_vtxScreenX + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+            ((int)(short)g_vtxScreenP2X - (int)(short)g_triStripRingA) -
+            ((int)(*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+            ((int)(short)g_vtxScreenX - (int)(short)g_triStripRingA) < 1;
+    g_vtxValid = (uint)bVar4;
+    local_38 = g_vtxScreenX;
+    local_26 = CONCAT22((*(unsigned short *)((char *)&local_26 + 2)),(ushort)local_26 & 0xfbff | (ushort)bVar4 << 10);
+    if (((0 < g_min_007af984) && (0 < g_min_007af988)) && (0 < g_min_007af98c)) {
+      Helper_DrawCursor(&local_40);
+    }
+    CopyArgs16ToGlobals(uVar16,sVar2 + *(short *)(param_1 + 6),0);
+    ProjectVertex();
+    local_20 = g_triStripRingA;
+    local_1c = g_vtxScreenP2X;
+    bVar4 = ((int)(*(unsigned short *)((char *)&g_vtxScreenX + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+            ((int)(short)g_vtxScreenP2X - (int)(short)g_triStripRingA) -
+            ((int)(*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+            ((int)(short)g_vtxScreenX - (int)(short)g_triStripRingA) < 1;
+    g_vtxValid = (uint)bVar4;
+    local_18 = g_vtxScreenX;
+    local_6 = CONCAT22((*(unsigned short *)((char *)&local_6 + 2)),(ushort)local_6 & 0xfbff | (ushort)bVar4 << 10);
+    if (((0 < g_min_007af984) && (0 < g_min_007af988)) && (0 < g_min_007af98c)) {
+      Helper_DrawCursor(&local_20);
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void BillboardSheetDualEmit(void)
 {
     __asm {
@@ -596,3 +797,4 @@ __declspec(naked) void BillboardSheetDualEmit(void)
         ret
     }
 }
+#endif

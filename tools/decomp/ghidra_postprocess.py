@@ -166,6 +166,22 @@ def postprocess(text, fn_by_va, gl_by_va):
     # so those still bail to Phase C.
     text = re.sub(r'\*\*\(code \*\*\)', '*(MK4ComMethod *)', text)
 
+    # Ghidra sub-field notation `lvalue._<off>_<size>_` = access <size> bytes
+    # at byte offset <off> of an identifier (a partial register/global access,
+    # e.g. writing the low 2 bytes of a 4-byte global). Rewrite to a typed
+    # access at that offset - behavior-faithful (same bytes, little-endian).
+    # Sizes 1/2/4 only; a 3-byte access has no scalar type, so leave it to
+    # bail. Identifier base only (complex bases stay as-is and bail).
+    _SUBF_T = {'1': 'unsigned char', '2': 'unsigned short', '4': 'unsigned int'}
+
+    def subfield(m):
+        base, off, size = m.group(1), m.group(2), m.group(3)
+        t = _SUBF_T.get(size)
+        if not t:
+            return m.group(0)
+        return '(*(%s *)((char *)&%s + %s))' % (t, base, off)
+    text = re.sub(r'\b(\w+)\._(\d+)_(\d+)_', subfield, text)
+
     # packed-ptr node access -> seam (offset may be hex 0xN or decimal N)
     #   *(T *)(EXPR * 4 + N)
     text = re.sub(

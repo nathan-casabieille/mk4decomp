@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -136,6 +137,83 @@ extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
 extern void Vec3ColorShiftClamp(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TristripBatchEmit(int param_1,int param_2,int param_3)
+
+{
+  ushort uVar1;
+  ushort uVar2;
+  ushort uVar3;
+  undefined2 uVar4;
+  ushort *puVar5;
+  undefined4 *puVar6;
+  undefined2 *puVar7;
+  int local_8;
+  
+  if ((g_inLoopStep == 0) && (*(int *)(param_1 + 4) != 0)) {
+    puVar5 = (ushort *)(*(int *)(param_1 + 8) + 8 + param_1);
+    puVar7 = (undefined2 *)(param_1 + 4 + *(int *)(param_1 + 4));
+    puVar6 = (undefined4 *)(g_dualC + 4);
+    while( true ) {
+      uVar1 = *puVar5;
+      uVar3 = uVar1 & 1;
+      if (param_2 != 0) {
+        uVar3 = (ushort)(uVar3 == 0);
+      }
+      uVar2 = puVar5[1];
+      puVar5 = puVar5 + 2;
+      if ((short)uVar2 < 0) break;
+      g_dispatchSave1626 = 0;
+      g_vtxIn1_y = 0;
+      g_vtxIn2_y = 0;
+      g_vtxIn2_x = *puVar7;
+      g_vtxIn1_z = puVar7[1];
+      g_vtxIn2_z = puVar7[2];
+      g_triStripX0 = puVar7[6];
+      g_triStripX1 = puVar7[7];
+      g_triStripX2 = puVar7[8];
+      ProjectTwoVertices();
+      puVar7 = puVar7 + 0xc;
+      local_8 = (short)uVar2 + 1;
+      do {
+        AdvanceTriStripRing(*puVar7,puVar7[1],puVar7[2]);
+        ProjectVertex();
+        g_vtxValid =
+             (uint)(((int)(*(unsigned short *)((char *)&g_vtxScreenX + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+                    ((int)(short)g_vtxScreenP2X - (int)(short)g_triStripRingA) -
+                    ((int)(*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+                    ((int)(short)g_vtxScreenX - (int)(short)g_triStripRingA) < 1);
+        if ((((uVar3 != (g_vtxValid == 0)) && (0 < g_min_007af984)) && (0 < g_min_007af988)) &&
+           (0 < g_min_007af98c)) {
+          *puVar6 = g_triStripRingA;
+          puVar6[1] = g_vtxScreenP2X;
+          puVar6[2] = g_vtxScreenX;
+          *(ushort *)((int)puVar6 + 0x1a) =
+               *(ushort *)((int)puVar6 + 0x1a) & 0xfbff | (ushort)((g_vtxValid & 1) << 10);
+          if (param_3 == 0) {
+            uVar4 = MinOfThree();
+          }
+          else {
+            uVar4 = MaxOfThree();
+          }
+          *(undefined2 *)((int)puVar6 + 0x12) = uVar4;
+          *(ushort *)((int)puVar6 + 0x1a) =
+               *(ushort *)((int)puVar6 + 0x1a) & 0xfe7f | (short)(char)((byte)(uVar1 >> 8) & 1) << 7
+               | 0x10;
+          Vec3ColorShiftClamp(puVar6,9);
+          Helper_DrawCursor(puVar6);
+        }
+        puVar7 = puVar7 + 6;
+        uVar3 = (ushort)(uVar3 == 0);
+        puVar6 = puVar6 + 7;
+        local_8 = local_8 + -1;
+      } while (local_8 != 0);
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void TristripBatchEmit(void)
 {
     __asm {
@@ -300,3 +378,4 @@ __declspec(naked) void TristripBatchEmit(void)
         ret
     }
 }
+#endif

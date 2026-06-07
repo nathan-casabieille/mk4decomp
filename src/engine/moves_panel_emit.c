@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -149,6 +150,84 @@ extern void Helper_DrawCursor(void);
 extern void ProjectTwoVertices(void);
 extern void SunbeamSpriteEmit(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MovesPanelEmit(void)
+
+{
+  int iVar1;
+  bool bVar2;
+  undefined *puVar3;
+  uint uVar4;
+  
+  g_eventQueuePending = MK4_NODE_AT(int, g_dualD, 0x18);
+  if (g_eventQueuePending < 8) {
+    SunbeamSpriteEmit();
+    return;
+  }
+  if ((g_inLoopStep == 0) &&
+     ((((puVar3 = (undefined *)(g_dualD * 4), puVar3 == &g_dispatchCmpEnd ||
+        (puVar3 == &g_movesPanelEnd)) || (puVar3 == &g_dispatchCmpEnd2)) || (puVar3 == &g_installCountdownEnd)))) {
+    if (g_tickW1 < 0x10) {
+      uVar4 = 0;
+    }
+    else {
+      uVar4 = ((int)(g_tickW1 + (g_tickW1 >> 0x1f & 7U)) >> 3) - 1;
+    }
+    iVar1 = g_eventQueuePending * 4;
+    g_dispatchSave1546 = g_tickCurMask;
+    g_dispatchSave1540 = (-(MK4_NODE_AT(int, g_eventQueuePending, 0) == 0xa000) & 0xf4U) + 0x16;
+    g_dispatchSave1548 = 0xf;
+    g_dispatchSave1543 = 100;
+    g_dispatchSave1545 = 100;
+    g_dispatchSave1541 = 100;
+    g_dispatchSave1547 = (ushort)((uVar4 << 5 | uVar4) << 5) | (ushort)uVar4;
+    g_vtxIn2_y = 0;
+    g_dispatchSave1626 = (short)*(undefined4 *)(iVar1 + 4) >> 3;
+    g_vtxIn1_y = (short)((int)*(undefined4 *)(iVar1 + 4) >> 0x13);
+    g_vtxIn2_z = 0;
+    g_vtxIn2_x = (short)*(undefined4 *)(iVar1 + 0xc) >> 3;
+    g_vtxIn1_z = (short)((int)*(undefined4 *)(iVar1 + 0xc) >> 0x13);
+    g_triStripX2 = 0;
+    g_triStripX0 = (short)*(undefined4 *)(iVar1 + 0x14) >> 3;
+    g_triStripX1 = (short)((int)*(undefined4 *)(iVar1 + 0x14) >> 0x13);
+    g_dispatchSave1542 = g_dispatchSave1540;
+    g_dispatchSave1544 = g_dispatchSave1540;
+    ProjectTwoVertices();
+    g_dispatchSave1534 = g_triStripRingA;
+    g_dispatchSave1536 = g_vtxScreenP2X;
+    bVar2 = ((int)(*(unsigned short *)((char *)&g_vtxScreenX + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+            ((int)(short)g_vtxScreenP2X - (int)(short)g_triStripRingA) -
+            ((int)(*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+            ((int)(short)g_vtxScreenX - (int)(short)g_triStripRingA) < 1;
+    g_vtxValid = (uint)bVar2;
+    g_dispatchSave1538 = g_vtxScreenX;
+    g_dispatchSave1548 = g_dispatchSave1548 & 0xfbff | (ushort)bVar2 << 10;
+    GamepadSeqRecord(g_dualD * 4,0);
+    if (((0 < g_min_007af984) && (0 < g_min_007af988)) && (0 < g_min_007af98c)) {
+      Helper_DrawCursor(&g_dispatchSave1534);
+    }
+    g_vtxIn2_z = 0;
+    g_vtxIn2_x = (short)*(undefined4 *)(iVar1 + 0x1c) >> 3;
+    g_vtxIn1_z = (short)((int)*(undefined4 *)(iVar1 + 0x1c) >> 0x13);
+    ProjectTwoVertices();
+    g_dispatchSave1534 = g_triStripRingA;
+    g_dispatchSave1536 = g_vtxScreenP2X;
+    bVar2 = ((int)(*(unsigned short *)((char *)&g_vtxScreenX + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+            ((int)(short)g_vtxScreenP2X - (int)(short)g_triStripRingA) -
+            ((int)(*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+            ((int)(short)g_vtxScreenX - (int)(short)g_triStripRingA) < 1;
+    g_vtxValid = (uint)bVar2;
+    g_dispatchSave1538 = g_vtxScreenX;
+    g_dispatchSave1548 = g_dispatchSave1548 & 0xfbff | (ushort)bVar2 << 10;
+    GamepadSeqRecord(g_dualD * 4,1);
+    if (((0 < g_min_007af984) && (0 < g_min_007af988)) && (0 < g_min_007af98c)) {
+      Helper_DrawCursor(&g_dispatchSave1534);
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void MovesPanelEmit(void)
 {
     __asm {
@@ -351,3 +430,4 @@ __declspec(naked) void MovesPanelEmit(void)
         ret
     }
 }
+#endif

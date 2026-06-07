@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -136,6 +137,88 @@ extern void MaxOfThree(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TristripBatchEmit2(int param_1,int param_2)
+
+{
+  ushort uVar1;
+  ushort uVar2;
+  ushort uVar3;
+  uint uVar4;
+  int iVar5;
+  ushort *puVar6;
+  undefined4 *puVar7;
+  undefined2 *puVar8;
+  int local_c;
+  ushort local_8;
+  
+  if ((g_inLoopStep == 0) && (*(int *)(param_1 + 4) != 0)) {
+    puVar6 = (ushort *)(*(int *)(param_1 + 8) + 8 + param_1);
+    puVar8 = (undefined2 *)(param_1 + 4 + *(int *)(param_1 + 4));
+    puVar7 = (undefined4 *)(g_dualC + 4);
+    if (g_dispatchSave1576 < 0x10) {
+      uVar4 = 0;
+    }
+    else {
+      uVar4 = ((int)(g_dispatchSave1576 + (g_dispatchSave1576 >> 0x1f & 7U)) >> 3) - 1;
+    }
+    local_8 = (ushort)uVar4 | (ushort)((uVar4 << 5 | uVar4) << 5);
+    while( true ) {
+      uVar1 = *puVar6;
+      uVar3 = uVar1 & 1;
+      if (param_2 != 0) {
+        uVar3 = (ushort)(uVar3 == 0);
+      }
+      uVar2 = puVar6[1];
+      puVar6 = puVar6 + 2;
+      if ((short)uVar2 < 0) break;
+      g_dispatchSave1626 = 0;
+      g_vtxIn1_y = 0;
+      g_vtxIn2_y = 0;
+      g_vtxIn2_x = *puVar8;
+      g_vtxIn1_z = puVar8[1];
+      g_vtxIn2_z = puVar8[2];
+      g_triStripX0 = puVar8[6];
+      g_triStripX1 = puVar8[7];
+      g_triStripX2 = puVar8[8];
+      ProjectTwoVertices();
+      puVar8 = puVar8 + 0xc;
+      local_c = (short)uVar2 + 1;
+      do {
+        AdvanceTriStripRing(*puVar8,puVar8[1],puVar8[2]);
+        ProjectVertex();
+        g_vtxValid =
+             (uint)(((int)(*(unsigned short *)((char *)&g_vtxScreenX + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+                    ((int)(short)g_vtxScreenP2X - (int)(short)g_triStripRingA) -
+                    ((int)(*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+                    ((int)(short)g_vtxScreenX - (int)(short)g_triStripRingA) < 1);
+        if ((((uVar3 != (g_vtxValid == 0)) && (0 < g_min_007af984)) && (0 < g_min_007af988)) &&
+           (0 < g_min_007af98c)) {
+          *puVar7 = g_triStripRingA;
+          puVar7[1] = g_vtxScreenP2X;
+          puVar7[2] = g_vtxScreenX;
+          *(ushort *)((int)puVar7 + 0x1a) =
+               *(ushort *)((int)puVar7 + 0x1a) & 0xfbff | (ushort)((g_vtxValid & 1) << 10);
+          iVar5 = MaxOfThree();
+          *(short *)((int)puVar7 + 0x12) = (short)(iVar5 + 2000);
+          *(short *)((int)puVar7 + 0x12) = (short)(g_dispatchSave1559 * 0x20 + iVar5 + 2000);
+          *(ushort *)((int)puVar7 + 0x1a) =
+               *(ushort *)((int)puVar7 + 0x1a) & 0xfe6f | (short)(char)((byte)(uVar1 >> 8) & 1) << 7
+          ;
+          *(ushort *)(puVar7 + 5) = local_8;
+          Helper_DrawCursor(puVar7);
+        }
+        puVar8 = puVar8 + 6;
+        uVar3 = (ushort)(uVar3 == 0);
+        puVar7 = puVar7 + 7;
+        local_c = local_c + -1;
+      } while (local_c != 0);
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void TristripBatchEmit2(void)
 {
     __asm {
@@ -312,3 +395,4 @@ __declspec(naked) void TristripBatchEmit2(void)
         ret
     }
 }
+#endif
