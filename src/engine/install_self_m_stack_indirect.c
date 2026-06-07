@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,46 @@ extern void BossDashCluster(void);
 
 extern unsigned int g_matrixStack_arr;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfMStackIndirect(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(int *)((int)g_matrixStackTop * 4) = g_eventQueueNotMask;
+    if (g_cj_00542054 != (code *)0x0) {
+      (*g_cj_00542054)();
+    }
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_eventQueueNotMask = *(int *)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    if (g_eventQueueNotMask == 0) {
+      BossDashCluster();
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x3c);
+    g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74);
+    if (g_walkCallback != g_eventQueueNotMask) {
+      BossDashCluster();
+      return;
+    }
+  }
+  *(code **)(iVar1 + 8) = InstallSelfMStackIndirect;
+  *(undefined4 *)(iVar1 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void InstallSelfMStackIndirect(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -177,3 +218,4 @@ __declspec(naked) void InstallSelfMStackIndirect(void) {
         ret
     }
 }
+#endif

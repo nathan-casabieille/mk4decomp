@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -114,6 +115,39 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void ScaledArrStore_CallDualStoreXorBit(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void EsiInstallChainCallIndirect(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x28);
+    g_xformDirtyFlags = g_xformDirtyFlags | 4;
+    g_cj_00542058 = MK4_NODE_AT(int, g_cj_0054205c, 0x24);
+    if (MK4_NODE_AT(int, g_cj_00542058, 4) != g_walkCallback) {
+      g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
+    }
+    (*g_cj_00542054)();
+    return;
+  }
+  g_cj_00542054 = *(code **)((int)g_matrixStackTop * 4);
+  g_matrixStackTop = g_matrixStackTop + -1;
+  ScaledArrStore_CallDualStoreXorBit();
+  if (g_framePauseFlag == 0) {
+    *(code **)(iVar1 + 8) = EsiInstallChainCallIndirect;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void EsiInstallChainCallIndirect(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -159,3 +193,4 @@ __declspec(naked) void EsiInstallChainCallIndirect(void) {
         ret
     }
 }
+#endif

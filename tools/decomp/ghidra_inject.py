@@ -70,8 +70,16 @@ def lab_as_value(c):
     return False
 
 
+# An FSM continuation that is masked to 24 bits (`(code *)((uint)x & 0xffffff)`)
+# is an ENCODED resume-point, not a clean function pointer - forcing it to
+# compile would ship a corrupted-pointer call. Keep those naked (Phase-C VM
+# redesign). The clean case (node fields holding named function pointers) is
+# fine and handled by the gate's fn-pointer extern.
+ENCODED_CONT = re.compile(r'\bcode\b.*&\s*0xffffff|&\s*0xffffff.*\bcode\b', re.DOTALL)
+
+
 def has_bail(c):
-    if UNMAPPED.search(c) or lab_as_value(c):
+    if UNMAPPED.search(c) or lab_as_value(c) or ENCODED_CONT.search(c):
         return True
     return any(re.search(r'\b%s' % re.escape(t), c) for t in BAIL_TOKENS)
 
@@ -137,10 +145,13 @@ def compile_ok(twin, name):
                 return True
         return False
     for g in globs:
-        if re.search(r'\b%s\s*\[' % g, twin) or unary_deref(g):
-            h += 'extern unsigned int %s[];\n' % g
-        elif re.search(r'\(\s*\*\s*%s\s*\)\s*\(' % g, twin) or re.search(r'\b%s\s*\(' % g, twin):
+        # Function-pointer use FIRST: `(*g)()` (call through) and `g(` (called)
+        # must win over the deref/array check below - otherwise `(*g)()` is read
+        # as a unary deref and g is mistyped as an array, breaking the call.
+        if re.search(r'\(\s*\*\s*%s\s*\)\s*\(' % g, twin) or re.search(r'\b%s\s*\(' % g, twin):
             h += 'extern int (*%s)();\n' % g
+        elif re.search(r'\b%s\s*\[' % g, twin) or unary_deref(g):
+            h += 'extern unsigned int %s[];\n' % g
         else:
             h += 'extern unsigned int %s;\n' % g
     h += ''.join('extern int %s();\n' % f for f in calls)

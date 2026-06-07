@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,37 @@ extern void InstallSelfIndirectJmp(void);
 extern void IterStepScaledStore(void);
 extern void SlotEvent3EntryChain(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackJmpInstallSelf(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = 0x46ed60;
+  iVar2 = g_baseSel * 4;
+  iVar1 = *(int *)(iVar2 + 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 == 0) {
+    g_cj_00542054 = *(code **)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+  }
+  g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x4c);
+  if (g_walkCallback == 0) {
+                    /* WARNING: Could not recover jumptable at 0x0048f43d. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    (*g_cj_00542054)();
+    return;
+  }
+  *(code **)(iVar2 + 8) = InstallSelfIndirectJmp;
+  *(undefined4 *)(iVar2 + 0x84) = 1;
+  g_dualC = 1;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void MStackJmpInstallSelf(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -171,3 +203,4 @@ __declspec(naked) void MStackJmpInstallSelf(void) {
         ret
     }
 }
+#endif

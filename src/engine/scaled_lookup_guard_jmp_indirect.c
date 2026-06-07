@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,33 @@ extern unsigned int g_fightAxisPosY;
 extern void FlagCascadeStateSet(void);
 extern void MoveDispatch4StateFsm(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ScaledLookupGuardJmpIndirect(int param_1)
+
+{
+  g_cj_00542054 = param_1 >> 2;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542054 + 4;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x6c) = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  g_dualD = *(code **)(g_cj_00542054 * 4 + 0xc);
+  if (g_dualD == (code *)0x0) {
+    MoveDispatch4StateFsm();
+    return;
+  }
+  FlagCascadeStateSet();
+  if (g_framePauseFlag == 0) {
+    if (((byte)g_xformDirtyFlags & 1) != 0) {
+                    /* WARNING: Could not recover jumptable at 0x00494a4a. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+      (*g_dualD)();
+      return;
+    }
+    MoveDispatch4StateFsm();
+    return;
+  }
+  return;
+}
+#else
 __declspec(naked) void ScaledLookupGuardJmpIndirect(void) {
     __asm {
         mov     eax, dword ptr [esp + 4]
@@ -154,3 +182,4 @@ __declspec(naked) void ScaledLookupGuardJmpIndirect(void) {
         ret
     }
 }
+#endif

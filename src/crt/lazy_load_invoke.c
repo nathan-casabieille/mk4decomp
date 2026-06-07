@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -126,6 +127,38 @@ extern unsigned int g_dispatchSave1452;
 extern unsigned int g_dispatchSave1453;
 extern unsigned int g_dispatchSave1454;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int LazyLoadInvoke(undefined4 param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  HMODULE hModule;
+  int iVar1;
+  
+  iVar1 = 0;
+  if (g_dispatchSave1452 != (FARPROC)0x0) {
+LAB_004ce1a0:
+    if (g_dispatchSave1453 != (FARPROC)0x0) {
+      iVar1 = (*g_dispatchSave1453)();
+    }
+    if ((iVar1 != 0) && (g_dispatchSave1454 != (FARPROC)0x0)) {
+      iVar1 = (*g_dispatchSave1454)(iVar1);
+    }
+    iVar1 = (*g_dispatchSave1452)(iVar1,param_1,param_2,param_3);
+    return iVar1;
+  }
+  hModule = LoadLibraryA("user32.dll");
+  if (hModule != (HMODULE)0x0) {
+    g_dispatchSave1452 = GetProcAddress(hModule,"MessageBoxA");
+    if (g_dispatchSave1452 != (FARPROC)0x0) {
+      g_dispatchSave1453 = GetProcAddress(hModule,"GetActiveWindow");
+      g_dispatchSave1454 = GetProcAddress(hModule,"GetLastActivePopup");
+      goto LAB_004ce1a0;
+    }
+  }
+  return 0;
+}
+#else
 __declspec(naked) void LazyLoadInvoke(void) {
     __asm {
         mov     eax, dword ptr [g_dispatchSave1452]
@@ -196,3 +229,4 @@ __declspec(naked) void LazyLoadInvoke(void) {
         ret
     }
 }
+#endif

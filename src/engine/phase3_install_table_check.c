@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -129,6 +130,69 @@ extern void CallSetPause(void);
 extern void IndirectDispatchCjStore(void);
 extern void MStackPush6OpPop6(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void Phase3InstallTableCheck(void)
+
+{
+  int iVar1;
+  undefined *puVar2;
+  int iVar3;
+  
+  iVar1 = g_baseSel * 4;
+  iVar3 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar3 == 0) {
+    g_walkCallback = 0;
+    (*g_eventQueueChild)();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    MK4_NODE_AT(undefined4, g_dualD, 0) = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54);
+    MK4_NODE_AT(undefined4, g_dualD, 4) = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58);
+    g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x5c);
+    MK4_NODE_AT(int, g_dualD, 8) = g_walkCallback;
+  }
+  else {
+    if (g_handWalkState148 != '\0') {
+      puVar2 = (undefined *)(g_cj_00542058 * 4);
+      if ((((puVar2 == MK4_VA(unsigned int, 0x4efe18)) || (puVar2 == MK4_VA(unsigned int, 0x4eff00))) || (puVar2 == MK4_VA(unsigned int, 0x4effe8))) ||
+         (puVar2 == &g_dispatchSave778)) {
+        CallSetPause();
+        return;
+      }
+      g_handWalkState148 = '\0';
+    }
+    g_walkCallback = 0;
+    (*g_eventQueueChild)();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    MStackPush6OpPop6();
+    if (g_framePauseFlag != 0) {
+      return;
+    }
+    g_walkCallback = MK4_NODE_AT(int, g_cj_00542058, 0) + 0x30000;
+    if (g_walkCallback <= g_currentNodeFlags) {
+      g_currentNodeFlags = g_walkCallback;
+      IndirectDispatchCjStore();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      StackPopDispatchTagged();
+      return;
+    }
+  }
+  IndirectDispatchCjStore();
+  if (g_framePauseFlag == 0) {
+    *(code **)(iVar1 + 8) = Phase3InstallTableCheck;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void Phase3InstallTableCheck(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -216,3 +280,4 @@ __declspec(naked) void Phase3InstallTableCheck(void) {
         ret
     }
 }
+#endif

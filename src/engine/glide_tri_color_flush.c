@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -121,6 +122,120 @@ extern unsigned int g_dispatchSave1632;
 extern unsigned int g_dispatchSave1652;
 extern unsigned int g_dispatchSave1653;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GlideTriColorFlush(byte param_1,byte param_2,undefined4 param_3,undefined4 param_4,uint param_5,
+                 uint param_6,short param_7,undefined4 param_8,undefined4 param_9,uint param_10,
+                 uint param_11,short param_12,undefined4 param_13,undefined4 param_14,uint param_15,
+                 uint param_16,short param_17)
+
+{
+  byte bVar1;
+  uint uVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  undefined4 uVar5;
+  undefined4 uStack_b4;
+  undefined4 uStack_b0;
+  undefined4 uStack_a8;
+  undefined4 uStack_a4;
+  undefined4 uStack_a0;
+  undefined4 uStack_98;
+  undefined4 uStack_94;
+  undefined4 uStack_90;
+  undefined4 uStack_8c;
+  undefined4 uStack_78;
+  undefined4 uStack_74;
+  undefined4 uStack_6c;
+  undefined4 uStack_68;
+  undefined4 uStack_64;
+  undefined4 uStack_5c;
+  undefined4 uStack_58;
+  undefined4 uStack_54;
+  undefined4 uStack_50;
+  undefined4 uStack_3c;
+  undefined4 uStack_38;
+  undefined4 uStack_30;
+  undefined4 uStack_2c;
+  undefined4 uStack_28;
+  undefined4 uStack_20;
+  undefined4 uStack_1c;
+  undefined4 uStack_18;
+  undefined4 uStack_14;
+  
+  if (g_renderer1_active == 0) {
+    return;
+  }
+  if (g_renderer1_surface == 0) {
+    return;
+  }
+  if (g_renderer1_busy != 0) {
+    return;
+  }
+  if (0x10 < param_1) {
+    param_1 = 0;
+  }
+  if (g_glideColorFlushByte != param_1) {
+    (*g_dispatchSave1652)(0,(&g_glideCmdArgArr)[param_1],3,&g_glideD0);
+    g_glideColorFlushByte = param_1;
+  }
+  bVar1 = g_glideE8;
+  if (param_2 != g_glideE8) {
+    bVar1 = param_2;
+    if (param_2 == 0) {
+      uVar5 = 4;
+      uVar4 = 0;
+      uVar3 = 4;
+    }
+    else if (param_2 == 0xff) {
+      uVar5 = 4;
+      uVar4 = 4;
+      uVar3 = 4;
+    }
+    else {
+      if ((g_glideE8 != 0) && (g_glideE8 != 0xff)) goto LAB_004b47ad;
+      uVar5 = 0;
+      uVar4 = 1;
+      uVar3 = 5;
+    }
+    (*g_dispatchSave1632)(uVar3,uVar4,uVar5,0);
+  }
+LAB_004b47ad:
+  g_glideE8 = bVar1;
+  uStack_38 = param_4;
+  uVar2 = (uint)param_7;
+  uStack_98 = (&g_glideTable1)[param_2];
+  uStack_3c = param_3;
+  uStack_30 = (&g_glideTable3)[(int)uVar2 >> 10 & 0x1f];
+  uStack_2c = (&g_glideTable3)[(int)uVar2 >> 5 & 0x1f];
+  uStack_28 = (&g_glideTable3)[uVar2 & 0x1f];
+  uStack_b4 = param_8;
+  uStack_58 = 0x3f800000;
+  uStack_94 = 0x3f800000;
+  uStack_18 = (&g_glideTable1)[param_5 & 0xff];
+  uStack_1c = 0x3f800000;
+  uStack_14 = (&g_glideTable1)[param_6 & 0xff];
+  uStack_b0 = param_9;
+  uVar2 = (uint)param_12;
+  uStack_a8 = (&g_glideTable3)[(int)uVar2 >> 10 & 0x1f];
+  uStack_a4 = (&g_glideTable3)[(int)uVar2 >> 5 & 0x1f];
+  uStack_a0 = (&g_glideTable3)[uVar2 & 0x1f];
+  uStack_78 = param_13;
+  uStack_90 = (&g_glideTable1)[param_10 & 0xff];
+  uStack_8c = (&g_glideTable1)[param_11 & 0xff];
+  uStack_74 = param_14;
+  uVar2 = (uint)param_17;
+  uStack_6c = (&g_glideTable3)[(int)uVar2 >> 10 & 0x1f];
+  uStack_68 = (&g_glideTable3)[(int)uVar2 >> 5 & 0x1f];
+  uStack_64 = (&g_glideTable3)[uVar2 & 0x1f];
+  uStack_54 = (&g_glideTable1)[param_15 & 0xff];
+  uStack_50 = (&g_glideTable1)[param_16 & 0xff];
+  uStack_5c = uStack_98;
+  uStack_20 = uStack_98;
+  (*g_dispatchSave1653)(&uStack_3c,&uStack_b4,&uStack_78);
+  return;
+}
+#else
 __declspec(naked) void GlideTriColorFlush(void)
 {
     __asm {
@@ -286,3 +401,4 @@ __declspec(naked) void GlideTriColorFlush(void)
         ret
     }
 }
+#endif

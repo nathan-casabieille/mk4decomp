@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -114,6 +115,39 @@ extern unsigned int g_dispatchTableBase;
 extern void CallSetPause(void);
 extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void UpperBodyComboFsmCluster(void)
+
+{
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(code **)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_walkCallback = g_eventMaskState;
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x13a910;
+  g_eventQueueCurrent = g_dispatchSave962;
+  do {
+    if (g_eventQueueCurrent == (code *)0xffffffff) {
+LAB_00492b32:
+      g_eventQueueCurrent = (code *)*(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_matrixStackTop = g_matrixStackTop + -2;
+      return;
+    }
+    if (g_eventQueueCurrent == g_eventMaskState) {
+      g_walkCallback = *(code **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4);
+      (*g_walkCallback)();
+      if (g_framePauseFlag != 0) {
+        return;
+      }
+      goto LAB_00492b32;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 2;
+    g_eventQueueCurrent = *(code **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  } while( true );
+}
+#else
 __declspec(naked) void UpperBodyComboFsmCluster(void)
 {
     __asm {
@@ -349,3 +383,4 @@ __declspec(naked) void UpperBodyComboFsmCluster(void)
         ret      
     }
 }
+#endif

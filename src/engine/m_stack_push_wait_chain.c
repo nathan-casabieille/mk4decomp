@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,53 @@ extern void MStackPush2TripleCallChain(void);
 extern void NegInstallNegSelfTrigPair(void);
 extern void ScaledMove48to58(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void MStackPushWaitChain(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_currentNodeFlags = 0xccc;
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = 0x486440;
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    g_cj_00542054 = *(code **)((int)g_matrixStackTop * 4);
+    g_matrixStackTop = g_matrixStackTop + -1;
+    g_walkCallback = g_currentNodeFlags;
+    g_eventQueueCurrent = g_currentNodeFlags;
+    ChainAccumMul10Pair();
+    if (g_framePauseFlag == 0) {
+      *(code **)(iVar1 + 8) = NegInstallNegSelfTrigPair;
+      *(undefined4 *)(iVar1 + 0x84) = 1;
+      g_dualC = 3;
+      g_framePauseFlag = 1;
+    }
+  }
+  else {
+    if (iVar2 != 1) {
+      (*g_cj_00542054)();
+      return;
+    }
+    g_walkCallback = -g_currentNodeFlags;
+    g_eventQueueCurrent = g_walkCallback;
+    g_currentNodeFlags = g_walkCallback;
+    ChainAccumMul10Pair();
+    if (g_framePauseFlag == 0) {
+      *(code **)(iVar1 + 8) = NegInstallNegSelfTrigPair;
+      *(undefined4 *)(iVar1 + 0x84) = 2;
+      g_dualC = 3;
+      g_framePauseFlag = 1;
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void MStackPushWaitChain(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -163,3 +211,4 @@ __declspec(naked) void MStackPushWaitChain(void) {
         ret
     }
 }
+#endif

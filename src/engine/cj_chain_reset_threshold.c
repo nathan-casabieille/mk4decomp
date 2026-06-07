@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -116,6 +117,53 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void ScaledLoadJmpIfNonzero(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void CjChainResetThreshold(void)
+
+{
+  int iVar1;
+  int iVar2;
+  bool bVar3;
+  
+  if ((g_cj_0054205c != 0) &&
+     (((g_walkCallback = *(code **)(g_cj_0054205c * 4 + 0x44), g_walkCallback == (code *)0x0 ||
+       ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_walkCallback, (*g_walkCallback)(), g_framePauseFlag == 0)) &&
+      (g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x4c), g_eventQueueCurrent != 0)))) {
+    g_walkCallback = (code *)(g_eventQueueCurrent + MK4_NODE_AT(int, g_cj_0054205c, 0x70));
+    bVar3 = -1 < (int)g_walkCallback;
+    *(code **)(g_cj_0054205c * 4 + 0x70) = g_walkCallback;
+    if (bVar3) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(code **)(g_cj_0054205c * 4 + 0x18);
+      g_chainAccumCur = *(int *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34);
+      g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x48);
+      g_eventQueueWorkType = g_walkCallback + MK4_NODE_AT(int, g_cj_0054205c, 0x58) + g_chainAccumCur;
+      if (g_eventQueueCurrent <= (int)g_eventQueueWorkType) {
+        iVar1 = g_cj_0054205c * 4;
+        iVar2 = g_cj_0054205c * 4;
+        *(undefined4 *)(iVar1 + 0x6c) = 0;
+        *(undefined4 *)(iVar1 + 0x70) = 0;
+        *(undefined4 *)(iVar1 + 0x74) = 0;
+        *(undefined4 *)(iVar1 + 0x78) = 0;
+        *(undefined4 *)(iVar1 + 0x7c) = 0;
+        *(undefined4 *)(iVar1 + 0x80) = 0;
+        *(undefined4 *)(iVar1 + 0x4c) = 0;
+        *(undefined4 *)(iVar1 + 0x58) = *(undefined4 *)(iVar2 + 0x48);
+        g_eventQueueCurrent = 0;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(code **)(g_cj_0054205c * 4 + 0x18);
+        g_walkCallback = *(code **)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34);
+        *(undefined4 *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34) = 0;
+        g_eventQueuePending = g_dualB_00538038;
+        if (g_cj_0054205c != g_player1NodeIdx) {
+          g_eventQueuePending = g_dualB_0053803c;
+        }
+        ScaledLoadJmpIfNonzero();
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void CjChainResetThreshold(void) {
     __asm {
         mov     ecx, dword ptr [g_cj_0054205c]
@@ -214,3 +262,4 @@ __declspec(naked) void CjChainResetThreshold(void) {
         ret
     }
 }
+#endif

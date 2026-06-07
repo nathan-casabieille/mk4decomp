@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -115,6 +116,33 @@ extern unsigned int g_primary_0053a774;
 extern unsigned int g_dispatchVar20;
 extern void PositionClampCluster(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void GeoTransformDispatchAndApply(void)
+
+{
+  int iVar1;
+  
+  g_currentNodeFlags = g_secondary_00535d04;
+  g_eventQueueChild = g_primary_0053a774;
+  iVar1 = 0;
+  g_walkCallback = 0;
+  if (0 < g_primary_0052d74c) {
+    iVar1 = 2;
+    g_walkCallback = 2;
+  }
+  g_eventQueueCurrent = g_secondary_00538068;
+  if ((g_secondary_00538068 != 0) && (-1 < g_secondary_00538068)) {
+    iVar1 = iVar1 + 1;
+    g_walkCallback = iVar1;
+  }
+  g_dualC = *(code **)((iVar1 + g_dispatchVar20) * 4);
+                    /* WARNING: Could not recover jumptable at 0x004898a2. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (*g_dualC)();
+  return;
+}
+#else
 __declspec(naked) void GeoTransformDispatchAndApply(void)
 {
     __asm {
@@ -246,3 +274,4 @@ __declspec(naked) void GeoTransformDispatchAndApply(void)
         jmp      PositionClampCluster
     }
 }
+#endif
