@@ -4,6 +4,7 @@
  * skipped.
  */
 #include "engine/ecm.h"
+#include "portable/ghidra_types.h"
 #include "platform/win32.h"
 
 /*
@@ -18,6 +19,42 @@
  * store). Pure C re-orders enough that we never hit byte equality.
  */
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ECM_Cleanup(void)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  
+  if (g_ecmThread != (HANDLE)0x0) {
+    for (iVar1 = 0; (g_ecmThreadStatus != 0 && (iVar1 < 3000)); iVar1 = iVar1 + 100) {
+      Sleep(100);
+    }
+    Sleep(100);
+    TerminateThread(g_ecmThread,0);
+    CloseHandle(g_ecmThread);
+    g_ecmThread = (HANDLE)0x0;
+  }
+  if (g_ecmDSBuffer != (int *)0x0) {
+    (*(MK4ComMethod *)(*g_ecmDSBuffer + 0x3c))(g_ecmDSBuffer,0xffffd8f0);
+    (*(MK4ComMethod *)(*g_ecmDSBuffer + 0x48))(g_ecmDSBuffer);
+    (*(MK4ComMethod *)(*g_ecmDSBuffer + 8))(g_ecmDSBuffer);
+    g_ecmDSBuffer = (int *)0x0;
+  }
+  puVar2 = &g_ecmHeaderBuf;
+  for (iVar1 = 0x386; iVar1 != 0; iVar1 = iVar1 + -1) {
+    *puVar2 = 0;
+    puVar2 = puVar2 + 1;
+  }
+  Helper_ECM_PostCleanup(0);
+  if (g_ecmFile != 0) {
+    Helper_FClose(g_ecmFile);
+  }
+  g_ecmFile = 0;
+  return;
+}
+#else
 __declspec(naked) void ECM_Cleanup(void)
 {
     __asm {
@@ -89,3 +126,4 @@ after_file:
         ret
     }
 }
+#endif

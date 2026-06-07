@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -136,6 +137,80 @@ extern unsigned int g_viewportX;
 extern unsigned int g_viewportY;
 extern unsigned int g_dispatchSave1404;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ScanlineTexBlitPaletted(void)
+
+{
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  
+  if ((((g_viewportX != 0) && (g_dispatchSave1378 < g_viewportW)) && (g_dispatchSave1381 < g_viewportH)) &&
+     ((-1 < g_dispatchSave1380 && (-1 < g_dispatchSave1383)))) {
+    g_dispatchSave1708 = g_dispatchSave1380 - g_dispatchSave1378;
+    g_dispatchSave1707 = g_dispatchSave1383 - g_dispatchSave1381;
+    if ((0 < g_dispatchSave1708) && (0 < g_dispatchSave1707)) {
+      uVar2 = g_dispatchSave1374 * 0x10000;
+      g_dispatchSave1373 = g_dispatchSave1373 * 0x10000;
+      uVar5 = g_dispatchSave1371 * 0x10000;
+      g_dispatchSave1357 = (int)(g_dispatchSave1373 + g_dispatchSave1371 * -0x10000) / g_dispatchSave1708;
+      g_dispatchSave1377 = g_dispatchSave1377 * 0x10000;
+      iVar3 = (int)(g_dispatchSave1377 + g_dispatchSave1374 * -0x10000) / g_dispatchSave1707;
+      g_dispatchSave1371 = uVar5;
+      if (g_dispatchSave1378 < 0) {
+        g_dispatchSave1371 = uVar5 - g_dispatchSave1357 * g_dispatchSave1378;
+        g_dispatchSave1708 = g_dispatchSave1708 + g_dispatchSave1378;
+        g_dispatchSave1378 = 0;
+      }
+      g_dispatchSave1374 = uVar2;
+      if (g_dispatchSave1381 < 0) {
+        g_dispatchSave1374 = uVar2 - iVar3 * g_dispatchSave1381;
+        g_dispatchSave1707 = g_dispatchSave1707 + g_dispatchSave1381;
+        g_dispatchSave1381 = 0;
+      }
+      if (g_viewportW <= g_dispatchSave1380) {
+        g_dispatchSave1708 = g_viewportW - g_dispatchSave1378;
+      }
+      if (g_viewportH <= g_dispatchSave1383) {
+        g_dispatchSave1707 = g_viewportH - g_dispatchSave1381;
+      }
+      g_dispatchSave1346 = (undefined2 *)(g_viewportX + g_viewportY * g_dispatchSave1381 + g_dispatchSave1378 * 2);
+      iVar4 = (g_dispatchSave1367 & 0xf0) * 0x2000 + g_dispatchSave1340;
+      uVar2 = (g_dispatchSave1403 & 0xf) << 0x10;
+      g_dispatchSave1358 = iVar3;
+      g_dispatchSave1403 = uVar2;
+      iVar6 = g_dispatchSave1708;
+      while (0 < g_dispatchSave1707) {
+        g_dispatchSave1404 = g_dispatchSave1400 + ((g_dispatchSave1374 >> 0x10 & 0xff) * 0x100 + uVar2) * 2;
+        g_dispatchSave1345 = g_dispatchSave1346;
+        iVar7 = g_dispatchSave1707;
+        g_dispatchSave1387 = g_dispatchSave1371;
+        for (g_clipMinScratch = iVar6; 0 < g_clipMinScratch; g_clipMinScratch = g_clipMinScratch + -1) {
+          uVar1 = *(ushort *)(g_dispatchSave1404 + (g_dispatchSave1387 >> 0x10 & 0xff) * 2);
+          if (uVar1 != 0) {
+            *g_dispatchSave1345 = *(undefined2 *)(iVar4 + (uint)uVar1 * 2);
+            iVar6 = g_dispatchSave1708;
+            iVar7 = g_dispatchSave1707;
+          }
+          g_dispatchSave1387 = g_dispatchSave1387 + g_dispatchSave1357;
+          g_dispatchSave1345 = g_dispatchSave1345 + 1;
+          iVar3 = g_dispatchSave1358;
+          uVar2 = g_dispatchSave1403;
+        }
+        g_dispatchSave1374 = g_dispatchSave1374 + iVar3;
+        g_dispatchSave1346 = (undefined2 *)((int)g_dispatchSave1346 + g_viewportY);
+        g_dispatchSave1707 = iVar7 + -1;
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void ScanlineTexBlitPaletted(void)
 {
     __asm {
@@ -311,3 +386,4 @@ __declspec(naked) void ScanlineTexBlitPaletted(void)
         ret
     }
 }
+#endif

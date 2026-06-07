@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -130,6 +131,44 @@ extern void Helper_TitleSetMaxVolume(void);
 extern void IterateCallSkip(void);
 extern void Loop1cBitMask(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioShutdownSequence(void)
+
+{
+  int iVar1;
+  DWORD DVar2;
+  DWORD DVar3;
+  int iVar4;
+  
+  iVar4 = (int)g_audioChannelCount;
+  while ((0 < iVar4 && (iVar1 = BuildMaskFromArray(), iVar1 != 0))) {
+    DVar2 = timeGetTime();
+    Audio_UpdateChannels();
+    Helper_TitleSetMaxVolume(iVar4);
+    DVar3 = timeGetTime();
+    DVar2 = DVar2 + (10 - DVar3);
+    if (0 < (int)DVar2) {
+      Sleep(DVar2);
+    }
+    iVar4 = iVar4 + -1;
+  }
+  g_dispatchSave1417 = 1;
+  Loop1cBitMask();
+  IterateCallSkip();
+  g_dispatchSave1417 = 0;
+  Helper_DSI_post1(0);
+  if (g_dsoundPrimary != (int *)0x0) {
+    (*(MK4ComMethod *)(*g_dsoundPrimary + 8))(g_dsoundPrimary);
+    g_dsoundPrimary = (int *)0x0;
+  }
+  if (g_dsoundContext != (int *)0x0) {
+    (*(MK4ComMethod *)(*g_dsoundContext + 8))(g_dsoundContext);
+    g_dsoundContext = (int *)0x0;
+  }
+  return;
+}
+#else
 __declspec(naked) void AudioShutdownSequence(void) {
     __asm {
         push    ebx
@@ -193,3 +232,4 @@ loopShutdown:
         ret
     }
 }
+#endif

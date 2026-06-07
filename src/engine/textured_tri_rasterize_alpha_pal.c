@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -154,6 +155,195 @@ extern unsigned int g_viewportX;
 extern unsigned int g_viewportY;
 extern unsigned int g_dispatchSave1404;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void TexturedTriRasterizeAlphaPal(void)
+
+{
+  ushort uVar1;
+  bool bVar2;
+  uint uVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  int iVar7;
+  
+  if (g_viewportX != 0) {
+    iVar7 = g_dispatchSave1383 - g_dispatchSave1381;
+    iVar4 = g_dispatchSave1382 - g_dispatchSave1381;
+    g_clipMinScratch = (g_dispatchSave1379 - g_dispatchSave1378) * iVar7 - (g_dispatchSave1380 - g_dispatchSave1378) * iVar4;
+    if (0 < g_clipMinScratch) {
+      uVar5 = (g_dispatchSave1372 - g_dispatchSave1371) * iVar7 - (g_dispatchSave1373 - g_dispatchSave1371) * iVar4;
+      if ((int)((uVar5 ^ (int)uVar5 >> 0x1f) - ((int)uVar5 >> 0x1f)) < 0x80000) {
+        g_dispatchSave1342 = (int)(uVar5 * 0x1000) / g_clipMinScratch << 4;
+      }
+      else {
+        g_dispatchSave1342 = (int)(uVar5 * 0x200) / g_clipMinScratch << 7;
+      }
+      uVar5 = (g_dispatchSave1376 - g_dispatchSave1374) * iVar7 - (g_dispatchSave1377 - g_dispatchSave1374) * iVar4;
+      if ((int)((uVar5 ^ (int)uVar5 >> 0x1f) - ((int)uVar5 >> 0x1f)) < 0x80000) {
+        g_dispatchSave1343 = (int)(uVar5 * 0x1000) / g_clipMinScratch << 4;
+      }
+      else {
+        g_dispatchSave1343 = (int)(uVar5 * 0x200) / g_clipMinScratch << 7;
+      }
+      g_dispatchSave1394 = g_dispatchSave1381;
+      bVar2 = g_dispatchSave1381 <= g_dispatchSave1382;
+      g_dispatchSave1365 = g_dispatchSave1382;
+      if (bVar2) {
+        g_dispatchSave1394 = g_dispatchSave1382;
+        g_dispatchSave1365 = g_dispatchSave1381;
+      }
+      g_dispatchSave1359 = (uint)!bVar2;
+      g_dispatchSave1366 = (uint)!bVar2;
+      if (g_dispatchSave1383 < g_dispatchSave1365) {
+        g_dispatchSave1359 = 2;
+        g_dispatchSave1366 = 2;
+        g_dispatchSave1365 = g_dispatchSave1383;
+      }
+      if (g_dispatchSave1394 < g_dispatchSave1383) {
+        g_dispatchSave1394 = g_dispatchSave1383;
+      }
+      if (g_dispatchSave1365 < 0) {
+        g_dispatchSave1365 = 0;
+      }
+      if (g_viewportH < g_dispatchSave1394) {
+        g_dispatchSave1394 = g_viewportH;
+      }
+      g_dispatchSave1404 = (g_dispatchSave1403 & 0xf) * 0x20000 + g_dispatchSave1400;
+      g_dispatchSave1346 = g_viewportY * g_dispatchSave1365 + g_viewportX;
+      g_dispatchSave1385 = 0;
+      g_dispatchSave1364 = 0;
+      uVar5 = g_dispatchSave1366;
+      if (g_dispatchSave1365 < g_dispatchSave1394) {
+        do {
+          while (g_dispatchSave1364 <= g_dispatchSave1365) {
+            uVar6 = uVar5 - 1;
+            if ((int)uVar6 < 0) {
+              uVar6 = 2;
+            }
+            g_dispatchSave1364 = (&g_dispatchSave1381)[uVar6];
+            iVar4 = g_dispatchSave1364 - (&g_dispatchSave1381)[uVar5];
+            uVar3 = uVar5;
+            if (iVar4 != 0) {
+              g_dispatchSave1338 = (((&g_dispatchSave1378)[uVar6] - (&g_dispatchSave1378)[g_dispatchSave1359]) * 0x10000) /
+                             iVar4;
+              g_dispatchSave1336 = (((&g_dispatchSave1371)[uVar6] - (&g_dispatchSave1371)[g_dispatchSave1359]) * 0x10000) /
+                             iVar4;
+              g_dispatchSave1337 = (((&g_dispatchSave1374)[uVar6] - (&g_dispatchSave1374)[g_dispatchSave1359]) * 0x10000) /
+                             iVar4;
+              uVar3 = g_dispatchSave1359;
+            }
+            g_dispatchSave1362 = (&g_dispatchSave1374)[uVar3] * 0x10000;
+            g_dispatchSave1363 = (&g_dispatchSave1378)[uVar3] * 0x10000;
+            g_dispatchSave1361 = (&g_dispatchSave1371)[uVar3] * 0x10000;
+            g_clipMaxScratch = g_dispatchSave1365 - (&g_dispatchSave1381)[uVar5];
+            uVar5 = uVar6;
+            g_dispatchSave1359 = uVar6;
+            if (g_clipMaxScratch != 0) {
+              g_dispatchSave1363 = g_dispatchSave1363 + g_clipMaxScratch * g_dispatchSave1338;
+              g_dispatchSave1361 = g_dispatchSave1361 + g_clipMaxScratch * g_dispatchSave1336;
+              g_dispatchSave1362 = g_dispatchSave1362 + g_clipMaxScratch * g_dispatchSave1337;
+            }
+          }
+          while (g_dispatchSave1385 <= g_dispatchSave1365) {
+            uVar5 = g_dispatchSave1366 + 1;
+            if (2 < (int)uVar5) {
+              uVar5 = 0;
+            }
+            g_dispatchSave1385 = (&g_dispatchSave1381)[uVar5];
+            iVar4 = g_dispatchSave1385 - (&g_dispatchSave1381)[g_dispatchSave1366];
+            if (iVar4 != 0) {
+              g_dispatchSave1339 = (((&g_dispatchSave1378)[uVar5] - (&g_dispatchSave1378)[g_dispatchSave1366]) * 0x10000) /
+                             iVar4;
+            }
+            g_dispatchSave1384 = (&g_dispatchSave1378)[g_dispatchSave1366] * 0x10000;
+            g_clipMaxScratch = g_dispatchSave1365 - (&g_dispatchSave1381)[g_dispatchSave1366];
+            g_dispatchSave1366 = uVar5;
+            if (g_clipMaxScratch != 0) {
+              g_dispatchSave1384 = g_dispatchSave1384 + g_clipMaxScratch * g_dispatchSave1339;
+            }
+          }
+          g_clipMinScratch = g_dispatchSave1385;
+          if (g_dispatchSave1364 < g_dispatchSave1385) {
+            g_clipMinScratch = g_dispatchSave1364;
+          }
+          g_dispatchSave1393 = g_clipMinScratch - g_dispatchSave1365;
+          g_dispatchSave1365 = g_clipMinScratch;
+          if (g_dispatchSave1394 < g_clipMinScratch) {
+            g_dispatchSave1393 = g_dispatchSave1393 + (g_dispatchSave1394 - g_clipMinScratch);
+          }
+          for (; 0 < g_dispatchSave1393; g_dispatchSave1393 = g_dispatchSave1393 + -1) {
+            g_dispatchSave1370 = g_dispatchSave1384 >> 0x10;
+            g_clipMinScratch = g_dispatchSave1363 >> 0x10;
+            g_clipMaxScratch = g_dispatchSave1370 - g_clipMinScratch;
+            if (((0 < g_clipMaxScratch) && (-1 < g_dispatchSave1370)) && (g_clipMinScratch < g_viewportW)) {
+              g_clipMaxScratch = g_clipMaxScratch + g_clipMinScratch;
+              g_dispatchSave1389 = g_dispatchSave1362;
+              g_dispatchSave1387 = g_dispatchSave1361;
+              if (g_clipMinScratch < 0) {
+                g_dispatchSave1387 = g_dispatchSave1361 - g_clipMinScratch * g_dispatchSave1342;
+                g_dispatchSave1389 = g_dispatchSave1362 - g_clipMinScratch * g_dispatchSave1343;
+                g_clipMinScratch = 0;
+              }
+              g_dispatchSave1345 = (ushort *)(g_dispatchSave1346 + g_clipMinScratch * 2);
+              if (g_viewportW < g_clipMaxScratch) {
+                g_clipMaxScratch = g_viewportW;
+              }
+              g_clipMinScratch = g_clipMaxScratch - g_clipMinScratch;
+              if (0 < g_clipMinScratch) {
+                if (g_texturedTriVar == 0) {
+                  do {
+                    uVar1 = *(ushort *)
+                             (g_dispatchSave1404 +
+                             ((int)((g_dispatchSave1387 >> 0x10 & 0xff) << 8 | g_dispatchSave1389 & 0xff0000) >>
+                             8) * 2);
+                    if (uVar1 != 0) {
+                      uVar6 = (*g_dispatchSave1345 & 0x7bde) + (uVar1 & 0x7bde);
+                      uVar5 = uVar6 & 0x8420;
+                      *g_dispatchSave1345 = ((short)uVar5 - (short)(uVar5 >> 5) | (ushort)uVar6) & 0x7bde;
+                    }
+                    g_clipMinScratch = g_clipMinScratch + -1;
+                    g_dispatchSave1387 = g_dispatchSave1387 + g_dispatchSave1342;
+                    g_dispatchSave1389 = g_dispatchSave1389 + g_dispatchSave1343;
+                    g_dispatchSave1345 = g_dispatchSave1345 + 1;
+                  } while (0 < g_clipMinScratch);
+                }
+                else {
+                  do {
+                    uVar1 = *(ushort *)
+                             (g_dispatchSave1404 +
+                             ((int)((g_dispatchSave1387 >> 0x10 & 0xff) << 8 | g_dispatchSave1389 & 0xff0000) >>
+                             8) * 2);
+                    if (uVar1 != 0) {
+                      uVar5 = (uVar1 & 0xf7de) + (*g_dispatchSave1345 & 0xf7de);
+                      *g_dispatchSave1345 =
+                           ((short)(uVar5 & 0x10820) -
+                            (short)((uVar5 & 0x10020 | (uVar5 & 0x10820) >> 1 & 0x7f80) >> 5) |
+                           (ushort)uVar5) & 0xf7de;
+                    }
+                    g_clipMinScratch = g_clipMinScratch + -1;
+                    g_dispatchSave1387 = g_dispatchSave1387 + g_dispatchSave1342;
+                    g_dispatchSave1389 = g_dispatchSave1389 + g_dispatchSave1343;
+                    g_dispatchSave1345 = g_dispatchSave1345 + 1;
+                  } while (0 < g_clipMinScratch);
+                }
+              }
+            }
+            g_dispatchSave1346 = g_dispatchSave1346 + g_viewportY;
+            g_dispatchSave1384 = g_dispatchSave1384 + g_dispatchSave1339;
+            g_dispatchSave1361 = g_dispatchSave1361 + g_dispatchSave1336;
+            g_dispatchSave1363 = g_dispatchSave1363 + g_dispatchSave1338;
+            g_dispatchSave1362 = g_dispatchSave1362 + g_dispatchSave1337;
+          }
+          uVar5 = g_dispatchSave1359;
+        } while (g_dispatchSave1365 < g_dispatchSave1394);
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void TexturedTriRasterizeAlphaPal(void)
 {
     __asm {
@@ -611,3 +801,4 @@ __declspec(naked) void TexturedTriRasterizeAlphaPal(void)
         ret
     }
 }
+#endif

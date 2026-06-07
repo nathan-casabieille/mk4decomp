@@ -151,7 +151,10 @@ def compile_ok(twin, name):
         if re.search(r'\(\s*\*\s*%s\s*\)\s*\(' % g, twin) or re.search(r'\b%s\s*\(' % g, twin):
             h += 'extern int (*%s)();\n' % g
         elif re.search(r'\b%s\s*\[' % g, twin) or unary_deref(g):
-            h += 'extern unsigned int %s[];\n' % g
+            # Pointer (not array): a pointer-holding global supports deref `*g`,
+            # index `g[i]`, AND `g = (T*)expr` pointer assignment (the scanline
+            # / texture dest pointers); an array decl rejects the assignment.
+            h += 'extern unsigned int *%s;\n' % g
         else:
             h += 'extern unsigned int %s;\n' % g
     h += ''.join('extern int %s();\n' % f for f in calls)

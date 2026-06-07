@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -135,6 +136,93 @@ extern unsigned int g_viewportX;
 extern unsigned int g_viewportY;
 extern unsigned int g_dispatchSave1404;
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void ScanlineTexBlitAdditive(void)
+
+{
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  
+  if ((((g_viewportX != 0) && (g_dispatchSave1378 < g_viewportW)) && (g_dispatchSave1381 < g_viewportH)) &&
+     ((-1 < g_dispatchSave1380 && (-1 < g_dispatchSave1383)))) {
+    g_dispatchSave1708 = g_dispatchSave1380 - g_dispatchSave1378;
+    g_dispatchSave1707 = g_dispatchSave1383 - g_dispatchSave1381;
+    if ((0 < g_dispatchSave1708) && (0 < g_dispatchSave1707)) {
+      uVar2 = g_dispatchSave1374 * 0x10000;
+      g_dispatchSave1373 = g_dispatchSave1373 * 0x10000;
+      uVar4 = g_dispatchSave1371 * 0x10000;
+      iVar3 = (int)(g_dispatchSave1373 + g_dispatchSave1371 * -0x10000) / g_dispatchSave1708;
+      g_dispatchSave1377 = g_dispatchSave1377 * 0x10000;
+      g_dispatchSave1358 = (int)(g_dispatchSave1377 + g_dispatchSave1374 * -0x10000) / g_dispatchSave1707;
+      g_dispatchSave1371 = uVar4;
+      if (g_dispatchSave1378 < 0) {
+        g_dispatchSave1371 = uVar4 - iVar3 * g_dispatchSave1378;
+        g_dispatchSave1708 = g_dispatchSave1708 + g_dispatchSave1378;
+        g_dispatchSave1378 = 0;
+      }
+      g_dispatchSave1374 = uVar2;
+      if (g_dispatchSave1381 < 0) {
+        g_dispatchSave1374 = uVar2 - g_dispatchSave1358 * g_dispatchSave1381;
+        g_dispatchSave1707 = g_dispatchSave1707 + g_dispatchSave1381;
+        g_dispatchSave1381 = 0;
+      }
+      if (g_viewportW <= g_dispatchSave1380) {
+        g_dispatchSave1708 = g_viewportW - g_dispatchSave1378;
+      }
+      if (g_viewportH <= g_dispatchSave1383) {
+        g_dispatchSave1707 = g_viewportH - g_dispatchSave1381;
+      }
+      g_dispatchSave1346 = (ushort *)(g_viewportX + g_viewportY * g_dispatchSave1381 + g_dispatchSave1378 * 2);
+      g_dispatchSave1403 = (g_dispatchSave1403 & 0xf) << 0x10;
+      g_dispatchSave1357 = iVar3;
+      iVar5 = g_dispatchSave1708;
+      for (; 0 < g_dispatchSave1707; g_dispatchSave1707 = g_dispatchSave1707 + -1) {
+        g_dispatchSave1404 = g_dispatchSave1400 + ((g_dispatchSave1374 >> 0x10 & 0xff) * 0x100 + g_dispatchSave1403) * 2;
+        g_dispatchSave1387 = g_dispatchSave1371;
+        g_dispatchSave1345 = g_dispatchSave1346;
+        g_clipMinScratch = iVar5;
+        if (g_texturedTriVar == 0) {
+          for (; 0 < g_clipMinScratch; g_clipMinScratch = g_clipMinScratch + -1) {
+            uVar1 = *(ushort *)(g_dispatchSave1404 + (g_dispatchSave1387 >> 0x10 & 0xff) * 2);
+            if (uVar1 != 0) {
+              uVar4 = (*g_dispatchSave1345 & 0x7bde) + (uVar1 & 0x7bde);
+              uVar2 = uVar4 & 0x8420;
+              *g_dispatchSave1345 = ((short)uVar2 - (short)(uVar2 >> 5) | (ushort)uVar4) & 0x7bde;
+              iVar5 = g_dispatchSave1708;
+              iVar3 = g_dispatchSave1357;
+            }
+            g_dispatchSave1387 = g_dispatchSave1387 + iVar3;
+            g_dispatchSave1345 = g_dispatchSave1345 + 1;
+          }
+        }
+        else {
+          for (; 0 < g_clipMinScratch; g_clipMinScratch = g_clipMinScratch + -1) {
+            uVar1 = *(ushort *)(g_dispatchSave1404 + (g_dispatchSave1387 >> 0x10 & 0xff) * 2);
+            if (uVar1 != 0) {
+              uVar2 = (*g_dispatchSave1345 & 0xf7de) + (uVar1 & 0xf7de);
+              *g_dispatchSave1345 =
+                   ((short)(uVar2 & 0x10820) -
+                    (short)((uVar2 & 0x10020 | (uVar2 & 0x10820) >> 1 & 0x7f80) >> 5) |
+                   (ushort)uVar2) & 0xf7de;
+              iVar5 = g_dispatchSave1708;
+              iVar3 = g_dispatchSave1357;
+            }
+            g_dispatchSave1387 = g_dispatchSave1387 + iVar3;
+            g_dispatchSave1345 = g_dispatchSave1345 + 1;
+          }
+        }
+        g_dispatchSave1374 = g_dispatchSave1374 + g_dispatchSave1358;
+        g_dispatchSave1346 = (ushort *)((int)g_dispatchSave1346 + g_viewportY);
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void ScanlineTexBlitAdditive(void)
 {
     __asm {
@@ -360,3 +448,4 @@ __declspec(naked) void ScanlineTexBlitAdditive(void)
         ret
     }
 }
+#endif

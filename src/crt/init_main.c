@@ -2,6 +2,7 @@
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 /* @addr 0x004cbb30 (238b crt) - CRT environment-string parser (envp builder).
@@ -17,6 +18,102 @@ extern void CmpCallPushIATCall(void);
 extern void FreeImpl(void);
 extern void LoadArgPushCall(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void _init_main(void)
+
+{
+  char cVar1;
+  char cVar2;
+  int *piVar3;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
+  char *pcVar7;
+  int iVar8;
+  char *pcVar9;
+  char *pcVar10;
+  int *local_4;
+  
+  iVar8 = 0;
+  cVar2 = *g_initRet;
+  pcVar7 = g_initRet;
+  while (cVar2 != '\0') {
+    if (cVar2 != '=') {
+      iVar8 = iVar8 + 1;
+    }
+    uVar4 = 0xffffffff;
+    pcVar9 = pcVar7;
+    do {
+      if (uVar4 == 0) break;
+      uVar4 = uVar4 - 1;
+      cVar2 = *pcVar9;
+      pcVar9 = pcVar9 + 1;
+    } while (cVar2 != '\0');
+    pcVar9 = pcVar7 + ~uVar4;
+    pcVar7 = pcVar7 + ~uVar4;
+    cVar2 = *pcVar9;
+  }
+  piVar3 = (int *)LoadArgPushCall(iVar8 * 4 + 4);
+  g_dispatchSave1426 = piVar3;
+  if (piVar3 == (int *)0x0) {
+    __amsg_exit(9);
+  }
+  cVar2 = *g_initRet;
+  local_4 = piVar3;
+  pcVar7 = g_initRet;
+  do {
+    if (cVar2 == '\0') {
+      FreeImpl(g_initRet);
+      g_initRet = (char *)0x0;
+      *piVar3 = 0;
+      return;
+    }
+    uVar4 = 0xffffffff;
+    pcVar9 = pcVar7;
+    do {
+      if (uVar4 == 0) break;
+      uVar4 = uVar4 - 1;
+      cVar1 = *pcVar9;
+      pcVar9 = pcVar9 + 1;
+    } while (cVar1 != '\0');
+    uVar4 = ~uVar4;
+    if (cVar2 != '=') {
+      iVar8 = LoadArgPushCall(uVar4);
+      *piVar3 = iVar8;
+      if (iVar8 == 0) {
+        __amsg_exit(9);
+      }
+      uVar5 = 0xffffffff;
+      pcVar9 = pcVar7;
+      do {
+        pcVar10 = pcVar9;
+        if (uVar5 == 0) break;
+        uVar5 = uVar5 - 1;
+        pcVar10 = pcVar9 + 1;
+        cVar2 = *pcVar9;
+        pcVar9 = pcVar10;
+      } while (cVar2 != '\0');
+      uVar5 = ~uVar5;
+      pcVar9 = pcVar10 + -uVar5;
+      pcVar10 = (char *)*local_4;
+      for (uVar6 = uVar5 >> 2; uVar6 != 0; uVar6 = uVar6 - 1) {
+        *(undefined4 *)pcVar10 = *(undefined4 *)pcVar9;
+        pcVar9 = pcVar9 + 4;
+        pcVar10 = pcVar10 + 4;
+      }
+      piVar3 = local_4 + 1;
+      for (uVar5 = uVar5 & 3; local_4 = piVar3, uVar5 != 0; uVar5 = uVar5 - 1) {
+        *pcVar10 = *pcVar9;
+        pcVar9 = pcVar9 + 1;
+        pcVar10 = pcVar10 + 1;
+      }
+    }
+    cVar2 = pcVar7[uVar4];
+    pcVar7 = pcVar7 + uVar4;
+  } while( true );
+}
+#else
 __declspec(naked) void _init_main(void) {
     __asm {
         push    ecx
@@ -121,4 +218,5 @@ __declspec(naked) void _init_main(void) {
         ret
     }
 }
+#endif
 
