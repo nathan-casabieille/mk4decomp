@@ -193710,34 +193710,6 @@ __declspec(naked) void Screen_GreatestWarrior(void)
 // === EXTERNS ===
 extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp(void);
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void PendingMatch_MStackPush2RunCountdown_0044c530(void)
-
-{
-  g_cj_0054205c = MK4_NODE_AT(undefined4, g_baseSel, 100);
-  MStackPush2RunCountdown();
-  if (g_framePauseFlag == 0) {
-    MStackBracket7_DispatchAndChain();
-    if (g_framePauseFlag == 0) {
-      g_walkCallback = 0xc;
-      ChainDirtyBitWalker();
-      if ((g_framePauseFlag == 0) &&
-         (g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0x40), g_walkCallback < -0x30a2)) {
-        g_chainAccumCur = 0xc;
-        g_walkCallback = 3;
-        DualSetShiftCall();
-        if (g_framePauseFlag == 0) {
-          DoubleStackPushAndJmp7d();
-          return;
-        }
-        return;
-      }
-    }
-  }
-  return;
-}
-#else
 __declspec(naked) void PendingMatch_MStackPush2RunCountdown_0044c530(void)
 {
     __asm {
@@ -194049,7 +194021,6 @@ __declspec(naked) void PendingMatch_MStackPush2RunCountdown_0044c530(void)
         ret      
     }
 }
-#endif
 
 // === EXTERNS ===
 
