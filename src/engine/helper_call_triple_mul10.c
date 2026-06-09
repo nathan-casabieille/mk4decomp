@@ -121,42 +121,6 @@ extern unsigned int g_eventQueueSeed;
 extern void MStackDualDiffSequencer(void);
 extern void SetupVecFsmCluster(void);
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void HelperCallTripleMul10(void)
-
-{
-  int iVar1;
-  undefined4 uVar2;
-  
-  g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
-  g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-  g_cj_00542054 = MK4_NODE_AT(undefined4, g_baseSel, 100);
-  SetupVecFsmCluster();
-  if (g_framePauseFlag == 0) {
-    g_walkCallback = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x78);
-    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
-    uVar2 = Mul10Tail(0x9999,g_walkCallback);
-    *(undefined4 *)(iVar1 + 0x78) = uVar2;
-    g_walkCallback = *(undefined4 *)(iVar1 + 0x7c);
-    uVar2 = Mul10Tail(0x9999,g_walkCallback);
-    *(undefined4 *)(iVar1 + 0x7c) = uVar2;
-    g_walkCallback = *(undefined4 *)(iVar1 + 0x80);
-    g_walkCallback = Mul10Tail(0x9999,g_walkCallback);
-    *(undefined4 *)(iVar1 + 0x80) = g_walkCallback;
-    g_eventQueuePending = g_eventQueueSeed + 0x15;
-    g_eventQueueCurrent = 0x2b85;
-    g_eventQueueWorkType = 0x20;
-    MStackDualDiffSequencer();
-    if (g_framePauseFlag == 0) {
-      g_cj_0054205c = *(int *)((int)g_matrixStackTop * 4);
-      g_matrixStackTop = g_matrixStackTop + -1;
-    }
-  }
-  return;
-}
-#else
 __declspec(naked) void HelperCallTripleMul10(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -224,4 +188,3 @@ __declspec(naked) void HelperCallTripleMul10(void) {
         ret
     }
 }
-#endif

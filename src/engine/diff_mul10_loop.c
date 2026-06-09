@@ -119,30 +119,6 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void DivLongPushCall(void);
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void DiffMul10Loop(void)
-
-{
-  g_walkCallback = ((g_walkCallback - MK4_NODE_AT(int, g_dualC, 0)) - MK4_NODE_AT(int, g_dualD, 0)) *
-                 0x10000 + MK4_NODE_AT(int, g_dualC, 4) + MK4_NODE_AT(int, g_dualD, 4);
-  DivLongPushCall();
-  if (g_framePauseFlag == 0) {
-    g_eventQueueCurrent = Mul10Tail(g_walkCallback,MK4_NODE_AT(undefined4, g_eventQueuePending, 0));
-    g_xformLoopCounter = 2;
-    do {
-      g_eventQueuePending = g_eventQueuePending + 1;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_eventQueueCurrent;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-      g_eventQueueCurrent = Mul10Tail(g_walkCallback,MK4_NODE_AT(undefined4, g_eventQueuePending, 0));
-      g_xformLoopCounter = g_xformLoopCounter + -1;
-    } while (-1 < g_xformLoopCounter);
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -3;
-    g_eventQueuePending = g_eventQueuePending + -3;
-  }
-  return;
-}
-#else
 __declspec(naked) void DiffMul10Loop(void) {
     __asm {
         mov     ecx, dword ptr [g_pendingNodeType]
@@ -213,4 +189,3 @@ __declspec(naked) void DiffMul10Loop(void) {
         ret
     }
 }
-#endif

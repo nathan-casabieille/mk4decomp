@@ -124,46 +124,6 @@ extern unsigned int g_audioStateMachineVar2;
 extern void GuardedSetupCallTailJmp(void);
 extern void MStackPush2ChainLLInsert(void);
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void CharSelect_CpuBattlesToggle(void)
-
-{
-  char *pcVar1;
-  uint uVar2;
-  
-  uVar2 = 0;
-  do {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(char **)((g_baseSel + (char)(&g_byteTab_004f3940)[uVar2 * 0x24]) * 4);
-    MStackPush2ChainLLInsert();
-    g_walkCallback = (&g_dispatchSave816)[uVar2 * 9];
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (&(*(unsigned int *)MK4_VA(unsigned int, 0x4f3944)))[uVar2 * 9];
-    if ((uVar2 == 2) && ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = "SHOW CPU BATTLES", g_audioStateMachineVar2 == 0)) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = "SKIP CPU BATTLES";
-    }
-    if ((uVar2 == 5) && (MK4_NODE_AT(int, g_baseSel, 0x30) == 1)) {
-      g_walkCallback = 0x3e80000;
-    }
-    if ((uVar2 == 6) && (MK4_NODE_AT(int, g_baseSel, 0x30) != 1)) {
-      g_walkCallback = 0x3e80000;
-    }
-    if ((uVar2 == 5) && (MK4_NODE_AT(int, g_baseSel, 0x30) == 2)) {
-      g_walkCallback = 0x3e80000;
-    }
-    if ((uVar2 == 6) && (MK4_NODE_AT(int, g_baseSel, 0x30) == 2)) {
-      g_walkCallback = 0x3e80000;
-    }
-    GuardedSetupCallTailJmp((*(unsigned int *)MK4_VA(unsigned int, 0x542044)),g_walkCallback);
-    *(undefined4 *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = (&(*(unsigned int *)MK4_VA(unsigned int, 0x4f3950)))[uVar2 * 9];
-    pcVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    (&(*(unsigned int *)MK4_VA(unsigned int, 0x4f3948)))[uVar2 * 9] = *(undefined4 *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54);
-    g_eventQueueCurrent = (int)(char)(&g_byteTab_004f3940)[uVar2 * 0x24];
-    uVar2 = uVar2 + 1;
-    *(char **)((g_eventQueueCurrent + g_baseSel) * 4) = pcVar1;
-  } while (uVar2 < 7);
-  return;
-}
-#else
 __declspec(naked) void CharSelect_CpuBattlesToggle(void)
 {
     __asm
@@ -252,4 +212,3 @@ __declspec(naked) void CharSelect_CpuBattlesToggle(void)
         ret
     }
 }
-#endif

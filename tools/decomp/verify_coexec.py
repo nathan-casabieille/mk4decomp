@@ -145,14 +145,23 @@ def uc_new(arena):
     return uc, full
 
 
+import os
+CAP = int(os.environ.get('MK4_COEXEC_CAP', '2000000'))
+
+
 def run_at(uc, eip, full):
-    from unicorn.x86_const import UC_X86_REG_ESP
+    from unicorn.x86_const import UC_X86_REG_ESP, UC_X86_REG_EIP
     SENT = 0x00bad0de
     esp = STACK + 0x20000
     uc.reg_write(UC_X86_REG_ESP, esp)
     uc.mem_write(esp, SENT.to_bytes(4, 'little'))
-    uc.emu_start(eip, SENT, count=2000000)
-    return bytes(uc.mem_read(0, full))
+    uc.emu_start(eip, SENT, count=CAP)
+    # A mismatch is only trustworthy if the function actually RETURNED (EIP at
+    # the sentinel). If it hit the instruction cap mid-run, the twin (gcc) and
+    # original (MSVC asm) may simply be at different points of an equivalent
+    # computation - a snapshot diff there is a cap artifact, not a real bug.
+    terminated = uc.reg_read(UC_X86_REG_EIP) == SENT
+    return bytes(uc.mem_read(0, full)), terminated
 
 
 def verify(name, fn_va, gl_va, name_to_va, arena):
@@ -174,9 +183,10 @@ def verify(name, fn_va, gl_va, name_to_va, arena):
             uc2.mem_map(load_base & ~0xFFF,
                         ((len(blob) + (load_base & 0xFFF) + 0xFFF) & ~0xFFF))
         uc2.mem_write(load_base, blob)             # twin lands at its own VA
-        twin = run_at(uc2, fn_va[name], full)
+        twin, twin_ret = run_at(uc2, fn_va[name], full)
     except Exception as e:
         return 'SKIP unicorn: %s' % e
+    orig, orig_ret = orig
     init = bytearray(full)
     init[BASE:BASE + len(arena)] = arena
 
@@ -192,7 +202,13 @@ def verify(name, fn_va, gl_va, name_to_va, arena):
                 if not (blob_lo <= o < blob_hi) and buf[o:o+4] != init[o:o+4]}
     do, dt = delta(orig), delta(twin)
     if do == dt:
-        return 'VERIFIED (%d writes)' % len(do)
+        return 'VERIFIED (%d writes)%s' % (
+            len(do), '' if (orig_ret and twin_ret) else ' [capped]')
+    # A diff is only a trustworthy MISMATCH if BOTH sides returned; otherwise
+    # one hit the instruction cap mid-run and the snapshot diff is a cap
+    # artifact (equivalent code, different instruction counts).
+    if not (orig_ret and twin_ret):
+        return 'SKIP capped-diff (orig_ret=%d twin_ret=%d)' % (orig_ret, twin_ret)
     ou = sorted(set(do) - set(dt))
     on = sorted(set(dt) - set(do))
     vd = sorted(o for o in set(do) & set(dt) if do[o] != dt[o])

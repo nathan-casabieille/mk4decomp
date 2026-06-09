@@ -134,23 +134,6 @@ extern void Wrapper_ScaledChainPushCall_004ef838(void);
 
 extern unsigned int g_matrixStack_arr;
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void FiveThunkMStackDispatcher(void)
-
-{
-  ScaledAndAlfe();
-  if (g_framePauseFlag == 0) {
-    g_walkCallback = 0x603;
-    MK4_NODE_AT(undefined4, g_baseSel, 0x74) = 0x603;
-    TripleCallPauseJmp();
-    if (g_framePauseFlag == 0) {
-      ArgSarStoreJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4eb6b8)));
-    }
-  }
-  return;
-}
-#else
 __declspec(naked) void FiveThunkMStackDispatcher(void) {
     __asm {
         call    ScaledAndAlfe
@@ -269,4 +252,3 @@ __declspec(naked) void FiveThunkMStackDispatcher(void) {
         jmp     MStackJmpInstallSelf
     }
 }
-#endif

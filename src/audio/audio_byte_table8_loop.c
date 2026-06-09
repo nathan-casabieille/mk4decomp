@@ -128,66 +128,6 @@ extern void GuardedSetupCallTailJmp(void);
 extern void Helper_Sprintf(void);
 extern void MStackPush2ChainLLInsert(void);
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void CharSelect_Team(void)
-
-{
-  int iVar1;
-  int iVar2;
-  uint uVar3;
-  char *pcVar4;
-  
-  uVar3 = 0;
-  do {
-    iVar2 = uVar3 * 0x24;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((g_baseSel + *(char *)(iVar2 + 0x4f3c20)) * 4);
-    MStackPush2ChainLLInsert();
-    if (uVar3 == 3) {
-      if (g_audioMixerKnob2 == 0) {
-        pcVar4 = MK4_VA(char, 0x004f43f4);
-      }
-      else if (g_audioMixerKnob2 == 1) {
-        pcVar4 = MK4_VA(char, 0x004f43dc);
-      }
-      else {
-        if (g_audioMixerKnob2 != 2) goto LAB_004a7fe0;
-        pcVar4 = MK4_VA(char, 0x004f43cc);
-      }
-LAB_004a7fd3:
-      Helper_Sprintf(MK4_VA(unsigned int, 0x543450),pcVar4);
-    }
-    else if (uVar3 == 4) {
-      if (g_audioMixerKnob == 0) {
-        pcVar4 = MK4_VA(char, 0x004f4434);
-      }
-      else if (g_audioMixerKnob == 1) {
-        pcVar4 = MK4_VA(char, 0x004f441c);
-      }
-      else {
-        if (g_audioMixerKnob != 2) goto LAB_004a7fe0;
-        pcVar4 = MK4_VA(char, 0x004f440c);
-      }
-      goto LAB_004a7fd3;
-    }
-LAB_004a7fe0:
-    g_walkCallback = *(undefined4 *)(iVar2 + 0x4f3c2c);
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 0x4f3c24);
-    GuardedSetupCallTailJmp((*(unsigned int *)MK4_VA(unsigned int, 0x542044)),g_walkCallback);
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = *(undefined4 *)(iVar2 + 0x4f3c30);
-    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    *(undefined4 *)(iVar2 + 0x4f3c28) = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54);
-    g_eventQueueCurrent = (int)*(char *)(iVar2 + 0x4f3c20);
-    uVar3 = uVar3 + 1;
-    *(int *)((g_eventQueueCurrent + g_baseSel) * 4) = iVar1;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = *(undefined4 *)(iVar2 + 0x4f3c28);
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = *(undefined4 *)(iVar2 + 0x4f3c2c);
-    if (7 < uVar3) {
-      return;
-    }
-  } while( true );
-}
-#else
 __declspec(naked) void CharSelect_Team(void)
 {
     __asm
@@ -277,4 +217,3 @@ __declspec(naked) void CharSelect_Team(void)
         ret
     }
 }
-#endif
