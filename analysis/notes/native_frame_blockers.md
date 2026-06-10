@@ -38,6 +38,31 @@ memory blockers, stub the 3 FSM blockers as no-ops, and `MainLoopStep` links
 renderer path) even before the game FSM ticks. That is the recommended first
 "real frame" milestone for the native port.
 
+## Empirical native-compile findings (2026-06-10)
+
+Compiled `MainLoopStep`'s portable closure (54 source files) under the
+**64-bit host clang** with `-DNON_MATCHING -DMK4_ARENA -DTARGET_SDL`:
+
+- **The converted code is seam-clean / 64-bit-native-feasible.** `main_loop.c`
+  itself compiles with zero raw-VA derefs (just a `Sleep` shim). This is the
+  big de-risking result: 64-bit native (and therefore WASM) is viable for the
+  converted corpus, not blocked on a pervasive raw-pointer rewrite.
+- Two central enablers landed (matching byte-identical throughout):
+  1. `ghidra_types.h` now includes `mem_model.h` (the injector added the
+     former but not the seam header -> `MK4_NODE_AT`/`MK4_VA` looked like
+     undeclared functions standalone).
+  2. `types.h` neutralizes `__stdcall`/`__declspec`/`__cdecl`/`__fastcall`
+     under `!_WIN32`.
+- Closure compile status: **26 / 54** files compile under permissive native
+  flags (`-Wno-int-conversion -Wno-implicit-function-declaration
+  -Wno-incompatible-pointer-types -Wno-int-to-pointer-cast` - the int<->ptr
+  ones are just the seam's pointer-as-int model). The remaining ~28 fail on a
+  finite per-file grind: missing externs (globals/functions not yet in any
+  header), Ghidra syntax artifacts, FPU inline (`fpu_sqrt_mul.c`), and Win32
+  headers in platform-glue files (`<mmsystem.h>` in `timer.c` -> PAL).
+- Real host/PAL shims the closure needs (small list): `Sleep`, `timeGetTime`,
+  `mciSendCommandA`, `__alldiv`, `__allshl`.
+
 ## Suggested order
 
 1. `Mul10Tail` (convert + verify_coexec) - removes one blocker cleanly.
