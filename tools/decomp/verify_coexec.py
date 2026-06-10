@@ -125,6 +125,43 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None):
     return bytes(buf), entry, load_base, None
 
 
+def extract_twin_any(name):
+    """Like verify_twin.extract_twin but for ANY signature (not just
+    void(void)). Returns (body, nargs, returns_value) or None.
+    nargs = number of stack params (each counted as one 4-byte slot);
+    returns_value = the body has a `return <expr>;` (so EAX is meaningful)."""
+    sig = re.compile(r'\b[A-Za-z_][\w *]*?\b(%s)\s*\(([^){]*)\)\s*\{'
+                     % re.escape(name))
+    for f in (ROOT / 'src').rglob('*.c'):
+        s = f.read_text(errors='ignore')
+        for m in re.finditer(r'#ifdef NON_MATCHING\b', s):
+            j = s.find('#else', m.end())
+            if j < 0:
+                continue
+            block = s[m.end():j]
+            nm = sig.search(block)
+            if not nm:
+                continue
+            params = nm.group(2).strip()
+            nargs = 0 if params in ('', 'void') else \
+                len([p for p in params.split(',') if p.strip()])
+            start = nm.start()
+            i = block.index('{', nm.end() - 1)
+            k, depth = i, 0
+            while k < len(block):
+                if block[k] == '{':
+                    depth += 1
+                elif block[k] == '}':
+                    depth -= 1
+                    if depth == 0:
+                        break
+                k += 1
+            body = block[start:k + 1]
+            returns_value = bool(re.search(r'\breturn\s+[^;]', body))
+            return body, nargs, returns_value
+    return None
+
+
 def uc_new(arena):
     from unicorn import Uc, UC_ARCH_X86, UC_MODE_32
     from unicorn import UC_HOOK_MEM_READ_UNMAPPED, UC_HOOK_MEM_WRITE_UNMAPPED
@@ -147,46 +184,55 @@ def uc_new(arena):
 
 import os
 CAP = int(os.environ.get('MK4_COEXEC_CAP', '2000000'))
+ARG_BASE = None          # set in main(): start of the deterministic arg scratch
 
 
-def run_at(uc, eip, full):
-    from unicorn.x86_const import UC_X86_REG_ESP, UC_X86_REG_EIP
+def run_at(uc, eip, full, nargs=0):
+    from unicorn.x86_const import UC_X86_REG_ESP, UC_X86_REG_EIP, UC_X86_REG_EAX
     SENT = 0x00bad0de
     esp = STACK + 0x20000
     uc.reg_write(UC_X86_REG_ESP, esp)
-    uc.mem_write(esp, SENT.to_bytes(4, 'little'))
+    uc.mem_write(esp, SENT.to_bytes(4, 'little'))   # return address
+    # Stack args at [esp+4 ...], identical for both sides. Each arg points into
+    # a deterministic self-referential scratch region (word at A == A), so a
+    # pointer arg can be walked without faulting and BOTH sides see the same
+    # bytes - this is an equivalence check, not a realistic-input test.
+    for i in range(nargs):
+        uc.mem_write(esp + 4 + 4 * i,
+                     ((ARG_BASE + i * 0x400) & 0xffffffff).to_bytes(4, 'little'))
     uc.emu_start(eip, SENT, count=CAP)
     # A mismatch is only trustworthy if the function actually RETURNED (EIP at
     # the sentinel). If it hit the instruction cap mid-run, the twin (gcc) and
     # original (MSVC asm) may simply be at different points of an equivalent
     # computation - a snapshot diff there is a cap artifact, not a real bug.
     terminated = uc.reg_read(UC_X86_REG_EIP) == SENT
-    return bytes(uc.mem_read(0, full)), terminated
+    eax = uc.reg_read(UC_X86_REG_EAX)
+    return bytes(uc.mem_read(0, full)), terminated, eax
 
 
 def verify(name, fn_va, gl_va, name_to_va, arena):
     if name not in fn_va:
         return 'SKIP no-addr'
-    t = vt.extract_twin(name)
+    t = extract_twin_any(name)
     if not t:
         return 'SKIP no-twin'
-    body = t[0]
+    body, nargs, returns_value = t
     blob, entry, load_base, err = build_twin_blob(
         name, body, gl_va, name_to_va, fn_self_va=fn_va[name])
     if blob is None:
         return 'SKIP ' + err
     try:
         uc1, full = uc_new(arena)
-        orig = run_at(uc1, fn_va[name], full)
+        orig = run_at(uc1, fn_va[name], full, nargs)
         uc2, _ = uc_new(arena)
         if load_base + len(blob) > full:           # blob outside arena map
             uc2.mem_map(load_base & ~0xFFF,
                         ((len(blob) + (load_base & 0xFFF) + 0xFFF) & ~0xFFF))
         uc2.mem_write(load_base, blob)             # twin lands at its own VA
-        twin, twin_ret = run_at(uc2, fn_va[name], full)
+        twin, twin_ret, twin_eax = run_at(uc2, fn_va[name], full, nargs)
     except Exception as e:
         return 'SKIP unicorn: %s' % e
-    orig, orig_ret = orig
+    orig, orig_ret, orig_eax = orig
     init = bytearray(full)
     init[BASE:BASE + len(arena)] = arena
 
@@ -201,14 +247,22 @@ def verify(name, fn_va, gl_va, name_to_va, arena):
         return {o: bytes(buf[o:o+4]) for o in range(0, full, 4)
                 if not (blob_lo <= o < blob_hi) and buf[o:o+4] != init[o:o+4]}
     do, dt = delta(orig), delta(twin)
-    if do == dt:
-        return 'VERIFIED (%d writes)%s' % (
-            len(do), '' if (orig_ret and twin_ret) else ' [capped]')
+    # EAX (return value) only matters for a value-returning function and only
+    # once both sides have returned (else it is mid-run garbage).
+    eax_ok = (not returns_value) or not (orig_ret and twin_ret) \
+        or (orig_eax == twin_eax)
+    if do == dt and eax_ok:
+        return 'VERIFIED (%d writes%s)%s' % (
+            len(do), '' if not returns_value else ', eax=0x%x' % (twin_eax & 0xffffffff),
+            '' if (orig_ret and twin_ret) else ' [capped]')
     # A diff is only a trustworthy MISMATCH if BOTH sides returned; otherwise
     # one hit the instruction cap mid-run and the snapshot diff is a cap
     # artifact (equivalent code, different instruction counts).
     if not (orig_ret and twin_ret):
         return 'SKIP capped-diff (orig_ret=%d twin_ret=%d)' % (orig_ret, twin_ret)
+    if do == dt and not eax_ok:
+        return 'MISMATCH eax orig=0x%x twin=0x%x' % (
+            orig_eax & 0xffffffff, twin_eax & 0xffffffff)
     ou = sorted(set(do) - set(dt))
     on = sorted(set(dt) - set(do))
     vd = sorted(o for o in set(do) & set(dt) if do[o] != dt[o])
@@ -231,9 +285,19 @@ def all_twins():
 
 
 def main():
+    global ARG_BASE
     fn_va, gl_va = vt.load_maps()
     name_to_va = fn_va                 # load_maps' fn_va is already name -> VA
-    arena = ARENA.read_bytes()
+    arena = bytearray(ARENA.read_bytes())
+    # Deterministic self-referential arg scratch in the last 256 KB of the
+    # arena: the word at address A holds A, so any pointer arg can be walked
+    # (and chased through fields) without leaving the region or faulting, and
+    # both co-exec runs read identical bytes. It lives inside [0,full) so writes
+    # through arg pointers are still part of the diff; the baseline pattern is
+    # in `init` (= arena) so it produces no spurious diff.
+    ARG_BASE = BASE + len(arena) - 0x40000
+    for off in range(len(arena) - 0x40000, len(arena), 4):
+        struct.pack_into('<I', arena, off, (BASE + off) & 0xffffffff)
     names = sys.argv[1:] or all_twins()
     counts = {}
     for n in names:
