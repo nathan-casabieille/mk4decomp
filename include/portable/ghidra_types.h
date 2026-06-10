@@ -74,6 +74,13 @@ typedef int bool;
 #include "win32_types.h"
 /* COM vtable-call seam (DirectSound/DirectDraw/Direct3D method dispatch). */
 #include "com.h"
+/* Memory-model seam (MK4_NODE / MK4_VA / MK4_NODE_AT). Every Ghidra twin that
+ * touches the node pool or a fixed VA uses these, so pull them in here (the
+ * injector adds ghidra_types.h to each twin file). The compile gate already
+ * included it; this makes the real source files compile standalone too -
+ * otherwise MK4_NODE_AT/MK4_VA look like undeclared functions in a native
+ * build. Identity under matching; arena-relative under MK4_ARENA. */
+#include "mem_model.h"
 
 #endif /* NON_MATCHING */
 
