@@ -113,6 +113,33 @@ Without it, this cluster is transcribe-but-cannot-verify, and the "no false"
 rule means it does not ship. This is the highest-leverage next investment for
 both the native frame and finishing the decomp.
 
+## Seeded verifier works - and immediately caught a wrong-VA data bug (2026-06-10)
+
+Built seeded co-exec verification (seed globals + a `ret` callback stub so a
+node-walk runs deterministically). Two `build_twin_blob` fixes were needed and
+made it work: (1) an array-base global (`g[i]`) is single-indirect
+`((uint*)VA)` not double `(*(uint**)VA)` - the double form on a base-0 table
+(`g_siblingTable`, VA 0) is a null deref gcc -O2 turns into `ud2`; (2) compile
+twins with `-fno-delete-null-pointer-checks` so fixed-VA / base-0 accesses are
+not treated as UB.
+
+With that, `Helper_TickInner`'s empty-walk path VERIFIED - but the loop path
+MISMATCHed, and the trace showed why: **the original writes `g_currentNodeIdx`
+at 0x542044, but extras_map maps `g_currentNodeIdx -> 0x54205c`** (a 3-way
+collision with `g_fightGroupHead` / `g_cj_0054205c`; 0x542044 is unnamed). The
+function's first instruction is literally `mov ecx,[0x00542044]`. So the seam
+(extras_map / gl_by_va) routes `g_currentNodeIdx` to the WRONG address, and any
+portable twin referencing it via the named symbol is wrong - the Ghidra C's raw
+`0x542044` was actually correct. (The matching build is unaffected: it resolves
+the asm symbol to the real VA independently.)
+
+IMPLICATION: a class of portable twins that reference `g_currentNodeIdx` (and
+possibly other mis-mapped/colliding globals) are silently wrong under the seam.
+The verifier now CATCHES these (this is exactly what it is for). Next: audit
+extras_map for VA collisions / wrong VAs against the matching symbol
+resolution, fix `g_currentNodeIdx` -> 0x542044 (carefully, given the 0x54205c
+collision), then the render/FSM twins can be transcribed AND verified.
+
 ## Suggested order
 
 1. `Mul10Tail` (convert + verify_coexec) - removes one blocker cleanly.

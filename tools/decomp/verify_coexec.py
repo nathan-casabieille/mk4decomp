@@ -69,7 +69,14 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None):
                 j -= 1
             if j < 0 or (body[j] not in '_)]' and not body[j].isalnum()):
                 deref = True
-        if deref or re.search(r'\b%s\s*\[' % g, body):
+        # Indexed `g[i]` -> g is an array AT the VA (a base-0 packed-ptr table
+        # like g_siblingTable resolves the address from i*4), so the base IS
+        # the VA: single-indirect. A unary-deref `*g` -> g HOLDS a pointer:
+        # double-indirect (load the pointer FROM the VA). (Conflating these
+        # made `g_siblingTable[i]` a double null-deref that gcc -O2 traps.)
+        if re.search(r'\b%s\s*\[' % g, body):
+            return '#define %s ((unsigned int *)0x%xu)\n' % (g, va)
+        if deref:
             return '#define %s (*(unsigned int **)0x%xu)\n' % (g, va)
         return '#define %s (*(unsigned int *)0x%xu)\n' % (g, va)
     defs = ''.join(gdef(g, gl_va[g]) for g in globs)
@@ -90,6 +97,9 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None):
         r = subprocess.run(
             [CC, '-m32', '-std=gnu89', '-c', '-O2', '-fno-stack-protector',
              '-fno-pic', '-ffreestanding', '-fno-asynchronous-unwind-tables',
+             # the engine reads fixed VAs (incl. base-0 packed-ptr tables);
+             # don't let gcc treat those as UB null derefs and emit ud2.
+             '-fno-delete-null-pointer-checks',
              '-I' + str(ROOT / 'include'), '-w', str(c), '-o', str(o)],
             capture_output=True, text=True)
         if r.returncode:
