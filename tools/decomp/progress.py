@@ -8,34 +8,35 @@ The decomp project moves along several independent dimensions, and a single
   This is the foundation of the project (`make matching` must always be 100%).
   Locked at 100% since the rebuild matched.
 
+- **Portable C (pure C + twins)** - functions with no x86 `__asm` in the path
+  a port compiles: pure-C bodies PLUS naked/hybrid functions that now carry a
+  behaviour-equivalent `#ifdef NON_MATCHING` twin. This is the axis the
+  asm->C / twin conversion work actually moves (toward a native/WASM port) and
+  it IS in the composite. (Distinct from bare "Pure C" below.)
+
 - **Pure C (no `__asm`)** - functions whose body contains no `__asm` block at
-  all. Relevant for portability (e.g. a future WASM/Emscripten port, where x86
-  inline asm is unusable). This metric has a **practical ceiling around 49%**
-  with MSVC 5.0 SP3 - the remaining naked functions all hit codegen quirks
-  pure C cannot reproduce. Shown but not in the composite.
+  all (so it serves BOTH builds with no twin). Has a **practical ceiling
+  around 49%** with MSVC 5.0 SP3 - remaining naked functions hit codegen
+  quirks pure C cannot reproduce. Shown for the matching build; NOT in the
+  composite (asymptotic) and superseded by Portable C for port-readiness.
 
-- **Function naming** - % of functions whose name carries semantic content
-  beyond a generic-prefix placeholder. A name counts as "named" if it has no
-  address suffix at all (`LoadGeoAsset_Textures`) OR if it has an address
-  suffix but ALSO carries a specific identifier (`Wrapper_OrListLoop_004de3f8`
-  - the target name `OrListLoop` is meaningful; `PendingMatch_004013a0` -
-  the FSM family `PendingMatch` is specific). Only bare placeholders like
-  `func_00411f0` (generic prefix + addr) count as not-named.
-
-- **Global naming** - same idea for `g_*` globals. `g_framePauseFlag` is
-  fully named; `Wrapper_OrListLoop_004de3f8` is also named (the arg hex is a
-  meaningful disambiguator). `g_table_004ab4e78` and `g_byte_005435a0` are
-  NOT named - the prefix is generic and the address is the only info.
+- **Symbol naming** - % of functions AND `g_*` globals whose name carries
+  semantic content beyond a generic-prefix placeholder (the two naming axes
+  merged - they move together). A name counts as "named" with no address
+  suffix (`LoadGeoAsset_Textures`, `g_framePauseFlag`) or with a suffix but a
+  specific identifier (`Wrapper_OrListLoop_004de3f8`, `PendingMatch_004013a0`).
+  Bare placeholders like `func_00411f0` / `g_table_004ab4e78` are not named.
 
 - **Struct field coverage** - % of fields in `typedef struct` blocks under
   `include/` that have a real name (not `_NN` / `_NN[K]` placeholders). This
-  is what Priority 1 (struct reconstruction) actually moves: each newly-named
-  ScenegraphNode / FightGroupNode / DrawEntry slot ticks it up.
+  is what struct reconstruction moves: each newly-named ScenegraphNode /
+  FightGroupNode / DrawEntry slot ticks it up.
 
-- **Functional understanding** (composite) - arithmetic mean of the three
-  naming metrics above. Byte-match is excluded (always 100%, doesn't move);
-  pure C is excluded (asymptote at ~49%, would unfairly cap the composite).
-  This is the headline number that reflects *current* contribution velocity.
+- **Functional understanding** (composite) - arithmetic mean of symbol naming,
+  struct-field coverage, and portable-C. Byte-match is excluded (always 100%,
+  doesn't move); bare pure-C is excluded (asymptote ~49%). This is the
+  headline number reflecting *current* contribution velocity - now including
+  the portability work.
 
 For per-function byte-diff, see diff.py / diff_fn_obj.py.
 """
@@ -174,6 +175,29 @@ def classify_file(path):
         else:
             per_fn[name] = 'pure_c'
     return (per_fn, file_has_asm, file_has_naked)
+
+
+def collect_twins():
+    """Return the set of function names that have a portable `#ifdef
+    NON_MATCHING` twin (a behaviour-equivalent C body used by every port
+    target). A twin'd function's matching body is still naked, but it now
+    has a portable form - so it counts toward portable-C coverage."""
+    names = set()
+    if not SRC_DIR.exists():
+        return names
+    for c in SRC_DIR.rglob("*.c"):
+        try:
+            s = c.read_text()
+        except (OSError, UnicodeDecodeError):
+            continue
+        for m in re.finditer(r'#ifdef NON_MATCHING\b', s):
+            j = s.find('#else', m.end())
+            if j < 0:
+                continue
+            nm = re.search(r'\b([A-Za-z_]\w*)\s*\(', s[m.end():j])
+            if nm:
+                names.add(nm.group(1))
+    return names
 
 
 def count_function_naming(syms):
@@ -408,21 +432,40 @@ def main():
     gv_named,  gv_total  = count_global_naming()
     st_named,  st_total  = count_struct_field_coverage()
 
-    fn_pct = pct(fn_named, fn_total)
-    gv_pct = pct(gv_named, gv_total)
+    # Symbol naming: function + global naming merged into one axis (they move
+    # together and are both at their ceiling, so one combined bar is clearer
+    # than two near-identical ones).
+    nm_named = fn_named + gv_named
+    nm_total = fn_total + gv_total
+    nm_pct = pct(nm_named, nm_total)
     st_pct = pct(st_named, st_total)
 
-    # Composite = arithmetic mean of the three naming axes.
-    composite = (fn_pct + gv_pct + st_pct) / 3.0
+    # Portable C: functions with NO x86 __asm in the path a port compiles -
+    # pure-C bodies plus naked/hybrid functions that now carry a portable
+    # `#ifdef NON_MATCHING` twin. This is the axis the asm->C / twin work
+    # actually moves (the bare "pure C" number below excludes twins and is
+    # capped ~49% by MSVC codegen, so it never reflected that work).
+    twins = collect_twins()
+    portable = sum(1 for s in syms
+                   if per_sym.get(s.get("name")) == 'pure_c'
+                   or s.get("name") in twins)
+    portable_pct = pct(portable, total)
+
+    # Composite now reflects CURRENT contribution velocity across the three
+    # moving axes: symbol naming, struct-field coverage, and portable-C.
+    # (Byte-match excluded - always 100%; bare pure-C excluded - asymptotic.)
+    composite = (nm_pct + st_pct + portable_pct) / 3.0
 
     print("MK4 matching decomp - progress")
     print("=" * 72)
     print()
     print(f"  Functional understanding (composite)  {composite:>6.1f}%")
-    print(f"    = mean of function-naming, global-naming, struct-field coverage")
+    print(f"    = mean of symbol-naming, struct-field coverage, portable-C")
     print()
     print(f"  Byte-perfect rebuild                  {pct(matched, total):>6.1f}%   "
           f"({matched} / {total} functions)")
+    print(f"  Portable C (pure C + twins)           {portable_pct:>6.1f}%   "
+          f"({portable} / {total} functions; {len(twins)} twins)")
     print(f"  Pure C  (no __asm; ceiling ~49%)      {pct(pure_c, total):>6.1f}%   "
           f"({pure_c} / {total} functions)")
     print(f"  Hybrid  (no naked, body still __asm)  {pct(hybrid, total):>6.1f}%   "
@@ -430,10 +473,8 @@ def main():
     print(f"  Still __declspec(naked)               {pct(naked,  total):>6.1f}%   "
           f"({naked} / {total} functions)")
     print()
-    print(f"  Function naming  (semantically named) {fn_pct:>6.1f}%   "
-          f"({fn_named} / {fn_total} symbols)")
-    print(f"  Global naming    (semantically named) {gv_pct:>6.1f}%   "
-          f"({gv_named} / {gv_total} globals)")
+    print(f"  Symbol naming    (semantically named) {nm_pct:>6.1f}%   "
+          f"({nm_named} / {nm_total} fns+globals)")
     print(f"  Struct field coverage (named slots)   {st_pct:>6.1f}%   "
           f"({st_named} / {st_total} slots in include/)")
     if absent:
@@ -470,9 +511,8 @@ def main():
     if "--no-svg" not in sys.argv:
         rows = [
             ("Byte-perfect rebuild",  pct(matched, total), None),
-            ("Pure C (portability)",  pct(pure_c, total),  "ceiling ~49%"),
-            ("Function naming",       fn_pct,              None),
-            ("Global naming",         gv_pct,              None),
+            ("Portable C (+twins)",   portable_pct,        f"{len(twins)} twins"),
+            ("Symbol naming",         nm_pct,              None),
             ("Struct field coverage", st_pct,              None),
         ]
         render_svg(rows, composite, SVG_FILE)
