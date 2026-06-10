@@ -121,48 +121,28 @@ extern s32 g_vtxOut2_z;
 extern s32 g_vtxOut_z;
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void Vec3ColorShiftClamp(int param_1,byte param_2)
-
+/* Portable twin (verified via verify_coexec). For each of three channels, read
+ * the source dword, arithmetic-shift-right by (shift & 0x1f), clamp to
+ * [0, 0x1f], take t5 = (0xffff - v) & 0x1f, and pack t5 into bits [0:5], [5:10]
+ * and [10:15] of the destination 16-bit word, preserving its bit 15. The
+ * source globals are read SIGNED (asm uses sar) - hence the (int) casts, which
+ * matter under the verifier (it models globals as unsigned). */
+void Vec3ColorShiftClamp(int dest_ptr, unsigned char shift)
 {
-  ushort uVar1;
-  ushort uVar2;
-  int iVar3;
-  
-  iVar3 = g_min_007af984 >> (param_2 & 0x1f);
-  if (iVar3 < 0) {
-    iVar3 = 0;
-  }
-  if (0x1f < iVar3) {
-    iVar3 = 0x1f;
-  }
-  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)(param_1 + 0x14)) & 0x1f ^
-          *(ushort *)(param_1 + 0x14);
-  uVar2 = uVar1 & 0x1f;
-  *(ushort *)(param_1 + 0x14) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
-  iVar3 = g_min_007af988 >> (param_2 & 0x1f);
-  if (iVar3 < 0) {
-    iVar3 = 0;
-  }
-  if (0x1f < iVar3) {
-    iVar3 = 0x1f;
-  }
-  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)(param_1 + 0x16)) & 0x1f ^
-          *(ushort *)(param_1 + 0x16);
-  uVar2 = uVar1 & 0x1f;
-  *(ushort *)(param_1 + 0x16) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
-  iVar3 = g_min_007af98c >> (param_2 & 0x1f);
-  if (iVar3 < 0) {
-    iVar3 = 0;
-  }
-  if (0x1f < iVar3) {
-    iVar3 = 0x1f;
-  }
-  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)(param_1 + 0x18)) & 0x1f ^
-          *(ushort *)(param_1 + 0x18);
-  uVar2 = uVar1 & 0x1f;
-  *(ushort *)(param_1 + 0x18) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
-  return;
+    unsigned int s = shift & 0x1f;
+#define PACK_CH(SRC, OFF) do {                                          \
+        unsigned short *p = (unsigned short *)(dest_ptr + (OFF));        \
+        int v = (int)(SRC) >> s;          /* sar (signed) */            \
+        unsigned int t5;                                                \
+        if (v < 0)    v = 0;                                            \
+        if (v > 0x1f) v = 0x1f;                                         \
+        t5 = (0xffffu - (unsigned int)v) & 0x1f;                        \
+        *p = (unsigned short)((*p & 0x8000) | t5 | (t5 << 5) | (t5 << 10)); \
+    } while (0)
+    PACK_CH(g_triStripRingB, 0x14);
+    PACK_CH(g_vtxOut2_z,     0x16);
+    PACK_CH(g_vtxOut_z,      0x18);
+#undef PACK_CH
 }
 #else
 __declspec(naked) void Vec3ColorShiftClamp(void)
