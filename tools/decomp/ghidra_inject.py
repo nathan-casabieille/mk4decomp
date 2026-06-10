@@ -179,15 +179,34 @@ def fn_body_span(src, brace_idx):
     return i - 1
 
 
+def load_blocklist():
+    """Function names the co-exec verifier confirmed as MISMATCH. Their
+    decompiled C still compiles, so without this they get re-injected every
+    run. Keeps the pipeline idempotent and the corpus free of known-wrong
+    twins."""
+    p = ROOT / 'config' / 'twin_mismatch_blocklist.txt'
+    names = set()
+    if p.exists():
+        for line in p.read_text().splitlines():
+            line = line.split('#', 1)[0].strip()
+            if line:
+                names.add(line)
+    return names
+
+
 def main():
     decompdir = Path(sys.argv[1])
     vamap = json.loads(Path(sys.argv[2]).read_text())   # "<hex8>": [name, file]
     apply = '--apply' in sys.argv
     fn_by_va, gl_by_va = gp.load_maps()
+    blocklist = load_blocklist()
 
-    injected = skipped = 0
+    injected = skipped = blocked = 0
     by_file = {}
     for va_hex, (name, srcfile) in vamap.items():
+        if name in blocklist:           # verifier-confirmed MISMATCH - never inject
+            blocked += 1
+            continue
         dpath = decompdir / (va_hex + '.c')
         if not dpath.exists():
             continue
@@ -243,8 +262,8 @@ def main():
         if apply and changed:
             path.write_text(src)
 
-    print('%s: injected %d, skipped %d'
-          % ('APPLIED' if apply else 'DRY-RUN', injected, skipped))
+    print('%s: injected %d, skipped %d, blocked %d (verifier MISMATCH)'
+          % ('APPLIED' if apply else 'DRY-RUN', injected, skipped, blocked))
 
 
 if __name__ == '__main__':

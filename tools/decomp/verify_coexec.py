@@ -157,7 +157,13 @@ def extract_twin_any(name):
                         break
                 k += 1
             body = block[start:k + 1]
-            returns_value = bool(re.search(r'\breturn\s+[^;]', body))
+            # EAX holds the return only for an integer/pointer return that the
+            # body actually produces. A float/double return goes in ST(0) (not
+            # compared here), so do NOT check EAX for those - else a correct
+            # float function (e.g. Frexp) is a false mismatch.
+            rettype = body[:body.index(nm.group(1))]
+            returns_value = bool(re.search(r'\breturn\s+[^;]', body)) and \
+                not re.search(r'\b(float|double|float10)\b', rettype)
             return body, nargs, returns_value
     return None
 

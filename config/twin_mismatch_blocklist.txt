@@ -1,0 +1,26 @@
+# Twins the co-exec verifier (tools/decomp/verify_coexec.py) confirmed as
+# behavioural MISMATCH against the original (both sides RETURNED, so not a
+# cap artifact). The Ghidra-decompiled C for these still passes the compile
+# gate, so ghidra_inject.py would otherwise re-inject them on every run -
+# this blocklist keeps the pipeline idempotent and the corpus free of
+# known-wrong twins. Re-validate with verify_coexec before ever removing a
+# name here. One function name per line; '#' comments allowed.
+#
+# Reverted across the 2026-06-09 audit (void + non-void sweeps):
+BillboardSheetDualEmit
+CharSelect_1v1
+CharSelect_CpuBattlesToggle
+CharSelect_Team
+ClampNegPair
+DiffMul10Loop
+Distance2DSaturationClamp
+FiveThunkMStackDispatcher
+FourVecFillMStackBracket
+HelperCallTripleMul10
+IdleFsm4CaseDispatch
+InstallSelfAccumOverflow
+InstallSelfChainStateInit
+PendingMatch_MStackPush2RunCountdown_0044c530
+RangeClampThree
+StackPeekDispatchIndirect
+ThreeChanPackClamp
