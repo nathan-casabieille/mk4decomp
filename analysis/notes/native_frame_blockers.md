@@ -63,6 +63,32 @@ Compiled `MainLoopStep`'s portable closure (54 source files) under the
 - Real host/PAL shims the closure needs (small list): `Sleep`, `timeGetTime`,
   `mciSendCommandA`, `__alldiv`, `__allshl`.
 
+## Named-global memory model (the project's "open decision") - explored
+
+The deeper native blocker behind many "undeclared identifier" failures:
+named fixed-VA globals (`g_dualC`, `g_cj_*`, ...) are NOT C variables - they
+are offsets into the `.data`/`.rdata` blobs, pinned at their VAs by the linker
+for matching, referenced by symbol. ~2500 of them have NO C `extern` decl, so
+the portable/native build cannot resolve them.
+
+Right architecture (matches how verify_coexec already models globals, and what
+WASM needs): under `MK4_ARENA`, `#define` each such global as its arena
+accessor (`MK4_VA`), since the arena already holds the `.data`/`.rdata` bytes
+at their VAs - reads/writes land at the original VA with the original value, no
+separate storage, no init step.
+
+Prototype: `tools/decomp/gen_arena_globals.py` generates such a header (2508
+globals). Wired it under `MK4_ARENA` (gated off for the verifier via
+`MK4_COEXEC_GATE`). Result: matching byte-identical and the verifier still
+passes, BUT it was a NET REGRESSION on the frame closure (26 -> 24): globals
+with MIXED usage (`g = v` AND `g[i]`/`*g`) cannot take one macro form, so the
+pointer form broke `g = v` ("expression is not assignable"); and the closure
+files that need these globals have OTHER blockers, so 0 net-fixed there.
+REVERTED the wiring (kept the generator). Lesson: this needs real per-global
+type precision (scalar lvalue is the safe default; pointer/array only when the
+global is NEVER a direct scalar lvalue), and it pays off corpus-wide, not on
+this particular closure. A deliberate next sub-project, not a broad auto-gen.
+
 ## Suggested order
 
 1. `Mul10Tail` (convert + verify_coexec) - removes one blocker cleanly.
