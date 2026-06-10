@@ -10,6 +10,26 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#else
+/* Non-Windows native/portable build (e.g. TARGET=sdl on macOS/Linux): the
+ * MSVC calling-convention / storage-class keywords are not recognized by
+ * clang/gcc for this target, so neutralize them. They are pure ABI hints
+ * irrelevant once everything compiles with one host convention; this only
+ * affects the NON_MATCHING build path (the matching MSVC build has _WIN32
+ * and the real keywords). __declspec(naked) bodies live in the #else
+ * (matching) branch and are never compiled here. */
+#ifndef __stdcall
+#define __stdcall
+#endif
+#ifndef __cdecl
+#define __cdecl
+#endif
+#ifndef __fastcall
+#define __fastcall
+#endif
+#ifndef __declspec
+#define __declspec(x)
+#endif
 #endif
 
 /* Fixed-width integers - MSVC 5.0 predates <stdint.h>. */
