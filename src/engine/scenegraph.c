@@ -26,6 +26,56 @@ void *AllocNode(void)
 extern void InitOrAllZeroLoopback(void);
 
 
+#ifdef NON_MATCHING
+/* Portable twin (verified via verify_coexec - fixed 9-iteration loop, no
+ * callback, so the at-rest arena exercises the whole walk). Pushes
+ * currentNodeIdx + xformLoopCounter onto the two parallel matrix stacks,
+ * descends to a child chain (xformEntityIdx -= 0xF, then follow node field at
+ * byte +0x28), copies 9 chain entries from the child range into the
+ * currentNodeIdx range, then pops both stacks. g_siblingTable / g_xformChainTable
+ * are the same base-0 packed-ptr space (word k at index k); +0x28 is +10 words. */
+void NodeApplyMatrix(void) {
+    int          top;
+    unsigned int eidx, cur, v;
+
+    top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    g_matrixStackA[top] = g_currentNodeIdx;          /* push currentNodeIdx */
+    top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    g_matrixStackB[top] = g_xformLoopCounter;        /* push loop counter */
+
+    eidx = g_xformEntityIdx - 0xF;
+    g_xformLoopCounter = 8;
+    g_xformEntityIdx = eidx;
+    eidx = g_siblingTable[eidx + 10] + 6;            /* node[eidx].f28 + 6 */
+    g_xformEntityIdx = eidx;
+
+    g_walkCallback = g_xformChainTable[eidx];        /* preload chain[eidx] */
+    eidx = eidx + 1;
+    g_xformEntityIdx = eidx;
+
+    for (;;) {
+        v = g_xformChainTable[eidx];                 /* read child chain entry */
+        g_walkCallback = v;
+        eidx = eidx + 1;
+        g_xformEntityIdx = eidx;
+        cur = g_currentNodeIdx;
+        g_xformChainTable[cur] = v;                  /* write into currentNodeIdx slot */
+        g_currentNodeIdx = cur + 1;
+        g_xformLoopCounter = g_xformLoopCounter - 1; /* dec (memory round-trip, as orig) */
+        if ((int)g_xformLoopCounter < 0)             /* jns: signed test (counter is int) */
+            break;
+    }
+
+    top = g_matrixStackTop;
+    g_xformLoopCounter = g_matrixStackB[top];        /* pop loop counter */
+    top = top - 1;
+    g_matrixStackTop = top;
+    g_currentNodeIdx = g_matrixStackA[top];          /* pop currentNodeIdx */
+    g_matrixStackTop = top - 1;
+}
+#else
 void NodeApplyMatrix(void) {
     __asm {
         mov     eax, [g_matrixStackTop]
@@ -77,6 +127,7 @@ loop_entry:
         mov     [g_matrixStackTop], eax
         }
 }
+#endif
 
 /*
  * Walk the scene-graph siblings of g_currentNodeIdx, invoking the
