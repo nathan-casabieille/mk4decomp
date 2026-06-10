@@ -171,6 +171,25 @@ behavioral co-exec verifier (a wrong VA shows up as a MISMATCH), not static
 alias-listing. So the audit's standing conclusion: no further blind VA edits;
 treat verify_coexec MISMATCHes as the wrong-VA tripwire.
 
+## Helper_TickInner: first verified render/FSM twin (2026-06-10, DONE)
+
+With the VA fix in place, transcribed `Helper_TickInner` (@0x004ba130, the
+scene-graph sibling walk) as a NON_MATCHING twin (naked #else kept -> matching
+byte-identical, MD5 a3d2bf7f). Verified two ways:
+  - verify_coexec on the at-rest arena: VERIFIED (post-walk write now lands at
+    0x542044, the very write that MISMATCHed before the fix);
+  - a targeted seeded harness (/tmp/seed_ticktest.py - seed g_currentNodeIdx +
+    a 2-node sibling chain in the base-0 table + a 0xc3 ret-stub callback):
+    orig and twin produce IDENTICAL writes across 2 walk iterations + callback +
+    termination + post_walk (g_currentNodeIdx->0, g_walkCallback->0,
+    g_xformDirtyFlags->4). MATCH.
+
+This both proves the g_currentNodeIdx fix end-to-end AND establishes the pattern
+for the render/FSM cluster: transcribe the walk to portable C, keep the naked
+#else, verify the loop path on a hand-seeded node chain (the verifier's at-rest
+state usually only exercises the empty path). The seed harness is the reusable
+template for the rest of the cluster.
+
 ## Suggested order
 
 1. `Mul10Tail` (convert + verify_coexec) - removes one blocker cleanly.

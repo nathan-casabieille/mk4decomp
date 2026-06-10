@@ -90,6 +90,46 @@ loop_entry:
  *
  * @addr 0x004ba130
  */
+#ifdef NON_MATCHING
+/* Portable twin (verified against the original via verify_coexec on seeded
+ * node state). g_siblingTable is the base-0 packed-ptr node pool: word at
+ * packed index k is g_siblingTable[k]; node `idx` fields f0/f4/f8 are
+ * g_siblingTable[idx + 0/1/2]. The saved callback (ebx) is the ORIGINAL
+ * g_walkCallback captured at entry; the global is reused as walk scratch. */
+void Helper_TickInner(void)
+{
+    void (*cb)(void) = (void (*)(void))g_walkCallback;   /* ebx: saved callback */
+    unsigned int idx     = g_currentNodeIdx;
+    unsigned int cur     = g_siblingTable[idx + 1];      /* eax = node[idx].f4 */
+    unsigned int next_off = g_siblingTable[idx + 2] + 2; /* edi = node[idx].f8 + 2 */
+    unsigned int last    = cur;                          /* ebp */
+
+    g_walkCallback = cur;
+    if (cur != 0) {
+        for (;;) {
+            unsigned int walkIdx = next_off + cur;       /* ecx = edi + eax */
+            unsigned int sib;
+            g_currentNodeIdx = walkIdx;
+            sib = g_siblingTable[walkIdx];               /* esi = node[walkIdx].f0 */
+            g_currentNodeIdx = cur;                      /* eax */
+            cb();
+            if (g_framePauseFlag) goto done;
+            if (g_xformDirtyFlags & 1) goto post_walk;
+            cur  = sib;
+            last = sib;
+            g_walkCallback = sib;
+            if (sib == 0) break;
+        }
+    }
+post_walk:
+    g_xformDirtyFlags |= 4;
+    g_currentNodeIdx = last;                             /* ebp */
+    if (last != 0)
+        g_xformDirtyFlags ^= 4;
+done:
+    return;
+}
+#else
 __declspec(naked) void Helper_TickInner(void)
 {
     __asm {
@@ -141,6 +181,7 @@ done:
         ret
     }
 }
+#endif
 
 /*
  * Build the per-axis rotation matrix using the "Direct" entry
