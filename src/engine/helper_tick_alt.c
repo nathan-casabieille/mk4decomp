@@ -9,6 +9,50 @@ extern unsigned int g_dispatchSave1575;
 extern unsigned int g_dispatchSave1576;
 extern void ZeroEightFields(void);
 
+#ifdef NON_MATCHING
+/* Portable twin of Helper_TickAlt's entry routine (the sibling walk, L_ilw),
+ * verified via verify_coexec at-rest + a seeded sibling chain. Sister of
+ * Helper_TickInner: initial node from field +0, stride from field +8 (no +2),
+ * and the saved callback (edi) is restored into g_walkCallback before each
+ * call. The packed L_amw_entry routine that follows in the naked body has no
+ * portable caller (no reloc/symbol/extras reference to its internal address),
+ * so it stays matching-only in the naked branch. The two finish paths (L_ilw_done's
+ * pre-OR and L_ilw_setMask) converge to the same net effect; transcribed as
+ * the converged form. */
+void Helper_TickAlt(void)
+{
+    unsigned int saved_cb = g_walkCallback;              /* edi: saved callback */
+    unsigned int idx      = g_currentNodeIdx;
+    unsigned int cur      = g_siblingTable[idx];         /* eax = node[idx].f0 */
+    unsigned int stride   = g_siblingTable[idx + 2];     /* ebp = node[idx].f8 */
+    unsigned int last     = cur;                         /* ebx */
+
+    g_walkCallback = cur;
+    if (cur != 0) {
+        for (;;) {
+            unsigned int walkIdx = stride + cur;         /* ecx = ebp + eax */
+            unsigned int sib;
+            g_currentNodeIdx = cur;                      /* eax */
+            sib = g_siblingTable[walkIdx];               /* esi = node[walkIdx].f0 */
+            g_currentNodeIdx = cur;                      /* eax (redundant store) */
+            g_walkCallback = saved_cb;                   /* edi restored before call */
+            ((void (*)(void))saved_cb)();
+            if (g_framePauseFlag) goto ret;              /* L_ilw_ret: no dirty update */
+            if (g_xformDirtyFlags & 1) break;            /* L_ilw_setMask -> finish */
+            cur  = sib;
+            last = sib;
+            g_walkCallback = sib;
+            if (sib == 0) break;                         /* L_ilw_done -> finish */
+        }
+    }
+    g_xformDirtyFlags |= 4;
+    g_currentNodeIdx = last;                             /* ebx */
+    if (last != 0)
+        g_xformDirtyFlags ^= 4;
+ret:
+    return;
+}
+#else
 __declspec(naked) void Helper_TickAlt(void)
 {
     __asm
@@ -155,4 +199,5 @@ __declspec(naked) void Helper_TickAlt(void)
         ret
     }
 }
+#endif
 
