@@ -10,6 +10,7 @@
  * Tail decrements g_tickDecay (clamped to 0).
  */
 #include "game/tick.h"
+#include "portable/ghidra_types.h"
 #include "engine/scenegraph.h"
 
 /*

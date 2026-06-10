@@ -73,6 +73,13 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None):
             return '#define %s (*(unsigned int **)0x%xu)\n' % (g, va)
         return '#define %s (*(unsigned int *)0x%xu)\n' % (g, va)
     defs = ''.join(gdef(g, gl_va[g]) for g in globs)
+    # Declare every referenced function (called OR taken as &address - a
+    # resolved continuation like `&ScaledInitOrSelfPtrSetType_...`). Without a
+    # declaration `&fn` is an undeclared-identifier error (implicit decl only
+    # covers calls). The relocation pass below points each to its original VA.
+    fns = {t for t in re.findall(r'\b([A-Za-z_]\w*)\b', body)
+           if t in name_to_va and t != name}
+    defs += ''.join('extern int %s();\n' % f for f in sorted(fns))
     src = ('#define NON_MATCHING 1\n'
            '#include "portable/ghidra_types.h"\n#include "portable/mem_model.h"\n'
            + defs + body + '\n')

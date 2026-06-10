@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -120,6 +121,31 @@ extern void ArgSarStoreJmp(void);
 extern void CallPauseCmpStateJmp(void);
 extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void QuadEntryGateChain(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  do {
+    g_walkCallback = g_quadEntryGate;
+    if (g_quadEntryGate != 0) {
+      CallPauseCmpStateJmp();
+      return;
+    }
+    iVar2 = g_baseSel * 4;
+    iVar1 = *(int *)(iVar2 + 0x84);
+    *(undefined4 *)(iVar2 + 0x84) = 0;
+  } while (iVar1 != 0);
+  *(undefined1 **)(iVar2 + 8) = &ScaledInitOrSelfPtrSetType_0046a5e0;
+  *(undefined4 *)(iVar2 + 0x84) = 1;
+  g_dualC = 3;
+  g_framePauseFlag = 1;
+  return;
+}
+#else
 __declspec(naked) void QuadEntryGateChain(void) {
     __asm {
         mov     eax, dword ptr [g_quadEntryGate]
@@ -185,3 +211,4 @@ __declspec(naked) void QuadEntryGateChain(void) {
         ret
     }
 }
+#endif

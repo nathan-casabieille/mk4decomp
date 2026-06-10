@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -119,6 +120,52 @@ extern unsigned int g_fightAxisPosY;
  */
 extern void GuardedScaledChainJmpIndirect(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void StoreGuardedBitInstallJmp(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  while( true ) {
+    MK4_NODE_AT(int, g_cj_0054205c, 0x28) = g_walkCallback;
+    GuardedChainCmpDualBitXor();
+    if ((g_framePauseFlag != 0) || (DirtyToggleByGate(), g_framePauseFlag != 0)) {
+      return;
+    }
+    if (((byte)g_xformDirtyFlags & 4) != 0) {
+      g_matrixStackTop = g_matrixStackTop + 1;
+      *(undefined1 **)((int)g_matrixStackTop * 4) = &InstallSelfChainCmpDispatch;
+      GameDispatchValidateState();
+      return;
+    }
+    GuardedScaledChainJmpIndirect(MK4_VA(unsigned int, 0x4f12b8));
+    if (g_framePauseFlag != 0) break;
+    iVar2 = g_baseSel * 4;
+    iVar1 = *(int *)(iVar2 + 0x84);
+    *(undefined4 *)(iVar2 + 0x84) = 0;
+    if (iVar1 == 0) {
+      *(undefined1 **)(iVar2 + 8) = &InstallSelfChainCmpDispatch;
+      *(undefined4 *)(iVar2 + 0x84) = 1;
+      g_framePauseFlag = 1;
+      g_dualC = 1;
+      return;
+    }
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x24);
+    g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x28) + 1;
+    if (*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4) <= g_walkCallback) {
+      SlotPhaseResetInstallChain();
+      if ((g_framePauseFlag == 0) && (ScaledZeroFour(), g_framePauseFlag == 0)) {
+        CjInstallSelfRouter();
+        return;
+      }
+      return;
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void StoreGuardedBitInstallJmp(void) {
     __asm {
         mov     eax, dword ptr [g_cj_0054205c]
@@ -157,3 +204,4 @@ __declspec(naked) void StoreGuardedBitInstallJmp(void) {
         ret
     }
 }
+#endif

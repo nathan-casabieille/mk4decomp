@@ -114,6 +114,20 @@ def postprocess(text, fn_by_va, gl_by_va):
         return fn_by_va.get(va, m.group(0))
     text = re.sub(r'FUN_([0-9a-fA-F]{8})', fun_sub, text)
 
+    # &LAB_<va> taken as an address (an FSM continuation / resume point) ->
+    # &<function> when <va> is a real function entry. This is the easy, no-split
+    # case of the SEH/label cluster: the resume target IS a function, so a real
+    # relocatable function pointer replaces the raw code address. The co-exec
+    # verifier relocates &fn back to its original VA, so the stored value still
+    # matches the original - and unlike MK4_VA(code,...) it is relocation-correct
+    # for a real port. A &LAB_<va> that is NOT a function entry (mid-function
+    # label) is left for the splitting pass and bails meanwhile.
+    def lab_addr_sub(m):
+        va = int(m.group(1), 16)
+        n = fn_by_va.get(va)
+        return ('&' + n) if n else m.group(0)
+    text = re.sub(r'&LAB_([0-9a-fA-F]{6,8})\b', lab_addr_sub, text)
+
     # PTR_DAT_00xxxxxx is a pointer-typed datum AT that VA (Ghidra names it
     # by target). Map it like DAT_ to our global at that VA, BEFORE the DAT_
     # rule (else the inner DAT_ gets rewritten and leaves PTR_g_name). Where

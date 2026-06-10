@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -132,6 +133,76 @@ extern unsigned int g_audioByteCounterChainSt;
 extern unsigned int g_audioPreloadState;
 
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void AudioPreloadStreamingTrack(void)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined1 *puVar3;
+  
+  iVar1 = g_baseSel * 4;
+  iVar2 = *(int *)(iVar1 + 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 == 0) {
+    *(code **)(iVar1 + 8) = AudioPreloadStreamingTrack;
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14a6e70;
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
+    AudioInstallSelfStatePush();
+    g_framePauseFlag = 1;
+  }
+  else {
+    TableWalkBoundedCmp(8);
+    TableWalkBoundedCmp(7);
+    BootInitGuardedCallChain();
+    IncCapped3e7();
+    QuadCallPhase2(0x1e,0xffffffff,0xffffffff,0xffffffff);
+    FiveTableWalkInit();
+    if (g_framePauseFlag == 0) {
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x142c46;
+      LoadGeoAsset_Default();
+      if (g_framePauseFlag == 0) {
+        TripleCallSetCopy();
+        if (g_count == 4) {
+          iVar1 = g_audioPreloadState * 4;
+          if (g_audioBankSel == 1) {
+            iVar2 = *(int *)(&g_dispatchSave519 + iVar1);
+            puVar3 = &g_audioBank2Base + *(int *)(&g_audioPreloadVar2 + iVar1) * 0x18;
+          }
+          else {
+            iVar2 = *(int *)(&g_dispatchSave519 + iVar1);
+            puVar3 = &g_audioByteCounterChainSt + *(int *)(&g_audioPreloadVar2 + iVar1) * 0x18;
+          }
+        }
+        else {
+          if (g_audioBankSel == 1) {
+            puVar3 = &g_audioBank2Base + *(int *)(&g_audioPreloadVar + g_audioPreloadState * 4) * 0x18;
+          }
+          else {
+            puVar3 = &g_audioByteCounterChainSt + *(int *)(&g_audioPreloadVar + g_audioPreloadState * 4) * 0x18;
+          }
+          iVar2 = *(int *)(&g_dispatchSave633 + g_audioPreloadState * 4);
+        }
+        MemcpyByteN(&g_audioBank2Base + iVar2 * 0x18,puVar3,0x18);
+        g_audioPreloadState = g_audioPreloadState + 1;
+        g_dualC = &PendingMatch_Test4StatesAny;
+        g_eventQueueWorkType = 0x1000;
+        AllocNode();
+        if (g_framePauseFlag == 0) {
+          CallSetPause();
+          return;
+        }
+      }
+    }
+  }
+  return;
+}
+#else
 __declspec(naked) void AudioPreloadStreamingTrack(void)
 {
     __asm {
@@ -240,3 +311,4 @@ __declspec(naked) void AudioPreloadStreamingTrack(void)
         ret
     }
 }
+#endif

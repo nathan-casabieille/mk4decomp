@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -122,6 +123,37 @@ extern void CmpEqInitCallElseJmp(void);
 extern void DirtyGuardLitOrJmp_0047ef40(void);
 extern void TwoPhasePackInstall(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+void InstallSelfCountdownLong(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  g_matrixStackTop = g_matrixStackTop + 1;
+  *(undefined4 *)((int)g_matrixStackTop * 4) = 0x47ee90;
+  iVar1 = g_baseSel * 4;
+  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar1 + 0x84) = 0;
+  if (iVar2 != 0) {
+    (*g_cj_00542054)();
+    return;
+  }
+  g_cj_00542054 = *(code **)((int)g_matrixStackTop * 4);
+  g_matrixStackTop = g_matrixStackTop + -1;
+  GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
+  if (g_framePauseFlag == 0) {
+    g_walkCallback = 2;
+    g_phaseTimer = 2;
+    *(undefined1 **)(iVar1 + 8) = &TwoPhasePackInstall;
+    *(undefined4 *)(iVar1 + 0x84) = 1;
+    g_dualC = 1;
+    g_framePauseFlag = 1;
+  }
+  return;
+}
+#else
 __declspec(naked) void InstallSelfCountdownLong(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
@@ -185,3 +217,4 @@ __declspec(naked) void InstallSelfCountdownLong(void) {
         ret
     }
 }
+#endif

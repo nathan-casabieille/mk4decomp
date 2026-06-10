@@ -2,6 +2,7 @@
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
+#include "portable/ghidra_types.h"
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -130,6 +131,55 @@ extern void MStackPushSet0200(void);
 extern void ScaledMove48to58(void);
 extern void TripleFieldCopyJmpHi(void);
 
+#ifdef NON_MATCHING
+/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+int InstallSelfChainedDispatch(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = g_baseSel * 4;
+  iVar1 = MK4_NODE_AT(int, g_baseSel, 0x84);
+  *(undefined4 *)(iVar2 + 0x84) = 0;
+  if (iVar1 != 0) {
+    g_walkCallback = 0x28f;
+    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x4c) = 0x28f;
+    g_matrixStackTop = g_matrixStackTop + 1;
+    *(undefined1 **)((int)g_matrixStackTop * 4) = &CallPauseDirtyMStackPushFn;
+    iVar2 = InstallSelfIndirectJmp();
+    return iVar2;
+  }
+  DirtyTestScaledCmpJmp();
+  if (g_framePauseFlag == 0) {
+    ScaledZeroFour();
+    if (g_framePauseFlag == 0) {
+      CopyJmp_ScaledSubStore_g_currentNodeIdx();
+      if (g_framePauseFlag == 0) {
+        if (0xcccc < g_walkCallback) {
+          ArgSarStoreJmp(MK4_VA(unsigned int, 0x4eb268));
+          return g_framePauseFlag;
+        }
+        ScaledMove48to58();
+        if (g_framePauseFlag == 0) {
+          MStackPushSet0200();
+          if (g_framePauseFlag == 0) {
+            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x13b02a;
+            GuardedDirtyXformFromTable();
+            if (g_framePauseFlag == 0) {
+              g_framePauseFlag = 1;
+              *(code **)(iVar2 + 8) = InstallSelfChainedDispatch;
+              *(undefined4 *)(iVar2 + 0x84) = 1;
+              g_dualC = 0xc;
+            }
+          }
+        }
+      }
+    }
+  }
+  return g_framePauseFlag;
+}
+#else
 __declspec(naked) void InstallSelfChainedDispatch(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -210,3 +260,4 @@ __declspec(naked) void InstallSelfChainedDispatch(void) {
         ret
     }
 }
+#endif
