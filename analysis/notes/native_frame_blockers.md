@@ -89,6 +89,30 @@ type precision (scalar lvalue is the safe default; pointer/array only when the
 global is NEVER a direct scalar lvalue), and it pays off corpus-wide, not on
 this particular closure. A deliberate next sub-project, not a broad auto-gen.
 
+## Render/FSM conversion is blocked on VERIFIABILITY, not transcription (2026-06-10)
+
+Tried to hand-convert `Helper_TickInner` (a scene-graph sibling-walk: walks
+`g_siblingTable` from `g_currentNodeIdx`, calling `g_walkCallback` per node).
+Transcription from the @addr asm is straightforward (the named globals are
+ground truth; Ghidra's `0x542044` IS `g_currentNodeIdx`, they agree). BUT it
+is NOT co-exec-verifiable: in the verifier's garbage initial state the walk
+indexes `g_siblingTable[<garbage idx>]` and calls through a garbage
+`g_walkCallback`, driving EIP into non-code -> `UC_ERR_INSN_INVALID` in the
+ORIGINAL run, before any diff. Seeding `g_walkCallback` to a `ret` stub did
+not help (the walk itself goes wild on garbage node indices).
+
+So an unverified hand-transcription is all we could ship - and a hand-written
+loop with array indexing + FSM control flow is exactly where a subtle bug
+hides. Held the line: reverted it (matching stayed byte-identical; also caught
++ fixed a missing `#endif` that briefly broke matching).
+
+THE REAL ENABLER for the render/FSM cluster: a verifier that runs on **seeded
+realistic state** - a valid node pool / sibling chain + a benign callback - so
+these functions execute deterministically and orig-vs-twin can be diffed.
+Without it, this cluster is transcribe-but-cannot-verify, and the "no false"
+rule means it does not ship. This is the highest-leverage next investment for
+both the native frame and finishing the decomp.
+
 ## Suggested order
 
 1. `Mul10Tail` (convert + verify_coexec) - removes one blocker cleanly.
