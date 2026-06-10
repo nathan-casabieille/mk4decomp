@@ -203,14 +203,16 @@ SDL_PREFIX    ?= /opt/homebrew
 SDL_CFLAGS    ?= -I$(SDL_PREFIX)/include
 SDL_LIBS      ?= -L$(SDL_PREFIX)/lib -lSDL2
 NATIVE_EXE    := $(BUILD_DIR)/MK4.native
-NATIVE_SRCS   := $(wildcard src/platform/sdl/*.c)
+# SDL backend + the arena loader (relocated memory model). Engine objects
+# join this list as they become portable + seam-clean.
+NATIVE_SRCS   := $(wildcard src/platform/sdl/*.c) src/portable/arena.c
 
 native: $(NATIVE_EXE)
-$(NATIVE_EXE): $(NATIVE_SRCS) include/platform/pal.h
+$(NATIVE_EXE): $(NATIVE_SRCS) include/platform/pal.h include/portable/arena.h
 	@mkdir -p $(BUILD_DIR)
 	$(NATIVE_CC) -DNON_MATCHING -DMK4_ARENA -DTARGET_SDL -Iinclude $(SDL_CFLAGS) \
 		-O2 -Wall $(NATIVE_SRCS) $(SDL_LIBS) -o $@
-	@echo "native (TARGET=sdl): built $@  [skeleton: SDL backend + weak engine stubs]"
+	@echo "native (TARGET=sdl): built $@  [skeleton: SDL backend + arena + weak engine stubs]"
 
 native-run: native
 	@$(NATIVE_EXE)

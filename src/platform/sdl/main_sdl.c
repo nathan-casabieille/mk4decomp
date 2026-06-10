@@ -10,9 +10,11 @@
  * Compiled only for TARGET=sdl.
  */
 #include "platform/pal.h"
+#include "portable/arena.h"
 
 #include <SDL2/SDL.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* Weak engine hooks: the real (strong) ones come from the converted engine
  * and override these at link time. Standalone, they make a visible smoke
@@ -49,6 +51,25 @@ int main(int argc, char **argv)
         SDL_Log("MK4_PalInit failed: %s", SDL_GetError());
         return 1;
     }
+
+    /* Relocated memory model: load the original mapped image into the arena
+     * so the engine's packed-ptr / fixed-VA accesses (via the MK4_VA /
+     * MK4_NODE seam) read real data. Path: $MK4_ARENA_BIN, argv[1], else
+     * build/arena.bin (run `make arena-blob` once to produce it). Non-fatal
+     * for the skeleton - the weak engine stubs do not touch the arena - but
+     * the real engine needs it, so warn loudly when absent. */
+    {
+        const char *arena = getenv("MK4_ARENA_BIN");
+        if (!arena)
+            arena = (argc > 1) ? argv[1] : "build/arena.bin";
+        if (!MK4_ArenaInitFromFile(arena))
+            SDL_Log("warning: arena not loaded from '%s' "
+                    "(engine code will fault on seam access; "
+                    "run 'make arena-blob')", arena);
+        else
+            SDL_Log("arena: %u bytes from '%s'", g_mk4ArenaSize, arena);
+    }
+
     if (MK4_GameInit(argc, argv) != 0) {
         MK4_PalShutdown();
         return 1;
