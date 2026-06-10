@@ -140,6 +140,37 @@ extras_map for VA collisions / wrong VAs against the matching symbol
 resolution, fix `g_currentNodeIdx` -> 0x542044 (carefully, given the 0x54205c
 collision), then the render/FSM twins can be transcribed AND verified.
 
+## extras_map VA audit + g_currentNodeIdx fix (2026-06-10, DONE)
+
+Fixed `g_currentNodeIdx`: 0x54205c -> **0x542044** in config/extras_map.yaml.
+
+Safety proof (matching unaffected): forced a full `synthesize.py` re-link after
+the edit -> **BYTE-IDENTICAL, Mismatches: 0** (MD5 a3d2bf7f...). The matching
+build carries every g_currentNodeIdx site via per-site `reloc_sites.yaml`
+overrides (19 sites -> 0x542044, 3 -> 0x54205c), so the extras_map name->VA is
+only a fallback there and was free to correct. The portable pure-C functions
+that reference `g_currentNodeIdx` use the C *variable* (data.c/stubs.c), not the
+seam VA, so they're unaffected too. The fix's real effect is on (1) the co-exec
+verifier's global routing and (2) future ghidra_postprocess VA->name naming.
+
+Corroboration the new VA is right: `g_xformEntityIdx` is at **0x542048** (per
+extras_map and feedback_alias_address_check), i.e. exactly 0x542044 + 4. The two
+node-walk globals are contiguous, and Helper_TickInner's first instruction is
+`mov ecx,[0x542044]`. Every portable-C reference uses `g_currentNodeIdx * 4`
+(packed node ptr); `g_fightGroupHead` (the real owner of 0x54205c) is used
+separately in the same statements (e.g. boot/func.c:26). So 0x542044 =
+node-index, 0x54205c = fight-group-head, and they were merged in error.
+
+Broader audit result: 164 high-VA (>=0x401000) addresses carry >1 name; 114 have
+>=2 non-self-encoding names. These are OVERWHELMINGLY benign aliases (one VA,
+several analysis-pass names: WndProc/WndProc@16, _imp__Sleep@4/g_iat_Sleep, the
+renderer/audio COM-struct-field families). Benign because name->VA stays
+unambiguous per name. The dangerous class is the inverse - ONE name -> WRONG VA
+(what g_currentNodeIdx was) - and the corpus-wide catch mechanism for THAT is the
+behavioral co-exec verifier (a wrong VA shows up as a MISMATCH), not static
+alias-listing. So the audit's standing conclusion: no further blind VA edits;
+treat verify_coexec MISMATCHes as the wrong-VA tripwire.
+
 ## Suggested order
 
 1. `Mul10Tail` (convert + verify_coexec) - removes one blocker cleanly.
