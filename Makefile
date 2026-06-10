@@ -52,7 +52,13 @@ MATCHING_LIBS := KERNEL32.LIB USER32.LIB GDI32.LIB ADVAPI32.LIB \
 
 # === Source discovery ====================================================
 
-C_SOURCES   := $(shell find src -name '*.c' 2>/dev/null)
+# The port-only platform backends (sdl/, web/) are NOT part of the matching
+# build - it always compiles the win32 layer. They are built by their own
+# targets (`make native` for sdl; emscripten for web) and need SDL2/WebGL
+# headers MSVC does not have, so exclude them from the shared source list.
+C_SOURCES   := $(shell find src -name '*.c' \
+                 -not -path 'src/platform/sdl/*' \
+                 -not -path 'src/platform/web/*' 2>/dev/null)
 ASM_SOURCES := $(shell find asm -name '*.s' 2>/dev/null)
 
 # Each src/foo/bar.c -> build/obj/foo/bar.obj
@@ -63,7 +69,7 @@ ALL_OBJS := $(C_OBJS) $(ASM_OBJS)
 
 # === Phony targets =======================================================
 
-.PHONY: all matching portable portable-check diff progress clean help check-msvc
+.PHONY: all matching portable portable-check native native-run diff progress clean help check-msvc
 
 help:
 	@echo "MK4 matching decomp - targets:"
@@ -180,6 +186,34 @@ $(PORT_OBJ_DIR)/%.o: src/%.c
 portable-check:
 	@$(CC_PORTABLE) $(CFLAGS_PORTABLE) -fsyntax-only $(SRC) \
 		&& echo "OK: $(SRC) compiles under NON_MATCHING"
+
+# === Native SDL port (TARGET=sdl) ========================================
+#
+# Desktop port: SDL2 + the PAL backend in src/platform/sdl/ (the contract in
+# include/platform/pal.h). The full engine is not yet link-complete (asm->C
+# conversion in progress), so `native` builds the SDL backend into a runnable
+# SKELETON: weak engine stubs give a live window (animated test fill) that
+# validates the platform layer end to end. Engine objects join this link as
+# they become portable + seam-clean (MK4_ARENA). Matching is untouched - this
+# is the host toolchain under NON_MATCHING + MK4_ARENA + TARGET_SDL only.
+#
+# SDL2 location is overridable: make native SDL_PREFIX=/usr/local
+NATIVE_CC     ?= cc
+SDL_PREFIX    ?= /opt/homebrew
+SDL_CFLAGS    ?= -I$(SDL_PREFIX)/include
+SDL_LIBS      ?= -L$(SDL_PREFIX)/lib -lSDL2
+NATIVE_EXE    := $(BUILD_DIR)/MK4.native
+NATIVE_SRCS   := $(wildcard src/platform/sdl/*.c)
+
+native: $(NATIVE_EXE)
+$(NATIVE_EXE): $(NATIVE_SRCS) include/platform/pal.h
+	@mkdir -p $(BUILD_DIR)
+	$(NATIVE_CC) -DNON_MATCHING -DMK4_ARENA -DTARGET_SDL -Iinclude $(SDL_CFLAGS) \
+		-O2 -Wall $(NATIVE_SRCS) $(SDL_LIBS) -o $@
+	@echo "native (TARGET=sdl): built $@  [skeleton: SDL backend + weak engine stubs]"
+
+native-run: native
+	@$(NATIVE_EXE)
 
 # === Arena (relocated memory model, Phase 1) =============================
 #
