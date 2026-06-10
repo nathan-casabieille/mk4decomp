@@ -1550,36 +1550,6 @@ __declspec(naked) void ScaledThreeChanPack(void) {
  *   Mix arg1 nibbles with 3 word globals, clamp each result to <=0xfe00,
  *   store back; clear 3 dword globals.
  */
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void ThreeChanPackClamp(uint param_1)
-
-{
-  uint uVar1;
-  uint uVar2;
-  uint uVar3;
-  
-  uVar3 = ((int)param_1 >> 8 & 0xffffff00U) + (uint)g_gtAxisX;
-  uVar1 = ((int)param_1 >> 8 & 0xffU) * 0x100 + (uint)g_gtAxisY;
-  uVar2 = (param_1 & 0xff) * 0x100 + (uint)g_gtAxisZ;
-  if (0xfe00 < uVar3) {
-    uVar3 = 0xfe00;
-  }
-  if (0xfe00 < uVar1) {
-    uVar1 = 0xfe00;
-  }
-  if (0xfe00 < uVar2) {
-    uVar2 = 0xfe00;
-  }
-  g_gtAxisY = (short)uVar1;
-  g_gtAxisX = (short)uVar3;
-  g_gtAxisZ = (short)uVar2;
-  g_pointPosZ = 0;
-  g_pointPosY = 0;
-  g_pointPosX = 0;
-  return;
-}
-#else
 __declspec(naked) void ThreeChanPackClamp(void) {
     __asm {
         mov     ecx, dword ptr [esp + 4]
@@ -1624,7 +1594,6 @@ __declspec(naked) void ThreeChanPackClamp(void) {
         ret
     }
 }
-#endif
 
 extern void BootStateTriple(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
@@ -17843,32 +17812,6 @@ extern unsigned int g_pendingMatchVar3;
 extern unsigned int g_pendingMatchVar5;
 
 /* @addr 0x0042ae40 (208b game) - 3-element range-clamp loop in-place at arg0 array. */
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void RangeClampThree(int param_1)
-
-{
-  int iVar1;
-  
-  for (iVar1 = MK4_NODE_AT(int, param_1, 0); g_pendingMatchVar3 < iVar1; iVar1 = iVar1 - g_pendingMatchVar) {
-  }
-  for (; iVar1 <= g_pendingMatchVar5; iVar1 = iVar1 + g_pendingMatchVar) {
-  }
-  MK4_NODE_AT(int, param_1, 0) = iVar1;
-  for (iVar1 = MK4_NODE_AT(int, param_1, 4); g_pendingMatchVar3 < iVar1; iVar1 = iVar1 - g_pendingMatchVar) {
-  }
-  for (; iVar1 <= g_pendingMatchVar5; iVar1 = iVar1 + g_pendingMatchVar) {
-  }
-  MK4_NODE_AT(int, param_1, 4) = iVar1;
-  for (g_walkCallback = MK4_NODE_AT(int, param_1, 8); g_pendingMatchVar3 < g_walkCallback;
-      g_walkCallback = g_walkCallback - g_pendingMatchVar) {
-  }
-  for (; g_walkCallback <= g_pendingMatchVar5; g_walkCallback = g_walkCallback + g_pendingMatchVar) {
-  }
-  MK4_NODE_AT(int, param_1, 8) = g_walkCallback;
-  return;
-}
-#else
 __declspec(naked) void RangeClampThree(void) {
     __asm {
         mov     edx, dword ptr [g_pendingMatchVar3]
@@ -17943,7 +17886,6 @@ __declspec(naked) void RangeClampThree(void) {
         ret
     }
 }
-#endif
 
 extern void SwapOrPassSet(void);
 extern void CmpEax1OrSetDirty(void);

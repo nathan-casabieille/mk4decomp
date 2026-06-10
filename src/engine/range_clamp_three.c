@@ -114,32 +114,6 @@ extern unsigned int g_pendingMatchVar3;
 extern unsigned int g_pendingMatchVar;
 extern unsigned int g_pendingMatchVar5;
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void RangeClampThree(int param_1)
-
-{
-  int iVar1;
-  
-  for (iVar1 = MK4_NODE_AT(int, param_1, 0); g_pendingMatchVar3 < iVar1; iVar1 = iVar1 - g_pendingMatchVar) {
-  }
-  for (; iVar1 <= g_pendingMatchVar5; iVar1 = iVar1 + g_pendingMatchVar) {
-  }
-  MK4_NODE_AT(int, param_1, 0) = iVar1;
-  for (iVar1 = MK4_NODE_AT(int, param_1, 4); g_pendingMatchVar3 < iVar1; iVar1 = iVar1 - g_pendingMatchVar) {
-  }
-  for (; iVar1 <= g_pendingMatchVar5; iVar1 = iVar1 + g_pendingMatchVar) {
-  }
-  MK4_NODE_AT(int, param_1, 4) = iVar1;
-  for (g_walkCallback = MK4_NODE_AT(int, param_1, 8); g_pendingMatchVar3 < g_walkCallback;
-      g_walkCallback = g_walkCallback - g_pendingMatchVar) {
-  }
-  for (; g_walkCallback <= g_pendingMatchVar5; g_walkCallback = g_walkCallback + g_pendingMatchVar) {
-  }
-  MK4_NODE_AT(int, param_1, 8) = g_walkCallback;
-  return;
-}
-#else
 __declspec(naked) void RangeClampThree(void) {
     __asm {
         mov     edx, dword ptr [g_pendingMatchVar3]
@@ -214,4 +188,3 @@ __declspec(naked) void RangeClampThree(void) {
         ret
     }
 }
-#endif
