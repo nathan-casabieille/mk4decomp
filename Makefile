@@ -203,16 +203,23 @@ SDL_PREFIX    ?= /opt/homebrew
 SDL_CFLAGS    ?= -I$(SDL_PREFIX)/include
 SDL_LIBS      ?= -L$(SDL_PREFIX)/lib -lSDL2
 NATIVE_EXE    := $(BUILD_DIR)/MK4.native
-# SDL backend + the arena loader (relocated memory model). Engine objects
-# join this list as they become portable + seam-clean.
+# SDL backend + host Win32 shims + the arena loader (relocated memory model).
+# Engine objects join this list as they become portable + seam-clean.
 NATIVE_SRCS   := $(wildcard src/platform/sdl/*.c) src/portable/arena.c
+# Port-in-progress posture: the converted engine models a relocated pointer as
+# an int-sized arena value, so int<->pointer conversions are expected, not
+# bugs; and call sites for not-yet-declared host functions resolve at link via
+# the shims. Downgrade those to warnings so engine objects can join the link
+# incrementally. (The SDL backend itself compiles clean without these.)
+NATIVE_PORTFLAGS := -Wno-int-conversion -Wno-incompatible-pointer-types \
+                    -Wno-int-to-pointer-cast -Wno-implicit-function-declaration
 
 native: $(NATIVE_EXE)
 $(NATIVE_EXE): $(NATIVE_SRCS) include/platform/pal.h include/portable/arena.h
 	@mkdir -p $(BUILD_DIR)
 	$(NATIVE_CC) -DNON_MATCHING -DMK4_ARENA -DTARGET_SDL -Iinclude $(SDL_CFLAGS) \
-		-O2 -Wall $(NATIVE_SRCS) $(SDL_LIBS) -o $@
-	@echo "native (TARGET=sdl): built $@  [skeleton: SDL backend + arena + weak engine stubs]"
+		-O2 -Wall $(NATIVE_PORTFLAGS) $(NATIVE_SRCS) $(SDL_LIBS) -o $@
+	@echo "native (TARGET=sdl): built $@  [skeleton: SDL backend + arena + host shims + weak engine stubs]"
 
 native-run: native
 	@$(NATIVE_EXE)
