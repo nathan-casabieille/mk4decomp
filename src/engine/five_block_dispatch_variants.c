@@ -141711,46 +141711,6 @@ extern unsigned int g_dispatchSave934;
 extern unsigned int g_dispatchSave149;
 extern unsigned int g_dispatchSave148;
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void BossPunchCluster(void)
-
-{
-  int iVar1;
-  
-  g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
-  ChainWalkPushPop();
-  if (g_framePauseFlag == 0) {
-    g_walkCallback = 300;
-    AudioVolumeRescale();
-    if (g_framePauseFlag == 0) {
-      if ((((byte)g_xformDirtyFlags & 1) != 0) && (func_0x00444db0(), g_framePauseFlag != 0)) {
-        return;
-      }
-      g_eventQueueCurrent = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x6c);
-      iVar1 = g_cj_0054205c * 4;
-      func_0x00446bf0();
-      *(undefined4 *)(iVar1 + 0x6c) = g_eventQueueCurrent;
-      g_eventQueueCurrent = *(undefined4 *)(iVar1 + 0x70);
-      func_0x00446bf0();
-      *(undefined4 *)(iVar1 + 0x70) = g_eventQueueCurrent;
-      g_eventQueueCurrent = *(undefined4 *)(iVar1 + 0x74);
-      func_0x00446bf0();
-      *(undefined4 *)(iVar1 + 0x74) = g_eventQueueCurrent;
-      g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x58);
-      if (-0x2667 < g_walkCallback) {
-        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58) = 0xffffd99a;
-        g_walkCallback = 0;
-        MK4_NODE_AT(undefined4, g_cj_0054205c, 0x70) = 0;
-      }
-      g_cj_0054205c = *(int *)((int)g_matrixStackTop * 4);
-      g_matrixStackTop = g_matrixStackTop + -1;
-    }
-  }
-  return;
-}
-#else
 __declspec(naked) void BossPunchCluster(void)
 {
     __asm {
@@ -141978,7 +141938,6 @@ __declspec(naked) void BossPunchCluster(void)
         ret
     }
 }
-#endif
 // Externs:
 extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
 extern void ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor(void);

@@ -11,6 +11,7 @@ BillboardSheetDualEmit
 # Reverted in the 2026-06-11 corpus sweep (~750/1054 twins; large Ghidra
 # decompiles, both sides RETURNED -> real behavioural MISMATCH, not seeding
 # artifacts). Candidates for re-transcription from asm + seeded re-verify.
+BossPunchCluster
 CameraBounceOverflow
 PositionClampCluster
 TableWalk3StrideCall
