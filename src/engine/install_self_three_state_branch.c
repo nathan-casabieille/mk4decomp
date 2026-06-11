@@ -140,7 +140,7 @@ void InstallSelfThreeStateBranch(void)
     g_eventQueueChild = 0x1e;
     *(code **)(iVar1 + 8) = InstallSelfThreeStateBranch;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    (g_currentNodeIdx) = *(int *)(iVar1 + 4);
     uVar3 = 0x1439d20;
   }
   else {
@@ -160,12 +160,12 @@ void InstallSelfThreeStateBranch(void)
     g_eventQueueChild = 0x1e;
     *(code **)(iVar1 + 8) = InstallSelfThreeStateBranch;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    (g_currentNodeIdx) = *(int *)(iVar1 + 4);
     uVar3 = 0x2439d20;
   }
-  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = uVar3;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(undefined4, (g_currentNodeIdx)) = uVar3;
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  *(int *)(iVar1 + 4) = (g_currentNodeIdx);
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
   StateGateMStackOverlap();
   g_framePauseFlag = 1;

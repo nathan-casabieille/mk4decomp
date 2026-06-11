@@ -142,9 +142,9 @@ void LinkedListBuilder(void)
   MK4_NODE_AT(undefined4, g_dualD, 0) = 0;
   MK4_NODE_AT(int, iVar3, 4) = g_eventQueuePending;
   MK4_NODE_AT(int, iVar3, 8) = g_cj_00542054;
-  iVar4 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  iVar4 = (g_currentNodeIdx);
   if (g_cj_00542054 != 0) {
-    MK4_NODE_AT(int, iVar3, 0) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(int, iVar3, 0) = (g_currentNodeIdx);
     *MK4_NODE(int, (iVar1 + 1 + iVar4)) = iVar3;
     g_xformLoopCounter = MK4_NODE_AT(int, iVar3, 8);
     if (1 < g_xformLoopCounter) {

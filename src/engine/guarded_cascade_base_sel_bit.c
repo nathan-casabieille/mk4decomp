@@ -131,7 +131,7 @@ extern void SetupVecFsmCluster(void);
 void GuardedCascadeBaseSelBit(void)
 
 {
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x30);
+  (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 0x30);
   g_eventQueuePending = MK4_NODE_AT(undefined4, g_baseSel, 0x60);
   g_cj_0054205c = MK4_NODE_AT(undefined4, g_baseSel, 0x4c);
   PushPopScaled1cDoubleCall();
@@ -156,7 +156,7 @@ void GuardedCascadeBaseSelBit(void)
         SetupVecFsmCluster();
         if (g_framePauseFlag == 0) {
           g_xformDirtyFlags = g_xformDirtyFlags | 4;
-          if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
+          if ((g_currentNodeIdx) != 0) {
             g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
           }
         }

@@ -204,14 +204,14 @@ void DualGuardStateMachine_SaveCallRestore(void)
   }
   SaveCallRestoreOrXor(0x267);
   if (((byte)g_xformDirtyFlags & 4) != 0) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_audioBitField, 4);
-    g_eventQueuePending = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x28);
+    (g_currentNodeIdx) = MK4_NODE_AT(int, g_audioBitField, 4);
+    g_eventQueuePending = MK4_NODE_AT(int, (g_currentNodeIdx), 0x28);
     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
     if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
       MStackCall_MStackPush2ChainInsert_004062a0();
       if (g_framePauseFlag == 0) {
-        MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x267;
-        g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0x267;
+        g_eventQueuePending = (g_currentNodeIdx);
         g_walkCallback = 4;
         ThrowFlowSetupCluster();
         if (g_framePauseFlag == 0) {

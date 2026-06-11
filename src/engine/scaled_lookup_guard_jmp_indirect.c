@@ -127,8 +127,8 @@ void ScaledLookupGuardJmpIndirect(int param_1)
 
 {
   g_cj_00542054 = param_1 >> 2;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542054 + 4;
-  MK4_NODE_AT(undefined4, g_baseSel, 0x6c) = *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
+  (g_currentNodeIdx) = g_cj_00542054 + 4;
+  MK4_NODE_AT(undefined4, g_baseSel, 0x6c) = *MK4_NODE(undefined4, (g_currentNodeIdx));
   g_dualD = *(code **)(g_cj_00542054 * 4 + 0xc);
   if (g_dualD == (code *)0x0) {
     MoveDispatch4StateFsm();

@@ -136,8 +136,8 @@ void InstallSelfDecrement(void)
   iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
   *(undefined4 *)(iVar1 + 0x84) = 0;
   if (iVar2 != 0) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x5c) + -1;
-    if (-1 < (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) {
+    (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 0x5c) + -1;
+    if (-1 < (g_currentNodeIdx)) {
       func_0x0047fb70();
       return;
     }

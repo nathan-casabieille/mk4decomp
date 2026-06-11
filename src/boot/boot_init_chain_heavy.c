@@ -150,7 +150,7 @@ void BootInitChainHeavy(void)
   if (g_framePauseFlag == 0) {
     thunk_Helper_GeoLoadPre();
     if (g_framePauseFlag == 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dispatchSave82;
+      (g_currentNodeIdx) = g_dispatchSave82;
       g_eventQueuePending = 0;
       g_dualC = 0x21;
       g_dualD = g_bootChainPair0;
@@ -190,14 +190,14 @@ void BootInitChainHeavy(void)
                       g_cj_00542054 = 0;
                       VertexSlotInitFlagWalk();
                       if (g_framePauseFlag == 0) {
-                        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dispatchSave81;
+                        (g_currentNodeIdx) = g_dispatchSave81;
                         g_eventQueuePending = 4;
                         g_dualC = 0x13;
                         g_dualD = g_bootChainSlot2;
                         g_cj_00542054 = 0x1c2;
                         LinkedListBuilder();
                         if (g_framePauseFlag == 0) {
-                          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dispatchSave80;
+                          (g_currentNodeIdx) = g_dispatchSave80;
                           g_eventQueuePending = 0;
                           g_dualC = 0x13;
                           g_dualD = g_bootChainState4;
@@ -209,8 +209,8 @@ void BootInitChainHeavy(void)
                               BootPhaseGateBracketedInit();
                               if (g_framePauseFlag == 0) {
                                 g_walkCallback = 0xc;
-                                MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0xc;
-                                g_eventQueueSeed = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+                                MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0xc;
+                                g_eventQueueSeed = (g_currentNodeIdx);
                                 MStackCall_MStackPush2ChainPrepend_004063e0();
                                 if (g_framePauseFlag == 0) {
                                   g_phaseThunkSlot8 = 0;

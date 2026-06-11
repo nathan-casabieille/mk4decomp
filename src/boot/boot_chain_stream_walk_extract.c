@@ -138,18 +138,18 @@ void BootChainStreamWalkExtract(void)
   g_matrixStackTop = g_matrixStackTop + 1;
   *MK4_NODE(int, (int)g_matrixStackTop) = g_dualD;
   g_dualD = g_dualC - 1;
-  piVar1 = (int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  iVar3 = *piVar1 + (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  piVar1 = (int *)((g_currentNodeIdx) * 4);
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  iVar3 = *piVar1 + (g_currentNodeIdx);
   g_eventQueueWorkType = iVar3;
-  if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) < iVar3) {
+  if ((g_currentNodeIdx) < iVar3) {
     do {
       while( true ) {
-        g_walkCallback = *MK4_NODE(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+        g_walkCallback = *MK4_NODE(uint, (g_currentNodeIdx));
+        (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
         if (-1 < (int)g_walkCallback) break;
 LAB_00407bae:
-        g_eq = (uint)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) < iVar3);
+        g_eq = (uint)((g_currentNodeIdx) < iVar3);
         g_eventQueuePending = g_eventQueuePending + 1;
         if ((g_eq == 0) || (g_dualD = g_dualD + -1, g_dualD < 0))
         goto LAB_00407be5;
@@ -171,7 +171,7 @@ LAB_00407bae:
           goto LAB_00407bae;
         }
       }
-    } while ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) < iVar3);
+    } while ((g_currentNodeIdx) < iVar3);
   }
 LAB_00407be5:
   g_dualD = *MK4_NODE(undefined4, (int)g_matrixStackTop);

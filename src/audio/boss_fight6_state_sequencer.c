@@ -132,13 +132,13 @@ void Match_OutcomeScreen(void)
   switch(uVar2) {
   case 0:
     GuardedSetupCallTailJmp("Game Over",0xffec0000);
-    *(char **)(g_baseSel * 4 + 0x30) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = "Player 1 Wins";
+    *(char **)(g_baseSel * 4 + 0x30) = (g_currentNodeIdx);
+    (g_currentNodeIdx) = "Player 1 Wins";
     if (g_audioBankSel != 1) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = "Player 2 Wins";
+      (g_currentNodeIdx) = "Player 2 Wins";
     }
-    GuardedSetupCallTailJmp((*(unsigned int *)MK4_VA(unsigned int, 0x542044)),0x140000);
-    *(char **)(g_baseSel * 4 + 0x34) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    GuardedSetupCallTailJmp((g_currentNodeIdx),0x140000);
+    *(char **)(g_baseSel * 4 + 0x34) = (g_currentNodeIdx);
     MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x30), 0x5c) = 0xa0000;
     MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x34), 0x5c) = 0xa0000;
     MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x34), 0x58) = 0xf0600000;

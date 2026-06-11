@@ -141,10 +141,10 @@ void StateSnapshotDispatch(int param_1)
   g_cj_00542058 = *MK4_NODE(undefined4, (param_1 >> 2));
   g_cj_00542054 = (param_1 >> 2) + 1;
   piVar1 = (int *)(g_baseSel * 4 + 4);
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *piVar1;
-  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = MK4_NODE_AT(undefined4, g_cj_00542054, 0);
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *piVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  (g_currentNodeIdx) = *piVar1;
+  *MK4_NODE(undefined4, (g_currentNodeIdx)) = MK4_NODE_AT(undefined4, g_cj_00542054, 0);
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  *piVar1 = (g_currentNodeIdx);
   MK4_NODE_AT(undefined4, g_cj_0054205c, 0x24) = g_cj_00542058;
   g_walkCallback = 0;
   MK4_NODE_AT(undefined4, g_cj_0054205c, 0x28) = 0;

@@ -158,7 +158,7 @@ void BootInitClearSlotSeed(void)
   
   BootInitGuardedCallChain();
   if (g_framePauseFlag == 0) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_eventQueueSeed;
+    (g_currentNodeIdx) = g_eventQueueSeed;
     iVar3 = g_eventQueueSeed * 4;
     ZeroThreeFields_00404ed0();
     *(undefined4 *)(iVar3 + 0x54) = 0;
@@ -171,14 +171,14 @@ void BootInitClearSlotSeed(void)
     *(undefined4 *)(iVar3 + 0x5c) = 0x10000;
     *(undefined4 *)(iVar3 + 0x34) = 0;
     g_phaseThunkVar4 = 0;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dispatchVar7;
+    (g_currentNodeIdx) = g_dispatchVar7;
     g_eventMusicVar = 0;
     g_dispatchSave96 = 2;
     g_walkCallback = 0;
     g_xformLoopCounter = 10;
     do {
-      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_walkCallback;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *MK4_NODE(undefined4, (g_currentNodeIdx)) = g_walkCallback;
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
       g_xformLoopCounter = g_xformLoopCounter + -1;
     } while (-1 < g_xformLoopCounter);
     g_phaseThunkVar2 = 10;
@@ -198,12 +198,12 @@ void BootInitClearSlotSeed(void)
         DownloadPlayerChar();
         if (g_framePauseFlag == 0) {
           g_dlEnabledFlag = 0;
-          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x142c85;
+          (g_currentNodeIdx) = 0x142c85;
           g_walkCallback = uVar1;
           g_eventQueueCurrent = uVar2;
           LoadGeoAsset_Default();
           if (g_framePauseFlag == 0) {
-            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x142c85;
+            (g_currentNodeIdx) = 0x142c85;
             LoadGeoAsset_Default();
           }
         }

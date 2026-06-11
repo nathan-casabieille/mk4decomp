@@ -149,13 +149,13 @@ void DualCondMatchSet(void)
       return;
     }
     g_xformDirtyFlags = g_xformDirtyFlags | 4;
-    if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
+    if ((g_currentNodeIdx) != 0) {
       g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
-      if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) {
+      if ((g_currentNodeIdx) == 0) {
         g_xformDirtyFlags = g_xformDirtyFlags | 1;
         return;
       }
-      g_eventQueuePending = *(code **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 8);
+      g_eventQueuePending = *(code **)((g_currentNodeIdx) * 4 + 8);
       g_dualC = InstallSelfStackReset;
       if (g_eventQueuePending == InstallSelfStackReset) goto LAB_00488e83;
     }

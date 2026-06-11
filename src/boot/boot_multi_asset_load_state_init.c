@@ -132,18 +132,18 @@ void BootMultiAssetLoadStateInit(void)
 
 {
   TableWalkBoundedCmp(8);
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b05;
+  (g_currentNodeIdx) = 0x141b05;
   LoadGeoAsset_Default();
   if (g_framePauseFlag == 0) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b05;
+    (g_currentNodeIdx) = 0x141b05;
     LoadGeoAsset_Default();
     if (g_framePauseFlag == 0) {
       g_eventQueuePending = 0x142036;
       DispatcherComplex260_FramePauseScaledStore();
       if (g_framePauseFlag == 0) {
-        *(undefined **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = &(*(unsigned int *)MK4_VA(unsigned int, 0x627d70));
+        *(undefined **)((g_currentNodeIdx) * 4 + 0x54) = &(*(unsigned int *)MK4_VA(unsigned int, 0x627d70));
         g_walkCallback = 0x1f;
-        MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x1f;
+        MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0x1f;
         PushSetCallPop();
         if (g_framePauseFlag == 0) {
           RegistryPushBindPop();
@@ -151,9 +151,9 @@ void BootMultiAssetLoadStateInit(void)
             g_eventQueuePending = 0x14202f;
             DispatcherComplex260_FramePauseScaledStore();
             if (g_framePauseFlag == 0) {
-              MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0xff9b8000;
+              MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54) = 0xff9b8000;
               g_walkCallback = 0x1f;
-              MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x1f;
+              MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0x1f;
               PushSetCallPop();
               if (g_framePauseFlag == 0) {
                 RegistryPushBindPop();

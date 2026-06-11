@@ -131,8 +131,8 @@ void NodeChainMaskMatch(void)
   }
   do {
     if (*(int *)(iVar1 + 0xd8) != 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1 >> 2;
-      g_eventQueueWorkType = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0xc) & g_eventQueueCurrent;
+      (g_currentNodeIdx) = iVar1 >> 2;
+      g_eventQueueWorkType = MK4_NODE_AT(uint, (g_currentNodeIdx), 0xc) & g_eventQueueCurrent;
       if (g_eventQueueWorkType == g_walkCallback) {
         g_xformDirtyFlags = g_xformDirtyFlags | 1;
         return;

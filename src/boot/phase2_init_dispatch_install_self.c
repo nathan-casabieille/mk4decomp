@@ -127,7 +127,7 @@ void Phase2InitDispatchInstallSelf(void)
   SetJmp_ZeroAndDirty4();
   if (((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) != 0)) &&
      (MStackPush8(), g_framePauseFlag == 0)) {
-    g_cj_00542054 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_cj_00542054 = (g_currentNodeIdx);
     g_dualD = g_eventQueuePending;
     g_cj_00542058 = 0x135964;
     g_eventQueueNotMask = 0xc1;
@@ -137,12 +137,12 @@ void Phase2InitDispatchInstallSelf(void)
       if (g_framePauseFlag != 0) {
         return;
       }
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x44) = MK4_NODE_AT(undefined4, g_dualD, 0);
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x44) = MK4_NODE_AT(undefined4, g_dualD, 0);
       g_dualD = g_dualD + 1;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x48) = MK4_NODE_AT(undefined4, g_dualD, 0);
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x48) = MK4_NODE_AT(undefined4, g_dualD, 0);
       g_dualD = g_dualD + 1;
       g_walkCallback = MK4_NODE_AT(undefined4, g_dualD, 0);
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x4c) = g_walkCallback;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x4c) = g_walkCallback;
       g_dualD = g_dualD + 1;
     }
     MStackPop8();

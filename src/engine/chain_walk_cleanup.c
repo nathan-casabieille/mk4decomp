@@ -126,20 +126,20 @@ int ChainWalkCleanup(void)
 
 {
   while( true ) {
-    if (MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x48) != 0) {
-      CleanupCallTwice((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x48);
+    if (MK4_NODE_AT(int, (g_currentNodeIdx), 0x48) != 0) {
+      CleanupCallTwice((g_currentNodeIdx) * 4 + 0x48);
     }
-    if (*MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) == 0) break;
-    if (MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0xc) != 1) {
+    if (*MK4_NODE(int, (g_currentNodeIdx)) == 0) break;
+    if (MK4_NODE_AT(int, (g_currentNodeIdx), 0xc) != 1) {
       g_walkCallback = ChainWalkCleanup;
       Helper_TickAlt();
       return g_framePauseFlag;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
+    (g_currentNodeIdx) = *MK4_NODE(int, (g_currentNodeIdx));
     g_walkCallback = (code *)0x1;
   }
-  g_walkCallback = (code *)*MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
-  return (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_walkCallback = (code *)*MK4_NODE(int, (g_currentNodeIdx));
+  return (g_currentNodeIdx);
 }
 #else
 __declspec(naked) void ChainWalkCleanup(void) {

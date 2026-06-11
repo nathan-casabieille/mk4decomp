@@ -124,7 +124,7 @@ void Vec3PackedTripleCallBracket(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *MK4_NODE(undefined4, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = (g_currentNodeIdx);
   g_matrixStackTop = g_matrixStackTop + 1;
   *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueuePending;
   g_matrixStackTop = g_matrixStackTop + 1;
@@ -139,7 +139,7 @@ void Vec3PackedTripleCallBracket(void)
   g_dispatchSave89 = MK4_NODE_AT(int, g_eventQueueSeed, 0x5c) - g_walkCallback;
   g_dualC = 0x14e908;
   g_eventQueuePending = g_packedTripleSlot2;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e026;
+  (g_currentNodeIdx) = 0x14e026;
   g_eventQueueWorkType = g_dispatchSave89;
   QuadInterpolator();
   if (g_framePauseFlag == 0) {
@@ -148,7 +148,7 @@ void Vec3PackedTripleCallBracket(void)
     g_eventQueueWorkType = *MK4_NODE(int, (int)(g_matrixStackTop + -1));
     g_dualC = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -2));
     g_eventQueuePending = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -3));
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -4));
+    (g_currentNodeIdx) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -4));
     g_matrixStackTop = g_matrixStackTop + -5;
   }
   return;

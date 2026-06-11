@@ -126,7 +126,7 @@ void PvpAngleDistSeed(void)
 {
   int iVar1;
   
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player1NodeIdx;
+  (g_currentNodeIdx) = g_player1NodeIdx;
   g_eventQueuePending = g_player2NodeIdx;
   g_chainAccumCur = MK4_NODE_AT(int, g_player1NodeIdx, 0x54);
   g_eventQueueCurrent = MK4_NODE_AT(int, g_player1NodeIdx, 0x5c);

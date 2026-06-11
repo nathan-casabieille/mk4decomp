@@ -233,7 +233,7 @@ void MultiPlayerWinStringFormat(void)
       if (g_framePauseFlag != 0) {
         return;
       }
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_currentNodeFlags;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = g_currentNodeFlags;
     }
     AllocSlotPushTripleGlobals();
     if (g_framePauseFlag != 0) {
@@ -252,7 +252,7 @@ void MultiPlayerWinStringFormat(void)
     if (g_framePauseFlag != 0) {
       return;
     }
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_currentNodeFlags;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = g_currentNodeFlags;
     AllocSlotPushTripleGlobals();
     if (g_framePauseFlag != 0) {
       return;
@@ -270,7 +270,7 @@ void MultiPlayerWinStringFormat(void)
     if (g_framePauseFlag != 0) {
       return;
     }
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_currentNodeFlags;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = g_currentNodeFlags;
     AllocSlotPushTripleGlobals();
     if (g_framePauseFlag != 0) {
       return;
@@ -381,7 +381,7 @@ void MultiPlayerWinStringFormat(void)
       if (g_framePauseFlag != 0) {
         return;
       }
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_currentNodeFlags;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = g_currentNodeFlags;
     }
     AllocSlotPushTripleGlobals();
     if (g_framePauseFlag != 0) {
@@ -400,7 +400,7 @@ void MultiPlayerWinStringFormat(void)
     if (g_framePauseFlag != 0) {
       return;
     }
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_currentNodeFlags;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = g_currentNodeFlags;
     AllocSlotPushTripleGlobals();
     if (g_framePauseFlag != 0) {
       return;
@@ -418,7 +418,7 @@ void MultiPlayerWinStringFormat(void)
     if (g_framePauseFlag != 0) {
       return;
     }
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_currentNodeFlags;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = g_currentNodeFlags;
     AllocSlotPushTripleGlobals();
     if (g_framePauseFlag != 0) {
       return;
@@ -435,7 +435,7 @@ void MultiPlayerWinStringFormat(void)
     MStackPop4Rewrite();
   }
   if (g_framePauseFlag == 0) {
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_currentNodeFlags;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = g_currentNodeFlags;
     Event23bMusicCluster();
   }
   return;

@@ -136,12 +136,12 @@ void MkIntroFsm(void)
     if (g_framePauseFlag == 0) {
       g_walkCallback = 1;
       g_quadEntryGate = 1;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualB_00538038;
+      (g_currentNodeIdx) = g_dualB_00538038;
       g_eventQueuePending = 0x4214a0;
       thunk_ChainNodeInit();
       if (g_framePauseFlag == 0) {
         g_eventQueuePending = 0x4214a0;
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualB_0053803c;
+        (g_currentNodeIdx) = g_dualB_0053803c;
         thunk_ChainNodeInit();
         if (g_framePauseFlag == 0) {
           g_walkCallback = 0x24b;

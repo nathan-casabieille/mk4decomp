@@ -130,7 +130,7 @@ void AiWalkCounterDualCluster(void)
   undefined4 *puVar1;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *MK4_NODE(uint, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(uint, (int)g_matrixStackTop) = (g_currentNodeIdx);
   SwapOrPassSet();
   if (g_framePauseFlag != 0) {
     return;
@@ -146,10 +146,10 @@ void AiWalkCounterDualCluster(void)
       if (g_active_00537e88 == 0) goto LAB_00477ec2;
       puVar1 = &g_player2State;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (uint)puVar1 >> 2;
-    g_walkCallback = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) + 1;
+    (g_currentNodeIdx) = (uint)puVar1 >> 2;
+    g_walkCallback = *MK4_NODE(int, (g_currentNodeIdx)) + 1;
     if (g_walkCallback < 999) {
-      *MK4_NODE(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_walkCallback;
+      *MK4_NODE(uint, (g_currentNodeIdx)) = g_walkCallback;
       MultiGateDispatchCallJmp();
       if (g_framePauseFlag != 0) {
         return;
@@ -157,7 +157,7 @@ void AiWalkCounterDualCluster(void)
     }
   }
 LAB_00477ec2:
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)g_matrixStackTop);
+  (g_currentNodeIdx) = *MK4_NODE(undefined4, (int)g_matrixStackTop);
   g_matrixStackTop = g_matrixStackTop + -1;
   return;
 }

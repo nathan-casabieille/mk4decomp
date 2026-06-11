@@ -134,13 +134,13 @@ void DualStreamSqDistThresh(void)
 {
   int iVar1;
   
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player1NodeIdx;
+  (g_currentNodeIdx) = g_player1NodeIdx;
   MatchPredicateCluster();
   if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 1) != 0)) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player2NodeIdx;
+    (g_currentNodeIdx) = g_player2NodeIdx;
     MatchPredicateCluster();
     if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 1) != 0)) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player1NodeIdx;
+      (g_currentNodeIdx) = g_player1NodeIdx;
       g_eventQueuePending = g_player2NodeIdx;
       g_walkCallback = MK4_NODE_AT(int, g_player1NodeIdx, 0x54) - MK4_NODE_AT(int, g_player2NodeIdx, 0x54);
       g_eventQueueCurrent = MK4_NODE_AT(int, g_player1NodeIdx, 0x58) - MK4_NODE_AT(int, g_player2NodeIdx, 0x58);

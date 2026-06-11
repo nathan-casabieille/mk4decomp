@@ -146,12 +146,12 @@ void InstallSelf5CallVecChain(void)
   g_dualD = MK4_NODE_AT(int, g_cj_00542054, 0);
   if (g_dualD != 0) {
     g_dualD = g_dualD + 0x15;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_savedNode;
+    (g_currentNodeIdx) = g_savedNode;
     QuadInterpolatorV2();
     if (g_framePauseFlag != 0) {
       return;
     }
-    g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_eventQueuePending = (g_currentNodeIdx);
     if (g_dualD != 0) {
       g_dualC = MK4_NODE_AT(int, g_cj_00542058, 0) + 0x15;
       TripleSubVec3();
@@ -159,26 +159,26 @@ void InstallSelf5CallVecChain(void)
         return;
       }
       g_walkCallback = 0xcccc;
-      g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_eventQueuePending = (g_currentNodeIdx);
       ThreeMul10Stores();
       if (g_framePauseFlag != 0) {
         return;
       }
-      g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_eventQueuePending = (g_currentNodeIdx);
       g_dualC = MK4_NODE_AT(int, g_cj_00542058, 0) + 0x1b;
       TripleSubVec3();
       if (g_framePauseFlag != 0) {
         return;
       }
       g_walkCallback = 0x4ccc;
-      g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_eventQueuePending = (g_currentNodeIdx);
       ThreeClampLoop();
       if (g_framePauseFlag != 0) {
         return;
       }
-      g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_00542058, 0) + 0x1b;
-      g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_eventQueuePending = (g_currentNodeIdx);
+      (g_currentNodeIdx) = MK4_NODE_AT(int, g_cj_00542058, 0) + 0x1b;
+      g_dualC = (g_currentNodeIdx);
       TripleAddVec3();
       if (g_framePauseFlag != 0) {
         return;

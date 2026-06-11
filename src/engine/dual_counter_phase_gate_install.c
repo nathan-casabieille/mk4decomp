@@ -128,10 +128,10 @@ void DualCounterPhaseGateInstall(void)
   if (iVar1 == 0) {
     g_eventQueuePending = *MK4_NODE(undefined4, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
+    (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 4);
     iVar1 = g_baseSel * 4;
-    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_eventQueuePending;
-    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    *MK4_NODE(undefined4, (g_currentNodeIdx)) = g_eventQueuePending;
+    *(int *)(iVar1 + 4) = (g_currentNodeIdx) + 1;
     g_walkCallback = 0;
     g_audioBank2State = 0;
     g_eventQueueChild = 0x3c;
@@ -140,10 +140,10 @@ LAB_00421e9e:
     g_eventQueueChild = iVar1;
     *(code **)(iVar2 + 8) = DualCounterPhaseGateInstall;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1421d50;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-    *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    (g_currentNodeIdx) = *(int *)(iVar2 + 4);
+    *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x1421d50;
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+    *(int *)(iVar2 + 4) = (g_currentNodeIdx);
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
     ScaledInitOrSelfPtr_InstallSelfStackReset();
     g_framePauseFlag = 1;
@@ -176,10 +176,10 @@ LAB_00421dbf:
   g_audioBank2State = g_walkCallback;
   *(code **)(iVar2 + 8) = DualCounterPhaseGateInstall;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x2421d50;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  (g_currentNodeIdx) = *(int *)(iVar2 + 4);
+  *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x2421d50;
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  *(int *)(iVar2 + 4) = (g_currentNodeIdx);
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
   ScaledInitOrSelfPtr_InstallSelfStackReset();
   g_framePauseFlag = 1;

@@ -132,7 +132,7 @@ void MstackPushPackChainInit(void)
   g_walkCallback = 0x1359c6;
   PushSetXfmMaskCallPop();
   if (g_framePauseFlag == 0) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+    (g_currentNodeIdx) = g_cj_0054205c;
     g_cj_0054205c = *MK4_NODE(int, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
     if (((byte)g_xformDirtyFlags & 4) != 0) {
@@ -143,9 +143,9 @@ void MstackPushPackChainInit(void)
     func_0x0049c3d0();
     if (g_framePauseFlag == 0) {
       TripleEntry3Block();
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 100) = 0;
-      g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x18);
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 100) = 0;
+      g_dualC = (g_currentNodeIdx);
+      (g_currentNodeIdx) = MK4_NODE_AT(int, (g_currentNodeIdx), 0x18);
       g_walkCallback = 1;
       CmpDivJmp();
       if (g_framePauseFlag == 0) {
@@ -167,7 +167,7 @@ void MstackPushPackChainInit(void)
         *puVar2 = *puVar2 | 8;
         g_walkCallback = 0xc000;
         puVar2[0x12] = 0xc000;
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualC;
+        (g_currentNodeIdx) = g_dualC;
       }
     }
   }

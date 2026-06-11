@@ -182,7 +182,7 @@ LAB_004a1740:
       MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54) = g_eventQueueWorkType;
       g_walkCallback = 0;
       MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58) = 0;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+      (g_currentNodeIdx) = g_cj_0054205c;
       MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
       if (g_framePauseFlag == 0) {
         *(undefined4 *)(iVar1 + 8) = 0x4a17d0;
@@ -192,16 +192,16 @@ LAB_004a1740:
       }
       return;
     }
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = g_dualC;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x1c) = g_dualC;
     g_eventQueuePending = g_dualD;
     MStackPush2ChainPrepend();
     if (g_framePauseFlag == 0) {
       g_walkCallback = 0x80000;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x80000;
-      MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34) = g_walkCallback;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0x80000;
+      MK4_NODE_AT(int, (g_currentNodeIdx), 0x34) = g_walkCallback;
       g_walkCallback = 0x83;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x38) = 0x83;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x38) = 0x83;
+      (g_currentNodeIdx) = g_cj_0054205c;
       MStackBracket4_ListInsertZeroFill();
       if (g_framePauseFlag == 0) {
         if (((byte)g_xformDirtyFlags & 4) == 0) {

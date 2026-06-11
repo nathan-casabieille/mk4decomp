@@ -144,14 +144,14 @@ void Phase4ThreePackedInstallSelf(void)
     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
     if (g_framePauseFlag == 0) {
       if (((byte)g_xformDirtyFlags & 4) != 0) goto LAB_0041a659;
-      g_installOwnerNode = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 100) = 0x4b65f;
-      g_installOwner2 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_installOwnerNode = (g_currentNodeIdx);
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 100) = 0x4b65f;
+      g_installOwner2 = (g_currentNodeIdx);
       g_walkCallback = 0;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0;
-      MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_walkCallback;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54) = 0;
+      MK4_NODE_AT(int, (g_currentNodeIdx), 0x5c) = g_walkCallback;
       g_walkCallback = 0xfffe4ccd;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = 0xfffe4ccd;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x58) = 0xfffe4ccd;
       StoreLoadJmp(0x41a7d0);
       g_cj_00542058 = g_counter_0053a51c + 0x135ee2;
       g_walkCallback = MK4_NODE_AT(int, g_cj_00542058, 0);
@@ -169,10 +169,10 @@ void Phase4ThreePackedInstallSelf(void)
           g_xformScratch2088 = g_walkCallback + 0x189;
           *(code **)(iVar1 + 8) = Phase4ThreePackedInstallSelf;
           MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-          *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x141a610;
-          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-          *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+          (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+          *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x141a610;
+          (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+          *(int *)(iVar1 + 4) = (g_currentNodeIdx);
           MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
           EsiInstallSetCbChainExtend_0048a810();
           g_framePauseFlag = 1;

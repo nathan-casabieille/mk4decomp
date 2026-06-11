@@ -127,11 +127,11 @@ void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void)
   int iVar2;
   
   while( true ) {
-    if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) {
-      g_walkCallback = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    if ((g_currentNodeIdx) == 0) {
+      g_walkCallback = (g_currentNodeIdx);
       return;
     }
-    piVar1 = (int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    piVar1 = (int *)((g_currentNodeIdx) * 4);
     g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0);
     iVar2 = g_eventQueuePending * 4;
     if ((g_walkCallback != 0) && (StoreDoubleNegPauseSubStore(), g_framePauseFlag != 0)) {
@@ -146,7 +146,7 @@ void LinkedListFieldAdd_StoreDoubleNegPauseSubStore(void)
     g_walkCallback = *(int *)(iVar2 + 8);
     if ((g_walkCallback != 0) && (StoreDoubleNegPauseSubStore(), g_framePauseFlag != 0)) break;
     piVar1[3] = g_walkCallback;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *piVar1;
+    (g_currentNodeIdx) = *piVar1;
   }
   return;
 }
@@ -237,10 +237,10 @@ void LinkedListFieldAdd(void)
   int *piVar2;
   int *piVar3;
   
-  g_eventQueueCurrent = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-  if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
+  g_eventQueueCurrent = (g_currentNodeIdx);
+  if ((g_currentNodeIdx) != 0) {
     piVar3 = (int *)(g_eventQueuePending * 4);
-    piVar2 = (int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    piVar2 = (int *)((g_currentNodeIdx) * 4);
     piVar2[1] = *piVar3 + piVar2[1];
     piVar2[2] = piVar3[1] + piVar2[2];
     g_walkCallback = piVar3[2] + piVar2[3];
@@ -256,7 +256,7 @@ void LinkedListFieldAdd(void)
       g_eventQueueCurrent = *piVar2;
     }
   }
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_eventQueueCurrent;
+  (g_currentNodeIdx) = g_eventQueueCurrent;
   return;
 }
 #else

@@ -144,7 +144,7 @@ void AudioInstallSelfStatePush(void)
   }
   PushPopScaledInit343c();
   GuardedSetupCallTailJmp("LOADING",&(*(unsigned int *)MK4_VA(unsigned int, 0x640000)));
-  g_audioInitScaled = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_audioInitScaled = (g_currentNodeIdx);
   g_tickW1 = 0x100;
   g_gameMode = AudioInstallSelfStatePush;
   *(code **)(iVar1 + 8) = AudioInstallSelfStatePush;

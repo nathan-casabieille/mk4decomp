@@ -190,11 +190,11 @@ void BboxProjectAndStash(void)
     iVar4 = (int)g_vtxIn2_y;
     sVar9 = (short)(iVar11 * g_mat3x3_007af992 + iVar4 * g_mat3x3_007af994 >> 0xc) + (short)g_vtxTransX;
     sVar3 = (short)(iVar5 * iVar11 + iVar10 * iVar4 >> 0xc) + (short)g_vtxTransY;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (int)sVar9;
+    (g_currentNodeIdx) = (int)sVar9;
     g_eventQueuePending = (int)sVar3;
     g_eventQueueCurrent = (int)(short)((short)(iVar7 * iVar4 + iVar6 * iVar11 >> 0xc) + (short)g_vtxTransZ
                                );
-    g_vtxOut1_x = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_vtxOut1_x = (g_currentNodeIdx);
     g_vtxOut1_y = g_eventQueuePending;
     g_min_007af984 = g_eventQueueCurrent;
     (&g_dispatchSave1516)[iVar2 * 3] = sVar9;

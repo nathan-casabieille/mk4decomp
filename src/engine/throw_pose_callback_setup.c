@@ -131,21 +131,21 @@ void ThrowPoseCallbackSetup(void)
   DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
   if (((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) &&
      (MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(), g_framePauseFlag == 0)) {
-    g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_cj_0054205c = (g_currentNodeIdx);
     g_walkCallback = g_eventQueueCurrent;
     if ((g_eventQueueCurrent != (code *)0x0) && (ScaledOrStore_004903d0(), g_framePauseFlag != 0)) {
       return;
     }
-    g_dualD = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x18);
+    g_dualD = MK4_NODE_AT(int, (g_currentNodeIdx), 0x18);
     g_eventQueuePending = *MK4_NODE(int, (int)g_dualC);
     g_dualC = g_dualC + 1;
     FramePauseScaledStore();
     if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = 2;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0xfff70000;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34) = 0xd0000;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x1c) = 2;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0xfff70000;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x34) = 0xd0000;
       g_walkCallback = (code *)0x1999;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x38) = 0x1999;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x38) = 0x1999;
       g_eventQueuePending = g_dualD;
       MStackPush2ChainPrepend();
       if (g_framePauseFlag == 0) {
@@ -156,7 +156,7 @@ void ThrowPoseCallbackSetup(void)
         g_walkCallback = *(code **)((int)g_dualC * 4);
         g_dualC = g_dualC + 1;
         *(code **)(g_cj_0054205c * 4 + 0x58) = g_walkCallback;
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+        (g_currentNodeIdx) = g_cj_0054205c;
         MStackBracket4_ListInsertZeroFill();
         if ((((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) &&
             (MStackPush3LinkedListWalk(), g_framePauseFlag == 0)) && (((byte)g_xformDirtyFlags & 4) == 0)) {

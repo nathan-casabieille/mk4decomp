@@ -169,7 +169,7 @@ void Phase1ChainExtendedInitLoop2(void)
         MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48) = 0xa666;
         MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0xff;
         *(code **)(g_eventQueuePending * 4 + 0x10) = ClampMulShiftStore;
-        MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) | 0x4000;
+        MK4_NODE_AT(uint, (g_currentNodeIdx), 0x20) = MK4_NODE_AT(uint, (g_currentNodeIdx), 0x20) | 0x4000;
         g_walkCallback = 1;
         CmpDivJmp();
         if (g_framePauseFlag != 0) {
@@ -185,15 +185,15 @@ void Phase1ChainExtendedInitLoop2(void)
             g_walkCallback = 0xfffe8000;
             g_walkCallback = Mul10Tail(MK4_NODE_AT(undefined4, g_cj_00542058, 0x74),0xfffe8000);
             g_eventQueueWorkType = g_eventQueueWorkType + g_walkCallback;
-            MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 4) = g_eventQueueCurrent;
-            MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0xc) = g_eventQueueWorkType;
-            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
+            MK4_NODE_AT(int, (g_currentNodeIdx), 4) = g_eventQueueCurrent;
+            MK4_NODE_AT(int, (g_currentNodeIdx), 0xc) = g_eventQueueWorkType;
+            (g_currentNodeIdx) = *MK4_NODE(int, (g_currentNodeIdx));
             g_xformDirtyFlags = g_xformDirtyFlags | 4;
-            if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) break;
+            if ((g_currentNodeIdx) == 0) break;
             g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
-          } while ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0);
+          } while ((g_currentNodeIdx) != 0);
         }
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+        (g_currentNodeIdx) = g_cj_0054205c;
         MStackCall_MStackPush2ChainPrepend_00406600();
         if (g_framePauseFlag != 0) {
           return;

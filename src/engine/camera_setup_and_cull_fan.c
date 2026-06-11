@@ -175,7 +175,7 @@ void CameraSetupAndCullFan(void)
   int iVar10;
   
   uVar2 = g_dualC;
-  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  iVar1 = (g_currentNodeIdx);
   g_dispatchSave1575 = (uint)(g_tickX3 * 0x60) >> 8;
   g_dispatchSave1576 = g_tickW1;
   g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0x3c) >> 8;
@@ -192,7 +192,7 @@ void CameraSetupAndCullFan(void)
   g_dispatchSave1577 = g_tickW1 * g_walkCallback >> 8;
   g_dispatchSave1504 = (undefined2)((uint)iVar7 >> 8);
   iVar7 = iVar7 >> 9;
-  iVar6 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 0x15;
+  iVar6 = (g_currentNodeIdx) + 0x15;
   g_dispatchSave1505 = -(short)iVar7;
   g_dualC = g_eventQueuePending + 0x15;
   g_dispatchSave1525 = MK4_NODE_AT(int, iVar6, 0) - MK4_NODE_AT(int, g_dualC, 0) >> 8;
@@ -269,7 +269,7 @@ void CameraSetupAndCullFan(void)
   if (((g_cj_0054205c & 0x1000) != 0) && (-1 < g_dispatchSave1574)) {
     AltCamMatrixProject(&g_dispatchSave1550,0);
   }
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1;
+  (g_currentNodeIdx) = iVar1;
   g_dualC = uVar2;
   return;
 }

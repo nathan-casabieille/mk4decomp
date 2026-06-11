@@ -138,10 +138,10 @@ void InstallSelfChainExtendCall_MStackPushSet0Jmp(void)
   }
   *(code **)(iVar2 + 8) = InstallSelfChainExtendCall_MStackPushSet0Jmp;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1434f10;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  (g_currentNodeIdx) = *(int *)(iVar2 + 4);
+  *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x1434f10;
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  *(int *)(iVar2 + 4) = (g_currentNodeIdx);
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
   MStackPushSet0Jmp();
   g_framePauseFlag = 1;
@@ -200,10 +200,10 @@ void InstallSelfChainExtendCall_MStackPushSet6Jmp(void)
   }
   *(code **)(iVar2 + 8) = InstallSelfChainExtendCall_MStackPushSet6Jmp;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x14351b0;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  (g_currentNodeIdx) = *(int *)(iVar2 + 4);
+  *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x14351b0;
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  *(int *)(iVar2 + 4) = (g_currentNodeIdx);
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
   MStackPushSet6Jmp();
   g_framePauseFlag = 1;
@@ -260,10 +260,10 @@ void InstallSelfChainExtendCall_ScaledChainJmp(void)
   if (iVar1 == 0) {
     *(code **)(iVar2 + 8) = InstallSelfChainExtendCall_ScaledChainJmp;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x147de60;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-    *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    (g_currentNodeIdx) = *(int *)(iVar2 + 4);
+    *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x147de60;
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+    *(int *)(iVar2 + 4) = (g_currentNodeIdx);
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
     ScaledChainJmp_00429470();
     g_framePauseFlag = 1;
@@ -341,10 +341,10 @@ void InstallSelfChainExtendCall_GameModeAdvanceCluster(void)
   }
   *(code **)(iVar2 + 8) = InstallSelfChainExtendCall_GameModeAdvanceCluster;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1481eb0;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  (g_currentNodeIdx) = *(int *)(iVar2 + 4);
+  *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x1481eb0;
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  *(int *)(iVar2 + 4) = (g_currentNodeIdx);
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
   GameModeAdvanceCluster();
   g_framePauseFlag = 1;
@@ -404,10 +404,10 @@ void InstallSelfChainExtendCall_InitZeroChainLookupJmp(void)
   }
   *(code **)(iVar2 + 8) = InstallSelfChainExtendCall_InitZeroChainLookupJmp;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x14945f0;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  (g_currentNodeIdx) = *(int *)(iVar2 + 4);
+  *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x14945f0;
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  *(int *)(iVar2 + 4) = (g_currentNodeIdx);
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
   InitZeroChainLookupJmp();
   g_framePauseFlag = 1;

@@ -140,7 +140,7 @@ void TripleChainTailJmp(void)
       if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
         g_walkCallback = 0x11999;
         MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48) = 0x11999;
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542054 + 0x15;
+        (g_currentNodeIdx) = g_cj_00542054 + 0x15;
         BootFlagChainAudioPause();
         return;
       }

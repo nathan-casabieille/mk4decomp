@@ -127,7 +127,7 @@ void GatedChainInit(void)
     if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
       MStackCall_MStackPush2ChainPrepend_00406340();
       if (g_framePauseFlag == 0) {
-        iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+        iVar1 = (g_currentNodeIdx) * 4;
         *(undefined4 *)(iVar1 + 0x54) = 0;
         *(undefined4 *)(iVar1 + 0x58) = 0;
         *(undefined4 *)(iVar1 + 0x5c) = 0x3333;
@@ -136,9 +136,9 @@ void GatedChainInit(void)
         PushSetXfmMaskCallPop();
         if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
           MStackCall_MStackPush2ChainPrepend_00406340();
-          iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+          iVar1 = (g_currentNodeIdx);
           if (g_framePauseFlag == 0) {
-            MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0xb333;
+            MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54) = 0xb333;
             MK4_NODE_AT(undefined4, iVar1, 0x58) = 0x3333;
             MK4_NODE_AT(undefined4, iVar1, 0x5c) = 0x3333;
             g_walkCallback = 0xca3d;

@@ -182,7 +182,7 @@ LAB_0042f599:
 joined_r0x0042f60a:
   if (g_framePauseFlag == 0) {
     g_walkCallback = 0x14000;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = 0x14000;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = 0x14000;
   }
   return;
 }

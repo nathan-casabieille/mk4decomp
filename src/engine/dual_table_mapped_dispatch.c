@@ -128,7 +128,7 @@ void DualTableMappedDispatch(void)
   TableWalkBoundedCmp(5);
   BootInitGuardedCallChain();
   if (g_framePauseFlag == 0) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x142c4f;
+    (g_currentNodeIdx) = 0x142c4f;
     LoadGeoAsset_Default();
     if (g_framePauseFlag == 0) {
       iVar1 = g_dlNalt1;
@@ -142,12 +142,12 @@ void DualTableMappedDispatch(void)
         iVar1 = 7;
       }
       g_walkCallback = iVar1 * 2;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (g_walkCallback + 0x150c22));
+      (g_currentNodeIdx) = *MK4_NODE(int, (g_walkCallback + 0x150c22));
       g_dualC = g_walkCallback + 0x150c23;
       g_eventQueuePending = 0x7e20000;
       LoadGeoAsset_Default();
       if (g_framePauseFlag == 0) {
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_dualC, 0);
+        (g_currentNodeIdx) = MK4_NODE_AT(int, g_dualC, 0);
         g_dualC = g_dualC + 1;
         g_eventQueuePending = 0x7e00000;
         LoadGeoAsset_Default();
@@ -163,17 +163,17 @@ void DualTableMappedDispatch(void)
             iVar1 = 7;
           }
           g_walkCallback = iVar1 * 2;
-          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (g_walkCallback + 0x150c22));
+          (g_currentNodeIdx) = *MK4_NODE(int, (g_walkCallback + 0x150c22));
           g_dualC = g_walkCallback + 0x150c23;
           g_eventQueuePending = 0x7f10000;
           LoadGeoAsset_Default();
           if (g_framePauseFlag == 0) {
-            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_dualC, 0);
+            (g_currentNodeIdx) = MK4_NODE_AT(int, g_dualC, 0);
             g_dualC = g_dualC + 1;
             g_eventQueuePending = 0x7e10000;
             LoadGeoAsset_Default();
             if (g_framePauseFlag == 0) {
-              (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_eventQueueSeed;
+              (g_currentNodeIdx) = g_eventQueueSeed;
               iVar1 = g_eventQueueSeed * 4;
               ZeroThreeFields_00404ed0();
               *(undefined4 *)(iVar1 + 0x54) = 0;

@@ -133,10 +133,10 @@ void InstallSelfChainSet80Call(void)
   g_eventQueueChild = 0x3c;
   *(code **)(iVar2 + 8) = InstallSelfChainSet80Call;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x14347f0;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  (g_currentNodeIdx) = *(int *)(iVar2 + 4);
+  *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x14347f0;
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  *(int *)(iVar2 + 4) = (g_currentNodeIdx);
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
   StateGateMStackOverlap();
   g_framePauseFlag = 1;

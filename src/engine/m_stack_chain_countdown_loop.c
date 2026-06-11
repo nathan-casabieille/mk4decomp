@@ -129,7 +129,7 @@ void MStackChainCountdownLoop(void)
   uint uVar2;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *MK4_NODE(undefined4, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = (g_currentNodeIdx);
   g_eventQueueWorkType = g_walkCallback;
   MStackPushSearchLoop();
   if (g_framePauseFlag == 0) {
@@ -148,7 +148,7 @@ void MStackChainCountdownLoop(void)
       g_walkCallback = g_walkCallback - 1;
     }
     g_chainAccumCur = MK4_NODE_AT(undefined4, iVar1, 8);
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)g_matrixStackTop);
+    (g_currentNodeIdx) = *MK4_NODE(undefined4, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
   }
   return;

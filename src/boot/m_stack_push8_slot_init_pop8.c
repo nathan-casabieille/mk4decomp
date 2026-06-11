@@ -155,7 +155,7 @@ LAB_0041516e:
         g_dualD = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -4));
         g_dualC = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -5));
         g_eventQueuePending = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -6));
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -7));
+        (g_currentNodeIdx) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -7));
         g_matrixStackTop = g_matrixStackTop + -8;
         return;
       }
@@ -177,7 +177,7 @@ LAB_0041516e:
           MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0xff;
           g_walkCallback = ClampMulShiftStore;
           *(code **)(g_eventQueuePending * 4 + 0x10) = ClampMulShiftStore;
-          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+          (g_currentNodeIdx) = g_cj_0054205c;
           MStackCall_MStackPush2ChainInsert_004065b0();
           if (g_framePauseFlag == 0) goto LAB_0041516e;
         }

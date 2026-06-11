@@ -121,13 +121,13 @@ void AnimEventUpdateCluster(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *MK4_NODE(int, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(int, (int)g_matrixStackTop) = (g_currentNodeIdx);
   g_matrixStackTop = g_matrixStackTop + 1;
   *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueuePending;
   g_walkCallback = 1;
   DirtyDoubleDeref();
   if (g_framePauseFlag == 0) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
+    (g_currentNodeIdx) = *MK4_NODE(int, (g_currentNodeIdx));
     ScaledTestPauseStore();
     if (g_framePauseFlag == 0) {
       if (((byte)g_xformDirtyFlags & 4) == 0) {
@@ -138,7 +138,7 @@ void AnimEventUpdateCluster(void)
         if (g_framePauseFlag != 0) {
           return;
         }
-        g_eventQueuePending = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x28);
+        g_eventQueuePending = MK4_NODE_AT(int, (g_currentNodeIdx), 0x28);
         g_walkCallback = 0x494020;
         MK4_NODE_AT(undefined4, g_eventQueuePending, 0x10) = 0x494020;
         if (((byte)g_dualBitGate & 1) == 0) {
@@ -151,7 +151,7 @@ void AnimEventUpdateCluster(void)
         }
       }
       g_eventQueuePending = *MK4_NODE(int, (int)g_matrixStackTop);
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (int)(g_matrixStackTop + -1));
+      (g_currentNodeIdx) = *MK4_NODE(int, (int)(g_matrixStackTop + -1));
       g_matrixStackTop = g_matrixStackTop + -2;
     }
   }

@@ -132,7 +132,7 @@ void BootSetJmpStoreThenChainTriple(void)
   SetJmp_ZeroAndDirty4();
   if (((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) != 0)) &&
      (MStackPush8(), g_framePauseFlag == 0)) {
-    g_cj_00542054 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_cj_00542054 = (g_currentNodeIdx);
     g_dualD = g_eventQueuePending;
     g_cj_00542058 = 0x15083a;
     g_eventQueueNotMask = 0xc1;
@@ -142,11 +142,11 @@ void BootSetJmpStoreThenChainTriple(void)
       if (g_framePauseFlag != 0) {
         return;
       }
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x44) = MK4_NODE_AT(undefined4, g_dualD, 0);
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x44) = MK4_NODE_AT(undefined4, g_dualD, 0);
       g_dualD = g_dualD + 1;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x48) = MK4_NODE_AT(undefined4, g_dualD, 0);
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x48) = MK4_NODE_AT(undefined4, g_dualD, 0);
       g_walkCallback = *MK4_NODE(undefined4, (g_dualD + 1));
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x4c) = g_walkCallback;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x4c) = g_walkCallback;
     }
     g_baseSel = *MK4_NODE(undefined4, (int)g_matrixStackTop);
     g_cj_0054205c = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
@@ -155,7 +155,7 @@ void BootSetJmpStoreThenChainTriple(void)
     g_dualD = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -4));
     g_dualC = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -5));
     g_eventQueuePending = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -6));
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -7));
+    (g_currentNodeIdx) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -7));
     g_matrixStackTop = g_matrixStackTop + -8;
     return;
   }

@@ -128,8 +128,8 @@ void InstallSelfDecBitCheck(void)
     StackPopDispatchTagged();
     return;
   }
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x3c);
-  g_walkCallback = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74) & 0xf00;
+  (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 0x3c);
+  g_walkCallback = MK4_NODE_AT(uint, (g_currentNodeIdx), 0x74) & 0xf00;
   if (g_walkCallback == 0) {
     StackPopDispatchTagged();
     return;

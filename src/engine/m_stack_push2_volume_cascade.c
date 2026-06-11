@@ -127,7 +127,7 @@ void MStackPush2VolumeCascade(void)
   undefined4 uVar3;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *MK4_NODE(int, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(int, (int)g_matrixStackTop) = (g_currentNodeIdx);
   g_matrixStackTop = g_matrixStackTop + 1;
   *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueueWorkType;
   g_walkCallback = 100;
@@ -175,7 +175,7 @@ void MStackPush2VolumeCascade(void)
       return;
     }
     iVar1 = g_cj_0054205c * 4;
-    iVar2 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+    iVar2 = (g_currentNodeIdx) * 4;
     *(undefined4 *)(iVar2 + 0x54) = *(undefined4 *)(iVar1 + 0x54);
     *(undefined4 *)(iVar2 + 0x58) = *(undefined4 *)(iVar1 + 0x58);
     *(undefined4 *)(iVar2 + 0x5c) = *(undefined4 *)(iVar1 + 0x5c);
@@ -187,7 +187,7 @@ void MStackPush2VolumeCascade(void)
     *(undefined4 *)(iVar2 + 0x74) = uVar3;
     g_walkCallback = 0xfffff5c3;
     *(undefined4 *)(iVar2 + 0x70) = 0xfffff5c3;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 0x1b;
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 0x1b;
     g_eventQueueWorkType = 0x28f;
     TripleVecAccCallStore();
     if (g_framePauseFlag != 0) {
@@ -195,7 +195,7 @@ void MStackPush2VolumeCascade(void)
     }
   }
   g_eventQueueWorkType = *MK4_NODE(undefined4, (int)g_matrixStackTop);
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
+  (g_currentNodeIdx) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
   g_matrixStackTop = g_matrixStackTop + -2;
   return;
 }

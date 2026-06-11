@@ -132,8 +132,8 @@ void DualChainSubCallSubLoad(void)
   g_eventQueuePending = g_eventQueueSeed;
   g_walkCallback = MK4_NODE_AT(int, g_eventQueueSeed, 0x54);
   g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueueSeed, 0x5c);
-  g_eventQueueWorkType = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) - g_walkCallback;
-  g_chainAccumCur = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) - g_eventQueueCurrent;
+  g_eventQueueWorkType = MK4_NODE_AT(int, (g_currentNodeIdx), 0x54) - g_walkCallback;
+  g_chainAccumCur = MK4_NODE_AT(int, (g_currentNodeIdx), 0x5c) - g_eventQueueCurrent;
   Atan2QuadrantLookup();
   if (g_framePauseFlag == 0) {
     g_walkCallback = 0x1921f - g_walkCallback;

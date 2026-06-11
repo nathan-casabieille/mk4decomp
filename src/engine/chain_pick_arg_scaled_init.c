@@ -144,7 +144,7 @@ void ChainPickArgScaledInit(int param_1)
   MK4_NODE_AT(undefined4, g_baseSel, 100) = g_dualD;
   MK4_NODE_AT(undefined4, g_baseSel, 0x68) = g_cj_00542054;
   g_dualC = (param_1 >> 2) + 0xf;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, ((param_1 >> 2) + g_chainAccumCur));
+  (g_currentNodeIdx) = *MK4_NODE(undefined4, ((param_1 >> 2) + g_chainAccumCur));
   EventPacketDecoder();
   return;
 }

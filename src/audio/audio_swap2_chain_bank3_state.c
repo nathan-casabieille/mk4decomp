@@ -151,10 +151,10 @@ void AudioSwap2ChainBank3State(void)
     g_cj_00542058 = MK4_NODE_AT(int, g_baseSel, 0x80);
   }
   if (((byte)g_gtFightTickCounter & 8) != 0) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (g_walkCallback + g_baseSel));
-    g_walkCallback = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54);
-    g_eventQueueCurrent = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58);
-    g_eventQueueWorkType = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c);
+    (g_currentNodeIdx) = *MK4_NODE(int, (g_walkCallback + g_baseSel));
+    g_walkCallback = MK4_NODE_AT(int, (g_currentNodeIdx), 0x54);
+    g_eventQueueCurrent = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x58);
+    g_eventQueueWorkType = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c);
     MK4_NODE_AT(int, g_cj_00542058, 0x54) = g_walkCallback;
     MK4_NODE_AT(undefined4, g_cj_00542058, 0x58) = g_eventQueueCurrent;
     MK4_NODE_AT(undefined4, g_cj_00542058, 0x5c) = g_eventQueueWorkType;

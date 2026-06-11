@@ -138,10 +138,10 @@ void GuardedStateChangePair(void)
       CallSetPause();
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_stateChangePair2 + 0x14e02b;
+    (g_currentNodeIdx) = g_stateChangePair2 + 0x14e02b;
     g_walkCallback = 0x27;
     g_stateChangePair2 = g_eventQueueCurrent;
-    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x27;
+    *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x27;
     SpawnTrioInitCluster();
     if (g_framePauseFlag == 0) {
       CallSetPause();
@@ -149,7 +149,7 @@ void GuardedStateChangePair(void)
     }
   }
   else {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e02c;
+    (g_currentNodeIdx) = 0x14e02c;
     g_eventQueueCurrent = g_stateChangePair2;
     if (2 < g_stateChangePair2) {
 LAB_004586cd:
@@ -159,8 +159,8 @@ LAB_004586cd:
       CallSetPause();
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_stateChangePair2 + 0x14e02c;
-    *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_stateChangePair3;
+    (g_currentNodeIdx) = g_stateChangePair2 + 0x14e02c;
+    *MK4_NODE(int, (g_currentNodeIdx)) = g_stateChangePair3;
     g_matrixStackTop = g_matrixStackTop + 1;
     *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueCurrent;
     MStackPush2ClampLookup();

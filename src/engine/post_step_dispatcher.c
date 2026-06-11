@@ -157,8 +157,8 @@ LAB_00497920:
   }
   else {
     iVar2 = g_cj_0054205c * 4;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
-    g_walkCallback = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20);
+    (g_currentNodeIdx) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+    g_walkCallback = MK4_NODE_AT(uint, (g_currentNodeIdx), 0x20);
     g_xformScratch94 = g_walkCallback & 0x2000;
     if (g_xformScratch94 != 0) {
       func_0x00497b10();
@@ -176,7 +176,7 @@ LAB_0049783e:
       *(undefined4 *)(iVar2 + 0x70) = 0xfffff0a4;
       g_walkCallback = -0x1999;
       *(undefined4 *)(iVar2 + 0x58) = 0xffffe667;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c + 0x15;
+      (g_currentNodeIdx) = g_cj_0054205c + 0x15;
       g_eventQueuePending = g_cj_0054205c + 0x1b;
       Phase2InitDispatchInstallSelf();
       if (g_framePauseFlag != 0) {

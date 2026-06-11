@@ -388,7 +388,7 @@ void SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30(void)
     if (g_framePauseFlag != 0) {
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x13a816;
+    (g_currentNodeIdx) = 0x13a816;
     GuardedDirtyXformFromTable();
     if (g_framePauseFlag != 0) {
       return;
@@ -419,10 +419,10 @@ void SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30(void)
       if (((byte)g_xformDirtyFlags & 1) == 0) {
         *(code **)(iVar1 + 8) = SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30;
         MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-        *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x245fd30;
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-        *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+        *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x245fd30;
+        (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+        *(int *)(iVar1 + 4) = (g_currentNodeIdx);
         MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
         InstallSelfChainCascade();
         g_framePauseFlag = 1;

@@ -131,14 +131,14 @@ void ChainFieldTest2Branch(void)
 {
   bool bVar1;
   
-  g_walkCallback = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x40);
+  g_walkCallback = MK4_NODE_AT(uint, (g_currentNodeIdx), 0x40);
   g_xformScratch94 = g_walkCallback & 0x40;
   if (g_xformScratch94 != 0) {
-    bVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == g_player1NodeIdx;
-    g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player1NodeIdx;
+    bVar1 = (g_currentNodeIdx) == g_player1NodeIdx;
+    g_eventQueuePending = (g_currentNodeIdx);
+    (g_currentNodeIdx) = g_player1NodeIdx;
     if (bVar1) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_player2NodeIdx;
+      (g_currentNodeIdx) = g_player2NodeIdx;
     }
     MStackSignedMod();
     if (g_framePauseFlag == 0) {

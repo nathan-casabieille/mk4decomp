@@ -136,10 +136,10 @@ void DispatchPair(void)
     *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_walkCallback;
     TwinLoopSlotFinder();
     if (g_framePauseFlag == 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(undefined4, g_cj_00542058, 0);
+      (g_currentNodeIdx) = MK4_NODE_AT(undefined4, g_cj_00542058, 0);
       LoadGeoAsset_Default();
       if (g_framePauseFlag == 0) {
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(undefined4, g_cj_00542058, 4);
+        (g_currentNodeIdx) = MK4_NODE_AT(undefined4, g_cj_00542058, 4);
         LoadGeoAsset_Default();
         if (g_framePauseFlag == 0) {
           g_walkCallback = *MK4_NODE(undefined4, (int)g_matrixStackTop);

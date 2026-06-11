@@ -125,7 +125,7 @@ void TripleMod411262(void)
   uint uVar1;
   uint uVar2;
   
-  uVar1 = *MK4_NODE(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
+  uVar1 = *MK4_NODE(uint, (g_currentNodeIdx));
   if ((int)uVar1 < 0) {
     uVar1 = uVar1 + ((0x6487d - uVar1) / 0x6487e) * 0x6487e;
   }
@@ -136,8 +136,8 @@ void TripleMod411262(void)
       uVar2 = uVar2 - 1;
     } while (uVar2 != 0);
   }
-  *MK4_NODE(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = uVar1;
-  uVar1 = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 4);
+  *MK4_NODE(uint, (g_currentNodeIdx)) = uVar1;
+  uVar1 = MK4_NODE_AT(uint, (g_currentNodeIdx), 4);
   if ((int)uVar1 < 0) {
     uVar1 = uVar1 + ((0x6487d - uVar1) / 0x6487e) * 0x6487e;
   }
@@ -148,8 +148,8 @@ void TripleMod411262(void)
       uVar2 = uVar2 - 1;
     } while (uVar2 != 0);
   }
-  MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 4) = uVar1;
-  g_walkCallback = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 8);
+  MK4_NODE_AT(uint, (g_currentNodeIdx), 4) = uVar1;
+  g_walkCallback = MK4_NODE_AT(uint, (g_currentNodeIdx), 8);
   if ((int)g_walkCallback < 0) {
     g_walkCallback = g_walkCallback + ((0x6487d - g_walkCallback) / 0x6487e) * 0x6487e;
   }
@@ -160,7 +160,7 @@ void TripleMod411262(void)
       uVar1 = uVar1 - 1;
     } while (uVar1 != 0);
   }
-  MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 8) = g_walkCallback;
+  MK4_NODE_AT(uint, (g_currentNodeIdx), 8) = g_walkCallback;
   return;
 }
 #else

@@ -130,7 +130,7 @@ void IndirectDispatchCjStore(void)
   *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_currentNodeFlags;
   g_matrixStackTop = g_matrixStackTop + 1;
   *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_xformScratch2088;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542054;
+  (g_currentNodeIdx) = g_cj_00542054;
   g_eventQueuePending = g_cj_00542058;
   g_walkCallback = 0;
   (*g_eventQueueChild)();

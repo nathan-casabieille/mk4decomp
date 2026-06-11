@@ -131,27 +131,27 @@ void EndingScreenFsmCluster(void)
   AudioVolumeRescale();
   if (g_framePauseFlag == 0) {
     if (((byte)g_xformDirtyFlags & 1) == 0) {
-      MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34) = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34) | 1;
+      MK4_NODE_AT(uint, (g_currentNodeIdx), 0x34) = MK4_NODE_AT(uint, (g_currentNodeIdx), 0x34) | 1;
     }
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x54);
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x5c);
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x54);
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x5c);
     g_walkCallback = 0xffff999a;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = 0xffff999a;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x58) = 0xffff999a;
     g_eventQueueWorkType = 0x3333;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 0x15;
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 0x15;
     TripleVecAccCallStore();
     if (g_framePauseFlag == 0) {
       g_walkCallback = 0;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -0x15;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x6c) = 0;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74) = g_walkCallback;
+      (g_currentNodeIdx) = (g_currentNodeIdx) + -0x15;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x6c) = 0;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x74) = g_walkCallback;
       g_walkCallback = 0xfffff0a4;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x70) = 0xfffff0a4;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x70) = 0xfffff0a4;
       g_eventQueueWorkType = 0x20c;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 0x1b;
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 0x1b;
       TripleVecAccCallStore();
       if (g_framePauseFlag == 0) {
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -0x1b;
+        (g_currentNodeIdx) = (g_currentNodeIdx) + -0x1b;
       }
     }
   }

@@ -128,12 +128,12 @@ void Phase4TrampolineThreePacked(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *MK4_NODE(undefined4, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = (g_currentNodeIdx);
   g_matrixStackTop = g_matrixStackTop + 1;
   *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_dualC;
   StoreTwoCall(0x40fa90,0x84);
   g_dualC = *MK4_NODE(undefined4, (int)g_matrixStackTop);
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
+  (g_currentNodeIdx) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
   g_matrixStackTop = g_matrixStackTop + -2;
   return;
 }

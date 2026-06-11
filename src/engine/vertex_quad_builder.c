@@ -141,7 +141,7 @@ void VertexQuadBuilder(int param_1,int param_2)
   uVar7 = (uint)*(ushort *)(param_1 * 0x10 + 0xe + *(int *)(g_eventQueuePending + 4));
   iVar6 = param_1 * 0x10 + 0xc + *(int *)(g_eventQueuePending + 4);
   if (uVar7 != 0) {
-    piVar1 = (int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x48);
+    piVar1 = (int *)((g_currentNodeIdx) * 4 + 0x48);
     uVar8 = g_cj_0054205c >> 0x10 & 8U | g_dispatchSave1572;
     uVar9 = uVar7 * 0x1c;
     if (param_2 != 0) {
@@ -178,7 +178,7 @@ LAB_004bc520:
     }
   }
   g_dualC = (uint *)0x0;
-  MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x48) = 0;
+  MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x48) = 0;
   return;
 }
 #else

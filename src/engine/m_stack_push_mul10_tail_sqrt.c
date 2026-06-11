@@ -128,7 +128,7 @@ void MStackPushMul10TailSqrt(void)
   *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueWorkType;
   g_matrixStackTop = g_matrixStackTop + 1;
   *MK4_NODE(int, (int)g_matrixStackTop) = g_chainAccumCur;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_eventQueueWorkType;
+  (g_currentNodeIdx) = g_eventQueueWorkType;
   g_chainAccumCur = MK4_NODE_AT(int, g_eventQueueWorkType, 0) - MK4_NODE_AT(int, g_dualC, 0);
   g_eventQueueWorkType = MK4_NODE_AT(int, g_eventQueueWorkType, 8) - MK4_NODE_AT(int, g_dualC, 8);
   g_chainAccumCur = Mul10Tail(g_chainAccumCur,g_chainAccumCur);

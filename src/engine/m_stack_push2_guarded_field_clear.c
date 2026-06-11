@@ -131,8 +131,8 @@ void MStackPush2GuardedFieldClear(void)
   DirtyDoubleDeref();
   if (g_framePauseFlag == 0) {
     g_matrixStackTop = g_matrixStackTop + 1;
-    *MK4_NODE(int, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    g_eventQueuePending = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x24);
+    *MK4_NODE(int, (int)g_matrixStackTop) = (g_currentNodeIdx);
+    g_eventQueuePending = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x24);
     FramePauseScaledStore();
     if (g_framePauseFlag == 0) {
       g_dualC = *MK4_NODE(undefined4, (int)g_matrixStackTop);
@@ -143,11 +143,11 @@ void MStackPush2GuardedFieldClear(void)
       }
       g_matrixStackTop = g_matrixStackTop + -1;
       g_walkCallback = 0;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34) = g_walkCallback;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x38) = g_walkCallback;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x34) = g_walkCallback;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x38) = g_walkCallback;
       g_walkCallback = 0;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = 0;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x1c) = 0;
       g_eventQueuePending = *MK4_NODE(undefined4, (int)g_matrixStackTop);
       g_matrixStackTop = g_matrixStackTop + -1;
       g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffb;

@@ -131,9 +131,9 @@ void ThreeClampLoop(void)
   g_xformLoopCounter = 2;
   g_eventQueueCurrent = -g_walkCallback;
   iVar2 = 3;
-  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  iVar1 = (g_currentNodeIdx);
   do {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1;
+    (g_currentNodeIdx) = iVar1;
     g_eventQueueWorkType = MK4_NODE_AT(int, g_eventQueuePending, 0);
     g_eventQueuePending = g_eventQueuePending + 1;
     if (g_eventQueueWorkType < 0) {
@@ -147,12 +147,12 @@ LAB_00425ad6:
       iVar1 = g_walkCallback;
       if (g_walkCallback < g_eventQueueWorkType) goto LAB_00425ad6;
     }
-    *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_eventQueueWorkType;
+    *MK4_NODE(int, (g_currentNodeIdx)) = g_eventQueueWorkType;
     g_xformLoopCounter = g_xformLoopCounter + -1;
     iVar2 = iVar2 + -1;
-    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    iVar1 = (g_currentNodeIdx) + 1;
     if (iVar2 == 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -2;
+      (g_currentNodeIdx) = (g_currentNodeIdx) + -2;
       g_eventQueuePending = g_eventQueuePending + -3;
       return;
     }

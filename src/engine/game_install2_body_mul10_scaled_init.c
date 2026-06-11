@@ -137,7 +137,7 @@ void GameInstall2BodyMul10ScaledInit(void)
   g_walkCallback = MK4_NODE_AT(undefined4, g_cj_00542054, 0x30);
   SetJmp_Thunk_LinkedListBitMaskSearch();
   if (g_framePauseFlag == 0) {
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = g_currentNodeFlags;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x1c) = g_currentNodeFlags;
     IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0(&(*(unsigned int *)MK4_VA(unsigned int, 0x4ec890)));
   }
   return;

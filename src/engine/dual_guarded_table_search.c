@@ -142,7 +142,7 @@ undefined4 DualGuardedTableSearch(void)
     return 0;
   }
   CmpP1GTSetup();
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x13afa5;
+  (g_currentNodeIdx) = 0x13afa5;
   g_eventQueueWorkType = (*(unsigned int *)MK4_VA(unsigned int, 0x4ebe90));
   while( true ) {
     if (g_eventQueueWorkType < 0) {
@@ -150,11 +150,11 @@ undefined4 DualGuardedTableSearch(void)
     }
     g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueuePending, 0x34);
     if (g_eventQueueCurrent == g_eventQueueWorkType) break;
-    g_eventQueueWorkType = *MK4_NODE(int, ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1));
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 2;
+    g_eventQueueWorkType = *MK4_NODE(int, ((g_currentNodeIdx) + 1));
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 2;
   }
-  g_walkCallback = *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+  g_walkCallback = *MK4_NODE(undefined4, (g_currentNodeIdx));
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
   SnapshotDispatchMStack();
   ScaledZeroFour();
   return 1;

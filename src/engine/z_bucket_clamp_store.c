@@ -131,7 +131,7 @@ void ZBucketClampStore(void)
     g_walkCallback = 0;
   }
   g_currentNodeFlags = g_currentNodeFlags & 0xff0fffff | g_walkCallback;
-  MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) = g_currentNodeFlags;
+  MK4_NODE_AT(uint, (g_currentNodeIdx), 0x20) = g_currentNodeFlags;
   return;
 }
 #else

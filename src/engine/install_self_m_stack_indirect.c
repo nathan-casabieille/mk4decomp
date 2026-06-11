@@ -149,8 +149,8 @@ void InstallSelfMStackIndirect(void)
       BossDashCluster();
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x3c);
-    g_walkCallback = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74);
+    (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 0x3c);
+    g_walkCallback = MK4_NODE_AT(int, (g_currentNodeIdx), 0x74);
     if (g_walkCallback != g_eventQueueNotMask) {
       BossDashCluster();
       return;

@@ -138,10 +138,10 @@ void MatchStartCluster(void)
 
 {
   g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e902;
+  (g_currentNodeIdx) = 0x14e902;
   g_eventQueuePending = 0x14e8f8;
   DualScaledStoreConst();
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14dfa2;
+  (g_currentNodeIdx) = 0x14dfa2;
   g_eventQueuePending = 0x14e9c0;
   DualScaledStoreConst();
   ClearTwoCallSetStore();

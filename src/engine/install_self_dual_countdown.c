@@ -135,7 +135,7 @@ void InstallSelfDualCountdown(void)
       thunk_StackPopDispatchTagged();
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x24);
+    (g_currentNodeIdx) = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x24);
     ScaledLoadJmp_24();
     if (g_framePauseFlag != 0) {
       return;
@@ -147,10 +147,10 @@ void InstallSelfDualCountdown(void)
   }
   *(code **)(iVar1 + 8) = InstallSelfDualCountdown;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1429050;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+  *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x1429050;
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  *(int *)(iVar1 + 4) = (g_currentNodeIdx);
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
   Install3WayChainStateAdvance();
   g_framePauseFlag = 1;

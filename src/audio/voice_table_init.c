@@ -136,17 +136,17 @@ void VoiceTableInit(int param_1)
   
   ppuVar2 = (undefined **)&g_dispatchSave805;
   do {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (*(char *)(ppuVar2 + -2) + g_baseSel));
-    g_walkCallback = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58);
-    *(undefined **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = *ppuVar2;
+    (g_currentNodeIdx) = *MK4_NODE(int, (*(char *)(ppuVar2 + -2) + g_baseSel));
+    g_walkCallback = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x58);
+    *(undefined **)((g_currentNodeIdx) * 4 + 0x54) = *ppuVar2;
     if (param_1 != 0) {
-      *(undefined **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = ppuVar2[1];
+      *(undefined **)((g_currentNodeIdx) * 4 + 0x58) = ppuVar2[1];
     }
     ppuVar1 = ppuVar2 + 2;
     ppuVar2 = ppuVar2 + 7;
-    *(undefined **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = *ppuVar1;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x6c) = 0;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x70) = 0;
+    *(undefined **)((g_currentNodeIdx) * 4 + 0x5c) = *ppuVar1;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x6c) = 0;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x70) = 0;
   } while (ppuVar2 < &(*(unsigned int *)MK4_VA(unsigned int, 0x4f31a8)));
   return;
 }

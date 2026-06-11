@@ -128,7 +128,7 @@ void Mul10TailPairChain(void)
   int iVar1;
   
   g_eventQueuePending = 0x14e030;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14b5ca;
+  (g_currentNodeIdx) = 0x14b5ca;
   iVar1 = 0x14e030;
   if (g_cj_0054205c != g_player1NodeIdx) {
     g_eventQueuePending = 0x14b5ca;

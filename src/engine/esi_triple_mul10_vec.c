@@ -126,8 +126,8 @@ void EsiTripleMul10Vec(void)
   int iVar1;
   undefined4 uVar2;
   
-  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
-  g_walkCallback = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x78);
+  iVar1 = (g_currentNodeIdx) * 4;
+  g_walkCallback = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x78);
   uVar2 = Mul10Tail(g_eventQueueCurrent,g_walkCallback);
   *(undefined4 *)(iVar1 + 0x78) = uVar2;
   g_walkCallback = *(undefined4 *)(iVar1 + 0x7c);

@@ -129,14 +129,14 @@ void TableWalkMatchInsert(void)
 {
   undefined4 *puVar1;
   
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x13a218;
+  (g_currentNodeIdx) = 0x13a218;
   g_eventQueuePending = 0x14e02c;
   g_walkCallback = g_dispatchSave956;
   if (g_dispatchSave956 != 0) {
-    while (((g_walkCallback != g_stateChangeBase || (MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 4) != g_dispatchInit4b))
-           || (MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 8) != g_phaseThunkVar7))) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 3;
-      g_walkCallback = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
+    while (((g_walkCallback != g_stateChangeBase || (MK4_NODE_AT(int, (g_currentNodeIdx), 4) != g_dispatchInit4b))
+           || (MK4_NODE_AT(int, (g_currentNodeIdx), 8) != g_phaseThunkVar7))) {
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 3;
+      g_walkCallback = *MK4_NODE(int, (g_currentNodeIdx));
       if (g_walkCallback == 0) {
         return;
       }
@@ -144,13 +144,13 @@ void TableWalkMatchInsert(void)
     g_walkCallback = 3;
     StorePauseImulShr16();
     if (g_framePauseFlag == 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_walkCallback * 3 + 0x13a253;
+      (g_currentNodeIdx) = g_walkCallback * 3 + 0x13a253;
       MK4_NODE_AT(undefined4, g_eventQueuePending, 0) = *MK4_NODE(undefined4, (g_walkCallback * 3 + 0x13a252));
-      puVar1 = (undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      puVar1 = (undefined4 *)((g_currentNodeIdx) * 4);
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
       MK4_NODE_AT(undefined4, g_eventQueuePending, 4) = *puVar1;
-      g_walkCallback = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      g_walkCallback = *MK4_NODE(int, (g_currentNodeIdx));
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
       MK4_NODE_AT(int, g_eventQueuePending, 8) = g_walkCallback;
     }
   }

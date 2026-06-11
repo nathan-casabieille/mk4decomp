@@ -132,26 +132,26 @@ void InstallSelfBranchIndirect(void)
   iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
   *(undefined4 *)(iVar1 + 0x84) = 0;
   if (iVar2 != 0) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
-    g_eventQueuePending = *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
-    MK4_NODE_AT(int, g_baseSel, 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
+    g_eventQueuePending = *MK4_NODE(undefined4, (g_currentNodeIdx));
+    MK4_NODE_AT(int, g_baseSel, 4) = (g_currentNodeIdx);
   }
   g_eventQueueChild = MK4_NODE_AT(int, g_cj_00542054, 0);
   g_cj_00542054 = g_cj_00542054 + 1;
   if (-1 < g_eventQueueChild) {
     ScaledArrStore_GuardedChainCmpDualBitXor_00429980();
     if (g_framePauseFlag == 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x3c);
-      g_walkCallback = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74);
+      (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 0x3c);
+      g_walkCallback = MK4_NODE_AT(int, (g_currentNodeIdx), 0x74);
       if (((g_walkCallback != 0x2001) && (g_currentNodeFlags == 0)) &&
          (func_0x00470e20(), g_framePauseFlag != 0)) {
         return;
       }
       iVar2 = g_baseSel * 4;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
-      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_eventQueuePending;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-      *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 4);
+      *MK4_NODE(undefined4, (g_currentNodeIdx)) = g_eventQueuePending;
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+      *(int *)(iVar2 + 4) = (g_currentNodeIdx);
       *(code **)(iVar1 + 8) = InstallSelfBranchIndirect;
       *(undefined4 *)(iVar1 + 0x84) = 1;
       g_dualC = 1;

@@ -129,7 +129,7 @@ void SpawnPhaseAdvanceVoices(void)
   g_matrixStackTop = g_matrixStackTop + 1;
   *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueCurrent;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *MK4_NODE(int, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(int, (int)g_matrixStackTop) = (g_currentNodeIdx);
   g_matrixStackTop = g_matrixStackTop + 1;
   *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueuePending;
   g_matrixStackTop = g_matrixStackTop + 1;
@@ -137,18 +137,18 @@ void SpawnPhaseAdvanceVoices(void)
   g_eventQueuePending = MK4_NODE_AT(int, g_dispatchVar7, 0);
   g_dualC = g_eventQueueSeed;
   puVar2 = g_matrixStackTop;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dispatchVar7;
+  (g_currentNodeIdx) = g_dispatchVar7;
   do {
     if (g_eventQueuePending == 0) {
       g_eventQueueCurrent = *MK4_NODE(undefined4, (int)(puVar2 + -3));
       g_walkCallback = *MK4_NODE(undefined4, (int)(puVar2 + -4));
       g_dualC = *MK4_NODE(undefined4, (int)puVar2);
       g_eventQueuePending = *MK4_NODE(undefined4, (int)(puVar2 + -1));
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(puVar2 + -2));
+      (g_currentNodeIdx) = *MK4_NODE(undefined4, (int)(puVar2 + -2));
       g_matrixStackTop = puVar2 + -5;
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
     iVar1 = MK4_NODE_AT(int, g_eventQueuePending, 0x5c);
     g_eventQueueCurrent = iVar1 + 0xa0000;
     if (g_eventQueueCurrent <= MK4_NODE_AT(int, g_dualC, 0x5c)) {
@@ -159,8 +159,8 @@ void SpawnPhaseAdvanceVoices(void)
       else {
         g_matrixStackTop = puVar2 + 1;
         g_walkCallback = g_phaseThunkVar4;
-        *MK4_NODE(int, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_eventQueuePending;
+        *MK4_NODE(int, (int)g_matrixStackTop) = (g_currentNodeIdx);
+        (g_currentNodeIdx) = g_eventQueuePending;
         MStackPushTableMatch();
         if (g_framePauseFlag != 0) {
           return;
@@ -169,12 +169,12 @@ void SpawnPhaseAdvanceVoices(void)
         if (g_framePauseFlag != 0) {
           return;
         }
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (int)g_matrixStackTop);
+        (g_currentNodeIdx) = *MK4_NODE(int, (int)g_matrixStackTop);
         puVar2 = g_matrixStackTop + -1;
         g_matrixStackTop = puVar2;
       }
     }
-    g_eventQueuePending = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
+    g_eventQueuePending = *MK4_NODE(int, (g_currentNodeIdx));
   } while( true );
 }
 #else

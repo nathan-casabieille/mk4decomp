@@ -129,20 +129,20 @@ void LoopMStackBitTest(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *MK4_NODE(int, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0;
+  *MK4_NODE(int, (int)g_matrixStackTop) = (g_currentNodeIdx);
+  (g_currentNodeIdx) = 0;
   g_walkCallback = 0x91;
   DispatcherComplex138_004760f0();
   if (g_framePauseFlag == 0) {
     while (((byte)g_xformDirtyFlags & 4) == 0) {
       g_matrixStackTop = g_matrixStackTop + 1;
-      *MK4_NODE(int, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x18);
+      *MK4_NODE(int, (int)g_matrixStackTop) = (g_currentNodeIdx);
+      (g_currentNodeIdx) = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x18);
       ScaledAndFBJmp();
       if (g_framePauseFlag != 0) {
         return;
       }
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (int)g_matrixStackTop);
+      (g_currentNodeIdx) = *MK4_NODE(int, (int)g_matrixStackTop);
       g_matrixStackTop = g_matrixStackTop + -1;
       g_walkCallback = 0x91;
       DispatcherComplex138_004760f0();
@@ -150,7 +150,7 @@ void LoopMStackBitTest(void)
         return;
       }
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (int)g_matrixStackTop);
+    (g_currentNodeIdx) = *MK4_NODE(int, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
   }
   return;

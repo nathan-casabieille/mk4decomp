@@ -129,7 +129,7 @@ void MStackAngleWrapDispatch(int param_1)
   g_matrixStackTop = g_matrixStackTop + 1;
   *MK4_NODE(int, (int)g_matrixStackTop) = g_xformScratch2088;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *MK4_NODE(undefined4, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = (g_currentNodeIdx);
   g_matrixStackTop = g_matrixStackTop + 1;
   *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueuePending;
   g_matrixStackTop = g_matrixStackTop + 1;
@@ -158,7 +158,7 @@ void MStackAngleWrapDispatch(int param_1)
       g_eventQueueNotMask = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
       g_chainAccumCur = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -2));
       g_eventQueuePending = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -3));
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -4));
+      (g_currentNodeIdx) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -4));
       g_matrixStackTop = g_matrixStackTop + -5;
       g_eventQueueChild = Mul10Tail(g_chainAccumCur,g_eventQueueCurrent);
       g_currentNodeFlags = Mul10Tail(g_eventQueueNotMask,g_walkCallback);

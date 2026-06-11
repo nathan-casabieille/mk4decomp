@@ -136,11 +136,11 @@ void CjDispatchCommit(void)
   if (g_framePauseFlag == 0) {
     func_0x0041d770();
     if (g_framePauseFlag == 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e056;
+      (g_currentNodeIdx) = 0x14e056;
       g_eventQueuePending = 0x14e057;
       iVar1 = 0x14e056;
       if (g_cj_00542058 != g_player1NodeIdx) {
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e057;
+        (g_currentNodeIdx) = 0x14e057;
         iVar1 = 0x14e057;
       }
       MK4_NODE_AT(int, iVar1, 0) = g_cj_0054205c;

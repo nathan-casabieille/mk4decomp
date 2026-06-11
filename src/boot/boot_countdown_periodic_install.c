@@ -142,12 +142,12 @@ void BootCountdownPeriodicInstall(void)
   *(undefined4 *)(iVar1 + 0x84) = 0;
   if (iVar2 == 0) {
     TableHitOrSchedule(0x13c9);
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542058;
+    (g_currentNodeIdx) = g_cj_00542058;
     SetDirty4XorScaledLoad();
     if (g_framePauseFlag != 0) {
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+    (g_currentNodeIdx) = g_cj_0054205c;
     SetDirty4XorScaledLoad();
     if (g_framePauseFlag != 0) {
       return;
@@ -157,7 +157,7 @@ void BootCountdownPeriodicInstall(void)
   else {
     g_eventQueueNotMask = g_eventQueueNotMask + -1;
     if (g_eventQueueNotMask < 1) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542058;
+      (g_currentNodeIdx) = g_cj_00542058;
       MStackPush2ChainLLInsert();
       if (g_framePauseFlag != 0) {
         return;

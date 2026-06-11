@@ -129,7 +129,7 @@ void ThrowAnimTriggerCluster(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *MK4_NODE(int, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(int, (int)g_matrixStackTop) = (g_currentNodeIdx);
   g_matrixStackTop = g_matrixStackTop + 1;
   *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueuePending;
   g_matrixStackTop = g_matrixStackTop + 1;
@@ -154,24 +154,24 @@ void ThrowAnimTriggerCluster(void)
       return;
     }
     g_walkCallback = 0;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = g_walkCallback;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_walkCallback;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54) = 0;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x58) = g_walkCallback;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = g_walkCallback;
     g_walkCallback = 6;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 6;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 6;
     MStackCall_MStackPush2ChainPrepend_00406340();
     if (g_framePauseFlag != 0) {
       return;
     }
     g_eventQueueCurrent = 0x10000;
-    MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34) = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34) | 0x10000;
-    g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_particleEmitterNode;
+    MK4_NODE_AT(uint, (g_currentNodeIdx), 0x34) = MK4_NODE_AT(uint, (g_currentNodeIdx), 0x34) | 0x10000;
+    g_dualC = (g_currentNodeIdx);
+    (g_currentNodeIdx) = g_particleEmitterNode;
     MK4_NODE_AT(undefined4, g_particleEmitterNode, 0x54) = 0x10000;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = 0;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x58) = 0;
     g_walkCallback = 0xffff8000;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = 0xffff8000;
-    MK4_NODE_AT(int, g_dualC, 0x3c) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = 0xffff8000;
+    MK4_NODE_AT(int, g_dualC, 0x3c) = (g_currentNodeIdx);
     RoundWinTransition();
     if (g_framePauseFlag != 0) {
       return;
@@ -179,7 +179,7 @@ void ThrowAnimTriggerCluster(void)
   }
   g_cj_0054205c = *MK4_NODE(undefined4, (int)g_matrixStackTop);
   g_eventQueuePending = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -2));
+  (g_currentNodeIdx) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -2));
   g_matrixStackTop = g_matrixStackTop + -3;
   return;
 }

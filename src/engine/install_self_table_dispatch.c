@@ -136,9 +136,9 @@ void InstallSelfTableDispatch(void)
     if (g_walkCallback == 2) {
       g_walkCallback = 6;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (g_walkCallback + 0x150c80));
-    g_walkCallback = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
-    g_eventQueuePending = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 4);
+    (g_currentNodeIdx) = *MK4_NODE(int, (g_walkCallback + 0x150c80));
+    g_walkCallback = *MK4_NODE(int, (g_currentNodeIdx));
+    g_eventQueuePending = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 4);
     StateMachineInit();
     if (g_framePauseFlag == 0) {
       if (((byte)g_xformDirtyFlags & 4) != 0) goto LAB_00461ae8;
@@ -147,10 +147,10 @@ void InstallSelfTableDispatch(void)
       MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58) = 0xfffb0000;
       *(code **)(iVar1 + 8) = InstallSelfTableDispatch;
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1461a60;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+      *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x1461a60;
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+      *(int *)(iVar1 + 4) = (g_currentNodeIdx);
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
       InitZeroChainLookupJmp();
       g_framePauseFlag = 1;

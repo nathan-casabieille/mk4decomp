@@ -139,8 +139,8 @@ void PackedSelectLoad6(void)
   g_xformScratch2088 = *MK4_NODE(undefined4, (iVar1 + 3));
   g_cj_00542054 = *MK4_NODE(undefined4, (iVar1 + 4));
   g_cj_00542058 = *MK4_NODE(undefined4, (iVar1 + 5));
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x3c);
-  g_walkCallback = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74);
+  (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 0x3c);
+  g_walkCallback = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x74);
   return;
 }
 #else

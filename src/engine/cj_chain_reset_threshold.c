@@ -128,14 +128,14 @@ void CjChainResetThreshold(void)
   
   if ((g_cj_0054205c != 0) &&
      (((g_walkCallback = *(code **)(g_cj_0054205c * 4 + 0x44), g_walkCallback == (code *)0x0 ||
-       ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_walkCallback, (*g_walkCallback)(), g_framePauseFlag == 0)) &&
+       ((g_currentNodeIdx) = g_walkCallback, (*g_walkCallback)(), g_framePauseFlag == 0)) &&
       (g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x4c), g_eventQueueCurrent != 0)))) {
     g_walkCallback = (code *)(g_eventQueueCurrent + MK4_NODE_AT(int, g_cj_0054205c, 0x70));
     bVar3 = -1 < (int)g_walkCallback;
     *(code **)(g_cj_0054205c * 4 + 0x70) = g_walkCallback;
     if (bVar3) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(code **)(g_cj_0054205c * 4 + 0x18);
-      g_chainAccumCur = MK4_NODE_AT(int, (int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34);
+      (g_currentNodeIdx) = *(code **)(g_cj_0054205c * 4 + 0x18);
+      g_chainAccumCur = MK4_NODE_AT(int, (int)(g_currentNodeIdx), 0x34);
       g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x48);
       g_eventQueueWorkType = g_walkCallback + MK4_NODE_AT(int, g_cj_0054205c, 0x58) + g_chainAccumCur;
       if (g_eventQueueCurrent <= (int)g_eventQueueWorkType) {
@@ -150,9 +150,9 @@ void CjChainResetThreshold(void)
         *(undefined4 *)(iVar1 + 0x4c) = 0;
         *(undefined4 *)(iVar1 + 0x58) = *(undefined4 *)(iVar2 + 0x48);
         g_eventQueueCurrent = 0;
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(code **)(g_cj_0054205c * 4 + 0x18);
-        g_walkCallback = *(code **)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34);
-        MK4_NODE_AT(undefined4, (int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34) = 0;
+        (g_currentNodeIdx) = *(code **)(g_cj_0054205c * 4 + 0x18);
+        g_walkCallback = *(code **)((int)(g_currentNodeIdx) * 4 + 0x34);
+        MK4_NODE_AT(undefined4, (int)(g_currentNodeIdx), 0x34) = 0;
         g_eventQueuePending = g_dualB_00538038;
         if (g_cj_0054205c != g_player1NodeIdx) {
           g_eventQueuePending = g_dualB_0053803c;

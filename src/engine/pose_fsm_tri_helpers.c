@@ -135,7 +135,7 @@ void PoseFsmTriHelpers(void)
   int iVar9;
   int iStack_10;
   
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (g_eventQueueChild + 0x150862));
+  (g_currentNodeIdx) = *MK4_NODE(int, (g_eventQueueChild + 0x150862));
   g_eventQueuePending = g_eventQueueSeed;
   iVar6 = MK4_NODE_AT(int, g_player1NodeIdx, 0x54);
   iVar7 = MK4_NODE_AT(int, g_player1NodeIdx, 0x5c);
@@ -148,12 +148,12 @@ void PoseFsmTriHelpers(void)
   TimerWindowWrap();
   iStack_10 = g_walkCallback;
   if (g_framePauseFlag == 0) {
-    g_eventQueueCurrent = *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    g_eventQueueCurrent = *MK4_NODE(undefined4, (g_currentNodeIdx));
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
     g_eventQueueCurrent = Mul10Tail(g_xformScratch2088,g_eventQueueCurrent);
     g_walkCallback = g_walkCallback + g_eventQueueCurrent;
-    g_currentNodeFlags = *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+    g_currentNodeFlags = *MK4_NODE(undefined4, (g_currentNodeIdx));
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
     GuardedTimeBudgetDualMul10();
     if (g_framePauseFlag == 0) {
       iVar8 = MK4_NODE_AT(int, g_cj_00542054, 0x54) + g_eventQueueWorkType;
@@ -165,13 +165,13 @@ void PoseFsmTriHelpers(void)
         iVar7 = Mul10Tail(iVar3 - iVar8,iVar9 - iVar7);
         if (iVar6 - iVar7 < 0 != iVar4 - iVar5 < 0) {
           iStack_10 = iStack_10 + 0x3243f;
-          g_eventQueueCurrent = *MK4_NODE(undefined4, ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -2));
-          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -1;
+          g_eventQueueCurrent = *MK4_NODE(undefined4, ((g_currentNodeIdx) + -2));
+          (g_currentNodeIdx) = (g_currentNodeIdx) + -1;
           g_walkCallback = iStack_10;
           g_eventQueueCurrent = Mul10Tail(g_xformScratch2088,g_eventQueueCurrent);
           g_walkCallback = g_walkCallback + g_eventQueueCurrent;
-          g_currentNodeFlags = *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
-          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+          g_currentNodeFlags = *MK4_NODE(undefined4, (g_currentNodeIdx));
+          (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
           GuardedTimeBudgetDualMul10();
           if (g_framePauseFlag != 0) {
             return;
@@ -183,19 +183,19 @@ void PoseFsmTriHelpers(void)
       iVar6 = g_baseSel;
       MK4_NODE_AT(int, g_baseSel, 0x34) = g_walkCallback;
       MK4_NODE_AT(int, iVar6, 0x3c) = g_eventQueueCurrent;
-      puVar1 = (undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      puVar1 = (undefined4 *)((g_currentNodeIdx) * 4);
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
       MK4_NODE_AT(undefined4, iVar6, 0x40) = *puVar1;
       g_walkCallback = iStack_10;
-      g_eventQueueCurrent = *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      g_eventQueueCurrent = *MK4_NODE(undefined4, (g_currentNodeIdx));
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
       g_eventQueueCurrent = Mul10Tail(g_xformScratch2088,g_eventQueueCurrent);
       MK4_NODE_AT(int, g_baseSel, 0x44) = g_walkCallback + g_eventQueueCurrent;
-      puVar1 = (undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      puVar1 = (undefined4 *)((g_currentNodeIdx) * 4);
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
       MK4_NODE_AT(undefined4, g_baseSel, 0x38) = *puVar1;
-      puVar1 = (undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      puVar1 = (undefined4 *)((g_currentNodeIdx) * 4);
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
       MK4_NODE_AT(undefined4, g_baseSel, 0x78) = *puVar1;
       MK4_NODE_AT(undefined4, g_baseSel, 0x48) = 0;
       g_walkCallback = 0x28;

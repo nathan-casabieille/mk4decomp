@@ -144,27 +144,27 @@ void VoiceMixerTickDispatch(void)
   ppuVar3 = &g_dispatchSave804;
   do {
     g_walkCallback = ppuVar3[2];
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *ppuVar3;
-    GuardedSetupCallTailJmp((*(unsigned int *)MK4_VA(unsigned int, 0x542044)),g_walkCallback);
+    (g_currentNodeIdx) = *ppuVar3;
+    GuardedSetupCallTailJmp((g_currentNodeIdx),g_walkCallback);
     switch(iVar5) {
     case 6:
     case 7:
-      iVar2 = MK4_NODE_AT(int, (int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) + -0xf00000;
+      iVar2 = MK4_NODE_AT(int, (int)(g_currentNodeIdx), 0x54) + -0xf00000;
       break;
     case 8:
     case 9:
-      iVar2 = MK4_NODE_AT(int, (int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) + 0xf00000;
+      iVar2 = MK4_NODE_AT(int, (int)(g_currentNodeIdx), 0x54) + 0xf00000;
       break;
     default:
       goto switchD_004a2838_default;
     }
-    MK4_NODE_AT(int, (int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = iVar2;
+    MK4_NODE_AT(int, (int)(g_currentNodeIdx), 0x54) = iVar2;
 switchD_004a2838_default:
     ppuVar4 = ppuVar3 + 7;
-    *(undefined **)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = ppuVar3[3];
+    *(undefined **)((int)(g_currentNodeIdx) * 4 + 0x5c) = ppuVar3[3];
     iVar2 = g_baseSel;
-    puVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    ppuVar3[1] = *(undefined **)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54);
+    puVar1 = (g_currentNodeIdx);
+    ppuVar3[1] = *(undefined **)((int)(g_currentNodeIdx) * 4 + 0x54);
     g_eventQueueCurrent = (int)*(char *)(ppuVar3 + -1);
     iVar5 = iVar5 + 1;
     *(undefined **)((g_eventQueueCurrent + iVar2) * 4) = puVar1;

@@ -157,7 +157,7 @@ LAB_00418bd4:
         if (g_framePauseFlag == 0) {
           MK4_NODE_AT(int, g_cj_0054205c, 0x58) = MK4_NODE_AT(int, g_cj_0054205c, 0x58) + -0x1c000;
           g_walkCallback = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58);
-          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+          (g_currentNodeIdx) = g_cj_0054205c;
           MStackCall_MStackPush2ChainPrepend_00406600();
           if (g_framePauseFlag == 0) goto LAB_00418bd4;
         }

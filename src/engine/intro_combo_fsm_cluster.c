@@ -127,13 +127,13 @@ void IntroComboFsmCluster(void)
   PushSetXfmMaskCallPop();
   if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
     g_walkCallback = 0x91;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x91;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0x91;
     MStackCall_MStackPush2ChainPrepend_00406340();
     if (g_framePauseFlag == 0) {
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = MK4_NODE_AT(undefined4, g_eventQueuePending, 0x3c);
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = MK4_NODE_AT(undefined4, g_eventQueuePending, 0x40);
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54) = MK4_NODE_AT(undefined4, g_eventQueuePending, 0x3c);
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x58) = MK4_NODE_AT(undefined4, g_eventQueuePending, 0x40);
       g_walkCallback = MK4_NODE_AT(undefined4, g_eventQueuePending, 0x44);
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_walkCallback;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = g_walkCallback;
     }
   }
   return;

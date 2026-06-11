@@ -140,10 +140,10 @@ void InstallSelfMStackPushDispatch(void)
     g_eventQueueChild = *MK4_NODE(undefined4, (g_cj_00542054 + 1));
     g_cj_00542054 = g_cj_00542054 + 2;
     piVar2 = (int *)(g_baseSel * 4 + 4);
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *piVar2;
-    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = MK4_NODE_AT(undefined4, g_cj_00542054, 0);
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-    *piVar2 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    (g_currentNodeIdx) = *piVar2;
+    *MK4_NODE(undefined4, (g_currentNodeIdx)) = MK4_NODE_AT(undefined4, g_cj_00542054, 0);
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+    *piVar2 = (g_currentNodeIdx);
     IncStoreCallIATDec();
     if (g_framePauseFlag != 0) {
       return;

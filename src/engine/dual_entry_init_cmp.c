@@ -125,14 +125,14 @@ extern void VertexSlotInitFlagWalk(void);
 void DualEntryInitCmp(void)
 
 {
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_vertexInitFlagAlt;
+  (g_currentNodeIdx) = g_vertexInitFlagAlt;
   g_eventQueuePending = 0;
   g_dualC = 0x800;
   g_dualD = g_vertexInitFlag;
   g_cj_00542054 = 1;
   VertexSlotInitFlagWalk();
   if (g_framePauseFlag == 0) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_vertexInitFlagAlt;
+    (g_currentNodeIdx) = g_vertexInitFlagAlt;
     g_walkCallback = 0x7fc;
     MK4_NODE_AT(undefined4, g_vertexInitFlagAlt, 0xc) = 0x7fc;
     g_dualD = g_vertexInitVar;

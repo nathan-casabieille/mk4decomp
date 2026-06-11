@@ -135,7 +135,7 @@ void Vec3AddViaHelper(void)
   
   piVar1 = (int *)(g_eventQueuePending * 4);
   piVar2 = (int *)(g_dualC * 4);
-  piVar3 = (int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  piVar3 = (int *)((g_currentNodeIdx) * 4);
   g_walkCallback = *piVar2 + *piVar1;
   BootMod6487eClampAndChainMul10();
   *piVar3 = g_walkCallback;

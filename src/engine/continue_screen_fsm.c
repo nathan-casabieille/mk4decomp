@@ -144,18 +144,18 @@ void ContinueScreenFsm(void)
     }
   }
   else if (iVar2 == 1) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b05;
+    (g_currentNodeIdx) = 0x141b05;
     LoadGeoAsset_Default();
     if (g_framePauseFlag == 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b05;
+      (g_currentNodeIdx) = 0x141b05;
       LoadGeoAsset_Default();
       if (g_framePauseFlag == 0) {
         g_eventQueuePending = 0x14203d;
         DispatcherComplex260_FramePauseScaledStore();
         if (g_framePauseFlag == 0) {
-          MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0;
+          MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54) = 0;
           g_walkCallback = 0x1f;
-          MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x1f;
+          MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0x1f;
           PushSetCallPop();
           if (g_framePauseFlag == 0) {
             RegistryPushBindPop();
@@ -176,10 +176,10 @@ void ContinueScreenFsm(void)
       g_eventQueueCurrent = 4;
       *(code **)(iVar1 + 8) = ContinueScreenFsm;
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 3;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x3423c20;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+      *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x3423c20;
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+      *(int *)(iVar1 + 4) = (g_currentNodeIdx);
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
       InstallSelfPackedF80();
       g_framePauseFlag = 1;
@@ -187,7 +187,7 @@ void ContinueScreenFsm(void)
     }
     BootInitGuardedCallChain();
     if (g_framePauseFlag == 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b05;
+      (g_currentNodeIdx) = 0x141b05;
       LoadGeoAsset_Default();
       if (g_framePauseFlag == 0) {
         g_eventQueueWorkType = 0x25;
@@ -204,7 +204,7 @@ void ContinueScreenFsm(void)
             Push70CallScaleArith();
             if (g_framePauseFlag == 0) {
               g_walkCallback = 0x10000;
-              MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = 0x10000;
+              MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = 0x10000;
               g_cj_00542058 = 0x137e68;
               OpcodeStreamDispatch();
               return;

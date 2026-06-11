@@ -132,8 +132,8 @@ void TripleBlockInstallSelfThunk(void)
 {
   StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x461a00)),0x30);
   g_walkCallback = 0;
-  MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = 0;
-  MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) = g_walkCallback;
+  MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x1c) = 0;
+  MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x20) = g_walkCallback;
   g_walkCallback = 1;
   g_save_0053a748 = 1;
   return;

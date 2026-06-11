@@ -42,7 +42,7 @@ void DualPlayerSetupCall_ChainPickArgScaledInit_0045dcd0(undefined4 param_1)
   g_dualD = 0x14aac6;
   g_cj_0054205c = g_player1NodeIdx;
   g_cj_00542058 = g_player2NodeIdx;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualB_00538038;
+  (g_currentNodeIdx) = g_dualB_00538038;
   g_cj_00542054 = 0x14e8a8;
   g_chainAccumCur = MK4_NODE_AT(undefined4, g_dualB_00538038, 0x34);
   ChainPickArgScaledInit(param_1);
@@ -83,7 +83,7 @@ void DualPlayerSetupCall_ChainPickArgScaledInit_0045dd30(undefined4 param_1)
   g_dualD = 0x150780;
   g_cj_0054205c = g_player2NodeIdx;
   g_cj_00542058 = g_player1NodeIdx;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualB_0053803c;
+  (g_currentNodeIdx) = g_dualB_0053803c;
   g_cj_00542054 = 0x14e8be;
   g_chainAccumCur = MK4_NODE_AT(undefined4, g_dualB_0053803c, 0x34);
   ChainPickArgScaledInit(param_1);

@@ -140,18 +140,18 @@ void InstallSelfFourStatePauseChain(void)
     }
     *(code **)(iVar1 + 8) = InstallSelfFourStatePauseChain;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    (g_currentNodeIdx) = *(int *)(iVar1 + 4);
     uVar3 = 0x149b000;
   }
   else if (iVar2 == 1) {
     *(code **)(iVar1 + 8) = InstallSelfFourStatePauseChain;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    (g_currentNodeIdx) = *(int *)(iVar1 + 4);
     uVar3 = 0x249b000;
   }
   else {
     if (iVar2 != 2) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+      (g_currentNodeIdx) = g_cj_0054205c;
       MStackPush2ChainLLInsert();
       if (g_framePauseFlag != 0) {
         return;
@@ -161,12 +161,12 @@ void InstallSelfFourStatePauseChain(void)
     }
     *(code **)(iVar1 + 8) = InstallSelfFourStatePauseChain;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 3;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+    (g_currentNodeIdx) = *(int *)(iVar1 + 4);
     uVar3 = 0x349b000;
   }
-  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = uVar3;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(undefined4, (g_currentNodeIdx)) = uVar3;
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  *(int *)(iVar1 + 4) = (g_currentNodeIdx);
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
   EsiInstallCounterDispatch();
   g_framePauseFlag = 1;

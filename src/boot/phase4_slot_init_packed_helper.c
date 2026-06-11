@@ -135,7 +135,7 @@ void Phase4SlotInitPackedHelper(void)
   
   MStackPush8();
   if (g_framePauseFlag == 0) {
-    g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_dualC = (g_currentNodeIdx);
     g_eventQueuePending = 0x1447e9;
     MStackPushDispatchBitGate();
     if (g_framePauseFlag == 0) {

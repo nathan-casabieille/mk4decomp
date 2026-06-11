@@ -145,10 +145,10 @@ void InstallSelfMStackPush_CjInstallSelfRouter(void)
     g_eventQueueCurrent = 0x17;
     *(code **)(iVar1 + 8) = InstallSelfMStackPush_CjInstallSelfRouter;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x146cc80;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+    *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x146cc80;
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+    *(int *)(iVar1 + 4) = (g_currentNodeIdx);
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
     ScaledArrStore_EsiInstallBitCallChain_00428e70();
     g_framePauseFlag = 1;
@@ -219,10 +219,10 @@ void InstallSelfMStackPush_FiveCallGuardSetTail_00496630(void)
   if (g_framePauseFlag == 0) {
     *(code **)(iVar1 + 8) = InstallSelfMStackPush_FiveCallGuardSetTail_00496630;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1496630;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+    *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x1496630;
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+    *(int *)(iVar1 + 4) = (g_currentNodeIdx);
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
     ScaledLoadJmp_00428d20();
     g_framePauseFlag = 1;
@@ -290,10 +290,10 @@ void InstallSelfMStackPush_FiveCallGuardSetTail_004968a0(void)
   if (g_framePauseFlag == 0) {
     *(code **)(iVar1 + 8) = InstallSelfMStackPush_FiveCallGuardSetTail_004968a0;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x14968a0;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+    *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x14968a0;
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+    *(int *)(iVar1 + 4) = (g_currentNodeIdx);
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
     ScaledLoadJmp_00428d20();
     g_framePauseFlag = 1;

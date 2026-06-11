@@ -130,10 +130,10 @@ void SpawnFreezeProjectileChain(void)
        (((byte)g_xformDirtyFlags & 4) != 0)) {
       return;
     }
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x7e;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x70) = 0xffffe148;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0x7e;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x70) = 0xffffe148;
     g_walkCallback = 0x3d7;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x4c) = 0x3d7;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x4c) = 0x3d7;
     g_eventQueueWorkType = MK4_NODE_AT(int, g_dualD, 4) + -0x4b65f + MK4_NODE_AT(int, g_cj_0054205c, 100);
     MStackPush1MagicMod2();
     if (g_framePauseFlag != 0) {
@@ -141,12 +141,12 @@ void SpawnFreezeProjectileChain(void)
     }
     g_eventQueueCurrent = Mul10Tail(0x28f5,g_eventQueueCurrent);
     g_walkCallback = Mul10Tail(0x28f5,g_walkCallback);
-    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    iVar1 = (g_currentNodeIdx);
     g_eventQueueWorkType = MK4_NODE_AT(uint, g_cj_0054205c, 0x34) & 1;
     if (g_eventQueueWorkType != 0) {
       g_eventQueueCurrent = -g_eventQueueCurrent;
     }
-    MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x6c) = g_eventQueueCurrent;
+    MK4_NODE_AT(int, (g_currentNodeIdx), 0x6c) = g_eventQueueCurrent;
     iVar1 = iVar1 * 4;
     *(int *)(iVar1 + 0x74) = g_walkCallback;
     g_walkCallback = 0x1999;
@@ -166,12 +166,12 @@ void SpawnFreezeProjectileChain(void)
     }
     *(int *)(iVar1 + 0x80) = g_walkCallback;
     g_eventQueueWorkType = 0x7ae;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 0x1b;
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 0x1b;
     TripleVecAccCallStore();
     if (g_framePauseFlag != 0) {
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -0x1b;
+    (g_currentNodeIdx) = (g_currentNodeIdx) + -0x1b;
     g_dualD = g_dualD + 9;
     g_walkCallback = MK4_NODE_AT(int, g_dualD, 0);
     g_framePauseFlag = 0;

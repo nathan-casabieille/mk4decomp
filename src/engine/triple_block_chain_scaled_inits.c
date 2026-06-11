@@ -126,8 +126,8 @@ void TripleBlockChainScaledInits(void)
   if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) == 0)) {
     MStackCall_MStackPush2ChainPrepend_00406600();
     if (g_framePauseFlag == 0) {
-      g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542058;
+      g_cj_0054205c = (g_currentNodeIdx);
+      (g_currentNodeIdx) = g_cj_00542058;
       g_chainAccumCur = MK4_NODE_AT(undefined4, g_cj_00542054, 4);
       g_eventQueueNotMask = MK4_NODE_AT(undefined4, g_cj_00542054, 8);
       ChainGatedNegAccum();
@@ -137,11 +137,11 @@ void TripleBlockChainScaledInits(void)
         g_walkCallback = MK4_NODE_AT(undefined4, g_cj_00542054, 0xc);
         MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58) = g_walkCallback;
         g_eventQueueWorkType = 0x1999;
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c + 0x15;
+        (g_currentNodeIdx) = g_cj_0054205c + 0x15;
         TripleVecAccCallStore();
         if (g_framePauseFlag == 0) {
           g_xformDirtyFlags = g_xformDirtyFlags | 4;
-          if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
+          if ((g_currentNodeIdx) != 0) {
             g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
           }
         }

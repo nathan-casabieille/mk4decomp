@@ -124,12 +124,12 @@ void Vec3SetupQuadrupleMul10Sub(void)
   
   MStackCall_MStackPush2ChainPrepend_00406340();
   if (g_framePauseFlag == 0) {
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x7e;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x3c);
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x40);
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x44);
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x70) = 0xffffe148;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x4c) = 0x3d7;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0x7e;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x3c);
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x58) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x40);
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x44);
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x70) = 0xffffe148;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x4c) = 0x3d7;
     g_walkCallback = g_pendingMatchVar;
     AudioMixerStep();
     if (g_framePauseFlag == 0) {
@@ -138,7 +138,7 @@ void Vec3SetupQuadrupleMul10Sub(void)
       if (g_framePauseFlag == 0) {
         g_eventQueueCurrent = Mul10Tail(0x1c28,g_eventQueueCurrent);
         g_walkCallback = Mul10Tail(0x1c28,g_walkCallback);
-        iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+        iVar1 = (g_currentNodeIdx) * 4;
         *(undefined4 *)(iVar1 + 0x6c) = g_eventQueueCurrent;
         *(undefined4 *)(iVar1 + 0x74) = g_walkCallback;
         g_walkCallback = 0x1999;
@@ -154,10 +154,10 @@ void Vec3SetupQuadrupleMul10Sub(void)
             if (g_framePauseFlag == 0) {
               *(undefined4 *)(iVar1 + 0x80) = g_walkCallback;
               g_eventQueueWorkType = 0x7ae;
-              (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 0x1b;
+              (g_currentNodeIdx) = (g_currentNodeIdx) + 0x1b;
               TripleVecAccCallStore();
               if (g_framePauseFlag == 0) {
-                (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -0x1b;
+                (g_currentNodeIdx) = (g_currentNodeIdx) + -0x1b;
               }
             }
           }

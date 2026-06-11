@@ -140,18 +140,18 @@ void PhaseInstallSelf3Step(void)
     if (g_framePauseFlag == 0) {
       g_phaseIdx = 3;
       StoreTwoCall(&g_dispatchSave509,0);
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b0b;
+      (g_currentNodeIdx) = 0x141b0b;
       LoadGeoAsset_Default();
       if (g_framePauseFlag == 0) {
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b0b;
+        (g_currentNodeIdx) = 0x141b0b;
         LoadGeoAsset_Default();
         if (g_framePauseFlag == 0) {
           g_eventQueuePending = 0x1420c2;
           DispatcherComplex260_FramePauseScaledStore();
           if (g_framePauseFlag == 0) {
-            MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0xffb00000;
+            MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54) = 0xffb00000;
             g_walkCallback = 0x1f;
-            MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x1f;
+            MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0x1f;
             PushSetCallPop();
             if (g_framePauseFlag == 0) {
               RegistryPushBindPop();
@@ -159,9 +159,9 @@ void PhaseInstallSelf3Step(void)
                 g_eventQueuePending = 0x1420c9;
                 DispatcherComplex260_FramePauseScaledStore();
                 if (g_framePauseFlag == 0) {
-                  *(undefined **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = &(*(unsigned int *)MK4_VA(unsigned int, 0x770000));
+                  *(undefined **)((g_currentNodeIdx) * 4 + 0x54) = &(*(unsigned int *)MK4_VA(unsigned int, 0x770000));
                   g_walkCallback = 0x1f;
-                  MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x1f;
+                  MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0x1f;
                   PushSetCallPop();
                   if (g_framePauseFlag == 0) {
                     RegistryPushBindPop();
@@ -188,10 +188,10 @@ void PhaseInstallSelf3Step(void)
   g_eventQueueCurrent = 4;
   *(code **)(iVar1 + 8) = PhaseInstallSelf3Step;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x2402350;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+  *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x2402350;
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  *(int *)(iVar1 + 4) = (g_currentNodeIdx);
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
   InstallSelfPackedF80();
   g_framePauseFlag = 1;

@@ -160,7 +160,7 @@ void AudioMixerKnobUpdate(void)
       }
     }
     g_walkCallback = (int)(char)(&g_audioBank2Base)[iVar2 * 0x18];
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(undefined4, (g_counter_0054359c + g_baseSel), 0x34);
+    (g_currentNodeIdx) = MK4_NODE_AT(undefined4, (g_counter_0054359c + g_baseSel), 0x34);
     ScaledChainStore24();
   }
   if (g_audioMixerKnob == 0) {
@@ -195,9 +195,9 @@ void AudioMixerKnobUpdate(void)
       }
     }
     g_walkCallback = (int)(char)(&g_audioBank2Base)[iVar2 * 0x18];
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, (g_counter_005433c8 + g_baseSel), 0x48);
+    (g_currentNodeIdx) = MK4_NODE_AT(int, (g_counter_005433c8 + g_baseSel), 0x48);
     g_eventQueuePending = *(int *)(*(uint *)((g_walkCallback + 0x14283c) * 4) & 0xffffff) >> 2 & 0x3fffff;
-    g_cj_0054205c = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x18);
+    g_cj_0054205c = MK4_NODE_AT(int, (g_currentNodeIdx), 0x18);
     MK4_NODE_AT(uint, g_cj_0054205c, 0x24) = g_eventQueuePending;
     return;
   }

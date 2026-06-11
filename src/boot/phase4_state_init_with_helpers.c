@@ -171,8 +171,8 @@ void Phase4StateInitWithHelpers(void)
       }
       if ((g_xformDirtyFlags & 4) == 0) {
         MK4_NODE_AT(undefined4, g_cj_0054205c, 0x30) = 0x9b;
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
-        g_eventQueuePending = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x28);
+        (g_currentNodeIdx) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+        g_eventQueuePending = MK4_NODE_AT(int, (g_currentNodeIdx), 0x28);
         puVar2 = (uint *)(g_eventQueuePending * 4);
         puVar2[4] = (uint)&(*(unsigned int *)MK4_VA(unsigned int, 0x414590));
         puVar2[5] = 0;
@@ -200,7 +200,7 @@ void Phase4StateInitWithHelpers(void)
           }
         }
         g_matrixStackTop = puVar1;
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+        (g_currentNodeIdx) = g_cj_0054205c;
         MStackCall_MStackPush2ChainPrepend_00406600();
         if (g_framePauseFlag != 0) {
           return;

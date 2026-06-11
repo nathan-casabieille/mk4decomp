@@ -132,7 +132,7 @@ void MeshReplicateDriver(void)
   g_walkCallback = g_dispatchSave732;
   while( true ) {
     if (g_walkCallback == 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+      (g_currentNodeIdx) = g_cj_0054205c;
       MStackBracket4_ListInsertZeroFill();
       if ((((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) &&
           (MStackPush3LinkedListWalk(), g_framePauseFlag == 0)) && (((byte)g_xformDirtyFlags & 4) == 0)) {
@@ -144,28 +144,28 @@ void MeshReplicateDriver(void)
     if (g_framePauseFlag != 0) {
       return;
     }
-    g_dualD = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_dualD = (g_currentNodeIdx);
     g_eventQueuePending = 0x145254;
     MStackBracket1_TreeWalkRecursive2();
     if (g_framePauseFlag != 0) {
       return;
     }
     if (((byte)g_xformDirtyFlags & 4) != 0) break;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x3c) = MK4_NODE_AT(undefined4, g_dualC, 0);
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x3c) = MK4_NODE_AT(undefined4, g_dualC, 0);
     g_dualC = g_dualC + 1;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x40) = MK4_NODE_AT(undefined4, g_dualC, 0);
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x40) = MK4_NODE_AT(undefined4, g_dualC, 0);
     g_dualC = g_dualC + 1;
-    MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = MK4_NODE_AT(int, g_dualD, 0x30) >> 1;
-    MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34) = MK4_NODE_AT(int, g_dualD, 0x34) >> 1;
-    MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x38) = MK4_NODE_AT(int, g_dualD, 0x38) >> 1;
-    g_walkCallback = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) & 0xfaffffff | 0xa001000;
-    MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) = g_walkCallback;
+    MK4_NODE_AT(int, (g_currentNodeIdx), 0x30) = MK4_NODE_AT(int, g_dualD, 0x30) >> 1;
+    MK4_NODE_AT(int, (g_currentNodeIdx), 0x34) = MK4_NODE_AT(int, g_dualD, 0x34) >> 1;
+    MK4_NODE_AT(int, (g_currentNodeIdx), 0x38) = MK4_NODE_AT(int, g_dualD, 0x38) >> 1;
+    g_walkCallback = MK4_NODE_AT(uint, (g_currentNodeIdx), 0x20) & 0xfaffffff | 0xa001000;
+    MK4_NODE_AT(uint, (g_currentNodeIdx), 0x20) = g_walkCallback;
     g_eventQueuePending = MK4_NODE_AT(undefined4, g_dualD, 0x14);
     PushPopScaled1cDoubleCall();
     if (g_framePauseFlag != 0) {
       return;
     }
-    MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = g_eventQueueWorkType;
+    MK4_NODE_AT(int, (g_currentNodeIdx), 0x1c) = g_eventQueueWorkType;
     g_eventQueueWorkType = g_eventQueueWorkType + 1;
     g_walkCallback = MK4_NODE_AT(int, g_dualC, 0);
   }

@@ -124,10 +124,10 @@ void SizeGateInstallSelfThenSubMul10(void)
   undefined4 uVar1;
   int iVar2;
   
-  if (g_chainAccumCur <= MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c)) {
-    g_eventQueuePending = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x28);
-    MK4_NODE_AT(undefined4, g_eventQueuePending, 0x20) = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x3c);
-    g_walkCallback = *(code **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40);
+  if (g_chainAccumCur <= MK4_NODE_AT(int, (g_currentNodeIdx), 0x1c)) {
+    g_eventQueuePending = MK4_NODE_AT(int, (g_currentNodeIdx), 0x28);
+    MK4_NODE_AT(undefined4, g_eventQueuePending, 0x20) = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x3c);
+    g_walkCallback = *(code **)((g_currentNodeIdx) * 4 + 0x40);
     if (g_walkCallback != (code *)0x0) {
       uVar1 = Mul10Tail(0x1999,g_walkCallback);
       MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48) = uVar1;
@@ -145,7 +145,7 @@ void SizeGateInstallSelfThenSubMul10(void)
       return;
     }
     MK4_NODE_AT(int, g_eventQueuePending, 0x1c) = (int)g_walkCallback + 0xccc;
-    iVar2 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+    iVar2 = (g_currentNodeIdx) * 4;
     *(undefined4 *)(iVar2 + 0x3c) = 0;
     *(undefined4 *)(iVar2 + 0x40) = 0;
     *(undefined4 *)(iVar2 + 0x44) = 0;
@@ -157,7 +157,7 @@ void SizeGateInstallSelfThenSubMul10(void)
     MK4_NODE_AT(undefined4, g_eventQueuePending, 0x10) = 0;
     MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0x13b254;
   }
-  g_walkCallback = *(code **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc);
+  g_walkCallback = *(code **)((g_currentNodeIdx) * 4 + 0xc);
   if (g_walkCallback != (code *)0x0) {
     g_walkCallback = SizeGateInstallSelfThenSubMul10;
     Helper_TickAlt();

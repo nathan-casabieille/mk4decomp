@@ -133,7 +133,7 @@ void DualEntryInstallSelfScaled(void)
   if (g_save_0053a748 != 0) {
     g_eventQueueNotMask = g_save_0053a748 + -1;
     StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x461bb0)),0x26);
-    MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x14) = g_eventQueueNotMask;
+    MK4_NODE_AT(int, (g_currentNodeIdx), 0x14) = g_eventQueueNotMask;
   }
   return;
 }

@@ -130,23 +130,23 @@ LAB_004335a4:
       g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
       return;
     }
-    g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_eventQueuePending = (g_currentNodeIdx);
     g_walkCallback = MK4_NODE_AT(undefined4, g_cj_00542058, 4);
     MStackPush2LLWalkCompare();
     if (g_framePauseFlag == 0) {
       if ((g_xformDirtyFlags & 4) != 0) goto LAB_004335a4;
-      g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_dualC = (g_currentNodeIdx);
       g_walkCallback = MK4_NODE_AT(undefined4, g_cj_00542058, 8);
       MStackPush2LLWalkCompare();
       if (g_framePauseFlag == 0) {
         if ((g_xformDirtyFlags & 4) != 0) goto LAB_004335a4;
-        g_dualD = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+        g_dualD = (g_currentNodeIdx);
         g_walkCallback = MK4_NODE_AT(undefined4, g_cj_00542058, 0xc);
         MStackPush2LLWalkCompare();
         if (g_framePauseFlag == 0) {
           if ((g_xformDirtyFlags & 4) != 0) goto LAB_004335a4;
           g_xformDirtyFlags = g_xformDirtyFlags | 1;
-          g_cj_00542054 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+          g_cj_00542054 = (g_currentNodeIdx);
         }
       }
     }

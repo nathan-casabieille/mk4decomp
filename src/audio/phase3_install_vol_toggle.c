@@ -197,7 +197,7 @@ void Phase3InstallVolToggle(void)
       StackPopDispatchTagged();
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542054;
+    (g_currentNodeIdx) = g_cj_00542054;
     g_walkCallback = (int)(char)(&g_audioBank2Base)[g_eventQueueCurrent * 0x18];
     ScaledChainStore24();
   }

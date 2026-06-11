@@ -142,7 +142,7 @@ void RoundFinalizeCluster(void)
     g_xformDirtyFlags = g_xformDirtyFlags | 4;
     return;
   }
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1;
+  (g_currentNodeIdx) = iVar1;
   g_eventQueuePending = MK4_NODE_AT(int, iVar1, 0);
   if (g_eventQueuePending != 0) {
     g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0x1c);
@@ -150,19 +150,19 @@ void RoundFinalizeCluster(void)
       g_eventQueuePending = 0;
     }
     MK4_NODE_AT(int, g_baseSel, 0x68) = g_eventQueuePending;
-    g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_dualC = (g_currentNodeIdx);
     g_eventQueuePending = 4;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
+    (g_currentNodeIdx) = *MK4_NODE(int, (g_currentNodeIdx));
     g_xformDirtyFlags = g_xformDirtyFlags | 4;
-    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    if ((((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) || (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0)) ||
-       (MStackBracket5_LinkedListUnlink(), iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), g_framePauseFlag == 0)) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualC;
+    iVar1 = (g_currentNodeIdx);
+    if ((((g_currentNodeIdx) == 0) || (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, (g_currentNodeIdx) == 0)) ||
+       (MStackBracket5_LinkedListUnlink(), iVar1 = (g_currentNodeIdx), g_framePauseFlag == 0)) {
+      (g_currentNodeIdx) = g_dualC;
       g_dualD = iVar1;
       MStackBracket2_TreeWalkRecursive();
       if (g_framePauseFlag == 0) {
         g_eq = (uint)(g_dualD == 0);
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualD;
+        (g_currentNodeIdx) = g_dualD;
         g_walkCallback = -0x94a7;
         MK4_NODE_AT(undefined4, g_dualD, 0x38) = 0xffff6b59;
         g_eventQueuePending = MK4_NODE_AT(undefined4, g_baseSel, 100);

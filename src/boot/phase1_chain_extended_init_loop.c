@@ -135,13 +135,13 @@ void DualMul10AndDispatchChain(void)
   int iVar1;
   int iVar2;
   
-  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+  iVar1 = (g_currentNodeIdx) * 4;
   iVar2 = g_baseSel * 4;
   g_currentNodeFlags = Mul10Tail(0x3333,g_currentNodeFlags);
   g_xformScratch2088 = Mul10Tail(0x3333,g_xformScratch2088);
   *(undefined4 *)(iVar1 + 0x6c) = g_currentNodeFlags;
   *(undefined4 *)(iVar1 + 0x74) = g_xformScratch2088;
-  g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_cj_0054205c = (g_currentNodeIdx);
   *(undefined4 *)(iVar2 + 0x5c) = 0x30;
   g_walkCallback = 1;
   *(undefined4 *)(iVar2 + 0x74) = 1;

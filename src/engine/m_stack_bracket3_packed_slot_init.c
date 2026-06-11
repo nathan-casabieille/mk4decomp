@@ -142,11 +142,11 @@ void MStackBracket3PackedSlotInit(void)
     }
     MK4_NODE_AT(undefined4, g_cj_0054205c, 0x3c) = g_particleEmitterNode;
     g_walkCallback = 0x7f;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x7f;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0x7f;
     MStackCall_MStackPush2ChainPrepend_00406340();
     if (g_framePauseFlag == 0) {
       g_matrixStackTop = g_matrixStackTop + 1;
-      iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
+      iVar1 = (g_currentNodeIdx) * 4;
       *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueuePending;
       MK4_NODE_AT(uint, *(int *)(iVar1 + 0x18), 0x20) =
            MK4_NODE_AT(uint, *(int *)(iVar1 + 0x18), 0x20) & 0xfffff9ff;

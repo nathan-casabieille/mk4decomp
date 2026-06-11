@@ -164,7 +164,7 @@ int InstallSelfChainedDispatch(void)
         if (g_framePauseFlag == 0) {
           MStackPushSet0200();
           if (g_framePauseFlag == 0) {
-            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x13b02a;
+            (g_currentNodeIdx) = 0x13b02a;
             GuardedDirtyXformFromTable();
             if (g_framePauseFlag == 0) {
               g_framePauseFlag = 1;

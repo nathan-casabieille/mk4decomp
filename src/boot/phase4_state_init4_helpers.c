@@ -145,18 +145,18 @@ void Phase4StateInit4Helpers(void)
         *(undefined4 *)(iVar1 + 0x54) = *(undefined4 *)(iVar3 + 0x3c);
         *(undefined4 *)(iVar1 + 0x58) = *(undefined4 *)(iVar3 + 0x40);
         g_walkCallback = *(undefined4 *)(iVar3 + 0x44);
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 0x18);
+        (g_currentNodeIdx) = *(int *)(iVar1 + 0x18);
         *(undefined4 *)(iVar1 + 0x5c) = g_walkCallback;
         ThreeChanPackClamp(0x100020);
         CopyThreeFields(g_cj_0054205c);
-        g_eventQueuePending = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x28);
+        g_eventQueuePending = MK4_NODE_AT(int, (g_currentNodeIdx), 0x28);
         puVar2 = (uint *)(g_eventQueuePending * 4);
         puVar2[0x12] = 0xa666;
         puVar2[5] = 0xff;
         *puVar2 = *puVar2 | 8;
         g_walkCallback = 0x4131f0;
         puVar2[4] = 0x4131f0;
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+        (g_currentNodeIdx) = g_cj_0054205c;
         MStackCall_MStackPush2ChainPrepend_00406600();
         if (g_framePauseFlag != 0) {
           return;

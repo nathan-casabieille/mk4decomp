@@ -51,13 +51,13 @@ void MStackPushCallPopDirtyJmp_State208cBit0Flag(void)
     puVar3 = g_matrixStackTop + -1;
     if (((byte)g_xformDirtyFlags & 1) != 0) {
       *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_walkCallback;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x38);
-      g_walkCallback = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54);
-      g_eventQueueCurrent = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c);
+      (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 0x38);
+      g_walkCallback = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54);
+      g_eventQueueCurrent = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c);
       g_eventQueueWorkType = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54);
       g_chainAccumCur = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c);
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = g_eventQueueWorkType;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_chainAccumCur;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54) = g_eventQueueWorkType;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = g_chainAccumCur;
       MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54) = g_walkCallback;
       MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c) = g_eventQueueCurrent;
       DualCallPauseDirtyJmp_00490c30();
@@ -129,13 +129,13 @@ void MStackPushCallPopDirtyJmp_GuardedRangeCmpToggle(void)
     puVar3 = g_matrixStackTop + -1;
     if (((byte)g_xformDirtyFlags & 1) != 0) {
       *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_walkCallback;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x38);
-      g_walkCallback = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54);
-      g_eventQueueCurrent = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c);
+      (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 0x38);
+      g_walkCallback = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54);
+      g_eventQueueCurrent = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c);
       g_eventQueueWorkType = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54);
       g_chainAccumCur = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c);
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = g_eventQueueWorkType;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_chainAccumCur;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54) = g_eventQueueWorkType;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = g_chainAccumCur;
       MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54) = g_walkCallback;
       MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c) = g_eventQueueCurrent;
       DualCallPauseDirtyJmp_00490c30();

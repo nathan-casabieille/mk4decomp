@@ -175,11 +175,11 @@ void StageEventComplexFsm(void)
     if (g_framePauseFlag != 0) {
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14b5d3;
+    (g_currentNodeIdx) = 0x14b5d3;
     g_eventQueuePending = 0x14e01a;
     iVar2 = 0x14b5d3;
     if (g_cj_0054205c != g_player1NodeIdx) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x14e01a;
+      (g_currentNodeIdx) = 0x14e01a;
       iVar2 = 0x14e01a;
     }
     g_walkCallback = MK4_NODE_AT(int, iVar2, 0);
@@ -187,7 +187,7 @@ void StageEventComplexFsm(void)
       func_0x0047c620();
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x13ff8a;
+    (g_currentNodeIdx) = 0x13ff8a;
     MK4_NODE_AT(undefined4, g_cj_0054205c, 0x24) = 0x13ff8a;
     g_walkCallback = MK4_NODE_AT(int, g_baseSel, 0x68) - 1;
     if ((g_walkCallback == 0) && (TripleEntryTblPushJmp(), g_framePauseFlag != 0)) {

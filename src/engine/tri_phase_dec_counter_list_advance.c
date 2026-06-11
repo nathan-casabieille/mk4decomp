@@ -170,20 +170,20 @@ void TriPhaseDecCounterListAdvance(void)
     if (g_framePauseFlag != 0) {
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
-    g_eventQueueChild = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
-    MK4_NODE_AT(int, g_baseSel, 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
+    g_eventQueueChild = *MK4_NODE(int, (g_currentNodeIdx));
+    MK4_NODE_AT(int, g_baseSel, 4) = (g_currentNodeIdx);
     g_eventQueueChild = g_eventQueueChild + -1;
     if (g_eventQueueChild == 0) {
       func_0x0047aef0();
       return;
     }
   }
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
+  (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 4);
   iVar2 = g_baseSel * 4;
-  *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_eventQueueChild;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(int, (g_currentNodeIdx)) = g_eventQueueChild;
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  *(int *)(iVar2 + 4) = (g_currentNodeIdx);
   g_eventQueueNotMask = 6;
   EntryThunkBodyStateMachine();
   if ((g_framePauseFlag == 0) && (TripleFieldCopyJmpHi(), g_framePauseFlag == 0)) {

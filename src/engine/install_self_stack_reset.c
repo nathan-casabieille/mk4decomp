@@ -147,8 +147,8 @@ void InstallSelfStackReset(void)
     if (g_walkCallback < 0) {
       g_walkCallback = 0;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_walkCallback + 0x137f26;
-    g_dualC = *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
+    (g_currentNodeIdx) = g_walkCallback + 0x137f26;
+    g_dualC = *MK4_NODE(undefined4, (g_currentNodeIdx));
     *(code **)(iVar1 + 8) = InstallSelfStackReset;
     *(undefined4 *)(iVar1 + 0x84) = 1;
     g_framePauseFlag = 1;

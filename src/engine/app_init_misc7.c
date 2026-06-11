@@ -10,7 +10,7 @@
 void AppInit_Misc7(void)
 
 {
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x1444d3;
+  (g_currentNodeIdx) = 0x1444d3;
   LoadGeoAsset_Default();
   return;
 }

@@ -144,10 +144,10 @@ void InstallSelfMidPush(void)
   g_xformScratch2088 = 0x4000;
   *(code **)(iVar2 + 8) = InstallSelfMidPush;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x145bd80;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  (g_currentNodeIdx) = *(int *)(iVar2 + 4);
+  *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x145bd80;
+  (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+  *(int *)(iVar2 + 4) = (g_currentNodeIdx);
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
   InstallSelfAccumOverflow();
   g_framePauseFlag = 1;

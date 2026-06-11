@@ -129,17 +129,17 @@ void Install3StateAudioChain(void)
     if ((g_eventQueueNotMask != 0xf) && (g_eventQueueNotMask != 0x11)) {
       g_tickW1 = 0x100;
       iVar2 = g_baseSel * 4;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
-      *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_eventQueueNotMask;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-      *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 4);
+      *MK4_NODE(int, (g_currentNodeIdx)) = g_eventQueueNotMask;
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+      *(int *)(iVar2 + 4) = (g_currentNodeIdx);
       PushPopScaledInit343c();
       *(code **)(iVar1 + 8) = Install3StateAudioChain;
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1424200;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+      *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x1424200;
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+      *(int *)(iVar1 + 4) = (g_currentNodeIdx);
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
       AudioInstallSelfStatePush();
       g_framePauseFlag = 1;
@@ -151,9 +151,9 @@ void Install3StateAudioChain(void)
       StackPopDispatchTagged();
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
-    g_eventQueueNotMask = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
-    MK4_NODE_AT(int, g_baseSel, 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
+    g_eventQueueNotMask = *MK4_NODE(int, (g_currentNodeIdx));
+    MK4_NODE_AT(int, g_baseSel, 4) = (g_currentNodeIdx);
     SceneFrameStepWithInputs(g_eventQueueNotMask + 0x13,1);
   }
   *(code **)(iVar1 + 8) = Install3StateAudioChain;

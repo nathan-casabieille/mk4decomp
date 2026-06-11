@@ -126,8 +126,8 @@ void DirtyOrFlagDispatch(void)
   if (g_framePauseFlag != 0) {
     return;
   }
-  MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) | 4;
-  g_walkCallback = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0xc);
+  MK4_NODE_AT(uint, (g_currentNodeIdx), 0x20) = MK4_NODE_AT(uint, (g_currentNodeIdx), 0x20) | 4;
+  g_walkCallback = MK4_NODE_AT(int, (g_currentNodeIdx), 0xc);
   if (g_walkCallback != 0) {
     g_walkCallback = 0x476e90;
     Helper_TickAlt();

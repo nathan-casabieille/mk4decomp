@@ -124,8 +124,8 @@ void TriCounterReinitChain(void)
   if (g_eventQueueNotMask == 0) {
     ScaledChain3c74();
     if (g_framePauseFlag == 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x3c);
-      g_walkCallback = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c);
+      (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 0x3c);
+      g_walkCallback = MK4_NODE_AT(int, (g_currentNodeIdx), 0x5c);
       if (g_walkCallback != 1) {
         g_matrixStackTop = g_matrixStackTop + 1;
         *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueNotMask;

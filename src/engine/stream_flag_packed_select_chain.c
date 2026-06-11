@@ -184,7 +184,7 @@ void StreamFlagPackedSelectChain(void)
           g_dualD = g_dualC;
         }
       }
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualD;
+      (g_currentNodeIdx) = g_dualD;
       Mul10SumStoreNegCommit();
       if ((((g_framePauseFlag == 0) && (GuardedPackedSlotInit(&g_dispatchVar37), g_framePauseFlag == 0)) &&
           (MStackPush3CmpCall(), g_framePauseFlag == 0)) &&

@@ -145,7 +145,7 @@ void InstallSelfStateMachine6(void)
     if (g_framePauseFlag != 0) {
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x141b11;
+    (g_currentNodeIdx) = 0x141b11;
     LoadGeoAsset_Default();
     if (g_framePauseFlag != 0) {
       return;
@@ -155,14 +155,14 @@ void InstallSelfStateMachine6(void)
     if (g_framePauseFlag != 0) {
       return;
     }
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54) = 0;
     g_walkCallback = 0x1f;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x1f;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x30) = 0x1f;
     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
     if (g_framePauseFlag != 0) {
       return;
     }
-    g_cj_00542058 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_cj_00542058 = (g_currentNodeIdx);
     g_tickW1 = 0x100;
     *(code **)(iVar1 + 8) = InstallSelfStateMachine6;
     *(undefined4 *)(iVar1 + 0x84) = 1;
@@ -171,16 +171,16 @@ void InstallSelfStateMachine6(void)
     return;
   case 1:
   case 2:
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542058;
+    (g_currentNodeIdx) = g_cj_00542058;
     MStackPush2ChainLLInsert();
     g_tickW1 = 0x100;
     PushPopScaledInit343c();
     *(code **)(iVar1 + 8) = InstallSelfStateMachine6;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 3;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x34a48e0;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-    *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+    *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x34a48e0;
+    (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+    *(int *)(iVar1 + 4) = (g_currentNodeIdx);
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
     AudioInstallSelfStatePush();
     g_framePauseFlag = 1;
@@ -191,12 +191,12 @@ void InstallSelfStateMachine6(void)
       PushPopScaledInit343c();
       *(code **)(iVar1 + 8) = InstallSelfStateMachine6;
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 4;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      (g_currentNodeIdx) = *(int *)(iVar1 + 4);
       uVar3 = 0x44a48e0;
 LAB_004a4a15:
-      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = uVar3;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      *MK4_NODE(undefined4, (g_currentNodeIdx)) = uVar3;
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+      *(int *)(iVar1 + 4) = (g_currentNodeIdx);
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
       AudioInstallSelfStatePush();
       g_framePauseFlag = 1;
@@ -209,7 +209,7 @@ LAB_004a4a15:
       PushPopScaledInit343c();
       *(code **)(iVar1 + 8) = InstallSelfStateMachine6;
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 5;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
+      (g_currentNodeIdx) = *(int *)(iVar1 + 4);
       uVar3 = 0x54a48e0;
       goto LAB_004a4a15;
     }

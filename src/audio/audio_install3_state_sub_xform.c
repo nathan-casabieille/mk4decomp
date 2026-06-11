@@ -140,7 +140,7 @@ void AudioInstall3StateSubXform(void)
     MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54) = g_eventQueueWorkType;
     g_walkCallback = 0;
     MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58) = 0;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+    (g_currentNodeIdx) = g_cj_0054205c;
     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
     if (g_framePauseFlag == 0) {
       *(code **)(iVar1 + 8) = AudioInstall3StateSubXform;

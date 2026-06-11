@@ -126,16 +126,16 @@ void IntroSequencePipeline(void)
 {
   func_0x0044d060();
   if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_dualD, 0x18);
+    (g_currentNodeIdx) = MK4_NODE_AT(int, g_dualD, 0x18);
     g_walkCallback = 1;
-    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = 1;
+    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x1c) = 1;
     func_0x0044cf50();
     if (g_framePauseFlag == 0) {
       g_walkCallback = 0x10;
       MStackPush2GuardedFieldClear();
       if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
         g_walkCallback = 3;
-        MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = 3;
+        MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x1c) = 3;
         func_0x0044cf80();
         if (g_framePauseFlag == 0) {
           g_eventQueuePending = MK4_NODE_AT(int, g_dualD, 0x18);
@@ -150,16 +150,16 @@ void IntroSequencePipeline(void)
               if (g_framePauseFlag == 0) {
                 func_0x0044d230();
                 if (g_framePauseFlag == 0) {
-                  g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+                  g_eventQueuePending = (g_currentNodeIdx);
                   MStackBracket5_FieldClear_StateAdvance();
                   if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
                     g_walkCallback = 2;
-                    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = 2;
+                    MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x1c) = 2;
                     func_0x0044cfb0();
                     if (g_framePauseFlag == 0) {
                       func_0x0044d230();
                       if (g_framePauseFlag == 0) {
-                        g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+                        g_eventQueuePending = (g_currentNodeIdx);
                         g_walkCallback = 0xc;
                         g_cj_00542054 = g_dualC;
                         MStackPush2GuardedFieldClear();
@@ -168,7 +168,7 @@ void IntroSequencePipeline(void)
                           if (g_framePauseFlag == 0) {
                             func_0x0044d230();
                             if (g_framePauseFlag == 0) {
-                              (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualD;
+                              (g_currentNodeIdx) = g_dualD;
                               g_cj_0054205c = g_dualD;
                               GDispatch4();
                             }

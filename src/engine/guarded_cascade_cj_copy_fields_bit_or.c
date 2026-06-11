@@ -143,7 +143,7 @@ void GuardedCascadeCjCopyFieldsBitOr(void)
       g_framePauseFlag = 1;
       return;
     }
-    g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    g_cj_0054205c = (g_currentNodeIdx);
     MStackPushTwoEntryChainCall();
     if (g_framePauseFlag == 0) {
       MStackCall_MStackPush2ChainPrepend_00406340();

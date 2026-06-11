@@ -125,8 +125,8 @@ void BitDispatchDualCallMStackPush(void)
 
 {
   g_eventQueueCurrent = -g_walkCallback;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x38);
-  g_eventQueueWorkType = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34);
+  (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 0x38);
+  g_eventQueueWorkType = MK4_NODE_AT(uint, (g_currentNodeIdx), 0x34);
   g_xformScratch94 = g_eventQueueWorkType & 1;
   if (g_xformScratch94 == 0) {
     DoublePushCallDoublePop();

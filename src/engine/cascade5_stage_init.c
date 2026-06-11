@@ -151,10 +151,10 @@ void Cascade5StageInit(int param_1)
               MK4_NODE_AT(undefined4, g_cj_0054205c, 0x24) = g_eventQueuePending;
               *(undefined4 *)(iVar1 + 8) = 0x4916f0;
               MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-              (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-              *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x14916f0;
-              (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-              *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+              (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+              *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x14916f0;
+              (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+              *(int *)(iVar1 + 4) = (g_currentNodeIdx);
               MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
               ScaledClearJmp_EsiInstallBitCallChain();
               g_framePauseFlag = 1;
@@ -201,9 +201,9 @@ void Cascade5StageInit(int param_1)
             g_dualC = 1;
             return;
           }
-          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x24);
+          (g_currentNodeIdx) = MK4_NODE_AT(int, g_cj_0054205c, 0x24);
           g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x28) + 1;
-          if (MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 4) <= g_walkCallback) {
+          if (MK4_NODE_AT(int, (g_currentNodeIdx), 4) <= g_walkCallback) {
             SlotPhaseResetInstallChain();
             if ((g_framePauseFlag == 0) && (ScaledZeroFour(), g_framePauseFlag == 0)) {
               CjInstallSelfRouter();

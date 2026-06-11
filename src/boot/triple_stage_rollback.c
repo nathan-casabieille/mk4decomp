@@ -134,15 +134,15 @@ void TripleStageRollback(undefined4 param_1)
   
   uVar3 = g_eventQueueCurrent;
   uVar2 = g_dualC;
-  uVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  uVar1 = (g_currentNodeIdx);
   g_walkCallback = param_1;
   g_eventQueueCurrent = 0xffff;
   thunk_NodeChainMaskMatch();
-  uVar4 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  uVar4 = (g_currentNodeIdx);
   uVar5 = g_eventQueueCurrent;
   if (g_framePauseFlag == 0) {
     while (uVar4 = uVar1, g_dualC = uVar2, uVar5 = uVar3, ((byte)g_xformDirtyFlags & 1) != 0) {
-      g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      g_dualC = (g_currentNodeIdx);
       thunk_LoadShlDerefCallSkip();
       if (g_framePauseFlag != 0) {
         return;
@@ -156,7 +156,7 @@ void TripleStageRollback(undefined4 param_1)
     }
   }
   g_eventQueueCurrent = uVar5;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = uVar4;
+  (g_currentNodeIdx) = uVar4;
   return;
 }
 #else

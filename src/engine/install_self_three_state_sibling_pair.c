@@ -140,10 +140,10 @@ void InstallSelfThreeStateSiblingPair(void)
     if (g_framePauseFlag == 0) {
       *(code **)(iVar1 + 8) = InstallSelfThreeStateSiblingPair;
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1495480;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+      *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x1495480;
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+      *(int *)(iVar1 + 4) = (g_currentNodeIdx);
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
       InstallSelf3WayChainCmp();
       g_framePauseFlag = 1;
@@ -158,10 +158,10 @@ void InstallSelfThreeStateSiblingPair(void)
     if (g_framePauseFlag == 0) {
       *(code **)(iVar1 + 8) = InstallSelfThreeStateSiblingPair;
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x2495480;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+      *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x2495480;
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+      *(int *)(iVar1 + 4) = (g_currentNodeIdx);
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
       ScaledLoadJmp_00428d20();
       g_framePauseFlag = 1;

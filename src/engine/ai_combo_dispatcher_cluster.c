@@ -145,12 +145,12 @@ void AiComboDispatcherCluster(void)
   g_walkCallback = 0x1359e2;
   PushSetXfmMaskCallPop();
   if (g_framePauseFlag == 0) {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+    (g_currentNodeIdx) = g_cj_0054205c;
     g_cj_0054205c = *MK4_NODE(int, (int)g_matrixStackTop);
     puVar1 = g_matrixStackTop + -1;
     g_eventQueueChild = *MK4_NODE(undefined4, (int)puVar1);
     if (((byte)g_xformDirtyFlags & 4) != 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -2));
+      (g_currentNodeIdx) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -2));
       g_matrixStackTop = g_matrixStackTop + -3;
       ScaledNeg1SetPause();
       g_framePauseFlag = 1;
@@ -163,7 +163,7 @@ void AiComboDispatcherCluster(void)
     if (g_framePauseFlag == 0) {
       TripleEntry3Block();
       g_walkCallback = 0;
-      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 100) = 0;
+      MK4_NODE_AT(undefined4, (g_currentNodeIdx), 100) = 0;
       g_eventQueueChild = *MK4_NODE(undefined4, (int)g_matrixStackTop);
       g_matrixStackTop = g_matrixStackTop + -1;
     }

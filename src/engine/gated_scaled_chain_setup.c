@@ -136,9 +136,9 @@ void GatedScaledChainSetup(void)
         MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54) = g_chainAccumCur;
         MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c) = g_eventQueueNotMask;
         MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58) = 0xfffffd71;
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
+        (g_currentNodeIdx) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
         g_walkCallback = 0x18000;
-        MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x3c) = 0x18000;
+        MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x3c) = 0x18000;
         MStackCall_MStackPush2ChainPrepend_004062f0();
         if (g_framePauseFlag != 0) {
           return;
@@ -151,7 +151,7 @@ void GatedScaledChainSetup(void)
       g_dualD = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -4));
       g_dualC = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -5));
       g_eventQueuePending = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -6));
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -7));
+      (g_currentNodeIdx) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -7));
       g_matrixStackTop = g_matrixStackTop + -8;
       return;
     }

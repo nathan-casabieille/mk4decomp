@@ -130,16 +130,16 @@ void Install3StateMStackPopDispatch(void)
   if (iVar2 == 0) {
     PushPopWalkSet1006();
     if (g_framePauseFlag == 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
+      (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 4);
       iVar2 = g_baseSel * 4;
-      *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_xformScratch2088;
-      *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
+      *MK4_NODE(int, (g_currentNodeIdx)) = g_xformScratch2088;
+      *(int *)(iVar2 + 4) = (g_currentNodeIdx) + 1;
       *(code **)(iVar1 + 8) = Install3StateMStackPopDispatch;
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x146f560;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-      *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+      *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x146f560;
+      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
+      *(int *)(iVar1 + 4) = (g_currentNodeIdx);
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
       ScaledLoadJmp_00428d20();
       g_framePauseFlag = 1;
@@ -150,9 +150,9 @@ void Install3StateMStackPopDispatch(void)
       CjInstallSelfRouter();
       return;
     }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
-    g_xformScratch2088 = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
-    MK4_NODE_AT(int, g_baseSel, 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
+    g_xformScratch2088 = *MK4_NODE(int, (g_currentNodeIdx));
+    MK4_NODE_AT(int, g_baseSel, 4) = (g_currentNodeIdx);
     if (g_xformScratch2088 < 2) {
       FiveCallGuardSetTail();
       return;

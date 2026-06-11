@@ -143,7 +143,7 @@ void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413380(void)
       MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0xff;
       g_walkCallback = ClampMulShiftStore;
       *(code **)(g_eventQueuePending * 4 + 0x10) = ClampMulShiftStore;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+      (g_currentNodeIdx) = g_cj_0054205c;
       MStackCall_MStackPush2ChainPrepend_00406600();
       return;
     }
@@ -295,7 +295,7 @@ void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413580(void)
       MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0xff;
       g_walkCallback = ClampMulShiftStore;
       *(code **)(g_eventQueuePending * 4 + 0x10) = ClampMulShiftStore;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
+      (g_currentNodeIdx) = g_cj_0054205c;
       g_matrixStackTop = g_matrixStackTop + 1;
       *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueuePending;
       g_eventQueuePending = g_bootChainScaled2;
