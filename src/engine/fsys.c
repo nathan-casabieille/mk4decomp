@@ -565,6 +565,27 @@ int FSYS_fclose(int fh)
  *
  * @addr 0x004b1f50
  */
+#ifdef NON_MATCHING
+/* Portable twin (verify_coexec, seeded string) - matches the C sketched above;
+ * kept naked for matching only because of a 1-byte SIB encoding diff. */
+unsigned int FSYS_HashName(const char *normalized_path)
+{
+    const unsigned char *p = (const unsigned char *)normalized_path;
+    int hash = 0, shift = 0, i = 0;
+    unsigned char c = p[0];
+    if (c != 0) {
+        for (;;) {
+            hash += (int)(signed char)c << shift;
+            shift += 8;
+            if (shift > 0x18) shift = 0;
+            c = p[i + 1];
+            i++;
+            if (c == 0) break;
+        }
+    }
+    return (unsigned int)(hash + i);
+}
+#else
 __declspec(naked) u32 FSYS_HashName(const char *normalized_path)
 {
     __asm {
@@ -597,3 +618,4 @@ end_hash:
         ret
     }
 }
+#endif
