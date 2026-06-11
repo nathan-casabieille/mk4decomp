@@ -119,29 +119,6 @@ extern unsigned int g_str_00461980;
 
 extern unsigned int g_arr_461640;
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void TableWalk3StrideCall(void)
-
-{
-  g_eventQueueChild = 0;
-  g_walkCallback = 0;
-  g_eventQueuePending = 0x13a81c;
-  g_eventQueueNotMask = g_dispatchSave1277;
-  while (-1 < g_eventQueueNotMask) {
-    g_currentNodeFlags = MK4_NODE_AT(undefined4, g_eventQueuePending, 4);
-    g_xformScratch2088 = MK4_NODE_AT(undefined4, g_eventQueuePending, 8);
-    StoreTwoCall(&g_str_00461980,0x30);
-    g_eventQueueChild = g_eventQueueChild + 1;
-    g_walkCallback = g_eventQueueChild * 3;
-    g_eventQueuePending = g_walkCallback + 0x13a81c;
-    g_eventQueueNotMask = MK4_NODE_AT(int, g_eventQueuePending, 0);
-  }
-  g_walkCallback = 8;
-  g_save_0053a748 = 8;
-  return;
-}
-#else
 __declspec(naked) void TableWalk3StrideCall(void) {
     __asm {
         push    esi
@@ -184,4 +161,3 @@ loopInner:
         ret
     }
 }
-#endif

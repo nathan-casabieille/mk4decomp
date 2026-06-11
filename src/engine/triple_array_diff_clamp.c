@@ -121,45 +121,6 @@ extern unsigned int g_pendingMatchVar;
 extern unsigned int g_pendingMatchVar3;
 extern unsigned int g_eq;
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void TripleArrayDiffClamp(void)
-
-{
-  int iVar1;
-  int iVar2;
-  
-  g_xformLoopCounter = 2;
-  iVar2 = 3;
-  iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-  do {
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1;
-    g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueuePending, 0) - MK4_NODE_AT(int, g_dualC, 0);
-    g_dualC = g_dualC + 1;
-    g_eventQueuePending = g_eventQueuePending + 1;
-    iVar1 = g_eventQueueCurrent;
-    if (g_eventQueueCurrent < 0) {
-      iVar1 = -g_eventQueueCurrent;
-    }
-    g_eq = (uint)(iVar1 <= g_pendingMatchVar3);
-    g_walkCallback = g_pendingMatchVar;
-    if (-1 < g_eventQueueCurrent) {
-      g_walkCallback = g_dispatchSave895;
-    }
-    if (g_eq == 0) {
-      g_eventQueueCurrent = g_eventQueueCurrent + g_walkCallback;
-    }
-    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_eventQueueCurrent;
-    g_xformLoopCounter = g_xformLoopCounter + -1;
-    iVar2 = iVar2 + -1;
-    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-  } while (iVar2 != 0);
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -2;
-  g_eventQueuePending = g_eventQueuePending + -3;
-  g_dualC = g_dualC + -3;
-  return;
-}
-#else
 __declspec(naked) void TripleArrayDiffClamp(void) {
     __asm {
         push    ebx
@@ -223,4 +184,3 @@ loop_004251fd:
         ret
     }
 }
-#endif
