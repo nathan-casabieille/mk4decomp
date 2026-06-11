@@ -243,6 +243,33 @@ for the render/FSM cluster: transcribe the walk to portable C, keep the naked
 state usually only exercises the empty path). The seed harness is the reusable
 template for the rest of the cluster.
 
+## First runnable native frame - DONE (2026-06-11)
+
+MK4_GameFrame now drives the real MainLoopStep natively (not the smoke stub):
+  - src/platform/sdl/engine_frame.c : MK4_GameFrame() -> MainLoopStep()
+  - src/platform/sdl/engine_stubs.c : WEAK blocker stubs (real host-us
+    QueryMicroTimer; no-op BeginFrame/GameLogicStep/PresentFrame; smoke-pattern
+    DrawScene via PAL). Real files override each weak stub as they join.
+  - Makefile NATIVE_ENGINE_SRCS (= src/boot/main_loop.c so far) feeds the link.
+  - main_sdl.c MK4_MAX_FRAMES=N for headless smoke runs.
+Verified: 120 MainLoopStep frames in ~2s (~60Hz via the real host clock), arena
+loaded, clean exit. Matching unaffected (a3d2bf7f).
+
+mmsystem.h shim (include/portable/mmsystem_shim.h) unblocked draw_scene.c native
+compile (timer.c still inline-asm -> stays host-clock stub).
+
+### Render path closure (next sub-project)
+Real DrawScene's undefined set: `FlushDrawQueue`, `Renderer{1..5}_EndScene_*`,
+`g_clampedRendererMode`, `g_drawSceneTimeMs`. Plan for real SW output:
+  1. force g_clampedRendererMode to a SW mode (3/4/5);
+  2. light up FlushDrawQueue + the SW rasterizers (TexturedTriRasterize*, the big
+     naked pixel loops) -> they write a software framebuffer;
+  3. reroute Renderer{3,4,5}_EndScene_SW (the surface flip) to MK4_PalBlit555;
+  4. stub Renderer1_Glide / Renderer2_D3D (no native API).
+BUT visible game pixels also need GameLogicStep populating the draw queue, so the
+render pipeline and the game-tick closure must both land before real frames show
+content. Until then the smoke-pattern DrawScene stub is the better "it runs" demo.
+
 ## Suggested order
 
 1. `Mul10Tail` (convert + verify_coexec) - removes one blocker cleanly.
