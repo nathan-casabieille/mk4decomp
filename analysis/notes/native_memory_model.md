@@ -57,6 +57,25 @@ exercised because raw-`idx*4` twins bypass it.
   asm) need the trampoline, so its scope is narrower than steps 1/3. Defer until a
   consumer path is live to validate against.
 
+## Why the FSM cluster is gated on step 4 (2026-06-11)
+
+Surveyed the remaining naked frontier for tractable seeded-verify converts. The
+clean small compute/node-walk wins are EXHAUSTED; every remaining FSM function has
+a structural trap:
+  - **Indirect dispatch through stored fn-ptrs**: GameStateTick does
+    `eax = node[idx].f4; call eax` - calling a node field that holds a function
+    VA. This IS the dispatch mechanism, and it is exactly step 4 (VA->native
+    trampoline). So the FSM cluster is gated on the trampoline, not on more
+    transcription.
+  - **Packed multi-entry**: Alarm3EntryPhaseChain / GameStateTick pack 2-3 entry
+    points + internal-label self-installs (`mov [esi+8], offset L_body`) in one
+    naked body - need the split-packed-helpers workflow, not a plain twin.
+  - **CRT/FPU**: DoubleToInt64 = __ftol (fstcw/fistp) - keep naked.
+So further FSM progress requires step 4 (trampoline) FIRST - which is itself
+end-to-end gated (needs a running consumer to validate). This is the genuine hard
+floor: the easy/medium converts are done; the rest is the trampoline + render
+backend + then the FSM, all interdependent and end-to-end-validated.
+
 ## Status / sequencing
 - node-pool DATA model: SOLVED (fixed-VA array in arena; MK4_NODE correct).
 - #2 (re-route raw idx*4) + #3 (globals via MK4_VA + conditional externs):
