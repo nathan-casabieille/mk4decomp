@@ -20,9 +20,14 @@
  * memory model, NOT a platform choice - it is gated on `MK4_ARENA`
  * (orthogonal to whichever TARGET_* platform backend is linked).
  *
- *   ***  The relocated branch is the next open decision  ***
- * It is gated behind `MK4_ARENA` (defined once the arena loader exists)
- * so it stays inert until designed. Wiring it requires:
+ *   ***  DECIDED (2026-06-11): see analysis/notes/native_memory_model.md  ***
+ * Host MAP_FIXED at 0x400000 is impossible (macOS), so translation is
+ * mandatory: arena at an arbitrary base, EVERY fixed-VA/packed-ptr/global
+ * access through this seam. The node pool is a fixed-VA array (g_nodeSlotsArea
+ * @0x53e368) already inside the arena, so MK4_NODE below is correct as-is.
+ * Remaining: re-route raw idx*4 twins through MK4_NODE; make globals MK4_VA
+ * macros (not C vars) for name/VA consistency; add a VA->native code-ptr
+ * trampoline. Wiring requires:
  *   1. reserving `g_mk4Arena` large enough to span the original data
  *      VAs touched (see config/extras_map.yaml for the address range);
  *   2. a loader that copies the initialized data/rdata bytes
