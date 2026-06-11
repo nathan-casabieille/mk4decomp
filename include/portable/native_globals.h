@@ -2252,5 +2252,9 @@ extern unsigned int g_xformScratch94;
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
 
+/* Copy each global's original initial value from the loaded arena
+ * (call once after MK4_ArenaInitFromFile). */
+void MK4_NativeGlobalsInit(void);
+
 #endif
 #endif

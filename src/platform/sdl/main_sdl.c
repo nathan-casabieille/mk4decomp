@@ -70,6 +70,12 @@ int main(int argc, char **argv)
             SDL_Log("arena: %u bytes from '%s'", g_mk4ArenaSize, arena);
     }
 
+#ifdef MK4_NATIVE_FULL
+    /* Seed the consolidated fixed-VA globals with their real initial values from
+     * the arena (native-full only; the clean smoke build has no such globals). */
+    { extern void MK4_NativeGlobalsInit(void); MK4_NativeGlobalsInit(); }
+#endif
+
     if (MK4_GameInit(argc, argv) != 0) {
         MK4_PalShutdown();
         return 1;
