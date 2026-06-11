@@ -113,6 +113,7 @@ src/engine/scaled_load_install_or_call.c
 src/engine/scaled_load_two_call_dual_const.c
 src/engine/scaled_store_cur_dirty_clear.c
 src/engine/scaled_store_cur_dirty_or1.c
+src/engine/scaled_sub_store.c
 src/engine/scaled_xor_store.c
 src/engine/scaled_zero_four.c
 src/engine/setjmp_wrappers.c

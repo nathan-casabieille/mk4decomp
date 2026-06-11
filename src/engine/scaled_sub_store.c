@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/ghidra_types.h"   /* MK4_NODE_AT (NON_MATCHING-only) */
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -18,6 +19,19 @@ extern unsigned int g_currentNodeIdx;
  *   ret
  */
 
+#ifdef NON_MATCHING
+/* Portable twin (verified via verify_coexec). Reads node[g_currentNodeIdx]
+ * fields +0x48 and +0x58, stores +0x58 to g_eventQueueCurrent and their
+ * difference (f48 - f58) to g_walkCallback. */
+void ScaledSubStore(void) {
+    unsigned int idx = g_currentNodeIdx;
+    unsigned int f48 = MK4_NODE_AT(unsigned int, idx, 0x48);
+    unsigned int f58 = MK4_NODE_AT(unsigned int, idx, 0x58);
+    g_walkCallback = f48;
+    g_eventQueueCurrent = f58;
+    g_walkCallback = f48 - f58;
+}
+#else
 void ScaledSubStore(void) {
     __asm {
         mov     eax, dword ptr [g_currentNodeIdx]
@@ -29,4 +43,5 @@ void ScaledSubStore(void) {
         mov     dword ptr [g_walkCallback], ecx
         }
 }
+#endif
 
