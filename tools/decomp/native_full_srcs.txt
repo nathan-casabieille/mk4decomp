@@ -57,6 +57,7 @@ src/engine/dual_load_dual_store_jmp.c
 src/engine/dual_push_set7d_call_pop.c
 src/engine/dual_scaled_load_store_jmp.c
 src/engine/dual_scaled_store_zero.c
+src/engine/ecm.c
 src/engine/esi_install_bit_call_chain_variants.c
 src/engine/esi_install_dec_call_chain_variants.c
 src/engine/event_queue_drain_loop.c

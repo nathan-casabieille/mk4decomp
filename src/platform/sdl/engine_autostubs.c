@@ -251,4 +251,5 @@ __attribute__((weak)) int ScaledStateNegCallPauseLoad(){return 0;}
 __attribute__((weak)) int StateSnapshotDispatch(){return 0;}
 __attribute__((weak)) unsigned int g_eventQueueSeed;
 __attribute__((weak)) int DualScaledStore(){return 0;}
+__attribute__((weak)) int ECM_DecodeFrame_Huffman(){return 0;}
 #endif /* MK4_NATIVE_FULL */

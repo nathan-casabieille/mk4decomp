@@ -22,7 +22,7 @@ s32 ECM_DecodeFrame(const void *src, void *dst)
     if (src) {
         if (dst) {
             memset(&state, 0, sizeof(state));
-            state._14 = 0;
+            state.reserved_14 = 0;
             state.buffer = (u8 *)src;
             state.dst = dst;
             ECM_DecodeFrameDispatch(&state);
@@ -45,6 +45,27 @@ s32 ECM_DecodeFrame(const void *src, void *dst)
  *
  * @addr 0x004b1220
  */
+#ifdef NON_MATCHING
+/* Portable twin (verify_coexec, seeded): the asm is an overlap-safe byte copy
+ * (forward when dst<=src or no overlap, backward otherwise) of offset_b bytes
+ * from buffer+12 to dst - i.e. exactly memmove. */
+/* Verified via a seeded co-exec harness on the raw-offset form (forward and
+ * backward/overlap paths both MATCH the original). Standard verify_coexec SKIPs
+ * this one - it compiles twins without engine headers, so the ecm_state type is
+ * unavailable - hence the manual harness. */
+void ECM_DecodeFrame_Raw(ecm_state *state)
+{
+    unsigned char *dst = (unsigned char *)state->dst;
+    unsigned char *src = (unsigned char *)state->buffer + 12;
+    unsigned int   n   = (unsigned int)state->offset_b;
+    unsigned int   i;
+    if (dst > src && dst < src + n) {           /* overlap -> backward copy */
+        for (i = n; i != 0; i--) dst[i - 1] = src[i - 1];
+    } else {                                    /* forward copy */
+        for (i = 0; i < n; i++) dst[i] = src[i];
+    }
+}
+#else
 __declspec(naked) void ECM_DecodeFrame_Raw(ecm_state *state)
 {
     __asm {
@@ -94,6 +115,7 @@ fwd_done:
         ret
     }
 }
+#endif
 
 /*
  * Parse the next frame's 12-byte header out of state->buffer:

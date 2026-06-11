@@ -365,6 +365,10 @@ extern int ComRelease_g_comptr_0058c8f0();
 extern int ComReleaseCapture_004b0380();
 extern int ComReleasePair_004b0500();
 extern int IncCallVtablePushCall();
+extern int ECM_DecodeFrame_Raw();
+extern int ECM_DecodeFrameDispatch();
+extern int ECM_ParseFrameHeader();
+extern int ECM_DecodeFrame();
 extern int TestCallZero();
 extern int Helper_AppStub_21C0();
 extern int AppShutdown();
@@ -763,6 +767,10 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4b0380u, (void*)ComReleaseCapture_004b0380},
     {0x4b0500u, (void*)ComReleasePair_004b0500},
     {0x4b0d80u, (void*)IncCallVtablePushCall},
+    {0x4b1220u, (void*)ECM_DecodeFrame_Raw},
+    {0x4b1bf0u, (void*)ECM_DecodeFrameDispatch},
+    {0x4b1c30u, (void*)ECM_ParseFrameHeader},
+    {0x4b1c90u, (void*)ECM_DecodeFrame},
     {0x4b1de0u, (void*)TestCallZero},
     {0x4b21c0u, (void*)Helper_AppStub_21C0},
     {0x4b2690u, (void*)AppShutdown},
