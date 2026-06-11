@@ -81,6 +81,12 @@ typedef int bool;
  * otherwise MK4_NODE_AT/MK4_VA look like undeclared functions in a native
  * build. Identity under matching; arena-relative under MK4_ARENA. */
 #include "mem_model.h"
+/* Consolidated fixed-VA global extern decls (generated). Many twins reference
+ * globals declared extern only locally in one file; sharing them here lets every
+ * twin compile natively. Duplicate-but-identical externs are legal C, so files
+ * with their own local decl are unaffected. NON_MATCHING-only -> matching is
+ * untouched. */
+#include "native_globals.h"
 
 #endif /* NON_MATCHING */
 
