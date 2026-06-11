@@ -229,6 +229,22 @@ $(NATIVE_EXE): $(NATIVE_SRCS) include/platform/pal.h include/portable/arena.h
 native-run: native
 	@$(NATIVE_EXE)
 
+# native-full: the broad closure - every natively-compilable engine file in
+# MainLoopStep + GameLogicStep + DrawScene's transitive closure (grown by
+# tools/decomp/grow_native.py), linked against engine_autostubs.c (the weak
+# stub frontier for the not-yet-portable naked/hardware/Win32 symbols, enabled
+# by -DMK4_NATIVE_FULL). Measures native-port surface; may not run cleanly yet
+# (hollow stubs), unlike the clean `native` smoke frame. Regenerate the file
+# list with: build/venv/bin/python tools/decomp/grow_native.py
+NATIVE_FULL_EXE  := $(BUILD_DIR)/MK4.native.full
+NATIVE_FULL_SRCS := $(wildcard src/platform/sdl/*.c) src/portable/arena.c \
+                    $(shell cat tools/decomp/native_full_srcs.txt)
+native-full:
+	@mkdir -p $(BUILD_DIR)
+	$(NATIVE_CC) -DNON_MATCHING -DMK4_ARENA -DTARGET_SDL -DMK4_NATIVE_FULL -Iinclude $(SDL_CFLAGS) \
+		-O2 -w $(NATIVE_PORTFLAGS) $(NATIVE_FULL_SRCS) $(SDL_LIBS) -o $(NATIVE_FULL_EXE)
+	@echo "native-full: linked $(NATIVE_FULL_EXE)  [$(words $(NATIVE_FULL_SRCS)) TUs: broad engine closure + weak stub frontier]"
+
 # === Arena (relocated memory model, Phase 1) =============================
 #
 # Extract the original mapped image into a flat blob, then exercise the
