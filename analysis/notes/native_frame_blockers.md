@@ -270,6 +270,27 @@ BUT visible game pixels also need GameLogicStep populating the draw queue, so th
 render pipeline and the game-tick closure must both land before real frames show
 content. Until then the smoke-pattern DrawScene stub is the better "it runs" demo.
 
+## Named-global memory model - IMPLEMENTED (2026-06-11)
+
+The "open decision" is now solved with the C-variable-mirror model:
+  - tools/decomp/gen_native_globals.py scans every `extern <type> g_name;` in the
+    corpus, keeps the 2248 single-consistent-type names not already in a header,
+    and emits include/portable/native_globals.h (shared extern decls, primitives,
+    included from ghidra_types.h under NON_MATCHING) + src/platform/sdl/
+    native_globals.c (weak defs, gated MK4_NATIVE_FULL).
+  - MK4_NativeGlobalsInit() arena-seeds 2204/2248 of them (VA from name-embedded
+    suffix or extras_map, bounds-guarded) so the converted code runs on REAL
+    initial values, not zeros. Called after arena load.
+This unblocked native-full 121 -> 139 TUs (131 engine files), running 60 frames
+clean on real global state. Matching untouched (NON_MATCHING-only; a3d2bf7f).
+
+Updated frontier (engine_autostubs.c): ~103 special globals (no consistent type /
+no VA) + ~131 naked/hardware fns remain stubbed. The ~50 naked frontier FILES are
+now the dominant blocker - genuine ASM->C conversion work (verify_coexec each),
+and they now compile+link+run natively the moment they convert (the global +
+mmsystem + win32 seams are all in place). Convert in fan-in order
+(analysis/notes/native_port_frontier.md).
+
 ## Suggested order
 
 1. `Mul10Tail` (convert + verify_coexec) - removes one blocker cleanly.
