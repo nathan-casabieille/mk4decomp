@@ -127,9 +127,18 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None):
         if sym['sec'] > 0:                         # defined in this obj (label)
             target = load_base + sym['value']
         else:                                      # external -> original VA
-            tv = name_to_va.get(_strip(sym['name']))
+            sname = _strip(sym['name'])
+            tv = name_to_va.get(sname)
             if tv is None:
-                return None, None, None, 'unresolved call: %s' % _strip(sym['name'])
+                # Ghidra emits raw-address callees as `func_0x<hex>` (and the
+                # `thunk_func_0x<hex>` jmp-thunk variant): the VA is in the name,
+                # so resolve it directly - the callee co-executes as the original
+                # bytes at that VA, same as a named one.
+                m = re.search(r'func_0x([0-9a-fA-F]+)$', sname)
+                if m:
+                    tv = int(m.group(1), 16)
+            if tv is None:
+                return None, None, None, 'unresolved call: %s' % sname
             target = tv
         if rt == 6 and off >= 1 and buf[off-1] in (0xe8, 0xe9):
             rt = 20
