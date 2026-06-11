@@ -131,6 +131,156 @@ extern unsigned int g_viewportX;
 extern unsigned int g_viewportY;
 extern unsigned int g_dispatchSave1404;
 
+#ifdef NON_MATCHING
+/*
+ * Portable C twin (path A, native/SDL build). Faithful register-level
+ * transcription of the naked branch below - reproduces every memory write
+ * (renderer-state globals + framebuffer pixels), verified by seeded co-exec
+ * (tools/decomp/verify_scanline.py), NOT by byte-match. Understanding the
+ * geometry is unnecessary for fidelity; this mirrors the instruction effects.
+ *
+ * Roles (inferred): g_viewportX = framebuffer base ptr (0 => no surface),
+ * g_viewportY = pitch in bytes, g_viewportW/H = clip extents,
+ * g_dispatchSave1378/1381/1380/1383 = dest x0/y0/x1/y1,
+ * g_dispatchSave1374/1373/1371/1377 = packed 16.16 texcoords,
+ * g_dispatchSave1357/1358 = per-column/per-row gradients,
+ * g_dispatchSave1400 = texture base, g_dispatchSave1375 = texture page hi byte,
+ * g_dispatchSave1403 = sub-texel, g_dispatchSave1346 = current dest address.
+ * Pixels are 16bpp; texel 0 = transparent (color-key).
+ */
+void ScanlineTexBlit(void)
+{
+    unsigned int eax, ebx, ecx, edx, esi, edi;
+
+    if (g_viewportX == 0) return;                       /* no surface */
+    edi = g_dispatchSave1378;                           /* x0 */
+    if ((int)edi >= (int)g_viewportW) return;
+    eax = g_dispatchSave1381;                           /* y0 */
+    if ((int)eax >= (int)g_viewportH) return;
+    ecx = g_dispatchSave1380;                           /* x1 */
+    if ((int)ecx < 0) return;
+    esi = g_dispatchSave1383;                           /* y1 */
+    if ((int)esi < 0) return;
+    ecx -= edi;                                         /* w = x1 - x0 */
+    esi -= eax;                                         /* h = y1 - y0 */
+    g_dispatchSave1708 = ecx;                           /* w */
+    g_dispatchSave1707 = esi;                           /* h */
+    if ((int)ecx < 1) return;
+    if ((int)esi < 1) return;
+
+    eax = g_dispatchSave1374 << 16;  g_dispatchSave1374 = eax;   /* u0 << 16 */
+    edx = g_dispatchSave1371 << 16;                             /* P << 16 */
+    eax = g_dispatchSave1373 << 16;  g_dispatchSave1373 = eax;   /* U1 << 16 */
+    eax = eax - edx;                                            /* U1fx - Pfx */
+    g_dispatchSave1371 = edx;                                   /* Pfx */
+    ebx = g_dispatchSave1377;                                   /* Q */
+    eax = (unsigned int)((int)eax / (int)ecx);                  /* idiv w -> gradX */
+    edx = g_dispatchSave1374;                                   /* u0fx */
+    ebx <<= 16;                                                 /* Qfx */
+    g_dispatchSave1377 = ebx;
+    ebx = eax;                                                  /* gradX */
+    eax = g_dispatchSave1377;                                   /* Qfx */
+    eax = eax - edx;                                            /* Qfx - u0fx */
+    g_dispatchSave1357 = ebx;                                   /* gradX */
+    eax = (unsigned int)((int)eax / (int)esi);                  /* idiv h -> gradY */
+    g_dispatchSave1358 = eax;                                   /* gradY */
+
+    if ((int)edi < 0) {                                         /* left clip */
+        ebx = (unsigned int)((int)ebx * (int)edi);             /* gradX * x0 */
+        edx = g_dispatchSave1371;                              /* Pfx */
+        ecx = ecx + edi;                                       /* w += x0 */
+        edx = edx - ebx;
+        edi = 0;
+        g_dispatchSave1371 = edx;
+        g_dispatchSave1708 = ecx;
+        g_dispatchSave1378 = edi;                             /* 0 */
+    }
+    ecx = g_dispatchSave1381;                                  /* y0 */
+    if ((int)ecx < 0) {                                        /* top clip (eax=gradY) */
+        eax = (unsigned int)((int)eax * (int)ecx);            /* gradY * y0 */
+        edx = g_dispatchSave1374;                             /* u0fx */
+        g_dispatchSave1381 = 0;
+        edx = edx - eax;
+        esi = esi + ecx;                                      /* h += y0 */
+        ecx = g_dispatchSave1381;                             /* 0 */
+        g_dispatchSave1374 = edx;
+        g_dispatchSave1707 = esi;
+    }
+    eax = g_viewportW;
+    edx = g_dispatchSave1380;                                  /* x1 */
+    if (!((int)edx < (int)eax)) {                              /* right clip */
+        eax = eax - edi;                                      /* W - x0 */
+        g_dispatchSave1708 = eax;
+    }
+    eax = g_viewportH;
+    edx = g_dispatchSave1383;                                  /* y1 */
+    if (!((int)edx < (int)eax)) {                              /* bottom clip */
+        eax = eax - ecx;                                      /* H - y0 */
+        esi = eax;
+        g_dispatchSave1707 = esi;
+    }
+    edx = g_viewportY;                                         /* pitch */
+    eax = g_viewportX;                                         /* fb base */
+    edx = (unsigned int)((int)edx * (int)ecx);                /* pitch * y0 */
+    eax = eax + edx;
+    eax = eax + edi * 2;                                       /* + x0*2 (16bpp) */
+    g_dispatchSave1346 = eax;                                  /* dest top-left */
+    eax = g_dispatchSave1403 & 0xf;
+    eax <<= 16;
+    g_dispatchSave1403 = eax;
+    if ((int)esi <= 0) return;
+
+    eax = g_dispatchSave1403;                                  /* first row: jmp L_0aac */
+    for (;;) {
+        ecx = g_dispatchSave1371;
+        edx = (g_dispatchSave1375 & 0xff) << 8;                /* dh = texpage */
+        g_dispatchSave1387 = ecx;
+        edx = edx + eax;                                       /* + sub-texel (1403) */
+        eax = g_dispatchSave1400;                              /* tex base */
+        ecx = eax + edx * 2;
+        g_dispatchSave1404 = ecx;
+        eax = g_dispatchSave1387 << 16;                        /* frac accumulator (=0) */
+        edx = g_dispatchSave1404 >> 1;
+        ecx = g_dispatchSave1387 >> 16;                        /* integer col */
+        edx = (edx & 0xffffff00u) | (ecx & 0xff);              /* dl = cl */
+        edi = g_dispatchSave1346;
+        edi = edi + g_dispatchSave1708;
+        edi = edi + g_dispatchSave1708;                        /* edi += 2*w (row end) */
+        esi = g_dispatchSave1708;
+        esi = (unsigned int)(-(int)esi);                       /* esi = -w */
+        ecx = g_dispatchSave1357;                              /* gradX */
+        ecx = (ecx << 16) | (ecx >> 16);                       /* rol 16 */
+        ecx = ecx & 0xffff00ffu;                               /* ch = 0 */
+        do {
+            unsigned short texel = *(unsigned short *)(unsigned long)(edx * 2);
+            eax = (eax & 0xffff0000u) | texel;                 /* mov ax, [edx*2] */
+            if (texel != 0)
+                *(unsigned short *)(unsigned long)(edi + esi * 2) = texel;
+            {
+                unsigned int sum = eax + ecx;                  /* add eax, ecx */
+                unsigned int carry = (sum < eax) ? 1u : 0u;
+                unsigned int dl = (edx & 0xff) + (ecx & 0xff) + carry; /* adc dl, cl */
+                eax = sum;
+                edx = (edx & 0xffffff00u) | (dl & 0xff);
+            }
+            esi = esi + 1;
+        } while ((int)esi < 0);
+        edx = g_dispatchSave1358;                              /* gradY */
+        esi = g_dispatchSave1374;
+        eax = g_dispatchSave1707;
+        ecx = g_viewportY;
+        esi = esi + edx;                                       /* 1374 += gradY */
+        edx = g_dispatchSave1346;
+        eax = eax - 1;                                         /* rows-- */
+        edx = edx + ecx;                                       /* dest += pitch */
+        g_dispatchSave1707 = eax;
+        g_dispatchSave1374 = esi;
+        g_dispatchSave1346 = edx;
+        if (!((int)eax > 0)) break;
+        eax = g_dispatchSave1403;                              /* L_0aa7 reload */
+    }
+}
+#else
 __declspec(naked) void ScanlineTexBlit(void)
 {
     __asm {
@@ -292,3 +442,4 @@ __declspec(naked) void ScanlineTexBlit(void)
         ret
     }
 }
+#endif
