@@ -129,7 +129,7 @@ void ThreeCharNormalize(void)
   g_cj_00542054 = 0x14e02c;
   g_dispatchArg = 0;
   while( true ) {
-    g_walkCallback = *(int *)((g_cj_00542054 + g_dispatchArg) * 4);
+    g_walkCallback = *MK4_NODE(int, (g_cj_00542054 + g_dispatchArg));
     if ((g_walkCallback < 0) ||
        ((((0x5f < g_walkCallback && (g_walkCallback != 0x7b)) && (g_walkCallback != 0x7c)) &&
         (g_walkCallback != 0x7d)))) {
@@ -137,7 +137,7 @@ void ThreeCharNormalize(void)
     }
     LinearSearchByEsi();
     if (g_framePauseFlag != 0) break;
-    *(int *)((g_cj_00542054 + g_dispatchArg) * 4) = g_walkCallback;
+    *MK4_NODE(int, (g_cj_00542054 + g_dispatchArg)) = g_walkCallback;
     g_dispatchArg = g_dispatchArg + 1;
     if (2 < g_dispatchArg) {
       return;

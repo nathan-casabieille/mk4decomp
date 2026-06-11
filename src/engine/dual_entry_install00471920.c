@@ -158,7 +158,7 @@ void DualEntryInstall00471920(void)
     GuardedSeq_MStackCall_then_CallSetPause_00471670();
     return;
   }
-  g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
+  g_eventQueuePending = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x28);
   g_walkCallback = MK4_NODE_AT(uint, g_eventQueuePending, 0);
   g_xformScratch94 = g_walkCallback & 0x400;
   if (g_xformScratch94 == 0) {

@@ -155,9 +155,9 @@ void InstallSelfStateMachine6(void)
     if (g_framePauseFlag != 0) {
       return;
     }
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0;
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0;
     g_walkCallback = 0x1f;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x1f;
     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
     if (g_framePauseFlag != 0) {
       return;
@@ -178,7 +178,7 @@ void InstallSelfStateMachine6(void)
     *(code **)(iVar1 + 8) = InstallSelfStateMachine6;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 3;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x34a48e0;
+    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x34a48e0;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
     *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -194,7 +194,7 @@ void InstallSelfStateMachine6(void)
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
       uVar3 = 0x44a48e0;
 LAB_004a4a15:
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = uVar3;
+      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = uVar3;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
       *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;

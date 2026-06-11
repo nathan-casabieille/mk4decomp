@@ -149,7 +149,7 @@ void Phase4StateInit4Helpers(void)
         *(undefined4 *)(iVar1 + 0x5c) = g_walkCallback;
         ThreeChanPackClamp(0x100020);
         CopyThreeFields(g_cj_0054205c);
-        g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
+        g_eventQueuePending = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x28);
         puVar2 = (uint *)(g_eventQueuePending * 4);
         puVar2[0x12] = 0xa666;
         puVar2[5] = 0xff;
@@ -163,7 +163,7 @@ void Phase4StateInit4Helpers(void)
         }
       }
     }
-    g_cj_0054205c = *(int *)((int)g_matrixStackTop * 4);
+    g_cj_0054205c = *MK4_NODE(int, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
   }
   return;

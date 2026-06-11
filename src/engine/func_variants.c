@@ -352,7 +352,7 @@ LAB_0049883c:
       *(code **)(iVar1 + 8) = func_MStackChainSwapTraversal;
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x2498790;
+      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x2498790;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
       *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -367,7 +367,7 @@ LAB_0049883c:
       *(code **)(iVar1 + 8) = func_MStackChainSwapTraversal;
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1498790;
+      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1498790;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
       *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -517,7 +517,7 @@ void func_TableLookupCall_g_table_00498980(void)
       if (g_framePauseFlag == 0) {
         MStackCall_MStackPush2ChainPrepend_00406340();
         if (g_framePauseFlag == 0) {
-          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x43;
+          MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x43;
           iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
           g_eventQueueCurrent = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58);
           g_eventQueueWorkType = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c);
@@ -525,12 +525,12 @@ void func_TableLookupCall_g_table_00498980(void)
           *(undefined4 *)(iVar1 + 0x58) = g_eventQueueCurrent;
           *(undefined4 *)(iVar1 + 0x5c) = g_eventQueueWorkType;
           g_walkCallback = MK4_NODE_AT(uint, g_cj_0054205c, 0x34) & 1 |
-                         *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34);
-          *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34) = g_walkCallback;
+                         MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34);
+          MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34) = g_walkCallback;
           g_currentNodeFlags = Mul10Tail(0x23d7,g_currentNodeFlags);
           g_xformScratch2088 = Mul10Tail(0x23d7,g_xformScratch2088);
-          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) = g_currentNodeFlags;
-          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74) = g_xformScratch2088;
+          MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x6c) = g_currentNodeFlags;
+          MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74) = g_xformScratch2088;
           g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
           ArgSar_Set0_Jmp(0x4f2240);
         }
@@ -827,7 +827,7 @@ void SwapSidePoseAdd51e_0047c530(void)
   }
   g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x70) + 0x51e;
   MK4_NODE_AT(int, g_cj_0054205c, 0x70) = g_walkCallback;
-  *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = g_walkCallback;
+  MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x70) = g_walkCallback;
   return;
 }
 #else
@@ -940,7 +940,7 @@ void func_GuardedDispatch4(void)
     *(code **)(iVar2 + 8) = func_GuardedDispatch4;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14822e0;
+    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x14822e0;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
     *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -1165,13 +1165,13 @@ void func_PendingMatch(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_currentNodeFlags;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_currentNodeFlags;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(int, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_dualC;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_dualC;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_cj_00542058;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_cj_00542058;
   PendingMatch_Ten404c40_404bd0();
   if (g_framePauseFlag != 0) {
     return;
@@ -1198,7 +1198,7 @@ void func_PendingMatch(void)
     }
     if (((byte)g_xformDirtyFlags & 4) == 0) {
       g_eventQueueChild = 0x18000;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0x18000;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = 0x18000;
       AllocSlotPushTripleGlobals();
       if (g_framePauseFlag != 0) {
         return;
@@ -1217,7 +1217,7 @@ void func_PendingMatch(void)
         return;
       }
       if (((byte)g_xformDirtyFlags & 4) == 0) {
-        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_eventQueueChild;
+        MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_eventQueueChild;
         g_currentNodeFlags = g_currentNodeFlags * 100;
         g_walkCallback = g_currentNodeFlags >> 0x10;
         StoreIncrMStackPush6();
@@ -1238,7 +1238,7 @@ void func_PendingMatch(void)
           return;
         }
         if (((byte)g_xformDirtyFlags & 4) == 0) {
-          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_eventQueueChild;
+          MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_eventQueueChild;
           AllocSlotPushTripleGlobals();
           if (g_framePauseFlag != 0) {
             return;
@@ -1257,7 +1257,7 @@ void func_PendingMatch(void)
             return;
           }
           if (((byte)g_xformDirtyFlags & 4) == 0) {
-            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_eventQueueChild;
+            MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_eventQueueChild;
             g_cj_00542058 = 0;
             StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x432f00)),0x228);
           }
@@ -1265,10 +1265,10 @@ void func_PendingMatch(void)
       }
     }
   }
-  g_currentNodeFlags = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
-  g_cj_00542058 = *(undefined4 *)((int)g_matrixStackTop * 4);
-  g_dualC = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
+  g_currentNodeFlags = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -3));
+  g_cj_00542058 = *MK4_NODE(undefined4, (int)g_matrixStackTop);
+  g_dualC = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -2));
   g_matrixStackTop = g_matrixStackTop + -4;
   return;
 }
@@ -1786,7 +1786,7 @@ int func_Set2CallIncJmp(void)
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
   }
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = uVar3;
+  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = uVar3;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
   *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;

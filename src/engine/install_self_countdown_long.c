@@ -132,7 +132,7 @@ void InstallSelfCountdownLong(void)
   int iVar2;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = 0x47ee90;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = 0x47ee90;
   iVar1 = g_baseSel * 4;
   iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
   *(undefined4 *)(iVar1 + 0x84) = 0;

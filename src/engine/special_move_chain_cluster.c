@@ -149,7 +149,7 @@ void SpecialMoveChainCluster(void)
               func_0x0043f8f0();
               if (g_framePauseFlag == 0) {
                 g_matrixStackTop = g_matrixStackTop + 1;
-                *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
+                *MK4_NODE(int, (int)g_matrixStackTop) = g_cj_0054205c;
                 iVar2 = g_baseSel * 4;
                 iVar1 = g_cj_0054205c * 4;
                 *(undefined4 *)(iVar1 + 0x54) = *(undefined4 *)(iVar2 + 0x3c);

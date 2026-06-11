@@ -145,19 +145,19 @@ void Phase4ThreePackedInstallSelf(void)
     if (g_framePauseFlag == 0) {
       if (((byte)g_xformDirtyFlags & 4) != 0) goto LAB_0041a659;
       g_installOwnerNode = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 100) = 0x4b65f;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 100) = 0x4b65f;
       g_installOwner2 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       g_walkCallback = 0;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0;
-      *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = g_walkCallback;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0;
+      MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = g_walkCallback;
       g_walkCallback = 0xfffe4ccd;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0xfffe4ccd;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = 0xfffe4ccd;
       StoreLoadJmp(0x41a7d0);
       g_cj_00542058 = g_counter_0053a51c + 0x135ee2;
       g_walkCallback = MK4_NODE_AT(int, g_cj_00542058, 0);
       StorePauseImulShr16();
       if (g_framePauseFlag == 0) {
-        g_cj_00542058 = *(int *)((g_walkCallback + 0x150b3a) * 4);
+        g_cj_00542058 = *MK4_NODE(int, (g_walkCallback + 0x150b3a));
         if (g_counter_0053a51c == 3) {
           g_cj_00542058 = 0x13c034;
         }
@@ -170,7 +170,7 @@ void Phase4ThreePackedInstallSelf(void)
           *(code **)(iVar1 + 8) = Phase4ThreePackedInstallSelf;
           MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
           (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x141a610;
+          *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x141a610;
           (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
           *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
           MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;

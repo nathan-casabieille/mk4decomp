@@ -136,21 +136,21 @@ void InstallSelfMStackIndirect(void)
   *(undefined4 *)(iVar1 + 0x84) = 0;
   if (iVar2 != 0) {
     g_matrixStackTop = g_matrixStackTop + 1;
-    *(int *)((int)g_matrixStackTop * 4) = g_eventQueueNotMask;
+    *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueNotMask;
     if (g_cj_00542054 != (code *)0x0) {
       (*g_cj_00542054)();
     }
     if (g_framePauseFlag != 0) {
       return;
     }
-    g_eventQueueNotMask = *(int *)((int)g_matrixStackTop * 4);
+    g_eventQueueNotMask = *MK4_NODE(int, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
     if (g_eventQueueNotMask == 0) {
       BossDashCluster();
       return;
     }
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x3c);
-    g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74);
+    g_walkCallback = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74);
     if (g_walkCallback != g_eventQueueNotMask) {
       BossDashCluster();
       return;

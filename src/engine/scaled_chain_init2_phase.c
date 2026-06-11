@@ -124,13 +124,13 @@ extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 void ScaledChainInit2Phase(undefined4 param_1)
 
 {
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0;
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0;
-  *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = MK4_NODE_AT(int, g_cj_00542054, 0x5c) + 0x41999;
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x68) = 0x62978;
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74) = 0xffffaaab;
+  MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0;
+  MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = 0;
+  MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = MK4_NODE_AT(int, g_cj_00542054, 0x5c) + 0x41999;
+  MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x68) = 0x62978;
+  MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74) = 0xffffaaab;
   g_walkCallback = param_1;
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = param_1;
+  MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = param_1;
   MStackCall_MStackPush2ChainPrepend_00406340();
   if (g_framePauseFlag == 0) {
     g_dualC = g_particleEmitterNode;
@@ -138,7 +138,7 @@ void ScaledChainInit2Phase(undefined4 param_1)
     MK4_NODE_AT(undefined4, g_dualC, 0x58) = 0xfffc0000;
     g_walkCallback = 0;
     MK4_NODE_AT(undefined4, g_dualC, 0x5c) = 0;
-    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x3c) = g_dualC;
+    MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x3c) = g_dualC;
   }
   return;
 }

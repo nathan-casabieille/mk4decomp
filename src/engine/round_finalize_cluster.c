@@ -152,7 +152,7 @@ void RoundFinalizeCluster(void)
     MK4_NODE_AT(int, g_baseSel, 0x68) = g_eventQueuePending;
     g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     g_eventQueuePending = 4;
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
     g_xformDirtyFlags = g_xformDirtyFlags | 4;
     iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     if ((((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) || (g_xformDirtyFlags = g_xformDirtyFlags ^ 4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0)) ||

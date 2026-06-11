@@ -169,7 +169,7 @@ LAB_004bc520:
         *(undefined2 *)((int)puVar5 + 0xe) = *(undefined2 *)(pcVar4 + 4);
         *(undefined2 *)(puVar5 + 4) = *(undefined2 *)(pcVar4 + 6);
         *(ushort *)((int)puVar5 + 0x1a) =
-             *(byte *)(iVar3 + iVar2 + 10 + *pcVar4 * 4) & 0xff0f |
+             *MK4_NODE(byte, iVar3 + iVar2 + 10 + *pcVar4) & 0xff0f |
              *(ushort *)((int)puVar5 + 0x1a) & 0xfff0;
         puVar5 = puVar5 + 7;
         pcVar4 = pcVar4 + 8;
@@ -178,7 +178,7 @@ LAB_004bc520:
     }
   }
   g_dualC = (uint *)0x0;
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x48) = 0;
+  MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x48) = 0;
   return;
 }
 #else

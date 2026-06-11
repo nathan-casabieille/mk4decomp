@@ -139,12 +139,12 @@ void InstallSelfMStackCountdown(void)
   }
   else {
     g_matrixStackTop = g_matrixStackTop + 1;
-    *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueChild;
+    *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueueChild;
     GuardedDualAndFlagToggle();
     if (g_framePauseFlag == 0) {
-      g_eventQueueChild = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_eventQueueChild = *MK4_NODE(undefined4, (int)g_matrixStackTop);
       if (((byte)g_xformDirtyFlags & 1) != 0) {
-        *(undefined4 *)((int)g_matrixStackTop * 4) = 0x4370c0;
+        *MK4_NODE(undefined4, (int)g_matrixStackTop) = 0x4370c0;
         GameDispatchValidateState();
         return;
       }

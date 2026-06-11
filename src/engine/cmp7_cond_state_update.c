@@ -130,10 +130,10 @@ void Cmp7CondStateUpdate(void)
   if (g_framePauseFlag == 0) {
     if ((((byte)g_xformDirtyFlags & 1) != 0) && (g_walkCallback = (*(unsigned int *)MK4_VA(unsigned int, 0x537f8c)), (*(unsigned int *)MK4_VA(unsigned int, 0x537f8c)) == 0)) {
       g_walkCallback = 1;
-      if ((*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) == 1) &&
+      if ((*MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) == 1) &&
          (g_walkCallback = g_eventMusicSlot2, g_eventMusicSlot2 != g_eventQueueCurrent)) {
         g_eventQueueCurrent = 2;
-        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 2;
+        *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 2;
         g_walkCallback = 1;
         (*(unsigned int *)MK4_VA(unsigned int, 0x537f8c)) = 1;
       }

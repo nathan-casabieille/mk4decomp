@@ -140,21 +140,21 @@ void SpawnListGlyphRender(void)
     if (g_framePauseFlag == 0) {
       MStackBracket5_FieldClear_StateAdvance();
       iVar3 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x24) = 0;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x24) = 0;
       MK4_NODE_AT(int, iVar2, 0x18) = iVar3;
       MK4_NODE_AT(int, iVar3, 0x18) = iVar2;
       g_walkCallback = 4;
       MStackPush3HelperCondToggle();
       g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       g_eventQueueCurrent = -0x1999;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc) = 0x1455e9;
-      *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4) = g_eventQueueCurrent;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 8) = 0;
-      for ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4); g_eventQueueCurrent = g_eventQueueCurrent + 0xf5c,
-          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0; (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4)) {
-        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc) = 0x1455e9;
-        *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4) = g_eventQueueCurrent;
-        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 8) = 0;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0xc) = 0x1455e9;
+      MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 4) = g_eventQueueCurrent;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 8) = 0;
+      for ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))); g_eventQueueCurrent = g_eventQueueCurrent + 0xf5c,
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0; (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)))) {
+        MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0xc) = 0x1455e9;
+        MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 4) = g_eventQueueCurrent;
+        MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 8) = 0;
       }
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar2;
     }

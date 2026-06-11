@@ -139,17 +139,17 @@ void Match_OutcomeScreen(void)
     }
     GuardedSetupCallTailJmp((*(unsigned int *)MK4_VA(unsigned int, 0x542044)),0x140000);
     *(char **)(g_baseSel * 4 + 0x34) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x30) * 4 + 0x5c) = 0xa0000;
-    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x34) * 4 + 0x5c) = 0xa0000;
-    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x34) * 4 + 0x58) = 0xf0600000;
-    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x30) * 4 + 0x74) = 0xffffc000;
+    MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x30), 0x5c) = 0xa0000;
+    MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x34), 0x5c) = 0xa0000;
+    MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x34), 0x58) = 0xf0600000;
+    MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x30), 0x74) = 0xffffc000;
     *(code **)(iVar1 + 8) = Match_OutcomeScreen;
     *(undefined4 *)(iVar1 + 0x84) = 1;
     g_dualC = 0x24;
     g_framePauseFlag = 1;
     return;
   case 1:
-    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x30) * 4 + 0x74) = 0;
+    MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x30), 0x74) = 0;
     if (g_audioStreamState == 0) {
       TwoCallsTwoBranchTail();
       if (g_framePauseFlag != 0) {
@@ -162,8 +162,8 @@ void Match_OutcomeScreen(void)
       return;
     }
 switchD_004a3d06_caseD_2:
-    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x34) * 4 + 0x58) = 0x140000;
-    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x34) * 4 + 0x74) = 0xffffc000;
+    MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x34), 0x58) = 0x140000;
+    MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x34), 0x74) = 0xffffc000;
     *(code **)(iVar1 + 8) = Match_OutcomeScreen;
     *(undefined4 *)(iVar1 + 0x84) = 3;
     g_dualC = 0x24;
@@ -172,7 +172,7 @@ switchD_004a3d06_caseD_2:
   case 2:
     goto switchD_004a3d06_caseD_2;
   case 3:
-    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x34) * 4 + 0x74) = 0;
+    MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x34), 0x74) = 0;
     *(code **)(iVar1 + 8) = Match_OutcomeScreen;
     *(undefined4 *)(iVar1 + 0x84) = 4;
     g_dualC = 0x3c;

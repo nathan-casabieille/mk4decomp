@@ -130,7 +130,7 @@ void DualScaledChainPush(void)
   if (g_framePauseFlag == 0) {
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
     iVar1 = g_baseSel * 4;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
+    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_walkCallback;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
     *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     ArgSarStoreJmp(0x4ea978);

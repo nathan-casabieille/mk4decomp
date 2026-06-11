@@ -133,18 +133,18 @@ void BitSetByIndex(void)
   int iVar1;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_chainAccumCur;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_chainAccumCur;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueuePending;
   g_dispatchArg = g_walkCallback;
-  iVar1 = *(int *)(*(int *)((g_audioBitField + g_walkCallback) * 4) * 4 + 0x10);
+  iVar1 = MK4_NODE_AT(int, *(int *)((g_audioBitField + g_walkCallback) * 4), 0x10);
   g_walkCallback = MK4_NODE_AT(uint, iVar1, 0);
   if (-1 < g_chainAccumCur + -1) {
     g_eventQueueCurrent = 1 << ((byte)(g_chainAccumCur + -1) & 0x1f) | g_walkCallback;
     MK4_NODE_AT(uint, iVar1, 0) = g_eventQueueCurrent;
   }
-  g_eventQueuePending = *(undefined4 *)((int)g_matrixStackTop * 4);
-  g_chainAccumCur = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+  g_eventQueuePending = *MK4_NODE(undefined4, (int)g_matrixStackTop);
+  g_chainAccumCur = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
   g_matrixStackTop = g_matrixStackTop + -2;
   return;
 }

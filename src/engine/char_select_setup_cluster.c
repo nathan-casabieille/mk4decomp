@@ -137,13 +137,13 @@ void CharSelectSetupCluster(void)
     if (g_framePauseFlag == 0) {
       g_walkCallback = MK4_NODE_AT(int, g_cj_00542054, 100) + 0x4b65f;
       uVar1 = WorldCellSetupCluster(g_walkCallback);
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 100) = uVar1;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x93;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 100) = uVar1;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x93;
       g_walkCallback = 0xfffff852;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0xfffff852;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = 0xfffff852;
       g_cj_00542058 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       g_cj_0054205c = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x18);
       ScaledTestPauseStore();
       if (g_framePauseFlag == 0) {
         g_walkCallback = 0x13a064;

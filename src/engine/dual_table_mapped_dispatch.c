@@ -142,7 +142,7 @@ void DualTableMappedDispatch(void)
         iVar1 = 7;
       }
       g_walkCallback = iVar1 * 2;
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((g_walkCallback + 0x150c22) * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (g_walkCallback + 0x150c22));
       g_dualC = g_walkCallback + 0x150c23;
       g_eventQueuePending = 0x7e20000;
       LoadGeoAsset_Default();
@@ -163,7 +163,7 @@ void DualTableMappedDispatch(void)
             iVar1 = 7;
           }
           g_walkCallback = iVar1 * 2;
-          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((g_walkCallback + 0x150c22) * 4);
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (g_walkCallback + 0x150c22));
           g_dualC = g_walkCallback + 0x150c23;
           g_eventQueuePending = 0x7f10000;
           LoadGeoAsset_Default();

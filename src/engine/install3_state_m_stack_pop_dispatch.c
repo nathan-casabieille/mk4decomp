@@ -132,12 +132,12 @@ void Install3StateMStackPopDispatch(void)
     if (g_framePauseFlag == 0) {
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
       iVar2 = g_baseSel * 4;
-      *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_xformScratch2088;
+      *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_xformScratch2088;
       *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
       *(code **)(iVar1 + 8) = Install3StateMStackPopDispatch;
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x146f560;
+      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x146f560;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
       *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -151,7 +151,7 @@ void Install3StateMStackPopDispatch(void)
       return;
     }
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
-    g_xformScratch2088 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    g_xformScratch2088 = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
     MK4_NODE_AT(int, g_baseSel, 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     if (g_xformScratch2088 < 2) {
       FiveCallGuardSetTail();

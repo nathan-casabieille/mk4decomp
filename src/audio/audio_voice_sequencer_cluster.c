@@ -129,9 +129,9 @@ void AudioVoiceSequencerCluster(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-  g_chainAccumCur = *(undefined4 *)((g_chainAccumCur * 5 + -5 + g_audioSequencerSlot) * 4);
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)g_matrixStackTop * 4);
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  g_chainAccumCur = *MK4_NODE(undefined4, (g_chainAccumCur * 5 + -5 + g_audioSequencerSlot));
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)g_matrixStackTop);
   g_matrixStackTop = g_matrixStackTop + -1;
   return;
 }

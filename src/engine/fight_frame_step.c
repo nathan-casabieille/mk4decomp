@@ -32,9 +32,9 @@ void FightFrameStep_Inner(void)
   uint uVar2;
   
   g_walkCallback = MK4_NODE_AT(uint, g_cj_0054205c, 0) & 0xffff;
-  g_eventQueueCurrent = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  g_eventQueueCurrent = *MK4_NODE(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
   g_eventQueueWorkType = MK4_NODE_AT(uint, g_eventQueuePending, 0);
-  *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
+  *MK4_NODE(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_walkCallback;
   MK4_NODE_AT(uint, g_eventQueuePending, 0) = g_eventQueueCurrent;
   uVar1 = g_eventQueueCurrent ^ g_walkCallback;
   g_currentNodeFlags = g_eventQueueCurrent;

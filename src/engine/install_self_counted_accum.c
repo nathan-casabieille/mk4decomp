@@ -147,7 +147,7 @@ void InstallSelfCountedAccum(void)
     }
   }
   g_cj_00542058 = g_cj_00542058 + 1;
-  g_eventQueueCurrent = *(int *)(g_cj_00542058 * 4 + -4);
+  g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_00542058, -4);
   g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x5c) + g_eventQueueCurrent;
   MK4_NODE_AT(int, g_cj_0054205c, 0x5c) = g_walkCallback;
   *(code **)(iVar2 + 8) = InstallSelfCountedAccum;

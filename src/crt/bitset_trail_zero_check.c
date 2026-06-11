@@ -126,7 +126,7 @@ undefined4 BitsetTrailZeroCheck(int param_1,int param_2)
   
   bVar1 = (byte)(param_2 >> 0x1f);
   iVar3 = (int)(param_2 + (param_2 >> 0x1f & 0x1fU)) >> 5;
-  if ((*(uint *)(param_1 + iVar3 * 4) &
+  if ((*MK4_NODE(uint, param_1 + iVar3) &
       ~(-1 << (0x1f - ((((byte)param_2 ^ bVar1) - bVar1 & 0x1f ^ bVar1) - bVar1) & 0x1f))) != 0) {
     return 0;
   }

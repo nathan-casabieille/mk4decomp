@@ -126,7 +126,7 @@ void ThrowPoseCallbackSetup(void)
   undefined4 uVar1;
   
   g_walkCallback = (code *)((int)g_walkCallback * 4);
-  g_eventQueuePending = *(int *)((int)(g_walkCallback + 0x13c4c0) * 4);
+  g_eventQueuePending = *MK4_NODE(int, (int)(g_walkCallback + 0x13c4c0));
   g_dualC = g_walkCallback + 0x13c4c1;
   DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
   if (((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) &&
@@ -136,16 +136,16 @@ void ThrowPoseCallbackSetup(void)
     if ((g_eventQueueCurrent != (code *)0x0) && (ScaledOrStore_004903d0(), g_framePauseFlag != 0)) {
       return;
     }
-    g_dualD = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18);
-    g_eventQueuePending = *(int *)((int)g_dualC * 4);
+    g_dualD = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x18);
+    g_eventQueuePending = *MK4_NODE(int, (int)g_dualC);
     g_dualC = g_dualC + 1;
     FramePauseScaledStore();
     if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = 2;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0xfff70000;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34) = 0xd0000;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = 2;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0xfff70000;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34) = 0xd0000;
       g_walkCallback = (code *)0x1999;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x38) = 0x1999;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x38) = 0x1999;
       g_eventQueuePending = g_dualD;
       MStackPush2ChainPrepend();
       if (g_framePauseFlag == 0) {

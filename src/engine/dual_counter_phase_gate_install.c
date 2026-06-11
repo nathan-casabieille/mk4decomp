@@ -126,11 +126,11 @@ void DualCounterPhaseGateInstall(void)
   iVar1 = *(int *)(iVar2 + 0x84);
   *(undefined4 *)(iVar2 + 0x84) = 0;
   if (iVar1 == 0) {
-    g_eventQueuePending = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_eventQueuePending = *MK4_NODE(undefined4, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
     iVar1 = g_baseSel * 4;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_eventQueuePending;
+    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_eventQueuePending;
     *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
     g_walkCallback = 0;
     g_audioBank2State = 0;
@@ -141,7 +141,7 @@ LAB_00421e9e:
     *(code **)(iVar2 + 8) = DualCounterPhaseGateInstall;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1421d50;
+    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1421d50;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
     *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -177,7 +177,7 @@ LAB_00421dbf:
   *(code **)(iVar2 + 8) = DualCounterPhaseGateInstall;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x2421d50;
+  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x2421d50;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
   *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;

@@ -154,7 +154,7 @@ void StoreGuardedBitInstallJmp(void)
     }
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x24);
     g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x28) + 1;
-    if (*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4) <= g_walkCallback) {
+    if (MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 4) <= g_walkCallback) {
       SlotPhaseResetInstallChain();
       if ((g_framePauseFlag == 0) && (ScaledZeroFour(), g_framePauseFlag == 0)) {
         CjInstallSelfRouter();

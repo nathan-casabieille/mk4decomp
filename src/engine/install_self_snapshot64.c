@@ -138,10 +138,10 @@ void InstallSelfSnapshot64(void)
     return;
   }
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueNotMask;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueueNotMask;
   BackdashSetupCluster();
   if (g_framePauseFlag == 0) {
-    g_eventQueueNotMask = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_eventQueueNotMask = *MK4_NODE(undefined4, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
     *(code **)(iVar1 + 8) = InstallSelfSnapshot64;
     *(undefined4 *)(iVar1 + 0x84) = 1;

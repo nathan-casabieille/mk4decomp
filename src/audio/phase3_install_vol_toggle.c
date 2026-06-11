@@ -159,12 +159,12 @@ void Phase3InstallVolToggle(void)
     AudioSwap2ChainBank3State();
     iVar3 = MK4_NODE_AT(int, g_baseSel, 0x30);
     if (iVar3 == 3) {
-      g_cj_00542054 = *(undefined4 *)((g_baseSel + g_counter_0054359c) * 4 + 0x34);
+      g_cj_00542054 = MK4_NODE_AT(undefined4, (g_baseSel + g_counter_0054359c), 0x34);
       g_eventQueueCurrent = g_counter_0054359c;
     }
     else if (iVar3 == 4) {
       g_eventQueueCurrent = g_counter_005433c8 + 5;
-      g_cj_00542054 = *(undefined4 *)((g_baseSel + g_counter_005433c8) * 4 + 0x48);
+      g_cj_00542054 = MK4_NODE_AT(undefined4, (g_baseSel + g_counter_005433c8), 0x48);
     }
     DualListInit();
     if (g_gtModeFlag == '\x01') {

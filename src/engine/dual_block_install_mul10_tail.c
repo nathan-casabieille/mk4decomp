@@ -146,7 +146,7 @@ void DualBlockInstallMul10Tail(void)
   *(code **)(iVar2 + 8) = DualBlockInstallMul10Tail;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x149a4e0;
+  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x149a4e0;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
   *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;

@@ -180,7 +180,7 @@ switchD_00436e76_default:
     CjInstallSelfRouter();
     return;
   }
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = uVar2;
+  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = uVar2;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
   *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;

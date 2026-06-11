@@ -133,7 +133,7 @@ void DualEntryBitGated(void)
     g_dispatchState = 1;
     g_matrixStackTop = g_matrixStackTop + 1;
     g_walkCallback = 0;
-    *(undefined4 *)((int)g_matrixStackTop * 4) = 0x439bf0;
+    *MK4_NODE(undefined4, (int)g_matrixStackTop) = 0x439bf0;
     MstackPopScaledChainPlusThunks();
     return;
   }

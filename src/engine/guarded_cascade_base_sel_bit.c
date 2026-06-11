@@ -137,7 +137,7 @@ void GuardedCascadeBaseSelBit(void)
   PushPopScaled1cDoubleCall();
   if (g_framePauseFlag == 0) {
     g_matrixStackTop = g_matrixStackTop + 1;
-    *(undefined4 *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
+    *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_cj_0054205c;
     g_cj_0054205c = g_cj_00542058;
     DispatchSetDirtyToggle();
     if ((g_xformDirtyFlags & 4) == 0) {
@@ -146,7 +146,7 @@ void GuardedCascadeBaseSelBit(void)
     else {
       g_eventQueuePending = 0x14658b;
     }
-    g_cj_0054205c = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_cj_0054205c = *MK4_NODE(undefined4, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
     MStackBracket1_TreeWalkRecursive2();
     if ((g_framePauseFlag == 0) && ((g_xformDirtyFlags & 4) == 0)) {

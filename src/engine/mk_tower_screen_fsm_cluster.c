@@ -128,7 +128,7 @@ void MkTowerScreenFsmCluster(void)
   int iVar1;
   
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_phaseThunkVar + g_phaseCounter;
-  g_eventQueueCurrent = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  g_eventQueueCurrent = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
   if (g_eventQueueCurrent != 0) {
     g_dualC = g_phaseCounter * 4 + g_dispatchAcc;
     g_walkCallback = MK4_NODE_AT(int, g_dualC, 0);
@@ -143,8 +143,8 @@ void MkTowerScreenFsmCluster(void)
       thunk_BootMod6487eClampAndChainMul10();
       if (g_framePauseFlag == 0) {
         do {
-          *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 100) = g_walkCallback;
-          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40);
+          MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 100) = g_walkCallback;
+          (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x40);
           if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == 0) {
             g_xformDirtyFlags = g_xformDirtyFlags | 4;
             return;

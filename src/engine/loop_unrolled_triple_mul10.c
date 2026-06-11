@@ -140,8 +140,8 @@ void LoopUnrolledTripleMul10(void)
     g_walkCallback = *(undefined4 *)(iVar2 + 8);
     g_walkCallback = Mul10Tail(*(undefined4 *)(iVar1 + 0x18),g_walkCallback);
     *(undefined4 *)(iVar1 + 0x18) = g_walkCallback;
-    for ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4); (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0;
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4)) {
+    for ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))); (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0;
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)))) {
       iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
       g_walkCallback = MK4_NODE_AT(undefined4, g_eventQueuePending, 0);
       iVar2 = g_eventQueuePending * 4;

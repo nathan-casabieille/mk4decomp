@@ -142,7 +142,7 @@ void InstallSelfStatePush_InstallSelf3StateDualBody_00434990(void)
   *(code **)(iVar2 + 8) = InstallSelfStatePush_InstallSelf3StateDualBody_00434990;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1434990;
+  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1434990;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
   *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -208,7 +208,7 @@ void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_the
   *(code **)(iVar2 + 8) = InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435d40;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1435d40;
+  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1435d40;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
   *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -277,7 +277,7 @@ void InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_the
   *(code **)(iVar2 + 8) = InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435b00;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1435b00;
+  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1435b00;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
   *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -348,7 +348,7 @@ void InstallSelfStatePush_InstallSelf3StateDualBody_004348f0(void)
   *(code **)(iVar2 + 8) = InstallSelfStatePush_InstallSelf3StateDualBody_004348f0;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14348f0;
+  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x14348f0;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
   *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;

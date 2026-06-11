@@ -140,7 +140,7 @@ void AudioInitLoopTriple(void)
     SnapshotDirtyMark(0x13333);
     MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430();
     if (g_framePauseFlag == 0) {
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0x100000;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = 0x100000;
     }
   }
   return;

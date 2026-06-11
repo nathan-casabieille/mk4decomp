@@ -177,7 +177,7 @@ void BootInitClearSlotSeed(void)
     g_walkCallback = 0;
     g_xformLoopCounter = 10;
     do {
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
+      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_walkCallback;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
       g_xformLoopCounter = g_xformLoopCounter + -1;
     } while (-1 < g_xformLoopCounter);

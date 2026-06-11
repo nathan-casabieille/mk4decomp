@@ -148,14 +148,14 @@ void MStackPush8SlotInitPop8(void)
     if (g_framePauseFlag == 0) {
       if (((byte)g_xformDirtyFlags & 4) != 0) {
 LAB_0041516e:
-        g_baseSel = *(undefined4 *)((int)g_matrixStackTop * 4);
-        g_cj_0054205c = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
-        g_cj_00542058 = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
-        g_cj_00542054 = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
-        g_dualD = *(undefined4 *)((int)(g_matrixStackTop + -4) * 4);
-        g_dualC = *(undefined4 *)((int)(g_matrixStackTop + -5) * 4);
-        g_eventQueuePending = *(undefined4 *)((int)(g_matrixStackTop + -6) * 4);
-        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -7) * 4);
+        g_baseSel = *MK4_NODE(undefined4, (int)g_matrixStackTop);
+        g_cj_0054205c = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
+        g_cj_00542058 = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -2));
+        g_cj_00542054 = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -3));
+        g_dualD = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -4));
+        g_dualC = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -5));
+        g_eventQueuePending = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -6));
+        (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -7));
         g_matrixStackTop = g_matrixStackTop + -8;
         return;
       }
@@ -171,7 +171,7 @@ LAB_0041516e:
         if (g_framePauseFlag == 0) {
           *(code **)(g_cj_0054205c * 4 + 0x6c) = g_walkCallback;
           MK4_NODE_AT(undefined4, iVar1, 0x74) = g_eventQueueCurrent;
-          g_eventQueuePending = *(int *)(MK4_NODE_AT(int, iVar1, 0x18) * 4 + 0x28);
+          g_eventQueuePending = MK4_NODE_AT(int, MK4_NODE_AT(int, iVar1, 0x18), 0x28);
           MK4_NODE_AT(uint, g_eventQueuePending, 0) = MK4_NODE_AT(uint, g_eventQueuePending, 0) | 8;
           MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48) = 0xe666;
           MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0xff;

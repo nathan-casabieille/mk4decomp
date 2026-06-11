@@ -128,7 +128,7 @@ void ThrowChargeCluster(void)
   int iVar1;
   
   iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x75;
+  MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x75;
   g_walkCallback = 0x2147;
   iVar1 = iVar1 * 4;
   StoreDoubleNegPauseSubStore();

@@ -142,7 +142,7 @@ LAB_00428f0c:
     *(code **)(iVar1 + 8) = InstallSelfBitGated;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1428eb0;
+    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1428eb0;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
     *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;

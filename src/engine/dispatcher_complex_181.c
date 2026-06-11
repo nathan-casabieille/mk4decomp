@@ -116,17 +116,17 @@ void DispatcherComplex181_StreamChainStringInstall(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_currentNodeFlags;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_currentNodeFlags;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueuePending;
   Sprintf2WaySelect();
   if (g_framePauseFlag == 0) {
     g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     g_walkCallback = g_eventQueueWorkType;
     StreamChainStringInstall();
     if (g_framePauseFlag == 0) {
-      g_eventQueuePending = *(int *)((int)g_matrixStackTop * 4);
-      g_currentNodeFlags = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_eventQueuePending = *MK4_NODE(int, (int)g_matrixStackTop);
+      g_currentNodeFlags = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
       g_matrixStackTop = g_matrixStackTop + -2;
       g_xformDirtyFlags = g_xformDirtyFlags | 4;
       if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
@@ -147,17 +147,17 @@ void DispatcherComplex181_Push70CallScaleArith(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_currentNodeFlags;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_currentNodeFlags;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueuePending;
   Sprintf2WaySelect();
   if (g_framePauseFlag == 0) {
     g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     g_walkCallback = g_eventQueueWorkType;
     Push70CallScaleArith();
     if (g_framePauseFlag == 0) {
-      g_eventQueuePending = *(int *)((int)g_matrixStackTop * 4);
-      g_currentNodeFlags = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_eventQueuePending = *MK4_NODE(int, (int)g_matrixStackTop);
+      g_currentNodeFlags = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
       g_matrixStackTop = g_matrixStackTop + -2;
       g_xformDirtyFlags = g_xformDirtyFlags | 4;
       if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
@@ -178,17 +178,17 @@ void DispatcherComplex181_Push70CallScaleArith2(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_currentNodeFlags;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_currentNodeFlags;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueuePending;
   Sprintf2WaySelect();
   if (g_framePauseFlag == 0) {
     g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     g_walkCallback = g_eventQueueWorkType;
     Push70CallScaleArith2();
     if (g_framePauseFlag == 0) {
-      g_eventQueuePending = *(int *)((int)g_matrixStackTop * 4);
-      g_currentNodeFlags = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_eventQueuePending = *MK4_NODE(int, (int)g_matrixStackTop);
+      g_currentNodeFlags = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
       g_matrixStackTop = g_matrixStackTop + -2;
       g_xformDirtyFlags = g_xformDirtyFlags | 4;
       if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {

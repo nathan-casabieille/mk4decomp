@@ -137,7 +137,7 @@ void LinearSearchByEsi(void)
   while (g_eventQueueCurrent != g_walkCallback) {
     g_eventQueueWorkType = g_eventQueueWorkType + 1;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
-    g_eventQueueCurrent = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + -4);
+    g_eventQueueCurrent = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), -4);
   }
   g_walkCallback = g_eventQueueWorkType;
   return;

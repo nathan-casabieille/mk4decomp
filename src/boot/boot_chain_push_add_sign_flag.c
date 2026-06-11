@@ -134,12 +134,12 @@ void BootChainPushAddSignFlag(void)
   
   g_eq = (uint)(g_walkCallback < 0);
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueuePending;
   iVar2 = MK4_NODE_AT(int, g_cj_0054205c, 0x24);
   if (g_eq == 0) {
     g_walkCallback = g_walkCallback + MK4_NODE_AT(int, g_cj_0054205c, 0x28);
     g_eq = (uint)(g_walkCallback < MK4_NODE_AT(int, iVar2, 4));
-    g_eventQueuePending = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4 + 4);
+    g_eventQueuePending = MK4_NODE_AT(undefined4, (int)(g_matrixStackTop + -1), 4);
     g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
     g_matrixStackTop = g_matrixStackTop + -1;
     if (g_eq == 0) {
@@ -148,7 +148,7 @@ void BootChainPushAddSignFlag(void)
     }
     return;
   }
-  g_walkCallback = g_walkCallback + *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
+  g_walkCallback = g_walkCallback + MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x28);
   if (g_walkCallback < 0) {
     puVar1 = (undefined4 *)((int)g_matrixStackTop * 4);
     g_matrixStackTop = g_matrixStackTop + -1;

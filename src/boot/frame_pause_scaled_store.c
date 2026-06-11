@@ -152,7 +152,7 @@ void ChainWalkInstall(void)
     uVar2 = 0xffff6667;
     g_eventQueueCurrent = 0xffff6667;
   }
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x38) = uVar2;
+  MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x38) = uVar2;
   MStackPush2ChainPrepend();
   return;
 }

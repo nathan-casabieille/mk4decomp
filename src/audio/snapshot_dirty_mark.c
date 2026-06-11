@@ -131,7 +131,7 @@ void SnapshotDirtyMark(undefined4 param_1)
   if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
     MStackPush3LinkedListWalk();
     if (g_framePauseFlag == 0) {
-      g_eventQueuePending = *(int *)(*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18) * 4 + 0x28);
+      g_eventQueuePending = MK4_NODE_AT(int, *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18), 0x28);
       g_walkCallback = MK4_NODE_AT(uint, g_eventQueuePending, 0) | 8;
       MK4_NODE_AT(uint, g_eventQueuePending, 0) = g_walkCallback;
       MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48) = param_1;

@@ -134,15 +134,15 @@ void AudioStreamFsm5Way(void)
   case 0:
     GuardedSetupCallTailJmp("Game Over",0xffec0000);
     MK4_NODE_AT(int, g_baseSel, 0x30) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x30) * 4 + 0x5c) = 0xa0000;
-    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x30) * 4 + 0x74) = 0xffffc000;
+    MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x30), 0x5c) = 0xa0000;
+    MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x30), 0x74) = 0xffffc000;
     *(code **)(iVar1 + 8) = AudioStreamFsm5Way;
     *(undefined4 *)(iVar1 + 0x84) = 1;
     g_dualC = 0x24;
     g_framePauseFlag = 1;
     return;
   case 1:
-    *(undefined4 *)(MK4_NODE_AT(int, g_baseSel, 0x30) * 4 + 0x74) = 0;
+    MK4_NODE_AT(undefined4, MK4_NODE_AT(int, g_baseSel, 0x30), 0x74) = 0;
     if (g_audioStreamState != 0) goto switchD_004a3f76_caseD_2;
     TwoCallsTwoBranchTail();
     if (g_framePauseFlag == 0) {
@@ -174,7 +174,7 @@ switchD_004a3f76_caseD_2:
       *(code **)(iVar1 + 8) = AudioStreamFsm5Way;
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 5;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x54a3f50;
+      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x54a3f50;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
       *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;

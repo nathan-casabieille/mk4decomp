@@ -124,15 +124,15 @@ void Vec3PackedTripleCallBracket(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueuePending;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_dualC;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_dualC;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueWorkType;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueWorkType;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_chainAccumCur;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_chainAccumCur;
   g_packedTripleSlot = MK4_NODE_AT(int, g_eventQueueSeed, 0x54) - MK4_NODE_AT(int, g_dualC, 0);
   g_dispatchSave90 = MK4_NODE_AT(int, g_eventQueueSeed, 0x58) - MK4_NODE_AT(int, g_dualC, 4);
   g_walkCallback = MK4_NODE_AT(int, g_dualC, 8);
@@ -144,11 +144,11 @@ void Vec3PackedTripleCallBracket(void)
   QuadInterpolator();
   if (g_framePauseFlag == 0) {
     g_walkCallback = g_dispatchSave97;
-    g_chainAccumCur = *(undefined4 *)((int)g_matrixStackTop * 4);
-    g_eventQueueWorkType = *(int *)((int)(g_matrixStackTop + -1) * 4);
-    g_dualC = *(undefined4 *)((int)(g_matrixStackTop + -2) * 4);
-    g_eventQueuePending = *(undefined4 *)((int)(g_matrixStackTop + -3) * 4);
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -4) * 4);
+    g_chainAccumCur = *MK4_NODE(undefined4, (int)g_matrixStackTop);
+    g_eventQueueWorkType = *MK4_NODE(int, (int)(g_matrixStackTop + -1));
+    g_dualC = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -2));
+    g_eventQueuePending = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -3));
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -4));
     g_matrixStackTop = g_matrixStackTop + -5;
   }
   return;

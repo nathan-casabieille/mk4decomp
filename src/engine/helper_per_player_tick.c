@@ -68,7 +68,7 @@ void Helper_PerPlayerTick(void)
     if (g_framePauseFlag == 0) {
       g_fightStateProgress = g_walkCallback;
       if (g_walkCallback != 0) {
-        g_eventQueueWorkType = MK4_NODE_AT(uint, g_eventQueuePending, 0x40) | *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40);
+        g_eventQueueWorkType = MK4_NODE_AT(uint, g_eventQueuePending, 0x40) | MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x40);
         g_xformScratch94 = g_eventQueueWorkType & 0x80;
         if (g_xformScratch94 == 0) {
           g_currentNodeFlags = g_walkCallback;
@@ -90,7 +90,7 @@ void Helper_PerPlayerTick(void)
           g_fightAxisNegY = -g_walkCallback;
           g_fightAxisPosY = g_walkCallback;
           g_xformScratch94 =
-               (MK4_NODE_AT(uint, g_eventQueuePending, 0x40) | *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40)) & 0x80;
+               (MK4_NODE_AT(uint, g_eventQueuePending, 0x40) | MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x40)) & 0x80;
           if (g_xformScratch94 == 0) {
             g_phaseInstallSlot = g_phaseInstallSlot + -1;
             if (g_phaseInstallSlot < 0) {
@@ -133,7 +133,7 @@ void Helper_PerPlayerTick(void)
       g_walkCallback = g_fightAxisPosY;
       if (g_fightAxisPosY == 0) {
         g_eventQueueChild = MK4_NODE_AT(uint, g_eventQueueSeed, 0x5c);
-        iVar1 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c);
+        iVar1 = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c);
       }
       else {
         g_eventQueueCurrent = g_fightAxisPosX;
@@ -141,18 +141,18 @@ void Helper_PerPlayerTick(void)
         if (g_framePauseFlag != 0) {
           return;
         }
-        g_eventQueueWorkType = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54);
-        g_chainAccumCur = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c);
+        g_eventQueueWorkType = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54);
+        g_chainAccumCur = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c);
         g_eventQueueNotMask = MK4_NODE_AT(int, g_dualC, 0x54) - g_eventQueueWorkType;
         g_eventQueueChild = MK4_NODE_AT(int, g_dualC, 0x5c) - g_chainAccumCur;
         iVar1 = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_walkCallback,g_eventQueueNotMask);
       }
       g_phaseThunkState = (uint)(iVar1 < (int)g_eventQueueChild);
       g_primary_0052d74c = 0;
-      iVar1 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c);
+      iVar1 = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x6c);
       uVar2 = g_fightAxisPosX;
       if ((iVar1 != 0) ||
-         (iVar1 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74), uVar2 = g_fightAxisPosY, iVar1 != 0)) {
+         (iVar1 = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74), uVar2 = g_fightAxisPosY, iVar1 != 0)) {
         g_eventQueueWorkType = uVar2;
         if ((int)uVar2 < 0) {
           g_eventQueueWorkType = -uVar2;
@@ -217,7 +217,7 @@ void Helper_PerPlayerTick(void)
           return;
         }
       }
-      g_eventQueueCurrent = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58);
+      g_eventQueueCurrent = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58);
       g_eventQueueWorkType = MK4_NODE_AT(int, g_eventQueuePending, 0x58) - g_eventQueueCurrent;
       if ((int)g_eventQueueWorkType < 0) {
         g_eventQueueWorkType = -g_eventQueueWorkType;

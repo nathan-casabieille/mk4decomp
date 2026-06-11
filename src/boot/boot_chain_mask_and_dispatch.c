@@ -133,7 +133,7 @@ void BootChainMaskAndDispatch(void)
   g_walkCallback = 2;
   DirtyDoubleDeref();
   if ((g_framePauseFlag == 0) && ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0)) {
-    *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) & 0xfffffffb;
+    MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) & 0xfffffffb;
     g_walkCallback = 0xffffffec;
     MStackInitCallToggle();
     if (g_framePauseFlag == 0) {

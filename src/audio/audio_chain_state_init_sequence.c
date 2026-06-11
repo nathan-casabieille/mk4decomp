@@ -192,15 +192,15 @@ LAB_004a1740:
       }
       return;
     }
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = g_dualC;
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = g_dualC;
     g_eventQueuePending = g_dualD;
     MStackPush2ChainPrepend();
     if (g_framePauseFlag == 0) {
       g_walkCallback = 0x80000;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x80000;
-      *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34) = g_walkCallback;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x80000;
+      MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34) = g_walkCallback;
       g_walkCallback = 0x83;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x38) = 0x83;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x38) = 0x83;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
       MStackBracket4_ListInsertZeroFill();
       if (g_framePauseFlag == 0) {

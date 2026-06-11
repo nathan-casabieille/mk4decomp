@@ -132,16 +132,16 @@ void InstallSelfCountdownBit(void)
   *(undefined4 *)(iVar1 + 0x84) = 0;
   if (iVar2 != 0) {
     g_matrixStackTop = g_matrixStackTop + 1;
-    *(int *)((int)g_matrixStackTop * 4) = g_eventQueueNotMask;
+    *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueNotMask;
     g_matrixStackTop = g_matrixStackTop + 1;
-    *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueChild;
+    *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueueChild;
     g_walkCallback = 6;
     AtanDualDeltaThreshold();
     if (g_framePauseFlag != 0) {
       return;
     }
-    g_eventQueueChild = *(undefined4 *)((int)g_matrixStackTop * 4);
-    g_eventQueueNotMask = *(int *)((int)(g_matrixStackTop + -1) * 4);
+    g_eventQueueChild = *MK4_NODE(undefined4, (int)g_matrixStackTop);
+    g_eventQueueNotMask = *MK4_NODE(int, (int)(g_matrixStackTop + -1));
     g_matrixStackTop = g_matrixStackTop + -2;
     if (((byte)g_xformDirtyFlags & 1) != 0) {
       RoundOverFsmCluster();

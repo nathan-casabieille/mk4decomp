@@ -134,16 +134,16 @@ void BitShiftExtract(void)
   int iVar2;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueueCurrent;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-  iVar1 = *(int *)((*(int *)((g_phaseCounter * 4 + g_dispatchAcc) * 4 + 0xc) + g_stateCountdown + -1) * 4);
-  iVar2 = *(int *)((g_phaseCounter + g_phaseThunkVar) * 4);
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  iVar1 = *MK4_NODE(int, (*(int *)((g_phaseCounter * 4 + g_dispatchAcc) * 4 + 0xc) + g_stateCountdown + -1));
+  iVar2 = *MK4_NODE(int, (g_phaseCounter + g_phaseThunkVar));
   g_dispatchVar34 = iVar1 >> (sbyte)((iVar2 - 2U & 3) << 3) & 0xff;
   g_installState = g_dispatchVar34;
   g_walkCallback = iVar1 >> ((char)iVar2 * '\b' & 0x1fU) & 0xff;
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)g_matrixStackTop * 4);
-  g_eventQueueCurrent = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)g_matrixStackTop);
+  g_eventQueueCurrent = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
   g_matrixStackTop = g_matrixStackTop + -2;
   return;
 }

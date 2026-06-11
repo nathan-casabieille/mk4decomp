@@ -150,10 +150,10 @@ undefined4 DualGuardedTableSearch(void)
     }
     g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueuePending, 0x34);
     if (g_eventQueueCurrent == g_eventQueueWorkType) break;
-    g_eventQueueWorkType = *(int *)(((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1) * 4);
+    g_eventQueueWorkType = *MK4_NODE(int, ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1));
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 2;
   }
-  g_walkCallback = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  g_walkCallback = *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
   SnapshotDispatchMStack();
   ScaledZeroFour();

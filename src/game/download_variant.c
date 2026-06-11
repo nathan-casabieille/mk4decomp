@@ -59,16 +59,16 @@ void __fastcall DownloadPlayerChar_Variant(int param_1)
     param_1 = (int)(char)(&g_dlVariantTable)[g_dlNalt4 * 4 + g_dlChar24];
   }
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueCurrent;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(int, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   Helper_DownloadSetup();
   if (g_framePauseFlag == 0) {
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) =
-         *(int *)(*(int *)(((uint)(g_eventQueueWorkType != 0) + (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) * 4 + 0xc) * 4 + 4) >> 2;
+         MK4_NODE_AT(int, *(int *)(((uint)(g_eventQueueWorkType != 0) + (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) * 4 + 0xc), 4) >> 2;
     LoadGeoAsset_Textures(param_1);
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((int)g_matrixStackTop * 4);
-    g_eventQueueCurrent = *(int *)((int)(g_matrixStackTop + -1) * 4);
+    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (int)g_matrixStackTop);
+    g_eventQueueCurrent = *MK4_NODE(int, (int)(g_matrixStackTop + -1));
     g_matrixStackTop = g_matrixStackTop + -2;
   }
   return;

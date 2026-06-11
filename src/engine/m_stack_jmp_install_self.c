@@ -131,7 +131,7 @@ void MStackJmpInstallSelf(void)
   int iVar2;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = 0x46ed60;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = 0x46ed60;
   iVar2 = g_baseSel * 4;
   iVar1 = *(int *)(iVar2 + 0x84);
   *(undefined4 *)(iVar2 + 0x84) = 0;

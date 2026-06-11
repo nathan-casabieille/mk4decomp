@@ -127,15 +127,15 @@ void BootMStackPopPush3Install(void)
   if (iVar1 == 0) {
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
     iVar1 = g_baseSel * 4;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_cj_00542054;
+    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_cj_00542054;
     *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
     iVar1 = g_baseSel * 4;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_cj_00542058;
+    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_cj_00542058;
     *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
     iVar1 = g_baseSel * 4;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_cj_0054205c;
+    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_cj_0054205c;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
     *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     Eleven404b90_404c00();
@@ -146,7 +146,7 @@ void BootMStackPopPush3Install(void)
         *(code **)(iVar2 + 8) = BootMStackPopPush3Install;
         MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
         (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar2 + 4);
-        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14046d0;
+        *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x14046d0;
         (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
         *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
         MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -165,7 +165,7 @@ void BootMStackPopPush3Install(void)
       g_cj_00542058 = MK4_NODE_AT(undefined4, iVar2, 0);
       MK4_NODE_AT(int, g_baseSel, 4) = iVar2;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
-      g_cj_00542054 = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+      g_cj_00542054 = *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
       MK4_NODE_AT(int, g_baseSel, 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       StackPopDispatchTagged();
       return;

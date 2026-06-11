@@ -147,7 +147,7 @@ LAB_00425ad6:
       iVar1 = g_walkCallback;
       if (g_walkCallback < g_eventQueueWorkType) goto LAB_00425ad6;
     }
-    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_eventQueueWorkType;
+    *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_eventQueueWorkType;
     g_xformLoopCounter = g_xformLoopCounter + -1;
     iVar2 = iVar2 + -1;
     iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;

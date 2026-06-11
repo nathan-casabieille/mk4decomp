@@ -135,8 +135,8 @@ void Phase1InitModelAdjustChain(void)
     FramePauseScaledStore();
     if (g_framePauseFlag == 0) {
       if (((byte)g_xformDirtyFlags & 4) == 0) {
-        g_walkCallback = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) | 0x600;
-        *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) = g_walkCallback;
+        g_walkCallback = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) | 0x600;
+        MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) = g_walkCallback;
         ScaledTestPauseStore();
         if (g_framePauseFlag != 0) {
           return;
@@ -154,7 +154,7 @@ void Phase1InitModelAdjustChain(void)
           return;
         }
         g_walkCallback = g_pendingMatchVar3;
-        *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x44) = g_pendingMatchVar3;
+        MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x44) = g_pendingMatchVar3;
       }
       ScaledChainOr8();
       MK4_NODE_AT(undefined4, g_eventQueuePending, 0x48) = 0xb333;

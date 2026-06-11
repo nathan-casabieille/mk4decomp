@@ -131,7 +131,7 @@ void ChainFieldTest2Branch(void)
 {
   bool bVar1;
   
-  g_walkCallback = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40);
+  g_walkCallback = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x40);
   g_xformScratch94 = g_walkCallback & 0x40;
   if (g_xformScratch94 != 0) {
     bVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) == g_player1NodeIdx;

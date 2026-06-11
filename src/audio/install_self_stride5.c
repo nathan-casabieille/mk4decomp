@@ -145,7 +145,7 @@ void InstallSelfStride5(void)
   g_cj_00542054 = g_cj_00542054 * 5;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542054 + g_audioSequencerSlot;
   g_installSelfStride5 = 1;
-  g_walkCallback = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4);
+  g_walkCallback = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 4);
   GuardedScaledCall();
   if (g_framePauseFlag == 0) {
     *(code **)(iVar1 + 8) = InstallSelfStride5;

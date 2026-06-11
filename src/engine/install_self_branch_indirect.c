@@ -133,7 +133,7 @@ void InstallSelfBranchIndirect(void)
   *(undefined4 *)(iVar1 + 0x84) = 0;
   if (iVar2 != 0) {
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
-    g_eventQueuePending = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    g_eventQueuePending = *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
     MK4_NODE_AT(int, g_baseSel, 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   }
   g_eventQueueChild = MK4_NODE_AT(int, g_cj_00542054, 0);
@@ -142,14 +142,14 @@ void InstallSelfBranchIndirect(void)
     ScaledArrStore_GuardedChainCmpDualBitXor_00429980();
     if (g_framePauseFlag == 0) {
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x3c);
-      g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74);
+      g_walkCallback = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74);
       if (((g_walkCallback != 0x2001) && (g_currentNodeFlags == 0)) &&
          (func_0x00470e20(), g_framePauseFlag != 0)) {
         return;
       }
       iVar2 = g_baseSel * 4;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_eventQueuePending;
+      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_eventQueuePending;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
       *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       *(code **)(iVar1 + 8) = InstallSelfBranchIndirect;

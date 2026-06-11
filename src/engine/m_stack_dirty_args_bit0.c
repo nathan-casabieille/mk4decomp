@@ -133,7 +133,7 @@ void MStackDirtyArgsBit0(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   Cmp2DirtySetOrClear_0049fb10();
   if (g_framePauseFlag != 0) {
     return;
@@ -152,7 +152,7 @@ void MStackDirtyArgsBit0(void)
   }
   g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
 LAB_0049faeb:
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)g_matrixStackTop * 4);
+  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)g_matrixStackTop);
   g_matrixStackTop = g_matrixStackTop + -1;
   return;
 }

@@ -148,10 +148,10 @@ int LockIterTwoPath(int param_1)
   Lock(2);
   if (0 < g_dispatchSave1466) {
     do {
-      iVar1 = *(int *)(g_dispatchSave1465 + iVar3 * 4);
+      iVar1 = *MK4_NODE(int, g_dispatchSave1465 + iVar3);
       if ((iVar1 != 0) && ((*(byte *)(iVar1 + 0xc) & 0x83) != 0)) {
         TwoPathIATDispatch_004c7030(iVar3,iVar1);
-        iVar1 = *(int *)(g_dispatchSave1465 + iVar3 * 4);
+        iVar1 = *MK4_NODE(int, g_dispatchSave1465 + iVar3);
         if ((*(uint *)(iVar1 + 0xc) & 0x83) != 0) {
           if (param_1 == 1) {
             iVar1 = CallTestPushSubCall(iVar1);
@@ -164,7 +164,7 @@ int LockIterTwoPath(int param_1)
             iVar2 = -1;
           }
         }
-        TwoPathIATDispatch_004c70a0(iVar3,*(undefined4 *)(g_dispatchSave1465 + iVar3 * 4));
+        TwoPathIATDispatch_004c70a0(iVar3,*MK4_NODE(undefined4, g_dispatchSave1465 + iVar3));
       }
       iVar3 = iVar3 + 1;
     } while (iVar3 < g_dispatchSave1466);

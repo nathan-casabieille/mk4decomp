@@ -60,14 +60,14 @@ void DispatcherComplex138_00476060(void)
   int iVar1;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueueCurrent;
   iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x53a2c0));
   if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) goto LAB_004760a6;
   while (((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1, iVar1 != 0 && (g_walkCallback != MK4_NODE_AT(int, iVar1, 0x30)))) {
 LAB_004760a6:
-    iVar1 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    iVar1 = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
   }
-  g_eventQueueCurrent = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_eventQueueCurrent = *MK4_NODE(undefined4, (int)g_matrixStackTop);
   g_matrixStackTop = g_matrixStackTop + -1;
   g_xformDirtyFlags = g_xformDirtyFlags | 4;
   if (iVar1 != 0) {
@@ -130,14 +130,14 @@ void DispatcherComplex138_004760f0(void)
   int iVar1;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueueCurrent;
   iVar1 = g_cj_00535df0;
   if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) goto LAB_00476136;
   while (((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1, iVar1 != 0 && (g_walkCallback != MK4_NODE_AT(int, iVar1, 0x30)))) {
 LAB_00476136:
-    iVar1 = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    iVar1 = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
   }
-  g_eventQueueCurrent = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_eventQueueCurrent = *MK4_NODE(undefined4, (int)g_matrixStackTop);
   g_matrixStackTop = g_matrixStackTop + -1;
   g_xformDirtyFlags = g_xformDirtyFlags | 4;
   if (iVar1 != 0) {

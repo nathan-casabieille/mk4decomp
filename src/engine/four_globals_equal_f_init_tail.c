@@ -138,7 +138,7 @@ void FourGlobalsEqualFInitTail(void)
     TablePushAccumTailJmp();
   }
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_counter_0053a51c + 0x137f52;
-  g_rangeBase = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+  g_rangeBase = *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
   g_eventQueueCurrent = g_rangeBase;
   g_rangeSqLimit = Mul10Tail(g_rangeBase,g_rangeBase);
   g_eventQueueCurrent = g_rangeSqLimit;

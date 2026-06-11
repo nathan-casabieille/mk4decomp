@@ -154,7 +154,7 @@ void StateMachineSharedTail(void)
         *(code **)(iVar1 + 8) = StateMachineSharedTail;
         MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
         (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x147baf0;
+        *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x147baf0;
         (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
         *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
         MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -165,8 +165,8 @@ void StateMachineSharedTail(void)
   }
   else {
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x3c);
-    g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x7c) + 1;
-    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x7c) = g_walkCallback;
+    g_walkCallback = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x7c) + 1;
+    MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x7c) = g_walkCallback;
     g_eventQueueNotMask = 0;
     EntryThunkBodyStateMachine();
     if (g_framePauseFlag == 0) {

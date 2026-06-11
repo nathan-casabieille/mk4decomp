@@ -145,18 +145,18 @@ void LinkedListBuilder(void)
   iVar4 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   if (g_cj_00542054 != 0) {
     MK4_NODE_AT(int, iVar3, 0) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    *(int *)((iVar1 + 1 + iVar4) * 4) = iVar3;
+    *MK4_NODE(int, (iVar1 + 1 + iVar4)) = iVar3;
     g_xformLoopCounter = MK4_NODE_AT(int, iVar3, 8);
     if (1 < g_xformLoopCounter) {
       for (g_xformLoopCounter = g_xformLoopCounter + -2; -1 < g_xformLoopCounter; g_xformLoopCounter = g_xformLoopCounter + -1) {
         iVar5 = iVar4 * 4;
         iVar4 = iVar4 + iVar2;
-        *(int *)(iVar5 + 4 + iVar1 * 4) = iVar3;
-        *(int *)(iVar5 + iVar1 * 4) = iVar4;
+        *MK4_NODE(int, iVar5 + 4 + iVar1) = iVar3;
+        *MK4_NODE(int, iVar5 + iVar1) = iVar4;
       }
     }
-    *(undefined4 *)((iVar1 + iVar4) * 4) = 0;
-    *(int *)((iVar1 + 1 + iVar4) * 4) = iVar3;
+    *MK4_NODE(undefined4, (iVar1 + iVar4)) = 0;
+    *MK4_NODE(int, (iVar1 + 1 + iVar4)) = iVar3;
   }
   return;
 }

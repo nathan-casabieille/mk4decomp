@@ -163,8 +163,8 @@ void CharSelect_HelpPrompts(void)
     GuardedSetupCallTailJmp(*(undefined4 *)((int)apcStack_58 + uVar2 + 0x2c),
                  *(undefined4 *)((int)apcStack_58 + uVar2));
     uVar3 = uVar2 + 4;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0x190000;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0x18000;
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0x190000;
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = 0x18000;
     *(int *)(uVar2 + 0x543408) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     uVar2 = uVar3;
   } while (uVar3 < 0x2c);

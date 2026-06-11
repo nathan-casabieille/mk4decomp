@@ -149,9 +149,9 @@ void PhaseInstallSelf3Step(void)
           g_eventQueuePending = 0x1420c2;
           DispatcherComplex260_FramePauseScaledStore();
           if (g_framePauseFlag == 0) {
-            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0xffb00000;
+            MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0xffb00000;
             g_walkCallback = 0x1f;
-            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+            MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x1f;
             PushSetCallPop();
             if (g_framePauseFlag == 0) {
               RegistryPushBindPop();
@@ -161,7 +161,7 @@ void PhaseInstallSelf3Step(void)
                 if (g_framePauseFlag == 0) {
                   *(undefined **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = &(*(unsigned int *)MK4_VA(unsigned int, 0x770000));
                   g_walkCallback = 0x1f;
-                  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+                  MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x1f;
                   PushSetCallPop();
                   if (g_framePauseFlag == 0) {
                     RegistryPushBindPop();
@@ -189,7 +189,7 @@ void PhaseInstallSelf3Step(void)
   *(code **)(iVar1 + 8) = PhaseInstallSelf3Step;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x2402350;
+  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x2402350;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
   *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;

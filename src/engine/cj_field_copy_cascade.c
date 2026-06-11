@@ -130,11 +130,11 @@ void CjFieldCopyCascade(void)
     g_walkCallback = 2;
     BootStateTriple();
     if (g_framePauseFlag == 0) {
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
       MK4_NODE_AT(uint, g_eventQueuePending, 0) = MK4_NODE_AT(uint, g_eventQueuePending, 0) | 4;
-      MK4_NODE_AT(undefined4, g_eventQueuePending, 0x30) = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30);
-      MK4_NODE_AT(undefined4, g_eventQueuePending, 0x34) = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34);
-      g_walkCallback = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x38);
+      MK4_NODE_AT(undefined4, g_eventQueuePending, 0x30) = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30);
+      MK4_NODE_AT(undefined4, g_eventQueuePending, 0x34) = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34);
+      g_walkCallback = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x38);
       MK4_NODE_AT(int, g_eventQueuePending, 0x38) = g_walkCallback;
       MStackBracket7_DispatchAndChain();
       if (g_framePauseFlag == 0) {
@@ -143,9 +143,9 @@ void CjFieldCopyCascade(void)
         DualSetShiftCall();
         if (g_framePauseFlag == 0) {
           g_matrixStackTop = g_matrixStackTop + 1;
-          *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+          *MK4_NODE(int, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
           g_matrixStackTop = g_matrixStackTop + 1;
-          *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
+          *MK4_NODE(int, (int)g_matrixStackTop) = g_cj_0054205c;
           (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0x7b;
           PreFightInstallCluster();
           if (g_framePauseFlag == 0) {
@@ -155,8 +155,8 @@ void CjFieldCopyCascade(void)
               g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x74) >> 1;
               MK4_NODE_AT(int, g_cj_0054205c, 0x74) = g_walkCallback;
             }
-            g_cj_0054205c = *(int *)((int)g_matrixStackTop * 4);
-            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+            g_cj_0054205c = *MK4_NODE(int, (int)g_matrixStackTop);
+            (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
             g_matrixStackTop = g_matrixStackTop + -2;
           }
           return;

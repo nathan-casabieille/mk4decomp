@@ -135,7 +135,7 @@ void ChainFieldCopyTailJmp(void)
   g_walkCallback = 2;
   DirtyDoubleDeref();
   if (g_framePauseFlag == 0) {
-    g_eventQueuePending = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x24);
+    g_eventQueuePending = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x24);
     MStackPushDispatchBitGate();
     if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
       MStackPushTwoEntryChainCall();
@@ -154,9 +154,9 @@ void ChainFieldCopyTailJmp(void)
           MK4_NODE_AT(undefined4, g_cj_0054205c, 0x3c) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x3c);
           (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 0x18);
           g_walkCallback = 0;
-          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0;
-          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34) = g_walkCallback;
-          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x38) = g_walkCallback;
+          MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0;
+          MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34) = g_walkCallback;
+          MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x38) = g_walkCallback;
           SetupVecFsmCluster();
           return;
         }

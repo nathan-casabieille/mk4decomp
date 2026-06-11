@@ -137,12 +137,12 @@ void Phase2InitDispatchInstallSelf(void)
       if (g_framePauseFlag != 0) {
         return;
       }
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x44) = MK4_NODE_AT(undefined4, g_dualD, 0);
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x44) = MK4_NODE_AT(undefined4, g_dualD, 0);
       g_dualD = g_dualD + 1;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x48) = MK4_NODE_AT(undefined4, g_dualD, 0);
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x48) = MK4_NODE_AT(undefined4, g_dualD, 0);
       g_dualD = g_dualD + 1;
       g_walkCallback = MK4_NODE_AT(undefined4, g_dualD, 0);
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x4c) = g_walkCallback;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x4c) = g_walkCallback;
       g_dualD = g_dualD + 1;
     }
     MStackPop8();

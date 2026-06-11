@@ -127,7 +127,7 @@ int CameraBounceUpdate(void)
   func_0x004406e0();
   iVar1 = g_framePauseFlag;
   if (g_framePauseFlag == 0) {
-    g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58);
+    g_walkCallback = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58);
     if (g_walkCallback < 0) {
       if (-0xccd < g_walkCallback) {
         return 0;
@@ -138,13 +138,13 @@ int CameraBounceUpdate(void)
     iVar1 = 0;
     if (g_walkCallback != 0) {
       g_walkCallback = 0;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0;
-      g_eventQueueCurrent = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70);
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = 0;
+      g_eventQueueCurrent = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x70);
       g_eventQueueCurrent = Mul10Tail(0xffff999a,g_eventQueueCurrent);
       iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       if (-0x28f < g_eventQueueCurrent) {
         g_walkCallback = 0;
-        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) = 0;
+        MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x6c) = 0;
         iVar1 = iVar1 * 4;
         *(int *)(iVar1 + 0x70) = g_walkCallback;
         *(int *)(iVar1 + 0x74) = g_walkCallback;
@@ -164,21 +164,21 @@ int CameraBounceUpdate(void)
         g_walkCallback = 0x20c;
         iVar1 = StoreDoubleNegPauseSubStore();
         if (g_framePauseFlag == 0) {
-          *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = g_eventQueueCurrent + g_walkCallback;
-          g_eventQueueCurrent = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c);
+          MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x70) = g_eventQueueCurrent + g_walkCallback;
+          g_eventQueueCurrent = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x6c);
           g_eventQueueCurrent = Mul10Tail(0x6666,g_eventQueueCurrent);
           g_walkCallback = 0x20000;
           iVar1 = AudioMixerStep();
           if (g_framePauseFlag == 0) {
             uVar2 = Mul10Tail(g_walkCallback,g_eventQueueCurrent);
-            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) = uVar2;
-            g_eventQueueCurrent = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74);
+            MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x6c) = uVar2;
+            g_eventQueueCurrent = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74);
             g_eventQueueCurrent = Mul10Tail(0x6666,g_eventQueueCurrent);
             g_walkCallback = 0x30000;
             iVar1 = AudioMixerStep();
             if (g_framePauseFlag == 0) {
               uVar2 = Mul10Tail(g_walkCallback,g_eventQueueCurrent);
-              *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74) = uVar2;
+              MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74) = uVar2;
               g_eventQueueCurrent = -0xf333;
               iVar1 = EsiTripleMul10Vec();
             }

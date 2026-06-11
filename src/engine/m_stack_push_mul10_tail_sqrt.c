@@ -125,9 +125,9 @@ void MStackPushMul10TailSqrt(void)
   int iVar1;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueWorkType;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueWorkType;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_chainAccumCur;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_chainAccumCur;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_eventQueueWorkType;
   g_chainAccumCur = MK4_NODE_AT(int, g_eventQueueWorkType, 0) - MK4_NODE_AT(int, g_dualC, 0);
   g_eventQueueWorkType = MK4_NODE_AT(int, g_eventQueueWorkType, 8) - MK4_NODE_AT(int, g_dualC, 8);
@@ -136,8 +136,8 @@ void MStackPushMul10TailSqrt(void)
   g_eventQueueWorkType = iVar1 + g_chainAccumCur;
   FpuSqrtMul();
   if (g_framePauseFlag == 0) {
-    g_chainAccumCur = *(int *)((int)g_matrixStackTop * 4);
-    g_eventQueueWorkType = *(int *)((int)(g_matrixStackTop + -1) * 4);
+    g_chainAccumCur = *MK4_NODE(int, (int)g_matrixStackTop);
+    g_eventQueueWorkType = *MK4_NODE(int, (int)(g_matrixStackTop + -1));
     g_matrixStackTop = g_matrixStackTop + -2;
   }
   return;

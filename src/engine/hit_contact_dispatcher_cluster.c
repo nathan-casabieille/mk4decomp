@@ -133,8 +133,8 @@ void HitContactDispatcherCluster(void)
   g_eventQueueNotMask = Mul10Tail(g_eventQueueCurrent,g_eventQueueNotMask);
   g_eventQueueChild = Mul10Tail(g_eventQueueCurrent,g_eventQueueChild);
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x38);
-  g_eventQueueCurrent = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) + g_eventQueueChild;
-  g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) + g_eventQueueNotMask;
+  g_eventQueueCurrent = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) + g_eventQueueChild;
+  g_walkCallback = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) + g_eventQueueNotMask;
   MK4_NODE_AT(int, g_cj_0054205c, 0x54) = g_walkCallback;
   MK4_NODE_AT(int, g_cj_0054205c, 0x5c) = g_eventQueueCurrent;
   g_eventQueueWorkType = g_walkCallback;
@@ -145,8 +145,8 @@ void HitContactDispatcherCluster(void)
   g_eventQueueWorkType = g_rangeSqLimit;
   if (g_rangeSqLimit < g_chainAccumCur) {
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x38);
-    g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54);
-    g_eventQueueCurrent = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c);
+    g_walkCallback = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54);
+    g_eventQueueCurrent = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c);
     MK4_NODE_AT(int, g_cj_0054205c, 0x54) = g_walkCallback;
     MK4_NODE_AT(int, g_cj_0054205c, 0x5c) = g_eventQueueCurrent;
   }
@@ -155,7 +155,7 @@ void HitContactDispatcherCluster(void)
     g_walkCallback = -0x2666;
     MStackFrameCdeclDouble();
     if (g_framePauseFlag == 0) {
-      g_baseSel = *(int *)((int)g_matrixStackTop * 4);
+      g_baseSel = *MK4_NODE(int, (int)g_matrixStackTop);
       g_matrixStackTop = g_matrixStackTop + -1;
       ScaledZero44();
     }

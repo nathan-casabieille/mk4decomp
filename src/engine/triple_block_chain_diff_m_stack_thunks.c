@@ -136,18 +136,18 @@ void TripleBlockChainDiffMStackThunks(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueChild;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueueChild;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x38);
   g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x54);
   g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x5c);
-  g_eventQueueWorkType = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) - g_walkCallback;
-  g_chainAccumCur = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) - g_eventQueueCurrent;
+  g_eventQueueWorkType = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) - g_walkCallback;
+  g_chainAccumCur = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) - g_eventQueueCurrent;
   Atan2QuadrantLookup();
   if (g_framePauseFlag == 0) {
     BootMod6487eClampAndChainMul10();
     if (g_framePauseFlag == 0) {
       MK4_NODE_AT(int, g_baseSel, 0x70) = g_walkCallback;
-      g_eventQueueChild = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_eventQueueChild = *MK4_NODE(undefined4, (int)g_matrixStackTop);
       g_matrixStackTop = g_matrixStackTop + -1;
     }
   }

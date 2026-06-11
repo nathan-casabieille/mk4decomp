@@ -137,12 +137,12 @@ void DeathAnimCluster(void)
   undefined4 uVar3;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueuePending;
   g_matrixStackTop = g_matrixStackTop + 1;
   g_eventQueueCurrent = g_zerotriple_00541dec;
-  *(int *)((int)g_matrixStackTop * 4) = g_zerotriple_00541de8;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_zerotriple_00541de8;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueueCurrent;
   g_zerotriple_00541de8 = 0;
   g_zerotriple_00541dec = 0;
   if (g_eventMusicSlot2 == 1) {
@@ -156,8 +156,8 @@ void DeathAnimCluster(void)
   g_eventQueueCurrent = 0;
   GuardedDualPushTailJmp();
   if (g_framePauseFlag == 0) {
-    g_zerotriple_00541dec = *(undefined4 *)((int)g_matrixStackTop * 4);
-    g_zerotriple_00541de8 = *(int *)((int)(g_matrixStackTop + -1) * 4);
+    g_zerotriple_00541dec = *MK4_NODE(undefined4, (int)g_matrixStackTop);
+    g_zerotriple_00541de8 = *MK4_NODE(int, (int)(g_matrixStackTop + -1));
     g_matrixStackTop = g_matrixStackTop + -2;
     g_walkCallback = g_zerotriple_00541de8;
     g_eventQueueCurrent = g_zerotriple_00541dec;
@@ -193,7 +193,7 @@ void DeathAnimCluster(void)
         g_walkCallback = -0x68000;
         MK4_NODE_AT(undefined4, g_eventQueuePending, 0x5c) = 0xfff98000;
         MK4_NODE_AT(int, g_cj_0054205c, 0x3c) = g_eventQueuePending;
-        g_eventQueuePending = *(undefined4 *)((int)g_matrixStackTop * 4);
+        g_eventQueuePending = *MK4_NODE(undefined4, (int)g_matrixStackTop);
         g_matrixStackTop = g_matrixStackTop + -1;
       }
     }

@@ -152,7 +152,7 @@ void Cascade5StageInit(int param_1)
               *(undefined4 *)(iVar1 + 8) = 0x4916f0;
               MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
               (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-              *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14916f0;
+              *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x14916f0;
               (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
               *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
               MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -185,7 +185,7 @@ void Cascade5StageInit(int param_1)
           }
           if (((byte)g_xformDirtyFlags & 4) != 0) {
             g_matrixStackTop = g_matrixStackTop + 1;
-            *(undefined4 *)((int)g_matrixStackTop * 4) = 0x491660;
+            *MK4_NODE(undefined4, (int)g_matrixStackTop) = 0x491660;
             GameDispatchValidateState();
             return;
           }
@@ -203,7 +203,7 @@ void Cascade5StageInit(int param_1)
           }
           (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x24);
           g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x28) + 1;
-          if (*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4) <= g_walkCallback) {
+          if (MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 4) <= g_walkCallback) {
             SlotPhaseResetInstallChain();
             if ((g_framePauseFlag == 0) && (ScaledZeroFour(), g_framePauseFlag == 0)) {
               CjInstallSelfRouter();

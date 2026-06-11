@@ -22,12 +22,12 @@ void PushPopWalkDecMod(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueueCurrent;
   g_walkCallback = g_walkCallback - 1;
   if (-1 < (int)g_walkCallback) {
     g_walkCallback = g_eventMaskState >> ((char)g_walkCallback * '\x04' & 0x1fU) & 0xf;
   }
-  g_eventQueueCurrent = *(undefined4 *)((int)g_matrixStackTop * 4);
+  g_eventQueueCurrent = *MK4_NODE(undefined4, (int)g_matrixStackTop);
   g_matrixStackTop = g_matrixStackTop + -1;
   return;
 }

@@ -134,13 +134,13 @@ void PackedSelectLoad6(void)
     iVar1 = 0x14d746;
   }
   g_eventQueueNotMask = MK4_NODE_AT(undefined4, iVar1, 0);
-  g_eventQueueChild = *(undefined4 *)((iVar1 + 1) * 4);
-  g_currentNodeFlags = *(undefined4 *)((iVar1 + 2) * 4);
-  g_xformScratch2088 = *(undefined4 *)((iVar1 + 3) * 4);
-  g_cj_00542054 = *(undefined4 *)((iVar1 + 4) * 4);
-  g_cj_00542058 = *(undefined4 *)((iVar1 + 5) * 4);
+  g_eventQueueChild = *MK4_NODE(undefined4, (iVar1 + 1));
+  g_currentNodeFlags = *MK4_NODE(undefined4, (iVar1 + 2));
+  g_xformScratch2088 = *MK4_NODE(undefined4, (iVar1 + 3));
+  g_cj_00542054 = *MK4_NODE(undefined4, (iVar1 + 4));
+  g_cj_00542058 = *MK4_NODE(undefined4, (iVar1 + 5));
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x3c);
-  g_walkCallback = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74);
+  g_walkCallback = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74);
   return;
 }
 #else

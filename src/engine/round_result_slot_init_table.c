@@ -121,13 +121,13 @@ void RoundResultSlotInitTable(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_walkCallback;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_walkCallback;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueCurrent;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueNotMask;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueNotMask;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueChild;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueChild;
   ScaledChainDouble();
   if (g_framePauseFlag == 0) {
     g_eventQueueNotMask = g_eventQueueNotMask >> 1;
@@ -136,16 +136,16 @@ void RoundResultSlotInitTable(void)
     g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x5c) + g_eventQueueChild;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_baseSel + 0x19;
     g_eventQueueWorkType = 0xfffe6667;
-    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_walkCallback;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 4) = g_eventQueueWorkType;
-    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 8) = g_eventQueueCurrent;
+    *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_walkCallback;
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 4) = g_eventQueueWorkType;
+    MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 8) = g_eventQueueCurrent;
     g_eventQueuePending = 0x13bb8f;
     Phase2InitDispatchInstallSelf();
     if (g_framePauseFlag == 0) {
-      g_eventQueueChild = *(int *)((int)g_matrixStackTop * 4);
-      g_eventQueueNotMask = *(int *)((int)(g_matrixStackTop + -1) * 4);
-      g_eventQueueCurrent = *(int *)((int)(g_matrixStackTop + -2) * 4);
-      g_walkCallback = *(int *)((int)(g_matrixStackTop + -3) * 4);
+      g_eventQueueChild = *MK4_NODE(int, (int)g_matrixStackTop);
+      g_eventQueueNotMask = *MK4_NODE(int, (int)(g_matrixStackTop + -1));
+      g_eventQueueCurrent = *MK4_NODE(int, (int)(g_matrixStackTop + -2));
+      g_walkCallback = *MK4_NODE(int, (int)(g_matrixStackTop + -3));
       g_matrixStackTop = g_matrixStackTop + -4;
     }
   }

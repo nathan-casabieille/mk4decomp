@@ -133,12 +133,12 @@ void LazyAllocOrPush(void)
     return;
   }
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_currentNodeFlags;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_currentNodeFlags;
   g_currentNodeFlags = g_currentNodeFlags + -0x10000 >> 1;
   g_eventQueuePending = g_installOwnerNode;
   MStackAngleRatioSubchain();
   if (g_framePauseFlag == 0) {
-    g_currentNodeFlags = *(int *)((int)g_matrixStackTop * 4);
+    g_currentNodeFlags = *MK4_NODE(int, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
   }
   return;

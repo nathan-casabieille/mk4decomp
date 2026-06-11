@@ -158,7 +158,7 @@ void Phase4StateInitWithHelpers(void)
   uint *puVar2;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_cj_00542054;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_cj_00542054;
   g_cj_0054205c = 0;
   g_walkCallback = 0xeb85;
   ZeroAndDirty4();
@@ -172,7 +172,7 @@ void Phase4StateInitWithHelpers(void)
       if ((g_xformDirtyFlags & 4) == 0) {
         MK4_NODE_AT(undefined4, g_cj_0054205c, 0x30) = 0x9b;
         (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
-        g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
+        g_eventQueuePending = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x28);
         puVar2 = (uint *)(g_eventQueuePending * 4);
         puVar2[4] = (uint)&(*(unsigned int *)MK4_VA(unsigned int, 0x414590));
         puVar2[5] = 0;
@@ -183,16 +183,16 @@ void Phase4StateInitWithHelpers(void)
         g_walkCallback = g_dualC;
         if (-1 < g_dualC) {
           g_matrixStackTop = g_matrixStackTop + 1;
-          *(int *)((int)g_matrixStackTop * 4) = g_dualC;
+          *MK4_NODE(int, (int)g_matrixStackTop) = g_dualC;
           ChainNodeAdvanceCallback();
           if (g_framePauseFlag != 0) {
             return;
           }
           while( true ) {
-            g_dualC = *(int *)((int)g_matrixStackTop * 4) + -1;
+            g_dualC = *MK4_NODE(int, (int)g_matrixStackTop) + -1;
             puVar1 = g_matrixStackTop + -1;
             if (g_dualC < 0) break;
-            *(int *)((int)g_matrixStackTop * 4) = g_dualC;
+            *MK4_NODE(int, (int)g_matrixStackTop) = g_dualC;
             ChainNodeAdvanceCallback();
             if (g_framePauseFlag != 0) {
               return;
@@ -211,7 +211,7 @@ void Phase4StateInitWithHelpers(void)
     if (g_cj_0054205c != 0) {
       g_xformDirtyFlags = g_xformDirtyFlags ^ 4;
     }
-    g_cj_00542054 = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_cj_00542054 = *MK4_NODE(undefined4, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
   }
   return;

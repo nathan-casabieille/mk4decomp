@@ -209,7 +209,7 @@ void BootInitChainHeavy(void)
                               BootPhaseGateBracketedInit();
                               if (g_framePauseFlag == 0) {
                                 g_walkCallback = 0xc;
-                                *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0xc;
+                                MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0xc;
                                 g_eventQueueSeed = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
                                 MStackCall_MStackPush2ChainPrepend_004063e0();
                                 if (g_framePauseFlag == 0) {

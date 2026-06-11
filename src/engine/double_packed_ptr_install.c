@@ -127,9 +127,9 @@ void DoublePackedPtrInstall(void)
   g_eventQueuePending = 0x143c7d;
   DispatcherComplex260_FramePauseScaledStore();
   if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0xffba0000;
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0xffba0000;
     g_walkCallback = 0x1f;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x1f;
     PushSetCallPop();
     if (g_framePauseFlag == 0) {
       RegistryPushBindPop();
@@ -139,7 +139,7 @@ void DoublePackedPtrInstall(void)
         if (g_framePauseFlag == 0) {
           *(undefined **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = &(*(unsigned int *)MK4_VA(unsigned int, 0x810000));
           g_walkCallback = 0x1f;
-          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+          MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x1f;
           PushSetCallPop();
           if (g_framePauseFlag == 0) {
             RegistryPushBindPop();

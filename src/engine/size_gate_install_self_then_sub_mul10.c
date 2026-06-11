@@ -124,9 +124,9 @@ void SizeGateInstallSelfThenSubMul10(void)
   undefined4 uVar1;
   int iVar2;
   
-  if (g_chainAccumCur <= *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c)) {
-    g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
-    MK4_NODE_AT(undefined4, g_eventQueuePending, 0x20) = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x3c);
+  if (g_chainAccumCur <= MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c)) {
+    g_eventQueuePending = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x28);
+    MK4_NODE_AT(undefined4, g_eventQueuePending, 0x20) = MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x3c);
     g_walkCallback = *(code **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40);
     if (g_walkCallback != (code *)0x0) {
       uVar1 = Mul10Tail(0x1999,g_walkCallback);

@@ -157,7 +157,7 @@ void InstallSelfThresholdDispatch(void)
         *(code **)(iVar1 + 8) = InstallSelfThresholdDispatch;
         MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 2;
         (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x247e310;
+        *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x247e310;
         (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
         *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
         MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;

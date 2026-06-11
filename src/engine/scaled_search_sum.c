@@ -147,11 +147,11 @@ void ScaledSearchSum(void)
   while( true ) {
     if (iVar2 == 0) {
       iVar6 = 0;
-      for (iVar5 = iVar4; g_chainAccumCur = 0, *(int *)((iVar5 + g_dualC) * 4) != 0;
+      for (iVar5 = iVar4; g_chainAccumCur = 0, *MK4_NODE(int, (iVar5 + g_dualC)) != 0;
           iVar5 = iVar5 + 1) {
 LAB_00457897:
       }
-      g_eventQueuePending = *(undefined4 *)((iVar5 + iVar6 + g_dualC) * 4 + 8);
+      g_eventQueuePending = MK4_NODE_AT(undefined4, (iVar5 + iVar6 + g_dualC), 8);
       return;
     }
     piVar1 = piVar3 + 1;

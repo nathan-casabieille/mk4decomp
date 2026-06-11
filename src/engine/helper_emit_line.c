@@ -66,7 +66,7 @@ void Helper_EmitLine(int param_1)
   *(short *)(&g_triStripRingA + param_1) =
        (short)((uint)((iVar1 * *(int *)(&g_vtxOut1_x + param_1 * 2) >> 0x10) * 0x1999a) >> 0x10) +
        0x140;
-  *(short *)((int)&g_triStripRingA + param_1 * 4 + 2) =
+  MK4_NODE_AT(short, (int)&g_triStripRingA + param_1, 2) =
        (short)((uint)((iVar1 * *(int *)(&g_vtxOut1_y + param_1 * 2) >> 0x10) * 0x1e000) >> 0x10) +
        0xf0;
   return;

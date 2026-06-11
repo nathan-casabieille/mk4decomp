@@ -171,7 +171,7 @@ void TriPhaseDecCounterListAdvance(void)
       return;
     }
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4) + -1;
-    g_eventQueueChild = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
+    g_eventQueueChild = *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)));
     MK4_NODE_AT(int, g_baseSel, 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     g_eventQueueChild = g_eventQueueChild + -1;
     if (g_eventQueueChild == 0) {
@@ -181,7 +181,7 @@ void TriPhaseDecCounterListAdvance(void)
   }
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 4);
   iVar2 = g_baseSel * 4;
-  *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_eventQueueChild;
+  *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_eventQueueChild;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
   *(int *)(iVar2 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   g_eventQueueNotMask = 6;

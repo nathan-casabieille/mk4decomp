@@ -148,10 +148,10 @@ void AudioByteCounterChain(void)
   iVar2 = g_audioBankSel;
   if (iVar1 == 0) {
     if (g_audioBankSel == 1) {
-      *(int *)(&g_audioBankCounterArr + g_dlNalt1 * 4) = *(int *)(&g_audioBankCounterArr + g_dlNalt1 * 4) + 1;
+      *MK4_NODE(int, &g_audioBankCounterArr + g_dlNalt1) = *MK4_NODE(int, &g_audioBankCounterArr + g_dlNalt1) + 1;
     }
     if (iVar2 == 2) {
-      *(int *)(&g_audioBankCounterArr + g_dlNalt2 * 4) = *(int *)(&g_audioBankCounterArr + g_dlNalt2 * 4) + 1;
+      *MK4_NODE(int, &g_audioBankCounterArr + g_dlNalt2) = *MK4_NODE(int, &g_audioBankCounterArr + g_dlNalt2) + 1;
     }
   }
   BootInitGuardedCallChain();

@@ -126,7 +126,7 @@ void BitDispatchDualCallMStackPush(void)
 {
   g_eventQueueCurrent = -g_walkCallback;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_baseSel, 0x38);
-  g_eventQueueWorkType = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x34);
+  g_eventQueueWorkType = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x34);
   g_xformScratch94 = g_eventQueueWorkType & 1;
   if (g_xformScratch94 == 0) {
     DoublePushCallDoublePop();
@@ -135,11 +135,11 @@ void BitDispatchDualCallMStackPush(void)
         g_walkCallback = g_eventQueueCurrent;
       }
       g_matrixStackTop = g_matrixStackTop + 1;
-      *(int *)((int)g_matrixStackTop * 4) = g_walkCallback;
+      *MK4_NODE(int, (int)g_matrixStackTop) = g_walkCallback;
       if ((((byte)g_xformDirtyFlags & 1) != 0) && (GuardedSeq_DualCallPauseDirtyJmp_then_ScaledXorStore(), g_framePauseFlag != 0)) {
         return;
       }
-      g_walkCallback = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_walkCallback = *MK4_NODE(undefined4, (int)g_matrixStackTop);
       g_matrixStackTop = g_matrixStackTop + -1;
       MStackFrameCdeclDouble();
       return;
@@ -154,10 +154,10 @@ void BitDispatchDualCallMStackPush(void)
       }
       g_matrixStackTop = g_matrixStackTop + 1;
       g_walkCallback = g_eventQueueCurrent;
-      *(int *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+      *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueCurrent;
       GuardedSeq_DualCallPauseDirtyJmp_then_ScaledXorStore();
       if (g_framePauseFlag == 0) {
-        g_walkCallback = *(undefined4 *)((int)g_matrixStackTop * 4);
+        g_walkCallback = *MK4_NODE(undefined4, (int)g_matrixStackTop);
         g_matrixStackTop = g_matrixStackTop + -1;
         MStackFrameCdeclDouble();
         return;

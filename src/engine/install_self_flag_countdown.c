@@ -133,7 +133,7 @@ void InstallSelfFlagCountdown(void)
   *(undefined4 *)(iVar2 + 0x84) = 0;
   if (iVar1 != 0) {
     g_matrixStackTop = g_matrixStackTop + 1;
-    *(undefined4 *)((int)g_matrixStackTop * 4) = 0x4346f0;
+    *MK4_NODE(undefined4, (int)g_matrixStackTop) = 0x4346f0;
     GameDispatchValidateState();
     return;
   }

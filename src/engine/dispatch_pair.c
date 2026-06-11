@@ -133,7 +133,7 @@ void DispatchPair(void)
   MStackPush8();
   if (g_framePauseFlag == 0) {
     g_matrixStackTop = g_matrixStackTop + 1;
-    *(undefined4 *)((int)g_matrixStackTop * 4) = g_walkCallback;
+    *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_walkCallback;
     TwinLoopSlotFinder();
     if (g_framePauseFlag == 0) {
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(undefined4, g_cj_00542058, 0);
@@ -142,7 +142,7 @@ void DispatchPair(void)
         (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(undefined4, g_cj_00542058, 4);
         LoadGeoAsset_Default();
         if (g_framePauseFlag == 0) {
-          g_walkCallback = *(undefined4 *)((int)g_matrixStackTop * 4);
+          g_walkCallback = *MK4_NODE(undefined4, (int)g_matrixStackTop);
           g_matrixStackTop = g_matrixStackTop + -1;
           MStackPop8();
           return;

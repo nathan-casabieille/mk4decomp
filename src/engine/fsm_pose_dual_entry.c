@@ -145,8 +145,8 @@ LAB_0047272d:
       GuardedSeq_MStackCall_then_CallSetPause_00471670();
       return;
     }
-    *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) | 0x40;
-    g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x2c);
+    MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) | 0x40;
+    g_eventQueuePending = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x2c);
     if (g_eventQueuePending != 0) {
       g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueuePending, 0x14) + 0x1ca;
       MK4_NODE_AT(int, g_eventQueuePending, 0x14) = g_eventQueueCurrent;
@@ -157,7 +157,7 @@ LAB_0047272d:
       }
     }
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
-    g_eventQueuePending = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x28);
+    g_eventQueuePending = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x28);
     g_xformScratch94 = MK4_NODE_AT(uint, g_eventQueuePending, 0) & 0x400;
     if (g_xformScratch94 != 0) {
       iVar2 = MK4_NODE_AT(int, g_baseSel, 0x38) + -0x33;

@@ -137,10 +137,10 @@ void InstallSelfMStackOverwrite(void)
   uVar3 = g_eventQueueNotMask;
   if (iVar2 == 0) {
     g_cj_00542058 = *(code **)((int)g_matrixStackTop * 4);
-    *(undefined4 *)((int)g_matrixStackTop * 4) = g_walkCallback;
+    *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_walkCallback;
     ScaledArrStore_GuardedChainCmpDualBitXor_00429980();
     if (g_framePauseFlag == 0) {
-      g_walkCallback = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_walkCallback = *MK4_NODE(undefined4, (int)g_matrixStackTop);
       g_matrixStackTop = g_matrixStackTop + -1;
       *(code **)(iVar1 + 8) = InstallSelfMStackOverwrite;
       *(undefined4 *)(iVar1 + 0x84) = 1;

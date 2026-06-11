@@ -137,8 +137,8 @@ void ChainSearch(void)
     }
     if (*(int *)(iVar1 + 0xd8) != 0) {
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = iVar1 >> 2;
-      g_eventQueueWorkType = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0xc);
-      if ((g_eventQueueWorkType == g_walkCallback) && (*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x2c) == g_cj_0054205c))
+      g_eventQueueWorkType = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0xc);
+      if ((g_eventQueueWorkType == g_walkCallback) && (MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x2c) == g_cj_0054205c))
       {
         g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffb | 1;
         return;

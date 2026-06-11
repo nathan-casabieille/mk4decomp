@@ -121,9 +121,9 @@ void Vec2ChainComputeStores(void)
   int iVar3;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_walkCallback;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_walkCallback;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueCurrent;
   ScaledChainDouble();
   if (g_framePauseFlag != 0) {
     return;
@@ -131,7 +131,7 @@ void Vec2ChainComputeStores(void)
   piVar1 = (int *)((int)g_matrixStackTop * 4);
   puVar2 = g_matrixStackTop + -1;
   g_matrixStackTop = g_matrixStackTop + -2;
-  g_walkCallback = *(int *)((int)puVar2 * 4) + g_eventQueueNotMask;
+  g_walkCallback = *MK4_NODE(int, (int)puVar2) + g_eventQueueNotMask;
   g_eventQueueCurrent = *piVar1 + g_eventQueueChild;
   g_eventQueueWorkType = g_eventQueueNotMask + g_walkCallback;
   g_chainAccumCur = g_eventQueueChild + g_eventQueueCurrent;

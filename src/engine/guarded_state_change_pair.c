@@ -141,7 +141,7 @@ void GuardedStateChangePair(void)
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_stateChangePair2 + 0x14e02b;
     g_walkCallback = 0x27;
     g_stateChangePair2 = g_eventQueueCurrent;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x27;
+    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x27;
     SpawnTrioInitCluster();
     if (g_framePauseFlag == 0) {
       CallSetPause();
@@ -160,9 +160,9 @@ LAB_004586cd:
       return;
     }
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_stateChangePair2 + 0x14e02c;
-    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = g_stateChangePair3;
+    *MK4_NODE(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = g_stateChangePair3;
     g_matrixStackTop = g_matrixStackTop + 1;
-    *(int *)((int)g_matrixStackTop * 4) = g_eventQueueCurrent;
+    *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueCurrent;
     MStackPush2ClampLookup();
     if (g_framePauseFlag == 0) {
       piVar1 = (int *)((int)g_matrixStackTop * 4);

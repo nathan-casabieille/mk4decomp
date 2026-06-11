@@ -132,9 +132,9 @@ void MStackPush2ChainInsert(void)
   iVar2 = g_eventQueuePending;
   iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_chainInsertSlot;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_chainInsertSlot;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_dualC;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_dualC;
   iVar3 = iVar1 + MK4_NODE_AT(int, iVar2, 8);
   MK4_NODE_AT(int, iVar3, 4) = iVar2;
   MK4_NODE_AT(undefined4, iVar3, 8) = 0;
@@ -144,12 +144,12 @@ void MStackPush2ChainInsert(void)
     MK4_NODE_AT(int, iVar2, 4) = iVar1;
   }
   else {
-    *(int *)((g_walkCallback + MK4_NODE_AT(int, iVar2, 8)) * 4 + 8) = iVar1;
+    MK4_NODE_AT(int, (g_walkCallback + MK4_NODE_AT(int, iVar2, 8)), 8) = iVar1;
   }
   MK4_NODE_AT(int, iVar2, 0) = iVar1;
   MK4_NODE_AT(int, iVar2, 0xc) = MK4_NODE_AT(int, iVar2, 0xc) + 1;
-  g_dualC = *(undefined4 *)((int)g_matrixStackTop * 4);
-  g_chainInsertSlot = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+  g_dualC = *MK4_NODE(undefined4, (int)g_matrixStackTop);
+  g_chainInsertSlot = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
   g_matrixStackTop = g_matrixStackTop + -2;
   return;
 }

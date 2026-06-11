@@ -132,11 +132,11 @@ void Scaled3StorePushCallJmp(int param_1)
   
   param_1 = param_1 >> 2;
   g_cj_00542058 = MK4_NODE_AT(undefined4, param_1, 0);
-  g_eventQueueChild = *(undefined4 *)((param_1 + 1) * 4);
+  g_eventQueueChild = *MK4_NODE(undefined4, (param_1 + 1));
   g_eventQueuePending = param_1 + 2;
   piVar1 = (int *)(g_baseSel * 4 + 4);
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *piVar1;
-  *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = MK4_NODE_AT(undefined4, g_eventQueuePending, 0);
+  *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = MK4_NODE_AT(undefined4, g_eventQueuePending, 0);
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
   *piVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
   Push80SetWalkNegDualCallPop();

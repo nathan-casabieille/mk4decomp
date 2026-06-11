@@ -131,7 +131,7 @@ void MStackBranchSelect(void)
 
 {
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_baseSel;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_baseSel;
   g_baseSel = g_dualB_00538038;
   if (g_cj_0054205c != g_player1NodeIdx) {
     g_baseSel = g_dualB_0053803c;
@@ -139,7 +139,7 @@ void MStackBranchSelect(void)
   g_walkCallback = 1;
   DualBranchWordLookup();
   if (g_framePauseFlag == 0) {
-    g_baseSel = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_baseSel = *MK4_NODE(undefined4, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
     g_chainAccumCur = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54);
     g_eventQueueNotMask = MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c);

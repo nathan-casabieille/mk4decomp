@@ -158,7 +158,7 @@ LAB_00497920:
   else {
     iVar2 = g_cj_0054205c * 4;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_cj_0054205c, 0x18);
-    g_walkCallback = *(uint *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20);
+    g_walkCallback = MK4_NODE_AT(uint, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20);
     g_xformScratch94 = g_walkCallback & 0x2000;
     if (g_xformScratch94 != 0) {
       func_0x00497b10();

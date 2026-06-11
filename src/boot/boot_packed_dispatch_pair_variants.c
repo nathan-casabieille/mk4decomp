@@ -139,7 +139,7 @@ void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413380(void)
     ScaledTripleCopy54();
     if (g_framePauseFlag == 0) {
       MK4_NODE_AT(int, g_cj_0054205c, 0x58) = MK4_NODE_AT(int, g_cj_0054205c, 0x58) + -0x1999;
-      g_eventQueuePending = *(int *)(MK4_NODE_AT(int, g_cj_0054205c, 0x18) * 4 + 0x28);
+      g_eventQueuePending = MK4_NODE_AT(int, MK4_NODE_AT(int, g_cj_0054205c, 0x18), 0x28);
       MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0xff;
       g_walkCallback = ClampMulShiftStore;
       *(code **)(g_eventQueuePending * 4 + 0x10) = ClampMulShiftStore;
@@ -291,17 +291,17 @@ void BootPackedDispatchPair_PushSetXfmMaskCallPop_00413580(void)
     ScaledTripleCopy54();
     if (g_framePauseFlag == 0) {
       MK4_NODE_AT(int, g_cj_0054205c, 0x58) = MK4_NODE_AT(int, g_cj_0054205c, 0x58) + -0x1999;
-      g_eventQueuePending = *(int *)(MK4_NODE_AT(int, g_cj_0054205c, 0x18) * 4 + 0x28);
+      g_eventQueuePending = MK4_NODE_AT(int, MK4_NODE_AT(int, g_cj_0054205c, 0x18), 0x28);
       MK4_NODE_AT(undefined4, g_eventQueuePending, 0x14) = 0xff;
       g_walkCallback = ClampMulShiftStore;
       *(code **)(g_eventQueuePending * 4 + 0x10) = ClampMulShiftStore;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
       g_matrixStackTop = g_matrixStackTop + 1;
-      *(int *)((int)g_matrixStackTop * 4) = g_eventQueuePending;
+      *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueuePending;
       g_eventQueuePending = g_bootChainScaled2;
       MStackPush2ChainPrepend();
       if (g_framePauseFlag == 0) {
-        g_eventQueuePending = *(undefined4 *)((int)g_matrixStackTop * 4);
+        g_eventQueuePending = *MK4_NODE(undefined4, (int)g_matrixStackTop);
         g_matrixStackTop = g_matrixStackTop + -1;
       }
       return;

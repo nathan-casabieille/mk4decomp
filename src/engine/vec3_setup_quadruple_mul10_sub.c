@@ -124,12 +124,12 @@ void Vec3SetupQuadrupleMul10Sub(void)
   
   MStackCall_MStackPush2ChainPrepend_00406340();
   if (g_framePauseFlag == 0) {
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x7e;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x3c);
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x40);
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x44);
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = 0xffffe148;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x4c) = 0x3d7;
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x7e;
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x3c);
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x40);
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = MK4_NODE_AT(undefined4, g_cj_00542054, 0x44);
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x70) = 0xffffe148;
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x4c) = 0x3d7;
     g_walkCallback = g_pendingMatchVar;
     AudioMixerStep();
     if (g_framePauseFlag == 0) {

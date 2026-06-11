@@ -150,7 +150,7 @@ uint CameraProjectionInitSweep(void)
       if (g_framePauseFlag == 0) {
         if (((byte)g_xformDirtyFlags & 4) == 0) {
           MK4_NODE_AT(int, g_dualD, 0x18) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-          *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18) = g_dualD;
+          MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x18) = g_dualD;
           g_dualD = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
           g_audioVoiceCounter = 0x28;
           g_chainAccumCur = 0;
@@ -180,14 +180,14 @@ uint CameraProjectionInitSweep(void)
             if (g_framePauseFlag != 0) {
               return g_framePauseFlag;
             }
-            *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = g_walkCallback;
-            *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x38) = g_eventQueueCurrent;
+            MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = g_walkCallback;
+            MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x38) = g_eventQueueCurrent;
             g_walkCallback = 0x3243f - g_xformScratch2088;
             thunk_BootMod6487eClampAndChainMul10();
             if (g_framePauseFlag != 0) {
               return g_framePauseFlag;
             }
-            *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40) = g_walkCallback;
+            MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x40) = g_walkCallback;
             g_walkCallback = g_xformScratch2088 - g_currentNodeFlags;
             g_xformScratch2088 = g_walkCallback;
             thunk_BootMod6487eClampAndChainMul10();
@@ -196,13 +196,13 @@ uint CameraProjectionInitSweep(void)
             }
             g_dispatchArg = g_dispatchArg + 1;
             g_xformScratch2088 = g_walkCallback;
-            *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = g_dispatchArg;
+            MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = g_dispatchArg;
             g_audioVoiceCounter = g_audioVoiceCounter + -1;
           } while (g_audioVoiceCounter != 0);
           (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cameraProjSlot;
           MK4_NODE_AT(undefined4, g_cameraProjSlot, 0x30) = 0x270;
           g_walkCallback = 0x18000;
-          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0x18000;
+          MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = 0x18000;
           MStackCall_MStackPush2ChainPrepend_00406340();
           uVar1 = g_framePauseFlag;
           if (g_framePauseFlag == 0) {

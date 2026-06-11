@@ -129,14 +129,14 @@ void PreFight4StageSequencer(void)
   if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, g_dualD, 0x18);
     g_walkCallback = 1;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = 1;
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = 1;
     func_0x0044cf50();
     if (g_framePauseFlag == 0) {
       g_walkCallback = 9;
       func_0x0044d0c0();
       if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
         g_walkCallback = 2;
-        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = 2;
+        MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = 2;
         func_0x0044cf80();
         if (g_framePauseFlag == 0) {
           g_eventQueuePending = MK4_NODE_AT(int, g_dualD, 0x18);
@@ -155,7 +155,7 @@ void PreFight4StageSequencer(void)
                   MStackBracket5_FieldClear_StateAdvance();
                   if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
                     g_walkCallback = 3;
-                    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = 3;
+                    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = 3;
                     func_0x0044cfb0();
                     if (g_framePauseFlag == 0) {
                       func_0x0044d230();
@@ -172,9 +172,9 @@ void PreFight4StageSequencer(void)
                               g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
                               func_0x0044d280();
                               if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
-                                *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x1c) = 4;
+                                MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x1c) = 4;
                                 g_walkCallback = 0x3243f;
-                                *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x3c) = 0x3243f;
+                                MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x3c) = 0x3243f;
                                 func_0x0044d230();
                                 if (g_framePauseFlag == 0) {
                                   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_dualD;

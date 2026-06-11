@@ -137,11 +137,11 @@ void InstallSelfMStackPushDispatch(void)
   *(undefined4 *)(iVar1 + 0x84) = 0;
   if (iVar3 == 0) {
     g_cj_00542058 = MK4_NODE_AT(undefined4, g_cj_00542054, 0);
-    g_eventQueueChild = *(undefined4 *)((g_cj_00542054 + 1) * 4);
+    g_eventQueueChild = *MK4_NODE(undefined4, (g_cj_00542054 + 1));
     g_cj_00542054 = g_cj_00542054 + 2;
     piVar2 = (int *)(g_baseSel * 4 + 4);
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *piVar2;
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = MK4_NODE_AT(undefined4, g_cj_00542054, 0);
+    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = MK4_NODE_AT(undefined4, g_cj_00542054, 0);
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
     *piVar2 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     IncStoreCallIATDec();

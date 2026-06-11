@@ -138,18 +138,18 @@ void SpawnLeftRightAudioCrew(void)
     do {
       g_walkCallback = 0x10;
       AudioChainInit();
-      *(int *)((iVar3 + g_baseSel) * 4 + 0x34) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = (iVar1 - g_audioCrewState) * 4;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0xfde40000;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 100) = 0;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0xc0000;
+      MK4_NODE_AT(int, (iVar3 + g_baseSel), 0x34) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = (iVar1 - g_audioCrewState) * 4;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = 0xfde40000;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 100) = 0;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = 0xc0000;
       g_walkCallback = (int)pcVar2[-2];
       ScaledChainStore24();
       if (*pcVar2 != '\0') {
         AudioInitLoopTriple();
-        *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = iVar1 - g_audioCrewState;
-        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0xff890000;
-        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0x30000;
+        MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = iVar1 - g_audioCrewState;
+        MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = 0xff890000;
+        MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = 0x30000;
       }
       iVar3 = iVar3 + 1;
       pcVar2 = pcVar2 + 0x18;
@@ -164,18 +164,18 @@ void SpawnLeftRightAudioCrew(void)
     do {
       g_walkCallback = 0x10;
       AudioChainInit();
-      *(int *)((iVar3 + g_baseSel) * 4 + 0x48) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = (iVar1 - g_audioCrewState) * 4;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0x12c0000;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 100) = 0;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0xc0000;
+      MK4_NODE_AT(int, (iVar3 + g_baseSel), 0x48) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+      MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = (iVar1 - g_audioCrewState) * 4;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = 0x12c0000;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 100) = 0;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = 0xc0000;
       g_walkCallback = (int)pcVar2[-2];
       ScaledChainStore24();
       if (*pcVar2 != '\0') {
         AudioInitLoopTriple();
-        *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = iVar1 - g_audioCrewState;
+        MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = iVar1 - g_audioCrewState;
         *(undefined4 **)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = &g_glideFnTable;
-        *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0x30000;
+        MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = 0x30000;
       }
       iVar3 = iVar3 + 1;
       pcVar2 = pcVar2 + 0x18;

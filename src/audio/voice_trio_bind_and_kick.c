@@ -138,11 +138,11 @@ void VoiceTrioBindAndKick(char *param_1,int param_2,int param_3,int param_4)
     if (g_framePauseFlag == 0) {
       if (((byte)g_xformDirtyFlags & 4) == 0) {
         if (param_1[2] == '\0') {
-          *(undefined4 *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 100) = 0x3243f;
+          MK4_NODE_AT(undefined4, (int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 100) = 0x3243f;
         }
-        *(int *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = param_2 * 4;
-        *(int *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = param_3 * 4;
-        *(int *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = param_4 * 4 + 0xc0000;
+        MK4_NODE_AT(int, (int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = param_2 * 4;
+        MK4_NODE_AT(int, (int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x58) = param_3 * 4;
+        MK4_NODE_AT(int, (int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = param_4 * 4 + 0xc0000;
       }
       *(undefined **)(param_1 + 8) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       if (param_1[2] == '\x01') {
@@ -151,15 +151,15 @@ void VoiceTrioBindAndKick(char *param_1,int param_2,int param_3,int param_4)
         (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (&g_audioStateMachineVar)[param_1[1]];
         GuardedSetupCallTailJmp3((*(unsigned int *)MK4_VA(unsigned int, 0x542044)),iVar1,param_3 + -0xa0000);
         iVar2 = param_4 / 3 + 0x10000;
-        *(int *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = iVar2;
+        MK4_NODE_AT(int, (int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = iVar2;
         *(undefined **)(param_1 + 0xc) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
         (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (&g_dispatchSave503)[param_1[3]];
         GuardedSetupCallTailJmp3((*(unsigned int *)MK4_VA(unsigned int, 0x542044)),iVar1,param_3 + 0xa0000);
-        *(int *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = iVar2;
+        MK4_NODE_AT(int, (int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = iVar2;
         *(undefined **)(param_1 + 0x10) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
         (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (&g_audioStateMachineVar4)[param_1[4]];
         GuardedSetupCallTailJmp3((*(unsigned int *)MK4_VA(unsigned int, 0x542044)),iVar1,param_3 + 0x1e0000);
-        *(int *)((int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = iVar2;
+        MK4_NODE_AT(int, (int)(*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = iVar2;
         *(undefined **)(param_1 + 0x14) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
         if (param_1[3] != '\0') {
           ScaledOr4DirtyClear();

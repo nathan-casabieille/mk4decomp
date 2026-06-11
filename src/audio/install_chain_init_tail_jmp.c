@@ -136,9 +136,9 @@ void InstallChainInitTailJmp(void)
   if ((g_framePauseFlag == 0) && (((byte)g_xformDirtyFlags & 4) == 0)) {
     g_matrixStackTop = g_matrixStackTop + 1;
     g_installChainTailSlot = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
+    *MK4_NODE(int, (int)g_matrixStackTop) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x40) = 0x6487;
+    MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x40) = 0x6487;
     MK4_NODE_AT(undefined4, iVar1, 0x3c) = 0;
     iVar1 = iVar1 * 4;
     *(undefined4 *)(iVar1 + 0x44) = 0;
@@ -147,7 +147,7 @@ void InstallChainInitTailJmp(void)
     DirtyDoubleDeref();
     if (g_framePauseFlag == 0) {
       g_eventQueuePending = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(undefined4 *)((int)g_matrixStackTop * 4);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *MK4_NODE(undefined4, (int)g_matrixStackTop);
       g_matrixStackTop = g_matrixStackTop + -1;
       PushPopScaled1cDoubleCall();
       return;

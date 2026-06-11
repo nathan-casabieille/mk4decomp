@@ -127,7 +127,7 @@ void EsiInstallPushDecPopJmp(void)
   *(undefined4 *)(iVar1 + 0x84) = 0;
   if (iVar3 != 0) {
     g_matrixStackTop = g_matrixStackTop + 1;
-    *(int *)((int)g_matrixStackTop * 4) = g_eventQueueNotMask;
+    *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueNotMask;
     GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
     if (g_framePauseFlag != 0) {
       return;

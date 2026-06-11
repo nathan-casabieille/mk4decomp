@@ -141,7 +141,7 @@ void InstallSelfCountdownDispatch(void)
     iVar2 = DualGatedStateYield();
     if (iVar2 == 0) {
       g_matrixStackTop = g_matrixStackTop + 1;
-      *(undefined4 *)((int)g_matrixStackTop * 4) = 0x438a70;
+      *MK4_NODE(undefined4, (int)g_matrixStackTop) = 0x438a70;
       GameDispatchValidateState();
       return;
     }

@@ -147,7 +147,7 @@ void VibrationFrameUpdate(int param_1)
       iVar2 = 2;
     }
     if ((0 < iVar2) && (iVar2 < 0x19)) {
-      g_walkCallback = *(int *)(&g_dispatchSave554 + iVar2 * 4);
+      g_walkCallback = *MK4_NODE(int, &g_dispatchSave554 + iVar2);
       if (g_walkCallback != 0x10000) {
         iVar1 = g_dualC * 4;
         if (iVar2 == 2) {

@@ -128,9 +128,9 @@ void NestedLoopDispatch(void)
   int iVar1;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_eventQueueWorkType;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueWorkType;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_dualC;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_dualC;
   g_dualC = 0x14e94f;
   g_eventQueueCurrent = 0xf;
   do {
@@ -159,8 +159,8 @@ LAB_00458ff3:
     g_eventQueueCurrent = g_eventQueueCurrent + -1;
     if (g_eventQueueCurrent == 0) {
 LAB_00459001:
-      g_eventQueueWorkType = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
-      g_dualC = *(undefined4 *)((int)g_matrixStackTop * 4);
+      g_eventQueueWorkType = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
+      g_dualC = *MK4_NODE(undefined4, (int)g_matrixStackTop);
       g_matrixStackTop = g_matrixStackTop + -2;
       return;
     }

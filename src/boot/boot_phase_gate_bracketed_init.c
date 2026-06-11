@@ -122,7 +122,7 @@ void BootPhaseGateBracketedInit(void)
   int iVar3;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_xformLoopCounter;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_xformLoopCounter;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_bootChainPair0;
   MStackPushChainStepIndex();
   if (g_framePauseFlag == 0) {
@@ -172,13 +172,13 @@ void BootPhaseGateBracketedInit(void)
         } while (iVar3 != 0);
       }
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + -0x15;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x48) = 0x10000;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x4c) = 0x10000;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x50) = 0x10000;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x20) = g_baseSel;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x48) = 0x10000;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x4c) = 0x10000;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x50) = 0x10000;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x20) = g_baseSel;
     }
     g_xformDirtyFlags = g_xformDirtyFlags | 4;
-    g_xformLoopCounter = *(undefined4 *)((int)g_matrixStackTop * 4);
+    g_xformLoopCounter = *MK4_NODE(undefined4, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
     if ((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) != 0) {
       g_xformDirtyFlags = g_xformDirtyFlags ^ 4;

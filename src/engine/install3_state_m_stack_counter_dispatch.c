@@ -34337,7 +34337,7 @@ void Install3StateMStackCounterDispatch(void)
     *(code **)(iVar1 + 8) = Install3StateMStackCounterDispatch;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x1434c10;
+    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x1434c10;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
     *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -34358,12 +34358,12 @@ void Install3StateMStackCounterDispatch(void)
   }
   else {
     g_matrixStackTop = g_matrixStackTop + 1;
-    *(int *)((int)g_matrixStackTop * 4) = g_eventQueueChild;
+    *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueueChild;
     GuardedDualAndFlagToggle();
     if (g_framePauseFlag != 0) {
       return;
     }
-    g_eventQueueChild = *(int *)((int)g_matrixStackTop * 4);
+    g_eventQueueChild = *MK4_NODE(int, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
     if (((byte)g_xformDirtyFlags & 1) == 0) {
       ThresholdInitInstallSelfChain();

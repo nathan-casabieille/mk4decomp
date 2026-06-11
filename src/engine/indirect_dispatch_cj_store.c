@@ -127,9 +127,9 @@ void IndirectDispatchCjStore(void)
 {
   g_matrixStackTop = g_matrixStackTop + 1;
   g_eventQueueCurrent = g_currentNodeFlags;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_currentNodeFlags;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_currentNodeFlags;
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(undefined4 *)((int)g_matrixStackTop * 4) = g_xformScratch2088;
+  *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_xformScratch2088;
   (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_00542054;
   g_eventQueuePending = g_cj_00542058;
   g_walkCallback = 0;
@@ -140,8 +140,8 @@ void IndirectDispatchCjStore(void)
       MK4_NODE_AT(undefined4, g_cj_0054205c, 0x58) = g_walkCallback;
       MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54) = g_currentNodeFlags;
       MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c) = g_xformScratch2088;
-      g_xformScratch2088 = *(undefined4 *)((int)g_matrixStackTop * 4);
-      g_currentNodeFlags = *(undefined4 *)((int)(g_matrixStackTop + -1) * 4);
+      g_xformScratch2088 = *MK4_NODE(undefined4, (int)g_matrixStackTop);
+      g_currentNodeFlags = *MK4_NODE(undefined4, (int)(g_matrixStackTop + -1));
       g_matrixStackTop = g_matrixStackTop + -2;
       g_walkCallback = 1;
                     /* WARNING: Could not recover jumptable at 0x0048af33. Too many branches */

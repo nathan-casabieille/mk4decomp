@@ -137,11 +137,11 @@ undefined4 BitsetReserve(int param_1,int param_2)
   bVar2 = (byte)(param_2 >> 0x1f);
   bVar2 = 0x1f - ((((byte)param_2 ^ bVar2) - bVar2 & 0x1f ^ bVar2) - bVar2);
   iVar3 = (int)(param_2 + (param_2 >> 0x1f & 0x1fU)) >> 5;
-  if (((*(uint *)(param_1 + iVar3 * 4) & 1 << (bVar2 & 0x1f)) != 0) &&
+  if (((*MK4_NODE(uint, param_1 + iVar3) & 1 << (bVar2 & 0x1f)) != 0) &&
      (iVar1 = BitsetTrailZeroCheck(param_1,param_2 + 1), iVar1 == 0)) {
     local_4 = BitsetIterClear(param_1,param_2 + -1);
   }
-  *(uint *)(param_1 + iVar3 * 4) = *(uint *)(param_1 + iVar3 * 4) & -1 << (bVar2 & 0x1f);
+  *MK4_NODE(uint, param_1 + iVar3) = *MK4_NODE(uint, param_1 + iVar3) & -1 << (bVar2 & 0x1f);
   iVar3 = iVar3 + 1;
   if (iVar3 < 3) {
     puVar4 = (undefined4 *)(param_1 + iVar3 * 4);

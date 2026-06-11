@@ -136,7 +136,7 @@ void Triple3VecMul10Tail(void)
     DivLongPushCall();
     if (g_framePauseFlag == 0) {
       puVar1 = (undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4);
-      uVar2 = Mul10Tail(*(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4),g_walkCallback);
+      uVar2 = Mul10Tail(*MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))),g_walkCallback);
       *puVar1 = uVar2;
       uVar2 = Mul10Tail(puVar1[1],g_walkCallback);
       puVar1[1] = uVar2;

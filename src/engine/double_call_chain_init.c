@@ -135,11 +135,11 @@ void DoubleCallChainInit(void)
     g_walkCallback = 0x45;
     MStackPush2LLWalkCompare();
     while ((g_framePauseFlag == 0 && (((byte)g_xformDirtyFlags & 4) == 0))) {
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x7a;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = 0xffffeb86;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x7a;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x70) = 0xffffeb86;
       g_walkCallback = 0;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) = 0;
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74) = g_walkCallback;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x6c) = 0;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x74) = g_walkCallback;
       g_walkCallback = 0x45;
       MStackPush2LLWalkCompare();
     }

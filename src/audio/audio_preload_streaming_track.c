@@ -149,7 +149,7 @@ void AudioPreloadStreamingTrack(void)
     *(code **)(iVar1 + 8) = AudioPreloadStreamingTrack;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x14a6e70;
+    *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x14a6e70;
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
     *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -181,12 +181,12 @@ void AudioPreloadStreamingTrack(void)
         }
         else {
           if (g_audioBankSel == 1) {
-            puVar3 = &g_audioBank2Base + *(int *)(&g_audioPreloadVar + g_audioPreloadState * 4) * 0x18;
+            puVar3 = &g_audioBank2Base + *MK4_NODE(int, &g_audioPreloadVar + g_audioPreloadState) * 0x18;
           }
           else {
-            puVar3 = &g_audioByteCounterChainSt + *(int *)(&g_audioPreloadVar + g_audioPreloadState * 4) * 0x18;
+            puVar3 = &g_audioByteCounterChainSt + *MK4_NODE(int, &g_audioPreloadVar + g_audioPreloadState) * 0x18;
           }
-          iVar2 = *(int *)(&g_dispatchSave633 + g_audioPreloadState * 4);
+          iVar2 = *MK4_NODE(int, &g_dispatchSave633 + g_audioPreloadState);
         }
         MemcpyByteN(&g_audioBank2Base + iVar2 * 0x18,puVar3,0x18);
         g_audioPreloadState = g_audioPreloadState + 1;

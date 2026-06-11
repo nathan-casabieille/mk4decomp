@@ -128,12 +128,12 @@ void MstackPushPackChainInit(void)
   uint *puVar2;
   
   g_matrixStackTop = g_matrixStackTop + 1;
-  *(int *)((int)g_matrixStackTop * 4) = g_cj_0054205c;
+  *MK4_NODE(int, (int)g_matrixStackTop) = g_cj_0054205c;
   g_walkCallback = 0x1359c6;
   PushSetXfmMaskCallPop();
   if (g_framePauseFlag == 0) {
     (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = g_cj_0054205c;
-    g_cj_0054205c = *(int *)((int)g_matrixStackTop * 4);
+    g_cj_0054205c = *MK4_NODE(int, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
     if (((byte)g_xformDirtyFlags & 4) != 0) {
       CallSetPause();
@@ -143,9 +143,9 @@ void MstackPushPackChainInit(void)
     func_0x0049c3d0();
     if (g_framePauseFlag == 0) {
       TripleEntry3Block();
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 100) = 0;
+      MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 100) = 0;
       g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x18);
+      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = MK4_NODE_AT(int, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x18);
       g_walkCallback = 1;
       CmpDivJmp();
       if (g_framePauseFlag == 0) {
@@ -163,7 +163,7 @@ void MstackPushPackChainInit(void)
             return;
           }
         }
-        puVar2 = (uint *)(*(int *)(MK4_NODE_AT(int, g_dualC, 0x18) * 4 + 0x28) * 4);
+        puVar2 = (uint *)(MK4_NODE_AT(int, MK4_NODE_AT(int, g_dualC, 0x18), 0x28) * 4);
         *puVar2 = *puVar2 | 8;
         g_walkCallback = 0xc000;
         puVar2[0x12] = 0xc000;

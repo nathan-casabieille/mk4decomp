@@ -153,9 +153,9 @@ void ContinueScreenFsm(void)
         g_eventQueuePending = 0x14203d;
         DispatcherComplex260_FramePauseScaledStore();
         if (g_framePauseFlag == 0) {
-          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) = 0;
+          MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x54) = 0;
           g_walkCallback = 0x1f;
-          *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x30) = 0x1f;
+          MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x30) = 0x1f;
           PushSetCallPop();
           if (g_framePauseFlag == 0) {
             RegistryPushBindPop();
@@ -177,7 +177,7 @@ void ContinueScreenFsm(void)
       *(code **)(iVar1 + 8) = ContinueScreenFsm;
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 3;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)(iVar1 + 4);
-      *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4) = 0x3423c20;
+      *MK4_NODE(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044))) = 0x3423c20;
       (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) + 1;
       *(int *)(iVar1 + 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
       MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
@@ -204,7 +204,7 @@ void ContinueScreenFsm(void)
             Push70CallScaleArith();
             if (g_framePauseFlag == 0) {
               g_walkCallback = 0x10000;
-              *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) = 0x10000;
+              MK4_NODE_AT(undefined4, (*(unsigned int *)MK4_VA(unsigned int, 0x542044)), 0x5c) = 0x10000;
               g_cj_00542058 = 0x137e68;
               OpcodeStreamDispatch();
               return;

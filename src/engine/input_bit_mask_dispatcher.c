@@ -136,48 +136,48 @@ void Input_PollPlayerJoystick(int param_1)
       *(uint *)(&g_dispatchSave532)[param_1 * 2] =
            *(uint *)(&g_dispatchSave532)[param_1 * 2] | (&g_dispatchSave533)[param_1 * 2];
     }
-    if ((*(int *)(&g_btnBind0 + param_1 * 4) != 0) &&
-       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind0 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+    if ((*MK4_NODE(int, &g_btnBind0 + param_1) != 0) &&
+       ((uVar1 & 1 << ((char)*MK4_NODE(int, &g_btnBind0 + param_1) - 1U & 0x1f)) != 0)) {
       *(uint *)(&g_dispatchSave1111)[param_1 * 2] =
            *(uint *)(&g_dispatchSave1111)[param_1 * 2] | *(uint *)(&g_dispatchSave1110 + param_1 * 8);
     }
-    if ((*(int *)(&g_btnBind1 + param_1 * 4) != 0) &&
-       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind1 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+    if ((*MK4_NODE(int, &g_btnBind1 + param_1) != 0) &&
+       ((uVar1 & 1 << ((char)*MK4_NODE(int, &g_btnBind1 + param_1) - 1U & 0x1f)) != 0)) {
       *(uint *)(&g_dispatchSave1113)[param_1 * 2] =
            *(uint *)(&g_dispatchSave1113)[param_1 * 2] | *(uint *)(&g_dispatchSave1112 + param_1 * 8);
     }
-    if ((*(int *)(&g_btnBind2 + param_1 * 4) != 0) &&
-       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind2 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+    if ((*MK4_NODE(int, &g_btnBind2 + param_1) != 0) &&
+       ((uVar1 & 1 << ((char)*MK4_NODE(int, &g_btnBind2 + param_1) - 1U & 0x1f)) != 0)) {
       *(uint *)(&g_dispatchSave1115)[param_1 * 2] =
            *(uint *)(&g_dispatchSave1115)[param_1 * 2] | *(uint *)(&g_dispatchSave1114 + param_1 * 8);
     }
-    if ((*(int *)(&g_btnBind3 + param_1 * 4) != 0) &&
-       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind3 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+    if ((*MK4_NODE(int, &g_btnBind3 + param_1) != 0) &&
+       ((uVar1 & 1 << ((char)*MK4_NODE(int, &g_btnBind3 + param_1) - 1U & 0x1f)) != 0)) {
       *(uint *)(&g_dispatchSave1117)[param_1 * 2] =
            *(uint *)(&g_dispatchSave1117)[param_1 * 2] | *(uint *)(&g_dispatchSave1116 + param_1 * 8);
     }
-    if ((*(int *)(&g_btnBind4 + param_1 * 4) != 0) &&
-       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind4 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+    if ((*MK4_NODE(int, &g_btnBind4 + param_1) != 0) &&
+       ((uVar1 & 1 << ((char)*MK4_NODE(int, &g_btnBind4 + param_1) - 1U & 0x1f)) != 0)) {
       *(uint *)(&g_dispatchSave1119)[param_1 * 2] =
            *(uint *)(&g_dispatchSave1119)[param_1 * 2] | *(uint *)(&g_dispatchSave1118 + param_1 * 8);
     }
-    if ((*(int *)(&g_btnBind5 + param_1 * 4) != 0) &&
-       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind5 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+    if ((*MK4_NODE(int, &g_btnBind5 + param_1) != 0) &&
+       ((uVar1 & 1 << ((char)*MK4_NODE(int, &g_btnBind5 + param_1) - 1U & 0x1f)) != 0)) {
       *(uint *)(&g_dispatchSave1121)[param_1 * 2] =
            *(uint *)(&g_dispatchSave1121)[param_1 * 2] | *(uint *)(&g_dispatchSave1120 + param_1 * 8);
     }
-    if ((*(int *)(&g_btnBind6 + param_1 * 4) != 0) &&
-       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind6 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+    if ((*MK4_NODE(int, &g_btnBind6 + param_1) != 0) &&
+       ((uVar1 & 1 << ((char)*MK4_NODE(int, &g_btnBind6 + param_1) - 1U & 0x1f)) != 0)) {
       *(uint *)(&g_dispatchSave1123)[param_1 * 2] =
            *(uint *)(&g_dispatchSave1123)[param_1 * 2] | *(uint *)(&g_dispatchSave1122 + param_1 * 8);
     }
-    if ((*(int *)(&g_btnBind7 + param_1 * 4) != 0) &&
-       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind7 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+    if ((*MK4_NODE(int, &g_btnBind7 + param_1) != 0) &&
+       ((uVar1 & 1 << ((char)*MK4_NODE(int, &g_btnBind7 + param_1) - 1U & 0x1f)) != 0)) {
       *(uint *)(&g_dispatchSave1125)[param_1 * 2] =
            *(uint *)(&g_dispatchSave1125)[param_1 * 2] | *(uint *)(&g_dispatchSave1124 + param_1 * 8);
     }
-    if ((*(int *)(&g_btnBind8 + param_1 * 4) != 0) &&
-       ((uVar1 & 1 << ((char)*(int *)(&g_btnBind8 + param_1 * 4) - 1U & 0x1f)) != 0)) {
+    if ((*MK4_NODE(int, &g_btnBind8 + param_1) != 0) &&
+       ((uVar1 & 1 << ((char)*MK4_NODE(int, &g_btnBind8 + param_1) - 1U & 0x1f)) != 0)) {
       *(uint *)(&g_dispatchSave1127)[param_1 * 2] =
            *(uint *)(&g_dispatchSave1127)[param_1 * 2] | *(uint *)(&g_dispatchSave1126 + param_1 * 8);
     }
