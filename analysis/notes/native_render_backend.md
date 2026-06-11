@@ -47,6 +47,38 @@ Shim (1) + convert FlushDrawQueue (2) + ONE rasterizer (3) + Flip->PAL (4), then
 feed a single test primitive (5). That displays the first engine-rendered pixels.
 Full game visuals follow as more rasterizers + the GameLogicStep/FSM cluster convert.
 
+## CRITICAL finding: "runs" != "native-correct" (2026-06-11)
+
+native-full links 146 TUs and runs 60 frames clean - but that is COMPILE+LINK+LOOP
+feasibility, NOT native correctness. The converted Ghidra twins are verified under
+the verifier's / matching's IDENTITY model (data sits at its real VA), and several
+are NOT correct under the relocated arena model:
+
+  - **~11 native-full twin files do raw `idx*4` packed-ptr derefs** (e.g.
+    `*(uint*)(idx*4)`), NOT routed through MK4_NODE. Under MK4_ARENA those hit a
+    raw low address, not arena+offset.
+  - **MK4_NODE itself is mis-fit for the node pool**: arena form is
+    `g_mk4Arena + (idx*4 - 0x400000)`, i.e. it treats the packed addr as an IMAGE
+    VA and subtracts the image base. But the packed-ptr node pool is the original
+    runtime HEAP (idx*4 = a heap address /4 *4), not image data, and is NOT loaded
+    into the arena. So node-pool access under MK4_ARENA is an unsolved design (the
+    mem_model.h "relocated branch is the next open decision" warning, still open).
+  - **Stored-VA function pointers**: `(*g_x)()` calls a uint global holding an
+    ORIGINAL code VA (0x4xxxxx). Natively that VA is not executable code -> needs a
+    VA->native-fn trampoline table. Same for any node field used as a fn-ptr.
+
+native-full RUNS only because GameLogicStep's FSM is mostly stubbed, so the deep
+node-walk / indirect-call paths are not exercised in a few smoke frames.
+
+IMPLICATION (reframes the native port): beyond compile/link, a CORRECT native
+frame needs (a) a real packed-ptr node-pool memory model (allocate the pool in a
+reserved region; make idx<->addr round-trip arena-consistent; route ALL packed
+access through MK4_NODE - the raw `idx*4` twins must be re-seam-routed), and (b) a
+VA->native mapping for stored code/data pointers. Lighting up MORE raw-`idx*4`
+Ghidra twins into native-full is DECEPTIVE (compiles + runs, but wrong on any
+exercised node path) - do NOT chase TU count as the metric. The metric that
+matters is seam-correctness + the node-pool model.
+
 ## Honest estimate
 ~70% of "playable frame" is done (loop, logic, arena, memory model, seams, the
 convert+verify+native toolchain, PAL output). The remaining ~30% is this render
