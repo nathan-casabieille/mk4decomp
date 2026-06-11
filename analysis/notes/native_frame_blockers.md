@@ -199,6 +199,31 @@ verify_coexec (single tracked process, timeout on) after any bulk ghidra_inject
 to keep it that way. The 4 reverted functions are re-transcription candidates
 (from asm + seeded verify), not lost.
 
+## SKIP attack (2026-06-11): 3 verifier fixes recovered ~57 twins
+
+Attacked the ~215 SKIP twins. Categorised the SKIP reasons and fixed the
+high-leverage tooling causes (all in verify_coexec.py):
+  1. **func_0x<hex> callee resolution** - Ghidra raw-address callees carry their
+     VA in the name; resolve directly. Unlocked 28 SKIP->VERIFIED, surfaced 1
+     more false twin (BossPunchCluster - wrong node index for its +0x58 write;
+     reverted + blocklisted -> 5 false twins total).
+  2. **thunk_X -> X VA** - thunks are jmp-wrappers; co-exec as X's bytes. ~9 more.
+  3. **-DMK4_WIN32_SHIM** - CC is mingw (_WIN32 set) so win32_types.h gated its
+     typedefs off; forcing the shim let 5 pure-compute Win32-typed twins compile
+     + VERIFY.
+Plus the emu_start wall-clock timeout (3s) that ended the hang/CPU-peg problem.
+
+Net: ~57 SKIP->VERIFIED, 0 hidden false twins in the entire SKIP set.
+
+Irreducible SKIP tail (NOT co-exec-verifiable by design, already proven by the
+byte-identical matching build):
+  - ~34 unresolved-call = Win32/CRT/FPU IAT callers (GetSystemMetrics, MCI,
+    __ftol, SQRT, DirectDrawEnumerate...) - external, can't run in unicorn.
+  - ~51 capped-diff + ~42 unicorn = loops / pointer-walks that need per-function
+    SEEDED state to run deterministically (same class as Helper_TickInner). These
+    are the next investment if more verified coverage is wanted: pick a function,
+    hand-seed a valid node/arg state, diff (see feedback_seeded_coexec_node_walk_template).
+
 ## Helper_TickInner: first verified render/FSM twin (2026-06-10, DONE)
 
 With the VA fix in place, transcribed `Helper_TickInner` (@0x004ba130, the
