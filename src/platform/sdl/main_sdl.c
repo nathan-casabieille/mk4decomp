@@ -75,10 +75,21 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    while (MK4_PalPumpEvents()) {
-        MK4_PalFrameBegin();
-        MK4_GameFrame();
-        MK4_PalFramePresent();
+    /* Optional bounded run: MK4_MAX_FRAMES=N exits cleanly after N frames
+     * (headless/CI smoke test of the frame loop); unset = run until quit. */
+    {
+        const char *mf = getenv("MK4_MAX_FRAMES");
+        long max_frames = mf ? strtol(mf, NULL, 10) : 0;
+        long frame = 0;
+        while (MK4_PalPumpEvents()) {
+            MK4_PalFrameBegin();
+            MK4_GameFrame();
+            MK4_PalFramePresent();
+            if (max_frames && ++frame >= max_frames) {
+                SDL_Log("MK4_MAX_FRAMES=%ld reached; %ld frames ran", max_frames, frame);
+                break;
+            }
+        }
     }
 
     MK4_GameShutdown();

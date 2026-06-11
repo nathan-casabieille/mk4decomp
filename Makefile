@@ -205,7 +205,12 @@ SDL_LIBS      ?= -L$(SDL_PREFIX)/lib -lSDL2
 NATIVE_EXE    := $(BUILD_DIR)/MK4.native
 # SDL backend + host Win32 shims + the arena loader (relocated memory model).
 # Engine objects join this list as they become portable + seam-clean.
-NATIVE_SRCS   := $(wildcard src/platform/sdl/*.c) src/portable/arena.c
+# Converted engine objects in MainLoopStep's closure, added as they link.
+# Start: the per-frame loop body itself (MainLoopStep). Its frame-stage blockers
+# (BeginFrame/GameLogicStep/DrawScene/PresentFrame/QueryMicroTimer) are weak
+# stubs in src/platform/sdl/engine_stubs.c until each real file joins here.
+NATIVE_ENGINE_SRCS := src/boot/main_loop.c
+NATIVE_SRCS   := $(wildcard src/platform/sdl/*.c) src/portable/arena.c $(NATIVE_ENGINE_SRCS)
 # Port-in-progress posture: the converted engine models a relocated pointer as
 # an int-sized arena value, so int<->pointer conversions are expected, not
 # bugs; and call sites for not-yet-declared host functions resolve at link via
