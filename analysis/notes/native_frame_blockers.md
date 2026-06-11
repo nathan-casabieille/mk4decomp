@@ -171,6 +171,34 @@ behavioral co-exec verifier (a wrong VA shows up as a MISMATCH), not static
 alias-listing. So the audit's standing conclusion: no further blind VA edits;
 treat verify_coexec MISMATCHes as the wrong-VA tripwire.
 
+## Full-corpus twin audit (2026-06-11, COMPLETE)
+
+Ran verify_coexec over all **1054 twins** (657 carried the "behavior not yet
+runtime-verified" Ghidra marker). Result:
+  - **729 VERIFIED**, ~216 SKIP (uncompilable / capped / timed-out),
+  - **4 confirmed false twins** (~0.4%), all Ghidra decompiles, both sides
+    RETURNED (real behavioural bugs, not seeding/cap artifacts):
+      PositionClampCluster      - g_eventQueueCurrent (0x542070) final diverges
+      CameraBounceOverflow      - wrote 0x4d5100/4/0x53814c vs orig's one store
+      TripleArrayDiffClamp      - g_walkCallback (0x54206c) final diverges
+      TableWalk3StrideCall      - omits 3 table writes + g_xformEntityIdx diverges
+  All 4 reverted to naked-only (tools-side: /tmp/revert_twin.py, a definition-
+  block remover) and added to config/twin_mismatch_blocklist.txt. Matching stayed
+  byte-identical throughout (MD5 a3d2bf7f).
+
+Two process/tooling lessons (now memories):
+  - Do NOT fan out the sweep with `( cmd ) &` worker fleets: they orphan to
+    launchd and become unkillable from the sandboxed Bash tool (pegged 5 cores).
+    Use one run_in_background process. [[feedback_no_untracked_background_fleets]]
+  - Root cause of the CPU peg: emu_start had no wall-clock timeout, so a
+    pathological twin's emulation ran unbounded. Fixed: emu_start now takes a 3s
+    timeout (MK4_COEXEC_WALL_US) -> timed-out runs become SKIP, never a hang.
+
+Standing conclusion: the corpus is now verified clean of false twins; re-run
+verify_coexec (single tracked process, timeout on) after any bulk ghidra_inject
+to keep it that way. The 4 reverted functions are re-transcription candidates
+(from asm + seeded verify), not lost.
+
 ## Helper_TickInner: first verified render/FSM twin (2026-06-10, DONE)
 
 With the VA fix in place, transcribed `Helper_TickInner` (@0x004ba130, the
