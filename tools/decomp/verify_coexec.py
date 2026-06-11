@@ -207,6 +207,10 @@ def uc_new(arena):
 
 import os
 CAP = int(os.environ.get('MK4_COEXEC_CAP', '2000000'))
+# Per-emulation wall-clock ceiling (microseconds). Bounds the rare twin whose
+# emulation the instruction cap fails to stop in reasonable time, so a sweep
+# can never hang/peg a core. Override via MK4_COEXEC_WALL_US.
+WALL_US = int(os.environ.get('MK4_COEXEC_WALL_US', '3000000'))
 ARG_BASE = None          # set in main(): start of the deterministic arg scratch
 
 
@@ -223,7 +227,13 @@ def run_at(uc, eip, full, nargs=0):
     for i in range(nargs):
         uc.mem_write(esp + 4 + 4 * i,
                      ((ARG_BASE + i * 0x400) & 0xffffffff).to_bytes(4, 'little'))
-    uc.emu_start(eip, SENT, count=CAP)
+    # Wall-clock timeout (microseconds) in ADDITION to the instruction cap:
+    # some pathological twins/originals run the cap's worth of instructions so
+    # slowly (or in a way the count cap doesn't bound) that emu_start hangs for
+    # minutes, pegging a core. The timeout guarantees emu_start returns; a
+    # timed-out run leaves EIP != SENT -> treated as non-terminated -> SKIP
+    # (cap artifact), never a false MISMATCH. See feedback_no_untracked_background_fleets.
+    uc.emu_start(eip, SENT, timeout=WALL_US, count=CAP)
     # A mismatch is only trustworthy if the function actually RETURNED (EIP at
     # the sentinel). If it hit the instruction cap mid-run, the twin (gcc) and
     # original (MSVC asm) may simply be at different points of an equivalent
