@@ -112368,45 +112368,6 @@ __declspec(naked) void ThrowTakedownCluster(void)
 /* ------------------------------------------------------------------ */
 extern void DualSubFromField(void);
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void PositionClampCluster(void)
-
-{
-  int iVar1;
-  
-  g_walkCallback = MK4_NODE_AT(undefined4, g_eventQueuePending, 0x54);
-  g_eventQueueCurrent = MK4_NODE_AT(undefined4, g_eventQueuePending, 0x5c);
-  g_walkCallback = Mul10Tail(g_walkCallback,g_walkCallback);
-  iVar1 = Mul10Tail(g_eventQueueCurrent,g_eventQueueCurrent);
-  g_walkCallback = g_walkCallback + iVar1;
-  g_eventQueueCurrent = g_rangeSqLimit + -0x40000;
-  if (g_eventQueueCurrent <= g_walkCallback) {
-    g_eventQueueWorkType = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c);
-    g_eventQueueNotMask = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74);
-    g_eventQueueCurrent = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x54) + g_eventQueueWorkType;
-    g_chainAccumCur = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c) + g_eventQueueNotMask;
-    g_eventQueueCurrent = Mul10Tail(g_eventQueueCurrent,g_eventQueueCurrent);
-    g_chainAccumCur = Mul10Tail(g_chainAccumCur,g_chainAccumCur);
-    g_eventQueueCurrent = g_eventQueueCurrent + g_chainAccumCur;
-    if (g_eventQueueChild <= g_eventQueueCurrent) {
-      g_dualC = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      DualSubFromField();
-      if (g_framePauseFlag == 0) {
-        g_dualC = g_eventQueuePending;
-        DualSubFromField();
-      }
-      return;
-    }
-  }
-  MK4_NODE_AT(int, g_eventQueuePending, 0x54) =
-       *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x6c) + MK4_NODE_AT(int, g_eventQueuePending, 0x54);
-  g_eventQueueWorkType = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x74);
-  g_chainAccumCur = g_eventQueueWorkType + MK4_NODE_AT(int, g_eventQueuePending, 0x5c);
-  MK4_NODE_AT(int, g_eventQueuePending, 0x5c) = g_chainAccumCur;
-  return;
-}
-#else
 __declspec(naked) void PositionClampCluster(void)
 {
     __asm {
@@ -112547,7 +112508,6 @@ __declspec(naked) void PositionClampCluster(void)
         ret
     }
 }
-#endif
 
 /* ------------------------------------------------------------------ */
 /* Sweep cluster (572b game, 2 packed helpers)                         */
@@ -114443,84 +114403,6 @@ void PvsMergeDriver(void) {
 /* ------------------------------------------------------------------ */
 /* Camera Z/Y bounce update with overflow correction (590b game)       */
 /* ------------------------------------------------------------------ */
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-int CameraBounceOverflow(void)
-
-{
-  int iVar1;
-  
-  g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) + *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x4c);
-  *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = g_walkCallback;
-  if (0x30a2 < g_walkCallback) {
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = 0x30a3;
-  }
-  g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58);
-  if (-1 < g_walkCallback) {
-    *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x58) = 0xfffffd71;
-    g_walkCallback = *(undefined4 *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70);
-    iVar1 = Mul10Tail(0xffff6667,g_walkCallback);
-    if (-0x11eb < iVar1) {
-      g_walkCallback = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70);
-      if (g_walkCallback == 0) {
-        return 0;
-      }
-      g_walkCallback = 0x17;
-      GatedWordPushCall();
-      if (g_framePauseFlag != 0) {
-        return g_framePauseFlag;
-      }
-      g_matrixStackTop = g_matrixStackTop + 1;
-      *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-      g_eventQueueNotMask = 7;
-      EntryThunkBodyStateMachine();
-      if (g_framePauseFlag != 0) {
-        return g_framePauseFlag;
-      }
-      (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((int)g_matrixStackTop * 4);
-      g_matrixStackTop = g_matrixStackTop + -1;
-      iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
-      g_walkCallback = 0;
-      *(undefined4 *)(iVar1 + 0x6c) = 0;
-      *(int *)(iVar1 + 0x70) = g_walkCallback;
-      *(int *)(iVar1 + 0x74) = g_walkCallback;
-      *(int *)(iVar1 + 0x7c) = g_walkCallback;
-      *(int *)(iVar1 + 0x78) = g_walkCallback;
-      *(int *)(iVar1 + 0x80) = g_walkCallback;
-      *(int *)(iVar1 + 0x4c) = g_walkCallback;
-      g_eventQueueCurrent = *(undefined4 *)(iVar1 + 0x5c);
-      g_walkCallback = *(undefined4 *)(iVar1 + 0x54);
-      MStackBracketed3StoreCall();
-      return g_framePauseFlag;
-    }
-    *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x70) = iVar1;
-    g_walkCallback = 0x17;
-    GatedWordPushCall();
-    if (g_framePauseFlag != 0) {
-      return g_framePauseFlag;
-    }
-    g_matrixStackTop = g_matrixStackTop + 1;
-    *(int *)((int)g_matrixStackTop * 4) = (*(unsigned int *)MK4_VA(unsigned int, 0x542044));
-    g_eventQueueNotMask = 7;
-    EntryThunkBodyStateMachine();
-    if (g_framePauseFlag != 0) {
-      return g_framePauseFlag;
-    }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = *(int *)((int)g_matrixStackTop * 4);
-    g_matrixStackTop = g_matrixStackTop + -1;
-    iVar1 = (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4;
-    *(int *)(iVar1 + 0x7c) = -*(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x7c);
-    *(int *)(iVar1 + 0x78) = -*(int *)(iVar1 + 0x78);
-    g_walkCallback = -*(int *)(iVar1 + 0x80);
-    *(int *)(iVar1 + 0x80) = g_walkCallback;
-  }
-  if (-0x8001 < g_walkCallback) {
-    return g_walkCallback;
-  }
-  iVar1 = SetJmp_AudioBridgeMStackChainCopy_00440720();
-  return iVar1;
-}
-#else
 __declspec(naked) void CameraBounceOverflow(void)
 {
     __asm {
@@ -114648,7 +114530,6 @@ __declspec(naked) void CameraBounceOverflow(void)
         jmp      SetJmp_AudioBridgeMStackChainCopy_00440720
     }
 }
-#endif
 
 /* ------------------------------------------------------------------ */
 /* Throw-takedown step cluster (592b game, 3 packed helpers)           */

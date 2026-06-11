@@ -119,47 +119,6 @@ extern void DispatcherComplex138_004760f0(void);
 extern void ScaledChainAccumThreshold(void);
 extern void ScaledInitOrSelfPtr_DualSeqLoopDispatch(void);
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void DualSeqLoopDispatch(void)
-
-{
-  (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0;
-  g_walkCallback = 0x94;
-  DispatcherComplex138_004760f0();
-  if (g_framePauseFlag == 0) {
-    while (((byte)g_xformDirtyFlags & 4) == 0) {
-      CameraBounceOverflow();
-      if (g_framePauseFlag != 0) {
-        return;
-      }
-      g_walkCallback = 0x94;
-      DispatcherComplex138_004760f0();
-      if (g_framePauseFlag != 0) {
-        return;
-      }
-    }
-    (*(unsigned int *)MK4_VA(unsigned int, 0x542044)) = 0;
-    g_walkCallback = 0x7e;
-    DispatcherComplex138_004760f0();
-    if (g_framePauseFlag == 0) {
-      while (((byte)g_xformDirtyFlags & 4) == 0) {
-        ScaledChainAccumThreshold();
-        if (g_framePauseFlag != 0) {
-          return;
-        }
-        g_walkCallback = 0x7e;
-        DispatcherComplex138_004760f0();
-        if (g_framePauseFlag != 0) {
-          return;
-        }
-      }
-      func_0x00442d90();
-    }
-  }
-  return;
-}
-#else
 __declspec(naked) void DualSeqLoopDispatch(void) {
     __asm {
         push    ebx
@@ -225,4 +184,3 @@ __declspec(naked) void DualSeqLoopDispatch(void) {
         ret
     }
 }
-#endif
