@@ -24,6 +24,7 @@ import verify_coexec as vc
 BASE = vc.BASE                 # 0x400000
 FB = 0x00100000                # framebuffer base (below BASE, inside [0, full))
 TEX = 0x00180000               # texture base
+PAL = 0x00300000               # palette base (paletted/CLUT variants)
 
 
 def seed(arena, gl_va, pairs):
@@ -41,6 +42,10 @@ def seed(arena, gl_va, pairs):
 # are essential: an unexercised branch proves nothing.
 W, H = 64, 48
 SCENARIOS = {
+    # u0 = starting V (texture row); it advances by gradY per row, so the
+    # texture page byte ((1374>>16)&0xff) is exercised across rows. (Do NOT seed
+    # g_dispatchSave1375 - it aliases &1374+2 and is overwritten by the function's
+    # own store of 1374<<16.) palsel exercises the CLUT base selector (1367).
     'no-clip':        dict(x0=8,  y0=6,  x1=40, y1=30, u0=0, U1=24, P=0,  Q=16),
     'left-clip':      dict(x0=-12, y0=6, x1=40, y1=30, u0=0, U1=24, P=2,  Q=16),
     'top-clip':       dict(x0=8,  y0=-9, x1=40, y1=30, u0=3, U1=24, P=0,  Q=16),
@@ -48,7 +53,8 @@ SCENARIOS = {
     'right-clip':     dict(x0=8,  y0=6,  x1=80, y1=30, u0=0, U1=40, P=0,  Q=16),
     'bottom-clip':    dict(x0=8,  y0=6,  x1=40, y1=60, u0=0, U1=24, P=0,  Q=40),
     'all-clip':       dict(x0=-4, y0=-3, x1=80, y1=60, u0=1, U1=48, P=2,  Q=48),
-    'subtexel+page':  dict(x0=8,  y0=6,  x1=40, y1=30, u0=0, U1=24, P=0,  Q=16, page=3, sub=7),
+    'subtexel+page':  dict(x0=8,  y0=6,  x1=40, y1=30, u0=5, U1=24, P=0,  Q=40, sub=7),
+    'palsel':         dict(x0=8,  y0=6,  x1=40, y1=30, u0=0, U1=24, P=0,  Q=16, palsel=0x10),
 }
 
 
@@ -60,8 +66,8 @@ def build_arena(base_arena, gl_va, sc):
         'g_dispatchSave1380': sc['x1'], 'g_dispatchSave1383': sc['y1'],
         'g_dispatchSave1374': sc['u0'], 'g_dispatchSave1373': sc['U1'],
         'g_dispatchSave1371': sc['P'],  'g_dispatchSave1377': sc['Q'],
-        'g_dispatchSave1375': sc.get('page', 0), 'g_dispatchSave1400': TEX,
-        'g_dispatchSave1403': sc.get('sub', 0),
+        'g_dispatchSave1400': TEX, 'g_dispatchSave1403': sc.get('sub', 0),
+        'g_dispatchSave1340': PAL, 'g_dispatchSave1367': sc.get('palsel', 0),
     })
     return arena
 
@@ -83,20 +89,30 @@ def main():
         print(name, 'SKIP build:', err)
         return 1
 
-    # Large non-zero 16bpp texture so page/sub-texel addressing (dh, g_..1403)
-    # lands inside real data (texel 0 = transparent, so force every word != 0).
+    # Large texture of small non-zero values (1..255): used directly as 16bpp
+    # color by ScanlineTexBlit, and as a CLUT index by the paletted variants
+    # (texel/index 0 = transparent). The big span covers page/sub-texel
+    # addressing without leaving mapped memory.
     TEXBYTES = 0x120000
     tex = bytearray(TEXBYTES)
     for i in range(0, TEXBYTES, 2):
-        v = ((i >> 1) & 0x7fff) | 1
+        v = (((i >> 1) % 255) + 1)             # 1..255, never 0
         tex[i] = v & 0xff
         tex[i + 1] = (v >> 8) & 0xff
+    # Palette: 0x40000 of distinct non-zero 16bpp colors (CLUT lookup target).
+    PALBYTES = 0x40000
+    pal = bytearray(PALBYTES)
+    for i in range(0, PALBYTES, 2):
+        v = (((i >> 1) * 7 + 0x1234) & 0x7fff) | 0x8000   # always != 0
+        pal[i] = v & 0xff
+        pal[i + 1] = (v >> 8) & 0xff
     blob_lo = load_base & ~3
     blob_hi = (load_base + len(blob) + 3) & ~3
 
     def run(arena, load_twin):
         uc, full = vc.uc_new(arena)
         uc.mem_write(TEX, bytes(tex))
+        uc.mem_write(PAL, bytes(pal))
         uc.mem_write(FB, b'\x00' * (pitch * H))
         if load_twin:
             if load_base + len(blob) > full:

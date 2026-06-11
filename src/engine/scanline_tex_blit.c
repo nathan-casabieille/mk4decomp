@@ -233,7 +233,7 @@ void ScanlineTexBlit(void)
     eax = g_dispatchSave1403;                                  /* first row: jmp L_0aac */
     for (;;) {
         ecx = g_dispatchSave1371;
-        edx = (g_dispatchSave1375 & 0xff) << 8;                /* dh = texpage */
+        edx = ((g_dispatchSave1374 >> 16) & 0xff) << 8;        /* dh = byte[1375] = (1374>>16)&0xff (V/page), layout-independent */
         g_dispatchSave1387 = ecx;
         edx = edx + eax;                                       /* + sub-texel (1403) */
         eax = g_dispatchSave1400;                              /* tex base */

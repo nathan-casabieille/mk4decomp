@@ -138,77 +138,161 @@ extern unsigned int g_viewportY;
 extern unsigned int g_dispatchSave1404;
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+/*
+ * Portable C twin (path A). Faithful register-level transcription of the naked
+ * branch below; verified by seeded co-exec (tools/decomp/verify_scanline.py),
+ * not byte-match. Paletted/CLUT variant of ScanlineTexBlit: the texture holds
+ * 16bpp indices; each is looked up in a palette (base = ((1367 & 0xf0) << 13)
+ * + 1340) to get the 16bpp output color. Index 0 = transparent. The texel
+ * column index is (g_dispatchSave1387 >> 16) & 0xff and the texture page/row
+ * byte is (g_dispatchSave1374 >> 16) & 0xff - in the original these are the
+ * aliased bytes g_dispatchSave1388 (&1387+2) / g_dispatchSave1375 (&1374+2);
+ * expressed via 1387/1374 here so the twin is layout-independent (correct in
+ * both the verifier and the native build). Replaces an earlier unverified
+ * Ghidra twin whose undefined2* globals did not co-exec.
+ */
 void ScanlineTexBlitPaletted(void)
-
 {
-  ushort uVar1;
-  uint uVar2;
-  int iVar3;
-  int iVar4;
-  uint uVar5;
-  int iVar6;
-  int iVar7;
-  
-  if ((((g_viewportX != 0) && (g_dispatchSave1378 < g_viewportW)) && (g_dispatchSave1381 < g_viewportH)) &&
-     ((-1 < g_dispatchSave1380 && (-1 < g_dispatchSave1383)))) {
-    g_dispatchSave1708 = g_dispatchSave1380 - g_dispatchSave1378;
-    g_dispatchSave1707 = g_dispatchSave1383 - g_dispatchSave1381;
-    if ((0 < g_dispatchSave1708) && (0 < g_dispatchSave1707)) {
-      uVar2 = g_dispatchSave1374 * 0x10000;
-      g_dispatchSave1373 = g_dispatchSave1373 * 0x10000;
-      uVar5 = g_dispatchSave1371 * 0x10000;
-      g_dispatchSave1357 = (int)(g_dispatchSave1373 + g_dispatchSave1371 * -0x10000) / g_dispatchSave1708;
-      g_dispatchSave1377 = g_dispatchSave1377 * 0x10000;
-      iVar3 = (int)(g_dispatchSave1377 + g_dispatchSave1374 * -0x10000) / g_dispatchSave1707;
-      g_dispatchSave1371 = uVar5;
-      if (g_dispatchSave1378 < 0) {
-        g_dispatchSave1371 = uVar5 - g_dispatchSave1357 * g_dispatchSave1378;
-        g_dispatchSave1708 = g_dispatchSave1708 + g_dispatchSave1378;
-        g_dispatchSave1378 = 0;
-      }
-      g_dispatchSave1374 = uVar2;
-      if (g_dispatchSave1381 < 0) {
-        g_dispatchSave1374 = uVar2 - iVar3 * g_dispatchSave1381;
-        g_dispatchSave1707 = g_dispatchSave1707 + g_dispatchSave1381;
-        g_dispatchSave1381 = 0;
-      }
-      if (g_viewportW <= g_dispatchSave1380) {
-        g_dispatchSave1708 = g_viewportW - g_dispatchSave1378;
-      }
-      if (g_viewportH <= g_dispatchSave1383) {
-        g_dispatchSave1707 = g_viewportH - g_dispatchSave1381;
-      }
-      g_dispatchSave1346 = (undefined2 *)(g_viewportX + g_viewportY * g_dispatchSave1381 + g_dispatchSave1378 * 2);
-      iVar4 = (g_dispatchSave1367 & 0xf0) * 0x2000 + g_dispatchSave1340;
-      uVar2 = (g_dispatchSave1403 & 0xf) << 0x10;
-      g_dispatchSave1358 = iVar3;
-      g_dispatchSave1403 = uVar2;
-      iVar6 = g_dispatchSave1708;
-      while (0 < g_dispatchSave1707) {
-        g_dispatchSave1404 = g_dispatchSave1400 + ((g_dispatchSave1374 >> 0x10 & 0xff) * 0x100 + uVar2) * 2;
-        g_dispatchSave1345 = g_dispatchSave1346;
-        iVar7 = g_dispatchSave1707;
-        g_dispatchSave1387 = g_dispatchSave1371;
-        for (g_clipMinScratch = iVar6; 0 < g_clipMinScratch; g_clipMinScratch = g_clipMinScratch + -1) {
-          uVar1 = *(ushort *)(g_dispatchSave1404 + (g_dispatchSave1387 >> 0x10 & 0xff) * 2);
-          if (uVar1 != 0) {
-            *g_dispatchSave1345 = *(undefined2 *)(iVar4 + (uint)uVar1 * 2);
-            iVar6 = g_dispatchSave1708;
-            iVar7 = g_dispatchSave1707;
-          }
-          g_dispatchSave1387 = g_dispatchSave1387 + g_dispatchSave1357;
-          g_dispatchSave1345 = g_dispatchSave1345 + 1;
-          iVar3 = g_dispatchSave1358;
-          uVar2 = g_dispatchSave1403;
-        }
-        g_dispatchSave1374 = g_dispatchSave1374 + iVar3;
-        g_dispatchSave1346 = (undefined2 *)((int)g_dispatchSave1346 + g_viewportY);
-        g_dispatchSave1707 = iVar7 + -1;
-      }
+    unsigned int eax, ebx, ecx, edx, esi, edi, ebp;
+
+    if (g_viewportX == 0) return;
+    ecx = g_dispatchSave1378;                  /* x0 */
+    if ((int)ecx >= (int)g_viewportW) return;
+    ebx = g_dispatchSave1381;                  /* y0 */
+    if ((int)ebx >= (int)g_viewportH) return;
+    esi = g_dispatchSave1380;                  /* x1 */
+    if ((int)esi < 0) return;
+    edi = g_dispatchSave1383;                  /* y1 */
+    if ((int)edi < 0) return;
+    esi -= ecx;                                /* w */
+    edi -= ebx;                                /* h */
+    g_dispatchSave1708 = esi;
+    g_dispatchSave1707 = edi;
+    if ((int)esi < 1) return;
+    if ((int)edi < 1) return;
+
+    eax = g_dispatchSave1374 << 16;  g_dispatchSave1374 = eax;   /* u0fx (V) */
+    edx = g_dispatchSave1371 << 16;                             /* Pfx */
+    eax = g_dispatchSave1373 << 16;  g_dispatchSave1373 = eax;   /* U1fx */
+    eax = eax - edx;
+    g_dispatchSave1371 = edx;
+    ebp = g_dispatchSave1377;                                   /* Q */
+    eax = (unsigned int)((int)eax / (int)esi);                  /* gradX = (U1fx-Pfx)/w */
+    edx = g_dispatchSave1374;                                   /* u0fx */
+    ebp <<= 16;  g_dispatchSave1377 = ebp;                       /* Qfx */
+    g_dispatchSave1357 = eax;                                   /* gradX */
+    eax = ebp;
+    eax = eax - edx;
+    eax = (unsigned int)((int)eax / (int)edi);                  /* gradY = (Qfx-u0fx)/h */
+    ebp = eax;
+    g_dispatchSave1358 = ebp;                                   /* gradY */
+
+    if ((int)ecx < 0) {                                         /* left clip */
+        eax = g_dispatchSave1357;
+        edx = g_dispatchSave1371;
+        eax = (unsigned int)((int)eax * (int)ecx);
+        edx = edx - eax;
+        esi = esi + ecx;
+        ecx = 0;
+        g_dispatchSave1371 = edx;
+        g_dispatchSave1708 = esi;
+        g_dispatchSave1378 = ecx;
     }
-  }
-  return;
+    if ((int)ebx < 0) {                                         /* top clip */
+        edx = ebp;
+        eax = g_dispatchSave1374;
+        edx = (unsigned int)((int)edx * (int)ebx);
+        eax = eax - edx;
+        edi = edi + ebx;
+        ebx = 0;
+        g_dispatchSave1374 = eax;
+        g_dispatchSave1707 = edi;
+        g_dispatchSave1381 = ebx;
+    }
+    eax = g_viewportW;
+    edx = g_dispatchSave1380;
+    if (!((int)edx < (int)eax)) {                              /* right clip */
+        eax = eax - ecx;
+        esi = eax;
+        g_dispatchSave1708 = esi;
+    }
+    eax = g_viewportH;
+    edx = g_dispatchSave1383;
+    if (!((int)edx < (int)eax)) {                              /* bottom clip */
+        eax = eax - ebx;
+        edi = eax;
+        g_dispatchSave1707 = edi;
+    }
+    edx = g_viewportY;                                         /* pitch */
+    eax = g_viewportX;                                         /* fb base */
+    edx = (unsigned int)((int)edx * (int)ebx);                /* pitch*y0 */
+    eax = eax + edx;
+    ebx = g_dispatchSave1340;                                  /* palette base lo */
+    eax = eax + ecx * 2;                                       /* + x0*2 */
+    ecx = g_dispatchSave1367 & 0xff;
+    g_dispatchSave1346 = eax;                                  /* dest top-left */
+    eax = g_dispatchSave1403;
+    ecx = (ecx & 0xfffffff0u) << 13;
+    eax = eax & 0xf;
+    ecx = ecx + ebx;                                           /* palette base */
+    eax <<= 16;                                                /* sub-texel << 16 */
+    g_dispatchSave1403 = eax;
+    if ((int)edi <= 0) return;
+
+    for (;;) {                                                 /* row loop; ecx=palette base */
+        edx = g_dispatchSave1371;
+        ebx = g_dispatchSave1400;                              /* tex base */
+        g_dispatchSave1387 = edx;
+        edx = ((g_dispatchSave1374 >> 16) & 0xff) << 8;        /* texpage/row byte (1374-derived) */
+        g_clipMinScratch = esi;                                /* column counter = w */
+        edx = edx + eax;                                       /* + sub<<16 */
+        edx = ebx + edx * 2;                                   /* texture row base */
+        g_dispatchSave1404 = edx;
+        edx = g_dispatchSave1346;
+        g_dispatchSave1345 = edx;                              /* current dest ptr */
+        if ((int)esi > 0) {
+            do {
+                edx = g_dispatchSave1404;
+                eax = (g_dispatchSave1387 >> 16) & 0xff;       /* texel column index */
+                {
+                    unsigned short t = *(unsigned short *)(unsigned long)(edx + eax * 2);
+                    eax = (eax & 0xffff0000u) | t;             /* mov ax, [edx+eax*2] */
+                }
+                if ((eax & 0xffff) != 0) {                     /* index 0 = transparent */
+                    edx = g_dispatchSave1345;
+                    eax = eax & 0xffff;
+                    {
+                        unsigned short c = *(unsigned short *)(unsigned long)(ecx + eax * 2);
+                        *(unsigned short *)(unsigned long)edx = c; /* CLUT lookup -> pixel */
+                    }
+                    esi = g_dispatchSave1708;                  /* reload esi=w */
+                    edi = g_dispatchSave1707;                  /* reload edi=h */
+                }
+                eax = g_clipMinScratch;
+                edx = g_dispatchSave1357;                      /* gradX */
+                ebp = g_dispatchSave1387;
+                ebx = g_dispatchSave1345;
+                eax = eax - 1;
+                ebp = ebp + edx;                               /* texcoord += gradX */
+                ebx = ebx + 2;                                 /* dest += 2 */
+                g_clipMinScratch = eax;
+                g_dispatchSave1387 = ebp;
+                g_dispatchSave1345 = ebx;
+            } while ((int)eax > 0);
+            eax = g_dispatchSave1403;                          /* restore eax = sub<<16 */
+            ebp = g_dispatchSave1358;                          /* restore ebp = gradY */
+        }
+        edx = g_dispatchSave1374;
+        ebx = g_dispatchSave1346;
+        edx = edx + ebp;                                       /* 1374 += gradY (V advance) */
+        edi = edi - 1;                                         /* rows-- */
+        g_dispatchSave1374 = edx;
+        edx = g_viewportY;
+        ebx = ebx + edx;                                       /* dest += pitch */
+        g_dispatchSave1707 = edi;
+        g_dispatchSave1346 = ebx;
+        if (!((int)edi > 0)) break;
+    }
 }
 #else
 __declspec(naked) void ScanlineTexBlitPaletted(void)
