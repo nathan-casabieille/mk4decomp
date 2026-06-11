@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/ghidra_types.h"   /* MK4_NODE_AT / MK4_ResolveCode (NON_MATCHING) */
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -122,6 +123,59 @@ extern unsigned int g_dispatchSave946;
 extern void DualScaledStore(void);
 extern void Thunk_ScaledNeg1SetPause(void);
 
+#ifdef NON_MATCHING
+/* Portable twin (verify_coexec + native trampoline). Install-self index walk:
+ * if node[baseSel].0x84 == 0, init then walk the dispatch table at
+ * g_dispatchSave946 (VA 0x4e7528, packed base VA>>2, 5-dword stride): each entry
+ * gives a callback index (signed; <0 -> Thunk_ScaledNeg1SetPause + return), call
+ * it (indirect -> MK4_ResolveCode), and on a non-zero +0x10 field install self
+ * (store &InstallSelfIndexWalk into node.+8) and pause. Else resume the walk at
+ * g_eventQueueEnd+5. */
+void InstallSelfIndexWalk(void)
+{
+    unsigned int base = g_baseSel;
+    unsigned int self = (unsigned int)(unsigned long)InstallSelfIndexWalk;
+    unsigned int v, e, c;
+
+    v = MK4_NODE_AT(unsigned int, base, 0x84);
+    MK4_NODE_AT(unsigned int, base, 0x84) = 0;
+    if (v == 0) {
+        DualScaledStore();
+        if (g_framePauseFlag) return;
+        MK4_NODE_AT(unsigned int, base, 0x4c) = g_cj_0054205c;
+        g_eventQueueIdx = g_cj_0054205c;
+        e = 0x4e7528u >> 2;                 /* OFFSET g_dispatchSave946 >> 2 */
+    } else {
+        e = g_eventQueueEnd + 5;            /* resume2 */
+    }
+    for (;;) {
+        g_eventQueueEnd = e;
+        v = MK4_NODE_AT(unsigned int, e, 0);
+        g_walkCallback = v;
+        if ((int)v < 0) {                   /* jge after_thunk; else thunk + ret */
+            Thunk_ScaledNeg1SetPause();
+            return;
+        }
+        v = v + g_eventQueueChild;
+        g_currentNodeIdx = v;
+        v = MK4_NODE_AT(unsigned int, v, 0);
+        g_currentNodeIdx = v;
+        ((void (*)(void))MK4_ResolveCode(v))();    /* call eax (indirect) */
+        if (g_framePauseFlag) return;
+        e = g_eventQueueEnd;
+        c = MK4_NODE_AT(unsigned int, e, 0x10);
+        g_walkCallback = c;
+        if (c != 0) {                       /* install self + pause */
+            g_pendingNodeType = c;
+            MK4_NODE_AT(unsigned int, base, 8) = self;
+            MK4_NODE_AT(unsigned int, base, 0x84) = 1;
+            g_framePauseFlag = 1;
+            return;
+        }
+        e = e + 5;
+    }
+}
+#else
 __declspec(naked) void InstallSelfIndexWalk(void) {
     __asm {
         mov     eax, dword ptr [g_baseSel]
@@ -187,3 +241,4 @@ L_isw_pop_ret:
         ret
     }
 }
+#endif

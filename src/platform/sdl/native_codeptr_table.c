@@ -158,6 +158,7 @@ extern int GuardedSeq_PendingMatch_then_GuardedSeq();
 extern int Add0fJmp();
 extern int GuardedChainDualAdd();
 extern int MStackCall_PushPopScaled1cDoubleCall();
+extern int InstallSelfIndexWalk();
 extern int ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ed0();
 extern int ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ef0();
 extern int GuardedSeq_ChainDirtyBitWalker_then_DualScaledLoadStoreJmp();
@@ -555,6 +556,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x44ccd0u, (void*)Add0fJmp},
     {0x44ccf0u, (void*)GuardedChainDualAdd},
     {0x44d230u, (void*)MStackCall_PushPopScaled1cDoubleCall},
+    {0x450de0u, (void*)InstallSelfIndexWalk},
     {0x450ed0u, (void*)ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ed0},
     {0x450ef0u, (void*)ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ef0},
     {0x4515a0u, (void*)GuardedSeq_ChainDirtyBitWalker_then_DualScaledLoadStoreJmp},

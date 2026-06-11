@@ -65,4 +65,16 @@ extern unsigned char *g_mk4Arena;       /* base of the reserved data arena */
 #define MK4_NODE_AT(T, idx, off) \
     (*(T *)((unsigned char *)MK4_NODE(unsigned char, (idx)) + (off)))
 
+/* Indirect-call seam: a stored function pointer holds an ORIGINAL code VA.
+ * Under the relocated native build it must be mapped to the native function;
+ * everywhere else (matching, verifier identity, flat 32-bit) it is the VA
+ * itself. Twins wrap indirect calls as ((fn)MK4_ResolveCode(target))(args) so
+ * the same source is verify-correct (identity) and native-correct (trampoline).
+ * The real table is src/platform/sdl/native_codeptr_table.c (MK4_NATIVE_FULL). */
+#if defined(MK4_NATIVE_FULL)
+extern void *MK4_ResolveCode(unsigned va);
+#else
+#define MK4_ResolveCode(va) ((void *)(unsigned long)(va))
+#endif
+
 #endif /* MK4_PORTABLE_MEM_MODEL_H */

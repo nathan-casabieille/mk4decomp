@@ -80,6 +80,7 @@ src/engine/inc_call_vtable_push_call.c
 src/engine/inc_store_call_iat_dec.c
 src/engine/install_self_chain_esi.c
 src/engine/install_self_chain_set_b333v2.c
+src/engine/install_self_index_walk.c
 src/engine/install_self_m_stack_push_dispatch.c
 src/engine/install_self_packed0x2005.c
 src/engine/install_self_stack_reset.c
