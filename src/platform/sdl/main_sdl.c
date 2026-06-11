@@ -74,6 +74,7 @@ int main(int argc, char **argv)
     /* Seed the consolidated fixed-VA globals with their real initial values from
      * the arena (native-full only; the clean smoke build has no such globals). */
     { extern void MK4_NativeGlobalsInit(void); MK4_NativeGlobalsInit(); }
+    { extern void MK4_CodePtrSelfTest(void); MK4_CodePtrSelfTest(); }
 #endif
 
     if (MK4_GameInit(argc, argv) != 0) {
