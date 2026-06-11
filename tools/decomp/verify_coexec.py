@@ -100,6 +100,10 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None):
              # the engine reads fixed VAs (incl. base-0 packed-ptr tables);
              # don't let gcc treat those as UB null derefs and emit ud2.
              '-fno-delete-null-pointer-checks',
+             # CC is mingw (defines _WIN32), so win32_types.h would gate its
+             # DWORD/HWND/... typedefs off; force the shim branch on so Win32-typed
+             # twins compile (windows.h is not included under -ffreestanding).
+             '-DMK4_WIN32_SHIM',
              '-I' + str(ROOT / 'include'), '-w', str(c), '-o', str(o)],
             capture_output=True, text=True)
         if r.returncode:
