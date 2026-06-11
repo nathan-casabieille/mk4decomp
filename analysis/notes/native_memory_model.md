@@ -40,6 +40,23 @@ exercised because raw-`idx*4` twins bypass it.
    looks up the target. (Data pointers are fine once #3 routes them through the
    arena.)
 
+## Implementation progress (2026-06-11)
+- **Step 1 DONE + validated** (commit 71a9b918): seam_route_nodes.py re-routed
+  raw `*(T*)(idx*4[+off])` -> MK4_NODE / MK4_NODE_AT in 263 twins (1856 sites).
+  Identity-preserving (verify_coexec sample VERIFIED), matching byte-identical.
+- **Step 3 DONE + validated** (commit c43f5792): name_va_globals.py rewrote
+  `*(T*)MK4_VA(T,0xVA)` -> the named C global in 290 twins (2551 sites), for
+  uniquely-named + C-defined VAs. Kills the named-vs-VA dual-copy bug. Identity-
+  preserving, matching byte-identical, native-full builds+runs.
+- **Step 4 (code-ptr trampoline): pending, and END-TO-END GATED.** Unlike 1/3 it
+  is NOT validatable in isolation: a VA->native-fn table + indirect-call shim only
+  matters once the FSM's stored-fn-ptr dispatch actually runs, which needs the
+  render backend + un-stubbed FSM (lots more conversion). Building it now would be
+  untested scaffolding. Also: many fn-ptr stores in converted code are already
+  `g_x = NativeFn` (native, works) - only raw-VA stores (data dispatch tables /
+  asm) need the trampoline, so its scope is narrower than steps 1/3. Defer until a
+  consumer path is live to validate against.
+
 ## Status / sequencing
 - node-pool DATA model: SOLVED (fixed-VA array in arena; MK4_NODE correct).
 - #2 (re-route raw idx*4) + #3 (globals via MK4_VA + conditional externs):
