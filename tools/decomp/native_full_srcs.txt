@@ -1,3 +1,4 @@
+src/audio/audio_mixer_step.c
 src/audio/audio_timer_teardown.c
 src/audio/aux_audio_teardown.c
 src/audio/debug.c

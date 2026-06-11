@@ -24,7 +24,7 @@ extern unsigned int g_dispatchSave404;
 extern void Mul10Tail(int, int);
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+/* Portable twin - VERIFIED via verify_coexec (2 writes match the original). */
 void AudioMixerStep(void)
 
 {
@@ -35,7 +35,10 @@ void AudioMixerStep(void)
   g_dispatchSave1164 = g_dispatchSave1164 + (int)(g_dispatchSave1163 + ((int)g_dispatchSave1163 >> 0x1f));
   g_dispatchSave404 = g_walkCallback;
   g_walkCallback = (uint)g_dispatchSave1163 & 0xffff;
-  g_walkCallback = Mul10Tail(uVar1,(uint)g_dispatchSave1163 & 0xffff);
+  /* Mul10Tail is declared void (matching side ignores eax) but returns a value
+   * here; cast to a returning fn-ptr to capture it. See feedback_cast_to_int_fnptr. */
+  g_walkCallback = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)
+                       (uVar1, (uint)g_dispatchSave1163 & 0xffff);
   return;
 }
 #else
