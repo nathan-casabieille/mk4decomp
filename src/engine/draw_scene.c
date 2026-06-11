@@ -6,7 +6,7 @@
  */
 #include "engine/render.h"
 #include "platform/win32.h"
-#include <mmsystem.h>
+#include "portable/mmsystem_shim.h"
 
 /*
  * @addr 0x004b42e0

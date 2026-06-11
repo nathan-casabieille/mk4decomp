@@ -6,7 +6,7 @@
  * (debug shim that bypasses QPC on hardware that misreports it).
  */
 #include "platform/win32.h"
-#include <mmsystem.h>
+#include "portable/mmsystem_shim.h"
 
 /* The 1e6 divisor used to convert QPC frequency to ticks-per-usec.
  * Sits in .rdata in the original (0x004d2aa0); we let the linker
