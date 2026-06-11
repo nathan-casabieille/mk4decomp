@@ -55,6 +55,8 @@ SCENARIOS = {
     'all-clip':       dict(x0=-4, y0=-3, x1=80, y1=60, u0=1, U1=48, P=2,  Q=48),
     'subtexel+page':  dict(x0=8,  y0=6,  x1=40, y1=30, u0=5, U1=24, P=0,  Q=40, sub=7),
     'palsel':         dict(x0=8,  y0=6,  x1=40, y1=30, u0=0, U1=24, P=0,  Q=16, palsel=0x10),
+    'mode0':          dict(x0=8,  y0=6,  x1=40, y1=30, u0=0, U1=24, P=0,  Q=16, mode=0),
+    'mode0-clip':     dict(x0=-4, y0=-3, x1=80, y1=60, u0=1, U1=48, P=2,  Q=48, mode=0),
 }
 
 
@@ -68,6 +70,7 @@ def build_arena(base_arena, gl_va, sc):
         'g_dispatchSave1371': sc['P'],  'g_dispatchSave1377': sc['Q'],
         'g_dispatchSave1400': TEX, 'g_dispatchSave1403': sc.get('sub', 0),
         'g_dispatchSave1340': PAL, 'g_dispatchSave1367': sc.get('palsel', 0),
+        'g_texturedTriVar': sc.get('mode', 1),   # blend-mode selector (additive etc.)
     })
     return arena
 
@@ -106,6 +109,14 @@ def main():
         v = (((i >> 1) * 7 + 0x1234) & 0x7fff) | 0x8000   # always != 0
         pal[i] = v & 0xff
         pal[i + 1] = (v >> 8) & 0xff
+    # Framebuffer pre-filled with a bright non-zero pattern: blend variants
+    # (additive/alpha) only exercise their saturation math when dest+src can
+    # overflow a channel, so a zero background would leave that path untested.
+    fb_init = bytearray(pitch * H)
+    for i in range(0, pitch * H, 2):
+        v = (((i >> 1) * 5 + 0x4000) & 0x7bde) | 0x4210
+        fb_init[i] = v & 0xff
+        fb_init[i + 1] = (v >> 8) & 0xff
     blob_lo = load_base & ~3
     blob_hi = (load_base + len(blob) + 3) & ~3
 
@@ -113,7 +124,7 @@ def main():
         uc, full = vc.uc_new(arena)
         uc.mem_write(TEX, bytes(tex))
         uc.mem_write(PAL, bytes(pal))
-        uc.mem_write(FB, b'\x00' * (pitch * H))
+        uc.mem_write(FB, bytes(fb_init))
         if load_twin:
             if load_base + len(blob) > full:
                 uc.mem_map(load_base & ~0xFFF,
@@ -130,8 +141,9 @@ def main():
         diffs = [off for off in range(0, len(o_buf), 4)
                  if not (blob_lo <= off < blob_hi)
                  and o_buf[off:off + 4] != t_buf[off:off + 4]]
+        # "exercised" = pixels the original changed from the pre-filled background
         fb_nz = sum(1 for off in range(FB, FB + pitch * H, 2)
-                    if o_buf[off:off + 2] != b'\x00\x00')
+                    if o_buf[off:off + 2] != fb_init[off - FB:off - FB + 2])
         ok = o_term and t_term and not diffs and fb_nz > 0
         print('  %-14s term=%d/%d fb_px=%-4d diffs=%-3d %s'
               % (label, o_term, t_term, fb_nz, len(diffs),
