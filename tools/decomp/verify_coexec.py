@@ -129,6 +129,10 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None):
         else:                                      # external -> original VA
             sname = _strip(sym['name'])
             tv = name_to_va.get(sname)
+            if tv is None and sname.startswith('thunk_'):
+                # Ghidra `thunk_X` is a jmp-wrapper to X; co-executing as X's
+                # bytes is behaviourally identical, so resolve to X's VA.
+                tv = name_to_va.get(sname[len('thunk_'):])
             if tv is None:
                 # Ghidra emits raw-address callees as `func_0x<hex>` (and the
                 # `thunk_func_0x<hex>` jmp-thunk variant): the VA is in the name,
