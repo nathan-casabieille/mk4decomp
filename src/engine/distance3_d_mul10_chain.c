@@ -126,7 +126,8 @@ extern unsigned int g_eventQueueScratch;
 extern void DualCallPauseDirtyJmp_00490c30(void);
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+/* Portable twin - VERIFIED via verify_coexec. Mul10Tail returns eax (declared
+ * void on the matching side); cast to a returning fn-ptr to capture it. */
 void Distance3DMul10Chain(void)
 
 {
@@ -134,17 +135,17 @@ void Distance3DMul10Chain(void)
   g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x5c);
   g_eventQueueWorkType = g_dual_0053a1a8 - g_walkCallback;
   g_chainAccumCur = g_dual_0053a1a4 - g_eventQueueCurrent;
-  g_eventQueueWorkType = Mul10Tail(g_eventQueueWorkType,g_eventQueueWorkType);
-  g_chainAccumCur = Mul10Tail(g_chainAccumCur,g_chainAccumCur);
+  g_eventQueueWorkType = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_eventQueueWorkType,g_eventQueueWorkType);
+  g_chainAccumCur = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_chainAccumCur,g_chainAccumCur);
   g_eventQueueWorkType = g_eventQueueWorkType + g_chainAccumCur;
   FpuSqrtMul();
   if (g_framePauseFlag == 0) {
     g_eventQueueChild = g_walkCallback;
-    g_eventQueueChild = Mul10Tail(g_currentNodeFlags,g_walkCallback);
+    g_eventQueueChild = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_currentNodeFlags,g_walkCallback);
     g_eventQueueWorkType = g_eventQueueScratch;
     g_chainAccumCur = g_eventQueueChildSrc;
-    g_eventQueueWorkType = Mul10Tail(g_eventQueueChild,g_eventQueueScratch);
-    g_chainAccumCur = Mul10Tail(g_eventQueueChild,g_chainAccumCur);
+    g_eventQueueWorkType = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_eventQueueChild,g_eventQueueScratch);
+    g_chainAccumCur = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_eventQueueChild,g_chainAccumCur);
     g_walkCallback = g_dual_0053a1a8 + g_eventQueueWorkType;
     g_eventQueueCurrent = g_dual_0053a1a4 + g_chainAccumCur;
     MK4_NODE_AT(int, g_cj_0054205c, 0x54) = g_walkCallback;

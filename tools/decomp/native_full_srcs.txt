@@ -44,6 +44,7 @@ src/engine/com_release_capture.c
 src/engine/com_release_pair.c
 src/engine/cond_install_dispatch.c
 src/engine/copy_jmp.c
+src/engine/distance3_d_mul10_chain.c
 src/engine/double_stack_push_and_jmp.c
 src/engine/double_stack_push_and_jmp7b.c
 src/engine/double_stack_push_and_jmp7d.c

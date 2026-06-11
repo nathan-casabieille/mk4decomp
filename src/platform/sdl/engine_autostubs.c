@@ -239,4 +239,5 @@ __attribute__((weak)) int func_004740d0_zz(){return 0;}
 __attribute__((weak)) int func_00476e90(){return 0;}
 __attribute__((weak)) int func_0x00474b10(){return 0;}
 __attribute__((weak)) int ExitGame(){return 0;}
+__attribute__((weak)) int FpuSqrtMul(){return 0;}
 #endif /* MK4_NATIVE_FULL */
