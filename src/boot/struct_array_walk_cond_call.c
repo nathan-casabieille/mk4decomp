@@ -113,7 +113,7 @@ extern unsigned int g_fightAxisPosY;
  *   g_walkCallback &= g_eventQueueCurrent; for each struct: if struct[0xd8] != 0
  *   AND (arr[key+3] & g_eventQueueCurrent) != g_walkCallback: call NodeUnlink(esi).
  */
-extern void NodeUnlink(void);
+extern void NodeUnlink();
 
 extern unsigned int g_arr_41fc50_disp_0c;
 

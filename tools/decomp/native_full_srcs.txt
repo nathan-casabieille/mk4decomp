@@ -7,6 +7,7 @@ src/audio/empty_stubs.c
 src/audio/helper_aux_audio_post_init.c
 src/audio/store_pause_imul_shr16.c
 src/boot/boot_chain_push_add_sign_flag.c
+src/boot/boot_scheduled_node_timer_walk.c
 src/boot/call_pause_scaled_store_add.c
 src/boot/call_set_pause.c
 src/boot/finalize.c
@@ -24,10 +25,12 @@ src/boot/scaled_load_or_set_jmp.c
 src/boot/scaled_neg1_set_pause.c
 src/boot/scaled_pushpop_helpers.c
 src/boot/stack_pop_dispatch_tagged.c
+src/boot/struct_array_walk_cond_call.c
 src/boot/table_lookup_iat_call.c
 src/boot/zero_and_dirty4.c
 src/boot/zero_large_block.c
 src/crt/crt_heap_commit_free_cluster.c
+src/engine/alarm_countdown_install.c
 src/engine/arg_sar_store_jmp.c
 src/engine/call_dual_store_xor_bit.c
 src/engine/call_jmp.c
@@ -70,6 +73,7 @@ src/engine/guarded_triple_call_set_tail.c
 src/engine/helper_fclose.c
 src/engine/helper_geo_load_pre.c
 src/engine/helper_gfx_cleanup.c
+src/engine/helper_per_player_tick.c
 src/engine/helper_post_player_tick.c
 src/engine/helper_tick_alt.c
 src/engine/inc_call_vtable_push_call.c

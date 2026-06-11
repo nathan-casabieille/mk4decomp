@@ -240,4 +240,14 @@ __attribute__((weak)) int func_00476e90(){return 0;}
 __attribute__((weak)) int func_0x00474b10(){return 0;}
 __attribute__((weak)) int ExitGame(){return 0;}
 __attribute__((weak)) int FpuSqrtMul(){return 0;}
+__attribute__((weak)) int DualInstallCallSwap_CjChainResetThreshold_then_CjChainResetThreshold(){return 0;}
+__attribute__((weak)) int DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThresholdRevertAdvance(){return 0;}
+__attribute__((weak)) int FixedDiv16(){return 0;}
+__attribute__((weak)) int GatedScaledSubSat(){return 0;}
+__attribute__((weak)) int GeoTransformDispatchAndApply(){return 0;}
+__attribute__((weak)) int MStackFrameCdeclDouble(){return 0;}
+__attribute__((weak)) int NineEntryFlagDispatch(){return 0;}
+__attribute__((weak)) int ScaledStateNegCallPauseLoad(){return 0;}
+__attribute__((weak)) int StateSnapshotDispatch(){return 0;}
+__attribute__((weak)) unsigned int g_eventQueueSeed;
 #endif /* MK4_NATIVE_FULL */

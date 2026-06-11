@@ -136,7 +136,7 @@ extern void DualScaledStoreZero(void);
 extern void GatedScaledSubSat(void);
 extern void GuardedScaledChainJmpIndirect(void);
 extern void NineEntryFlagDispatch(void);
-extern void StateSnapshotDispatch(void);
+extern void StateSnapshotDispatch();
 extern void ZeroScaledZeroCallPauseJmp(void);
 
 #ifdef NON_MATCHING

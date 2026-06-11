@@ -60,8 +60,8 @@ void Helper_PerPlayerTick(void)
     g_chainAccumCur = iVar3 - g_eventQueueCurrent;
     g_eventQueueNotMask = g_eventQueueWorkType;
     g_eventQueueChild = g_chainAccumCur;
-    g_eventQueueWorkType = Mul10Tail(g_eventQueueWorkType,g_eventQueueWorkType);
-    g_chainAccumCur = Mul10Tail(g_chainAccumCur,g_chainAccumCur);
+    g_eventQueueWorkType = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_eventQueueWorkType,g_eventQueueWorkType);
+    g_chainAccumCur = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_chainAccumCur,g_chainAccumCur);
     g_eventQueueWorkType = g_eventQueueWorkType + g_chainAccumCur;
     FpuSqrtMul();
     uVar2 = g_walkCallback;
@@ -107,13 +107,13 @@ void Helper_PerPlayerTick(void)
               g_eventQueueCurrent = g_walkBoundsLimit;
               g_eventQueueNotMask = g_dispatchVar35;
               g_eventQueueChild = g_phaseThunkSlot7;
-              g_eventQueueWorkType = Mul10Tail(g_eventQueueWorkType,g_eventQueueWorkType);
-              g_chainAccumCur = Mul10Tail(g_chainAccumCur,g_chainAccumCur);
+              g_eventQueueWorkType = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_eventQueueWorkType,g_eventQueueWorkType);
+              g_chainAccumCur = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_chainAccumCur,g_chainAccumCur);
               g_eventQueueWorkType = g_eventQueueWorkType + g_chainAccumCur;
               g_eventQueueNotMask = g_eventQueueNotMask - g_walkCallback;
               g_eventQueueChild = g_eventQueueChild - g_eventQueueCurrent;
-              g_eventQueueNotMask = Mul10Tail(g_eventQueueNotMask,g_eventQueueNotMask);
-              g_eventQueueChild = Mul10Tail(g_eventQueueChild,g_eventQueueChild);
+              g_eventQueueNotMask = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_eventQueueNotMask,g_eventQueueNotMask);
+              g_eventQueueChild = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_eventQueueChild,g_eventQueueChild);
               g_eventQueueNotMask = g_eventQueueNotMask + g_eventQueueChild;
               g_walkBoundsSlot = g_phaseThunkSlot6;
               g_walkBoundsLimit = g_audioBridgeSlot2;
@@ -145,7 +145,7 @@ void Helper_PerPlayerTick(void)
         g_chainAccumCur = *(int *)((*(unsigned int *)MK4_VA(unsigned int, 0x542044)) * 4 + 0x5c);
         g_eventQueueNotMask = MK4_NODE_AT(int, g_dualC, 0x54) - g_eventQueueWorkType;
         g_eventQueueChild = MK4_NODE_AT(int, g_dualC, 0x5c) - g_chainAccumCur;
-        iVar1 = Mul10Tail(g_walkCallback,g_eventQueueNotMask);
+        iVar1 = ((unsigned int (*)(unsigned int, unsigned int))Mul10Tail)(g_walkCallback,g_eventQueueNotMask);
       }
       g_phaseThunkState = (uint)(iVar1 < (int)g_eventQueueChild);
       g_primary_0052d74c = 0;
