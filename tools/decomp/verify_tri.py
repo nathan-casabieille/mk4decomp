@@ -24,6 +24,8 @@ import verify_coexec as vc
 BASE = vc.BASE
 FB = 0x00100000
 TEX = 0x00180000
+LUT = 0x00300000          # shaded: 2D lighting-table base (g_dispatchSave1340)
+LUT_LO = 0x002a0000       # seed the whole [LUT_LO, BASE) region as the table
 W, H = 64, 48
 
 # Each triangle: 3 verts (x,y,u,v), positive edge area required (else rejected).
@@ -50,7 +52,7 @@ def seed(arena, gl_va, pairs):
             struct.pack_into('<I', arena, gl_va[n] - BASE, v & 0xffffffff)
 
 
-def build_arena(base_arena, gl_va, tri):
+def build_arena(base_arena, gl_va, tri, shaded):
     a = bytearray(base_arena)
     x, y, u, v = tri['x'], tri['y'], tri['u'], tri['v']
     seed(a, gl_va, {
@@ -62,6 +64,13 @@ def build_arena(base_arena, gl_va, tri):
         'g_dispatchSave1400': TEX, 'g_dispatchSave1403': tri.get('sub', 0),
         'g_texturedTriVar': tri.get('mode', 1),
     })
+    if shaded:
+        s = tri.get('s', (8, 40, 72))   # 3 vertex shade bytes (moderate -> LUT in range)
+        # shade vertices = 3 consecutive bytes at &g_dispatchSave1367; pack into the dword.
+        seed(a, gl_va, {
+            'g_dispatchSave1367': (s[0] & 0xff) | ((s[1] & 0xff) << 8) | ((s[2] & 0xff) << 16),
+            'g_dispatchSave1340': LUT,
+        })
     return a
 
 
@@ -71,6 +80,7 @@ def main():
     base = bytearray(vc.ARENA.read_bytes())
     pitch = W * 2
 
+    shaded = 'Shaded' in name
     t = vc.extract_twin_any(name)
     if not t:
         print(name, 'SKIP no-twin')
@@ -94,12 +104,21 @@ def main():
         val = (((i >> 1) * 5 + 0x4000) & 0x7bde) | 0x4210
         fb_init[i] = val & 0xff
         fb_init[i + 1] = (val >> 8) & 0xff
+    lut = None
+    if shaded:    # 2D lighting LUT filling [LUT_LO, BASE), distinct non-zero colours
+        lut = bytearray(BASE - LUT_LO)
+        for i in range(0, len(lut), 2):
+            val = (((i >> 1) * 3 + 0x111) & 0x7fff) | 0x8000
+            lut[i] = val & 0xff
+            lut[i + 1] = (val >> 8) & 0xff
     blob_lo, blob_hi = load_base & ~3, (load_base + len(blob) + 3) & ~3
 
     def run(arena, load_twin):
         uc, full = vc.uc_new(arena)
         uc.mem_write(TEX, bytes(tex))
         uc.mem_write(FB, bytes(fb_init))
+        if shaded:
+            uc.mem_write(LUT_LO, bytes(lut))
         if load_twin:
             if load_base + len(blob) > full:
                 uc.mem_map(load_base & ~0xFFF,
@@ -110,7 +129,7 @@ def main():
     rc = 0
     print(name)
     for label, tri in TRIS.items():
-        arena = build_arena(base, gl_va, tri)
+        arena = build_arena(base, gl_va, tri, shaded)
         o_buf, o_term, _ = run(arena, False)
         t_buf, t_term, _ = run(arena, True)
         diffs = [o for o in range(0, len(o_buf), 4)
