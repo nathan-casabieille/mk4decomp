@@ -161,215 +161,290 @@ extern unsigned int g_viewportY;
 extern unsigned int g_dispatchSave1404;
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+/*
+ * Portable C twin (path A). Fresh full transcription into the DEDICATED file
+ * (extract_twin_any returns this file first). Dithered = interlaced affine
+ * textured triangle (direct texel write, no blend): per scanline only every
+ * OTHER pixel is drawn (dest+=4, count-=2, steps doubled 2*du/2*dv), with the
+ * start parity = (g_dispatchSave1351 & 1) XOR ((destAddr >> 1) & 1) and 1351 the
+ * running row index (++ per scanline). Same outer as TexturedTriRasterize
+ * (ebx=left-U accum, edi=left-V accum, edx=top/from vertex). Verified by
+ * tools/decomp/verify_tri.py.
+ */
 void TexturedTriRasterizeDithered(void)
-
 {
-  ushort uVar1;
-  char cVar3;
-  uint uVar2;
-  char cVar4;
-  uint uVar5;
-  int iVar6;
-  short sVar7;
-  uint uVar9;
-  uint uVar10;
-  int iVar11;
-  int iVar12;
-  short *psVar13;
-  bool bVar14;
-  short sVar8;
-  
-  if (g_viewportX != 0) {
-    iVar12 = g_dispatchSave1383 - g_dispatchSave1381;
-    iVar6 = g_dispatchSave1382 - g_dispatchSave1381;
-    g_clipMinScratch = (g_dispatchSave1379 - g_dispatchSave1378) * iVar12 - (g_dispatchSave1380 - g_dispatchSave1378) * iVar6;
-    if (0 < (int)g_clipMinScratch) {
-      uVar9 = (g_dispatchSave1372 - g_dispatchSave1371) * iVar12 - (g_dispatchSave1373 - g_dispatchSave1371) * iVar6;
-      if ((int)((uVar9 ^ (int)uVar9 >> 0x1f) - ((int)uVar9 >> 0x1f)) < 0x80000) {
-        g_dispatchSave1342 = (int)(uVar9 * 0x1000) / (int)g_clipMinScratch << 4;
-      }
-      else {
-        g_dispatchSave1342 = (int)(uVar9 * 0x200) / (int)g_clipMinScratch << 7;
-      }
-      uVar9 = (g_dispatchSave1376 - g_dispatchSave1374) * iVar12 - (g_dispatchSave1377 - g_dispatchSave1374) * iVar6;
-      if ((int)((uVar9 ^ (int)uVar9 >> 0x1f) - ((int)uVar9 >> 0x1f)) < 0x80000) {
-        g_dispatchSave1343 = (int)(uVar9 * 0x1000) / (int)g_clipMinScratch << 4;
-      }
-      else {
-        g_dispatchSave1343 = (int)(uVar9 * 0x200) / (int)g_clipMinScratch << 7;
-      }
-      g_dispatchSave1394 = g_dispatchSave1381;
-      bVar14 = (int)g_dispatchSave1381 <= (int)g_dispatchSave1382;
-      g_dispatchSave1365 = g_dispatchSave1382;
-      if (bVar14) {
-        g_dispatchSave1394 = g_dispatchSave1382;
-        g_dispatchSave1365 = g_dispatchSave1381;
-      }
-      g_dispatchSave1359 = (uint)!bVar14;
-      g_dispatchSave1366 = (uint)!bVar14;
-      if ((int)g_dispatchSave1383 < (int)g_dispatchSave1365) {
-        g_dispatchSave1359 = 2;
-        g_dispatchSave1366 = 2;
-        g_dispatchSave1365 = g_dispatchSave1383;
-      }
-      if ((int)g_dispatchSave1394 < (int)g_dispatchSave1383) {
-        g_dispatchSave1394 = g_dispatchSave1383;
-      }
-      if ((int)g_dispatchSave1365 < 0) {
-        g_dispatchSave1365 = 0;
-      }
-      if ((int)g_viewportH < (int)g_dispatchSave1394) {
-        g_dispatchSave1394 = g_viewportH;
-      }
-      g_dispatchSave1404 = (g_dispatchSave1403 & 0xf) * 0x20000 + g_dispatchSave1400;
-      g_dispatchSave1346 = g_viewportY * g_dispatchSave1365 + g_viewportX;
-      g_dispatchSave1385 = 0;
-      g_dispatchSave1364 = 0;
-      g_dispatchSave1351 = g_dispatchSave1365;
-      uVar9 = g_dispatchSave1366;
-      iVar6 = g_dispatchSave1361;
-      iVar12 = g_dispatchSave1361;
-      if ((int)g_dispatchSave1365 < (int)g_dispatchSave1394) {
-        do {
-          while ((int)g_dispatchSave1364 <= (int)g_dispatchSave1365) {
-            uVar10 = uVar9 - 1;
-            if ((int)uVar10 < 0) {
-              uVar10 = 2;
-            }
-            g_dispatchSave1364 = (&g_dispatchSave1381)[uVar10];
-            iVar6 = g_dispatchSave1364 - (&g_dispatchSave1381)[uVar9];
-            uVar5 = uVar9;
-            if (iVar6 != 0) {
-              g_dispatchSave1338 = (((&g_dispatchSave1378)[uVar10] - (&g_dispatchSave1378)[uVar9]) * 0x10000) / iVar6;
-              g_dispatchSave1336 = (((&g_dispatchSave1371)[uVar10] - (&g_dispatchSave1371)[g_dispatchSave1359]) * 0x10000) /
-                             iVar6;
-              g_dispatchSave1337 = (((&g_dispatchSave1374)[uVar10] - (&g_dispatchSave1374)[g_dispatchSave1359]) * 0x10000) /
-                             iVar6;
-              uVar5 = g_dispatchSave1359;
-            }
-            g_dispatchSave1363 = (&g_dispatchSave1378)[uVar5] * 0x10000;
-            iVar6 = (&g_dispatchSave1371)[uVar5] * 0x10000;
-            g_dispatchSave1362 = (&g_dispatchSave1374)[uVar5] * 0x10000;
-            g_clipMaxScratch = g_dispatchSave1365 - (&g_dispatchSave1381)[uVar9];
-            uVar9 = uVar10;
-            g_dispatchSave1359 = uVar10;
-            iVar12 = iVar6;
-            if (g_clipMaxScratch != 0) {
-              g_dispatchSave1363 = g_dispatchSave1363 + g_clipMaxScratch * g_dispatchSave1338;
-              iVar6 = iVar6 + g_clipMaxScratch * g_dispatchSave1336;
-              g_dispatchSave1362 = g_dispatchSave1362 + g_clipMaxScratch * g_dispatchSave1337;
-              iVar12 = iVar6;
-            }
-          }
-          while ((int)g_dispatchSave1385 <= (int)g_dispatchSave1365) {
-            g_clipMinScratch = g_dispatchSave1366 + 1;
-            if (2 < (int)g_clipMinScratch) {
-              g_clipMinScratch = 0;
-            }
-            g_dispatchSave1385 = (&g_dispatchSave1381)[g_clipMinScratch];
-            iVar11 = g_dispatchSave1385 - (&g_dispatchSave1381)[g_dispatchSave1366];
-            if (iVar11 != 0) {
-              g_dispatchSave1339 = (((&g_dispatchSave1378)[g_clipMinScratch] - (&g_dispatchSave1378)[g_dispatchSave1366]) *
-                             0x10000) / iVar11;
-              uVar9 = g_dispatchSave1359;
-            }
-            g_dispatchSave1384 = (&g_dispatchSave1378)[g_dispatchSave1366] * 0x10000;
-            g_clipMaxScratch = g_dispatchSave1365 - (&g_dispatchSave1381)[g_dispatchSave1366];
-            g_dispatchSave1366 = g_clipMinScratch;
-            if (g_clipMaxScratch != 0) {
-              g_dispatchSave1384 = g_dispatchSave1384 + g_clipMaxScratch * g_dispatchSave1339;
-            }
-          }
-          g_clipMinScratch = g_dispatchSave1364;
-          if ((int)g_dispatchSave1385 <= (int)g_dispatchSave1364) {
-            g_clipMinScratch = g_dispatchSave1385;
-          }
-          g_dispatchSave1393 = g_clipMinScratch - g_dispatchSave1365;
-          g_dispatchSave1365 = g_clipMinScratch;
-          iVar11 = g_dispatchSave1404;
-          if ((int)g_dispatchSave1394 < (int)g_clipMinScratch) {
-            g_dispatchSave1393 = g_dispatchSave1393 + (g_dispatchSave1394 - g_clipMinScratch);
-          }
-          for (; g_dispatchSave1404 = iVar11, 0 < g_dispatchSave1393; g_dispatchSave1393 = g_dispatchSave1393 + -1) {
-            g_dispatchSave1370 = g_dispatchSave1384 >> 0x10;
-            g_clipMinScratch = g_dispatchSave1363 >> 0x10;
-            g_clipMaxScratch = g_dispatchSave1370 - g_clipMinScratch;
-            g_dispatchSave1361 = iVar6;
-            if (((0 < g_clipMaxScratch) && (-1 < g_dispatchSave1370)) && ((int)g_clipMinScratch < g_viewportW))
-            {
-              g_clipMaxScratch = g_clipMaxScratch + g_clipMinScratch;
-              g_dispatchSave1387 = iVar6;
-              g_dispatchSave1389 = g_dispatchSave1362;
-              if ((int)g_clipMinScratch < 0) {
-                g_dispatchSave1387 = iVar6 - g_clipMinScratch * g_dispatchSave1342;
-                g_dispatchSave1389 = g_dispatchSave1362 - g_clipMinScratch * g_dispatchSave1343;
-                g_clipMinScratch = 0;
-              }
-              g_dispatchSave1345 = (short *)(g_dispatchSave1346 + g_clipMinScratch * 2);
-              if (g_viewportW < g_clipMaxScratch) {
-                g_clipMaxScratch = g_viewportW;
-              }
-              g_clipMinScratch = g_clipMaxScratch - g_clipMinScratch;
-              if (0 < (int)g_clipMinScratch) {
-                g_dispatchSave1344 = g_dispatchSave1389;
-                g_dispatchSave1391 = g_dispatchSave1387;
-                g_dispatchSave1392 = g_dispatchSave1345;
-                g_dispatchSave1399 = g_clipMinScratch;
-                if ((g_dispatchSave1351 & 1) != ((int)g_dispatchSave1345 >> 1 & 1U)) {
-                  g_dispatchSave1399 = g_clipMinScratch - 1;
-                  g_dispatchSave1391 = g_dispatchSave1342 + g_dispatchSave1387;
-                  g_dispatchSave1344 = g_dispatchSave1343 + g_dispatchSave1389;
-                  g_dispatchSave1392 = g_dispatchSave1345 + 1;
-                }
-                g_dispatchSave1397 = g_dispatchSave1342 * 2;
-                g_dispatchSave1347 = g_dispatchSave1343 * 2;
-                g_dispatchSave1361 = iVar12;
-                if (0 < (int)g_dispatchSave1399) {
-                  uVar10 = g_dispatchSave1344 << 0x10;
-                  cVar3 = (char)((uint)g_dispatchSave1397 >> 0x10);
-                  cVar4 = (char)((uint)g_dispatchSave1347 >> 0x10);
-                  uVar9 = CONCAT22((short)g_dispatchSave1347,CONCAT11(cVar3,cVar4));
-                  uVar1 = CONCAT11((char)((uint)g_dispatchSave1344 >> 0x10),
-                                   (char)((uint)g_dispatchSave1391 >> 0x10));
-                  uVar5 = CONCAT22((short)g_dispatchSave1397,(short)g_dispatchSave1399);
-                  iVar6 = g_dispatchSave1391 << 0x10;
-                  psVar13 = g_dispatchSave1392;
-                  do {
-                    sVar7 = *(short *)(iVar11 + (uint)uVar1 * 2);
-                    uVar2 = CONCAT22((short)((uint)iVar6 >> 0x10),sVar7);
-                    if (sVar7 != 0) {
-                      *psVar13 = sVar7;
-                    }
-                    bVar14 = CARRY4(uVar10,uVar9);
-                    uVar10 = uVar10 + uVar9;
-                    iVar6 = uVar2 + uVar5;
-                    uVar1 = CONCAT11((char)(uVar1 >> 8) + cVar4 + bVar14,
-                                     (char)uVar1 + cVar3 + CARRY4(uVar2,uVar5));
-                    psVar13 = psVar13 + 2;
-                    sVar8 = (short)uVar5;
-                    sVar7 = sVar8 + -2;
-                    uVar5 = CONCAT22((short)(uVar5 >> 0x10),sVar7);
-                  } while (sVar7 != 0 && 1 < sVar8);
-                }
-              }
-            }
-            g_dispatchSave1346 = g_dispatchSave1346 + g_viewportY;
-            g_dispatchSave1351 = g_dispatchSave1351 + 1;
-            g_dispatchSave1363 = g_dispatchSave1363 + g_dispatchSave1338;
-            g_dispatchSave1384 = g_dispatchSave1384 + g_dispatchSave1339;
-            iVar6 = g_dispatchSave1361 + g_dispatchSave1336;
-            g_dispatchSave1362 = g_dispatchSave1362 + g_dispatchSave1337;
-            uVar9 = g_dispatchSave1359;
-            iVar12 = iVar6;
-            iVar11 = g_dispatchSave1404;
-          }
-          g_dispatchSave1361 = iVar12;
-        } while ((int)g_dispatchSave1365 < (int)g_dispatchSave1394);
-      }
+    unsigned int eax, ebx, ecx, edx, esi, edi, ebp;
+    unsigned int loc4, loc8;
+    unsigned int *X = (unsigned int *)&g_dispatchSave1378;
+    unsigned int *Y = (unsigned int *)&g_dispatchSave1381;
+    unsigned int *U = (unsigned int *)&g_dispatchSave1371;
+    unsigned int *Vv = (unsigned int *)&g_dispatchSave1374;
+
+    if (g_viewportX == 0) return;
+    edi = Y[2]; eax = Y[0]; ebx = Y[1]; edx = X[2]; ecx = X[1];
+    edi -= eax; ebx -= eax;
+    eax = X[0]; edx -= eax; ecx -= eax;
+    edx = (unsigned int)((int)((unsigned int)edx * (unsigned int)ebx));
+    ecx = (unsigned int)((int)((unsigned int)ecx * (unsigned int)edi));
+    ecx = ecx - edx;
+    g_clipMinScratch = ecx;
+    if ((int)ecx <= 0) return;
+    edx = U[2]; eax = U[0]; esi = U[1]; edx -= eax; esi -= eax;
+    edx = (unsigned int)((int)((unsigned int)edx * (unsigned int)ebx));
+    esi = (unsigned int)((int)((unsigned int)esi * (unsigned int)edi));
+    esi = esi - edx;
+    { int n=(int)esi, ab=n<0?-n:n;
+      if (ab>=0x80000) eax=(unsigned int)((int)(esi<<9)/(int)ecx)<<7;
+      else eax=(unsigned int)((int)(esi<<12)/(int)ecx)<<4; }
+    g_dispatchSave1342 = eax;
+    edx = Vv[2]; esi = Vv[1]; eax = Vv[0]; edx -= eax; esi -= eax;
+    edx = (unsigned int)((int)((unsigned int)edx * (unsigned int)ebx));
+    esi = (unsigned int)((int)((unsigned int)esi * (unsigned int)edi));
+    esi = esi - edx;
+    { int n=(int)esi, ab=n<0?-n:n;
+      if (ab>=0x80000) eax=(unsigned int)((int)(esi<<9)/(int)ecx)<<7;
+      else eax=(unsigned int)((int)(esi<<12)/(int)ecx)<<4; }
+    g_dispatchSave1343 = eax;
+    ecx = Y[0]; eax = Y[1]; esi = 0; edx = 0;
+    g_dispatchSave1359 = edx; g_dispatchSave1365 = ecx; g_dispatchSave1394 = ecx;
+    if ((int)eax < (int)ecx) { g_dispatchSave1359=1; edx=g_dispatchSave1359; g_dispatchSave1365=eax; ecx=eax; }
+    else { g_dispatchSave1394 = eax; }
+    eax = Y[2];
+    if ((int)eax < (int)ecx) { g_dispatchSave1359=2; edx=g_dispatchSave1359; g_dispatchSave1365=eax; ecx=eax; }
+    if ((int)eax > (int)g_dispatchSave1394) g_dispatchSave1394 = eax;
+    if ((int)ecx < (int)esi) { g_dispatchSave1365 = esi; ecx = esi; }
+    eax = g_viewportH; edi = g_dispatchSave1394;
+    if ((int)edi > (int)eax) g_dispatchSave1394 = eax;
+    eax = (g_dispatchSave1403 & 0xf) << 0x11; eax = eax + g_dispatchSave1400; edi = g_viewportX;
+    g_dispatchSave1351 = ecx;                 /* row-parity baseline = minY */
+    g_dispatchSave1404 = eax;
+    eax = (unsigned int)((int)g_viewportY * (int)ecx); eax = eax + edi;
+    g_dispatchSave1366 = edx;
+    g_dispatchSave1346 = eax;
+    g_dispatchSave1385 = esi; g_dispatchSave1364 = esi;
+    if ((int)ecx >= (int)g_dispatchSave1394) return;
+    ebx = g_dispatchSave1361;
+    goto L_2822;
+L_281c:
+    ecx = g_dispatchSave1365;
+L_2822:
+    if ((int)g_dispatchSave1364 > (int)ecx) goto L_2c9f;
+    goto L_2836;
+L_2830:
+    edx = g_dispatchSave1359;
+L_2836:
+    esi = edx - 1;
+    if ((int)esi < 0) esi = 2;
+    ecx = Y[esi]; eax = Y[edx];
+    loc4 = ecx; ecx = ecx - eax; loc8 = eax;
+    if (ecx != 0) {
+        eax = X[esi]; edi = X[edx]; eax -= edi;
+        edi = g_dispatchSave1359;
+        eax = (unsigned int)((int)(eax << 16) / (int)ecx);
+        ebx = U[edi];
+        g_dispatchSave1338 = eax;
+        eax = U[esi]; eax -= ebx;
+        ebx = Vv[edi];
+        eax = (unsigned int)((int)(eax << 16) / (int)ecx);
+        g_dispatchSave1336 = eax;
+        eax = Vv[esi]; eax -= ebx;
+        eax = (unsigned int)((int)(eax << 16) / (int)ecx);
+        edx = edi;
+        g_dispatchSave1337 = eax;
     }
-  }
-  return;
+/* L_28b3 */
+    ecx = X[edx]; ebx = U[edx]; edi = Vv[edx];
+    eax = g_dispatchSave1365; edx = loc8;
+    ecx = ecx << 16; ebx = ebx << 16; edi = edi << 16;
+    eax = eax - edx;
+    g_dispatchSave1363 = ecx; g_dispatchSave1361 = ebx; g_dispatchSave1362 = edi;
+    g_clipMaxScratch = eax;
+    if (eax != 0) {
+        edx = (unsigned int)((int)eax * (int)g_dispatchSave1338);
+        ecx = ecx + edx;
+        g_dispatchSave1363 = ecx;
+        ecx = (unsigned int)((int)eax * (int)g_dispatchSave1336);
+        eax = (unsigned int)((int)eax * (int)g_dispatchSave1337);
+        ebx = ebx + ecx; edi = edi + eax;
+        g_dispatchSave1361 = ebx; g_dispatchSave1362 = edi;
+    }
+/* L_2925 */
+    eax = loc4; ecx = g_dispatchSave1365;
+    g_dispatchSave1359 = esi; g_dispatchSave1364 = eax;
+    if ((int)eax <= (int)ecx) goto L_2830;
+    edx = esi;
+L_2943:
+    if ((int)g_dispatchSave1385 > (int)ecx) goto L_29fc;
+L_294f:
+    eax = g_dispatchSave1366 + 1;
+    g_clipMinScratch = eax;
+    if ((int)eax > 2) { eax = 0; g_clipMinScratch = 0; }
+    ecx = g_dispatchSave1366;
+    esi = Y[eax]; loc4 = esi; ecx = Y[ecx]; esi = esi - ecx;
+    if (esi != 0) {
+        edx = g_dispatchSave1366;
+        eax = X[eax] - X[edx];
+        eax = (unsigned int)((int)(eax << 16) / (int)esi);
+        edx = g_dispatchSave1359;
+        g_dispatchSave1339 = eax;
+    }
+/* L_29a6 */
+    eax = g_dispatchSave1366;
+    esi = X[eax] << 16;
+    eax = g_dispatchSave1365;
+    eax = eax - ecx;
+    g_dispatchSave1384 = esi;
+    g_clipMaxScratch = eax;
+    if (eax != 0) {
+        eax = (unsigned int)((int)eax * (int)g_dispatchSave1339);
+        esi = esi + eax;
+        g_dispatchSave1384 = esi;
+    }
+/* L_29d8 */
+    ecx = g_clipMinScratch;
+    eax = loc4;
+    g_dispatchSave1366 = ecx;
+    ecx = g_dispatchSave1365;
+    g_dispatchSave1385 = eax;
+    if ((int)eax <= (int)ecx) goto L_294f;
+    goto L_2a02;
+L_29fc:
+    esi = g_dispatchSave1384;
+L_2a02:
+    eax = g_dispatchSave1364; ecx = g_dispatchSave1385;
+    if ((int)ecx < (int)eax) eax = ecx;   /* segBottom = min(leftBot,rightBot) */
+    ecx = g_dispatchSave1365;
+    g_clipMinScratch = eax;
+    eax = eax - ecx;
+    ecx = g_dispatchSave1394;
+    g_dispatchSave1393 = eax;
+    eax = g_clipMinScratch;
+    g_dispatchSave1365 = eax;
+    if ((int)eax > (int)ecx) {
+        ecx = ecx - eax;
+        eax = g_dispatchSave1393;
+        eax = eax + ecx;
+        g_dispatchSave1393 = eax;
+    }
+    if ((int)g_dispatchSave1393 <= 0) goto L_2c85;
+L_2a54:
+    eax = g_dispatchSave1363; edx = esi;
+    edx = (unsigned int)((int)edx >> 16);
+    eax = (unsigned int)((int)eax >> 16);
+    ecx = edx;
+    g_dispatchSave1370 = edx;
+    ecx = ecx - eax;
+    g_clipMinScratch = eax;
+    g_clipMaxScratch = ecx;
+    if ((int)ecx <= 0) goto L_2c0d;
+    if ((int)edx < 0) goto L_2c0d;
+    if ((int)eax >= (int)g_viewportW) goto L_2c0d;
+    edx = ebx; esi = edi;
+    ecx = ecx + eax;
+    g_dispatchSave1387 = edx;
+    g_dispatchSave1389 = esi;
+    g_clipMaxScratch = ecx;
+    if ((int)eax < 0) {
+        esi = eax;
+        eax = (unsigned int)((int)eax * (int)g_dispatchSave1343);
+        esi = (unsigned int)((int)esi * (int)g_dispatchSave1342);
+        edx = edx - esi;
+        esi = edi;
+        esi = esi - eax;
+        g_dispatchSave1387 = edx;
+        g_dispatchSave1389 = esi;
+        eax = 0;
+    }
+/* L_2ad2 */
+    edi = g_dispatchSave1346 + eax * 2;
+    g_dispatchSave1345 = edi;
+    if ((int)ecx > (int)g_viewportW) { ecx = g_viewportW; g_clipMaxScratch = ecx; }
+    ecx = ecx - eax;
+    g_clipMinScratch = ecx;
+    if ((int)ecx <= 0) goto L_2c01;
+    eax = g_dispatchSave1351 & 1;
+    ebx = ((unsigned int)edi >> 1) & 1;
+    eax = eax ^ ebx;
+    g_dispatchSave1391 = edx;     /* U accum */
+    g_dispatchSave1344 = esi;     /* V accum */
+    g_dispatchSave1399 = ecx;     /* span/counter */
+    g_dispatchSave1392 = edi;     /* dest ptr */
+    if (eax != 0) {               /* odd parity: start one pixel in */
+        ecx = g_dispatchSave1399 - 1;
+        g_dispatchSave1399 = ecx;
+        ecx = g_dispatchSave1342 + edx;     /* U += du */
+        edx = g_dispatchSave1343 + esi;     /* V += dv */
+        edi = edi + 2;                      /* dest += 2 */
+        g_dispatchSave1391 = ecx;
+        g_dispatchSave1344 = edx;
+        g_dispatchSave1392 = edi;
+    }
+/* L_2b5c */
+    g_dispatchSave1347 = g_dispatchSave1343 + g_dispatchSave1343;   /* 2*dv */
+    g_dispatchSave1397 = g_dispatchSave1342 + g_dispatchSave1342;   /* 2*du */
+    if ((int)g_dispatchSave1399 >= 1) {
+        unsigned int uacc, vacc, vstep, ustep, tex;
+        /* ecx = rol(2*dv,16) with ch=2*du_int_byte */
+        vstep = ((g_dispatchSave1347 & 0xffff) << 16)
+                | (((g_dispatchSave1397 >> 16) & 0xff) << 8)
+                | ((g_dispatchSave1347 >> 16) & 0xff);
+        /* ebp = 2*du_frac<<16 | span(counter) */
+        ustep = ((g_dispatchSave1397 & 0xffff) << 16) | (g_dispatchSave1399 & 0xffff);
+        tex = (((g_dispatchSave1344 >> 16) & 0xff) << 8) | ((g_dispatchSave1391 >> 16) & 0xff);
+        vacc = g_dispatchSave1344 << 16;
+        uacc = g_dispatchSave1391 << 16;
+        edi = g_dispatchSave1392;
+        esi = g_dispatchSave1404;
+        for (;;) {
+            unsigned short t = *(unsigned short *)(unsigned long)(esi + tex * 2);
+            if (t != 0) *(unsigned short *)(unsigned long)edi = t;
+            {   /* add ebx,ecx ; adc dh,cl  (V step) */
+                unsigned int s = vacc + vstep, cy = s < vacc;
+                unsigned int dh = ((tex >> 8) & 0xff) + (vstep & 0xff) + cy;
+                vacc = s;
+                tex = (tex & 0xffff00ffu) | ((dh & 0xff) << 8);
+            }
+            {   /* add eax,ebp ; adc dl,ch  (U step; eax low = texel) */
+                unsigned int e = (uacc & 0xffff0000u) | t;
+                unsigned int s = e + ustep, cy = s < e;
+                unsigned int dl = (tex & 0xff) + ((vstep >> 8) & 0xff) + cy;
+                uacc = s;
+                tex = (tex & 0xffffff00u) | (dl & 0xff);
+            }
+            edi = edi + 4;
+            ustep = (ustep & 0xffff0000u) | ((ustep - 2) & 0xffff);   /* sub bp, 2 */
+            if (!((int)(short)(ustep & 0xffff) > 0)) break;
+        }
+    }
+/* L_2bfb */
+    ebx = g_dispatchSave1361;
+L_2c01:
+    esi = g_dispatchSave1384;
+    edi = g_dispatchSave1362;
+L_2c0d:
+    edx = g_dispatchSave1346 + g_viewportY;
+    g_dispatchSave1346 = edx;
+    eax = g_dispatchSave1393 - 1;
+    g_dispatchSave1393 = eax;
+    edx = g_dispatchSave1351 + 1;       /* row parity ++ */
+    g_dispatchSave1351 = edx;
+    ecx = g_dispatchSave1363 + g_dispatchSave1338;
+    g_dispatchSave1363 = ecx;
+    esi = esi + g_dispatchSave1339;
+    ebx = ebx + g_dispatchSave1336;
+    edi = edi + g_dispatchSave1337;
+    g_dispatchSave1384 = esi;
+    g_dispatchSave1361 = ebx;
+    g_dispatchSave1362 = edi;
+    if ((int)eax > 0) goto L_2a54;
+    edx = g_dispatchSave1359;
+L_2c85:
+    eax = g_dispatchSave1394; ecx = g_dispatchSave1365;
+    if ((int)ecx < (int)eax) goto L_281c;
+    return;
+L_2c9f:
+    edi = g_dispatchSave1362;
+    goto L_2943;
 }
 #else
 __declspec(naked) void TexturedTriRasterizeDithered(void)
