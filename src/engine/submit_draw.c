@@ -21,6 +21,81 @@
  * different field offsets per loop, then a rep movsd copy
  * + word patch through g_zSortKeyLUT.
  */
+#ifdef NON_MATCHING
+/*
+ * Portable twin (verified by co-exec, tools/decomp/verify_submit.py - NOT
+ * byte-matched; the naked branch below is the matching one). Faithful
+ * asm-shaped C: two clip-envelope passes (Y fields +2/+6/+0xa, then X fields
+ * +0/+4/+8) tracking min->g_clipMinScratch / max->g_clipMaxScratch, vertex 1
+ * (+6 / +4) skipped when flag (+0x1a) bit 0x20 is set; reject out-of-envelope;
+ * else copy the 28-byte (7-dword) entry into g_drawQueue[g_drawQueueSize], patch
+ * the sort key at +0x12 through g_zSortKeyLUT, and bump g_drawQueueSize.
+ *
+ * &g_drawQueue / &g_zSortKeyLUT are taken with explicit casts (no direct `[` on
+ * the name) so verify_coexec.gdef types them as scalar-base = the VA, not a
+ * dword-indexed array.
+ */
+void Helper_DrawCursor(short *pe)
+{
+    short *esi = pe;
+    int eax, edx, ecx;
+    unsigned char cl;
+    unsigned int qsize = g_drawQueueSize;
+    unsigned char *dst;
+    int i;
+
+    if ((int)qsize >= 3000)
+        return;
+
+    /* ---- Y envelope ---- */
+    eax = esi[1];                                  /* +2  v0.y (sign-extended) */
+    edx = eax;
+    g_clipMaxScratch = eax;
+    g_clipMinScratch = edx;
+    cl = ((unsigned char *)esi)[0x1a];
+    if (!(cl & 0x20)) {                            /* vertex 1 (+6) */
+        ecx = esi[3];
+        if (ecx < eax) { edx = ecx; g_clipMinScratch = edx; }
+        else           { eax = ecx; g_clipMaxScratch = eax; }
+    }
+    ecx = esi[5];                                  /* +0xa v2.y */
+    if (ecx < edx) { edx = ecx; g_clipMinScratch = edx; }
+    ecx = esi[5];
+    if (ecx > eax) { eax = ecx; g_clipMaxScratch = eax; }
+    if (eax < 0)        return;
+    if (edx > 0x1e0)    return;                     /* 480 */
+    if (edx < -100) { if (eax > 0x244) return; }    /* 580 */
+
+    /* ---- X envelope ---- */
+    eax = esi[0];                                  /* +0  v0.x */
+    edx = eax;
+    g_clipMaxScratch = eax;
+    g_clipMinScratch = edx;
+    cl = ((unsigned char *)esi)[0x1a];
+    if (!(cl & 0x20)) {                            /* vertex 1 (+4) */
+        ecx = esi[2];
+        if (ecx < eax) { edx = ecx; g_clipMinScratch = edx; }
+        else           { eax = ecx; g_clipMaxScratch = eax; }
+    }
+    ecx = esi[4];                                  /* +8  v2.x */
+    if (ecx < edx) { edx = ecx; g_clipMinScratch = edx; }
+    ecx = esi[4];
+    if (ecx > eax) { eax = ecx; g_clipMaxScratch = eax; }
+    if (eax < 0)        return;
+    if (edx > 0x280)    return;                     /* 640 */
+    if (edx < -100) { if (eax > 0x2e4) return; }    /* 740 */
+
+    /* ---- enqueue: copy 7 dwords into the queue slot, patch sort key ---- */
+    dst = (unsigned char *)&g_drawQueue + qsize * 0x1c;
+    for (i = 0; i < 7; i++)
+        ((unsigned int *)dst)[i] = ((unsigned int *)esi)[i];
+    {
+        unsigned int key = *(unsigned short *)(dst + 0x12);
+        *(unsigned short *)(dst + 0x12) = ((unsigned short *)&g_zSortKeyLUT)[key];
+    }
+    g_drawQueueSize = qsize + 1;
+}
+#else
 __declspec(naked) void Helper_DrawCursor(s16 *entry)
 {
     __asm {
@@ -126,3 +201,4 @@ done:
         ret
     }
 }
+#endif
