@@ -43,6 +43,45 @@ def _strip(n):
     return n[1:] if n.startswith('_') else n
 
 
+# Self-contained libgcc 64-bit divide helpers, appended to a twin's source only
+# when it references them (see build_twin_blob). Bit-by-bit restoring division:
+# uses only shift/compare/subtract on 64-bit values (which lower to inline 32-bit
+# pairs), never the `/` or `%` operator, so __divdi3 does not recurse into itself.
+# Truncates toward zero (C semantics) - matches MSVC's __alldiv on the orig side.
+LIBGCC_DIVIDE_SRC = r'''
+static unsigned long long mk4_udivmod(unsigned long long n, unsigned long long dd,
+                                      unsigned long long *rp) {
+    unsigned long long q = 0, r = 0; int i;
+    for (i = 63; i >= 0; i--) {
+        r = (r << 1) | ((n >> i) & 1ULL);
+        if (dd && r >= dd) { r -= dd; q |= (1ULL << i); }
+    }
+    if (rp) *rp = r;
+    return q;
+}
+long long __divdi3(long long a, long long b) {
+    int neg = 0; unsigned long long ua, ub, q;
+    if (a < 0) { ua = (unsigned long long)(-a); neg ^= 1; } else ua = (unsigned long long)a;
+    if (b < 0) { ub = (unsigned long long)(-b); neg ^= 1; } else ub = (unsigned long long)b;
+    q = mk4_udivmod(ua, ub, 0);
+    return neg ? -(long long)q : (long long)q;
+}
+unsigned long long __udivdi3(unsigned long long a, unsigned long long b) {
+    return mk4_udivmod(a, b, 0);
+}
+long long __moddi3(long long a, long long b) {
+    int neg = 0; unsigned long long ua, ub, r;
+    if (a < 0) { ua = (unsigned long long)(-a); neg ^= 1; } else ua = (unsigned long long)a;
+    ub = (b < 0) ? (unsigned long long)(-b) : (unsigned long long)b;
+    mk4_udivmod(ua, ub, &r);
+    return neg ? -(long long)r : (long long)r;
+}
+unsigned long long __umoddi3(unsigned long long a, unsigned long long b) {
+    unsigned long long r; mk4_udivmod(a, b, &r); return r;
+}
+'''
+
+
 def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None):
     """Compile twin -> .text, relocated so external calls target the
     ORIGINAL function VAs (callees co-execute as original bytes in the
@@ -90,25 +129,41 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None):
     src = ('#define NON_MATCHING 1\n'
            '#include "portable/ghidra_types.h"\n#include "portable/mem_model.h"\n'
            + defs + body + '\n')
-    with tempfile.TemporaryDirectory() as d:
-        c = Path(d) / 't.c'
-        c.write_text(src)
-        o = Path(d) / 't.o'
-        r = subprocess.run(
-            [CC, '-m32', '-std=gnu89', '-c', '-O2', '-fno-stack-protector',
-             '-fno-pic', '-ffreestanding', '-fno-asynchronous-unwind-tables',
-             # the engine reads fixed VAs (incl. base-0 packed-ptr tables);
-             # don't let gcc treat those as UB null derefs and emit ud2.
-             '-fno-delete-null-pointer-checks',
-             # CC is mingw (defines _WIN32), so win32_types.h would gate its
-             # DWORD/HWND/... typedefs off; force the shim branch on so Win32-typed
-             # twins compile (windows.h is not included under -ffreestanding).
-             '-DMK4_WIN32_SHIM',
-             '-I' + str(ROOT / 'include'), '-w', str(c), '-o', str(o)],
-            capture_output=True, text=True)
-        if r.returncode:
-            return None, None, None, 'compile: ' + (r.stderr.strip().splitlines() or [''])[-1]
-        syms, sections = syn.parse_obj_full(o.read_bytes())
+    # A twin that does a 64-bit divide (e.g. the perspective divide in
+    # ProjectVertex) emits a libgcc helper call (__divdi3/...). build_twin_blob
+    # only resolves GAME-function callees, so the call would be unresolved. We
+    # compile once; if the .o references one of these helpers, append a self-
+    # contained C implementation (bit-by-bit division - never uses the 64-bit
+    # `/` operator, so no recursion) and recompile so the call resolves WITHIN
+    # the blob. Only triggers for twins that actually need it - all other twins
+    # compile exactly as before.
+    LIBGCC = {'__divdi3', '__udivdi3', '__moddi3', '__umoddi3'}
+    syms = sections = None
+    for attempt in range(2):
+        with tempfile.TemporaryDirectory() as d:
+            c = Path(d) / 't.c'
+            c.write_text(src)
+            o = Path(d) / 't.o'
+            r = subprocess.run(
+                [CC, '-m32', '-std=gnu89', '-c', '-O2', '-fno-stack-protector',
+                 '-fno-pic', '-ffreestanding', '-fno-asynchronous-unwind-tables',
+                 # the engine reads fixed VAs (incl. base-0 packed-ptr tables);
+                 # don't let gcc treat those as UB null derefs and emit ud2.
+                 '-fno-delete-null-pointer-checks',
+                 # CC is mingw (defines _WIN32), so win32_types.h would gate its
+                 # DWORD/HWND/... typedefs off; force the shim branch on so Win32-typed
+                 # twins compile (windows.h is not included under -ffreestanding).
+                 '-DMK4_WIN32_SHIM',
+                 '-I' + str(ROOT / 'include'), '-w', str(c), '-o', str(o)],
+                capture_output=True, text=True)
+            if r.returncode:
+                return None, None, None, 'compile: ' + (r.stderr.strip().splitlines() or [''])[-1]
+            syms, sections = syn.parse_obj_full(o.read_bytes())
+        undef = {_strip(s['name']) for s in syms if s and s['sec'] <= 0}
+        if attempt == 0 and (undef & LIBGCC):
+            src += LIBGCC_DIVIDE_SRC
+            continue
+        break
     text = next((s for s in sections if s['name'].startswith('.text')), None)
     if text is None:
         return None, None, None, 'no .text'
