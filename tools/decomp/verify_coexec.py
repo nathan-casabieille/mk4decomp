@@ -82,7 +82,7 @@ unsigned long long __umoddi3(unsigned long long a, unsigned long long b) {
 '''
 
 
-def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None):
+def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None):
     """Compile twin -> .text, relocated so external calls target the
     ORIGINAL function VAs (callees co-execute as original bytes in the
     arena) and intra-twin labels resolve within the loaded blob. When
@@ -99,6 +99,15 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None):
     # holds a pointer; else a plain scalar. Same VA either way - only the type
     # of the lvalue differs so the C compiles.
     def gdef(g, va):
+        # width16: globals the caller knows are 16-bit (e.g. packed s16 matrix
+        # entries / vertex coords the original reads `movsx word`). gdef defaults
+        # every global to 32-bit, which is WRONG for a packed 16-bit value - its
+        # high word is the NEXT entry, so a dword read is polluted. Typing it as
+        # `short` reads exactly 2 bytes, sign-extended, matching movsx. Opt-in per
+        # harness (default empty) so the 100+ existing 32-bit verifications are
+        # untouched. Signed because the geometry path uses movsx, not movzx.
+        if width16 and g in width16:
+            return '#define %s (*(short *)0x%xu)\n' % (g, va)
         if re.search(r'\(\s*\*\s*%s\s*\)\s*\(' % g, body) or re.search(r'\b%s\s*\(' % g, body):
             return '#define %s (*(unsigned int (**)())0x%xu)\n' % (g, va)
         deref = False
@@ -315,7 +324,7 @@ def run_at(uc, eip, full, nargs=0):
     return bytes(uc.mem_read(0, full)), terminated, eax
 
 
-def verify(name, fn_va, gl_va, name_to_va, arena):
+def verify(name, fn_va, gl_va, name_to_va, arena, width16=None):
     if name not in fn_va:
         return 'SKIP no-addr'
     t = extract_twin_any(name)
@@ -323,7 +332,7 @@ def verify(name, fn_va, gl_va, name_to_va, arena):
         return 'SKIP no-twin'
     body, nargs, returns_value = t
     blob, entry, load_base, err = build_twin_blob(
-        name, body, gl_va, name_to_va, fn_self_va=fn_va[name])
+        name, body, gl_va, name_to_va, fn_self_va=fn_va[name], width16=width16)
     if blob is None:
         return 'SKIP ' + err
     try:

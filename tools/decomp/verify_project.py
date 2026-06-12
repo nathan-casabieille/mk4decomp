@@ -41,17 +41,28 @@ MATRIX = [0x0f00, 0x0200, 0x0080,
           0x0040, -0x0120, 0x0fa0]
 
 
+# 16-bit globals the originals read `movsx word` (confirmed by disassembling
+# ProjectVertex): the packed 3x3 matrix (+2 stride) and the three vertex coords.
+# gdef must type these as `short`, else a 32-bit read is polluted by the neighbor.
+WIDTH16 = {'g_mat3x3_007af990', 'g_mat3x3_007af992', 'g_mat3x3_007af994',
+           'g_mat3x3_007af996', 'g_mat3x3_007af998', 'g_mat3x3_007af99a',
+           'g_mat3x3_007af99c', 'g_mat3x3_007af99e', 'g_mat3x3_007af9a0',
+           'g_triStripX0', 'g_triStripX1', 'g_triStripX2',
+           'g_vtxIn1_y', 'g_vtxIn1_z', 'g_vtxIn2_x', 'g_vtxIn2_y', 'g_vtxIn2_z'}
+
+
 def seed_common(a):
-    # projection matrix (nine s16)
+    # projection matrix (nine s16, +2 stride)
     for i, v in enumerate(MATRIX):
         setw(a, MAT + i * 2, v)
-    # input vertices: g_triStripX0/1/2 each a 3-word (x,y,z) group, 6 bytes apart
-    verts = [(0x0040, 0x0030, 0x0500),
-             (0x0080, -0x0020, 0x0480),
-             (-0x0030, 0x0060, 0x0520)]
-    for vi, base in enumerate((0x7af95c, 0x7af962, 0x7af968)):
-        for j, c in enumerate(verts[vi]):
-            setw(a, base + j * 2, c)
+    # the input vertex = three s16 components (x,y,z) in g_triStripX0/1/2, which
+    # are 6 bytes apart (0x7af95c/962/968) - each a single word, NOT a 3-word group.
+    setw(a, 0x7af95c, 0x0040)                  # g_triStripX0 (x)
+    setw(a, 0x7af962, 0x0030)                  # g_triStripX1 (y)
+    setw(a, 0x7af968, 0x0500)                  # g_triStripX2 (z)
+    setdw(a, 0x7af9a4, 0x0010)                 # g_vtxTransX (32-bit translation)
+    setdw(a, 0x7af9a8, 0x0020)                 # g_vtxTransY
+    setdw(a, 0x7af9ac, 0x0040)                 # g_vtxTransZ (keep projected Z > 1)
     setdw(a, 0x7af98c, 0x0200)                 # g_min_007af98c (scratch input)
     # light matrix (g_lightMat00/01/02/20/21/22, dword slots) + light vector
     lm = {0x7af9c0: 0x0f00, 0x7af9c4: 0x0100, 0x7af9c8: 0x0080,
@@ -76,7 +87,7 @@ def main():
     for name in names:
         seeded = bytearray(base)
         seed_common(seeded)
-        res = vc.verify(name, fn_va, gl_va, fn_va, seeded)
+        res = vc.verify(name, fn_va, gl_va, fn_va, seeded, width16=WIDTH16)
         weak = 'VERIFIED (0 writes' in res
         flag = 'WEAK(no writes - seed missed inputs)' if weak else ''
         print('  %-22s %s %s' % (name, res, flag))
