@@ -52,8 +52,8 @@ def rect_record(a, idx, x0, y0, x1, y1, u0, v0, u1, v1, color, typ):
     r = REC + idx * 0x1c
     setw(a, r + 0, x0)        # +0  x0 (= sort key)
     setw(a, r + 2, y0)        # +2  y0
-    setw(a, r + 4, 0)         # +4
-    setw(a, r + 6, 0)         # +6
+    setw(a, r + 4, 50)        # +4  V1.x (triangle path)
+    setw(a, r + 6, 12)        # +6  V1.y
     setw(a, r + 8, x1)        # +8  x1 (rect right, via L_fda3)
     setw(a, r + 0xa, y1)      # +a  y1
     setb(a, r + 0xc, u0)      # +c  u0
@@ -88,14 +88,19 @@ def main():
     # scenarios: a few rect primitives (type 0x20 -> ScanlineTexBlit) at various x0
     def seed(a):
         setdw(a, gl, RENDER_MODE_VA, 5)         # SW mode
-        setdw(a, gl, 'g_drawQueueSize', 2)
+        setdw(a, gl, 'g_drawQueueSize', 6)
         setdw(a, gl, 'g_viewportX', FB)
         setdw(a, gl, 'g_viewportY', pitch)
         setdw(a, gl, 'g_viewportW', W)
         setdw(a, gl, 'g_viewportH', H)
         setdw(a, gl, 'g_dispatchSave1400', TEX)
-        rect_record(a, 0, 8, 6, 40, 30, 0, 0, 24, 16, 0xffff, 0x20)
-        rect_record(a, 1, 20, 10, 50, 40, 4, 2, 30, 20, 0xffff, 0x20)
+        # mix of types exercising the full dispatch:
+        rect_record(a, 0, 8, 6, 40, 30, 0, 0, 24, 16, 0xffff, 0x20)        # rect -> ScanlineTexBlit
+        rect_record(a, 1, 20, 10, 50, 40, 4, 2, 30, 20, 0x1000, 0x20)      # rect, color<0x7fff -> Paletted
+        rect_record(a, 2, 12, 8, 44, 34, 1, 1, 28, 18, 0xffff, 0x20 | 0x80)# rect -> Interlaced
+        rect_record(a, 3, 16, 6, 48, 36, 2, 0, 26, 14, 0xffff, 0x20 | 0x40)# rect -> BlitBlend16bpp
+        rect_record(a, 4, 6, 4, 38, 28, 0, 0, 22, 12, 0xffff, 0x00)        # tri -> TexturedTriRasterize
+        rect_record(a, 5, 10, 5, 42, 32, 3, 1, 25, 15, 0x1000, 0x00)       # tri, color<0x7fff -> Shaded
 
     tex = bytearray(0x120000)
     for i in range(0, 0x120000, 2):

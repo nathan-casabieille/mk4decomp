@@ -46,6 +46,154 @@ extern void TexturedTriRasterizeDithered(void);
 extern void TexturedTriRasterizeShaded(void);
 extern void TexturedTriRasterize(void);
 
+#ifdef NON_MATCHING
+/*
+ * Portable C twin (path A). SW dispatcher. The mode-5 (software) path is
+ * FPU-free; modes 1 (Glide+FPU) and 2 (PadEnum) and the non-5 SW variant
+ * (L_ff9e) are stubbed (Renderer_GetMode()==5 in the SW build, so they are not
+ * reached). Counting-sort the draw queue by the +0x12 key, then per sorted
+ * 0x1c-byte record: decode verts/uv into the g_dispatchSave globals, compute the
+ * per-vertex shade from RGB555 colours via g_div3Table, and dispatch to the
+ * right (now-all-C) rasterizer by the +0x1a type. Verified by verify_flush.py.
+ */
+void FlushDrawQueue(void)
+{
+    unsigned int eax, ebx, ecx, edx, esi, edi;
+    unsigned short *buckets = (unsigned short *)&g_drawQueueBuckets;
+    unsigned char *div3 = (unsigned char *)&g_div3Table;
+    unsigned char *rec0 = (unsigned char *)&g_dispatchSave1398 - 0x12; /* record 0 start */
+    unsigned int *sorted = (unsigned int *)&g_dispatchSave1356;
+    unsigned int sortidx, count;
+    int i;
+    /* --- counting sort --- */
+    esi = g_drawQueueSize;
+    ebx = 0;
+    for (i = 0; i < 0x400 * 2; i++) buckets[i] = 0;     /* rep stosd 0x400 dwords */
+    if ((int)esi > 0) {
+        unsigned char *kp = (unsigned char *)&g_dispatchSave1398;   /* key field (rec+0x12) */
+        for (edx = esi; edx != 0; edx--) {
+            eax = *(unsigned short *)kp;
+            buckets[eax]++;
+            kp += 0x1c;
+        }
+    }
+    {   /* prefix sum over [g_dispatchSave1349, g_dispatchSave1350) step 2 */
+        unsigned char *p = (unsigned char *)&g_dispatchSave1349;
+        unsigned char *end = (unsigned char *)&g_dispatchSave1350;
+        for (; p < end; p += 2)
+            *(unsigned short *)p = (unsigned short)(*(unsigned short *)p + *(unsigned short *)(p - 2));
+    }
+    eax = esi - 1;
+    if ((int)eax >= 0) {            /* scatter (last record -> first) */
+        unsigned char *kp = (unsigned char *)&g_dispatchSave1398 + eax * 0x1c;
+        for (edx = eax + 1; edx != 0; edx--) {
+            unsigned int recva = (unsigned int)(unsigned long)(kp - 0x12);
+            eax = *(unsigned short *)kp;
+            kp -= 0x1c;
+            buckets[eax]--;
+            sorted[buckets[eax] & 0xffff] = recva;
+        }
+    }
+    /* --- mode dispatch (Renderer_GetMode reads *0x4f4b3c) --- */
+    if (Renderer_GetMode() == 1) goto done;             /* Glide+FPU path - stub */
+    if (Renderer_GetMode() == 2) goto done;             /* PadEnum path - stub */
+    if (Renderer_GetMode() != 5) goto done;             /* L_ff9e other-SW - stub */
+    /* --- L_fc70: SW mode 5 per-primitive decode + dispatch --- */
+    eax = g_drawQueueSize;
+    if ((int)(eax - 1) < 0) goto done;
+    sortidx = eax - 1;                                  /* index into sorted[] (backward) */
+    count = eax;
+    for (;;) {
+        unsigned char *rec = (unsigned char *)(unsigned long)sorted[sortidx];
+        unsigned int color0, typ;
+        g_dispatchSave1378 = (unsigned int)(int)*(short *)(rec + 0);     /* x0 */
+        g_dispatchSave1381 = (unsigned int)(int)*(short *)(rec + 2);     /* y0 */
+        g_dispatchSave1371 = rec[0xc];                                  /* u0 */
+        g_dispatchSave1374 = rec[0xd];                                  /* v0 */
+        color0 = *(unsigned short *)(rec + 0x14);
+        g_dispatchSave1367 = (unsigned char)((div3[(color0 & 0x1f) + ((color0 >> 5) & 0x1f) + ((color0 >> 0xa) & 0x1f)] << 3) & 0xff);
+        if (!(rec[0x1a] & 0x10)) {
+            *(unsigned short *)(rec + 0x16) = *(unsigned short *)(rec + 0x14);
+            *(unsigned short *)(rec + 0x18) = *(unsigned short *)(rec + 0x16);
+        }
+        typ = *(unsigned short *)(rec + 0x1a);
+        {
+            unsigned int c1 = *(unsigned short *)(rec + 0x16);
+            unsigned int c2 = *(unsigned short *)(rec + 0x18);
+            unsigned int s1 = (unsigned char)((div3[(c1 & 0x1f) + ((c1 >> 5) & 0x1f) + ((c1 >> 0xa) & 0x1f)] << 3) & 0xff);
+            unsigned int s2 = (unsigned char)((div3[(c2 & 0x1f) + ((c2 >> 5) & 0x1f) + ((c2 >> 0xa) & 0x1f)] << 3) & 0xff);
+            if ((typ & 0x400) && !(typ & 0x20)) {     /* ch&4 && !cl&0x20 == (typ>>8)&4 && !(typ&0x2000)? */
+                /* path A */
+                g_dispatchSave1380 = (unsigned int)(int)*(short *)(rec + 4);
+                g_dispatchSave1383 = (unsigned int)(int)*(short *)(rec + 6);
+                g_dispatchSave1379 = (unsigned int)(int)*(short *)(rec + 8);
+                g_dispatchSave1382 = (unsigned int)(int)*(short *)(rec + 0xa);
+                g_dispatchSave1373 = rec[0xe];
+                g_dispatchSave1377 = rec[0xf];
+                g_dispatchSave1372 = rec[0x10];
+                g_dispatchSave1376 = rec[0x11];
+                g_dispatchSave1369 = (unsigned char)s1;
+                g_dispatchSave1368 = (unsigned char)s2;
+            } else {
+                /* path B (L_fda3) */
+                g_dispatchSave1379 = (unsigned int)(int)*(short *)(rec + 4);
+                g_dispatchSave1382 = (unsigned int)(int)*(short *)(rec + 6);
+                g_dispatchSave1380 = (unsigned int)(int)*(short *)(rec + 8);
+                g_dispatchSave1383 = (unsigned int)(int)*(short *)(rec + 0xa);
+                g_dispatchSave1372 = rec[0xe];
+                g_dispatchSave1376 = rec[0xf];
+                g_dispatchSave1373 = rec[0x10];
+                g_dispatchSave1377 = rec[0x11];
+                g_dispatchSave1368 = (unsigned char)s1;
+                g_dispatchSave1369 = (unsigned char)s2;
+            }
+        }
+        /* L_fe4f dispatch */
+        g_dispatchSave1403 = typ & 0xf;
+        if ((typ >> 5) & 1) {
+            /* RECT: sort verts so x0<=x1, y0<=y1 (+ u/v) */
+            edx = g_dispatchSave1380;
+            edi = g_dispatchSave1373;
+            if ((int)g_dispatchSave1378 > (int)edx) {
+                ecx = g_dispatchSave1378;
+                g_dispatchSave1380 = ecx; g_dispatchSave1378 = edx;
+                ecx = g_dispatchSave1371;
+                g_dispatchSave1373 = ecx; g_dispatchSave1371 = edi;
+            }
+            esi = g_dispatchSave1383;
+            if ((int)g_dispatchSave1381 > (int)esi) {
+                edx = g_dispatchSave1377;
+                ecx = g_dispatchSave1381;
+                g_dispatchSave1383 = ecx; g_dispatchSave1381 = esi;
+                ecx = g_dispatchSave1374;
+                g_dispatchSave1377 = ecx; g_dispatchSave1374 = edx;
+            }
+            if (*(unsigned short *)(rec + 0x14) < 0x7fff) {
+                ScanlineTexBlitPaletted();
+            } else {
+                unsigned int m = typ & 0x180;
+                if (m == 0x80 || m == 0x100 || m == 0x180) ScanlineTexBlitInterlaced();
+                else if ((typ >> 6) & 1) BlitBlend16bpp();
+                else ScanlineTexBlit();
+            }
+        } else {
+            /* TRIANGLE */
+            if (*(unsigned short *)(rec + 0x14) >= 0x7fff && !(typ & 0x10)) {
+                unsigned int m = typ & 0x180;
+                if (m == 0x80 || m == 0x100 || m == 0x180) TexturedTriRasterizeDithered();
+                else TexturedTriRasterize();
+            } else {
+                TexturedTriRasterizeShaded();
+            }
+        }
+        if (--count == 0) break;
+        sortidx--;
+    }
+done:
+    g_viewportX = 0;
+    g_viewportY = 0;
+}
+#else
 __declspec(naked) void FlushDrawQueue(void)
 {
     __asm {
@@ -1259,4 +1407,5 @@ __declspec(naked) void FlushDrawQueue(void)
         ret
     }
 }
+#endif
 
