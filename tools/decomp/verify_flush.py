@@ -134,6 +134,19 @@ def main():
         va = o + BASE
         where = ('FB+0x%x' % (o - FB)) if FB <= o < FB + 0x10000 else inv.get(va, '0x%x' % va)
         print('  diff @%s: orig=%s twin=%s' % (where, o_buf[o:o+4].hex(), t_buf[o:o+4].hex()))
+    if '--dump' in sys.argv:
+        # RGB565 framebuffer -> PPM (proof the verified C pipeline renders pixels)
+        fb = t_buf[FB:FB + pitch * H]
+        out = Path('/tmp/mk4_render.ppm')
+        with out.open('wb') as f:
+            f.write(b'P6\n%d %d\n255\n' % (W, H))
+            for i in range(0, len(fb), 2):
+                px = fb[i] | (fb[i + 1] << 8)
+                r = ((px >> 11) & 0x1f) << 3
+                g = ((px >> 5) & 0x3f) << 2
+                b = (px & 0x1f) << 3
+                f.write(bytes((r, g, b)))
+        print('  dumped framebuffer ->', out, '(%dx%d, %d non-bg px)' % (W, H, fb_nz))
     if o_term and t_term and not diffs and fb_nz:
         print('  VERIFIED'); return 0
     return 1
