@@ -69,7 +69,7 @@ ALL_OBJS := $(C_OBJS) $(ASM_OBJS)
 
 # === Phony targets =======================================================
 
-.PHONY: all matching portable portable-check native native-run diff progress clean help check-msvc
+.PHONY: all matching portable portable-check native native-run wasm diff progress clean help check-msvc
 
 help:
 	@echo "MK4 matching decomp - targets:"
@@ -244,6 +244,25 @@ native-full:
 	$(NATIVE_CC) -DNON_MATCHING -DMK4_ARENA -DTARGET_SDL -DMK4_NATIVE_FULL -Iinclude $(SDL_CFLAGS) \
 		-O2 -w $(NATIVE_PORTFLAGS) $(NATIVE_FULL_SRCS) $(SDL_LIBS) -o $(NATIVE_FULL_EXE)
 	@echo "native-full: linked $(NATIVE_FULL_EXE)  [$(words $(NATIVE_FULL_SRCS)) TUs: broad engine closure + weak stub frontier]"
+
+# wasm: the VERIFIED SW render pipeline (FlushDrawQueue + the rasterizers) as a
+# self-contained wasm32 bundle. wasm32 is 32-bit (malloc/long/pointers all 32),
+# so the twins' uint-pointer model is lossless - exactly the target the verified
+# code fits (macOS arm64 cannot, see the pointer-width-fork note). The generator
+# collects twin BODIES + arena-relative MK4_VA global aliases (so the vertex
+# arrays the triangle twins index are contiguous by construction) + a driver that
+# loads build/arena.bin, seeds a draw queue, runs FlushDrawQueue, and dumps a PPM.
+WASM_DIR := $(BUILD_DIR)/wasm
+wasm: $(WASM_DIR)/frame.ppm
+$(WASM_DIR)/mk4_render.c: tools/decomp/gen_wasm_render.py $(ARENA_BLOB)
+	@mkdir -p $(WASM_DIR)
+	@python3 tools/decomp/gen_wasm_render.py > $@
+$(WASM_DIR)/mk4_render.js: $(WASM_DIR)/mk4_render.c
+	emcc -O2 -sNODERAWFS=1 -sALLOW_MEMORY_GROWTH=1 -sINITIAL_MEMORY=64MB \
+		-Iinclude -DNON_MATCHING -DMK4_ARENA $< -o $@
+$(WASM_DIR)/frame.ppm: $(WASM_DIR)/mk4_render.js $(ARENA_BLOB)
+	node $(WASM_DIR)/mk4_render.js $(ARENA_BLOB) $@
+	@echo "wasm: rendered $@  [verified SW pipeline running as wasm32]"
 
 # === Arena (relocated memory model, Phase 1) =============================
 #
