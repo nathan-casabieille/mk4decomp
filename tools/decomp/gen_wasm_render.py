@@ -118,21 +118,24 @@ def main():
     P('}')
     P('')
     # ---- driver ----
-    P(DRIVER % dict(fb_va=FB_VA, tex_va=TEX_VA, w=W, h=H,
-                    mode_va=RENDER_MODE_VA, rec=REC))
+    sdl = '--sdl' in sys.argv
+    fmt = dict(fb_va=FB_VA, tex_va=TEX_VA, w=W, h=H, mode_va=RENDER_MODE_VA, rec=REC)
+    P(DRIVER_COMMON % fmt)
+    P((DRIVER_SDL if sdl else DRIVER_PPM) % fmt)
     sys.stdout.write('\n'.join(out) + '\n')
     sys.stderr.write('twins=%d  stubs_needed=%s  missing_globals=%s\n'
                      % (len(order), sorted(need_stub) or 'none', missing or 'none'))
 
 
-DRIVER = r'''
-/* ---------------- driver ---------------- */
+DRIVER_COMMON = r'''
+/* ---------------- driver (shared) ---------------- */
 #define FB_VA   0x%(fb_va)xu
 #define TEX_VA  0x%(tex_va)xu
 #define W       %(w)d
 #define H       %(h)d
 #define PITCH   (W * 2)
 #define REC     0x%(rec)xu
+#define MODE_VA 0x%(mode_va)xu
 
 static void setw(unsigned int va, unsigned short v) {
     *(unsigned short *)MK4_VA(unsigned short, va) = v;
@@ -160,63 +163,103 @@ static void rec_prim(int idx, int x0, int y0, int x1, int y1,
     setw(r + 0x1a, typ);
 }
 
-int main(int argc, char **argv) {
-    const char *img = (argc > 1) ? argv[1] : "build/arena.bin";
-    const char *outp = (argc > 2) ? argv[2] : "build/wasm/frame.ppm";
+/* Load the original data image into one linear arena + carve a texture. */
+static int arena_init(const char *img) {
     FILE *f = fopen(img, "rb");
-    long n;
-    unsigned int i;
-    if (!f) { fprintf(stderr, "cannot open %%s\n", img); return 2; }
+    long n; unsigned int i;
+    if (!f) { fprintf(stderr, "cannot open %%s\n", img); return 0; }
     fseek(f, 0, SEEK_END); n = ftell(f); fseek(f, 0, SEEK_SET);
-    g_mk4ArenaSize = 0x1400000;               /* 20 MB: covers image + FB + TEX */
+    g_mk4ArenaSize = 0x1400000;               /* 20 MB: image + FB + TEX */
     g_mk4Arena = (unsigned char *)calloc(1, g_mk4ArenaSize);
-    if (!g_mk4Arena) { fprintf(stderr, "calloc failed\n"); return 2; }
-    if (fread(g_mk4Arena, 1, (size_t)n, f) != (size_t)n) { fprintf(stderr,"short read\n"); return 2; }
+    if (!g_mk4Arena) { fprintf(stderr, "calloc failed\n"); fclose(f); return 0; }
+    if (fread(g_mk4Arena, 1, (size_t)n, f) != (size_t)n) {
+        fprintf(stderr, "short read\n"); fclose(f); return 0; }
     fclose(f);
-
-    /* a simple texture: distinct non-zero RGB565 texels */
-    for (i = 0; i < 0x100000; i += 2)
+    for (i = 0; i < 0x100000; i += 2)         /* distinct non-zero RGB565 texels */
         *(unsigned short *)MK4_VA(unsigned short, TEX_VA + i) =
             (unsigned short)((((i >> 1) %% 255) + 1));
+    return 1;
+}
 
-    /* renderer state + viewport (framebuffer + texture as raw 32-bit ptrs) */
-    setdw(0x%(mode_va)xu, 5);                              /* SW mode */
+/* Seed the renderer state + a small scene (rects + triangles). `frame` shifts
+   the primitives so a main loop animates the same dispatch every tick. */
+static void seed_scene(int frame) {
+    int dx = (frame %% 80) - 40, dy = (frame / 2 %% 60) - 30;
+    setdw(MODE_VA, 5);                                    /* SW mode */
     g_drawQueueSize = 7;
     g_viewportX = (unsigned int)(unsigned long)MK4_VA(void, FB_VA);
-    g_viewportY = PITCH;
-    g_viewportW = W;
-    g_viewportH = H;
+    g_viewportY = PITCH;  g_viewportW = W;  g_viewportH = H;
     g_dispatchSave1400 = (unsigned int)(unsigned long)MK4_VA(void, TEX_VA);
+    /* clear the framebuffer between frames */
+    memset(MK4_VA(void, FB_VA), 0, PITCH * H);
+    rec_prim(0,  20+dx,  20+dy, 160+dx, 120+dy, 0,0, 60,40, 0xffff, 0x20);
+    rec_prim(1,  60+dx,  40+dy, 220+dx, 160+dy, 4,2, 80,50, 0x1000, 0x20);
+    rec_prim(2, 100,     60+dy, 280,    200+dy, 1,1, 70,45, 0xffff, 0x20|0x80);
+    rec_prim(3,  40+dx, 100,    200+dx, 220,    2,0, 64,36, 0xffff, 0x20|0x40);
+    rec_prim(4, 130-dx,  30+dy, 300-dx, 210+dy, 0,0, 90,60, 0xffff, 0x00);
+    rec_prim(5,  10,    140-dy, 150,    235-dy, 3,1, 55,40, 0x1000, 0x00);
+    rec_prim(6,  80+dx,  80,    260+dx, 180,    5,3, 88,52, 0xffff, 0x180);
+}
+'''
 
-    /* a small scene exercising the full dispatch (rects + triangles) */
-    rec_prim(0,  20,  20, 160, 120, 0, 0, 60, 40, 0xffff, 0x20);        /* ScanlineTexBlit  */
-    rec_prim(1,  60,  40, 220, 160, 4, 2, 80, 50, 0x1000, 0x20);        /* Paletted         */
-    rec_prim(2, 100,  60, 280, 200, 1, 1, 70, 45, 0xffff, 0x20|0x80);   /* Interlaced       */
-    rec_prim(3,  40, 100, 200, 220, 2, 0, 64, 36, 0xffff, 0x20|0x40);   /* BlitBlend16bpp   */
-    rec_prim(4, 130,  30, 300, 210, 0, 0, 90, 60, 0xffff, 0x00);        /* TexturedTri      */
-    rec_prim(5,  10, 140, 150, 235, 3, 1, 55, 40, 0x1000, 0x00);        /* Shaded           */
-    rec_prim(6,  80,  80, 260, 180, 5, 3, 88, 52, 0xffff, 0x180);       /* Dithered (tri)   */
-
+DRIVER_PPM = r'''
+/* ---------------- headless PPM driver (node) ---------------- */
+int main(int argc, char **argv) {
+    const char *img  = (argc > 1) ? argv[1] : "build/arena.bin";
+    const char *outp = (argc > 2) ? argv[2] : "build/wasm/frame.ppm";
+    unsigned short *fb;
+    FILE *o; int x, y, nz = 0;
+    if (!arena_init(img)) return 2;
+    seed_scene(0);
     FlushDrawQueue();
-
-    {
-        FILE *o = fopen(outp, "wb");
-        unsigned short *fb = (unsigned short *)MK4_VA(unsigned short, FB_VA);
-        int x, y, nz = 0;
-        if (!o) { fprintf(stderr, "cannot write %%s\n", outp); return 2; }
-        fprintf(o, "P6\n%%d %%d\n255\n", W, H);
-        for (y = 0; y < H; y++) for (x = 0; x < W; x++) {
-            unsigned short px = fb[y * W + x];
-            unsigned char rgb[3];
-            if (px) nz++;
-            rgb[0] = (unsigned char)(((px >> 11) & 0x1f) << 3);
-            rgb[1] = (unsigned char)(((px >> 5)  & 0x3f) << 2);
-            rgb[2] = (unsigned char)(( px        & 0x1f) << 3);
-            fwrite(rgb, 1, 3, o);
-        }
-        fclose(o);
-        fprintf(stderr, "wrote %%s (%%dx%%d, %%d non-zero px)\n", outp, W, H, nz);
+    fb = (unsigned short *)MK4_VA(unsigned short, FB_VA);
+    o = fopen(outp, "wb");
+    if (!o) { fprintf(stderr, "cannot write %%s\n", outp); return 2; }
+    fprintf(o, "P6\n%%d %%d\n255\n", W, H);
+    for (y = 0; y < H; y++) for (x = 0; x < W; x++) {
+        unsigned short px = fb[y * W + x];
+        unsigned char rgb[3];
+        if (px) nz++;
+        rgb[0] = (unsigned char)(((px >> 11) & 0x1f) << 3);
+        rgb[1] = (unsigned char)(((px >> 5)  & 0x3f) << 2);
+        rgb[2] = (unsigned char)(( px        & 0x1f) << 3);
+        fwrite(rgb, 1, 3, o);
     }
+    fclose(o);
+    fprintf(stderr, "wrote %%s (%%dx%%d, %%d non-zero px)\n", outp, W, H, nz);
+    return 0;
+}
+'''
+
+DRIVER_SDL = r'''
+/* ---------------- SDL2 canvas driver (emscripten, browser) ---------------- */
+#include <SDL2/SDL.h>
+#include <emscripten.h>
+
+static SDL_Renderer *g_ren;
+static SDL_Texture  *g_tex;
+static int g_frame;
+
+static void tick(void) {
+    seed_scene(g_frame++);
+    FlushDrawQueue();
+    /* the framebuffer is native RGB565 - upload straight into the texture */
+    SDL_UpdateTexture(g_tex, NULL, MK4_VA(void, FB_VA), PITCH);
+    SDL_RenderClear(g_ren);
+    SDL_RenderCopy(g_ren, g_tex, NULL, NULL);
+    SDL_RenderPresent(g_ren);
+}
+
+int main(int argc, char **argv) {
+    SDL_Window *win;
+    const char *img = (argc > 1) ? argv[1] : "build/arena.bin";
+    if (!arena_init(img)) return 2;
+    SDL_Init(SDL_INIT_VIDEO);
+    SDL_CreateWindowAndRenderer(W * 2, H * 2, 0, &win, &g_ren);
+    SDL_RenderSetLogicalSize(g_ren, W, H);
+    g_tex = SDL_CreateTexture(g_ren, SDL_PIXELFORMAT_RGB565,
+                              SDL_TEXTUREACCESS_STREAMING, W, H);
+    emscripten_set_main_loop(tick, 0, 1);
     return 0;
 }
 '''

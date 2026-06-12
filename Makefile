@@ -69,7 +69,7 @@ ALL_OBJS := $(C_OBJS) $(ASM_OBJS)
 
 # === Phony targets =======================================================
 
-.PHONY: all matching portable portable-check native native-run wasm diff progress clean help check-msvc
+.PHONY: all matching portable portable-check native native-run wasm wasm-sdl diff progress clean help check-msvc
 
 help:
 	@echo "MK4 matching decomp - targets:"
@@ -263,6 +263,21 @@ $(WASM_DIR)/mk4_render.js: $(WASM_DIR)/mk4_render.c
 $(WASM_DIR)/frame.ppm: $(WASM_DIR)/mk4_render.js $(ARENA_BLOB)
 	node $(WASM_DIR)/mk4_render.js $(ARENA_BLOB) $@
 	@echo "wasm: rendered $@  [verified SW pipeline running as wasm32]"
+
+# wasm-sdl: the same verified pipeline driving an SDL2 canvas in the browser
+# (emscripten ships SDL2). The framebuffer is native RGB565, uploaded straight
+# into an SDL streaming texture each frame; seed_scene(frame) animates the scene
+# so the dispatch runs every tick. arena.bin is packaged into the wasm VFS.
+# Open with: emrun build/wasm/index.html   (or any static server)
+wasm-sdl: $(WASM_DIR)/index.html
+$(WASM_DIR)/mk4_render_sdl.c: tools/decomp/gen_wasm_render.py $(ARENA_BLOB)
+	@mkdir -p $(WASM_DIR)
+	@python3 tools/decomp/gen_wasm_render.py --sdl > $@
+$(WASM_DIR)/index.html: $(WASM_DIR)/mk4_render_sdl.c $(ARENA_BLOB)
+	emcc -O2 -sUSE_SDL=2 -sALLOW_MEMORY_GROWTH=1 -sINITIAL_MEMORY=64MB \
+		--preload-file $(ARENA_BLOB)@build/arena.bin \
+		-Iinclude -DNON_MATCHING -DMK4_ARENA $< -o $@
+	@echo "wasm-sdl: built $@  [open with: emrun $@]"
 
 # === Arena (relocated memory model, Phase 1) =============================
 #
