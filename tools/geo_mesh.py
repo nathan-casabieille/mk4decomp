@@ -22,7 +22,8 @@ it round-trips on the real character assets.
     +0x02 u16 count     TOTAL TRIANGLE count of the block = sum(n_i + 1)
     +0x04 s32 ofs_a     vertices,   RELATIVE TO THE FIELD (block + 4 + ofs_a)
     +0x08 s32 ofs_b     strip list, RELATIVE TO THE FIELD (block + 8 + ofs_b)
-    +0x0c s32 ofs_c     END of the vertex data (block + 12 + ofs_c), also relative
+    +0x0c s32 ofs_c     the per-TRIANGLE table (block + 12 + ofs_c), also
+                        relative - it starts exactly where the vertex data ends
 
   The RELATIVE reading is what the emitter does - `*(int *)(param_1 + 4)` added
   to `param_1 + 4`. Reading ofs_a/ofs_b as absolute file offsets (the earlier
@@ -36,6 +37,20 @@ it round-trips on the real character assets.
                  sum(n_i + 1) == the block's `count` field   (triangles)
                  vtx_off + 12 * sum(n_i + 3) == block + 12 + ofs_c  (end of verts)
   vertices   : 12 bytes = 3x s16 position + 3x s16 normal.
+  triangles  : 8 bytes each, `count` of them, at block + 12 + ofs_c:
+                   u8 pad;       always 0 in every asset checked
+                   u8 tex_index; 0..47 (48 distinct in sc_geo)
+                   u8 u0, v0;  u8 u1, v1;  u8 u2, v2;
+               The six UV bytes land in a draw entry at +0xc..+0x11, which is
+               exactly the three (u,v) pairs FlushDrawQueue decodes.
+               Two things confirm this: the table is exactly count*8 bytes and
+               ends precisely where the NEXT block's strip list begins, and
+               consecutive rows share two UV pairs - the sliding window of a
+               triangle strip. These are the u/v bytes FlushDrawQueue reads
+               from a draw entry at +0xc..+0x11; neither emitter writes them,
+               so a separate setup pass copies this table into the entry array
+               at g_dualC+4 (which is why the emitters advance that cursor by
+               0x1c per triangle whether or not they submit).
 
 Usage:
     build/venv/bin/python tools/geo_mesh.py build/assets/sc_geo.geo [--blocks]
@@ -47,7 +62,7 @@ from pathlib import Path
 
 class Block:
     __slots__ = ('idx', 'off', 'type', 'count', 'ofs_a', 'ofs_b', 'ofs_c',
-                 'vtx_off', 'strip_off', 'strips', 'nvert')
+                 'vtx_off', 'strip_off', 'strips', 'nvert', 'tri_off')
 
 
 def parse(data):
@@ -83,6 +98,7 @@ def parse(data):
         if bl.vtx_off + 12 * nvert != o + 12 + bl.ofs_c:   # verts must end at ofs_c
             break
         bl.nvert = nvert
+        bl.tri_off = o + 12 + bl.ofs_c        # per-triangle tex/UV table
         blocks.append(bl)
         o += 16
     return tex_off, size, blocks
@@ -109,9 +125,12 @@ def main():
               % (len(allv), min(xs), max(xs), min(ys), max(ys), min(zs), max(zs)))
     if '--blocks' in sys.argv:
         for bl in blocks:
-            print('  blk%-3d @0x%05x tris=%-5d verts=%-5d strips=%-3d verts@0x%05x strips@0x%05x'
+            tex = sorted({struct.unpack_from('<H', data, bl.tri_off + k * 8)[0]
+                          for k in range(bl.count)})
+            print('  blk%-3d @0x%05x tris=%-5d verts=%-5d strips=%-3d '
+                  'verts@0x%05x tris@0x%05x tex=%s'
                   % (bl.idx, bl.off, bl.count, bl.nvert, len(bl.strips),
-                     bl.vtx_off, bl.strip_off))
+                     bl.vtx_off, bl.tri_off, tex[:6]))
     return 0
 
 

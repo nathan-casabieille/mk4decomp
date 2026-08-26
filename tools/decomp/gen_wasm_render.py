@@ -145,7 +145,12 @@ def main():
     # pipeline. Without it only the pipeline half runs, off hand-seeded records.
     emit = '--emit' in sys.argv or '--geo' in sys.argv
     geo = '--geo' in sys.argv
-    seed = ['TristripBatchEmit', 'FlushDrawQueue'] if emit else ['FlushDrawQueue']
+    if geo:
+        seed = ['DrawMeshBlock', 'FlushDrawQueue']
+    elif emit:
+        seed = ['TristripBatchEmit', 'FlushDrawQueue']
+    else:
+        seed = ['FlushDrawQueue']
     bodies, order, need_stub = collect(seed, fn_va)
     # Renderer_GetMode is the only SW-path callee we satisfy ourselves.
     need_stub.discard('FlushDrawQueue')
@@ -610,7 +615,7 @@ DRIVER_GEO = r"""
    LOD or variant set - the per-part triangle counts repeat), so only type 1 is
    drawn or the model renders twice over itself.
    ------------------------------------------------------------------------- */
-static int g_geoBlocks[256], g_geoNBlocks;
+static int g_geoBlocks[256], g_geoNBlocks, g_geoTris[256];
 
 static int geo_load(const char *path) {
     FILE *f = fopen(path, "rb");
@@ -633,7 +638,12 @@ static int geo_load(const char *path) {
         unsigned int va = o + 4 + (unsigned)a, sa = o + 8 + (unsigned)b;
         if ((typ != 0 && typ != 1) || cnt == 0) break;
         if (va >= tex || sa >= tex) break;
-        if (typ == 1) g_geoBlocks[g_geoNBlocks++] = (int)(GEO_VA + o);
+        if (typ == 1) {
+            /* block + 12 + ofs_c is the per-TRIANGLE table: 8 bytes each,
+               u8 pad / u8 tex_index / three (u,v) byte pairs. */
+            g_geoTris[g_geoNBlocks] = (int)(GEO_VA + o + 12 + (unsigned)*(int *)(base + o + 12));
+            g_geoBlocks[g_geoNBlocks++] = (int)(GEO_VA + o);
+        }
     }
     fprintf(stderr, "geo: %%ld bytes, %%d type-1 mesh blocks\n", n, g_geoNBlocks);
     return g_geoNBlocks > 0;
@@ -647,15 +657,60 @@ static int geo_load(const char *path) {
 #define GEO_COLS 6
 #define GEO_CELL 0x50
 
+/* The lighting DrawMeshBlock needs. MatVec2Multiply (which it calls) turns
+   g_lightMat00/01/02 + g_dispatchSave1627/28/29 and the transposed vertex
+   matrix into g_vtxLight0_* / g_vtxLight1_*, which is exactly what
+   TransformVertex then reads per vertex (g_lightMat20/21/22 and
+   g_vtxLight0_x/y/z are the same three VAs). */
+static void geo_lighting(void) {
+    setdw(0x007af9c0u, 0x0180);  setdw(0x007af9c4u, 0x0080);  setdw(0x007af9c8u, 0x0040);
+    setdw(0x007af9ccu, 0x0060);  setdw(0x007af9d0u, 0x0140);  setdw(0x007af9d4u, 0x00a0);
+    /* A DARK base: TransformVertex ADDS each light's contribution to the
+       channels it unpacks from g_vtxColorPrev and clamps at 0x1f, so a white
+       base saturates immediately and every vertex comes out the same colour. */
+    setw(0x007af9f0u, 0x0842);            /* g_vtxColorPrev: dim grey */
+    setw(0x007af9fcu, 0x0842);            /* g_vtxColor               */
+    setw(0x007af9f8u, 0x0842);            /* g_vtxColorCopy           */
+    setw(0x007af9fau, 0x0842);            /* g_vtxColorSaved          */
+    /* the six RGB scales are PACKED BYTES at 0x7af9f2..f7 - byte writes only */
+    setb(0x007af9f2u, 0x30); setb(0x007af9f3u, 0x18);   /* blue  light0 / light1 */
+    setb(0x007af9f4u, 0x40); setb(0x007af9f5u, 0x20);   /* green */
+    setb(0x007af9f6u, 0x50); setb(0x007af9f7u, 0x28);   /* red   */
+    setdw(0x00543aa8u, 1);                /* g_menuRestoreSlot != 0 -> MESH path */
+    setdw(0x00ab4e60u, 0x200);            /* g_dispatchSave1576: no attenuation  */
+    setdw(0x00ab4d9cu, 0);                /* g_dispatchSave1559: sort-key bias   */
+    setdw(0x00ab4e28u, 0);                /* g_dispatchSave1570: no alt cam      */
+}
+
+/* Neither emitter writes a draw entry's u/v bytes (+0xc..+0x11) - they only
+   fill the fields that vary per frame and advance the cursor by 0x1c per
+   TRIANGLE whether or not they submit. The entry array at g_dualC+4 is
+   therefore a persistent per-mesh table that some setup pass populates from
+   the block's triangle table, in the same triangle order. This reproduces
+   that pass, so the rasterizers see real texture coordinates instead of
+   whatever was left in the staging area. */
+static void geo_fill_uvs(int blk) {
+    unsigned char *tri = (unsigned char *)MK4_VA(unsigned char, (unsigned)g_geoTris[blk]);
+    unsigned char *e = (unsigned char *)MK4_VA(unsigned char, ENTRIES_VA);
+    unsigned short cnt = *(unsigned short *)MK4_VA(unsigned short,
+                             (unsigned)g_geoBlocks[blk] + 2);
+    int k, j;
+    for (k = 0; k < (int)cnt; k++, tri += 8, e += 0x1c)
+        for (j = 0; j < 6; j++)
+            e[0xc + j] = tri[2 + j];
+}
+
 static void geo_frame(int frame) {
     int i;
     seed_mesh(frame);                     /* viewport, palette, gate, matrix */
+    geo_lighting();
     setdw(0x007af9acu, 0x2c0);            /* g_vtxTransZ */
     for (i = 0; i < g_geoNBlocks; i++) {
         setdw(0x007af9a4u, (i %% GEO_COLS - GEO_COLS / 2) * GEO_CELL);      /* transX */
         setdw(0x007af9a8u, (i / GEO_COLS - g_geoNBlocks / GEO_COLS / 2) * GEO_CELL); /* transY */
         g_drawQueueSize = 0;              /* the emitter refills g_dualC+4 per block */
-        TristripBatchEmit(g_geoBlocks[i], 0, 0);
+        geo_fill_uvs(i);                  /* the setup pass the emitters assume */
+        DrawMeshBlock(g_geoBlocks[i], 0, 0);   /* the .geo MAIN path */
         viewport_arm();                   /* consumed by the previous dispatch */
         FlushDrawQueue();                 /* draw this block before the next */
     }
