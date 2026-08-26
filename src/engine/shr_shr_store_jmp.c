@@ -20,7 +20,7 @@ extern void AddDerefJmp(void);
 /* Portable: shift the queue cursor, store the packed-ptr of 0x004e4cf8
  * (addr >> 2) into the xform index, then tail-call AddDerefJmp (the orig
  * `jmp`). Matching keeps the two-register load/shr/store interleave that
- * MSVC SP3 will not emit from C (see #else).
+ * MSVC SP3 will not emit from C (see naked branch).
  * NOTE: 0x004e4cf8 is an absolute VA; Phase 1 (memory model) will route
  * it through GLOBAL()/packed-ptr translation for non-flat targets. */
 void ShrShrStoreJmp(void) {

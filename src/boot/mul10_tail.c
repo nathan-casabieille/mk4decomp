@@ -16,7 +16,7 @@ extern unsigned int g_currentNodeIdx;
 extern void Sar64(void);
 #ifdef NON_MATCHING
 /* Signed 16.16 fixed-point multiply: full 64-bit product of the two args
- * shifted right by 16. The matching #else computes the 64-bit `imul`,
+ * shifted right by 16. The matching naked branch computes the 64-bit `imul`,
  * loads the shift count (0x10) into ecx, and tail-jmps to Sar64 (the
  * shared >>16 epilogue). Behavior here is identical; byte form is not.
  * TODO(Phase 3): unify the prototype to int(int,int) at all call sites -

@@ -230,7 +230,7 @@ void GuardedTwiceLoopback(void) {
 /* Portable: decrement the g_baseSel node's +0x5c countdown into
  * g_walkCallback; non-zero -> loop tail-call, zero -> cascade tail-call.
  * Node access goes through the MK4_NODE seam (identity under matching /
- * flat 32-bit, arena-relative under MK4_ARENA). The #else keeps the
+ * flat 32-bit, arena-relative under MK4_ARENA). The naked branch keeps the
  * naked form because the `je` reads ZF from the `dec` - a flag
  * dependency C cannot reproduce (see [[feedback_dec_flags_not_preserved]]). */
 void LoopGuardedDecJmp_Body_0042c7c0(void) {
