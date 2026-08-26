@@ -527,10 +527,11 @@ is a real side-effect - possibly intentional, possibly vestigial.
 
 ---
 
-## .geo format (TEXTURES MAPPED, mesh data still TBD)
+## .geo format (TEXTURES MAPPED, MESH DATA DECODED 2026-08-26)
 
-`.geo` files are the engine's geometry+texture container. The texture
-portion has been fully reverse-engineered and decoded.
+`.geo` files are the engine's geometry+texture container. Both halves are
+now decoded: the texture chunk (see below) and the MESH block table
+(see "Mesh blocks" further down). Decoder: [tools/geo_mesh.py](../../tools/geo_mesh.py).
 
 ### File header (12 bytes)
 
@@ -590,6 +591,48 @@ struct geo_mesh_block {
 ```
 
 Recovered counts:
+### Mesh blocks (DECODED)
+
+The mesh half was previously "NOT yet decoded; finding the renderer code is the
+next step". That step is done: the layout below is read straight off the
+co-exec-verified tristrip emitters (`TristripBatchEmit` `0x004bbb80` and its
+siblings) and round-trips on every character asset.
+
+```c
+struct geo_block {          // 16 bytes; table starts at 0x0c, runs to tex_table_offset
+    uint16_t type;          // 1 = first set, 0 = a SECOND parallel set (see below)
+    uint16_t count;         // TOTAL TRIANGLE count of the block = sum(n_i + 1)
+    int32_t  ofs_a;         // vertices,   RELATIVE TO ITS OWN FIELD: block + 4 + ofs_a
+    int32_t  ofs_b;         // strip list, RELATIVE TO ITS OWN FIELD: block + 8 + ofs_b
+    int32_t  ofs_c;         // END of the vertex data:                block + 12 + ofs_c
+};
+```
+
+**The offsets are field-relative, not absolute.** This is exactly what the
+emitter computes - `*(int *)(param_1 + 4)` added to `param_1 + 4`. Reading them
+as absolute file offsets (the earlier guess) yields garbage: strip counts like
+-26555 and vertex coordinates in the tens of thousands.
+
+- **strip list**: `(uint16 flags, int16 count)` pairs, a NEGATIVE count
+  terminates. A strip opens on 2 vertices then walks `count + 1` more, and
+  strips consume the vertex array STRICTLY sequentially.
+- **vertices**: 12 bytes = 3x s16 position + 3x s16 normal.
+
+Two independent invariants pin the format down on the real assets:
+
+    sum(n_i + 1) == block.count                        (triangles)
+    vtx_off + 12 * sum(n_i + 3) == block + 12 + ofs_c   (end of vertex data)
+
+`type` is NOT a validity flag: type-0 blocks satisfy every invariant and repeat
+the same per-part triangle counts as the type-1 set (63/112/47/25/... appear
+twice in `sc_geo`), so they are an LOD or variant set. Counting both reproduces
+the block totals recorded below exactly - 37 for Scorpion, 41 for Sub-Zero.
+
+Each block is a body part in its **own local space**; the per-part placement
+lives in the scene graph (the blocks are skeleton nodes, see the scene-graph
+section). Rendering all blocks with a single transform piles them on the origin
+- `make native-geo` lays them out on a grid instead, pending the node walk.
+
 - `sc_geo.geo` (Scorpion): 37 blocks → 37 submeshes (head, torso, arms, legs, weapon...)
 - `sz_geo.geo` (Sub-Zero): 41 blocks
 - `lk_geo.geo` (Liu Kang): observed similar pattern

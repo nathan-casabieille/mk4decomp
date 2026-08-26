@@ -363,6 +363,42 @@ native-mesh-check: $(NATIVE_MESH_PPM) $(WASM_DIR)/mesh0.ppm
 		&& echo "native-mesh-check: OK - arm64 mesh frame is BYTE-IDENTICAL to wasm32" \
 		|| (echo "native-mesh-check: MISMATCH"; exit 1)
 
+# native-geo: render a REAL character asset. Extracts a .geo out of
+# FILESYS.DAT, loads it verbatim into the arena and hands each of its mesh
+# blocks to the verified emitter - so the pixels come from Mortal Kombat 4's
+# own model data, through the same co-exec-verified chain as native-mesh.
+#
+# The parts are laid out on a grid rather than assembled: each .geo mesh block
+# is a body part in its OWN local space and the per-part placement lives in the
+# scene graph (the blocks are skeleton nodes), which is the next layer to
+# convert. See tools/geo_mesh.py for the block format.
+#   make native-geo          -> build/native/scorpion.ppm (+ .png if sips exists)
+#   make native-geo CHAR=sz  -> Sub-Zero instead
+CHAR ?= sc
+GEO_ASSET := $(BUILD_DIR)/assets/$(CHAR)_geo.geo
+# per-CHAR names: the generated C embeds the asset path, so switching
+# characters must regenerate rather than reuse a stale binary.
+NATIVE_GEO_SRC := $(NATIVE_RENDER_DIR)/mk4_geo_$(CHAR).c
+NATIVE_GEO_PPM := $(NATIVE_RENDER_DIR)/mk4_geo_$(CHAR)
+
+$(GEO_ASSET):
+	@mkdir -p $(BUILD_DIR)/assets
+	build/venv/bin/python tools/fsys_extract.py game/FILESYS.DAT \
+		'c:\source\mk4\win\geogfx\$(CHAR)_geo.geo' $@
+
+$(NATIVE_GEO_SRC): tools/decomp/gen_wasm_render.py $(ARENA_BLOB) $(GEO_ASSET)
+	@mkdir -p $(NATIVE_RENDER_DIR)
+	@build/venv/bin/python tools/decomp/gen_wasm_render.py --geo $(GEO_ASSET) > $@
+$(NATIVE_GEO_PPM): $(NATIVE_GEO_SRC)
+	$(NATIVE_RENDER_CC) $(NATIVE_PORTFLAGS) $< -lm -o $@
+
+native-geo: $(NATIVE_GEO_PPM) $(GEO_ASSET)
+	@build/venv/bin/python tools/geo_mesh.py $(GEO_ASSET)
+	@$(NATIVE_GEO_PPM) $(ARENA_BLOB) $(NATIVE_RENDER_DIR)/$(CHAR)_geo.ppm
+	@command -v sips >/dev/null && sips -s format png $(NATIVE_RENDER_DIR)/$(CHAR)_geo.ppm \
+		--out $(NATIVE_RENDER_DIR)/$(CHAR)_geo.png >/dev/null || true
+	@echo "native-geo: rendered $(NATIVE_RENDER_DIR)/$(CHAR)_geo.ppm from MK4's own model data"
+
 # === Arena (relocated memory model, Phase 1) =============================
 #
 # Extract the original mapped image into a flat blob, then exercise the

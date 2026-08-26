@@ -32,6 +32,7 @@ TEX_VA = 0x01100000
 # ((shade & 0xf0) << 13) + idx*2, so it must span 0xf0<<13 + 0x20000 = 2 MB.
 PAL_VA = 0x01200000
 PAL_SZ = 0x00200000
+GEO_VA = 0x01400000   # a whole .geo asset, loaded verbatim
 W, H = 320, 240                   # hand-seeded rect scene (arbitrary size)
 # The ENGINE's screen is 640x480: the projection helpers add the screen centre
 # as 0x140 / 0xf0, and Helper_DrawCursor's envelope test rejects x > 0x280 and
@@ -142,7 +143,8 @@ def main():
     # --emit drives the FULL chain: a real strip mesh through the projection
     # + emitter layer into the draw queue, then the sort/dispatch/rasterize
     # pipeline. Without it only the pipeline half runs, off hand-seeded records.
-    emit = '--emit' in sys.argv
+    emit = '--emit' in sys.argv or '--geo' in sys.argv
+    geo = '--geo' in sys.argv
     seed = ['TristripBatchEmit', 'FlushDrawQueue'] if emit else ['FlushDrawQueue']
     bodies, order, need_stub = collect(seed, fn_va)
     # Renderer_GetMode is the only SW-path callee we satisfy ourselves.
@@ -207,6 +209,7 @@ def main():
     sdl = '--sdl' in sys.argv
     native = '--native' in sys.argv
     fmt = dict(fb_va=FB_VA, tex_va=TEX_VA, pal_va=PAL_VA, pal_sz=PAL_SZ,
+               geo_va=GEO_VA,
                w=EMIT_W if emit else W, h=EMIT_H if emit else H,
                mode_va=RENDER_MODE_VA, rec=REC)
     P('/* ---- driver ---- */')
@@ -219,8 +222,14 @@ def main():
     P(DRIVER_COMMON % fmt)
     if emit:
         P(DRIVER_EMIT % fmt)
-        P('#define SCENE_INIT()   mesh_init()')
-        P('#define SCENE_FRAME(f) mesh_frame(f)')
+        if geo:
+            P(DRIVER_GEO % fmt)
+            gp = sys.argv[sys.argv.index('--geo') + 1]
+            P('#define SCENE_INIT()   (mesh_init(), geo_load("%s"))' % gp)
+            P('#define SCENE_FRAME(f) geo_frame(f)')
+        else:
+            P('#define SCENE_INIT()   mesh_init()')
+            P('#define SCENE_FRAME(f) mesh_frame(f)')
     else:
         P('#define SCENE_INIT()   ((void)0)')
         P('#define SCENE_FRAME(f) do { seed_scene(f); FlushDrawQueue(); } while (0)')
@@ -236,6 +245,7 @@ DRIVER_COMMON = r'''
 #define TEX_VA  0x%(tex_va)xu
 #define PAL_VA  0x%(pal_va)xu
 #define PAL_SZ  0x%(pal_sz)xu
+#define GEO_VA  0x%(geo_va)xu
 #define W       %(w)d
 #define H       %(h)d
 #define PITCH   (W * 2)
@@ -551,10 +561,20 @@ static void mesh_matrix(int frame) {
     { int i; for (i = 0; i < 9; i++) mesh_setw(MAT_VA + (unsigned)i * 2, m[i]); }
 }
 
-static void seed_mesh(int frame) {
-    setdw(MODE_VA, 5);                       /* SW mode */
+/* g_viewportX / g_viewportY are per-DISPATCH scratch, not persistent state:
+   FlushDrawQueue's rasterizers consume them (both read back as 0 afterwards).
+   The engine re-establishes them every frame in its SW BeginFrame, so anything
+   that dispatches more than once - e.g. one flush per mesh block - must re-arm
+   them before EACH FlushDrawQueue or every dispatch after the first draws into
+   a null framebuffer. */
+static void viewport_arm(void) {
     g_viewportX = FB_VA;                     /* VAs, not host pointers */
     g_viewportY = PITCH;  g_viewportW = W;  g_viewportH = H;
+}
+
+static void seed_mesh(int frame) {
+    setdw(MODE_VA, 5);                       /* SW mode */
+    viewport_arm();
     g_dispatchSave1400 = TEX_VA;
     g_dispatchSave1340 = PAL_VA;
     g_inLoopStep = 0;                        /* the emitter gate */
@@ -570,9 +590,77 @@ static void seed_mesh(int frame) {
 static void mesh_frame(int frame) {
     seed_mesh(frame);
     TristripBatchEmit((int)MESH_VA, 0, 0);   /* project + emit + enqueue */
+    viewport_arm();
     FlushDrawQueue();                        /* sort + dispatch + rasterize */
 }
 '''
+
+
+DRIVER_GEO = r"""
+/* ---------------- real .geo asset scene -------------------------------------
+   Loads a character asset verbatim into the arena and hands each of its mesh
+   blocks straight to the verified emitter. The block layout is decoded in
+   tools/geo_mesh.py; the short version is that ofs_a / ofs_b are relative TO
+   THEIR OWN FIELD, which is precisely what the emitter computes:
+       vertices   at block + 4 + *(s32 *)(block + 4)
+       strip list at block + 8 + *(s32 *)(block + 8)
+   Loading the file verbatim therefore preserves every offset for free.
+
+   type-1 and type-0 blocks are two parallel sets covering the same parts (an
+   LOD or variant set - the per-part triangle counts repeat), so only type 1 is
+   drawn or the model renders twice over itself.
+   ------------------------------------------------------------------------- */
+static int g_geoBlocks[256], g_geoNBlocks;
+
+static int geo_load(const char *path) {
+    FILE *f = fopen(path, "rb");
+    long n; unsigned int tex, o;
+    unsigned char *base;
+    if (!f) { fprintf(stderr, "cannot open %%s\n", path); return 0; }
+    fseek(f, 0, SEEK_END); n = ftell(f); fseek(f, 0, SEEK_SET);
+    base = (unsigned char *)MK4_VA(unsigned char, GEO_VA);
+    if (fread(base, 1, (size_t)n, f) != (size_t)n) {
+        fprintf(stderr, "short read\n"); fclose(f); return 0; }
+    fclose(f);
+    if (base[0] != '0' || base[1] != '.' || base[2] != '1' || base[3] != 'v') {
+        fprintf(stderr, "not a .geo\n"); return 0; }
+    tex = *(unsigned int *)(base + 4);
+    g_geoNBlocks = 0;
+    for (o = 0x0c; o + 16 <= tex && g_geoNBlocks < 256; o += 16) {
+        unsigned short typ = *(unsigned short *)(base + o);
+        unsigned short cnt = *(unsigned short *)(base + o + 2);
+        int a = *(int *)(base + o + 4), b = *(int *)(base + o + 8);
+        unsigned int va = o + 4 + (unsigned)a, sa = o + 8 + (unsigned)b;
+        if ((typ != 0 && typ != 1) || cnt == 0) break;
+        if (va >= tex || sa >= tex) break;
+        if (typ == 1) g_geoBlocks[g_geoNBlocks++] = (int)(GEO_VA + o);
+    }
+    fprintf(stderr, "geo: %%ld bytes, %%d type-1 mesh blocks\n", n, g_geoNBlocks);
+    return g_geoNBlocks > 0;
+}
+
+/* Each mesh block is a body part in its OWN local space - the per-part
+   placement lives in the scene graph (the .geo blocks are skeleton nodes), so
+   drawing them all with one transform piles them on the origin. Until the node
+   walk is converted, lay the parts out on a grid: it shows every block
+   decoding and rasterizing, and it is honest about what is still missing. */
+#define GEO_COLS 6
+#define GEO_CELL 0x50
+
+static void geo_frame(int frame) {
+    int i;
+    seed_mesh(frame);                     /* viewport, palette, gate, matrix */
+    setdw(0x007af9acu, 0x2c0);            /* g_vtxTransZ */
+    for (i = 0; i < g_geoNBlocks; i++) {
+        setdw(0x007af9a4u, (i %% GEO_COLS - GEO_COLS / 2) * GEO_CELL);      /* transX */
+        setdw(0x007af9a8u, (i / GEO_COLS - g_geoNBlocks / GEO_COLS / 2) * GEO_CELL); /* transY */
+        g_drawQueueSize = 0;              /* the emitter refills g_dualC+4 per block */
+        TristripBatchEmit(g_geoBlocks[i], 0, 0);
+        viewport_arm();                   /* consumed by the previous dispatch */
+        FlushDrawQueue();                 /* draw this block before the next */
+    }
+}
+"""
 
 
 if __name__ == '__main__':
