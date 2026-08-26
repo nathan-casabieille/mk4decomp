@@ -255,15 +255,15 @@ void ScanlineTexBlitPaletted(void)
                 edx = g_dispatchSave1404;
                 eax = (g_dispatchSave1387 >> 16) & 0xff;       /* texel column index */
                 {
-                    unsigned short t = *(unsigned short *)(unsigned long)(edx + eax * 2);
+                    unsigned short t = *(unsigned short *)MK4_PTR(edx + eax * 2);
                     eax = (eax & 0xffff0000u) | t;             /* mov ax, [edx+eax*2] */
                 }
                 if ((eax & 0xffff) != 0) {                     /* index 0 = transparent */
                     edx = g_dispatchSave1345;
                     eax = eax & 0xffff;
                     {
-                        unsigned short c = *(unsigned short *)(unsigned long)(ecx + eax * 2);
-                        *(unsigned short *)(unsigned long)edx = c; /* CLUT lookup -> pixel */
+                        unsigned short c = *(unsigned short *)MK4_PTR(ecx + eax * 2);
+                        *(unsigned short *)MK4_PTR(edx) = c; /* CLUT lookup -> pixel */
                     }
                     esi = g_dispatchSave1708;                  /* reload esi=w */
                     edi = g_dispatchSave1707;                  /* reload edi=h */

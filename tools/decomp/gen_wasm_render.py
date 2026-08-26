@@ -28,6 +28,10 @@ BASE = vc.BASE                    # 0x400000 = MK4_ORIG_IMAGE_BASE
 # Scratch regions placed ABOVE the data image so MK4_VA offsets stay positive.
 FB_VA = 0x01000000
 TEX_VA = 0x01100000
+# CLUT / lighting-LUT base (g_dispatchSave1340). The paletted blit indexes it as
+# ((shade & 0xf0) << 13) + idx*2, so it must span 0xf0<<13 + 0x20000 = 2 MB.
+PAL_VA = 0x01200000
+PAL_SZ = 0x00200000
 W, H = 320, 240                   # a real-ish frame
 RENDER_MODE_VA = 0x4f4b3c
 REC = 0xf71310                    # draw-queue record start (sort key at +0x12)
@@ -119,9 +123,11 @@ def main():
     P('')
     # ---- driver ----
     sdl = '--sdl' in sys.argv
-    fmt = dict(fb_va=FB_VA, tex_va=TEX_VA, w=W, h=H, mode_va=RENDER_MODE_VA, rec=REC)
+    native = '--native' in sys.argv
+    fmt = dict(fb_va=FB_VA, tex_va=TEX_VA, pal_va=PAL_VA, pal_sz=PAL_SZ,
+               w=W, h=H, mode_va=RENDER_MODE_VA, rec=REC)
     P(DRIVER_COMMON % fmt)
-    P((DRIVER_SDL if sdl else DRIVER_PPM) % fmt)
+    P((DRIVER_NATIVE if native else DRIVER_SDL if sdl else DRIVER_PPM) % fmt)
     sys.stdout.write('\n'.join(out) + '\n')
     sys.stderr.write('twins=%d  stubs_needed=%s  missing_globals=%s\n'
                      % (len(order), sorted(need_stub) or 'none', missing or 'none'))
@@ -131,6 +137,8 @@ DRIVER_COMMON = r'''
 /* ---------------- driver (shared) ---------------- */
 #define FB_VA   0x%(fb_va)xu
 #define TEX_VA  0x%(tex_va)xu
+#define PAL_VA  0x%(pal_va)xu
+#define PAL_SZ  0x%(pal_sz)xu
 #define W       %(w)d
 #define H       %(h)d
 #define PITCH   (W * 2)
@@ -157,7 +165,13 @@ static void rec_prim(int idx, int x0, int y0, int x1, int y1,
     setb(r + 0xc, u0); setb(r + 0xd, v0);
     setb(r + 0xe, u1); setb(r + 0xf, v1);
     setb(r + 0x10, u1); setb(r + 0x11, v1);
-    setw(r + 0x12, x0);                      /* sort key */
+    /* Sort key = screen x0. FlushDrawQueue buckets it into g_drawQueueBuckets,
+       which has exactly 0x400 entries, so the key MUST be 0..0x3ff - the engine
+       guarantees that upstream (Helper_DrawCursor rejects negative-x
+       primitives; see verify_submit's reject-negx scenario). Clamp here so a
+       bad seed can never scribble outside the bucket array: on wasm32 that OOB
+       was invisible (one flat linear memory), on a 64-bit host it faults. */
+    setw(r + 0x12, x0 < 0 ? 0 : (x0 > 0x3ff ? 0x3ff : x0));   /* sort key */
     setw(r + 0x14, color);
     setw(r + 0x16, 0); setw(r + 0x18, 0);
     setw(r + 0x1a, typ);
@@ -169,7 +183,7 @@ static int arena_init(const char *img) {
     long n; unsigned int i;
     if (!f) { fprintf(stderr, "cannot open %%s\n", img); return 0; }
     fseek(f, 0, SEEK_END); n = ftell(f); fseek(f, 0, SEEK_SET);
-    g_mk4ArenaSize = 0x1400000;               /* 20 MB: image + FB + TEX */
+    g_mk4ArenaSize = 0x1800000;               /* 24 MB: image + FB + TEX + PAL */
     g_mk4Arena = (unsigned char *)calloc(1, g_mk4ArenaSize);
     if (!g_mk4Arena) { fprintf(stderr, "calloc failed\n"); fclose(f); return 0; }
     if (fread(g_mk4Arena, 1, (size_t)n, f) != (size_t)n) {
@@ -178,18 +192,29 @@ static int arena_init(const char *img) {
     for (i = 0; i < 0x100000; i += 2)         /* distinct non-zero RGB565 texels */
         *(unsigned short *)MK4_VA(unsigned short, TEX_VA + i) =
             (unsigned short)((((i >> 1) %% 255) + 1));
+    /* CLUT / lighting LUT: the paletted + shaded rasterizers look up through
+       g_dispatchSave1340. Left at 0 the lookup derefs VA 0, which is 4 MB
+       BELOW the arena base - invisible on wasm32, an instant fault natively. */
+    for (i = 0; i < PAL_SZ; i += 2)
+        *(unsigned short *)MK4_VA(unsigned short, PAL_VA + i) =
+            (unsigned short)(((i >> 1) * 2654435761u) >> 16);
     return 1;
 }
 
 /* Seed the renderer state + a small scene (rects + triangles). `frame` shifts
    the primitives so a main loop animates the same dispatch every tick. */
 static void seed_scene(int frame) {
-    int dx = (frame %% 80) - 40, dy = (frame / 2 %% 60) - 30;
+    int dx = frame %% 40, dy = frame / 2 %% 30;   /* keep every x0 on-screen */
     setdw(MODE_VA, 5);                                    /* SW mode */
     g_drawQueueSize = 7;
-    g_viewportX = (unsigned int)(unsigned long)MK4_VA(void, FB_VA);
+    /* These globals hold ORIGINAL VAs, not host pointers: the twins deref them
+       through MK4_PTR, which is the identity on a flat 32-bit layout and adds
+       the arena translation on a 64-bit host. Storing a truncated host pointer
+       here (the old form) only worked because wasm32 pointers are 32-bit. */
+    g_viewportX = FB_VA;
     g_viewportY = PITCH;  g_viewportW = W;  g_viewportH = H;
-    g_dispatchSave1400 = (unsigned int)(unsigned long)MK4_VA(void, TEX_VA);
+    g_dispatchSave1400 = TEX_VA;
+    g_dispatchSave1340 = PAL_VA;          /* CLUT / lighting-LUT base */
     /* clear the framebuffer between frames */
     memset(MK4_VA(void, FB_VA), 0, PITCH * H);
     rec_prim(0,  20+dx,  20+dy, 160+dx, 120+dy, 0,0, 60,40, 0xffff, 0x20);
@@ -263,6 +288,65 @@ int main(int argc, char **argv) {
     return 0;
 }
 '''
+
+DRIVER_NATIVE = r'''
+/* ---------------- SDL2 desktop driver (native macOS / Linux) ----------------
+   Same verified pipeline as the wasm bundle. The only reason this can run on a
+   64-bit host at all is the MK4_PTR seam: every VA the twins carry in a 32-bit
+   register-mirror local is translated at the deref, so the arena may live
+   anywhere in a 64-bit address space (mmap of the low 4 GB is impossible on
+   macOS arm64 - the whole region is __PAGEZERO). ------------------------- */
+#include <SDL2/SDL.h>
+
+int main(int argc, char **argv) {
+    const char *img = (argc > 1) ? argv[1] : "build/arena.bin";
+    SDL_Window *win; SDL_Renderer *ren; SDL_Texture *tex;
+    int frame = 0, running = 1, scale = 3;
+
+    if (!arena_init(img)) return 2;
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+        fprintf(stderr, "SDL_Init: %%s\n", SDL_GetError()); return 2; }
+    win = SDL_CreateWindow("MK4 - verified SW render pipeline (native)",
+                           SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                           W * scale, H * scale, SDL_WINDOW_SHOWN);
+    ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_RenderSetLogicalSize(ren, W, H);
+    tex = SDL_CreateTexture(ren, SDL_PIXELFORMAT_RGB565,
+                            SDL_TEXTUREACCESS_STREAMING, W, H);
+    if (!win || !ren || !tex) {
+        fprintf(stderr, "SDL setup: %%s\n", SDL_GetError()); return 2; }
+
+    /* headless smoke mode: render N frames, report, exit (for CI / no display) */
+    if (argc > 2 && argv[2][0] == '-' && argv[2][1] == 'n') {
+        int n = atoi(argv[2] + 2), i, x, y, nz = 0;
+        unsigned short *fb;
+        for (i = 0; i < (n > 0 ? n : 1); i++) { seed_scene(i); FlushDrawQueue(); }
+        fb = (unsigned short *)MK4_VA(unsigned short, FB_VA);
+        for (y = 0; y < H; y++) for (x = 0; x < W; x++) if (fb[y * W + x]) nz++;
+        fprintf(stderr, "native: %%d frames, %%d non-zero px in last frame\n",
+                (n > 0 ? n : 1), nz);
+        SDL_Quit(); return nz ? 0 : 1;
+    }
+
+    while (running) {
+        SDL_Event e;
+        while (SDL_PollEvent(&e)) {
+            if (e.type == SDL_QUIT) running = 0;
+            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) running = 0;
+        }
+        seed_scene(frame++);
+        FlushDrawQueue();                     /* verified twin: sort + dispatch */
+        SDL_UpdateTexture(tex, NULL, MK4_VA(void, FB_VA), PITCH);
+        SDL_RenderClear(ren);
+        SDL_RenderCopy(ren, tex, NULL, NULL);
+        SDL_RenderPresent(ren);
+    }
+    SDL_DestroyTexture(tex); SDL_DestroyRenderer(ren); SDL_DestroyWindow(win);
+    SDL_Quit();
+    return 0;
+}
+'''
+
 
 if __name__ == '__main__':
     main()

@@ -1,6 +1,7 @@
 /**
  * Auto-split from misc_matchesQQ.c
  */
+#include "portable/ghidra_types.h"
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
@@ -252,10 +253,10 @@ void ScanlineTexBlit(void)
         ecx = (ecx << 16) | (ecx >> 16);                       /* rol 16 */
         ecx = ecx & 0xffff00ffu;                               /* ch = 0 */
         do {
-            unsigned short texel = *(unsigned short *)(unsigned long)(edx * 2);
+            unsigned short texel = *(unsigned short *)MK4_PTR(edx * 2);
             eax = (eax & 0xffff0000u) | texel;                 /* mov ax, [edx*2] */
             if (texel != 0)
-                *(unsigned short *)(unsigned long)(edi + esi * 2) = texel;
+                *(unsigned short *)MK4_PTR(edi + esi * 2) = texel;
             {
                 unsigned int sum = eax + ecx;                  /* add eax, ecx */
                 unsigned int carry = (sum < eax) ? 1u : 0u;

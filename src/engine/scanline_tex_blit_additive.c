@@ -244,10 +244,10 @@ void ScanlineTexBlitAdditive(void)
                 do {
                     edi = g_dispatchSave1404;
                     ecx = (g_dispatchSave1387 >> 16) & 0xff;
-                    eax = *(unsigned short *)(unsigned long)(edi + ecx * 2);
+                    eax = *(unsigned short *)MK4_PTR(edi + ecx * 2);
                     if ((eax & 0xffff) != 0) {
                         edx = g_dispatchSave1345;
-                        ecx = *(unsigned short *)(unsigned long)edx;
+                        ecx = *(unsigned short *)MK4_PTR(edx);
                         eax = (eax & 0xf7de) + (ecx & 0xf7de);  /* sum (in eax now) */
                         ecx = eax;                              /* ecx = sum */
                         eax = eax & 0x10820;                    /* OV */
@@ -257,7 +257,7 @@ void ScanlineTexBlitAdditive(void)
                         esi = (esi | edi) >> 5;
                         eax = (eax - esi) | ecx;
                         eax = eax & 0xf7de;
-                        *(unsigned short *)(unsigned long)edx = (unsigned short)eax;
+                        *(unsigned short *)MK4_PTR(edx) = (unsigned short)eax;
                         ebp = g_dispatchSave1708;
                         esi = g_dispatchSave1357;
                         edx = g_dispatchSave1345;
@@ -275,17 +275,17 @@ void ScanlineTexBlitAdditive(void)
                 do {
                     edi = g_dispatchSave1404;
                     ecx = (g_dispatchSave1387 >> 16) & 0xff;
-                    eax = *(unsigned short *)(unsigned long)(edi + ecx * 2);
+                    eax = *(unsigned short *)MK4_PTR(edi + ecx * 2);
                     if ((eax & 0xffff) != 0) {
                         edx = g_dispatchSave1345;
-                        ecx = *(unsigned short *)(unsigned long)edx;
+                        ecx = *(unsigned short *)MK4_PTR(edx);
                         eax = (eax & 0x7bde) + (ecx & 0x7bde);  /* sum */
                         ecx = eax;
                         eax = eax & 0x8420;                     /* OV */
                         esi = eax >> 5;
                         eax = (eax - esi) | ecx;
                         eax = eax & 0x7bde;
-                        *(unsigned short *)(unsigned long)edx = (unsigned short)eax;
+                        *(unsigned short *)MK4_PTR(edx) = (unsigned short)eax;
                         ebp = g_dispatchSave1708;
                         esi = g_dispatchSave1357;
                         edx = g_dispatchSave1345;

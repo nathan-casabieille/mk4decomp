@@ -396,8 +396,8 @@ L_2a54:
         edi = g_dispatchSave1392;
         esi = g_dispatchSave1404;
         for (;;) {
-            unsigned short t = *(unsigned short *)(unsigned long)(esi + tex * 2);
-            if (t != 0) *(unsigned short *)(unsigned long)edi = t;
+            unsigned short t = *(unsigned short *)MK4_PTR(esi + tex * 2);
+            if (t != 0) *(unsigned short *)MK4_PTR(edi) = t;
             {   /* add ebx,ecx ; adc dh,cl  (V step) */
                 unsigned int s = vacc + vstep, cy = s < vacc;
                 unsigned int dh = ((tex >> 8) & 0xff) + (vstep & 0xff) + cy;

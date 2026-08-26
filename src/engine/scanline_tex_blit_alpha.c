@@ -1,6 +1,7 @@
 /**
  * Auto-split from misc_matchesQQ.c
  */
+#include "portable/ghidra_types.h"
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
@@ -247,12 +248,12 @@ void ScanlineTexBlitAlpha(void)
         ecx = ecx & 0xffff00ffu;
         if (g_texturedTriVar != 0) {                     /* mode != 0: 565 */
             do {
-                unsigned int texel = *(unsigned short *)(unsigned long)(edx * 2);
-                unsigned int dst = *(unsigned short *)(unsigned long)(edi + esi * 2);
+                unsigned int texel = *(unsigned short *)MK4_PTR(edx * 2);
+                unsigned int dst = *(unsigned short *)MK4_PTR(edi + esi * 2);
                 eax = (eax & 0xffff0000u) | texel;
                 if (texel != 0) {
                     unsigned int px = (((texel >> 1) & 0x7bef) + ((dst & 0xf7de) >> 1)) & 0xffff;
-                    *(unsigned short *)(unsigned long)(edi + esi * 2) = (unsigned short)px;
+                    *(unsigned short *)MK4_PTR(edi + esi * 2) = (unsigned short)px;
                 }
                 {
                     unsigned int sum = eax + ecx;
@@ -265,12 +266,12 @@ void ScanlineTexBlitAlpha(void)
             } while ((int)esi < 0);
         } else {                                         /* mode == 0: 555 */
             do {
-                unsigned int texel = *(unsigned short *)(unsigned long)(edx * 2);
-                unsigned int dst = *(unsigned short *)(unsigned long)(edi + esi * 2);
+                unsigned int texel = *(unsigned short *)MK4_PTR(edx * 2);
+                unsigned int dst = *(unsigned short *)MK4_PTR(edi + esi * 2);
                 eax = (eax & 0xffff0000u) | texel;
                 if (texel != 0) {
                     unsigned int px = (((texel >> 1) & 0x3def) + ((dst & 0x7bde) >> 1)) & 0xffff;
-                    *(unsigned short *)(unsigned long)(edi + esi * 2) = (unsigned short)px;
+                    *(unsigned short *)MK4_PTR(edi + esi * 2) = (unsigned short)px;
                 }
                 {
                     unsigned int sum = eax + ecx;

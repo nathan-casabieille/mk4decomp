@@ -381,13 +381,13 @@ L_23a7:
                 ebx = g_dispatchSave1404;
                 ecx = (((vacc & 0xff0000u) | (((uacc >> 16) & 0xff) << 8)) >> 8);
                 {
-                    unsigned int t = *(unsigned short *)(unsigned long)(ebx + ecx * 2);
+                    unsigned int t = *(unsigned short *)MK4_PTR(ebx + ecx * 2);
                     if (t != 0) {
-                        unsigned int d = *(unsigned short *)(unsigned long)edx;
+                        unsigned int d = *(unsigned short *)MK4_PTR(edx);
                         unsigned int sum = (t & 0xf7deu) + (d & 0xf7deu);
                         unsigned int ov = sum & 0x10820u;
                         unsigned int s2 = (((ov & 0xffff00ffu) | ((ov >> 1) & 0x7f80u)) >> 5);
-                        *(unsigned short *)(unsigned long)edx =
+                        *(unsigned short *)MK4_PTR(edx) =
                             (unsigned short)(((ov - s2) | sum) & 0xf7deu);
                         edi = g_clipMinScratch;
                         vacc = g_dispatchSave1389;
@@ -409,13 +409,13 @@ L_23a7:
                 ebx = g_dispatchSave1404;
                 ecx = (((vacc & 0xff0000u) | (((uacc >> 16) & 0xff) << 8)) >> 8);
                 {
-                    unsigned int t = *(unsigned short *)(unsigned long)(ebx + ecx * 2);
+                    unsigned int t = *(unsigned short *)MK4_PTR(ebx + ecx * 2);
                     if (t != 0) {
-                        unsigned int d = *(unsigned short *)(unsigned long)edx;
+                        unsigned int d = *(unsigned short *)MK4_PTR(edx);
                         unsigned int sum = (t & 0x7bdeu) + (d & 0x7bdeu);
                         unsigned int ov = sum & 0x8420u;
                         unsigned int s2 = ov >> 5;
-                        *(unsigned short *)(unsigned long)edx =
+                        *(unsigned short *)MK4_PTR(edx) =
                             (unsigned short)(((ov - s2) | sum) & 0x7bdeu);
                         edi = g_clipMinScratch;
                         vacc = g_dispatchSave1389;

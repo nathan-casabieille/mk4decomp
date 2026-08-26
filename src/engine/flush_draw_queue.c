@@ -1,6 +1,7 @@
 /**
  * Auto-extracted from misc_matchesQQ.c during reorganization.
  */
+#include "portable/ghidra_types.h"
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
@@ -87,7 +88,7 @@ void FlushDrawQueue(void)
     if ((int)eax >= 0) {            /* scatter (last record -> first) */
         unsigned char *kp = (unsigned char *)&g_dispatchSave1398 + eax * 0x1c;
         for (edx = eax + 1; edx != 0; edx--) {
-            unsigned int recva = (unsigned int)(unsigned long)(kp - 0x12);
+            unsigned int recva = MK4_UNPTR(kp - 0x12);
             eax = *(unsigned short *)kp;
             kp -= 0x1c;
             buckets[eax]--;
@@ -104,7 +105,7 @@ void FlushDrawQueue(void)
     sortidx = eax - 1;                                  /* index into sorted[] (backward) */
     count = eax;
     for (;;) {
-        unsigned char *rec = (unsigned char *)(unsigned long)sorted[sortidx];
+        unsigned char *rec = (unsigned char *)MK4_PTR(sorted[sortidx]);
         unsigned int color0, typ;
         g_dispatchSave1378 = (unsigned int)(int)*(short *)(rec + 0);     /* x0 */
         g_dispatchSave1381 = (unsigned int)(int)*(short *)(rec + 2);     /* y0 */

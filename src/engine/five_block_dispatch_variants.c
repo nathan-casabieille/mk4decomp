@@ -87971,8 +87971,8 @@ L_17f1:
         edi = g_dispatchSave1345;
         esi = g_dispatchSave1404;
         for (;;) {
-            unsigned short t = *(unsigned short *)(unsigned long)(esi + tex * 2);
-            if (t != 0) *(unsigned short *)(unsigned long)edi = t;
+            unsigned short t = *(unsigned short *)MK4_PTR(esi + tex * 2);
+            if (t != 0) *(unsigned short *)MK4_PTR(edi) = t;
             {
                 unsigned int s = vacc + vspan, c = s < vacc;
                 unsigned int dh = ((tex >> 8) & 0xff) + ((ustep >> 8) & 0xff) + c;
@@ -88699,10 +88699,10 @@ L_17f1:
         esi = g_dispatchSave1404;
         if (g_texturedTriVar != 0) {            /* mode != 0: 565 masks */
             for (;;) {
-                unsigned short t = *(unsigned short *)(unsigned long)(esi + tex * 2);
-                unsigned short d = *(unsigned short *)(unsigned long)edi;
+                unsigned short t = *(unsigned short *)MK4_PTR(esi + tex * 2);
+                unsigned short d = *(unsigned short *)MK4_PTR(edi);
                 if (t != 0)
-                    *(unsigned short *)(unsigned long)edi =
+                    *(unsigned short *)MK4_PTR(edi) =
                         (unsigned short)((((t >> 1) & 0x7bef) + ((d & 0xf7de) >> 1)) & 0xffff);
                 {   /* add ebx,ecx ; adc dh,cl */
                     unsigned int e = (vacc & 0xffff0000u) | d;
@@ -88724,10 +88724,10 @@ L_17f1:
             }
         } else {                                /* mode == 0: 555 masks */
             for (;;) {
-                unsigned short t = *(unsigned short *)(unsigned long)(esi + tex * 2);
-                unsigned short d = *(unsigned short *)(unsigned long)edi;
+                unsigned short t = *(unsigned short *)MK4_PTR(esi + tex * 2);
+                unsigned short d = *(unsigned short *)MK4_PTR(edi);
                 if (t != 0)
-                    *(unsigned short *)(unsigned long)edi =
+                    *(unsigned short *)MK4_PTR(edi) =
                         (unsigned short)((((t >> 1) & 0x3def) + ((d & 0x7bde) >> 1)) & 0xffff);
                 {
                     unsigned int e = (vacc & 0xffff0000u) | d;
@@ -90467,11 +90467,11 @@ L_31c2:
         g_dispatchSave1390 = (unsigned int)((int)g_dispatchSave1341 >> 4);
         shade = (((g_dispatchSave1386 >> 3) + g_dispatchSave1340) >> 1);
         for (;;) {
-            unsigned short texel = *(unsigned short *)(unsigned long)(tex * 2);
+            unsigned short texel = *(unsigned short *)MK4_PTR(tex * 2);
             if (texel != 0) {
                 unsigned int ti = (shade & 0xffff0000u) | texel;
-                *(unsigned short *)(unsigned long)edi =
-                    *(unsigned short *)(unsigned long)(ti * 2);
+                *(unsigned short *)MK4_PTR(edi) =
+                    *(unsigned short *)MK4_PTR(ti * 2);
             }
             {
                 unsigned int s = vacc + vstep, c = s < vacc;
@@ -129451,9 +129451,9 @@ void BlitBlend16bpp(void)
             if ((int)edi > 0) {
                 do {
                     unsigned int col = ((unsigned int)((int)eax >> 16)) & 0xff;
-                    ecx = *(unsigned int *)(unsigned long)(edx + col * 2);      /* tapA (2 px) */
+                    ecx = *(unsigned int *)MK4_PTR(edx + col * 2);      /* tapA (2 px) */
                     if ((ecx & 0xffff0000u) != 0) {
-                        eax = *(unsigned int *)(unsigned long)(edx + col * 2 + 0x200); /* tapB */
+                        eax = *(unsigned int *)MK4_PTR(edx + col * 2 + 0x200); /* tapB */
                         eax >>= 1;  ecx >>= 1;
                         eax &= 0x7bef7befu;  ecx &= 0x7bef7befu;
                         eax = (eax + ecx) & 0xf7def7deu;
@@ -129461,7 +129461,7 @@ void BlitBlend16bpp(void)
                         ecx = eax & 0xffff;
                         eax >>= 16;
                         ecx = ecx + eax;
-                        *(unsigned short *)(unsigned long)g_dispatchSave1345 = (unsigned short)ecx;
+                        *(unsigned short *)MK4_PTR(g_dispatchSave1345) = (unsigned short)ecx;
                         ebp = g_dispatchSave1357;
                         edx = g_dispatchSave1404;
                     }
@@ -129477,9 +129477,9 @@ void BlitBlend16bpp(void)
             if ((int)edi > 0) {
                 do {
                     unsigned int col = ((unsigned int)((int)eax >> 16)) & 0xff;
-                    ecx = *(unsigned int *)(unsigned long)(edx + col * 2);
+                    ecx = *(unsigned int *)MK4_PTR(edx + col * 2);
                     if ((ecx & 0xffff0000u) != 0) {
-                        eax = *(unsigned int *)(unsigned long)(edx + col * 2 + 0x200);
+                        eax = *(unsigned int *)MK4_PTR(edx + col * 2 + 0x200);
                         eax >>= 1;  ecx >>= 1;
                         eax &= 0x3def3defu;  ecx &= 0x3def3defu;
                         eax = (eax + ecx) & 0x7bde7bdeu;
@@ -129487,7 +129487,7 @@ void BlitBlend16bpp(void)
                         ecx = eax & 0xffff;
                         eax >>= 16;
                         ecx = ecx + eax;
-                        *(unsigned short *)(unsigned long)g_dispatchSave1345 = (unsigned short)ecx;
+                        *(unsigned short *)MK4_PTR(g_dispatchSave1345) = (unsigned short)ecx;
                         ebp = g_dispatchSave1357;
                         edx = g_dispatchSave1404;
                     }

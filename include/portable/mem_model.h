@@ -49,10 +49,24 @@ extern unsigned char *g_mk4Arena;       /* base of the reserved data arena */
     ((void *)(g_mk4Arena + ((unsigned)(va) - MK4_ORIG_IMAGE_BASE)))
 #define MK4_NODE(T, idx)     ((T *)MK4_PTR((unsigned)(idx) * 4u))
 #define MK4_VA(T, va)        ((T *)MK4_PTR((unsigned)(va)))
+/* Inverse of MK4_PTR: a host pointer INTO the arena -> the original 32-bit VA
+ * it stands for. Needed where the engine stores a pointer it later re-reads as
+ * a VA-sized slot (e.g. FlushDrawQueue's sorted[] record table). On a 64-bit
+ * host the raw pointer would truncate; this keeps the stored value a real VA. */
+#define MK4_UNPTR(p) \
+    ((unsigned)((unsigned char *)(p) - g_mk4Arena) + MK4_ORIG_IMAGE_BASE)
 
 #else
 
 /* --- Identity (matching + flat 32-bit): exactly the inline form --- */
+/* MK4_PTR is the VA-deref seam. Under a flat 32-bit layout (the matching
+ * build, and the co-exec verifier's unicorn arena mapped at real VAs) a VA IS
+ * the address, so this is the identity - the twins' bytes are unchanged and
+ * the 100+ existing verifications are untouched. Under MK4_ARENA (above) it
+ * adds the base translation, which is what lets the SAME verified twin source
+ * run on a 64-bit host. */
+#define MK4_PTR(va)          ((void *)(unsigned long)(va))
+#define MK4_UNPTR(p)         ((unsigned)(unsigned long)(p))
 #define MK4_NODE(T, idx)     ((T *)((idx) * 4))
 #define MK4_VA(T, va)        ((T *)(va))
 

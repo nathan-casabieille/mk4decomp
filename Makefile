@@ -279,6 +279,45 @@ $(WASM_DIR)/index.html: $(WASM_DIR)/mk4_render_sdl.c $(ARENA_BLOB)
 		-Iinclude -DNON_MATCHING -DMK4_ARENA $< -o $@
 	@echo "wasm-sdl: built $@  [open with: emrun $@]"
 
+# native-render: the VERIFIED SW render pipeline as a real arm64/x86_64 SDL2
+# app - no Wine, no emulator, no Rosetta. What makes this possible on a 64-bit
+# host is the MK4_PTR seam (include/portable/mem_model.h): the twins carry
+# ORIGINAL 32-bit VAs in their register-mirror locals and translate at the
+# deref, so the arena can live anywhere in a 64-bit address space. (Mapping the
+# low 4 GB is impossible on macOS arm64 - the whole region is __PAGEZERO, and
+# shrinking it makes the kernel refuse to exec the binary.) MK4_PTR is the
+# IDENTITY under a flat 32-bit layout, so the matching build and the 100+
+# co-exec verifications are byte-for-byte unaffected.
+#   make native-render        -> build/native/mk4_render_native (SDL2 window)
+#   make native-render-check  -> headless frame + PPM byte-diff vs the wasm32
+#                                build (proves the seam is semantics-preserving)
+NATIVE_RENDER_DIR := $(BUILD_DIR)/native
+NATIVE_RENDER_EXE := $(NATIVE_RENDER_DIR)/mk4_render_native
+NATIVE_RENDER_PPM := $(NATIVE_RENDER_DIR)/mk4_ppm
+NATIVE_RENDER_CC  := $(NATIVE_CC) -O2 -Iinclude -DNON_MATCHING -DMK4_ARENA -w
+
+native-render: $(NATIVE_RENDER_EXE)
+$(NATIVE_RENDER_DIR)/mk4_render_native.c: tools/decomp/gen_wasm_render.py $(ARENA_BLOB)
+	@mkdir -p $(NATIVE_RENDER_DIR)
+	@build/venv/bin/python tools/decomp/gen_wasm_render.py --native > $@
+$(NATIVE_RENDER_EXE): $(NATIVE_RENDER_DIR)/mk4_render_native.c
+	$(NATIVE_RENDER_CC) $(SDL_CFLAGS) $< $(SDL_LIBS) -o $@
+	@echo "native-render: built $@  [verified SW pipeline, native SDL2 - run: $@ $(ARENA_BLOB)]"
+
+$(NATIVE_RENDER_DIR)/mk4_render_ppm.c: tools/decomp/gen_wasm_render.py $(ARENA_BLOB)
+	@mkdir -p $(NATIVE_RENDER_DIR)
+	@build/venv/bin/python tools/decomp/gen_wasm_render.py > $@
+$(NATIVE_RENDER_PPM): $(NATIVE_RENDER_DIR)/mk4_render_ppm.c
+	$(NATIVE_RENDER_CC) $< -o $@
+
+# Cross-target equivalence gate: the 64-bit host (translated arena) and wasm32
+# (flat VA, MK4_PTR = identity) must render the SAME framebuffer, bit for bit.
+native-render-check: $(NATIVE_RENDER_PPM) $(WASM_DIR)/frame.ppm
+	@$(NATIVE_RENDER_PPM) $(ARENA_BLOB) $(NATIVE_RENDER_DIR)/frame_native.ppm
+	@cmp $(NATIVE_RENDER_DIR)/frame_native.ppm $(WASM_DIR)/frame.ppm \
+		&& echo "native-render-check: OK - arm64 framebuffer is BYTE-IDENTICAL to wasm32" \
+		|| (echo "native-render-check: MISMATCH - the MK4_PTR seam changed semantics"; exit 1)
+
 # === Arena (relocated memory model, Phase 1) =============================
 #
 # Extract the original mapped image into a flat blob, then exercise the
