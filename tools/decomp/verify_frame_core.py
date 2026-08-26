@@ -293,6 +293,25 @@ SEEDS = {
         ('negative x',    {}, (-40, 20, 300, 100)),
         ('degenerate',    {}, (100, 100, 0, 0)),
     ],
+    # The command switch only runs on state 2, and only acts when the select
+    # bit is set - so the key reader is stubbed to "held" and the selected
+    # row's s16 command word (0x4f4fd4 for selection 0) is seeded per case.
+    'Menu_InsertCDDialog': [
+        ('fresh open',    {'g_dispatchSave1488': 0, 'g_dispatchSave1500': 0}),
+        ('closing',       {'g_dispatchSave1488': 1, 'g_dispatchSave1500': 0x45}),
+        ('cmd 0x11 retry', dict(_readers(1, 0), **{'g_dispatchSave1488': 1,
+                               'g_dispatchSave1500': 2, 'g_dispatchSave1481': 0,
+                               'g_dispatchSave1491': 0, '@0x4f4fd4': b'\x11\x00'})),
+        ('cmd 0x12 close', dict(_readers(1, 0), **{'g_dispatchSave1488': 1,
+                               'g_dispatchSave1500': 2, 'g_dispatchSave1481': 0,
+                               'g_dispatchSave1491': 0, '@0x4f4fd4': b'\x12\x00'})),
+        ('cmd 0x13 quit',  dict(_readers(1, 0), **{'g_dispatchSave1488': 1,
+                               'g_dispatchSave1500': 2, 'g_dispatchSave1481': 0,
+                               'g_dispatchSave1491': 0, '@0x4f4fd4': b'\x13\x00'})),
+        ('cmd 0, no keys', dict(_readers(0, 0), **{'g_dispatchSave1488': 1,
+                               'g_dispatchSave1500': 2, 'g_dispatchSave1481': 0,
+                               'g_dispatchSave1491': 0, '@0x4f4fd4': b'\x00\x00'})),
+    ],
     'Mem_Free': [
         ('below the heap',      _blocks(),          (0x7b0000,)),
         ('above the heap',      _blocks(),          (0xac0000,)),

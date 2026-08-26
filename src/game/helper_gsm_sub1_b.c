@@ -5,11 +5,24 @@
 #include "game/tick.h"
 
 /* Menu_DirectDrawUnavailableDialog - sister of 0x4b8630 for 0x004f5070 menu. */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_menuFlagsSub1b;
 extern unsigned int g_gsmVar;
 extern unsigned int g_dispatchSave869;
 extern unsigned int g_dispatchSave1487;
 extern unsigned int g_dispatchSave1497;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_dispatchSave1487 (*(unsigned int *)MK4_VA(unsigned int, 0xab4310u))
+#define g_dispatchSave1497 (*(unsigned int *)MK4_VA(unsigned int, 0xab4370u))
+#define g_dispatchSave869 (*(unsigned int *)MK4_VA(unsigned int, 0x4f5074u))
+#define g_gsmVar (*(unsigned int *)MK4_VA(unsigned int, 0x4f5070u))
+#define g_menuFlagsSub1b (*(unsigned int *)MK4_VA(unsigned int, 0xab4308u))
+#endif
+
 /* Real signatures. The auto-generated placeholders all said `(void)`, but the
  * original pushes two stack args for the two selectable-scanners and one for
  * the poll, and every caller uses the returned value. */
@@ -18,6 +31,48 @@ extern unsigned int Menu_PollNavInput(int mode);
 extern unsigned int Menu_FindNextSelectable(int cur, void *menu);
 extern unsigned int Menu_FindPrevSelectable(int cur, void *menu);
 
+#ifdef NON_MATCHING
+/* Portable twin. Instruction for instruction the same shape as
+ * Menu_Direct3DUnavailableDialog (71 instructions each, identical mnemonic
+ * sequence) - only the flag byte, the menu base and the two state slots
+ * differ, so this is that verified twin with those substituted.
+ *
+ * The menu table strides 8 BYTES per entry with a s16 at +4, hence the char
+ * pointer: on a uint pointer the offset strides 32. */
+int Menu_DirectDrawUnavailableDialog(void)
+{
+    unsigned int nav;
+
+    if ((g_menuFlagsSub1b & 1) == 0) {
+        g_menuFlagsSub1b = g_menuFlagsSub1b | 1;
+        g_dispatchSave1487 = Menu_FindNextSelectable(0, &g_gsmVar);
+    }
+    if (g_dispatchSave1497 == 0) {
+        g_dispatchSave1497 = 2;
+    } else if (g_dispatchSave1497 == 2) {
+        nav = Menu_PollNavInput(1);
+        if (((nav & 0x8000) == 0) && ((nav & 1) != 0)) {
+            g_dispatchSave1487 = Menu_FindPrevSelectable(g_dispatchSave1487, &g_gsmVar);
+        }
+        if ((nav & 0x8000) == 0) {
+            if ((nav & 2) != 0) {
+                g_dispatchSave1487 = Menu_FindNextSelectable(g_dispatchSave1487, &g_gsmVar);
+            }
+            if ((nav & 0x10) != 0) {
+                g_dispatchSave1497 = (int)*(short *)((unsigned char *)&g_dispatchSave869
+                                                     + g_dispatchSave1487 * 8);
+            }
+            if ((nav & 0x20) != 0) {
+                g_dispatchSave1497 = 0x45;
+            }
+        }
+    } else if (g_dispatchSave1497 == 0x45) {
+        g_dispatchSave1497 = 0;
+    }
+    DrawMenu(&g_gsmVar, g_dispatchSave1487);
+    return g_dispatchSave1497;
+}
+#else
 __declspec(naked) void Menu_DirectDrawUnavailableDialog(void)
 {
     __asm
@@ -104,4 +159,5 @@ __declspec(naked) void Menu_DirectDrawUnavailableDialog(void)
         ret
     }
 }
+#endif
 

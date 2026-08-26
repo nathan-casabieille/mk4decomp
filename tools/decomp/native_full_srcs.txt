@@ -200,8 +200,10 @@ src/game/helper_gsm_handle_event.c
 src/game/helper_gsm_sub18.c
 src/game/helper_gsm_sub19.c
 src/game/helper_gsm_sub1_a.c
+src/game/helper_gsm_sub1_b.c
 src/game/helper_gsm_sub1_c.c
 src/game/helper_gsm_sub_other1.c
+src/game/helper_gsm_sub_other2.c
 src/game/menu_nav_poll.c
 src/game/statemachine.c
 src/game/table_search_asc.c

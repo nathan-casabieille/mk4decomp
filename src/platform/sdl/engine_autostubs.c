@@ -273,4 +273,5 @@ __attribute__((weak)) int Menu_HelpScreen(){return 0;}
 __attribute__((weak)) int Menu_InsertCDDialog(){return 0;}
 __attribute__((weak)) int Menu_PauseMenu(){return 0;}
 __attribute__((weak)) int Helper_DrawMenu_PostRender(){return 0;}
+__attribute__((weak)) int AppInit_Misc8(){return 0;}
 #endif /* MK4_NATIVE_FULL */
