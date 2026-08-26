@@ -5,10 +5,13 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern u32 g_drawQueueBuckets[];
 extern unsigned int g_dispatchSave1349;
 extern unsigned int g_dispatchSave1350;
+#endif
 extern unsigned int g_dispatchSave1352;
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dispatchSave1356;
 extern unsigned int g_dispatchSave1367;
 extern unsigned int g_dispatchSave1368;
@@ -26,11 +29,45 @@ extern unsigned int g_dispatchSave1381;
 extern unsigned int g_dispatchSave1382;
 extern unsigned int g_dispatchSave1383;
 extern unsigned int g_dispatchSave1398;
+#endif
 extern unsigned int g_dispatchSave1400;
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern u32 g_drawQueueSize;
 extern unsigned int g_dispatchSave1403;
 extern unsigned int g_viewportX;
 extern unsigned int g_viewportY;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_dispatchSave1349 (*(unsigned int *)MK4_VA(unsigned int, 0xf6d052u))
+#define g_dispatchSave1350 (*(unsigned int *)MK4_VA(unsigned int, 0xf6e050u))
+#define g_dispatchSave1356 (*(unsigned int *)MK4_VA(unsigned int, 0xf6e068u))
+#define g_dispatchSave1367 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f7cu))
+#define g_dispatchSave1368 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f7du))
+#define g_dispatchSave1369 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f7eu))
+#define g_dispatchSave1371 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f88u))
+#define g_dispatchSave1372 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f8cu))
+#define g_dispatchSave1373 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f90u))
+#define g_dispatchSave1374 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f98u))
+#define g_dispatchSave1376 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f9cu))
+#define g_dispatchSave1377 (*(unsigned int *)MK4_VA(unsigned int, 0xf70fa0u))
+#define g_dispatchSave1378 (*(unsigned int *)MK4_VA(unsigned int, 0xf70fa8u))
+#define g_dispatchSave1379 (*(unsigned int *)MK4_VA(unsigned int, 0xf70facu))
+#define g_dispatchSave1380 (*(unsigned int *)MK4_VA(unsigned int, 0xf70fb0u))
+#define g_dispatchSave1381 (*(unsigned int *)MK4_VA(unsigned int, 0xf70fb8u))
+#define g_dispatchSave1382 (*(unsigned int *)MK4_VA(unsigned int, 0xf70fbcu))
+#define g_dispatchSave1383 (*(unsigned int *)MK4_VA(unsigned int, 0xf70fc0u))
+#define g_dispatchSave1398 (*(unsigned int *)MK4_VA(unsigned int, 0xf71322u))
+#define g_dispatchSave1403 (*(unsigned int *)MK4_VA(unsigned int, 0xf85b4cu))
+#define g_div3Table (*(unsigned int *)MK4_VA(unsigned int, 0xf70ff8u))
+#define g_drawQueueBuckets (*(unsigned int *)MK4_VA(unsigned int, 0xf6d050u))
+#define g_drawQueueSize (*(unsigned int *)MK4_VA(unsigned int, 0xf85b40u))
+#define g_viewportX (*(unsigned int *)MK4_VA(unsigned int, 0xf85b50u))
+#define g_viewportY (*(unsigned int *)MK4_VA(unsigned int, 0xf85b54u))
+#endif
+
 extern void BlitBlend16bpp(void);
 extern void DecodeTableAllocaCall(void);
 extern void GlideTriBatchEmit(void);

@@ -109,6 +109,7 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_viewportW;
 extern unsigned int g_viewportH;
 extern unsigned int g_dispatchSave1707;
@@ -120,7 +121,9 @@ extern unsigned int g_dispatchSave1358;
 extern unsigned int g_dispatchSave1371;
 extern unsigned int g_dispatchSave1373;
 extern unsigned int g_dispatchSave1374;
+#endif
 extern unsigned int g_dispatchSave1375;
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dispatchSave1377;
 extern unsigned int g_dispatchSave1378;
 extern unsigned int g_dispatchSave1380;
@@ -135,6 +138,38 @@ extern unsigned int g_dispatchSave1403;
 extern unsigned int g_viewportX;
 extern unsigned int g_viewportY;
 extern unsigned int g_dispatchSave1404;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_dispatchSave1334 (*(unsigned int *)MK4_VA(unsigned int, 0xf4d010u))
+#define g_dispatchSave1346 (*(unsigned int *)MK4_VA(unsigned int, 0xf4d044u))
+#define g_dispatchSave1357 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f4cu))
+#define g_dispatchSave1358 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f50u))
+#define g_dispatchSave1371 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f88u))
+#define g_dispatchSave1373 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f90u))
+#define g_dispatchSave1374 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f98u))
+#define g_dispatchSave1377 (*(unsigned int *)MK4_VA(unsigned int, 0xf70fa0u))
+#define g_dispatchSave1378 (*(unsigned int *)MK4_VA(unsigned int, 0xf70fa8u))
+#define g_dispatchSave1380 (*(unsigned int *)MK4_VA(unsigned int, 0xf70fb0u))
+#define g_dispatchSave1381 (*(unsigned int *)MK4_VA(unsigned int, 0xf70fb8u))
+#define g_dispatchSave1383 (*(unsigned int *)MK4_VA(unsigned int, 0xf70fc0u))
+#define g_dispatchSave1387 (*(unsigned int *)MK4_VA(unsigned int, 0xf70fd8u))
+#define g_dispatchSave1395 (*(unsigned int *)MK4_VA(unsigned int, 0xf71300u))
+#define g_dispatchSave1396 (*(unsigned int *)MK4_VA(unsigned int, 0xf71304u))
+#define g_dispatchSave1400 (*(unsigned int *)MK4_VA(unsigned int, 0xf85b34u))
+#define g_dispatchSave1402 (*(unsigned int *)MK4_VA(unsigned int, 0xf85b3cu))
+#define g_dispatchSave1403 (*(unsigned int *)MK4_VA(unsigned int, 0xf85b4cu))
+#define g_dispatchSave1404 (*(unsigned int *)MK4_VA(unsigned int, 0xf85b58u))
+#define g_dispatchSave1707 (*(unsigned int *)MK4_VA(unsigned int, 0xb2d008u))
+#define g_dispatchSave1708 (*(unsigned int *)MK4_VA(unsigned int, 0xb2d00cu))
+#define g_viewportH (*(unsigned int *)MK4_VA(unsigned int, 0x4ffd48u))
+#define g_viewportW (*(unsigned int *)MK4_VA(unsigned int, 0x4ffd44u))
+#define g_viewportX (*(unsigned int *)MK4_VA(unsigned int, 0xf85b50u))
+#define g_viewportY (*(unsigned int *)MK4_VA(unsigned int, 0xf85b54u))
+#endif
+
 
 #ifdef NON_MATCHING
 /*

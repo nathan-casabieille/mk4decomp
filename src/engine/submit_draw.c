@@ -13,6 +13,17 @@
 #include "engine/render.h"
 #include "engine/render_types.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_clipMaxScratch (*(unsigned int *)MK4_VA(unsigned int, 0xf70f78u))
+#define g_clipMinScratch (*(unsigned int *)MK4_VA(unsigned int, 0xf70f70u))
+#define g_drawQueue (*(unsigned int *)MK4_VA(unsigned int, 0xf71310u))
+#define g_drawQueueSize (*(unsigned int *)MK4_VA(unsigned int, 0xf85b40u))
+#define g_zSortKeyLUT (*(unsigned int *)MK4_VA(unsigned int, 0xb0d008u))
+#endif
+
+
 /*
  * @addr 0x004c3360
  *

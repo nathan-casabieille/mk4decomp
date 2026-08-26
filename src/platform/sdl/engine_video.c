@@ -120,8 +120,57 @@ void MK4_NativeVideoInit(void)
                       | ((unsigned)scale[k][(t >> 5) & 0x1f] << 5)
                       | (unsigned)scale[k][t & 0x1f]);
     }
+    /* Texture + shading-LUT bases. These are ARENA-ALIASED globals in the
+     * render TUs (see alias_globals.py), so they must be written at their VA
+     * here too - writing the same-named weak C variable would set a different
+     * location and the rasterisers would read a null texture base. That is
+     * exactly what crashed ScanlineTexBlit on the first attempt. */
+    *(unsigned int *)MK4_VA(unsigned int, 0x00f85b34u) = MK4_TEX_VA;  /* 1400 */
+    *(unsigned int *)MK4_VA(unsigned int, 0x00f4d028u) = MK4_LUT_VA;  /* 1340 */
+    for (k = 0; k < 0x10000u; k++)     /* a placeholder 256x256 RGB-555 page */
+        *(unsigned short *)MK4_VA(unsigned short, MK4_TEX_VA + k * 2) =
+            (unsigned short)((((k >> 4) & 0x1f) << 10) | ((k & 0x1f) << 5) | 0x10);
+
     SDL_Log("native video: mode=%d %dx%d, fb@VA 0x%x, tables seeded "
             "(sin/div3/zsort/shading)", mode, s_w, s_h, MK4_FB_VA);
+}
+
+/* --- a scene source, while the game logic that fills the queue is unconverted
+ * ------------------------------------------------------------------------
+ * The engine fills its draw queue from the scene graph (RenderSceneNode, still
+ * naked) driven by the game FSM (GameStateMachine, still naked). Until those
+ * land, MK4_SCENE=rect submits a few primitives through the engine's OWN
+ * enqueue (Helper_DrawCursor), so the frame exercises the real path:
+ *   enqueue -> FlushDrawQueue's counting sort -> dispatch -> rasterisers.
+ * This is a scene SOURCE, not a renderer: every pixel is drawn by engine code.
+ */
+extern void Helper_DrawCursor(void *entry);
+
+static void put16(unsigned char *e, int off, int v)
+{
+    *(short *)(e + off) = (short)v;
+}
+
+void MK4_NativeSceneRects(int frame)
+{
+    static unsigned char entry[0x1c];
+    int i;
+    int dx = frame % 40;
+    for (i = 0; i < 4; i++) {
+        int x0 = 40 + i * 90 + dx, y0 = 60 + i * 40;
+        int x1 = x0 + 150,         y1 = y0 + 130;
+        memset(entry, 0, sizeof entry);
+        put16(entry, 0x00, x0);  put16(entry, 0x02, y0);   /* v0 */
+        put16(entry, 0x04, x1);  put16(entry, 0x06, y0);   /* v1 */
+        put16(entry, 0x08, x1);  put16(entry, 0x0a, y1);   /* v2 */
+        entry[0x0c] = 0;   entry[0x0d] = 0;                /* u0,v0 */
+        entry[0x0e] = 80;  entry[0x0f] = 50;
+        entry[0x10] = 80;  entry[0x11] = 50;
+        put16(entry, 0x12, 0x180 + i * 8);                 /* depth key */
+        put16(entry, 0x14, 0x7fff);                        /* colour */
+        put16(entry, 0x1a, 0x20);                          /* RECT */
+        Helper_DrawCursor(entry);
+    }
 }
 
 /* --- present ------------------------------------------------------------- */

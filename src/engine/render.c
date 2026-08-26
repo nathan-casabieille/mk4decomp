@@ -1,7 +1,19 @@
 /**
  * Per-renderer EndScene + mode-switch helpers.
  */
+#include <stddef.h>          /* NULL - the matching build gets it from windows.h */
 #include "engine/render.h"
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_drawQueueSize (*(unsigned int *)MK4_VA(unsigned int, 0xf85b40u))
+#define g_viewportH (*(unsigned int *)MK4_VA(unsigned int, 0x4ffd48u))
+#define g_viewportW (*(unsigned int *)MK4_VA(unsigned int, 0x4ffd44u))
+#define g_viewportX (*(unsigned int *)MK4_VA(unsigned int, 0xf85b50u))
+#define g_viewportY (*(unsigned int *)MK4_VA(unsigned int, 0xf85b54u))
+#endif
+
 
 /*
  * Per-frame BeginFrame dispatcher: branch on g_currentRendererMode,

@@ -11,6 +11,9 @@
  */
 #include "platform/pal.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 extern void MainLoopStep(void);
 extern void MK4_NativeVideoInit(void);
 extern void MK4_NativeVideoPresent(void);
@@ -26,6 +29,22 @@ int MK4_GameInit(int argc, char **argv)
 
 void MK4_GameFrame(void)
 {
-    MainLoopStep();          /* BeginFrame / GameLogicStep / DrawScene / Present */
+    static int frame;
+    const char *scene = getenv("MK4_SCENE");
+
+    if (scene && strcmp(scene, "rect") == 0) {
+        /* Same stages MainLoopStep runs, with a scene source standing in for
+         * the unconverted game logic between BeginFrame and DrawScene. */
+        extern void BeginFrame(int);
+        extern void DrawScene(void);
+        extern void PresentFrame(void);
+        extern void MK4_NativeSceneRects(int);
+        BeginFrame(1);
+        MK4_NativeSceneRects(frame++);
+        DrawScene();
+        PresentFrame();
+    } else {
+        MainLoopStep();      /* BeginFrame / GameLogicStep / DrawScene / Present */
+    }
     MK4_NativeVideoPresent();/* arena framebuffer -> the SDL window */
 }

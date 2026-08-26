@@ -87,6 +87,9 @@ help:
 	@echo "  make native-geo         - render a REAL character from FILESYS.DAT"
 	@echo "                            to a PPM        (CHAR=sc|sz|lk, default sc)"
 	@echo "  make native-geo-win     - the same asset in an interactive window"
+	@echo "  make native-full        - the broad engine closure + weak stub frontier"
+	@echo "  make native-frame-check - the native app runs the ENGINE'S frame"
+	@echo "                            stages and draws (MK4_SCENE=rect)"
 	@echo "  make native-render-check / native-mesh-check"
 	@echo "                          - cross-target gate: the arm64 framebuffer"
 	@echo "                            must be BYTE-IDENTICAL to the wasm32 one"
@@ -433,6 +436,21 @@ native-geo: $(NATIVE_GEO_PPM) $(GEO_ASSET) $(GEO_TEX)
 	@command -v sips >/dev/null && sips -s format png $(NATIVE_RENDER_DIR)/$(CHAR)_geo.ppm \
 		--out $(NATIVE_RENDER_DIR)/$(CHAR)_geo.png >/dev/null || true
 	@echo "native-geo: rendered $(NATIVE_RENDER_DIR)/$(CHAR)_geo.ppm from MK4's own model data"
+
+# native-frame-check: the native app must run the ENGINE'S OWN frame stages
+# and produce pixels. MK4_SCENE=rect feeds the draw queue through the engine's
+# real enqueue (Helper_DrawCursor) because the game logic that would fill it -
+# RenderSceneNode + GameStateMachine - is not converted yet; everything after
+# that point is engine code:
+#   BeginFrame -> Renderer5_BeginFrame_SW_FS_Hi (the port's video hook)
+#              -> SetViewport -> DrawScene -> FlushDrawQueue -> rasterisers
+#              -> arena framebuffer -> SDL
+native-frame-check: native-full $(ARENA_BLOB)
+	@MK4_SCENE=rect MK4_MAX_FRAMES=3 MK4_DUMP_PPM=$(BUILD_DIR)/native/frame.ppm \
+		$(NATIVE_FULL_EXE) $(ARENA_BLOB) 2>&1 | grep -E "native video|non-zero" || true
+	@build/venv/bin/python -c "import sys; d=open('$(BUILD_DIR)/native/frame.ppm','rb').read(); \
+	 i=d.index(b'255\n')+4; px=d[i:]; nz=sum(1 for k in range(0,len(px),3) if px[k:k+3]!=b'\0\0\0'); \
+	 print('native-frame-check: %d non-zero pixels' % nz); sys.exit(0 if nz > 1000 else 1)"
 
 # === Arena (relocated memory model, Phase 1) =============================
 #

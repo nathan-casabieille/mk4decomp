@@ -61,6 +61,7 @@ src/engine/ecm.c
 src/engine/esi_install_bit_call_chain_variants.c
 src/engine/esi_install_dec_call_chain_variants.c
 src/engine/event_queue_drain_loop.c
+src/engine/flush_draw_queue.c
 src/engine/getters.c
 src/engine/guarded_chain_dual_add.c
 src/engine/guarded_dirty_dispatch.c
@@ -102,6 +103,7 @@ src/engine/packed_select_load6.c
 src/engine/push_pop84_triple_call.c
 src/engine/quad_field_early_jmp_then_install.c
 src/engine/quad_mul10_tail_fpu_chain.c
+src/engine/render.c
 src/engine/renderer_teardown_sw.c
 src/engine/scaled_addr_init.c
 src/engine/scaled_array_store.c
@@ -124,10 +126,18 @@ src/engine/scaled_store_cur_dirty_or1.c
 src/engine/scaled_sub_store.c
 src/engine/scaled_xor_store.c
 src/engine/scaled_zero_four.c
+src/engine/scanline_tex_blit.c
+src/engine/scanline_tex_blit_additive.c
+src/engine/scanline_tex_blit_alpha.c
+src/engine/scanline_tex_blit_interlaced.c
+src/engine/scanline_tex_blit_paletted.c
 src/engine/setjmp_wrappers.c
 src/engine/small_helpers.c
+src/engine/submit_draw.c
 src/engine/test_call_push4_zero.c
 src/engine/test_call_zero.c
+src/engine/textured_tri_rasterize_alpha_pal.c
+src/engine/textured_tri_rasterize_dithered.c
 src/engine/thunks.c
 src/engine/weighted_sum_clamp_helper.c
 src/engine/wrappers.c
