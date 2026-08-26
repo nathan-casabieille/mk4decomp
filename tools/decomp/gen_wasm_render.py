@@ -230,7 +230,10 @@ def main():
         if geo:
             P(DRIVER_GEO % fmt)
             gp = sys.argv[sys.argv.index('--geo') + 1]
-            P('#define SCENE_INIT()   (mesh_init(), geo_load("%s"))' % gp)
+            # the raw atlas sits next to the asset: sc_geo.geo -> sc_tex.bin
+            tp = gp.replace('_geo.geo', '_tex.bin')
+            P('#define SCENE_INIT()   (mesh_init(), geo_tex_load("%s"), geo_load("%s"))'
+              % (tp, gp))
             P('#define SCENE_FRAME(f) geo_frame(f)')
         else:
             P('#define SCENE_INIT()   mesh_init()')
@@ -304,12 +307,32 @@ static int arena_init(const char *img) {
     for (i = 0; i < 0x100000; i += 2)         /* distinct non-zero RGB565 texels */
         *(unsigned short *)MK4_VA(unsigned short, TEX_VA + i) =
             (unsigned short)((((i >> 1) %% 255) + 1));
-    /* CLUT / lighting LUT: the paletted + shaded rasterizers look up through
-       g_dispatchSave1340. Left at 0 the lookup derefs VA 0, which is 4 MB
-       BELOW the arena base - invisible on wasm32, an instant fault natively. */
-    for (i = 0; i < PAL_SZ; i += 2)
-        *(unsigned short *)MK4_VA(unsigned short, PAL_VA + i) =
-            (unsigned short)(((i >> 1) * 2654435761u) >> 16);
+    /* Lighting LUT at g_dispatchSave1340. TexturedTriRasterizeShaded reads
+           colour = LUT[ (shade & 0xffff0000) | texel ]
+       with shade = ((shadeAcc >> 3) + LUT_base) >> 1, so the effective address
+       is (LUT_base + (shadeAcc >> 3)) rounded DOWN to 128 KB, plus texel*2.
+       That makes the table 16 PAGES of 128 KB - a full 16-bit -> 16-bit colour
+       map per brightness level - selected by shadeAcc >> 20. The vertex shade
+       byte is (avg channel) << 3, i.e. 0..248, so the level is shade >> 4 =
+       0..15. 16 * 128 KB = 2 MB = exactly PAL_SZ.
+       Left at 0 the lookup would deref VA 0, 4 MB BELOW the arena base -
+       invisible on wasm32, an instant fault natively. */
+    {
+        unsigned char scale[16][32];
+        unsigned int L, T;
+        for (L = 0; L < 16; L++)
+            for (T = 0; T < 32; T++)
+                scale[L][T] = (unsigned char)((T * L) / 15);
+        for (L = 0; L < 16; L++) {
+            unsigned short *page =
+                (unsigned short *)MK4_VA(unsigned short, PAL_VA + L * 0x20000u);
+            for (T = 0; T < 0x10000u; T++)
+                page[T] = (unsigned short)((T & 0x8000u)
+                          | ((unsigned)scale[L][(T >> 10) & 0x1f] << 10)
+                          | ((unsigned)scale[L][(T >> 5) & 0x1f] << 5)
+                          | (unsigned)scale[L][T & 0x1f]);
+        }
+    }
     return 1;
 }
 
@@ -357,8 +380,11 @@ int main(int argc, char **argv) {
         unsigned short px = fb[y * W + x];
         unsigned char rgb[3];
         if (px) nz++;
-        rgb[0] = (unsigned char)(((px >> 11) & 0x1f) << 3);
-        rgb[1] = (unsigned char)(((px >> 5)  & 0x3f) << 2);
+        /* RGB-555: FlushDrawQueue's shade extraction masks the colour as
+           (c>>10)&0x1f, (c>>5)&0x1f, c&0x1f - five bits per channel - and the
+           .geo texture atlas decodes as 555 too. */
+        rgb[0] = (unsigned char)(((px >> 10) & 0x1f) << 3);
+        rgb[1] = (unsigned char)(((px >> 5)  & 0x1f) << 3);
         rgb[2] = (unsigned char)(( px        & 0x1f) << 3);
         fwrite(rgb, 1, 3, o);
     }
@@ -394,7 +420,7 @@ int main(int argc, char **argv) {
     SDL_Init(SDL_INIT_VIDEO);
     SDL_CreateWindowAndRenderer(W * 2, H * 2, 0, &win, &g_ren);
     SDL_RenderSetLogicalSize(g_ren, W, H);
-    g_tex = SDL_CreateTexture(g_ren, SDL_PIXELFORMAT_RGB565,
+    g_tex = SDL_CreateTexture(g_ren, SDL_PIXELFORMAT_RGB555,
                               SDL_TEXTUREACCESS_STREAMING, W, H);
     emscripten_set_main_loop(tick, 0, 1);
     return 0;
@@ -424,7 +450,7 @@ int main(int argc, char **argv) {
                            W * scale, H * scale, SDL_WINDOW_SHOWN);
     ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     SDL_RenderSetLogicalSize(ren, W, H);
-    tex = SDL_CreateTexture(ren, SDL_PIXELFORMAT_RGB565,
+    tex = SDL_CreateTexture(ren, SDL_PIXELFORMAT_RGB555,
                             SDL_TEXTUREACCESS_STREAMING, W, H);
     if (!win || !ren || !tex) {
         fprintf(stderr, "SDL setup: %%s\n", SDL_GetError()); return 2; }
@@ -537,8 +563,18 @@ static void mesh_build(void) {
     mesh_setw(strip + NSTRIP * 4 + 2, -1);       /* negative count terminates */
 }
 
+#define DIV3_VA 0x00f70ff8u        /* g_div3Table */
+
 static void mesh_init(void) {
     unsigned int k;
+    /* SECOND runtime-built table that is all-zero in the static image (the
+       z-sort LUT below is the first). FlushDrawQueue turns a vertex colour
+       into a shade with
+           shade = (g_div3Table[r + g + b] << 3) & 0xff
+       so an empty table makes EVERY shade 0, which selects lighting-LUT page 0
+       - solid black. Three 5-bit channels sum to at most 93. */
+    for (k = 0; k < 0x100u; k++)
+        *(unsigned char *)MK4_VA(unsigned char, DIV3_VA + k) = (unsigned char)(k / 3);
     /* Depth -> bucket table. FlushDrawQueue buckets on the +0x12 field that
        Helper_DrawCursor rewrites through this LUT, and there are exactly 0x400
        buckets, so every entry MUST land in 0..0x3ff. The static image has the
@@ -617,6 +653,22 @@ DRIVER_GEO = r"""
    ------------------------------------------------------------------------- */
 static int g_geoBlocks[256], g_geoNBlocks, g_geoTris[256];
 
+/* The .geo texture half decodes to one 256x256 RGB-555 atlas (128 KB), which
+   is exactly how the rasterizers address it: a texel is read at
+   (tex_base/2 & 0xffff0000 | V<<8 | U) * 2, so 256 texels per row and the base
+   VA must be 0x20000-aligned for that high-half trick to hold. TEX_VA is.
+   Dump it with: tools/geo_decode.py FILE 0 --raw out.bin */
+static int geo_tex_load(const char *path) {
+    FILE *f = fopen(path, "rb");
+    size_t n;
+    if (!f) { fprintf(stderr, "no texture %%s (keeping the synthetic one)\n", path);
+              return 0; }
+    n = fread(MK4_VA(void, TEX_VA), 1, 256u * 256u * 2u, f);
+    fclose(f);
+    fprintf(stderr, "geo: texture atlas %%lu bytes -> TEX_VA\n", (unsigned long)n);
+    return n == 256u * 256u * 2u;
+}
+
 static int geo_load(const char *path) {
     FILE *f = fopen(path, "rb");
     long n; unsigned int tex, o;
@@ -665,13 +717,15 @@ static int geo_load(const char *path) {
 static void geo_lighting(void) {
     setdw(0x007af9c0u, 0x0180);  setdw(0x007af9c4u, 0x0080);  setdw(0x007af9c8u, 0x0040);
     setdw(0x007af9ccu, 0x0060);  setdw(0x007af9d0u, 0x0140);  setdw(0x007af9d4u, 0x00a0);
-    /* A DARK base: TransformVertex ADDS each light's contribution to the
-       channels it unpacks from g_vtxColorPrev and clamps at 0x1f, so a white
-       base saturates immediately and every vertex comes out the same colour. */
-    setw(0x007af9f0u, 0x0842);            /* g_vtxColorPrev: dim grey */
-    setw(0x007af9fcu, 0x0842);            /* g_vtxColor               */
-    setw(0x007af9f8u, 0x0842);            /* g_vtxColorCopy           */
-    setw(0x007af9fau, 0x0842);            /* g_vtxColorSaved          */
+    /* Vertex colour drives the SHADE, and the shade picks a 128 KB page of the
+       lighting LUT: level = (average channel) >> 4, so 0..15. Page 15 leaves
+       the texel untouched (the atlas's own colours) and page 0 is black - a
+       dim base therefore renders the model completely black. Start bright and
+       let the lights vary it downward. */
+    setw(0x007af9f0u, 0x6318);            /* g_vtxColorPrev: 24,24,24 */
+    setw(0x007af9fcu, 0x6318);            /* g_vtxColor               */
+    setw(0x007af9f8u, 0x6318);            /* g_vtxColorCopy           */
+    setw(0x007af9fau, 0x6318);            /* g_vtxColorSaved          */
     /* the six RGB scales are PACKED BYTES at 0x7af9f2..f7 - byte writes only */
     setb(0x007af9f2u, 0x30); setb(0x007af9f3u, 0x18);   /* blue  light0 / light1 */
     setb(0x007af9f4u, 0x40); setb(0x007af9f5u, 0x20);   /* green */

@@ -27,6 +27,7 @@ Pixel format: 16-bit, format presumed RGB-555 or RGB-565 (TBD by visual inspecti
 
 Usage:
     python3 tools/geo_decode.py <file.geo> [tex_index] [out.ppm]
+    python3 tools/geo_decode.py <file.geo> 0 --raw out.bin   # raw 555 atlas
 """
 import struct
 import sys
@@ -137,6 +138,17 @@ def main():
     w, h, doff, sz = entries[tex_idx]
     dst, consumed = decode_rle16(data, doff, doff + sz, w, h, xor_key=0, dst_stride=256)
     print(f"  consumed {consumed - doff} of {sz} bytes")
+
+    if "--raw" in sys.argv:
+        # Raw 256x256 RGB-555 atlas, exactly the layout the SW rasterizers
+        # address: a texel is read at (tex_base/2 & 0xffff0000 | V<<8 | U) * 2,
+        # i.e. 256 texels per row, 16 bits each = 128 KB, and the base VA must
+        # be 0x20000-aligned for that high-half trick to work.
+        out = Path(sys.argv[sys.argv.index("--raw") + 1])
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_bytes(bytes(dst[: 256 * 256 * 2]))
+        print(f"\nwrote: {out}  (raw 256x256 RGB-555, {256*256*2} bytes)")
+        return
 
     out_555 = Path(sys.argv[3]) if len(sys.argv) > 3 else Path("/tmp/geo_tex_555.ppm")
     out_565 = out_555.with_suffix(".565.ppm")

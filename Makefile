@@ -386,13 +386,17 @@ $(GEO_ASSET):
 	build/venv/bin/python tools/fsys_extract.py game/FILESYS.DAT \
 		'c:\source\mk4\win\geogfx\$(CHAR)_geo.geo' $@
 
-$(NATIVE_GEO_SRC): tools/decomp/gen_wasm_render.py $(ARENA_BLOB) $(GEO_ASSET)
+GEO_TEX := $(BUILD_DIR)/assets/$(CHAR)_tex.bin
+$(GEO_TEX): $(GEO_ASSET)
+	build/venv/bin/python tools/geo_decode.py $(GEO_ASSET) 0 --raw $@
+
+$(NATIVE_GEO_SRC): tools/decomp/gen_wasm_render.py $(ARENA_BLOB) $(GEO_ASSET) $(GEO_TEX)
 	@mkdir -p $(NATIVE_RENDER_DIR)
 	@build/venv/bin/python tools/decomp/gen_wasm_render.py --geo $(GEO_ASSET) > $@
 $(NATIVE_GEO_PPM): $(NATIVE_GEO_SRC)
 	$(NATIVE_RENDER_CC) $(NATIVE_PORTFLAGS) $< -lm -o $@
 
-native-geo: $(NATIVE_GEO_PPM) $(GEO_ASSET)
+native-geo: $(NATIVE_GEO_PPM) $(GEO_ASSET) $(GEO_TEX)
 	@build/venv/bin/python tools/geo_mesh.py $(GEO_ASSET)
 	@$(NATIVE_GEO_PPM) $(ARENA_BLOB) $(NATIVE_RENDER_DIR)/$(CHAR)_geo.ppm
 	@command -v sips >/dev/null && sips -s format png $(NATIVE_RENDER_DIR)/$(CHAR)_geo.ppm \
