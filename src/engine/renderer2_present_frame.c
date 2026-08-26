@@ -10,8 +10,21 @@
  *
  * vtable[11] (offset 0x2c) with 2 args is IDirectDrawSurface::Flip.
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern DDSurfaceFlippable *g_comptr_0058c7b4;
 extern DDSurfaceFlippable *g_comptr_0058c7b0;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_comptr_0058c7b0 (*(unsigned int *)MK4_VA(unsigned int, 0x58c7b0u))
+#define g_comptr_0058c7b4 (*(unsigned int *)MK4_VA(unsigned int, 0x58c7b4u))
+#define g_renderer2_active (*(unsigned int *)MK4_VA(unsigned int, 0x58c7e0u))
+#define g_renderer2_paused (*(unsigned int *)MK4_VA(unsigned int, 0x58c7ecu))
+#define g_renderer2_present_rc (*(unsigned int *)MK4_VA(unsigned int, 0x58c7dcu))
+#endif
+
 extern void Renderer2_EndScene_D3D(void);
 
 void Renderer2_PresentFrame(void) {

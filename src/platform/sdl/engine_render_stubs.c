@@ -53,4 +53,21 @@ __attribute__((weak)) int g_renderer5_active;
 __attribute__((weak)) int g_renderer5_present_rc;
 __attribute__((weak)) int g_renderer5_surface;
 
+/* --- MSVC 64-bit CRT helpers ------------------------------------------------
+ * The matching build calls into MSVC's __alldiv / __allshl (register-convention
+ * asm from the 5.0 CRT). Natively they are ordinary 64-bit operations, so give
+ * them real implementations rather than stubs - they carry actual results. */
+long long __alldiv(long long a, long long b) { return b ? a / b : 0; }
+long long __allshl(long long a, int n)       { return a << (n & 63); }
+
+/* --- engine functions still naked, reached from the newly linked TUs ------- */
+__attribute__((weak)) void CjChainResetThreshold(void)     { }
+__attribute__((weak)) void DualSubFromField(void)          { }
+__attribute__((weak)) void SqDistThresholdRevertAdvance(void) { }
+
+/* --- Win32 IAT slots + Glide state the native port never uses -------------- */
+__attribute__((weak)) unsigned int g_iat_GdiFlush;
+__attribute__((weak)) unsigned int g_iat_SetDIBitsToDevice;
+__attribute__((weak)) unsigned int g_glideColorFlushByte;
+
 #endif /* MK4_NATIVE_FULL */

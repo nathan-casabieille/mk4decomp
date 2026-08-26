@@ -23,16 +23,32 @@
  */
 #include "engine/render.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dsqc_730_state874;
 extern unsigned int g_dsqc_f60_state874;
 extern unsigned int g_comret_0058c878;
 extern unsigned int g_comret_0058c8f8;
+#endif
 
 extern void Renderer3_EndScene_SW_FS(void);
 extern void Renderer5_EndScene_SW_FS_Hi(void);
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern DDSurfaceFlippable *g_comptr_0058c864;
 extern DDSurfaceFlippable *g_comptr_0058c8e4;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_comptr_0058c864 (*(unsigned int *)MK4_VA(unsigned int, 0x58c864u))
+#define g_comptr_0058c8e4 (*(unsigned int *)MK4_VA(unsigned int, 0x58c8e4u))
+#define g_comret_0058c878 (*(unsigned int *)MK4_VA(unsigned int, 0x58c878u))
+#define g_comret_0058c8f8 (*(unsigned int *)MK4_VA(unsigned int, 0x58c8f8u))
+#define g_dsqc_730_state874 (*(unsigned int *)MK4_VA(unsigned int, 0x58c874u))
+#define g_dsqc_f60_state874 (*(unsigned int *)MK4_VA(unsigned int, 0x58c8f4u))
+#endif
+
 
 /* @addr 0x004af690 */
 void Renderer3_PresentFrame(void) {

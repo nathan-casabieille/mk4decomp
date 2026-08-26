@@ -5,8 +5,10 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
+#endif
 
 /* @addr 0x004ab2a0 (89b)
  * 16.16 fixed-point divide: g_walkCallback = (g_walkCallback << 16) /
@@ -18,7 +20,20 @@ extern unsigned int g_currentNodeIdx;
  * name was wrong; it is a divide. Used to normalise a delta by a range
  * (e.g. the inter-fighter facing components in helper_per_player_tick).
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_eventQueueCurrent_mm2;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_eventQueueCurrent (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_eventQueueCurrent_mm2 (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#endif
+
 extern void func_004c5740_mm(void);
 extern int Alldiv(int, int, int, int);
 

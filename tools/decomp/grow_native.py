@@ -30,7 +30,30 @@ def pick_file(sym):
     cands.sort(key=lambda c: Path(c).stat().st_size)
     return cands[0]
 
-srcs=list(BASE_SRCS)
+# Seed from the CURRENT native-full list rather than a fixed base set, so this
+# extends the build instead of restarting it.
+CUR = Path('tools/decomp/native_full_srcs.txt')
+srcs = list(BASE_SRCS)
+if CUR.exists():
+    srcs += [l.strip() for l in CUR.read_text().split('\n')
+             if l.strip() and l.strip() not in srcs and Path(l.strip()).exists()]
+srcs += [str(f) for f in sorted(Path('src/platform/sdl').glob('*.c'))
+         if str(f) not in srcs]
+if 'src/portable/arena.c' not in srcs: srcs.append('src/portable/arena.c')
+
+def alias(f):
+    """Arena-alias a file before adding it. A non-aliased TU would see
+    different storage for the same globals than the rest of the build."""
+    if 'alias_globals.py' in Path(f).read_text():
+        return True
+    bak = Path(f).read_text()
+    subprocess.run(['build/venv/bin/python','tools/decomp/alias_globals.py',f],
+                   capture_output=True, text=True)
+    if compiles(f):
+        return True
+    Path(f).write_text(bak)      # keep it un-aliased rather than broken
+    return compiles(f)
+
 added=[]; stub_needed=set(); compile_fail=set()
 for rnd in range(40):
     undef=link_undef(srcs)
@@ -44,6 +67,7 @@ for rnd in range(40):
         if not f: stub_needed.add(sym); continue
         if f in srcs: continue
         if not compiles(f): compile_fail.add(f); stub_needed.add(sym); continue
+        alias(f)
         srcs.append(f); added.append(f); progress=True
     if not progress:
         print('no progress at round',rnd); break
