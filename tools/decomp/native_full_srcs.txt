@@ -88,9 +88,11 @@ src/engine/guarded_scaled_chain_jmp_indirect.c
 src/engine/guarded_sequels.c
 src/engine/guarded_six_field_copy.c
 src/engine/guarded_triple_call_set_tail.c
+src/engine/helper_draw_menu_text.c
 src/engine/helper_emit_line.c
 src/engine/helper_fclose.c
 src/engine/helper_geo_load_pre.c
+src/engine/helper_get_menu_extents.c
 src/engine/helper_gfx_cleanup.c
 src/engine/helper_per_player_tick.c
 src/engine/helper_post_player_tick.c
@@ -189,6 +191,7 @@ src/engine/weighted_sum_clamp_helper.c
 src/engine/word9_reorder.c
 src/engine/wrappers.c
 src/engine/zero_three_slots.c
+src/game/draw_menu.c
 src/game/event_queue.c
 src/game/fight.c
 src/game/game_tick.c

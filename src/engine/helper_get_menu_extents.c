@@ -10,7 +10,17 @@
  *   Two code blocks (640x480 vs 320x240) selected via a 5-entry jump
  *   table; out-of-range and null-arg cases fall through to early ret.
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern int g_currentRendererMode;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_clampedRendererMode (*(unsigned int *)MK4_VA(unsigned int, 0x4f4b3cu))
+#define g_currentRendererMode (*(int *)MK4_VA(int, 0x4f4b3cu))
+#endif
+
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */

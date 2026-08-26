@@ -11,6 +11,18 @@
  */
 #include "game/statemachine.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_menuCounter (*(unsigned int *)MK4_VA(unsigned int, 0xab4344u))
+#define g_menuCurrent (*(unsigned int *)MK4_VA(unsigned int, 0xab433cu))
+#define g_menuCursorBuf ((unsigned int *)MK4_VA(unsigned int, 0xab41a8u))
+#define g_menuExtraDelta (*(unsigned int *)MK4_VA(unsigned int, 0xab4348u))
+#define g_menuExtraSign (*(unsigned int *)MK4_VA(unsigned int, 0x4f579cu))
+#define g_menuPrev (*(unsigned int *)MK4_VA(unsigned int, 0xab4340u))
+#endif
+
+
 /*
  * @addr 0x004b65c0
  *
@@ -21,7 +33,152 @@
  * for both "extents-out" slots and animation scratch slots in a way
  * pure C struct locals don't compose.
  */
-__declspec(naked) void DrawMenu(void *menu_items, s32 selection)
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+/* Portable twin.
+ *
+ * A menu is an array of 8-byte entries, [+0] a char* label, terminated by a
+ * null label. The pass structure is: count the entries and the longest label,
+ * ask Helper_GetMenuExtents for the screen box, centre the block, slide it in
+ * or out over 100 counter units in steps of 14, draw each label centred, then
+ * put the cursor quad around the selected row.
+ *
+ * The interpolation is a magic-multiply divide by 100 (0x51eb851f with the
+ * sar 5 / sign fixup), written here as a plain signed `/ 100` - the compiler
+ * emits the same reciprocal and both truncate toward zero.
+ *
+ * All three of `(width - textw) / 2`, `(height - texth) / 2` and the counter
+ * interpolation are SIGNED in the original (`cdq ; sub ; sar`), so each keeps
+ * an explicit int - see `make signed-audit`.
+ *
+ * The label pointers and the menu table itself are VAs, hence the MK4_PTR
+ * derefs; a host pointer would not survive the round trip the engine does
+ * through g_menuPrev / g_menuCurrent.
+ *
+ * The cursor quad is positioned from the row origin BEFORE the draw loop runs
+ * - the original keeps it in a stack slot ([esp+0x28]) precisely because the
+ * loop walks its own copy down the rows.
+ *
+ * Careful reading that block: it runs with the Helper_DrawCursor argument
+ * already pushed, so every [esp+N] inside it is shifted by 4. The `[esp+0x1c]`
+ * that sets the quad's right edge is therefore the TEXT WIDTH slot, not the
+ * screen height - x + textw - 9, which is (scr_w + textw) / 2 - 9.
+ */
+s32 DrawMenu(void *menu_items, s32 selection)
+{
+    unsigned int  table = MK4_UNPTR(menu_items);
+    unsigned int  cur   = g_menuCurrent;
+    unsigned char *e;
+    const char *txt;
+    int count = 0, maxlen = 0, n;
+    int textw, texth, scr_w, scr_h, x, y, ybase, yrow;
+    int i;
+
+    if (g_menuPrev != table) {
+        if (cur == 0) {
+            cur = g_menuPrev;
+            g_menuCurrent = cur;
+        }
+        g_menuPrev = table;
+        if (cur != 0)
+            g_menuCounter = 0;
+    }
+    if (cur != 0)
+        table = cur;
+    if (table == 0)
+        return 0;
+
+    /* pass 1: entry count and longest label */
+    e = (unsigned char *)MK4_PTR(table);
+    while (*(unsigned int *)e != 0) {
+        txt = (const char *)MK4_PTR(*(unsigned int *)e);
+        for (n = 0; txt[n] != 0; n++)          /* the original inlines scasb */
+            ;
+        if (n > maxlen)
+            maxlen = n;
+        count++;
+        e += 8;
+    }
+
+    textw = (maxlen + 4) * 9;
+    texth = (count + 4) * 10;
+    Helper_GetMenuExtents(&scr_w, &scr_h);
+
+    x = (scr_w - textw) / 2;
+    y = (scr_h - texth) / 2;
+
+    /* pass 2: slide. The counter runs 0..100 in steps of 14; g_menuCurrent set
+     * means the OLD menu is sliding out, clear means the new one slides in. */
+    if (g_menuCurrent != 0) {
+        g_menuCounter += 0xe;
+        if (g_menuCounter >= 0x64) {
+            g_menuCurrent = 0;
+            g_menuCounter = 0x64;
+        }
+        y += (scr_h - y) * g_menuCounter / 100;
+        if (g_menuCounter >= 0x64)
+            g_menuCounter = 0;
+    } else {
+        g_menuCounter += 0xe;
+        if (g_menuCounter >= 0x64)
+            g_menuCounter = 0x64;
+        y += (scr_h - y) * (0x64 - g_menuCounter) / 100;
+    }
+
+    /* pass 3: the labels, each centred on its own length */
+    ybase = y;
+    yrow  = y + 0x14;
+    e = (unsigned char *)MK4_PTR(table);
+    for (i = 0; i < count; i++) {
+        txt = (const char *)MK4_PTR(*(unsigned int *)e);
+        for (n = 0; txt[n] != 0; n++)
+            ;
+        Helper_DrawMenuText((s32)((unsigned int)(scr_w - n * 9) >> 1),
+                            (s32)yrow, txt, 0, 0x7fff);
+        yrow += 0xa;
+        e += 8;
+    }
+
+    /* pass 4: the cursor quad, skipped entirely for a negative selection */
+    if (selection >= 0) {
+        /* &buf[0], not the bare name: as an arena alias - and in the co-exec
+         * harness's generated defines - a bare global name is the VALUE at
+         * that address, and indexing element zero is what yields the ADDRESS.
+         * Spelled the other way the quad is written through a null pointer. */
+        unsigned char *q = (unsigned char *)&g_menuCursorBuf[0];
+        int pulse;
+
+        g_menuExtraDelta += g_menuExtraSign;
+        if (g_menuExtraDelta >= 0x20) {
+            g_menuExtraDelta = 0x1f;
+            g_menuExtraSign = -1;
+        }
+        if (g_menuExtraDelta < 0) {
+            g_menuExtraDelta = 0;
+            g_menuExtraSign = 1;
+        }
+        pulse = (unsigned char)(g_menuExtraDelta * 3) + 1;
+
+        *(short *)(q + 0x00) = (short)(x + 9);
+        *(short *)(q + 0x02) = (short)(y + 0x14 + selection * 10);
+        *(short *)(q + 0x08) = (short)(x + textw - 9);
+        *(short *)(q + 0x0a) = (short)(y + 0x14 + selection * 10 + 0xa);
+        q[0x0c] = (unsigned char)pulse;
+        q[0x0d] = 0x50;
+        q[0x10] = (unsigned char)pulse;
+        q[0x11] = 0x5b;
+        *(short *)(q + 0x12) = 0;
+        *(short *)(q + 0x14) = 0x7fff;
+        *(short *)(q + 0x1a) = 0x3af;
+        Helper_DrawCursor(q);
+    }
+
+    Helper_DrawMenu_PostRender((s32)x, (s32)ybase, (s32)textw, (s32)texth);
+    return 1;
+}
+#else
+__declspec(naked) s32 DrawMenu(void *menu_items, s32 selection)
 {
     __asm {
         mov     ecx, dword ptr [g_menuPrev]
@@ -257,3 +414,4 @@ skip_cursor:
         ret
     }
 }
+#endif

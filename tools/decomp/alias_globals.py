@@ -84,6 +84,25 @@ def _strip_decls(text):
                      if not l.lstrip().startswith('extern'))
 
 
+_WIDTHS = None
+
+
+def binary_width(g):
+    """Field size from config/global_widths.yaml, derived from the original's
+    own encodings by tools/decomp/audit_widths.py.
+
+    Reported, not applied automatically: see narrow_globals() in
+    verify_coexec.py for why a blanket retype is not safe. Use it to FIND the
+    packed fields a 32-bit alias is silently clobbering, then fix those twins
+    one at a time."""
+    global _WIDTHS
+    if _WIDTHS is None:
+        import yaml
+        f = Path(__file__).resolve().parents[2] / 'config' / 'global_widths.yaml'
+        _WIDTHS = yaml.safe_load(f.read_text()) if f.exists() else {}
+    return _WIDTHS.get(g)
+
+
 def declared_type(g, src):
     """Base type from the file's own `extern <type> g;` line, if it has one."""
     if g in WIDTH16:

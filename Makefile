@@ -106,6 +106,8 @@ help:
 	@echo "                            still standing between it and running natively"
 	@echo "  make signed-audit       - twins whose signed tests were silently made"
 	@echo "                            UNSIGNED by the arena alias typing"
+	@echo "  make width-audit        - real ACCESS WIDTH of every fixed-VA global,"
+	@echo "                            read off the original's own encodings"
 	@echo "  build/venv/bin/python tools/decomp/disasm_fn.py NAME   - original bytes"
 	@echo "  build/venv/bin/python tools/geo_mesh.py FILE --blocks  - .geo mesh format"
 	@echo
@@ -139,7 +141,17 @@ closure:
 signed-audit:
 	@build/venv/bin/python tools/decomp/audit_signed.py
 
-.PHONY: frame-core-check closure signed-audit
+# width-audit: everything downstream types a fixed-VA global `unsigned int`,
+# which for a packed byte or halfword field makes each store 32 bits wide and
+# wipes its neighbours. The original's encodings settle the real width (and
+# signedness, from movsx), so derive it: --write refreshes
+# config/global_widths.yaml. Apply the result PER TWIN, never in bulk -
+# narrowing a global also changes C integer promotion in expressions written
+# for the 32-bit spelling.
+width-audit:
+	@build/venv/bin/python tools/decomp/audit_widths.py
+
+.PHONY: frame-core-check closure signed-audit width-audit
 
 all: matching
 

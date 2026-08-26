@@ -11,6 +11,7 @@
  *   Builds quad descriptor at g_dispatchSave1609..g_callocInitFlag, calls Helper_DrawCursor.
  *   Advances screen_x by 9 per char; clears g_callocInitFlag at end.
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dispatchSave1609;
 extern unsigned int g_dispatchSave1610;
 extern unsigned int g_dispatchSave1611;
@@ -23,7 +24,29 @@ extern unsigned int g_dispatchSave1617;
 extern unsigned int g_dispatchSave1618;
 extern unsigned int g_dispatchSave1619;
 extern unsigned int g_callocInitFlag;
-extern void Helper_DrawCursor(void);
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+/* g_dispatchSave1609..1619 carry their REAL widths from
+ * config/global_widths.yaml: 1613..1616 are four consecutive BYTES, so a
+ * 32-bit alias makes every store wipe the fields after it. */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_callocInitFlag (*(unsigned int *)MK4_VA(unsigned int, 0x7af508u))
+#define g_dispatchSave1609 (*(unsigned short *)MK4_VA(unsigned short, 0x7af4e8u))
+#define g_dispatchSave1610 (*(unsigned short *)MK4_VA(unsigned short, 0x7af4eau))
+#define g_dispatchSave1611 (*(unsigned short *)MK4_VA(unsigned short, 0x7af4f0u))
+#define g_dispatchSave1612 (*(unsigned short *)MK4_VA(unsigned short, 0x7af4f2u))
+#define g_dispatchSave1613 (*(unsigned char *)MK4_VA(unsigned char, 0x7af4f4u))
+#define g_dispatchSave1614 (*(unsigned char *)MK4_VA(unsigned char, 0x7af4f5u))
+#define g_dispatchSave1615 (*(unsigned char *)MK4_VA(unsigned char, 0x7af4f8u))
+#define g_dispatchSave1616 (*(unsigned char *)MK4_VA(unsigned char, 0x7af4f9u))
+#define g_dispatchSave1617 (*(unsigned short *)MK4_VA(unsigned short, 0x7af4fau))
+#define g_dispatchSave1618 (*(unsigned short *)MK4_VA(unsigned short, 0x7af4fcu))
+#define g_dispatchSave1619 (*(unsigned short *)MK4_VA(unsigned short, 0x7af502u))
+#endif
+
+extern void Helper_DrawCursor(void *quad);   /* placeholder said (void) */
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */

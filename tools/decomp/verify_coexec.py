@@ -109,11 +109,8 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None
         # untouched. Signed because the geometry path uses movsx, not movzx.
         if width16 and g in width16:
             return '#define %s (*(short *)0x%xu)\n' % (g, va)
-        # Floating-point .rdata constants: the default below types EVERY global
-        # as `unsigned int`, which silently reinterprets a qword double's low
-        # half as an integer - the twin then computes garbage and the mismatch
-        # looks like a logic bug. fptypes comes from the twin's own file, where
-        # the global is declared `extern double g_x;` / `extern float g_x;`.
+        # Narrower-than-32-bit globals, taken from the declaration in the
+        # twin's own file. See NARROW above for why this matters.
         if fptypes and g in fptypes:
             return '#define %s (*(%s *)0x%xu)\n' % (g, fptypes[g], va)
         if re.search(r'\(\s*\*\s*%s\s*\)\s*\(' % g, body) or re.search(r'\b%s\s*\(' % g, body):
@@ -276,13 +273,49 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None
     return bytes(buf), entry, load_base, None
 
 
+# Declared spellings that are NOT 32 bits. gdef types every global
+# `unsigned int` by default, which is wrong in two ways: a qword double read as
+# an integer computes garbage, and - worse, because it corrupts state the twin
+# never meant to touch - a byte or halfword field written 32 bits wide CLOBBERS
+# ITS NEIGHBOURS. The engine packs those hard: g_dispatchSave1613..1616 are four
+# consecutive BYTES, so a 32-bit store to the first wipes the other three.
+# ONLY the floating-point spellings. Narrow INTEGER types are deliberately not
+# here: see narrow_globals() - retyping an integer global also changes C's
+# promotion rules in expressions written against the 32-bit spelling, and the
+# twins were verified under that. Integer widths are opt-in per harness via
+# verify(types=...).
+NARROW = {'double': 'double', 'float': 'float'}
+
+
+_WIDTHS = None
+
+
+def narrow_globals():
+    """global -> C type from config/global_widths.yaml (audit_widths.py).
+
+    NOT applied by default. The widths are correct - they come from the
+    original's own encodings - but narrowing a global also changes C's integer
+    PROMOTION in expressions written against the 32-bit spelling: an
+    `unsigned int` global compared with a `short` promotes the short to
+    unsigned, while an `unsigned short` one leaves the comparison signed. Twins
+    verified under the wide typing depend on that (g_screenH in the tristrip
+    emitters is the case in point), so applying the map is a per-twin decision.
+    Harnesses opt in by passing `types=` to verify().
+    """
+    global _WIDTHS
+    if _WIDTHS is None:
+        import yaml
+        f = ROOT / 'config' / 'global_widths.yaml'
+        raw = yaml.safe_load(f.read_text()) if f.exists() else {}
+        _WIDTHS = dict(raw or {})
+    return _WIDTHS
+
+
 def fp_globals_for(name):
     """Map global -> 'double'/'float' for the file that defines twin `name`.
 
-    The engine's FPU helpers multiply by qword constants in .rdata. gdef has no
-    way to know a global's width from the twin body alone, but the file that
-    holds the twin declares it (`extern double g_fpInvFixed16;`), so read it
-    from there."""
+    The engine's FPU helpers multiply by qword constants in .rdata, and gdef
+    would otherwise read one as an integer and compute garbage."""
     sig = re.compile(r'\b%s\s*\(' % re.escape(name))
     for f in (ROOT / 'src').rglob('*.c'):
         s = f.read_text(errors='ignore')
@@ -293,8 +326,13 @@ def fp_globals_for(name):
                    for m in re.finditer(r'#ifdef NON_MATCHING\b', s)
                    if s.find('#else', m.end()) > 0):
             continue
-        return {g: t for t, g in re.findall(
-            r'\bextern\s+(float|double)\s+(g_\w+)\s*;', s)}
+        out = {}
+        for t, g in re.findall(
+                r'(?m)^\s*extern\s+((?:unsigned\s+|signed\s+)?\w+)\s+(g_\w+)\s*(?:\[[^\]]*\])?\s*;', s):
+            t = ' '.join(t.split())
+            if t in NARROW:
+                out[g] = NARROW[t]
+        return out
     return {}
 
 
@@ -406,8 +444,11 @@ def run_at(uc, eip, full, nargs=0, argvals=None):
     return bytes(uc.mem_read(0, full)), terminated, eax
 
 
-def verify(name, fn_va, gl_va, name_to_va, arena, width16=None, argvals=None):
+def verify(name, fn_va, gl_va, name_to_va, arena, width16=None, argvals=None,
+           types=None):
     fptypes = fp_globals_for(name)
+    if types:
+        fptypes = dict(fptypes, **types)
     if name not in fn_va:
         return 'SKIP no-addr'
     t = extract_twin_any(name)

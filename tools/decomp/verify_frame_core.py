@@ -22,6 +22,25 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import verify_twin as vt
 import verify_coexec as vc
 
+# Per-twin integer WIDTHS, opt-in for the reason narrow_globals() explains: the
+# widths in config/global_widths.yaml are right, but retyping a global also
+# changes C promotion in expressions written for the 32-bit spelling, so it is
+# applied where it is needed and verified rather than everywhere.
+#
+# Helper_DrawMenuText needs it: g_dispatchSave1613..1616 are four CONSECUTIVE
+# BYTES, so as `unsigned int` each store is 32 bits and wipes the next fields -
+# 1615 and the low half of 1618 vanish, and the cursor quad goes out wrong.
+TYPES = {
+    'Helper_DrawMenuText': {
+        'g_dispatchSave1609': 'unsigned short', 'g_dispatchSave1610': 'unsigned short',
+        'g_dispatchSave1611': 'unsigned short', 'g_dispatchSave1612': 'unsigned short',
+        'g_dispatchSave1613': 'unsigned char',  'g_dispatchSave1614': 'unsigned char',
+        'g_dispatchSave1615': 'unsigned char',  'g_dispatchSave1616': 'unsigned char',
+        'g_dispatchSave1617': 'unsigned short', 'g_dispatchSave1618': 'unsigned short',
+        'g_dispatchSave1619': 'unsigned short',
+    },
+}
+
 BASE = 0x00400000
 
 # name -> [(label, seeds)], [(label, seeds, args)] or [(label, seeds, args, allow)]
@@ -232,6 +251,42 @@ SEEDS = {
         ('joy buttons, arg 0',dict(_readers(0, 0x00000fff), **{'g_dispatchSave1491': 0}), (0,)),
         ('joy buttons, arg 1',dict(_readers(0, 0x00000fff), **{'g_dispatchSave1491': 0}), (1,)),
     ],
+    # DrawMenu needs a REAL menu table or it returns immediately; 0x004f5090 is
+    # the help screen's, so these run the whole renderer - measure, centre,
+    # slide, draw every label, place the cursor quad.
+    'DrawMenu': [
+        ('fresh open',        {'g_menuPrev': 0, 'g_menuCurrent': 0,
+                               'g_menuCounter': 0}, (0x4f5090, 0)),
+        ('same menu again',   {'g_menuPrev': 0x4f5090, 'g_menuCurrent': 0,
+                               'g_menuCounter': 40}, (0x4f5090, 0)),
+        ('no selection',      {'g_menuPrev': 0x4f5090, 'g_menuCurrent': 0,
+                               'g_menuCounter': 40}, (0x4f5090, -1)),
+        ('selection 2',       {'g_menuPrev': 0x4f5090, 'g_menuCurrent': 0,
+                               'g_menuCounter': 40}, (0x4f5090, 2)),
+        ('sliding out',       {'g_menuPrev': 0x4f5090, 'g_menuCurrent': 0x4f5090,
+                               'g_menuCounter': 50}, (0x4f5090, 0)),
+        ('counter at the cap',{'g_menuPrev': 0x4f5090, 'g_menuCurrent': 0x4f5090,
+                               'g_menuCounter': 0x60}, (0x4f5090, 0)),
+        ('null menu',         {'g_menuPrev': 0, 'g_menuCurrent': 0}, (0, 0)),
+    ],
+    # Helper_DrawMenuText walks the string a glyph at a time and submits a quad
+    # per character, so it needs a real one; TEXT_VA carries it.
+    'Helper_DrawMenuText': [
+        ('empty string',   {'@0xb97000': b'\0'},        (100, 80, 0xb97000, 0, 0x7fff)),
+        ('one glyph',      {'@0xb97000': b'A\0'},       (100, 80, 0xb97000, 0, 0x7fff)),
+        ('a word',         {'@0xb97000': b'OPTIONS\0'}, (100, 80, 0xb97000, 0, 0x7fff)),
+        ('highlighted',    {'@0xb97000': b'OPTIONS\0'}, (100, 80, 0xb97000, 1, 0x7fff)),
+        ('wraps the page', {'@0xb97000': b'ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ\0'},
+                                                        (0, 0, 0xb97000, 0, 0x100)),
+    ],
+    # Two out-pointers, so they need real addresses; 0xb98000 is scratch.
+    'Helper_GetMenuExtents': [
+        ('renderer mode 1', {'g_clampedRendererMode': 1}, (0xb98000, 0xb98010)),
+        ('renderer mode 3', {'g_clampedRendererMode': 3}, (0xb98000, 0xb98010)),
+        ('renderer mode 5', {'g_clampedRendererMode': 5}, (0xb98000, 0xb98010)),
+        ('unknown mode 9',  {'g_clampedRendererMode': 9}, (0xb98000, 0xb98010)),
+        ('null out params', {'g_clampedRendererMode': 1}, (0, 0)),
+    ],
     'Mem_Free': [
         ('below the heap',      _blocks(),          (0x7b0000,)),
         ('above the heap',      _blocks(),          (0xac0000,)),
@@ -382,7 +437,8 @@ def main():
             allow = case[3] if len(case) > 3 else set()
             arena = bytearray(base)
             seed(arena, gl_va, spec)
-            res = vc.verify(name, fn_va, gl_va, fn_va, arena, argvals=args)
+            res = vc.verify(name, fn_va, gl_va, fn_va, arena, argvals=args,
+                            types=TYPES.get(name))
             if allow and res.startswith('MISMATCH'):
                 m = re.match(r"MISMATCH orig_only=\[(.*?)\] twin_only=\[(.*?)\] "
                              r"vdiff=\[(.*?)\]", res)

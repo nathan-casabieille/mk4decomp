@@ -100,8 +100,11 @@ extern u32 g_dlSavedNodeIdx[4]; /* 0x00541ed4 .. 0x00541ee0 */
 /* DrawMenu remembers the previous-frame menu pointer to detect a
  * fresh open (and reset the slide-in animation counter). The
  * "current" + "counter" pair drives the per-frame animation. */
-extern void *g_menuCurrent;     /* 0x00ab433c - current menu pointer */
-extern void *g_menuPrev;        /* 0x00ab4340 - previous-frame menu pointer */
+/* Both hold a menu-table ADDRESS, so under the relocated memory model they are
+ * VAs, not host pointers - declared u32 for that reason. Only DrawMenu touches
+ * them, and it goes through the MK4_PTR seam to dereference. */
+extern u32   g_menuCurrent;     /* 0x00ab433c - current menu table */
+extern u32   g_menuPrev;        /* 0x00ab4340 - previous-frame menu table */
 extern s32   g_menuCounter;     /* 0x00ab4344 - 0..100 anim counter */
 extern s32   g_menuExtraDelta;  /* 0x00ab4348 - cursor extra-delta */
 extern s32   g_menuExtraSign;   /* 0x004f579c */
@@ -118,9 +121,10 @@ void Helper_GetMenuExtents(s32 *out_w, s32 *out_h);     /* 0x004b3dc0 */
 void Helper_DrawMenuText(s32 x, s32 y, const char *txt,
                          s32 b, s32 c);                  /* 0x004b21d0 */
 void Helper_DrawCursor(u8 *cursor_buf);                  /* 0x004c3360 */
-void Helper_DrawMenu_PostRender(s32 maxw, s32 cur_x,
-                                s32 cur_y_save,
-                                void *menu_items);        /* 0x004b6880 */
+/* The original pushes ebp/edx/eax/edi, i.e. (x, y, text width, text height) -
+ * all four are integers; the last is NOT the menu pointer. */
+void Helper_DrawMenu_PostRender(s32 x, s32 y, s32 textw,
+                                s32 texth);               /* 0x004b6880 */
 
 /* === GameStateMachine support =============================== */
 
