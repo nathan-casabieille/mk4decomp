@@ -144,6 +144,9 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None
            if t in name_to_va and t != name}
     defs += ''.join('extern int %s();\n' % f for f in sorted(fns))
     src = ('#define NON_MATCHING 1\n'
+           # NB: only ghidra_types.h - pulling in the project's types.h drags
+           # win32_types.h with it, whose HWND conflicts with Ghidra's. Twins
+           # therefore spell their signatures in base C types, not u32/s16.
            '#include "portable/ghidra_types.h"\n#include "portable/mem_model.h"\n'
            + defs + body + '\n')
     # A twin that does a 64-bit divide (e.g. the perspective divide in

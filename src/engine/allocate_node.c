@@ -14,6 +14,26 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_currentNodeFlags (*(unsigned int *)MK4_VA(unsigned int, 0x542084u))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_eventQueueChild (*(unsigned int *)MK4_VA(unsigned int, 0x542080u))
+#define g_eventQueueEnd (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_eventQueueIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_eventQueueNotMask (*(unsigned int *)MK4_VA(unsigned int, 0x54207cu))
+#define g_eventQueueWorkType (*(unsigned int *)MK4_VA(unsigned int, 0x542074u))
+#define g_fightGroupHead (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_nodeAllocCounter (*(unsigned int *)MK4_VA(unsigned int, 0x541e64u))
+#define g_nodeListTail (*(unsigned int *)MK4_VA(unsigned int, 0x52ab3cu))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
+#define g_xformScratch2088 (*(unsigned int *)MK4_VA(unsigned int, 0x542088u))
+#endif
+
+
 /*
  * @addr 0x0041f290
  *
@@ -24,6 +44,99 @@
  * natural C body (it would CSE the load into a register).
  */
 
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+/* Portable twin.
+ *
+ * Slot i lives at 0x0053e368 + i * 0xe8; its header is the last 0x14 bytes of
+ * the slot, i.e. node + 0xd4:
+ *
+ *     +0xd4  magic       0x12345678
+ *     +0xd8  ptr_field   the type; ZERO means the slot is free
+ *     +0xdc  type_word   u16
+ *     +0xe0  worktype
+ *     +0xe4  next_link   forward link, and the field NodeUnlink unlinks
+ *
+ * The free scan and the list walk are both bounded by an ADDRESS compare
+ * (0x541e40 = 0x53e440 + 64 * 0xe8), so they are fixed 64-slot loops - and
+ * writing them as counts is what keeps the bound right once the table is
+ * relocated into the arena.
+ *
+ * The original re-loads g_currentNodeIdx before each of the ~30 field stores.
+ * Nothing it writes can alias that global (node fields top out at +0x84, well
+ * below the 0x53e368 table), so the twin holds the index in a local.
+ *
+ * The `cmp esi, ecx` for the list-splice sits three stores ahead of its `je`
+ * (MSVC scheduling flags across independent stores); order is immaterial here.
+ *
+ * Signature spelled in base C types, not u32: the co-exec harness compiles the
+ * twin body with only ghidra_types.h in scope.
+ */
+void *AllocateNode(unsigned int type)
+{
+    unsigned char *slot0 = (unsigned char *)MK4_VA(unsigned char, 0x0053e368u);
+    unsigned int   last  = g_nodeListTail;
+    unsigned char *node, *hdr;
+    unsigned int   idx, i, f;
+
+    /* walk to the end of the list */
+    if (last != 0) {
+        unsigned int nxt = *(unsigned int *)MK4_PTR(last + 0xe4);
+
+        while (nxt != 0) {
+            last = nxt;
+            nxt = *(unsigned int *)MK4_PTR(last + 0xe4);
+        }
+    }
+
+    /* first slot whose ptr_field is zero */
+    for (i = 0; i < 64; i++)
+        if (*(unsigned int *)(slot0 + i * 0xe8 + 0xd8) == 0)
+            break;
+    if (i == 64) {
+        g_currentNodeIdx = 0;
+        g_xformDirtyFlags |= 5;
+        return 0;
+    }
+
+    node = slot0 + i * 0xe8;
+    hdr  = node + 0xd4;
+
+    *(unsigned short *)(hdr + 0x08) = 0;                   /* type_word */
+    *(unsigned int   *)(hdr + 0x04) = type;                /* ptr_field */
+    *(unsigned int   *)(hdr + 0x0c) = g_eventQueueWorkType;
+    *(unsigned int   *)(hdr + 0x10) = 0;                   /* next_link */
+    if (last != 0)
+        *(unsigned int *)MK4_PTR(last + 0xe4) = MK4_UNPTR(node);
+    else
+        g_nodeListTail = MK4_UNPTR(node);
+    *(unsigned int *)(hdr + 0x00) = 0x12345678;
+
+    idx = MK4_UNPTR(node) >> 2;
+    g_currentNodeIdx = idx;
+
+    MK4_NODE_AT(unsigned int, idx, 0x84) = 0;
+    MK4_NODE_AT(unsigned int, idx, 0x10) = 0;
+    MK4_NODE_AT(unsigned int, idx, 0x08) = g_pendingNodeType;
+    MK4_NODE_AT(unsigned int, idx, 0x0c) = g_eventQueueWorkType;
+    g_walkCallback = idx + 0x22;
+    MK4_NODE_AT(unsigned int, idx, 0x04) = idx + 0x22;
+    MK4_NODE_AT(unsigned int, idx, 0x24) = g_eventQueueEnd;
+    MK4_NODE_AT(unsigned int, idx, 0x28) = g_eventQueueIdx;
+    MK4_NODE_AT(unsigned int, idx, 0x2c) = g_fightGroupHead;
+    MK4_NODE_AT(unsigned int, idx, 0x14) = g_eventQueueNotMask;
+    MK4_NODE_AT(unsigned int, idx, 0x18) = g_eventQueueChild;
+    MK4_NODE_AT(unsigned int, idx, 0x1c) = g_currentNodeFlags;
+    MK4_NODE_AT(unsigned int, idx, 0x20) = g_xformScratch2088;
+    for (f = 0x30; f <= 0x80; f += 4)
+        MK4_NODE_AT(unsigned int, idx, f) = 0;
+
+    g_nodeAllocCounter++;
+    g_xformDirtyFlags &= ~5u;
+    return node;
+}
+#else
 __declspec(naked) void *AllocateNode(u32 type)
 {
     __asm {
@@ -169,3 +282,4 @@ post_link:
         ret
     }
 }
+#endif

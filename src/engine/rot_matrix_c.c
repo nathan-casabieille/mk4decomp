@@ -8,6 +8,13 @@
  */
 #include "engine/scenegraph.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_sinTable (*(unsigned int *)MK4_VA(unsigned int, 0x7b01a0u))
+#endif
+
+
 /*
  * @addr 0x004b36c0
  *

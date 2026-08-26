@@ -35,6 +35,7 @@ src/boot/zero_and_dirty4.c
 src/boot/zero_large_block.c
 src/crt/crt_heap_commit_free_cluster.c
 src/engine/alarm_countdown_install.c
+src/engine/allocate_node.c
 src/engine/alt_cam_matrix_project.c
 src/engine/arg_sar_store_jmp.c
 src/engine/blit_blend16bpp.c
@@ -94,6 +95,7 @@ src/engine/helper_post_player_tick.c
 src/engine/helper_tick_alt.c
 src/engine/inc_call_vtable_push_call.c
 src/engine/inc_store_call_iat_dec.c
+src/engine/init_or_all_zero_loopback.c
 src/engine/install_self_chain_esi.c
 src/engine/install_self_chain_set_b333v2.c
 src/engine/install_self_index_walk.c
@@ -133,6 +135,9 @@ src/engine/renderer1_present_frame.c
 src/engine/renderer2_present_frame.c
 src/engine/renderer4_present_frame.c
 src/engine/renderer_teardown_sw.c
+src/engine/rot_matrix_a.c
+src/engine/rot_matrix_b.c
+src/engine/rot_matrix_c.c
 src/engine/scaled_addr_init.c
 src/engine/scaled_array_store.c
 src/engine/scaled_bit_op_jmp.c
@@ -160,6 +165,7 @@ src/engine/scanline_tex_blit_additive.c
 src/engine/scanline_tex_blit_alpha.c
 src/engine/scanline_tex_blit_interlaced.c
 src/engine/scanline_tex_blit_paletted.c
+src/engine/scenegraph.c
 src/engine/setjmp_wrappers.c
 src/engine/small_helpers.c
 src/engine/state_snapshot_dispatch.c

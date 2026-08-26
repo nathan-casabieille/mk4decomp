@@ -13,6 +13,7 @@ covered too.
 
   build/venv/bin/python tools/decomp/verify_frame_core.py [NAME ...]
 """
+import re
 import struct
 import sys
 from pathlib import Path
@@ -23,7 +24,15 @@ import verify_coexec as vc
 
 BASE = 0x00400000
 
-# name -> [(label, {target: value})] or [(label, {...}, (args...))]
+# name -> [(label, seeds)], [(label, seeds, args)] or [(label, seeds, args, allow)]
+#
+# `allow` is a set of addresses permitted to hold DIFFERENT values at the end.
+# There is exactly one legitimate reason for that: a global left holding the
+# packed pointer to the scratch. The original's scratch is on its C stack and
+# the twin's is the arena scratch stack, so when a path exits without popping,
+# the two runs leave different-but-equivalent dangling pointers there. Any
+# other difference, and any address written by only one side, is still a
+# MISMATCH.
 # A target key is a global name, or '@0xVA' to poke an absolute address.
 #
 # SCRATCH is a 64 KiB window near the top of the arena that nothing in the
@@ -70,6 +79,28 @@ SEEDS = {
     #   CUR     the slot behind g_currentNodeIdx - XOR of the two picks the path
     #   CHAIN   g_dualC's word list, stepping 8 bytes, 0-terminated
     #   HEAD    g_eventQueueHead's node
+    # NodeApplyTransform_B_Swapped hands a packed pointer to a 12-byte scratch
+    # to its callee. The original's scratch is on the C stack and the twin's is
+    # the arena scratch stack (MK4_ALLOCA), so the scratch bytes themselves are
+    # NOT comparable - what these check is that every arena-visible effect
+    # (the matrix-stack pushes and pops, g_walkCallback, the chain reads) is
+    # identical, on both the normal and the frame-paused exit.
+    'NodeApplyTransform_B_Swapped': [
+        ('normal exit',  {'g_matrixStackTop': 0x2e4400, 'g_xformEntityIdx': 0x2e4000,
+                          'g_pendingNodeType': 0x1234, 'g_framePauseFlag': 0,
+                          '@0xb90000': 0x11111111, '@0xb90004': 0x22222222,
+                          '@0xb90008': 0x33333333}),
+        # the paused exit skips the two pops, so the scratch pointer is still
+        # in g_xformEntityIdx / g_pendingNodeType when the function returns
+        ('frame paused', {'g_matrixStackTop': 0x2e4400, 'g_xformEntityIdx': 0x2e4000,
+                          'g_pendingNodeType': 0x1234, 'g_framePauseFlag': 1,
+                          '@0xb90000': 0x11111111, '@0xb90004': 0x22222222,
+                          '@0xb90008': 0x33333333},
+                         None, {0x542048, 0x54204c}),
+        ('zero chain',   {'g_matrixStackTop': 0x2e4400, 'g_xformEntityIdx': 0x2e4000,
+                          'g_pendingNodeType': 0, 'g_framePauseFlag': 0,
+                          '@0xb90000': 0, '@0xb90004': 0, '@0xb90008': 0}),
+    ],
     'Mem_Free': [
         ('below the heap',      _blocks(),          (0x7b0000,)),
         ('above the heap',      _blocks(),          (0xac0000,)),
@@ -114,6 +145,24 @@ SEEDS = {
                                   'g_eventQueuePending': 0x2e4008,
                                   'g_dualC': 0x2e4040, 'g_dualD': 0xbeef,
                                   'g_eventQueueHead': 0x14e941}),
+    ],
+    # AllocateNode picks the first slot whose ptr_field (node + 0xd8) is zero.
+    # The at-rest image has slot 0 free, so seed occupied slots to move the
+    # find, and fill all 64 to reach the exhausted path.
+    'AllocateNode': [
+        ('empty list, slot 0',  {'g_nodeListTail': 0}, (0x1234,)),
+        ('slot 0 taken',        {'g_nodeListTail': 0,
+                                 '@0x53e440': 0x99}, (0x1234,)),
+        ('slots 0-2 taken',     {'g_nodeListTail': 0,
+                                 '@0x53e440': 0x99, '@0x53e528': 0x99,
+                                 '@0x53e610': 0x99}, (0x1234,)),
+        ('splices onto a list', {'g_nodeListTail': 0xb90000,
+                                 '@0xb900e4': 0}, (0x5678,)),
+        ('walks a 2-deep list', {'g_nodeListTail': 0xb90000,
+                                 '@0xb900e4': 0xb91000, '@0xb910e4': 0}, (0x5678,)),
+        ('all 64 slots taken',  dict([('g_nodeListTail', 0)] +
+                                     [('@0x%x' % (0x53e440 + i * 0xe8), 0x99)
+                                      for i in range(64)]), (0x1234,)),
     ],
     'CountdownClampWalk': [
         # slot A at SCRATCH (index SCRATCH/4), slot B at SCRATCH+0x10.
@@ -196,9 +245,19 @@ def main():
         for case in SEEDS[name]:
             label, spec = case[0], case[1]
             args = case[2] if len(case) > 2 else None
+            allow = case[3] if len(case) > 3 else set()
             arena = bytearray(base)
             seed(arena, gl_va, spec)
             res = vc.verify(name, fn_va, gl_va, fn_va, arena, argvals=args)
+            if allow and res.startswith('MISMATCH'):
+                m = re.match(r"MISMATCH orig_only=\[(.*?)\] twin_only=\[(.*?)\] "
+                             r"vdiff=\[(.*?)\]", res)
+                if m and not m.group(1) and not m.group(2):
+                    diff = {int(a.strip().strip("'"), 16)
+                            for a in m.group(3).split(',') if a.strip()}
+                    if diff and diff <= allow:
+                        res = 'VERIFIED (scratch ptr differs at %s - expected)' % (
+                            ', '.join(hex(a) for a in sorted(diff)))
             print('  %-22s %s' % (label, res))
             if not res.startswith('VERIFIED'):
                 rc = 1

@@ -207,7 +207,15 @@ def main():
     if cand:
         ins = max(cand) + 1
     else:
-        ins = max(k for k, l in enumerate(lines) if l.startswith('#include')) + 1
+        # Only includes in the file's HEADER region count. A twin body often
+        # pulls in mem_model.h itself, and that include sits BELOW every
+        # function - anchoring the alias block to it would put the aliases
+        # after all the code that needs them.
+        stop = next((k for k, l in enumerate(lines)
+                     if l.startswith('#ifdef NON_MATCHING')
+                     or re.match(r'^[A-Za-z_][\w *]*\w\s*\(', l)), len(lines))
+        head = [k for k, l in enumerate(lines[:stop]) if l.startswith('#include')]
+        ins = (max(head) + 1) if head else stop
     out = lines[:ins] + alias + lines[ins:]
     path.write_text('\n'.join(out))
     print('%s: %d variable externs guarded, %d aliases' % (path, n_guard, len(globs)))

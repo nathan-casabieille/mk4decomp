@@ -72,6 +72,46 @@ extern unsigned char *g_mk4Arena;       /* base of the reserved data arena */
 
 #endif
 
+/* --- arena-resident scratch stack (packed pointers to LOCALS) ---------------
+ *
+ * Five functions hand a pointer to one of their own STACK locals to the engine
+ * as a packed pointer - `lea eax, [esp]; sar eax, 2` - and the callee then
+ * reads it back through the packed-ptr seam (NodeApplyTransform_B_Swapped,
+ * RenderSceneNode, RegionFlushChain, MStackBracket7_DispatchAndChain,
+ * PushStackAllocCall).
+ *
+ * A C local CANNOT carry that round trip on a 64-bit host. MK4_UNPTR narrows
+ * (pointer - arena) to 32 bits, and measured on macOS arm64 the stack sits
+ * about 46 GB from a malloc'd arena - and on the far side of it, so the
+ * difference is both negative and far past 32 bits. MK4_PTR(MK4_UNPTR(local))
+ * does not come back to `local`, and the callee reads somewhere else entirely.
+ *
+ * So the scratch has to live INSIDE the arena. This is a bump stack at a fixed
+ * VA above the reserved video regions: push on entry, pop on every exit. It is
+ * macro-only on purpose - a twin compiled by the co-exec harness may not call
+ * an external helper (no original VA to relocate to) nor name a new `g_`
+ * global (no entry in extras_map). MK4_SCRATCH_TOP self-initialises because
+ * the at-rest arena the verifier loads has a zero there.
+ *
+ * Discipline: every MK4_ALLOCA needs a matching MK4_ALLOCA_FREE on EVERY path
+ * out, early returns included - the originals pop their stack unconditionally.
+ */
+#define MK4_SCRATCH_TOP_VA  0x01440000u
+#define MK4_SCRATCH_BASE    0x01440010u
+#define MK4_SCRATCH_END     0x01450000u
+#define MK4_SCRATCH_SIZE    (MK4_SCRATCH_END - MK4_SCRATCH_TOP_VA)
+
+#define MK4_SCRATCH_TOP     (*(unsigned int *)MK4_VA(unsigned int, MK4_SCRATCH_TOP_VA))
+#define MK4_SCRATCH_ROUND(n) (((unsigned)(n) + 3u) & ~3u)
+
+#define MK4_ALLOCA(n) \
+    (MK4_SCRATCH_TOP = (MK4_SCRATCH_TOP < MK4_SCRATCH_BASE \
+                        ? MK4_SCRATCH_BASE : MK4_SCRATCH_TOP) \
+                       + MK4_SCRATCH_ROUND(n), \
+     MK4_PTR(MK4_SCRATCH_TOP - MK4_SCRATCH_ROUND(n)))
+
+#define MK4_ALLOCA_FREE(n)  (MK4_SCRATCH_TOP -= MK4_SCRATCH_ROUND(n))
+
 /* Typed access to a node field at byte offset `off` from the packed index
  * `idx` - i.e. the original `[idx*4 + off]` form. Used by the asm->C
  * lifter (tools/decomp/lift_asm.py) so converted twins read/write node

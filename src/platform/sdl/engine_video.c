@@ -388,7 +388,8 @@ void MK4_NativeVideoDump(const char *path)
 
 unsigned MK4_NativeVideoArenaReserve(void)
 {
-    /* everything up to the end of the shading table must live in the arena */
-    /* through the shading table, plus room for a loaded .geo above it */
-    return (MK4_GEO_VA - 0x00400000u) + 0x40000u;
+    /* Through the shading table, room for a loaded .geo above it, and then
+     * the arena-resident scratch stack (mem_model.h) that carries packed
+     * pointers to what were stack locals in the original. */
+    return (MK4_SCRATCH_END - 0x00400000u);
 }

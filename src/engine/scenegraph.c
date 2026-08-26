@@ -3,6 +3,26 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"   /* g_framePauseFlag */
+#include "portable/mem_model.h"
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_matrixStackA ((unsigned int *)MK4_VA(unsigned int, 0x0u))
+#define g_matrixStackB ((unsigned int *)MK4_VA(unsigned int, 0x0u))
+#define g_matrixStackTop (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_siblingTable ((unsigned int *)MK4_VA(unsigned int, 0x0u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformChainTable ((unsigned int *)MK4_VA(unsigned int, 0x0u))
+#define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_xformLoopCounter (*(unsigned int *)MK4_VA(unsigned int, 0x53a1acu))
+#define g_xformTempAngles ((unsigned int *)MK4_VA(unsigned int, 0xab5208u))
+#endif
+
 
 /*
  * Convenience: allocate a node using the type cached in
@@ -320,6 +340,60 @@ void NodeApplyTransform_C(void)
  *
  * @addr 0x004be130
  */
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+
+/* Portable twin.
+ *
+ * g_matrixStackA and g_matrixStackB are both base-0 in extras_map, i.e. the
+ * SAME packed-pointer table: the two "parallel stacks" are one stack pushed
+ * twice, which is why g_matrixStackTop is incremented twice on the way in and
+ * decremented twice on the way out. g_xformChainTable is base-0 too, so every
+ * `[reg*4 + table]` here is a plain packed-pointer deref.
+ *
+ * The scratch is 12 bytes the original takes off its own stack (`sub esp, 0Ch`)
+ * and hands on as a PACKED POINTER (`lea eax, [esp]; sar eax, 2`). A C local
+ * cannot carry that on a 64-bit host - see MK4_ALLOCA in mem_model.h - so it
+ * comes from the arena-resident scratch stack instead.
+ *
+ * The swap is in the copy: chain[1] and chain[2] land in the other's slot.
+ *
+ * `paused` sits BEFORE the `add esp, 0Ch`, so the stack is released on both
+ * paths; only the two matrix-stack pops are skipped when the frame is paused
+ * (the caller is expected to unwind it). */
+void NodeApplyTransform_B_Swapped(void)
+{
+    unsigned int *scratch = (unsigned int *)MK4_ALLOCA(12);
+    unsigned int  sp = MK4_UNPTR(scratch) >> 2;
+    unsigned int  e;
+
+    *MK4_NODE(unsigned int, ++g_matrixStackTop) = g_xformEntityIdx;
+    *MK4_NODE(unsigned int, ++g_matrixStackTop) = g_pendingNodeType;
+
+    e = g_xformEntityIdx;
+    g_pendingNodeType = sp;
+    g_walkCallback = MK4_NODE_AT(unsigned int, e, 0);
+    MK4_NODE_AT(unsigned int, sp, 0) = g_walkCallback;
+
+    g_walkCallback = MK4_NODE_AT(unsigned int, g_xformEntityIdx, 4);
+    MK4_NODE_AT(unsigned int, g_pendingNodeType, 8) = g_walkCallback;
+
+    g_walkCallback = MK4_NODE_AT(unsigned int, g_xformEntityIdx, 8);
+    MK4_NODE_AT(unsigned int, g_pendingNodeType, 4) = g_walkCallback;
+
+    g_xformEntityIdx = g_pendingNodeType;
+    NodeApplyTransform_B();
+
+    if (g_framePauseFlag == 0) {
+        g_pendingNodeType = *MK4_NODE(unsigned int, g_matrixStackTop);
+        g_matrixStackTop--;
+        g_xformEntityIdx = *MK4_NODE(unsigned int, g_matrixStackTop);
+        g_matrixStackTop--;
+    }
+    MK4_ALLOCA_FREE(12);
+}
+#else
 void NodeApplyTransform_B_Swapped(void) {
     __asm {
         mov     eax, [g_matrixStackTop]
@@ -374,6 +448,7 @@ paused:
         add     esp, 0Ch
         }
 }
+#endif
 
 /*
  * Like NodeApplyTransform_C but without the per-axis negation
