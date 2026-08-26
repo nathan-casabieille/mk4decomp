@@ -75,6 +75,7 @@ src/engine/esi_install_dec_call_chain_variants.c
 src/engine/event_queue_drain_loop.c
 src/engine/fight_frame_step.c
 src/engine/flush_draw_queue.c
+src/engine/geo_transform_dispatch_and_apply.c
 src/engine/getters.c
 src/engine/guarded_chain_dual_add.c
 src/engine/guarded_dirty_dispatch.c
