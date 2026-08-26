@@ -59,14 +59,3 @@ __attribute__((weak)) void DrawScene(void)
                 (((x + t) & 0x1f) | (((y) & 0x1f) << 5) | (((t >> 1) & 0x1f) << 10));
     MK4_PalBlit555(fb, W, H);
 }
-
-/* --- rasterisers that still live ONLY in the giant dispatch file ---------
- * BlitBlend16bpp, TexturedTriRasterize and TexturedTriRasterizeShaded are
- * converted and co-exec verified, but their only home is
- * src/engine/five_block_dispatch_variants.c, which native-full does not link
- * (130k lines, mostly naked asm). Until they are split into dedicated files
- * these weak stubs keep the link closed: the RECT primitives still rasterise
- * for real, and any TRIANGLE primitive silently draws nothing. */
-__attribute__((weak)) void BlitBlend16bpp(void)             { }
-__attribute__((weak)) void TexturedTriRasterize(void)       { }
-__attribute__((weak)) void TexturedTriRasterizeShaded(void) { }

@@ -9,6 +9,28 @@
  */
 #include "engine/render.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_vtxColor (*(unsigned int *)MK4_VA(unsigned int, 0x7af9fcu))
+#define g_vtxColorCopy (*(unsigned int *)MK4_VA(unsigned int, 0x7af9f8u))
+#define g_vtxColorPrev (*(unsigned int *)MK4_VA(unsigned int, 0x7af9f0u))
+#define g_vtxColorSaved (*(unsigned int *)MK4_VA(unsigned int, 0x7af9fau))
+#define g_vtxLight0_x (*(unsigned int *)MK4_VA(unsigned int, 0x7af9d8u))
+#define g_vtxLight0_y (*(unsigned int *)MK4_VA(unsigned int, 0x7af9dcu))
+#define g_vtxLight0_z (*(unsigned int *)MK4_VA(unsigned int, 0x7af9e0u))
+#define g_vtxLight1_x (*(unsigned int *)MK4_VA(unsigned int, 0x7af9e4u))
+#define g_vtxLight1_y (*(unsigned int *)MK4_VA(unsigned int, 0x7af9ecu))
+#define g_vtxLight1_z (*(unsigned int *)MK4_VA(unsigned int, 0x7af9e8u))
+#define g_vtxRGBScale0_b (*(unsigned int *)MK4_VA(unsigned int, 0x7af9f2u))
+#define g_vtxRGBScale0_g (*(unsigned int *)MK4_VA(unsigned int, 0x7af9f4u))
+#define g_vtxRGBScale0_r (*(unsigned int *)MK4_VA(unsigned int, 0x7af9f6u))
+#define g_vtxRGBScale1_b (*(unsigned int *)MK4_VA(unsigned int, 0x7af9f3u))
+#define g_vtxRGBScale1_g (*(unsigned int *)MK4_VA(unsigned int, 0x7af9f5u))
+#define g_vtxRGBScale1_r (*(unsigned int *)MK4_VA(unsigned int, 0x7af9f7u))
+#endif
+
+
 /*
  * @addr 0x004b3310
  *

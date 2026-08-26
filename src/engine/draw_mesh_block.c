@@ -5,6 +5,7 @@
 #include "engine/render_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_screenH;
 extern unsigned int g_menuRestoreSlot;
 extern u32 g_inLoopStep;
@@ -35,6 +36,46 @@ extern unsigned int g_dispatchSave1559;
 extern unsigned int g_dispatchSave1570;
 extern unsigned int g_dispatchSave1574;
 extern unsigned int g_dispatchSave1576;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_dispatchSave1501 (*(unsigned int *)MK4_VA(unsigned int, 0xab4398u))
+#define g_dispatchSave1559 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d9cu))
+#define g_dispatchSave1570 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e28u))
+#define g_dispatchSave1574 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e3cu))
+#define g_dispatchSave1576 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e60u))
+#define g_dispatchSave1626 (*(short *)MK4_VA(short, 0x7af958u))
+#define g_dualC (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_inLoopStep (*(unsigned int *)MK4_VA(unsigned int, 0x7af92cu))
+#define g_menuRestoreSlot (*(unsigned int *)MK4_VA(unsigned int, 0x543aa8u))
+#define g_screenH (*(unsigned int *)MK4_VA(unsigned int, 0x4f623cu))
+#define g_triStripRingA (*(unsigned int *)MK4_VA(unsigned int, 0x7af9b4u))
+#define g_triStripRingB (*(unsigned int *)MK4_VA(unsigned int, 0x7af984u))
+#define g_triStripX0 (*(short *)MK4_VA(short, 0x7af95cu))
+#define g_triStripX1 (*(short *)MK4_VA(short, 0x7af962u))
+#define g_triStripX2 (*(short *)MK4_VA(short, 0x7af968u))
+#define g_vtxColor (*(unsigned short *)MK4_VA(unsigned short, 0x7af9fcu))
+#define g_vtxColorCopy (*(unsigned short *)MK4_VA(unsigned short, 0x7af9f8u))
+#define g_vtxColorSaved (*(unsigned short *)MK4_VA(unsigned short, 0x7af9fau))
+#define g_vtxIn1_y (*(short *)MK4_VA(short, 0x7af95eu))
+#define g_vtxIn1_z (*(short *)MK4_VA(short, 0x7af960u))
+#define g_vtxIn2_x (*(short *)MK4_VA(short, 0x7af95au))
+#define g_vtxIn2_y (*(short *)MK4_VA(short, 0x7af964u))
+#define g_vtxIn2_z (*(short *)MK4_VA(short, 0x7af966u))
+#define g_vtxOut1_z (*(unsigned int *)MK4_VA(unsigned int, 0x7af984u))
+#define g_vtxOut2_z (*(int *)MK4_VA(int, 0x7af988u))
+#define g_vtxOut_z (*(int *)MK4_VA(int, 0x7af98cu))
+#define g_vtxScreenP1X (*(unsigned int *)MK4_VA(unsigned int, 0x7af9b4u))
+#define g_vtxScreenP1Y (*(short *)MK4_VA(short, 0x7af9b6u))
+#define g_vtxScreenP2X (*(unsigned int *)MK4_VA(unsigned int, 0x7af9b8u))
+#define g_vtxScreenP2Y (*(short *)MK4_VA(short, 0x7af9bau))
+#define g_vtxScreenX (*(unsigned int *)MK4_VA(unsigned int, 0x7af9bcu))
+#define g_vtxScreenY (*(short *)MK4_VA(short, 0x7af9beu))
+#define g_vtxValid (*(int *)MK4_VA(int, 0x7af9b0u))
+#endif
+
 extern void AdvanceTriStripRing(s16 v0, s16 v1, s16 v2);
 extern void AltCamMatrixProject(int *vec, int mode);
 extern void Helper_DrawCursor(void *entry);

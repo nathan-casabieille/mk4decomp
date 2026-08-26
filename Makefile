@@ -90,6 +90,8 @@ help:
 	@echo "  make native-full        - the broad engine closure + weak stub frontier"
 	@echo "  make native-frame-check - the native app runs the ENGINE'S frame"
 	@echo "                            stages and draws (MK4_SCENE=rect)"
+	@echo "  make native-char-check  - native-full renders a real character and"
+	@echo "                            must match the verified bundle byte-for-byte"
 	@echo "  make native-render-check / native-mesh-check"
 	@echo "                          - cross-target gate: the arm64 framebuffer"
 	@echo "                            must be BYTE-IDENTICAL to the wasm32 one"
@@ -451,6 +453,19 @@ native-frame-check: native-full $(ARENA_BLOB)
 	@build/venv/bin/python -c "import sys; d=open('$(BUILD_DIR)/native/frame.ppm','rb').read(); \
 	 i=d.index(b'255\n')+4; px=d[i:]; nz=sum(1 for k in range(0,len(px),3) if px[k:k+3]!=b'\0\0\0'); \
 	 print('native-frame-check: %d non-zero pixels' % nz); sys.exit(0 if nz > 1000 else 1)"
+
+# native-char-check: the strongest gate on the native engine build. It renders
+# a real character through native-full's ENGINE path and requires the frame to
+# be BYTE-IDENTICAL to the standalone bundle that was co-exec verified. Same
+# geometry, same emitter, same rasterisers, same arena - so any drift in the
+# alias model (a wrong width, a lost adjacency) shows up immediately.
+native-char-check: native-full $(GEO_ASSET) $(GEO_TEX) native-geo
+	@MK4_SCENE=$(GEO_ASSET) MK4_MAX_FRAMES=1 \
+		MK4_DUMP_PPM=$(BUILD_DIR)/native/char_native.ppm \
+		$(NATIVE_FULL_EXE) $(ARENA_BLOB) 2>&1 | grep -E "scene:|non-zero" || true
+	@cmp $(BUILD_DIR)/native/char_native.ppm $(NATIVE_RENDER_DIR)/$(CHAR)_geo.ppm \
+		&& echo "native-char-check: OK - native-full's frame is BYTE-IDENTICAL to the verified bundle" \
+		|| (echo "native-char-check: MISMATCH"; exit 1)
 
 # === Arena (relocated memory model, Phase 1) =============================
 #

@@ -14,6 +14,7 @@
  *   (offset 0xf0 = 240 center). Stores screen XY (word) at 0x7af9b4/b6.
  */
 extern s16 g_vtxIn_x;
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern s16 g_vtxIn1_y;
 extern s16 g_vtxIn2_y;
 extern s32 g_vtxOut1_x;
@@ -37,6 +38,36 @@ extern s16 g_vtxScreenP1Y;
 extern s32 g_vtxOut1_z;
 extern s16 g_dispatchSave1626;
 extern s16 g_mat3x3_007af990;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_dispatchSave1626 (*(short *)MK4_VA(short, 0x7af958u))
+#define g_mat3x3_007af990 (*(short *)MK4_VA(short, 0x7af990u))
+#define g_mat3x3_007af992 (*(short *)MK4_VA(short, 0x7af992u))
+#define g_mat3x3_007af994 (*(short *)MK4_VA(short, 0x7af994u))
+#define g_mat3x3_007af996 (*(short *)MK4_VA(short, 0x7af996u))
+#define g_mat3x3_007af998 (*(short *)MK4_VA(short, 0x7af998u))
+#define g_mat3x3_007af99a (*(short *)MK4_VA(short, 0x7af99au))
+#define g_mat3x3_007af99c (*(short *)MK4_VA(short, 0x7af99cu))
+#define g_mat3x3_007af99e (*(short *)MK4_VA(short, 0x7af99eu))
+#define g_mat3x3_007af9a0 (*(short *)MK4_VA(short, 0x7af9a0u))
+#define g_triStripRingA (*(unsigned int *)MK4_VA(unsigned int, 0x7af9b4u))
+#define g_triStripRingB (*(unsigned int *)MK4_VA(unsigned int, 0x7af984u))
+#define g_vtxIn1_y (*(short *)MK4_VA(short, 0x7af95eu))
+#define g_vtxIn2_y (*(short *)MK4_VA(short, 0x7af964u))
+#define g_vtxMat (*(short *)MK4_VA(short, 0x7af990u))
+#define g_vtxOut1_x (*(int *)MK4_VA(int, 0x7af96cu))
+#define g_vtxOut1_y (*(int *)MK4_VA(int, 0x7af978u))
+#define g_vtxOut1_z (*(int *)MK4_VA(int, 0x7af984u))
+#define g_vtxScreenP1Y (*(short *)MK4_VA(short, 0x7af9b6u))
+#define g_vtxTransX (*(int *)MK4_VA(int, 0x7af9a4u))
+#define g_vtxTransY (*(int *)MK4_VA(int, 0x7af9a8u))
+#define g_vtxTransZ (*(int *)MK4_VA(int, 0x7af9acu))
+#define g_vtxValid (*(int *)MK4_VA(int, 0x7af9b0u))
+#endif
+
 
 
 #ifdef NON_MATCHING

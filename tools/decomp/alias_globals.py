@@ -34,12 +34,67 @@ import verify_coexec as vc
 BEGIN = '/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */'
 
 
-def gdef(g, va, text):
+# The declared type MATTERS. Defaulting every alias to `unsigned int` turns a
+# 16-bit store into a 32-bit one that clobbers the neighbouring global - and in
+# this engine the neighbours are real data (g_triStripX0/1/2 sit 6 bytes apart,
+# the 3x3 matrix entries 2 bytes apart). AdvanceTriStripRing assigns
+# g_triStripX0 directly, so it has to be a `short` alias.
+CTYPE = {
+    's16': 'short', 'short': 'short', 'u16': 'unsigned short',
+    'unsigned short': 'unsigned short',
+    's8': 'signed char', 'u8': 'unsigned char', 'char': 'char',
+    'unsigned char': 'unsigned char', 'byte': 'unsigned char',
+    's32': 'int', 'int': 'int', 'u32': 'unsigned int',
+    'unsigned int': 'unsigned int', 'undefined4': 'unsigned int',
+    'undefined2': 'unsigned short', 'float': 'float',
+}
+
+
+# Globals whose DECLARED type in the sources is wrong. The auto-generated
+# externs call the packed s16 matrix / vertex-input words `unsigned int`, but
+# the original reads them `movsx word` and they sit 2 or 6 bytes apart - a
+# 32-bit alias is polluted by the neighbour and the geometry comes out as
+# vertical smears. Same opt-in set the co-exec harness uses (verify_project's
+# WIDTH16), which is why the verified bundle renders correctly.
+WIDTH16 = {
+    'g_mat3x3_007af990', 'g_mat3x3_007af992', 'g_mat3x3_007af994',
+    'g_mat3x3_007af996', 'g_mat3x3_007af998', 'g_mat3x3_007af99a',
+    'g_mat3x3_007af99c', 'g_mat3x3_007af99e', 'g_mat3x3_007af9a0',
+    'g_vtxMat', 'g_wtMatExtraWord',
+    'g_triStripX0', 'g_triStripX1', 'g_triStripX2',
+    'g_dispatchSave1626', 'g_vtxIn1_y', 'g_vtxIn1_z',
+    'g_vtxIn2_x', 'g_vtxIn2_y', 'g_vtxIn2_z',
+}
+
+
+# The mirror case: names that are declared s16 but are really the DWORD base of
+# a packed (X:lo, Y:hi) screen pair. DrawMeshBlock stores them whole -
+#     *(unsigned int *)(entry + 0) = g_vtxScreenP1X;
+# - so a 16-bit alias silently drops every Y and the geometry collapses into
+# vertical smears. The matching Y names (…P1Y, …P2Y, g_vtxScreenY) really are
+# the 16-bit halves and stay narrow.
+WIDTH32 = {'g_vtxScreenP1X', 'g_vtxScreenP2X', 'g_vtxScreenX'}
+
+
+def declared_type(g, src):
+    """Base type from the file's own `extern <type> g;` line, if it has one."""
+    if g in WIDTH16:
+        return 'short'          # authoritative; the source declaration is wrong
+    if g in WIDTH32:
+        return 'unsigned int'   # packed X|Y pair, stored as one dword
+    m = re.search(r'(?m)^extern\s+((?:unsigned\s+|signed\s+)?\w+)\s+\**%s\b' % re.escape(g), src)
+    if not m:
+        return None
+    return CTYPE.get(m.group(1).strip())
+
+
+def gdef(g, va, text, ctype=None):
     """Usage-aware alias - mirrors verify_coexec.gdef / gen_wasm_render.gdef_arena."""
+    t = ctype or 'unsigned int'
     if re.search(r'\(\s*\*\s*%s\s*\)\s*\(' % g, text) or re.search(r'\b%s\s*\(' % g, text):
         return '#define %s (*(unsigned int (**)())MK4_VA(unsigned int, 0x%xu))' % (g, va)
     if re.search(r'\b%s\s*\[' % g, text):
-        return '#define %s ((unsigned int *)MK4_VA(unsigned int, 0x%xu))' % (g, va)
+        return '#define %s ((%s *)MK4_VA(%s, 0x%xu))' % (g, t, t, va)
     deref = False
     for m in re.finditer(r'\*\s*%s\b' % g, text):
         j = m.start() - 1
@@ -48,8 +103,8 @@ def gdef(g, va, text):
         if j < 0 or (text[j] not in '_)]' and not text[j].isalnum()):
             deref = True
     if deref:
-        return '#define %s (*(unsigned int **)MK4_VA(unsigned int, 0x%xu))' % (g, va)
-    return '#define %s (*(unsigned int *)MK4_VA(unsigned int, 0x%xu))' % (g, va)
+        return '#define %s (*(%s **)MK4_VA(%s, 0x%xu))' % (g, t, t, va)
+    return '#define %s (*(%s *)MK4_VA(%s, 0x%xu))' % (g, t, t, va)
 
 
 def main():
@@ -81,7 +136,12 @@ def main():
     if not text:
         print('%s: no twin bodies for %s' % (path, names))
         return 1
-    globs = [g for g in sorted(set(re.findall(r'\bg_\w+', text))) if g in gl_va]
+    # Alias every global the twin touches AND every one the file declares
+    # itself. Leaving a declared-but-unaliased extern behind is an undefined
+    # symbol at link time: the variable no longer exists anywhere, because the
+    # whole point is that these live in the arena now.
+    declared = set(re.findall(r'(?m)^extern [^;()]*\b(g_\w+)\s*(?:\[[^\]]*\])?\s*;', src))
+    globs = sorted({g for g in set(re.findall(r'\bg_\w+', text)) | declared if g in gl_va})
 
     # 1. guard the file's own extern declarations - ONLY the variable ones.
     #    Guarding everything between the first and last `extern` swallows the
@@ -121,7 +181,7 @@ def main():
              '#ifdef MK4_ARENA',
              '#include "portable/mem_model.h"']
     for g in globs:
-        alias.append(gdef(g, gl_va[g], text))
+        alias.append(gdef(g, gl_va[g], text, declared_type(g, src)))
     alias += ['#endif', '']
 
     # 2. place the alias block after the last guarded run, or after the last

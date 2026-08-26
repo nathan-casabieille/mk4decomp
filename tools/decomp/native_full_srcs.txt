@@ -31,7 +31,9 @@ src/boot/zero_and_dirty4.c
 src/boot/zero_large_block.c
 src/crt/crt_heap_commit_free_cluster.c
 src/engine/alarm_countdown_install.c
+src/engine/alt_cam_matrix_project.c
 src/engine/arg_sar_store_jmp.c
+src/engine/blit_blend16bpp.c
 src/engine/call_dual_store_xor_bit.c
 src/engine/call_jmp.c
 src/engine/call_pause_dirty_const_jmp.c
@@ -51,6 +53,7 @@ src/engine/distance3_d_mul10_chain.c
 src/engine/double_stack_push_and_jmp.c
 src/engine/double_stack_push_and_jmp7b.c
 src/engine/double_stack_push_and_jmp7d.c
+src/engine/draw_mesh_block.c
 src/engine/draw_scene.c
 src/engine/dual_call_pause_dirty_jmp.c
 src/engine/dual_load_dual_store_jmp.c
@@ -72,6 +75,7 @@ src/engine/guarded_loop_with_callback.c
 src/engine/guarded_sequels.c
 src/engine/guarded_six_field_copy.c
 src/engine/guarded_triple_call_set_tail.c
+src/engine/helper_emit_line.c
 src/engine/helper_fclose.c
 src/engine/helper_geo_load_pre.c
 src/engine/helper_gfx_cleanup.c
@@ -93,6 +97,10 @@ src/engine/lea_plus22_store_self.c
 src/engine/literal_push_call_ent_zero.c
 src/engine/m_stack_bracket3_packed_slot_init.c
 src/engine/m_stack_push_dual_jmp.c
+src/engine/mat3x3_vec_mul6_bit.c
+src/engine/mat_vec2_multiply.c
+src/engine/max_of_three.c
+src/engine/min_of_three.c
 src/engine/mstack_calls.c
 src/engine/mstack_push_set_bit_variants.c
 src/engine/mul10_tail5x_interp.c
@@ -100,6 +108,8 @@ src/engine/net_entity_scan_and_punish.c
 src/engine/or_store_dec_stack_pop.c
 src/engine/packed_advance_call_tail_jmp.c
 src/engine/packed_select_load6.c
+src/engine/project_two.c
+src/engine/project_vertex.c
 src/engine/push_pop84_triple_call.c
 src/engine/quad_field_early_jmp_then_install.c
 src/engine/quad_mul10_tail_fpu_chain.c
@@ -136,10 +146,18 @@ src/engine/small_helpers.c
 src/engine/submit_draw.c
 src/engine/test_call_push4_zero.c
 src/engine/test_call_zero.c
+src/engine/textured_tri_rasterize.c
 src/engine/textured_tri_rasterize_alpha_pal.c
 src/engine/textured_tri_rasterize_dithered.c
+src/engine/textured_tri_rasterize_shaded.c
 src/engine/thunks.c
+src/engine/transform_vertex.c
+src/engine/tristrip.c
+src/engine/tristrip_batch_emit.c
+src/engine/tristrip_batch_emit3_cap.c
+src/engine/vec3_color_shift_clamp.c
 src/engine/weighted_sum_clamp_helper.c
+src/engine/word9_reorder.c
 src/engine/wrappers.c
 src/engine/zero_three_slots.c
 src/game/event_queue.c

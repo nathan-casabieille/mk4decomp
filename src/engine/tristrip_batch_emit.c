@@ -5,6 +5,7 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -15,6 +16,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -57,6 +59,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -64,6 +67,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -98,6 +102,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -108,9 +113,13 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern u32 g_inLoopStep;
+#endif
 extern s16 g_vtxIn_x;
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern s16 g_vtxIn2_x;
 extern unsigned int g_triStripX0;
 extern s16 g_vtxIn1_y;
@@ -129,13 +138,71 @@ extern s16 g_vtxScreenP2X;
 extern s16 g_vtxScreenP2Y;
 extern s16 g_vtxScreenX;
 extern s16 g_vtxScreenY;
-extern void AdvanceTriStripRing(void);
-extern void Helper_DrawCursor(void);
-extern void MaxOfThree(void);
-extern void MinOfThree(void);
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchSave1626 (*(short *)MK4_VA(short, 0x7af958u))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_dualC (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_inLoopStep (*(unsigned int *)MK4_VA(unsigned int, 0x7af92cu))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_min_007af984 (*(unsigned int *)MK4_VA(unsigned int, 0x7af984u))
+#define g_min_007af988 (*(unsigned int *)MK4_VA(unsigned int, 0x7af988u))
+#define g_min_007af98c (*(unsigned int *)MK4_VA(unsigned int, 0x7af98cu))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_triStripRingA (*(unsigned int *)MK4_VA(unsigned int, 0x7af9b4u))
+#define g_triStripRingB (*(unsigned int *)MK4_VA(unsigned int, 0x7af984u))
+#define g_triStripX0 (*(short *)MK4_VA(short, 0x7af95cu))
+#define g_triStripX1 (*(short *)MK4_VA(short, 0x7af962u))
+#define g_triStripX2 (*(short *)MK4_VA(short, 0x7af968u))
+#define g_vtxIn1_y (*(short *)MK4_VA(short, 0x7af95eu))
+#define g_vtxIn1_z (*(short *)MK4_VA(short, 0x7af960u))
+#define g_vtxIn2_x (*(short *)MK4_VA(short, 0x7af95au))
+#define g_vtxIn2_y (*(short *)MK4_VA(short, 0x7af964u))
+#define g_vtxIn2_z (*(short *)MK4_VA(short, 0x7af966u))
+#define g_vtxOut2_z (*(int *)MK4_VA(int, 0x7af988u))
+#define g_vtxOut_z (*(int *)MK4_VA(int, 0x7af98cu))
+#define g_vtxScreenP1Y (*(short *)MK4_VA(short, 0x7af9b6u))
+#define g_vtxScreenP2X (*(unsigned int *)MK4_VA(unsigned int, 0x7af9b8u))
+#define g_vtxScreenP2Y (*(short *)MK4_VA(short, 0x7af9bau))
+#define g_vtxScreenX (*(unsigned int *)MK4_VA(unsigned int, 0x7af9bcu))
+#define g_vtxScreenY (*(short *)MK4_VA(short, 0x7af9beu))
+#define g_vtxValid (*(int *)MK4_VA(int, 0x7af9b0u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
+extern void AdvanceTriStripRing(s16 v0, s16 v1, s16 v2);
+extern void Helper_DrawCursor(void *entry);
+extern int MaxOfThree(void);
+extern int MinOfThree(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
-extern void Vec3ColorShiftClamp(void);
+extern void Vec3ColorShiftClamp(int entry, unsigned char shift);
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */

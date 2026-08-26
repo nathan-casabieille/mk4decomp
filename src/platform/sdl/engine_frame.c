@@ -32,15 +32,36 @@ void MK4_GameFrame(void)
     static int frame;
     const char *scene = getenv("MK4_SCENE");
 
-    if (scene && strcmp(scene, "rect") == 0) {
+    if (scene && strstr(scene, ".geo")) {
+        extern void BeginFrame(int);
+        extern void DrawScene(void);
+        extern void PresentFrame(void);
+        extern int  MK4_NativeSceneGeoLoad(const char *);
+        extern void MK4_NativeSceneGeo(int);
+        static int loaded;
+        if (!loaded) { loaded = 1; MK4_NativeSceneGeoLoad(scene); }
+        extern void MK4_NativeVideoArmViewport(void);
+        BeginFrame(1);
+        MK4_NativeVideoArmViewport();
+        MK4_NativeSceneGeo(frame++);
+        /* g_viewportX / Y are per-DISPATCH scratch the emit path also consumes,
+         * so re-arm them - but NOT through SetViewport, which would also clear
+         * the queue we just filled. */
+        { extern void MK4_NativeVideoRearmFB(void); MK4_NativeVideoRearmFB(); }
+        DrawScene();
+        PresentFrame();
+    } else if (scene && strcmp(scene, "rect") == 0) {
         /* Same stages MainLoopStep runs, with a scene source standing in for
          * the unconverted game logic between BeginFrame and DrawScene. */
         extern void BeginFrame(int);
         extern void DrawScene(void);
         extern void PresentFrame(void);
         extern void MK4_NativeSceneRects(int);
+        extern void MK4_NativeVideoArmViewport(void);
         BeginFrame(1);
+        MK4_NativeVideoArmViewport();
         MK4_NativeSceneRects(frame++);
+        { extern void MK4_NativeVideoRearmFB(void); MK4_NativeVideoRearmFB(); }
         DrawScene();
         PresentFrame();
     } else {
