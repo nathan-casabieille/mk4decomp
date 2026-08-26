@@ -1,6 +1,6 @@
 functions:
   - addr: 0x00401000
-    name: VoicePicker
+    name: Anim_AcquireFrameData
     size: 282
     group: boot
     status: matched
@@ -30,7 +30,7 @@ functions:
     status: matched
     file: src/boot/init0_and_max.c
   - addr: 0x004013a0
-    name: PendingMatch_004013a0
+    name: Anim_DecodeBitstream
     size: 1989
     group: boot
     status: matched

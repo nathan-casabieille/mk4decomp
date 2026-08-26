@@ -1128,7 +1128,39 @@ appears as a whole string, and the trailing 0/1 digit puts the two hashes
 both by offset with
 [tools/fsys_extract_by_offset.py](../../tools/fsys_extract_by_offset.py).
 
-**Per-animation payload - NOT yet decoded.** 571 of the 612 blobs carry the
+**Per-animation payload - a 13-bit-field BIT-PACKED stream (decoder located).**
+
+The consumer chain is now mapped:
+
+| Function | VA | Role |
+|---|---|---|
+| `Anim_AcquireFrameData` | `0x00401000` | descriptor -> cache slot -> decode |
+| `Anim_DecodeBitstream`  | `0x004013a0` | the bit-stream decompressor |
+
+(Both were auto-named nonsense before - `VoicePicker` and
+`PendingMatch_004013a0`. Renamed 2026-08-26; `make matching` stays
+byte-identical.)
+
+`Anim_AcquireFrameData` takes a PACKED node index and reads the 12-byte
+descriptor as `[idx*4 + 0/4/8]`, which is how the table at `0x004ffdec` is
+reached at runtime (nothing else references that address). It tests
+`descriptor[+8] & 0x8000` - the flag the loader copied out of the AP0
+directory - and when set walks a 12-slot cache at `0x523b28 .. 0x523b58`
+before calling the decoder. So **bit 15 means "compressed"**, and 571 of the
+612 animations are.
+
+`Anim_DecodeBitstream` is a classic variable-length bit reader: a 32-bit
+accumulator with a bit counter in `esi`, refilled with the usual
+`shl`/`neg`/`shr` pair. Field widths seen so far are **13 bits**
+(`and 0x1fff` / `shr 0xd`), single bits (`and 1`), and variable widths
+(`esi + ebp - 0xb`). It also SEEKS: at `0x401446` it computes an absolute BIT
+offset (`edi*8 - esi + field`) and converts it back to a dword pointer plus a
+shift, so the 13-bit fields are partly back-references into the stream.
+
+What each field MEANS is still open, as is the 512-byte AP0 header and the 41
+unflagged (larger, differently-shaped) blobs.
+
+**(older observations)** 571 of the 612 blobs carry the
 0x8000 flag and start with a 24-byte header of three (max, min) s32 pairs - a
 bounding box - followed by high-entropy data, so the flag most likely means
 "compressed". The 41 unflagged ids are much larger (7200 / 10800 / 6768 bytes)

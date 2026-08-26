@@ -3605,7 +3605,7 @@ extern void PairedSubInstallSelfBigChain(void);
 extern void PaletteFillLineHybrid(void);
 extern void PauseGuardChainTriple(void);
 extern void PauseTestCmp2CallStore(void);
-extern void PendingMatch_004013a0(void);
+extern void Anim_DecodeBitstream(void);
 extern void PendingMatch_LeaPlus22StoreSelf(void);
 extern void Screen_GreatestWarrior(void);
 extern void PendingMatch_StoreTailJmpSigned(void);
@@ -4383,7 +4383,7 @@ extern void VertexQuadBuilder(void);
 extern void VertexSlotInitFlagWalk(void);
 extern void VibrationFrameUpdate(void);
 extern void VirtualHeapAlloc(void);
-extern void VoicePicker(void);
+extern void Anim_AcquireFrameData(void);
 extern void DebugMenu_DrawUnlockToggles(void);
 extern void VtRelease_Modal(void);
 extern void VtableDispatchSetDirty(void);
@@ -47977,9 +47977,9 @@ __declspec(naked) void BootInstallerPair(void) {
  *     (imul ebx, ebp; sar eax, 2; ret eax + ebx).
  *   Else: scan voice table [0x523b28..0x523b58] for existing match (esi=cur source).
  *   If not found (idx==12), find oldest via [0x523ae8] timestamps.
- *   Install voice: update tables at indices, call PendingMatch_004013a0, return slot ptr.
+ *   Install voice: update tables at indices, call Anim_DecodeBitstream, return slot ptr.
  */
-__declspec(naked) void VoicePicker(void) {
+__declspec(naked) void Anim_AcquireFrameData(void) {
     __asm {
         push    ebx
         push    ebp
@@ -48054,7 +48054,7 @@ __declspec(naked) void VoicePicker(void) {
         mov     dword ptr [g_dispatchSave12], ebp
         mov     dword ptr [g_dispatchSave11], esi
         mov     byte ptr [g_dispatchSave54], cl
-        call    PendingMatch_004013a0
+        call    Anim_DecodeBitstream
         sar     esi, 2
         mov     eax, esi
         pop     edi
@@ -49148,7 +49148,7 @@ __declspec(naked) void BootStateTriple(void) {
 extern void MStackBootPush4Init(void);
 /* @addr 0x00408190 (312b boot) - boot frame setup with mstack push/pop of 3 frames.
  *   Pushes g_currentNodeIdx/0x42048/0x4204c via mstack, updates state struct via
- *   g_fightGroupHead+0x24/0x28, calls VoicePicker(0xfffffffd, args) to init,
+ *   g_fightGroupHead+0x24/0x28, calls Anim_AcquireFrameData(0xfffffffd, args) to init,
  *   walks chain via [esi*4+0x2c] (default to g_dispatchTableArr2>>2),
  *   then calls TripleSubVec3 + MStackBootPush4Init (each guarded by
  *   g_framePauseFlag == 0). Pops 3 mstack frames.
@@ -49184,7 +49184,7 @@ __declspec(naked) void BootFrameSetup(void) {
         push    eax
         push    ecx
         mov     dword ptr [g_fightGroupHead], 0xfffffffd
-        call    VoicePicker
+        call    Anim_AcquireFrameData
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_fightGroupHead], esi
         mov     esi, dword ptr [esi*4 + 0x2c]
@@ -63134,7 +63134,7 @@ void BootMStackBracket3SubdispatchPair(void) {
         push    ecx
         push    eax
         mov     dword ptr [g_pendingNodeType], edx
-        call    VoicePicker
+        call    Anim_AcquireFrameData
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_xformEntityIdx], eax
         add     esp, 0xc
@@ -167665,7 +167665,7 @@ __declspec(naked) void MStackPushTripleFields(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_eventQueueNotMask], eax
         mov      dword ptr [g_fightGroupHead], 0xffffffff
-        call     VoicePicker
+        call     Anim_AcquireFrameData
         mov      dword ptr [g_eventQueueIdx], eax
         mov      dword ptr [g_fightGroupHead], esi
         mov      ecx, dword ptr [esi*4 + 0x24]
@@ -167686,7 +167686,7 @@ __declspec(naked) void MStackPushTripleFields(void)
         push     edx
         push     ecx
         mov      dword ptr [g_fightGroupHead], 0xfffffffe
-        call     VoicePicker
+        call     Anim_AcquireFrameData
         mov      dword ptr [g_fightGroupHead], esi
         mov      esi, dword ptr [g_eventQueueChild]
         mov      ecx, 0x10000
@@ -175840,7 +175840,7 @@ __declspec(naked) void PendingMatch_ZeroAndDirty4_0040d1d0(void)
 
 // === EXTERNS ===
 
-__declspec(naked) void PendingMatch_004013a0(void)
+__declspec(naked) void Anim_DecodeBitstream(void)
 {
     __asm {
         sub      esp, 0x260

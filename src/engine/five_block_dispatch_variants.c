@@ -48225,7 +48225,7 @@ __declspec(naked) void Helper_GfxInit2(void) {
 
 extern unsigned int g_dispatchTableArr2;
 extern unsigned int g_savedNode;
-extern void VoicePicker(void);
+extern void Anim_AcquireFrameData(void);
 extern void ChainNodeAdvanceCallback(void);
 /* extern void Input_PollJoystick(void); -- defined elsewhere with diff sig */
 extern void Audio_PlaySoundId(void);
@@ -48258,7 +48258,7 @@ extern unsigned int g_dispatchSave11;
 extern unsigned int g_dispatchSave5;
 extern unsigned int g_phaseThunkSave;
 extern unsigned char g_dispatchSave54;
-extern void PendingMatch_004013a0(void);
+extern void Anim_DecodeBitstream(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void CopyGlobal(void);
 extern void Test4StatesAny(void);
@@ -48585,11 +48585,11 @@ __declspec(naked) void BootInstallerPair(void) {
  *     (imul ebx, ebp; sar eax, 2; ret eax + ebx).
  *   Else: scan voice table [0x523b28..0x523b58] for existing match (esi=cur source).
  *   If not found (idx==12), find oldest via [0x523ae8] timestamps.
- *   Install voice: update tables at indices, call PendingMatch_004013a0, return slot ptr.
+ *   Install voice: update tables at indices, call Anim_DecodeBitstream, return slot ptr.
  */
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
-int VoicePicker(int param_1,int param_2,undefined1 param_3)
+int Anim_AcquireFrameData(int param_1,int param_2,undefined1 param_3)
 
 {
   uint uVar1;
@@ -48640,11 +48640,11 @@ int VoicePicker(int param_1,int param_2,undefined1 param_3)
   g_dispatchSave54 = param_3;
   g_dispatchSave12 = param_2;
   g_dispatchSave11 = &(*(unsigned int *)MK4_VA(unsigned int, 0x523b58)) + iVar3 * 0x80;
-  PendingMatch_004013a0();
+  Anim_DecodeBitstream();
   return (int)(&(*(unsigned int *)MK4_VA(unsigned int, 0x523b58)) + iVar3 * 0x80) >> 2;
 }
 #else
-__declspec(naked) void VoicePicker(void) {
+__declspec(naked) void Anim_AcquireFrameData(void) {
     __asm {
         push    ebx
         push    ebp
@@ -48719,7 +48719,7 @@ __declspec(naked) void VoicePicker(void) {
         mov     dword ptr [g_dispatchSave12], ebp
         mov     dword ptr [g_dispatchSave11], esi
         mov     byte ptr [g_dispatchSave54], cl
-        call    PendingMatch_004013a0
+        call    Anim_DecodeBitstream
         sar     esi, 2
         mov     eax, esi
         pop     edi
@@ -50052,7 +50052,7 @@ __declspec(naked) void BootStateTriple(void) {
 
 /* @addr 0x00408190 (312b boot) - boot frame setup with mstack push/pop of 3 frames.
  *   Pushes g_currentNodeIdx/0x42048/0x4204c via mstack, updates state struct via
- *   g_fightGroupHead+0x24/0x28, calls VoicePicker(0xfffffffd, args) to init,
+ *   g_fightGroupHead+0x24/0x28, calls Anim_AcquireFrameData(0xfffffffd, args) to init,
  *   walks chain via [esi*4+0x2c] (default to g_dispatchTableArr2>>2),
  *   then calls TripleSubVec3 + MStackBootPush4Init (each guarded by
  *   g_framePauseFlag == 0). Pops 3 mstack frames.
@@ -50074,7 +50074,7 @@ void BootFrameSetup(void)
   MK4_NODE_AT(undefined4, g_cj_0054205c, 0x28) = g_walkCallback;
   iVar1 = g_cj_0054205c;
   g_cj_0054205c = 0xfffffffd;
-  g_dualC = VoicePicker(g_eventQueuePending,g_walkCallback,1);
+  g_dualC = Anim_AcquireFrameData(g_eventQueuePending,g_walkCallback,1);
   g_eventQueuePending = MK4_NODE_AT(int, iVar1, 0x2c);
   if (g_eventQueuePending == 0) {
     g_eventQueuePending = 0x150832;
@@ -50126,7 +50126,7 @@ __declspec(naked) void BootFrameSetup(void) {
         push    eax
         push    ecx
         mov     dword ptr [g_fightGroupHead], 0xfffffffd
-        call    VoicePicker
+        call    Anim_AcquireFrameData
         mov     dword ptr [g_pendingNodeType], eax
         mov     dword ptr [g_fightGroupHead], esi
         mov     esi, dword ptr [esi*4 + 0x2c]
@@ -65729,7 +65729,7 @@ void BootMStackBracketChain(void) {
         }
 }
 
-extern void VoicePicker(void);
+extern void Anim_AcquireFrameData(void);
 extern void BootChainStreamWalkExtract(void);
 extern void GuardedChainDispatch2c(void);
 extern void SetJmp_CallPauseScaledStoreAdd(void);
@@ -65766,7 +65766,7 @@ void BootMStackBracket3SubdispatchPair(void) {
         push    ecx
         push    eax
         mov     dword ptr [g_pendingNodeType], edx
-        call    VoicePicker
+        call    Anim_AcquireFrameData
         mov     ecx, dword ptr [g_fightGroupHead]
         mov     dword ptr [g_xformEntityIdx], eax
         add     esp, 0xc
@@ -181022,7 +181022,7 @@ extern void ExtractBitsToVec3(void);
 extern void MStackPop8(void);
 extern void MStackPush8(void);
 extern void Mul10Tail(void);
-extern void VoicePicker(void);
+extern void Anim_AcquireFrameData(void);
 
 __declspec(naked) void MStackPushTripleFields(void)
 {
@@ -181057,7 +181057,7 @@ __declspec(naked) void MStackPushTripleFields(void)
         mov      dword ptr [g_walkCallback], eax
         mov      dword ptr [g_eventQueueNotMask], eax
         mov      dword ptr [g_fightGroupHead], 0xffffffff
-        call     VoicePicker
+        call     Anim_AcquireFrameData
         mov      dword ptr [g_eventQueueIdx], eax
         mov      dword ptr [g_fightGroupHead], esi
         mov      ecx, dword ptr [esi*4 + 0x24]
@@ -181078,7 +181078,7 @@ __declspec(naked) void MStackPushTripleFields(void)
         push     edx
         push     ecx
         mov      dword ptr [g_fightGroupHead], 0xfffffffe
-        call     VoicePicker
+        call     Anim_AcquireFrameData
         mov      dword ptr [g_fightGroupHead], esi
         mov      esi, dword ptr [g_eventQueueChild]
         mov      ecx, 0x10000
@@ -189545,7 +189545,7 @@ __declspec(naked) void PendingMatch_ZeroAndDirty4_0040d1d0(void)
 
 // === EXTERNS ===
 
-__declspec(naked) void PendingMatch_004013a0(void)
+__declspec(naked) void Anim_DecodeBitstream(void)
 {
     __asm {
         sub      esp, 0x260

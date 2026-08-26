@@ -110,7 +110,7 @@ extern unsigned int g_fightAxisPosY;
 
 extern unsigned int g_dispatchTableArr2;
 extern unsigned int g_savedNode;
-extern void VoicePicker(void);
+extern void Anim_AcquireFrameData(void);
 extern void ChainNodeAdvanceCallback(void);
 /* extern void Input_PollJoystick(void); -- defined elsewhere with diff sig */
 extern void Audio_PlaySoundId(void);
@@ -143,7 +143,7 @@ extern unsigned int g_dispatchSave11;
 extern unsigned int g_dispatchSave5;
 extern unsigned int g_phaseThunkSave;
 extern unsigned char g_dispatchSave54;
-extern void PendingMatch_004013a0(void);
+extern void Anim_DecodeBitstream(void);
 extern void StoreTwoCall(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void CopyGlobal(void);

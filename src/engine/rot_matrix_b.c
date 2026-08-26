@@ -6,7 +6,6 @@
  */
 #include "engine/scenegraph.h"
 
-extern s32 g_sinTable[4096];
 
 /*
  * @addr 0x004b3940
