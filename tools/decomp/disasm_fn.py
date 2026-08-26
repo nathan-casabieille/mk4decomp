@@ -33,7 +33,11 @@ def main():
         return 2
     img = vc.ARENA.read_bytes()
     off = va - vc.BASE
-    code = img[off:off + 0x4000]
+    # Extent = up to the next function symbol. Stopping at the first `ret` is
+    # wrong for anything with an early-return guard (DrawMeshBlock's first ret
+    # is 25 instructions in, out of ~1500).
+    nxt = min((v for v in fn_va.values() if v > va), default=va + 0x4000)
+    code = img[off:off + min(nxt - va, 0x8000)]
     md = Cs(CS_ARCH_X86, CS_MODE_32)
     md.detail = False
     n = 0
@@ -53,8 +57,6 @@ def main():
                     ann += '  ; %s' % gl2name[a]
         print('%08x  %-22s %-34s%s' % (ins.address, ins.bytes.hex(), '%s %s' % (ins.mnemonic, ins.op_str), ann))
         n += 1
-        if ins.mnemonic in ('ret', 'retn') and n > 1:
-            break
         if n >= limit:
             break
     return 0
