@@ -2521,7 +2521,7 @@ void PendingMatch_MStackPush2RunCountdown_0040cd50(void)
       while (g_dualD = g_dualD + 1, g_walkCallback != 0) {
         g_cj_00542054 = *MK4_NODE(int, (g_walkCallback + iVar2));
         iVar1 = g_walkCallback + iVar2;
-        if (0 < g_cj_00542054) {
+        if (0 < (int)g_cj_00542054) {
           g_walkCallback = 0x135980;
           PushSetXfmMaskCallPop();
           if (g_framePauseFlag != 0) {
@@ -3513,7 +3513,7 @@ void PendingMatch_ChainWalkPushPop_00411890(void)
         }
         MK4_NODE_AT(int, g_cj_0054205c, 0x60) = g_walkCallback;
         g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x58);
-        if (-1 < g_walkCallback) {
+        if (-1 < (int)g_walkCallback) {
           ZeroThreeFields6c();
           if (g_framePauseFlag != 0) {
             return;

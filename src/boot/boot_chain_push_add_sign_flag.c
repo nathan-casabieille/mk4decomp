@@ -175,7 +175,7 @@ void BootChainPushAddSignFlag(void)
   undefined4 *puVar1;
   int iVar2;
   
-  g_eq = (uint)(g_walkCallback < 0);
+  g_eq = (uint)((int)g_walkCallback < 0);
   g_matrixStackTop = g_matrixStackTop + 1;
   *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueuePending;
   iVar2 = MK4_NODE_AT(int, g_cj_0054205c, 0x24);
@@ -192,7 +192,7 @@ void BootChainPushAddSignFlag(void)
     return;
   }
   g_walkCallback = g_walkCallback + MK4_NODE_AT(int, (g_currentNodeIdx), 0x28);
-  if (g_walkCallback < 0) {
+  if ((int)g_walkCallback < 0) {
     puVar1 = (undefined4 *)((int)g_matrixStackTop * 4);
     g_matrixStackTop = g_matrixStackTop + -1;
     g_eventQueuePending = *puVar1;

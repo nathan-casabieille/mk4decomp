@@ -139,7 +139,7 @@ void BitSetByIndex(void)
   g_dispatchArg = g_walkCallback;
   iVar1 = MK4_NODE_AT(int, *(int *)((g_audioBitField + g_walkCallback) * 4), 0x10);
   g_walkCallback = MK4_NODE_AT(uint, iVar1, 0);
-  if (-1 < g_chainAccumCur + -1) {
+  if (-1 < (int)g_chainAccumCur + -1) {
     g_eventQueueCurrent = 1 << ((byte)(g_chainAccumCur + -1) & 0x1f) | g_walkCallback;
     MK4_NODE_AT(uint, iVar1, 0) = g_eventQueueCurrent;
   }

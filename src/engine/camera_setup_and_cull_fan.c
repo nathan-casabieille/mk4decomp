@@ -266,7 +266,7 @@ void CameraSetupAndCullFan(void)
   if (((g_cj_0054205c & 0x180000) != 0) && (g_tickFlagZ != 0)) {
     g_dispatchSave1567 = g_dispatchSave1567 + 0x2b85;
   }
-  if (((g_cj_0054205c & 0x1000) != 0) && (-1 < g_dispatchSave1574)) {
+  if (((g_cj_0054205c & 0x1000) != 0) && (-1 < (int)g_dispatchSave1574)) {
     AltCamMatrixProject(&g_dispatchSave1550,0);
   }
   (g_currentNodeIdx) = iVar1;

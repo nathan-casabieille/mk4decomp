@@ -138,13 +138,13 @@ void InstallSelfState88(void)
     uVar3 = 0xfffffd71;
     g_walkCallback = 0xfffffd71;
     g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x58);
-    if (g_eventQueueCurrent < -0x28000) {
+    if ((int)g_eventQueueCurrent < -0x28000) {
       uVar3 = 0;
       g_walkCallback = 0;
     }
     MK4_NODE_AT(undefined4, g_cj_0054205c, 0x70) = uVar3;
     g_xformScratch2088 = g_xformScratch2088 + -0x51e;
-    if (g_xformScratch2088 < -0x3243e) {
+    if ((int)g_xformScratch2088 < -0x3243e) {
       ScaledInitWithCounterAndType_004314f0();
       return;
     }

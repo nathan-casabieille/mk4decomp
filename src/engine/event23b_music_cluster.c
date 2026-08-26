@@ -132,12 +132,12 @@ void Event23bMusicCluster(void)
 
 {
   SaveCallRestore(0x23b);
-  if ((((g_active_0053a408 == 1) && (g_active_00537e88 == 0)) && (g_eventMusicSlot2 == 2)) && (g_eventMusicSlot < 0)) {
+  if ((((g_active_0053a408 == 1) && (g_active_00537e88 == 0)) && (g_eventMusicSlot2 == 2)) && ((int)g_eventMusicSlot < 0)) {
     return;
   }
   if ((g_active_0053a408 == 0) && (g_active_00537e88 == 1)) {
     if (g_eventMusicSlot2 == 1) {
-      if (g_dispatchVar3 < 0) {
+      if ((int)g_dispatchVar3 < 0) {
         return;
       }
       goto LAB_0042f599;

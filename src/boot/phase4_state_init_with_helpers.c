@@ -181,7 +181,7 @@ void Phase4StateInitWithHelpers(void)
         g_dualC = g_dualC + -1;
         puVar1 = g_matrixStackTop;
         g_walkCallback = g_dualC;
-        if (-1 < g_dualC) {
+        if (-1 < (int)g_dualC) {
           g_matrixStackTop = g_matrixStackTop + 1;
           *MK4_NODE(int, (int)g_matrixStackTop) = g_dualC;
           ChainNodeAdvanceCallback();
@@ -191,7 +191,7 @@ void Phase4StateInitWithHelpers(void)
           while( true ) {
             g_dualC = *MK4_NODE(int, (int)g_matrixStackTop) + -1;
             puVar1 = g_matrixStackTop + -1;
-            if (g_dualC < 0) break;
+            if ((int)g_dualC < 0) break;
             *MK4_NODE(int, (int)g_matrixStackTop) = g_dualC;
             ChainNodeAdvanceCallback();
             if (g_framePauseFlag != 0) {

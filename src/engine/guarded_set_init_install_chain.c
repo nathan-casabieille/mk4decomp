@@ -123,7 +123,7 @@ void GuardedSetInitInstallChain(void)
 {
   if (g_dispatchVar33 == g_gtFightTickCounter) {
     g_phaseThunkSlot2 = g_phaseThunkSlot2 + 1;
-    if (0 < g_phaseThunkSlot2) {
+    if (0 < (int)g_phaseThunkSlot2) {
       return;
     }
   }

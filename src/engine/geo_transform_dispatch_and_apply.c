@@ -117,7 +117,7 @@ extern unsigned int g_dispatchVar20;
 extern void PositionClampCluster(void);
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+/* Portable twin (seeded co-exec: make frame-core-check). */
 void GeoTransformDispatchAndApply(void)
 
 {
@@ -127,20 +127,29 @@ void GeoTransformDispatchAndApply(void)
   g_eventQueueChild = g_primary_0053a774;
   iVar1 = 0;
   g_walkCallback = 0;
-  if (0 < g_primary_0052d74c) {
+  /* Both tests are SIGNED in the original (`jle`, and `je`+`jl` which together
+   * mean "greater than zero"). The (int) casts are mandatory, not cosmetic:
+   * every fixed-VA global is typed `unsigned int` by the arena alias and by
+   * the co-exec harness alike, so without them a `0 <` or `-1 <` test becomes
+   * an UNSIGNED comparison and inverts on negative input. */
+  if ((int)g_primary_0052d74c > 0) {
     iVar1 = 2;
     g_walkCallback = 2;
   }
   g_eventQueueCurrent = g_secondary_00538068;
-  if ((g_secondary_00538068 != 0) && (-1 < g_secondary_00538068)) {
+  if ((int)g_secondary_00538068 > 0) {
     iVar1 = iVar1 + 1;
     g_walkCallback = iVar1;
   }
   /* Ghidra called this an unrecoverable jumptable; it is an ordinary indirect
    * tail-call through a packed-pointer slot. The slot holds an original code
    * VA, so it goes through the MK4_ResolveCode trampoline - raw, that VA is
-   * meaningless natively. */
-  g_dualC = *MK4_NODE(unsigned int, iVar1 + g_dispatchVar20);
+   * meaningless natively.
+   *
+   * 0x54204c is written TWICE: the INDEX at 0x489891, then the loaded target
+   * at 0x48989d. Ghidra dropped the first store; it is observable, so keep it. */
+  g_dualC = iVar1 + g_dispatchVar20;
+  g_dualC = *MK4_NODE(unsigned int, g_dualC);
   ((void (*)(void))MK4_ResolveCode(g_dualC))();
   return;
 }

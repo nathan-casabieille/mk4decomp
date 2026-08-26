@@ -494,7 +494,7 @@ void AudioBank2StatePickerWalk(void)
   }
   bVar1 = true;
   g_bootInitState = g_bootInitState + 1;
-  if (0 < g_audioStateMachine0) {
+  if (0 < (int)g_audioStateMachine0) {
     pcVar3 = &g_audioBank2Byte2;
     iVar2 = g_audioStateMachine0;
     do {
@@ -510,7 +510,7 @@ void AudioBank2StatePickerWalk(void)
   }
   else {
     bVar1 = true;
-    if (0 < g_audioStateMachine1) {
+    if (0 < (int)g_audioStateMachine1) {
       pcVar3 = &g_audioPendByte61a;
       iVar2 = g_audioStateMachine1;
       do {

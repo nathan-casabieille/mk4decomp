@@ -180,7 +180,7 @@ void BootInitClearSlotSeed(void)
       *MK4_NODE(undefined4, (g_currentNodeIdx)) = g_walkCallback;
       (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
       g_xformLoopCounter = g_xformLoopCounter + -1;
-    } while (-1 < g_xformLoopCounter);
+    } while (-1 < (int)g_xformLoopCounter);
     g_phaseThunkVar2 = 10;
     g_walkCallback = 0;
     CopyGlobal();

@@ -136,7 +136,7 @@ void ThreeClampLoop(void)
     (g_currentNodeIdx) = iVar1;
     g_eventQueueWorkType = MK4_NODE_AT(int, g_eventQueuePending, 0);
     g_eventQueuePending = g_eventQueuePending + 1;
-    if (g_eventQueueWorkType < 0) {
+    if ((int)g_eventQueueWorkType < 0) {
       iVar1 = g_eventQueueCurrent;
       if (g_eventQueueWorkType < g_eventQueueCurrent) {
 LAB_00425ad6:

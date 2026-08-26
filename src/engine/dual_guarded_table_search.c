@@ -145,7 +145,7 @@ undefined4 DualGuardedTableSearch(void)
   (g_currentNodeIdx) = 0x13afa5;
   g_eventQueueWorkType = (*(unsigned int *)MK4_VA(unsigned int, 0x4ebe90));
   while( true ) {
-    if (g_eventQueueWorkType < 0) {
+    if ((int)g_eventQueueWorkType < 0) {
       return 0;
     }
     g_eventQueueCurrent = MK4_NODE_AT(int, g_eventQueuePending, 0x34);

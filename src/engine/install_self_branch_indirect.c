@@ -138,7 +138,7 @@ void InstallSelfBranchIndirect(void)
   }
   g_eventQueueChild = MK4_NODE_AT(int, g_cj_00542054, 0);
   g_cj_00542054 = g_cj_00542054 + 1;
-  if (-1 < g_eventQueueChild) {
+  if (-1 < (int)g_eventQueueChild) {
     ScaledArrStore_GuardedChainCmpDualBitXor_00429980();
     if (g_framePauseFlag == 0) {
       (g_currentNodeIdx) = MK4_NODE_AT(int, g_baseSel, 0x3c);

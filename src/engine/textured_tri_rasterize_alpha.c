@@ -218,7 +218,7 @@ void TexturedTriRasterizeAlpha(void)
       if (g_dispatchSave1394 < g_dispatchSave1383) {
         g_dispatchSave1394 = g_dispatchSave1383;
       }
-      if (g_dispatchSave1365 < 0) {
+      if ((int)g_dispatchSave1365 < 0) {
         g_dispatchSave1365 = 0;
       }
       if (g_viewportH < g_dispatchSave1394) {
@@ -293,11 +293,11 @@ void TexturedTriRasterizeAlpha(void)
           if (g_dispatchSave1394 < (int)g_clipMinScratch) {
             g_dispatchSave1393 = g_dispatchSave1393 + (g_dispatchSave1394 - g_clipMinScratch);
           }
-          for (; g_dispatchSave1404 = iVar12, 0 < g_dispatchSave1393; g_dispatchSave1393 = g_dispatchSave1393 + -1) {
+          for (; g_dispatchSave1404 = iVar12, 0 < (int)g_dispatchSave1393; g_dispatchSave1393 = g_dispatchSave1393 + -1) {
             g_dispatchSave1370 = g_dispatchSave1384 >> 0x10;
             g_clipMinScratch = g_dispatchSave1363 >> 0x10;
             g_clipMaxScratch = g_dispatchSave1370 - g_clipMinScratch;
-            if (((0 < g_clipMaxScratch) && (-1 < g_dispatchSave1370)) && ((int)g_clipMinScratch < g_viewportW))
+            if (((0 < (int)g_clipMaxScratch) && (-1 < (int)g_dispatchSave1370)) && ((int)g_clipMinScratch < g_viewportW))
             {
               g_clipMaxScratch = g_clipMaxScratch + g_clipMinScratch;
               g_dispatchSave1387 = g_dispatchSave1361;

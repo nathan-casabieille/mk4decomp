@@ -141,7 +141,7 @@ void MultiPlayerWinStringFormat(void)
   if (g_eventMusicSlot2 == 1) {
     if ((g_active_0053a408 == 0) && (g_active_00537e88 == 1)) {
       g_dispatchVar3 = g_dispatchVar3 + -1;
-      if (g_dispatchVar3 < 0) {
+      if ((int)g_dispatchVar3 < 0) {
         g_walkCallback = g_eventMusicSlot2;
         g_currentNodeFlags = 0x14000;
         return;
@@ -289,7 +289,7 @@ void MultiPlayerWinStringFormat(void)
   else {
     if ((g_active_0053a408 == 1) && (g_active_00537e88 == 0)) {
       g_eventMusicSlot = g_eventMusicSlot + -1;
-      if (g_eventMusicSlot < 0) {
+      if ((int)g_eventMusicSlot < 0) {
         g_walkCallback = g_eventMusicSlot2;
         g_currentNodeFlags = 0x14000;
         return;

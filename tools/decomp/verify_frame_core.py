@@ -54,6 +54,10 @@ def _blocks(free_mask=0, owner=0):
 
 B1_USER = 0x7b41a0 + 0x40 + 0xc
 
+RET_STUB = 0x0041f2e0                    # AllocateNode's `ret`
+DISPATCH = dict([('g_dispatchVar20', 0xb92000 // 4)] +
+                [('@0x%x' % (0xb92000 + i * 4), RET_STUB) for i in range(4)])
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -100,6 +104,23 @@ SEEDS = {
         ('zero chain',   {'g_matrixStackTop': 0x2e4400, 'g_xformEntityIdx': 0x2e4000,
                           'g_pendingNodeType': 0, 'g_framePauseFlag': 0,
                           '@0xb90000': 0, '@0xb90004': 0, '@0xb90008': 0}),
+    ],
+    # Dispatch index is 0/1/2/3 from two signed tests; the slot it lands on
+    # holds a code VA. RET_STUB is AllocateNode's own `ret` byte, so the
+    # dispatched call returns immediately in both runs.
+    'GeoTransformDispatchAndApply': [
+        ('index 0',       dict(DISPATCH, **{'g_primary_0052d74c': 0,
+                                            'g_secondary_00538068': 0})),
+        ('index 2 (primary)', dict(DISPATCH, **{'g_primary_0052d74c': 5,
+                                            'g_secondary_00538068': 0})),
+        ('index 1 (secondary)', dict(DISPATCH, **{'g_primary_0052d74c': 0,
+                                            'g_secondary_00538068': 7})),
+        ('index 3 (both)', dict(DISPATCH, **{'g_primary_0052d74c': 5,
+                                            'g_secondary_00538068': 7})),
+        ('secondary negative', dict(DISPATCH, **{'g_primary_0052d74c': 5,
+                                            'g_secondary_00538068': -7})),
+        ('primary negative', dict(DISPATCH, **{'g_primary_0052d74c': -5,
+                                            'g_secondary_00538068': 0})),
     ],
     'Mem_Free': [
         ('below the heap',      _blocks(),          (0x7b0000,)),

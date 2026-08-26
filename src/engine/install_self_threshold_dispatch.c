@@ -143,7 +143,7 @@ void InstallSelfThresholdDispatch(void)
       return;
     }
     g_walkCallback = MK4_NODE_AT(int, g_cj_0054205c, 0x70);
-    if (-1 < g_walkCallback) {
+    if (-1 < (int)g_walkCallback) {
       func_0x0047e690();
       if (g_framePauseFlag != 0) {
         return;

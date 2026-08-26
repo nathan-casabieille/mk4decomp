@@ -104,6 +104,8 @@ help:
 	@echo "                            run passes without executing the body)"
 	@echo "  make closure ROOT=NAME  - static call closure + the live-stub blockers"
 	@echo "                            still standing between it and running natively"
+	@echo "  make signed-audit       - twins whose signed tests were silently made"
+	@echo "                            UNSIGNED by the arena alias typing"
 	@echo "  build/venv/bin/python tools/decomp/disasm_fn.py NAME   - original bytes"
 	@echo "  build/venv/bin/python tools/geo_mesh.py FILE --blocks  - .geo mesh format"
 	@echo
@@ -127,7 +129,17 @@ ROOT ?= MainLoopStep
 closure:
 	@build/venv/bin/python tools/decomp/closure.py $(ROOT)
 
-.PHONY: frame-core-check closure
+# signed-audit: every fixed-VA global is typed `unsigned int` - by
+# alias_globals.py for the native build and by verify_coexec's gdef for the
+# harness - which silently INVERTS a signed test (`g < 0` never fires,
+# `0 < g` collapses to `!= 0`). It is invisible: it compiles, and co-exec still
+# passes as long as no seed drives the value negative, because both sides are
+# then wrong together. Hits are cross-checked against the original's own jcc
+# opcodes. `--fix` inserts the (int) casts.
+signed-audit:
+	@build/venv/bin/python tools/decomp/audit_signed.py
+
+.PHONY: frame-core-check closure signed-audit
 
 all: matching
 

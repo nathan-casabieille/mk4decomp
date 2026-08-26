@@ -135,7 +135,7 @@ void PollThenInit(void)
     SaveCallRestoreOrXor(0x22);
   }
   g_walkCallback = g_gameCountdown;
-  if (g_gameCountdown < 0) {
+  if ((int)g_gameCountdown < 0) {
     g_walkCallback = 0;
   }
   StoreIncrMStackPush6();

@@ -49,7 +49,7 @@ void CallPauseScaledDecJmp(void)
     return;
   }
   g_eventQueueCurrent = MK4_NODE_AT(int, g_cj_0054205c, 0x28) + -1;
-  if (-1 < g_eventQueueCurrent) {
+  if (-1 < (int)g_eventQueueCurrent) {
     ScaledStoreCurDirtyClear();
     return;
   }

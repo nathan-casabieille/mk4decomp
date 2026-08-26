@@ -128,7 +128,7 @@ int CameraBounceUpdate(void)
   iVar1 = g_framePauseFlag;
   if (g_framePauseFlag == 0) {
     g_walkCallback = MK4_NODE_AT(int, (g_currentNodeIdx), 0x58);
-    if (g_walkCallback < 0) {
+    if ((int)g_walkCallback < 0) {
       if (-0xccd < g_walkCallback) {
         return 0;
       }

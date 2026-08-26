@@ -195,7 +195,7 @@ void InstallSelfStackReset(void)
   g_walkCallback = g_audioStreamState;
   if (g_audioStreamState != 0) {
     g_walkCallback = g_audioStreamState + -1;
-    if (g_walkCallback < 0) {
+    if ((int)g_walkCallback < 0) {
       g_walkCallback = 0;
     }
     (g_currentNodeIdx) = g_walkCallback + 0x137f26;

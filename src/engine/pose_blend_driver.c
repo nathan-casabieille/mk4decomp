@@ -138,7 +138,7 @@ void PoseBlendDriver(void)
       MK4_NODE_AT(undefined4, g_cj_0054205c, 0x54) = g_eventQueueNotMask;
       MK4_NODE_AT(undefined4, g_cj_0054205c, 0x5c) = g_eventQueueChild;
       g_chainAccumCur = g_walkCallback + -0x4ccc;
-      if (g_chainAccumCur < 0) {
+      if ((int)g_chainAccumCur < 0) {
         g_chainAccumCur = -g_chainAccumCur;
       }
       g_chainAccumCur = Mul10Tail(0x44924,g_chainAccumCur);

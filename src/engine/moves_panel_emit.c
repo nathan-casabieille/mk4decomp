@@ -204,7 +204,7 @@ void MovesPanelEmit(void)
     g_dispatchSave1538 = g_vtxScreenX;
     g_dispatchSave1548 = g_dispatchSave1548 & 0xfbff | (ushort)bVar2 << 10;
     GamepadSeqRecord(g_dualD * 4,0);
-    if (((0 < g_min_007af984) && (0 < g_min_007af988)) && (0 < g_min_007af98c)) {
+    if (((0 < (int)g_min_007af984) && (0 < (int)g_min_007af988)) && (0 < (int)g_min_007af98c)) {
       Helper_DrawCursor(&g_dispatchSave1534);
     }
     g_vtxIn2_z = 0;
@@ -221,7 +221,7 @@ void MovesPanelEmit(void)
     g_dispatchSave1538 = g_vtxScreenX;
     g_dispatchSave1548 = g_dispatchSave1548 & 0xfbff | (ushort)bVar2 << 10;
     GamepadSeqRecord(g_dualD * 4,1);
-    if (((0 < g_min_007af984) && (0 < g_min_007af988)) && (0 < g_min_007af98c)) {
+    if (((0 < (int)g_min_007af984) && (0 < (int)g_min_007af988)) && (0 < (int)g_min_007af98c)) {
       Helper_DrawCursor(&g_dispatchSave1534);
     }
   }

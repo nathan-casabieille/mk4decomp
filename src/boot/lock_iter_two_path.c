@@ -146,7 +146,7 @@ int LockIterTwoPath(int param_1)
   iStack_4 = 0;
   iVar2 = 0;
   Lock(2);
-  if (0 < g_dispatchSave1466) {
+  if (0 < (int)g_dispatchSave1466) {
     do {
       iVar1 = *MK4_NODE(int, g_dispatchSave1465 + iVar3);
       if ((iVar1 != 0) && ((*(byte *)(iVar1 + 0xc) & 0x83) != 0)) {

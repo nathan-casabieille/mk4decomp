@@ -139,7 +139,7 @@ void Helper_PerPlayerTick(void)
                (MK4_NODE_AT(uint, g_eventQueuePending, 0x40) | MK4_NODE_AT(uint, (g_currentNodeIdx), 0x40)) & 0x80;
           if (g_xformScratch94 == 0) {
             g_phaseInstallSlot = g_phaseInstallSlot + -1;
-            if (g_phaseInstallSlot < 0) {
+            if ((int)g_phaseInstallSlot < 0) {
               g_phaseInstallSlot = 0;
             }
             if (g_phaseInstallSlot == 0) {

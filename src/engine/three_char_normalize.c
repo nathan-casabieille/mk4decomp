@@ -130,7 +130,7 @@ void ThreeCharNormalize(void)
   g_dispatchArg = 0;
   while( true ) {
     g_walkCallback = *MK4_NODE(int, (g_cj_00542054 + g_dispatchArg));
-    if ((g_walkCallback < 0) ||
+    if (((int)g_walkCallback < 0) ||
        ((((0x5f < g_walkCallback && (g_walkCallback != 0x7b)) && (g_walkCallback != 0x7c)) &&
         (g_walkCallback != 0x7d)))) {
       g_walkCallback = 0;

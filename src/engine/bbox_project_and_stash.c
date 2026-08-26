@@ -157,7 +157,7 @@ void BboxProjectAndStash(void)
   
   iVar2 = g_tickX2;
   g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0x1c);
-  if (((0 < g_walkCallback) && (g_walkCallback < 0x11)) &&
+  if (((0 < (int)g_walkCallback) && (g_walkCallback < 0x11)) &&
      (iVar11 = g_walkCallback * 0x10, (&g_dispatchSave571)[iVar11] == '\0')) {
     if (g_tickCurConfig == &g_dispatchSave722) {
       if (g_dispatchSave1580 != 0) {

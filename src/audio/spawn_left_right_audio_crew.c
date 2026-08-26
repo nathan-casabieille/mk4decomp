@@ -132,7 +132,7 @@ void SpawnLeftRightAudioCrew(void)
   
   g_audioCrewState = g_audioStateMachine0 * 0x600000 + -0x600000;
   iVar3 = 0;
-  if (0 < g_audioStateMachine0) {
+  if (0 < (int)g_audioStateMachine0) {
     iVar1 = 0;
     pcVar2 = &g_audioBank2Byte2;
     do {
@@ -158,7 +158,7 @@ void SpawnLeftRightAudioCrew(void)
   }
   iVar3 = 0;
   g_audioCrewState = g_audioStateMachine1 * 0x600000 + -0x600000;
-  if (0 < g_audioStateMachine1) {
+  if (0 < (int)g_audioStateMachine1) {
     iVar1 = 0;
     pcVar2 = &g_audioPendByte61a;
     do {

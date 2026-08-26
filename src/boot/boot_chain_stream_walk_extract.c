@@ -151,7 +151,7 @@ void BootChainStreamWalkExtract(void)
 LAB_00407bae:
         g_eq = (uint)((g_currentNodeIdx) < iVar3);
         g_eventQueuePending = g_eventQueuePending + 1;
-        if ((g_eq == 0) || (g_dualD = g_dualD + -1, g_dualD < 0))
+        if ((g_eq == 0) || (g_dualD = g_dualD + -1, (int)g_dualD < 0))
         goto LAB_00407be5;
       }
       g_eq = (uint)(g_walkCallback == 0);

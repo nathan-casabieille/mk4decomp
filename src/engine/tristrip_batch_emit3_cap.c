@@ -233,7 +233,7 @@ void TristripBatchEmit3Cap(int param_1,int param_2,int param_3)
   ushort local_8;
   
   if ((g_inLoopStep == 0) && (*(int *)MK4_PTR(param_1 + 4) != 0)) {
-    if ((g_dispatchSave1570 != 0) && (g_dispatchSave1574 < 0)) {
+    if ((g_dispatchSave1570 != 0) && ((int)g_dispatchSave1574 < 0)) {
       AltCamMatrixProject(&g_dispatchSave1501,1);
     }
     puVar6 = (ushort *)MK4_PTR(*(int *)MK4_PTR(param_1 + 8) + 8 + param_1);
@@ -275,8 +275,8 @@ void TristripBatchEmit3Cap(int param_1,int param_2,int param_3)
                     ((int)(short)g_vtxScreenP2X - (int)(short)g_triStripRingA) -
                     ((int)(*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
                     ((int)(short)g_vtxScreenX - (int)(short)g_triStripRingA) < 1);
-        if ((((uVar3 != (g_vtxValid == 0)) && (0 < g_min_007af984)) && (0 < g_min_007af988)) &&
-           (0 < g_min_007af98c)) {
+        if ((((uVar3 != (g_vtxValid == 0)) && (0 < (int)g_min_007af984)) && (0 < (int)g_min_007af988)) &&
+           (0 < (int)g_min_007af98c)) {
           *puVar7 = g_triStripRingA;
           puVar7[1] = g_vtxScreenP2X;
           puVar7[2] = g_vtxScreenX;

@@ -140,7 +140,7 @@ void InstallSelfAbsDiff(void)
     return;
   }
   g_walkCallback = g_walkCallback - g_currentNodeFlags;
-  if (g_walkCallback < 0) {
+  if ((int)g_walkCallback < 0) {
     g_walkCallback = -g_walkCallback;
   }
   if (0x20000 < g_walkCallback) {

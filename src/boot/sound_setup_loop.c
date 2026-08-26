@@ -144,7 +144,7 @@ void SoundSetupLoop(void)
       func_0x00413f40();
       if (g_framePauseFlag == 0) {
         while ((((byte)g_xformDirtyFlags & 4) == 0 &&
-               (g_dualD = g_dualD + -1, -1 < g_dualD))) {
+               (g_dualD = g_dualD + -1, -1 < (int)g_dualD))) {
           func_0x00413f40();
           if (g_framePauseFlag != 0) {
             return;

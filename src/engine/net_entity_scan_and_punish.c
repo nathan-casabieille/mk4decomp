@@ -186,7 +186,7 @@ void NetEntityScanAndPunish(void)
       g_walkCallback = 0x147;
       MK4_NODE_AT(int, (g_currentNodeIdx), 0x70) = MK4_NODE_AT(int, (g_currentNodeIdx), 0x70) + 0x147;
       g_eventQueueCurrent = MK4_NODE_AT(int, (g_currentNodeIdx), 0x58);
-      if (g_eventQueueCurrent < 0) break;
+      if ((int)g_eventQueueCurrent < 0) break;
       g_eventQueuePending = *MK4_NODE(int, (g_currentNodeIdx));
       g_matrixStackTop = g_matrixStackTop + 1;
       *MK4_NODE(undefined4, (int)g_matrixStackTop) = MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54);

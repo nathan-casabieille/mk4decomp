@@ -251,8 +251,8 @@ void TristripBatchEmit(int param_1,int param_2,int param_3)
                     ((int)(short)g_vtxScreenP2X - (int)(short)g_triStripRingA) -
                     ((int)(*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
                     ((int)(short)g_vtxScreenX - (int)(short)g_triStripRingA) < 1);
-        if ((((uVar3 != (g_vtxValid == 0)) && (0 < g_min_007af984)) && (0 < g_min_007af988)) &&
-           (0 < g_min_007af98c)) {
+        if ((((uVar3 != (g_vtxValid == 0)) && (0 < (int)g_min_007af984)) && (0 < (int)g_min_007af988)) &&
+           (0 < (int)g_min_007af98c)) {
           *puVar6 = g_triStripRingA;
           puVar6[1] = g_vtxScreenP2X;
           puVar6[2] = g_vtxScreenX;

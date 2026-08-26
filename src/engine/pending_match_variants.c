@@ -7246,7 +7246,7 @@ __declspec(naked) void PendingMatch_MStackPush2BitLoop(void)
 void PendingMatch_Ten404c40_404bd0(void)
 
 {
-  if ((g_currentNodeFlags < 0x10001) && (0 < g_currentNodeFlags)) {
+  if ((g_currentNodeFlags < 0x10001) && (0 < (int)g_currentNodeFlags)) {
     g_xformDirtyFlags = g_xformDirtyFlags | 1;
     return;
   }
@@ -8056,7 +8056,7 @@ void PendingMatch_CondPlayerLookup(void)
     g_dlEnabledFlag = 0;
     g_walkCallback = *MK4_NODE(int, (int)g_matrixStackTop);
     g_matrixStackTop = g_matrixStackTop + -1;
-    if (0 < g_walkCallback) {
+    if (0 < (int)g_walkCallback) {
       g_dualC = g_walkCallback;
       *(code **)(iVar1 + 8) = PendingMatch_CondPlayerLookup;
       *(undefined4 *)(iVar1 + 0x84) = 1;

@@ -168,7 +168,7 @@ LAB_00497920:
     g_walkCallback = *(int *)(iVar2 + 0x58) + -0x1999;
     g_cj_00542054 = g_cj_00542054 + -1;
     if ((int)g_walkCallback < 0) {
-      if (-1 < g_cj_00542054) goto LAB_00497920;
+      if (-1 < (int)g_cj_00542054) goto LAB_00497920;
       if (-1 < (int)g_walkCallback) goto LAB_0049783e;
     }
     else {

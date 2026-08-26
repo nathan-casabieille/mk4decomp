@@ -134,7 +134,7 @@ void GuardedStateChangePair(void)
   g_walkCallback = g_stateChangePair3;
   if (g_stateChangePair3 == 0x27) {
     g_eventQueueCurrent = g_stateChangePair2 + -1;
-    if (g_eventQueueCurrent < 0) {
+    if ((int)g_eventQueueCurrent < 0) {
       CallSetPause();
       return;
     }

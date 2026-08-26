@@ -129,7 +129,7 @@ void AudioMixerKnobUpdate(void)
   int iVar2;
   
   if (g_audioMixerKnob2 == 0) {
-    if (((g_audioStateDisp50b4 & 4) != 0) && (0 < g_counter_0054359c)) {
+    if (((g_audioStateDisp50b4 & 4) != 0) && (0 < (int)g_counter_0054359c)) {
       SetJmp_Push16Call_004a1ad0();
       g_counter_0054359c = g_counter_0054359c + -1;
     }
@@ -164,7 +164,7 @@ void AudioMixerKnobUpdate(void)
     ScaledChainStore24();
   }
   if (g_audioMixerKnob == 0) {
-    if (((g_audioStateDisp50b4 & 0x400) != 0) && (0 < g_counter_005433c8)) {
+    if (((g_audioStateDisp50b4 & 0x400) != 0) && (0 < (int)g_counter_005433c8)) {
       SetJmp_Push16Call_004a1ad0();
       g_counter_005433c8 = g_counter_005433c8 + -1;
     }

@@ -148,7 +148,7 @@ void EnduranceFsmCluster(void)
     g_cj_00542058 = g_cj_00542058 + 1;
 LAB_004239c9:
     g_walkCallback = MK4_NODE_AT(int, g_cj_00542058, 0);
-    if (g_walkCallback < 0) {
+    if ((int)g_walkCallback < 0) {
       *(code **)(iVar1 + 8) = EnduranceFsmCluster;
       *(undefined4 *)(iVar1 + 0x84) = 3;
       g_dualC = 0x168;

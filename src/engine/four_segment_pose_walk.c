@@ -153,7 +153,7 @@ void FourSegmentPoseWalk(void)
                 return;
               }
               g_cj_00542058 = g_cj_00542058 + -1;
-              if (g_cj_00542058 < 0) {
+              if ((int)g_cj_00542058 < 0) {
                 g_cj_00542058 = 3;
                 SetJmp_ZeroAndDirty4();
                 if (g_framePauseFlag != 0) {
@@ -176,7 +176,7 @@ void FourSegmentPoseWalk(void)
                     return;
                   }
                   g_cj_00542058 = g_cj_00542058 + -1;
-                  if (g_cj_00542058 < 0) break;
+                  if ((int)g_cj_00542058 < 0) break;
                   g_eventQueuePending = 0x142cfc;
                   DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
                   if (g_framePauseFlag != 0) {
@@ -205,7 +205,7 @@ void FourSegmentPoseWalk(void)
                     return;
                   }
                   g_cj_00542058 = g_cj_00542058 + -1;
-                  if (g_cj_00542058 < 0) break;
+                  if ((int)g_cj_00542058 < 0) break;
                   g_eventQueuePending = 0x142d03;
                   DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
                   if (g_framePauseFlag != 0) {
@@ -234,7 +234,7 @@ void FourSegmentPoseWalk(void)
                     return;
                   }
                   g_cj_00542058 = g_cj_00542058 + -1;
-                  if (g_cj_00542058 < 0) {
+                  if ((int)g_cj_00542058 < 0) {
                     return;
                   }
                   g_eventQueuePending = 0x142d0a;

@@ -126,7 +126,7 @@ void StunDownCluster(void)
 {
   g_walkCallback = MK4_NODE_AT(int, g_cj_00542054, 0);
   g_cj_00542054 = g_cj_00542054 + 1;
-  if (-1 < g_walkCallback) {
+  if (-1 < (int)g_walkCallback) {
     while (ChainDirtyBitWalker(), g_framePauseFlag == 0) {
       g_dualD = MK4_NODE_AT(int, g_cj_00542054, 0);
       g_cj_00542054 = g_cj_00542054 + 1;
@@ -138,10 +138,10 @@ void StunDownCluster(void)
           return;
         }
         g_dualD = g_dualD + -1;
-      } while (-1 < g_dualD);
+      } while (-1 < (int)g_dualD);
       g_walkCallback = MK4_NODE_AT(int, g_cj_00542054, 0);
       g_cj_00542054 = g_cj_00542054 + 1;
-      if (g_walkCallback < 0) {
+      if ((int)g_walkCallback < 0) {
         return;
       }
     }

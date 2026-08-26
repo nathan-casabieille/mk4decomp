@@ -133,7 +133,7 @@ void ChainDispatcher4Call(void)
   
   g_walkCallback = 0x8000;
   g_eventQueueCurrent = MK4_NODE_AT(int, g_baseSel, 0x7c);
-  if (0 < g_eventQueueCurrent) {
+  if (0 < (int)g_eventQueueCurrent) {
     g_walkCallback = 0x4ccc;
   }
   CmpP1DualInitStore_00482ab0();
