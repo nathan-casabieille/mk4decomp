@@ -34,42 +34,69 @@ extern s32 g_vtxTransZ;
 extern s32 g_vtxValid;
 extern unsigned int g_triStripRingA;
 extern s16 g_vtxScreenP1Y;
+extern s32 g_vtxOut1_z;
+extern s16 g_dispatchSave1626;
+extern s16 g_mat3x3_007af990;
+
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+/* Co-exec verified (tools/decomp/verify_project.py, slots 0/1/2).
+ *
+ * Transcribed from the original bytes rather than trusting the Ghidra lift,
+ * which had two defects the verifier would not have caught on its own:
+ *   - the perspective divide was lifted as `0x2000000 / (longlong)z`; the
+ *     original is `cmp esi,1 / jle / cdq / idiv esi` - a SIGNED 32-bit idiv.
+ *     The 64-bit form pulls in __divdi3 and changes the semantics.
+ *   - the array strides were only correct under Ghidra's own `undefined2`
+ *     typing of the globals (`&g_vtxOut1_x + param_1 * 2`). Here every base is
+ *     taken as an address and cast, so the stride is fixed by the ORIGINAL
+ *     instruction form (movsx word [ecx*2 + b] for inputs, [ecx*4 + b] for
+ *     outputs) and does not depend on how each global happens to be declared.
+ *
+ * Sums accumulate through `unsigned` because three 16x16 products can exceed
+ * INT_MAX; signed overflow is UB and -O2 is entitled to exploit it (the same
+ * class of bug that miscompiled the triangle twins).
+ */
 void Helper_EmitLine(int param_1)
-
 {
-  int iVar1;
-  int iVar2;
-  
-  g_vtxValid = 1;
-  *(int *)(&g_vtxOut1_x + param_1 * 2) =
-       (int)(short)((short)((int)g_mat3x3_007af990 * (int)(short)(&g_dispatchSave1626)[param_1] +
-                            (int)g_mat3x3_007af992 * (int)*(short *)(&g_vtxIn1_y + param_1 * 2) +
-                            (int)g_mat3x3_007af994 * (int)(short)(&g_vtxIn2_y)[param_1] >> 0xc) +
-                   (short)g_vtxTransX);
-  *(int *)(&g_vtxOut1_y + param_1 * 2) =
-       (int)(short)((short)((int)g_mat3x3_007af996 * (int)(short)(&g_dispatchSave1626)[param_1] +
-                            (int)g_mat3x3_007af998 * (int)*(short *)(&g_vtxIn1_y + param_1 * 2) +
-                            (int)g_mat3x3_007af99a * (int)(short)(&g_vtxIn2_y)[param_1] >> 0xc) +
-                   (short)g_vtxTransY);
-  iVar2 = (int)(short)((short)((int)g_mat3x3_007af99c * (int)(short)(&g_dispatchSave1626)[param_1] +
-                               (int)g_mat3x3_007af99e * (int)*(short *)(&g_vtxIn1_y + param_1 * 2) +
-                               (int)g_mat3x3_007af9a0 * (int)(short)(&g_vtxIn2_y)[param_1] >> 0xc) +
-                      (short)g_vtxTransZ);
-  (&g_min_007af984)[param_1] = iVar2;
-  iVar1 = 0x2000000;
-  if (1 < iVar2) {
-    iVar1 = (int)(0x2000000 / (longlong)iVar2);
-  }
-  *(short *)(&g_triStripRingA + param_1) =
-       (short)((uint)((iVar1 * *(int *)(&g_vtxOut1_x + param_1 * 2) >> 0x10) * 0x1999a) >> 0x10) +
-       0x140;
-  MK4_NODE_AT(short, (int)&g_triStripRingA + param_1, 2) =
-       (short)((uint)((iVar1 * *(int *)(&g_vtxOut1_y + param_1 * 2) >> 0x10) * 0x1e000) >> 0x10) +
-       0xf0;
-  return;
+    /* inputs: three s16 vectors, stride 2 (orig: movsx word [ecx*2 + base]) */
+    const short *inX = (const short *)&g_dispatchSave1626;   /* 0x7af958 */
+    const short *inY = (const short *)&g_vtxIn1_y;           /* 0x7af95e */
+    const short *inZ = (const short *)&g_vtxIn2_y;           /* 0x7af964 */
+    /* outputs: s32 vectors, stride 4 (orig: mov [ecx*4 + base]) */
+    int *outX = (int *)&g_vtxOut1_x;                         /* 0x7af96c */
+    int *outY = (int *)&g_vtxOut1_y;                         /* 0x7af978 */
+    int *outZ = (int *)&g_vtxOut1_z;                         /* 0x7af984 */
+    /* screen pair: two s16 packed in each 4-byte slot at 0x7af9b4/+2 */
+    short *scr = (short *)&g_triStripRingA;
+    const short *m = (const short *)&g_mat3x3_007af990;      /* nine s16, +2 */
+    int i = param_1;
+    int z, inv, t;
+    unsigned acc;
+
+    g_vtxValid = 1;
+
+    acc = (unsigned)((int)m[0] * (int)inX[i]) + (unsigned)((int)m[1] * (int)inY[i])
+        + (unsigned)((int)m[2] * (int)inZ[i]);
+    outX[i] = (short)(((int)acc >> 0xc) + (int)g_vtxTransX);
+
+    acc = (unsigned)((int)m[3] * (int)inX[i]) + (unsigned)((int)m[4] * (int)inY[i])
+        + (unsigned)((int)m[5] * (int)inZ[i]);
+    outY[i] = (short)(((int)acc >> 0xc) + (int)g_vtxTransY);
+
+    acc = (unsigned)((int)m[6] * (int)inX[i]) + (unsigned)((int)m[7] * (int)inY[i])
+        + (unsigned)((int)m[8] * (int)inZ[i]);
+    z = (short)(((int)acc >> 0xc) + (int)g_vtxTransZ);
+    outZ[i] = z;
+
+    inv = 0x2000000;
+    if (z > 1)
+        inv = 0x2000000 / z;               /* orig: cdq / idiv esi (signed) */
+
+    t = (int)((unsigned)inv * (unsigned)outX[i]) >> 0x10;
+    scr[i * 2]     = (short)((int)((unsigned)t * 0x1999au) >> 0x10) + 0x140;
+    t = (int)((unsigned)inv * (unsigned)outY[i]) >> 0x10;
+    scr[i * 2 + 1] = (short)((int)((unsigned)t * 0x1e000u) >> 0x10) + 0xf0;
 }
 #else
 __declspec(naked) void Helper_EmitLine(void) {

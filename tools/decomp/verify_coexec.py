@@ -295,7 +295,7 @@ WALL_US = int(os.environ.get('MK4_COEXEC_WALL_US', '3000000'))
 ARG_BASE = None          # set in main(): start of the deterministic arg scratch
 
 
-def run_at(uc, eip, full, nargs=0):
+def run_at(uc, eip, full, nargs=0, argvals=None):
     from unicorn.x86_const import UC_X86_REG_ESP, UC_X86_REG_EIP, UC_X86_REG_EAX
     SENT = 0x00bad0de
     esp = STACK + 0x20000
@@ -305,9 +305,16 @@ def run_at(uc, eip, full, nargs=0):
     # a deterministic self-referential scratch region (word at A == A), so a
     # pointer arg can be walked without faulting and BOTH sides see the same
     # bytes - this is an equivalence check, not a realistic-input test.
+    # argvals (opt-in, per-harness): pass a LITERAL value for an argument that is
+    # a scalar, not a pointer. The self-referential-scratch default above is
+    # right for pointer args but catastrophic for a small INDEX arg - e.g.
+    # Helper_EmitLine(i) indexes [i*2 + 0x7af958], so handing it a 0x7f0000-ish
+    # scratch address walks far outside the arena. None = keep the default.
     for i in range(nargs):
-        uc.mem_write(esp + 4 + 4 * i,
-                     ((ARG_BASE + i * 0x400) & 0xffffffff).to_bytes(4, 'little'))
+        v = None if argvals is None or i >= len(argvals) else argvals[i]
+        if v is None:
+            v = (ARG_BASE + i * 0x400) & 0xffffffff
+        uc.mem_write(esp + 4 + 4 * i, (v & 0xffffffff).to_bytes(4, 'little'))
     # Wall-clock timeout (microseconds) in ADDITION to the instruction cap:
     # some pathological twins/originals run the cap's worth of instructions so
     # slowly (or in a way the count cap doesn't bound) that emu_start hangs for
@@ -324,7 +331,7 @@ def run_at(uc, eip, full, nargs=0):
     return bytes(uc.mem_read(0, full)), terminated, eax
 
 
-def verify(name, fn_va, gl_va, name_to_va, arena, width16=None):
+def verify(name, fn_va, gl_va, name_to_va, arena, width16=None, argvals=None):
     if name not in fn_va:
         return 'SKIP no-addr'
     t = extract_twin_any(name)
@@ -337,13 +344,13 @@ def verify(name, fn_va, gl_va, name_to_va, arena, width16=None):
         return 'SKIP ' + err
     try:
         uc1, full = uc_new(arena)
-        orig = run_at(uc1, fn_va[name], full, nargs)
+        orig = run_at(uc1, fn_va[name], full, nargs, argvals)
         uc2, _ = uc_new(arena)
         if load_base + len(blob) > full:           # blob outside arena map
             uc2.mem_map(load_base & ~0xFFF,
                         ((len(blob) + (load_base & 0xFFF) + 0xFFF) & ~0xFFF))
         uc2.mem_write(load_base, blob)             # twin lands at its own VA
-        twin, twin_ret, twin_eax = run_at(uc2, fn_va[name], full, nargs)
+        twin, twin_ret, twin_eax = run_at(uc2, fn_va[name], full, nargs, argvals)
     except Exception as e:
         return 'SKIP unicorn: %s' % e
     orig, orig_ret, orig_eax = orig

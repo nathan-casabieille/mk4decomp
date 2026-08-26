@@ -74,23 +74,41 @@ def seed_common(a):
     setdw(a, 0x7af9e8, 0x0400)                 # g_vtxLight1_z (note: y/z swapped VAs)
 
 
+# Scalar (non-pointer) arguments, per function. verify_coexec's default hands
+# every arg a self-referential scratch ADDRESS, which is right for a pointer but
+# catastrophic for a small index: Helper_EmitLine(i) indexes [i*2 + 0x7af958].
+# A tuple entry of None keeps the default pointer-scratch for that slot.
+ARGVALS = {
+    'Helper_EmitLine': (0,),          # vertex slot; 0/1/2 are the real callers
+    'Helper_EmitLine#1': (1,),
+    'Helper_EmitLine#2': (2,),
+    'AltCamMatrixProject': (None, 0),  # (vec3 *, mode) - mode 0 = no alt matrix
+    'AltCamMatrixProject#1': (None, 1),
+}
+
+
 def main():
     names = sys.argv[1:] or ['MatVec2Multiply', 'ProjectVertex',
                              'ProjectTwoVertices', 'TransformVertex',
-                             'AltCamMatrixProject']
+                             'AltCamMatrixProject', 'Helper_EmitLine',
+                             'Helper_EmitLine#1', 'Helper_EmitLine#2',
+                             'AltCamMatrixProject#1']
     fn_va, gl_va = vt.load_maps()
     base = bytearray(vc.ARENA.read_bytes())
     # Set ARG_BASE for the (rare) functions taking pointer args - point at a
     # benign in-arena scratch so a pointer walk does not fault.
     vc.ARG_BASE = 0x7af800
     rc = 0
-    for name in names:
+    for spec in names:
+        # "NAME#k" = the same function under argument variant k (see ARGVALS).
+        name = spec.split('#')[0]
         seeded = bytearray(base)
         seed_common(seeded)
-        res = vc.verify(name, fn_va, gl_va, fn_va, seeded, width16=WIDTH16)
+        res = vc.verify(name, fn_va, gl_va, fn_va, seeded, width16=WIDTH16,
+                        argvals=ARGVALS.get(spec))
         weak = 'VERIFIED (0 writes' in res
         flag = 'WEAK(no writes - seed missed inputs)' if weak else ''
-        print('  %-22s %s %s' % (name, res, flag))
+        print('  %-22s %s %s' % (spec, res, flag))
         if res.startswith('MISMATCH'):
             rc = 1
     return rc

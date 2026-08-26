@@ -20,7 +20,7 @@
  * carry-over.
  */
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+/* Co-exec verified (tools/decomp/verify_project.py). */
 void ProjectTwoVertices(void)
 
 {
@@ -41,8 +41,11 @@ void ProjectTwoVertices(void)
   iVar2 = 0x2000000;
   g_min_007af984 = (int)(short)((short)(g_mat3x3_007af99e * iVar3 + g_mat3x3_007af99c * iVar1 +
                                     g_mat3x3_007af9a0 * iVar4 >> 0xc) + (short)g_vtxTransZ);
-  if (1 < g_min_007af984) {
-    iVar2 = (int)(0x2000000 / (longlong)g_min_007af984);
+  if ((int)g_min_007af984 > 1) {
+    /* orig: cmp ecx,1 / jle / cdq / idiv ecx - a SIGNED 32-bit divide, not the
+       64-bit one Ghidra inferred (the (longlong) cast pulled in __divdi3 and
+       changed the semantics). */
+    iVar2 = 0x2000000 / (int)g_min_007af984;
   }
   iVar3 = (int)g_vtxIn1_z;
   g_vtxValid = 1;
@@ -60,8 +63,8 @@ void ProjectTwoVertices(void)
        (int)(short)((short)(iVar1 * g_mat3x3_007af996 + iVar2 * g_mat3x3_007af99a + iVar3 * g_mat3x3_007af998 >>
                            0xc) + (short)g_vtxTransY);
   iVar1 = 0x2000000;
-  if (1 < g_min_007af988) {
-    iVar1 = (int)(0x2000000 / (longlong)g_min_007af988);
+  if ((int)g_min_007af988 > 1) {
+    iVar1 = 0x2000000 / (int)g_min_007af988;     /* signed 32-bit idiv */
   }
   (*(unsigned short *)((char *)&g_vtxScreenP2X + 0)) = (short)((uint)((iVar1 * g_vtxOut2_x >> 0x10) * 0x1999a) >> 0x10) + 0x140;
   (*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) = (short)((uint)((iVar1 * g_vtxOut2_y >> 0x10) * 0x1e000) >> 0x10) + 0xf0;
