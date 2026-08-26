@@ -350,6 +350,20 @@ def verify(name, fn_va, gl_va, name_to_va, arena, width16=None, argvals=None):
             uc2.mem_map(load_base & ~0xFFF,
                         ((len(blob) + (load_base & 0xFFF) + 0xFFF) & ~0xFFF))
         uc2.mem_write(load_base, blob)             # twin lands at its own VA
+        # The twin is placed AT the original function's VA so self-references
+        # resolve, but the compiled twin is often LONGER than the original. If
+        # it overruns into the next function symbol it silently corrupts that
+        # function's first bytes - and any scenario that CALLS the neighbour
+        # then executes garbage and hangs (DrawMeshBlock's twin is 0x440 bytes
+        # over a 0x430 original, clobbering TristripBatchEmit3Cap right after
+        # it). Report it instead of letting it look like a twin bug.
+        nxt = min((v for v in fn_va.values() if v > fn_va[name]), default=None)
+        if nxt is not None and load_base + len(blob) > nxt:
+            over = load_base + len(blob) - nxt
+            victim = next((k for k, v in fn_va.items() if v == nxt), hex(nxt))
+            _overrun = 'blob overruns %s by %d bytes' % (victim, over)
+        else:
+            _overrun = None
         twin, twin_ret, twin_eax = run_at(uc2, fn_va[name], full, nargs, argvals)
     except Exception as e:
         return 'SKIP unicorn: %s' % e
@@ -380,7 +394,8 @@ def verify(name, fn_va, gl_va, name_to_va, arena, width16=None, argvals=None):
     # one hit the instruction cap mid-run and the snapshot diff is a cap
     # artifact (equivalent code, different instruction counts).
     if not (orig_ret and twin_ret):
-        return 'SKIP capped-diff (orig_ret=%d twin_ret=%d)' % (orig_ret, twin_ret)
+        return 'SKIP capped-diff (orig_ret=%d twin_ret=%d)%s' % (
+            orig_ret, twin_ret, '' if not _overrun else ' [%s]' % _overrun)
     if do == dt and not eax_ok:
         return 'MISMATCH eax orig=0x%x twin=0x%x' % (
             orig_eax & 0xffffffff, twin_eax & 0xffffffff)

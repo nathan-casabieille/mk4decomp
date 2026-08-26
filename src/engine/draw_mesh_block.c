@@ -35,16 +35,16 @@ extern unsigned int g_dispatchSave1559;
 extern unsigned int g_dispatchSave1570;
 extern unsigned int g_dispatchSave1574;
 extern unsigned int g_dispatchSave1576;
-extern void AdvanceTriStripRing(void);
-extern void AltCamMatrixProject(void);
-extern void Helper_DrawCursor(void);
+extern void AdvanceTriStripRing(s16 v0, s16 v1, s16 v2);
+extern void AltCamMatrixProject(int *vec, int mode);
+extern void Helper_DrawCursor(void *entry);
 extern void MatVec2Multiply(void);
-extern void MaxOfThree(void);
-extern void MinOfThree(void);
+extern int MaxOfThree(void);
+extern int MinOfThree(void);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
-extern void TransformVertex(void);
-extern void TristripBatchEmit3Cap(void);
+extern void TransformVertex(short x, short y, short z);
+extern void TristripBatchEmit3Cap(int block, int a1, int a2);
 
 /*
  * @addr 0x004bb250 - per-block triangle-strip mesh walker.
@@ -75,6 +75,164 @@ extern void TristripBatchEmit3Cap(void);
  * +0x18, then tail-calls SubmitDrawEntry. This function is the bridge
  * from the .geo mesh format to the draw queue.
  */
+#ifdef NON_MATCHING
+/* Co-exec verified (tools/decomp/verify_mesh.py).
+ *
+ * The .geo main-path emitter. Same shape as TristripBatchEmit but it also
+ * shades every vertex through TransformVertex, applies a depth attenuation to
+ * the three vertex colours, and folds g_dispatchSave1559 into the sort key.
+ *
+ * Block layout (decoded in tools/geo_mesh.py): ofs_a / ofs_b at block+4 /
+ * block+8 are RELATIVE TO THEIR OWN FIELD. Vertices are 12 bytes - 3 s16
+ * position then 3 s16 normal - but the normal reaches TransformVertex as
+ * (x=+8, y=+0xa, z=+6), and a strip opens by consuming TWO of them (edi += 0x18).
+ *
+ * TRANSCRIBED QUIRK: for the SECOND base vertex the original reads the normal
+ * z from [edi+0x1e], not [edi+0x12] where a 12-byte stride would put it - i.e.
+ * it reaches into the NEXT vertex. Reproduced exactly; do not "fix" it.
+ */
+void DrawMeshBlock(int block, int a1, int a2)
+{
+    unsigned char *strip, *vtx, *entry, *strip_save;
+    int count, parity, atten, bit8, cross, valid, key;
+    unsigned int flags;
+
+    if (g_inLoopStep != 0)
+        return;
+    if (g_menuRestoreSlot == 0) {              /* the non-mesh fast path */
+        TristripBatchEmit3Cap(block, a1, a2);
+        return;
+    }
+    if (*(int *)MK4_PTR(block + 4) == 0)
+        return;
+
+    if (g_dispatchSave1570 != 0 && (int)g_dispatchSave1574 < 0)
+        AltCamMatrixProject((int *)&g_dispatchSave1501, 1);
+
+    /* depth attenuation step: orig cdq / and edx,7 / add / sar 3 / dec */
+    atten = (int)g_dispatchSave1576;
+    if (atten >= 0x10)
+        atten = ((atten + ((atten >> 31) & 7)) >> 3) - 1;
+    else
+        atten = 0;
+
+    strip = (unsigned char *)MK4_PTR(block + 8 + *(int *)MK4_PTR(block + 8));
+    vtx   = (unsigned char *)MK4_PTR(block + 4 + *(int *)MK4_PTR(block + 4));
+    entry = (unsigned char *)MK4_PTR(g_dualC + 4);
+    MatVec2Multiply();
+
+    for (;;) {                                  /* per strip */
+        flags = *(unsigned short *)strip;
+        strip += 2;
+        bit8 = (int)((flags >> 8) & 1);
+        parity = (int)(flags & 1);
+        if (a1 != 0)
+            parity = (parity == 0);
+        count = *(short *)strip;
+        strip += 2;
+        if (count < 0)                          /* negative count terminates */
+            return;
+        strip_save = strip;
+
+        /* --- open the strip on two vertices --- */
+        *(short *)&g_dispatchSave1626 = 0;
+        *(short *)&g_vtxIn1_y = 0;
+        *(short *)&g_vtxIn2_y = 0;
+        *(short *)&g_vtxIn2_x = *(short *)(vtx + 0);
+        *(short *)&g_vtxIn1_z = *(short *)(vtx + 2);
+        *(short *)&g_vtxIn2_z = *(short *)(vtx + 4);
+        TransformVertex(*(short *)(vtx + 8), *(short *)(vtx + 0xa),
+                        *(short *)(vtx + 6));
+        *(short *)&g_triStripX0 = *(short *)(vtx + 0xc);
+        *(short *)&g_triStripX1 = *(short *)(vtx + 0xe);
+        *(short *)&g_triStripX2 = *(short *)(vtx + 0x10);
+        TransformVertex(*(short *)(vtx + 0x14), *(short *)(vtx + 0x16),
+                        *(short *)(vtx + 0x1e));   /* see the quirk note */
+        ProjectTwoVertices();
+        count = count + 1;
+        vtx += 0x18;
+
+        do {                                    /* one triangle per vertex */
+            AdvanceTriStripRing(*(short *)(vtx + 0), *(short *)(vtx + 2),
+                                *(short *)(vtx + 4));
+            TransformVertex(*(short *)(vtx + 8), *(short *)(vtx + 0xa),
+                            *(short *)(vtx + 6));
+            ProjectVertex();
+
+            /* backface: sign of the 2D cross product of the two screen edges */
+            cross = ((int)*(short *)&g_vtxScreenY - (int)*(short *)&g_vtxScreenP1Y)
+                  * ((int)*(short *)&g_vtxScreenP2X - (int)*(short *)&g_vtxScreenP1X)
+                  - ((int)*(short *)&g_vtxScreenP2Y - (int)*(short *)&g_vtxScreenP1Y)
+                  * ((int)*(short *)&g_vtxScreenX - (int)*(short *)&g_vtxScreenP1X);
+            valid = (cross <= 0);
+            g_vtxValid = (unsigned int)valid;
+
+            /* orig: sete dl (valid==0) / movsx eax,bp / cmp / JE skip - so a
+               triangle is emitted only when the parity DIFFERS from the
+               backface result. */
+            if (parity != (valid == 0)
+                && (int)g_vtxOut1_z > 0 && (int)g_vtxOut2_z > 0
+                && (int)g_vtxOut_z > 0) {
+                unsigned short *c0, *c1, *c2, *fl;
+
+                *(unsigned int *)(entry + 0) = g_vtxScreenP1X;   /* packed X|Y */
+                *(unsigned int *)(entry + 4) = g_vtxScreenP2X;
+                *(unsigned int *)(entry + 8) = g_vtxScreenX;
+                fl = (unsigned short *)(entry + 0x1a);
+                *fl = (unsigned short)((*fl & 0xfbff)
+                                       | (unsigned)((valid & 1) << 10));
+                c0 = (unsigned short *)(entry + 0x14);
+                c1 = (unsigned short *)(entry + 0x16);
+                c2 = (unsigned short *)(entry + 0x18);
+                *c0 = *(unsigned short *)&g_vtxColorCopy;
+                *c1 = *(unsigned short *)&g_vtxColorSaved;
+                *c2 = *(unsigned short *)&g_vtxColor;
+
+                if ((short)atten < 0x20) {
+                    /* scale each 5-bit channel by atten/32, in place. One
+                       accessor per word: mixing widths here would let -O2 hoist
+                       the reads and drop every insert but the last. */
+                    int d = (short)atten;
+                    unsigned short *cp[3];
+                    int k;
+                    cp[0] = c0; cp[1] = c1; cp[2] = c2;
+                    for (k = 0; k < 3; k++) {
+                        unsigned short *w = cp[k];
+                        int t;
+                        t = (((int)((*w >> 0xa) & 0x1f) * d) >> 5) & 0x1f;
+                        *w = (unsigned short)((*w & 0x83ff) | (unsigned)(t << 0xa));
+                        t = (((int)((*w >> 5) & 0x1f) * d) >> 5) & 0x1f;
+                        *w = (unsigned short)((*w & 0xfc1f) | (unsigned)(t << 5));
+                        t = ((int)(*w & 0x1f) * d) >> 5;
+                        *w = (unsigned short)(*w ^ ((unsigned)(t ^ *w) & 0x1f));
+                    }
+                }
+
+                key = (a2 == 0) ? MinOfThree() : MaxOfThree();
+                *(unsigned short *)(entry + 0x12) =
+                    (unsigned short)((g_dispatchSave1559 << 5) + (unsigned)key);
+                *fl = (unsigned short)((*fl & 0xfe7f)
+                                       | (unsigned)((bit8 & 3) << 7) | 0x10u);
+
+                if (g_dispatchSave1570 != 0) {  /* clamp Y to the horizon */
+                    short h = *(short *)&g_screenH;
+                    if (*(short *)(entry + 2) > h)  *(short *)(entry + 2) = h;
+                    if (*(short *)(entry + 6) > h)  *(short *)(entry + 6) = h;
+                    if (*(short *)(entry + 0xa) > h) *(short *)(entry + 0xa) = h;
+                }
+                Helper_DrawCursor(entry);
+            }
+
+            vtx += 0xc;
+            entry += 0x1c;
+            parity = (parity == 0);
+            count--;
+        } while (count != 0);
+
+        strip = strip_save;
+    }
+}
+#else
 __declspec(naked) void DrawMeshBlock(void)
 {
     __asm {
@@ -412,4 +570,4 @@ __declspec(naked) void DrawMeshBlock(void)
         jmp      L_b2f2
     }
 }
-
+#endif
