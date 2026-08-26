@@ -177,6 +177,7 @@ src/engine/textured_tri_rasterize_alpha_pal.c
 src/engine/textured_tri_rasterize_dithered.c
 src/engine/textured_tri_rasterize_shaded.c
 src/engine/thunks.c
+src/engine/tick_all.c
 src/engine/transform_vertex.c
 src/engine/tristrip.c
 src/engine/tristrip_batch_emit.c

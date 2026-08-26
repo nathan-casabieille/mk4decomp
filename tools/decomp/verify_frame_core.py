@@ -54,6 +54,8 @@ def _blocks(free_mask=0, owner=0):
 
 B1_USER = 0x7b41a0 + 0x40 + 0xc
 
+TICKCFG = {'g_tickCurConfig': 0xb93000, '@0xb93000': 0, '@0xb93004': 0}
+
 RET_STUB = 0x0041f2e0                    # AllocateNode's `ret`
 DISPATCH = dict([('g_dispatchVar20', 0xb92000 // 4)] +
                 [('@0x%x' % (0xb92000 + i * 4), RET_STUB) for i in range(4)])
@@ -121,6 +123,29 @@ SEEDS = {
                                             'g_secondary_00538068': -7})),
         ('primary negative', dict(DISPATCH, **{'g_primary_0052d74c': -5,
                                             'g_secondary_00538068': 0})),
+    ],
+    # TickAllEntities: g_tickInitFlag picks between the five-pass first frame
+    # and the single main pass; g_framePauseFlag abandons the sequence after
+    # any pass. TICKCFG points g_tickCurConfig at a scratch struct whose
+    # bytes 4 and 5 pick the pass-3 mask and the pass-4 Inner/Alt branch.
+    'TickAllEntities': [
+        ('steady frame',      dict(TICKCFG, **{'g_tickInitFlag': 1, 'g_framePauseFlag': 0,
+                                               'g_tickDecay': 5, 'g_tickW1': 0x40})),
+        ('steady, decay 0',   dict(TICKCFG, **{'g_tickInitFlag': 1, 'g_framePauseFlag': 0,
+                                               'g_tickDecay': 0, 'g_tickW1': 0x40})),
+        ('W1 over the clamp', dict(TICKCFG, **{'g_tickInitFlag': 1, 'g_framePauseFlag': 0,
+                                               'g_tickDecay': 5, 'g_tickW1': 0x4000})),
+        ('byte flag set',     dict(TICKCFG, **{'g_tickInitFlag': 1, 'g_framePauseFlag': 0,
+                                               'g_tickDecay': 5, 'g_tickW1': 0x40,
+                                               '@0x543720': 1})),
+        ('first frame',       dict(TICKCFG, **{'g_tickInitFlag': 0, 'g_framePauseFlag': 0,
+                                               'g_tickDecay': 5, 'g_tickW1': 0x40})),
+        ('first frame, alt',  dict(TICKCFG, **{'g_tickInitFlag': 0, 'g_framePauseFlag': 0,
+                                               'g_tickDecay': 5, 'g_tickW1': 0x40,
+                                               'g_tickFlagV': 1, 'g_tickFlagF': 7,
+                                               '@0xb93004': 0x01010101})),
+        ('paused up front',   dict(TICKCFG, **{'g_tickInitFlag': 0, 'g_framePauseFlag': 1,
+                                               'g_tickDecay': 5, 'g_tickW1': 0x40})),
     ],
     'Mem_Free': [
         ('below the heap',      _blocks(),          (0x7b0000,)),
