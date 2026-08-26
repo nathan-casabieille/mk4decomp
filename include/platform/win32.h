@@ -19,7 +19,22 @@
 /* IDE-only shim - these typedefs let clang/IntelliSense parse the
  * source on non-Windows hosts. The matching build uses MSVC 5.0
  * under Wine where _WIN32 is defined and the real Win32 SDK headers
- * supply these types. */
+ * supply these types.
+ *
+ * Under NON_MATCHING the portable set is the single source of truth. These
+ * used to be duplicated here with DIFFERENT underlying types (BOOL long vs
+ * int, DWORD u32 vs unsigned long), so any TU pulling BOTH headers failed
+ * with "typedef redefinition with different types" - which is what kept the
+ * projection files from compiling for the native target. */
+#if defined(NON_MATCHING)
+#include "../portable/win32_types.h"
+/* the few this engine needs that the portable set does not carry */
+typedef long   LRESULT;
+typedef u32    WPARAM;
+typedef long   LPARAM;
+typedef long   LSTATUS;
+typedef void  *HRESULT;
+#else
 typedef void *HINSTANCE;
 typedef void *HWND;
 typedef void *HANDLE;
@@ -43,6 +58,7 @@ typedef long BOOL;
 typedef u32 HKEY;
 typedef long LSTATUS;
 typedef void *HRESULT;
+#endif
 #endif
 
 /* Global Win32 application state - set by WinMain. */

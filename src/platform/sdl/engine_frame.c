@@ -12,8 +12,20 @@
 #include "platform/pal.h"
 
 extern void MainLoopStep(void);
+extern void MK4_NativeVideoInit(void);
+extern void MK4_NativeVideoPresent(void);
+
+int MK4_GameInit(int argc, char **argv)
+{
+    (void)argc; (void)argv;
+    /* Point the renderer's BeginFrame hook at an arena framebuffer and fill
+     * the tables the boot path would have built. See engine_video.c. */
+    MK4_NativeVideoInit();
+    return 0;
+}
 
 void MK4_GameFrame(void)
 {
-    MainLoopStep();
+    MainLoopStep();          /* BeginFrame / GameLogicStep / DrawScene / Present */
+    MK4_NativeVideoPresent();/* arena framebuffer -> the SDL window */
 }

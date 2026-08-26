@@ -62,7 +62,12 @@ int main(int argc, char **argv)
         const char *arena = getenv("MK4_ARENA_BIN");
         if (!arena)
             arena = (argc > 1) ? argv[1] : "build/arena.bin";
-        if (!MK4_ArenaInitFromFile(arena))
+        unsigned reserve = 0;
+#ifdef MK4_NATIVE_FULL
+        { extern unsigned MK4_NativeVideoArenaReserve(void);
+          reserve = MK4_NativeVideoArenaReserve(); }
+#endif
+        if (!MK4_ArenaInitFromFileReserve(arena, reserve))
             SDL_Log("warning: arena not loaded from '%s' "
                     "(engine code will fault on seam access; "
                     "run 'make arena-blob')", arena);
@@ -99,6 +104,11 @@ int main(int argc, char **argv)
         }
     }
 
+#ifdef MK4_NATIVE_FULL
+    { const char *dump = getenv("MK4_DUMP_PPM");
+      if (dump) { extern void MK4_NativeVideoDump(const char *);
+                  MK4_NativeVideoDump(dump); } }
+#endif
     MK4_GameShutdown();
     MK4_PalShutdown();
     return 0;

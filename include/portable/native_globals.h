@@ -1845,7 +1845,7 @@ extern unsigned int g_glideDataArr_00543fd0;
 extern unsigned int g_glideDataArr_00543fd4;
 extern unsigned int g_glideDataArr_00543fd8;
 extern unsigned int g_glideDataArr_00544050;
-extern unsigned int g_glideFnTable;
+/* g_glideFnTable: declared by a curated header (typed) - generated decl suppressed */
 extern unsigned int g_glideMipInit;
 extern unsigned int g_glideTileSize;
 extern unsigned int g_glideTriArrayBase;
@@ -1909,11 +1909,11 @@ extern unsigned int g_iat_GetLocaleInfoA;
 extern unsigned int g_iat_GetLocaleInfoW;
 extern unsigned int g_iat_GetMenu;
 extern unsigned int g_iat_GetModuleFileNameA;
-extern unsigned int g_iat_GetModuleHandleA;
+/* g_iat_GetModuleHandleA: declared by a curated header (typed) - generated decl suppressed */
 extern unsigned int g_iat_GetOEMCP;
 extern unsigned int g_iat_GetPriorityClass;
 extern unsigned int g_iat_GetProcAddress;
-extern unsigned int g_iat_GetStartupInfoA;
+/* g_iat_GetStartupInfoA: declared by a curated header (typed) - generated decl suppressed */
 extern unsigned int g_iat_GetStdHandle;
 extern unsigned int g_iat_GetStringTypeA;
 extern unsigned int g_iat_GetStringTypeW;
@@ -2155,7 +2155,7 @@ extern unsigned int g_renderer2_d3dInitByte;
 extern unsigned int g_renderer2_initVar;
 extern unsigned int g_renderer2_initVar2;
 extern unsigned int g_renderer2_initVar3;
-extern unsigned int g_renderer2_obj;
+/* g_renderer2_obj: declared by a curated header (typed) - generated decl suppressed */
 extern unsigned int g_renderer2_r7_data;
 extern unsigned int g_renderer2_state7;
 extern unsigned int g_renderer2_state9;

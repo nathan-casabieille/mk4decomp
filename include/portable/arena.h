@@ -25,4 +25,10 @@ int MK4_ArenaInitFromMemory(const void *image, unsigned size);
  * Returns 1 on success, 0 on any I/O failure. */
 int MK4_ArenaInitFromFile(const char *path);
 
+/* Same, but reserve `extra` zeroed bytes PAST the image. The native/WASM
+ * targets place scratch regions - the software framebuffer, a texture page -
+ * at VAs above the original image, so they must be inside the arena for the
+ * MK4_PTR seam to reach them. `extra` = 0 is the plain loader. */
+int MK4_ArenaInitFromFileReserve(const char *path, unsigned extra);
+
 #endif /* MK4_PORTABLE_ARENA_H */

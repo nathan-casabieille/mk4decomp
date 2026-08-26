@@ -29,7 +29,7 @@ int MK4_ArenaInitFromMemory(const void *image, unsigned size)
     return 1;
 }
 
-int MK4_ArenaInitFromFile(const char *path)
+int MK4_ArenaInitFromFileReserve(const char *path, unsigned extra)
 {
     FILE *f;
     long n;
@@ -46,7 +46,7 @@ int MK4_ArenaInitFromFile(const char *path)
         fclose(f);
         return 0;
     }
-    buf = (unsigned char *)malloc((size_t)n);
+    buf = (unsigned char *)calloc(1, (size_t)n + extra);
     if (buf == 0) {
         fclose(f);
         return 0;
@@ -54,9 +54,14 @@ int MK4_ArenaInitFromFile(const char *path)
     ok = (fread(buf, 1, (size_t)n, f) == (size_t)n);
     fclose(f);
     if (ok)
-        ok = MK4_ArenaInitFromMemory(buf, (unsigned)n);
+        ok = MK4_ArenaInitFromMemory(buf, (unsigned)n + extra);
     free(buf);
     return ok;
+}
+
+int MK4_ArenaInitFromFile(const char *path)
+{
+    return MK4_ArenaInitFromFileReserve(path, 0);
 }
 
 #endif /* NON_MATCHING */
