@@ -80,6 +80,23 @@ help:
 	@echo "  make progress       - print per-function match progress"
 	@echo "  make clean          - remove build/"
 	@echo
+	@echo "Native port (arm64/x86_64 SDL2, no Wine - the verified render path):"
+	@echo "  make native-render      - SW pipeline in a window (hand-seeded 2D scene)"
+	@echo "  make native-mesh        - FULL chain: a strip mesh -> projection ->"
+	@echo "                            emit -> sort -> rasterize, spinning"
+	@echo "  make native-geo         - render a REAL character from FILESYS.DAT"
+	@echo "                            to a PPM        (CHAR=sc|sz|lk, default sc)"
+	@echo "  make native-geo-win     - the same asset in an interactive window"
+	@echo "  make native-render-check / native-mesh-check"
+	@echo "                          - cross-target gate: the arm64 framebuffer"
+	@echo "                            must be BYTE-IDENTICAL to the wasm32 one"
+	@echo
+	@echo "Verification harnesses (co-exec vs the original bytes):"
+	@echo "  build/venv/bin/python tools/decomp/verify_{scanline,tri,flush,submit}.py"
+	@echo "  build/venv/bin/python tools/decomp/verify_{project,emit,mesh}.py"
+	@echo "  build/venv/bin/python tools/decomp/disasm_fn.py NAME   - original bytes"
+	@echo "  build/venv/bin/python tools/geo_mesh.py FILE --blocks  - .geo mesh format"
+	@echo
 	@echo "Setup (run once):"
 	@echo "  ./tools/setup-macos.sh"
 	@echo "  ./tools/decomp/setup-msvc50.sh"
@@ -395,6 +412,20 @@ $(NATIVE_GEO_SRC): tools/decomp/gen_wasm_render.py $(ARENA_BLOB) $(GEO_ASSET) $(
 	@build/venv/bin/python tools/decomp/gen_wasm_render.py --geo $(GEO_ASSET) > $@
 $(NATIVE_GEO_PPM): $(NATIVE_GEO_SRC)
 	$(NATIVE_RENDER_CC) $(NATIVE_PORTFLAGS) $< -lm -o $@
+
+# native-geo-win: the same real asset in an interactive SDL2 window (spinning,
+# ESC or the close box to quit) instead of a one-shot PPM.
+NATIVE_GEO_WIN_SRC := $(NATIVE_RENDER_DIR)/mk4_geo_win_$(CHAR).c
+NATIVE_GEO_WIN     := $(NATIVE_RENDER_DIR)/mk4_geo_win_$(CHAR)
+
+$(NATIVE_GEO_WIN_SRC): tools/decomp/gen_wasm_render.py $(ARENA_BLOB) $(GEO_ASSET) $(GEO_TEX)
+	@mkdir -p $(NATIVE_RENDER_DIR)
+	@build/venv/bin/python tools/decomp/gen_wasm_render.py --native --geo $(GEO_ASSET) > $@
+$(NATIVE_GEO_WIN): $(NATIVE_GEO_WIN_SRC)
+	$(NATIVE_RENDER_CC) $(NATIVE_PORTFLAGS) $(SDL_CFLAGS) $< $(SDL_LIBS) -lm -o $@
+
+native-geo-win: $(NATIVE_GEO_WIN)
+	@echo "native-geo-win: built $<  ->  run: $(NATIVE_GEO_WIN) $(ARENA_BLOB)"
 
 native-geo: $(NATIVE_GEO_PPM) $(GEO_ASSET) $(GEO_TEX)
 	@build/venv/bin/python tools/geo_mesh.py $(GEO_ASSET)
