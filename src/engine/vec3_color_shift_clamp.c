@@ -131,7 +131,7 @@ void Vec3ColorShiftClamp(int dest_ptr, unsigned char shift)
 {
     unsigned int s = shift & 0x1f;
 #define PACK_CH(SRC, OFF) do {                                          \
-        unsigned short *p = (unsigned short *)(dest_ptr + (OFF));        \
+        unsigned short *p = (unsigned short *)MK4_PTR(dest_ptr + (OFF));        \
         int v = (int)(SRC) >> s;          /* sar (signed) */            \
         unsigned int t5;                                                \
         if (v < 0)    v = 0;                                            \

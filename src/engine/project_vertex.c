@@ -19,35 +19,25 @@
  * with a very specific order. Pure C wouldn't reproduce the dual
  * idiv result-reuse (eax: ratio for X, ecx: ratio for Y).
  */
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void ProjectVertex(void)
+extern void Helper_EmitLine(int slot);
 
+#ifdef NON_MATCHING
+/* Co-exec verified (tools/decomp/verify_project.py, pos/neg/mixed seeds).
+ *
+ * ProjectVertex IS Helper_EmitLine(2). Confirmed by the write set: the original
+ * stores to 0x7af974 / 0x7af980 / 0x7af98c and the screen pair 0x7af9bc/be,
+ * which are exactly slot 2 of the out-x (0x7af96c), out-y (0x7af978), out-z
+ * (0x7af984) and screen (0x7af9b4) arrays Helper_EmitLine indexes - and it
+ * reads g_triStripX0/1/2, slot 2 of the three s16 input vectors.
+ *
+ * Expressing it this way retires a Ghidra lift that carried two sign bugs the
+ * old all-positive seeds could never catch: logical shifts where the original
+ * uses sar, and a (short) truncation applied BEFORE adding the 32-bit
+ * translation instead of after (orig: sar / add / movsx).
+ */
+void ProjectVertex(void)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  
-  iVar1 = (int)g_triStripX0;
-  iVar3 = (int)g_triStripX1;
-  iVar4 = (int)g_triStripX2;
-  g_vtxValid = 1;
-  iVar2 = 0x2000000;
-  g_min_007af98c = (int)(short)((short)(g_mat3x3_007af99e * iVar3 + g_mat3x3_007af99c * iVar1 +
-                                      g_mat3x3_007af9a0 * iVar4 >> 0xc) + (short)g_vtxTransZ);
-  g_vtxOut_x =
-       (int)(short)((short)(g_mat3x3_007af992 * iVar3 + g_mat3x3_007af990 * iVar1 + g_mat3x3_007af994 * iVar4
-                           >> 0xc) + (short)g_vtxTransX);
-  g_vtxOut_y =
-       (int)(short)((short)(g_mat3x3_007af998 * iVar3 + g_mat3x3_007af996 * iVar1 + g_mat3x3_007af99a * iVar4 >>
-                           0xc) + (short)g_vtxTransY);
-  if (1 < g_min_007af98c) {
-    iVar2 = (int)(0x2000000 / (longlong)g_min_007af98c);
-  }
-  (*(unsigned short *)((char *)&g_vtxScreenX + 0)) = (short)((uint)((iVar2 * g_vtxOut_x >> 0x10) * 0x1999a) >> 0x10) + 0x140;
-  (*(unsigned short *)((char *)&g_vtxScreenX + 2)) = (short)((uint)((iVar2 * g_vtxOut_y >> 0x10) * 0x1e000) >> 0x10) + 0xf0;
-  return;
+    Helper_EmitLine(2);
 }
 #else
 __declspec(naked) void ProjectVertex(void)

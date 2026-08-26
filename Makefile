@@ -318,6 +318,51 @@ native-render-check: $(NATIVE_RENDER_PPM) $(WASM_DIR)/frame.ppm
 		&& echo "native-render-check: OK - arm64 framebuffer is BYTE-IDENTICAL to wasm32" \
 		|| (echo "native-render-check: MISMATCH - the MK4_PTR seam changed semantics"; exit 1)
 
+# native-mesh: the FULL verified chain as a native SDL2 app - a real triangle
+# -strip mesh goes in, pixels come out, and every stage in between is co-exec
+# verified against the original bytes:
+#
+#   mesh -> TristripBatchEmit -> ProjectTwoVertices / ProjectVertex /
+#           AdvanceTriStripRing -> backface test -> DrawEntry ->
+#           Vec3ColorShiftClamp -> Helper_DrawCursor -> FlushDrawQueue ->
+#           (counting sort) -> rasterizers -> framebuffer
+#
+# Rendered at 640x480 because that IS the engine's screen: the projection adds
+# the centre as 0x140/0xf0 and Helper_DrawCursor's envelope rejects x > 0x280,
+# y > 0x1e0.
+#   make native-mesh        -> build/native/mk4_mesh (SDL2 window, spinning mesh)
+#   make native-mesh-check  -> headless frame + PPM byte-diff vs wasm32
+NATIVE_MESH_EXE := $(NATIVE_RENDER_DIR)/mk4_mesh
+NATIVE_MESH_PPM := $(NATIVE_RENDER_DIR)/mk4_mesh_ppm
+
+native-mesh: $(NATIVE_MESH_EXE)
+$(NATIVE_RENDER_DIR)/mk4_mesh.c: tools/decomp/gen_wasm_render.py $(ARENA_BLOB)
+	@mkdir -p $(NATIVE_RENDER_DIR)
+	@build/venv/bin/python tools/decomp/gen_wasm_render.py --native --emit > $@
+$(NATIVE_MESH_EXE): $(NATIVE_RENDER_DIR)/mk4_mesh.c
+	$(NATIVE_RENDER_CC) $(NATIVE_PORTFLAGS) $(SDL_CFLAGS) $< $(SDL_LIBS) -lm -o $@
+	@echo "native-mesh: built $@  [full verified chain - run: $@ $(ARENA_BLOB)]"
+
+$(NATIVE_RENDER_DIR)/mk4_mesh_ppm.c: tools/decomp/gen_wasm_render.py $(ARENA_BLOB)
+	@mkdir -p $(NATIVE_RENDER_DIR)
+	@build/venv/bin/python tools/decomp/gen_wasm_render.py --emit > $@
+$(NATIVE_MESH_PPM): $(NATIVE_RENDER_DIR)/mk4_mesh_ppm.c
+	$(NATIVE_RENDER_CC) $(NATIVE_PORTFLAGS) $< -lm -o $@
+
+$(WASM_DIR)/mk4_mesh.c: tools/decomp/gen_wasm_render.py $(ARENA_BLOB)
+	@mkdir -p $(WASM_DIR)
+	@build/venv/bin/python tools/decomp/gen_wasm_render.py --emit > $@
+$(WASM_DIR)/mesh0.ppm: $(WASM_DIR)/mk4_mesh.c $(ARENA_BLOB)
+	emcc -O2 -sNODERAWFS=1 -sALLOW_MEMORY_GROWTH=1 -sINITIAL_MEMORY=64MB \
+		-Iinclude -DNON_MATCHING -DMK4_ARENA $(NATIVE_PORTFLAGS) $< -o $(WASM_DIR)/mk4_mesh.js
+	node $(WASM_DIR)/mk4_mesh.js $(ARENA_BLOB) $@
+
+native-mesh-check: $(NATIVE_MESH_PPM) $(WASM_DIR)/mesh0.ppm
+	@$(NATIVE_MESH_PPM) $(ARENA_BLOB) $(NATIVE_RENDER_DIR)/mesh0.ppm
+	@cmp $(NATIVE_RENDER_DIR)/mesh0.ppm $(WASM_DIR)/mesh0.ppm \
+		&& echo "native-mesh-check: OK - arm64 mesh frame is BYTE-IDENTICAL to wasm32" \
+		|| (echo "native-mesh-check: MISMATCH"; exit 1)
+
 # === Arena (relocated memory model, Phase 1) =============================
 #
 # Extract the original mapped image into a flat blob, then exercise the

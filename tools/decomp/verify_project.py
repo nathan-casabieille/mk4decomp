@@ -51,19 +51,39 @@ WIDTH16 = {'g_mat3x3_007af990', 'g_mat3x3_007af992', 'g_mat3x3_007af994',
            'g_vtxIn1_y', 'g_vtxIn1_z', 'g_vtxIn2_x', 'g_vtxIn2_y', 'g_vtxIn2_z'}
 
 
-def seed_common(a):
+# Vertex/translation seeds. The ORIGINAL projects with signed arithmetic
+# (imul / sar), so a twin that lifted the shifts as LOGICAL only diverges once a
+# projected coordinate goes NEGATIVE. The harness seeded nothing but positive
+# vertices for a long time and happily reported VERIFIED - the mesh demo is what
+# exposed it. Always exercise both signs.
+SEEDS = {
+    'pos': dict(vx=0x0040, vy=0x0030, vz=0x0500, tx=0x0010, ty=0x0020, tz=0x0040),
+    'neg': dict(vx=-0x0180, vy=-0x0140, vz=0x0400, tx=-0x0060, ty=-0x0050, tz=0x0040),
+    'mixed': dict(vx=-0x0200, vy=0x01c0, vz=0x0380, tx=0x0030, ty=-0x0090, tz=0x0020),
+}
+
+
+def seed_common(a, vx=0x0040, vy=0x0030, vz=0x0500,
+                tx=0x0010, ty=0x0020, tz=0x0040):
     # projection matrix (nine s16, +2 stride)
     for i, v in enumerate(MATRIX):
         setw(a, MAT + i * 2, v)
     # the input vertex = three s16 components (x,y,z) in g_triStripX0/1/2, which
     # are 6 bytes apart (0x7af95c/962/968) - each a single word, NOT a 3-word group.
-    setw(a, 0x7af95c, 0x0040)                  # g_triStripX0 (x)
-    setw(a, 0x7af962, 0x0030)                  # g_triStripX1 (y)
-    setw(a, 0x7af968, 0x0500)                  # g_triStripX2 (z)
-    setdw(a, 0x7af9a4, 0x0010)                 # g_vtxTransX (32-bit translation)
-    setdw(a, 0x7af9a8, 0x0020)                 # g_vtxTransY
-    setdw(a, 0x7af9ac, 0x0040)                 # g_vtxTransZ (keep projected Z > 1)
+    setw(a, 0x7af95c, vx)                      # g_triStripX0 (x)
+    setw(a, 0x7af962, vy)                      # g_triStripX1 (y)
+    setw(a, 0x7af968, vz)                      # g_triStripX2 (z)
+    setdw(a, 0x7af9a4, tx)                     # g_vtxTransX (32-bit translation)
+    setdw(a, 0x7af9a8, ty)                     # g_vtxTransY
+    setdw(a, 0x7af9ac, tz)                     # g_vtxTransZ (keep projected Z > 1)
     setdw(a, 0x7af98c, 0x0200)                 # g_min_007af98c (scratch input)
+    # the extra input vertices ProjectTwoVertices / Helper_EmitLine read
+    setw(a, 0x7af958, vx // 2)                 # g_dispatchSave1626
+    setw(a, 0x7af95e, vy // 2)                 # g_vtxIn1_y
+    setw(a, 0x7af960, vz // 2)                 # g_vtxIn1_z
+    setw(a, 0x7af964, -vx)                     # g_vtxIn2_y
+    setw(a, 0x7af966, -vy)
+    setw(a, 0x7af96a, vz)
     # light matrix (g_lightMat00/01/02/20/21/22, dword slots) + light vector
     lm = {0x7af9c0: 0x0f00, 0x7af9c4: 0x0100, 0x7af9c8: 0x0080,
           0x7af9d8: 0x0040, 0x7af9dc: -0x0120, 0x7af9e0: 0x0fa0}
@@ -102,15 +122,16 @@ def main():
     for spec in names:
         # "NAME#k" = the same function under argument variant k (see ARGVALS).
         name = spec.split('#')[0]
-        seeded = bytearray(base)
-        seed_common(seeded)
-        res = vc.verify(name, fn_va, gl_va, fn_va, seeded, width16=WIDTH16,
-                        argvals=ARGVALS.get(spec))
-        weak = 'VERIFIED (0 writes' in res
-        flag = 'WEAK(no writes - seed missed inputs)' if weak else ''
-        print('  %-22s %s %s' % (spec, res, flag))
-        if res.startswith('MISMATCH'):
-            rc = 1
+        for sl, sk in SEEDS.items():
+            seeded = bytearray(base)
+            seed_common(seeded, **sk)
+            res = vc.verify(name, fn_va, gl_va, fn_va, seeded, width16=WIDTH16,
+                            argvals=ARGVALS.get(spec))
+            weak = 'VERIFIED (0 writes' in res
+            flag = 'WEAK(no writes - seed missed inputs)' if weak else ''
+            print('  %-22s %-6s %s %s' % (spec, sl, res, flag))
+            if res.startswith('MISMATCH'):
+                rc = 1
     return rc
 
 

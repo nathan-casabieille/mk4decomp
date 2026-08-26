@@ -19,57 +19,25 @@
  * divide. Pure C wouldn't reproduce the cross-vertex register
  * carry-over.
  */
-#ifdef NON_MATCHING
-/* Co-exec verified (tools/decomp/verify_project.py). */
-void ProjectTwoVertices(void)
+extern void Helper_EmitLine(int slot);
 
+#ifdef NON_MATCHING
+/* Co-exec verified (tools/decomp/verify_project.py, pos/neg/mixed seeds).
+ *
+ * ProjectTwoVertices projects the three vertex slots in turn: the original
+ * inlines slots 0 and 1 and then tail-calls Helper_EmitLine(2) - which is
+ * exactly why a `call Helper_EmitLine` sits at its end. Its write set is slot
+ * 0 (0x7af96c/978/984 + screen 0x7af9b4/b6) and slot 1 (0x7af970/97c/988 +
+ * screen 0x7af9b8/ba), then whatever slot 2 writes.
+ *
+ * See the note in project_vertex.c for the two sign bugs the Ghidra lift of
+ * this function carried.
+ */
+void ProjectTwoVertices(void)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  
-  iVar4 = (int)g_vtxIn2_y;
-  iVar3 = (int)g_vtxIn1_y;
-  iVar1 = (int)g_dispatchSave1626;
-  g_vtxOut1_x =
-       (int)(short)((short)(iVar4 * g_mat3x3_007af994 + iVar3 * g_mat3x3_007af992 + iVar1 * g_mat3x3_007af990
-                           >> 0xc) + (short)g_vtxTransX);
-  g_vtxOut1_y =
-       (int)(short)((short)(g_mat3x3_007af99a * iVar4 + g_mat3x3_007af998 * iVar3 + g_mat3x3_007af996 * iVar1 >>
-                           0xc) + (short)g_vtxTransY);
-  iVar2 = 0x2000000;
-  g_min_007af984 = (int)(short)((short)(g_mat3x3_007af99e * iVar3 + g_mat3x3_007af99c * iVar1 +
-                                    g_mat3x3_007af9a0 * iVar4 >> 0xc) + (short)g_vtxTransZ);
-  if ((int)g_min_007af984 > 1) {
-    /* orig: cmp ecx,1 / jle / cdq / idiv ecx - a SIGNED 32-bit divide, not the
-       64-bit one Ghidra inferred (the (longlong) cast pulled in __divdi3 and
-       changed the semantics). */
-    iVar2 = 0x2000000 / (int)g_min_007af984;
-  }
-  iVar3 = (int)g_vtxIn1_z;
-  g_vtxValid = 1;
-  (*(unsigned short *)((char *)&g_triStripRingA + 2)) =
-       (short)((uint)((iVar2 * g_vtxOut1_y >> 0x10) * 0x1e000) >> 0x10) + 0xf0;
-  iVar1 = (int)g_vtxIn2_x;
-  (*(unsigned short *)((char *)&g_triStripRingA + 0)) =
-       (short)((uint)((iVar2 * g_vtxOut1_x >> 0x10) * 0x1999a) >> 0x10) + 0x140;
-  iVar2 = (int)g_vtxIn2_z;
-  g_vtxOut2_x = (int)(short)((short)(iVar1 * g_mat3x3_007af990 + iVar3 * g_mat3x3_007af992 +
-                                      iVar2 * g_mat3x3_007af994 >> 0xc) + (short)g_vtxTransX);
-  g_min_007af988 = (int)(short)((short)(iVar1 * g_mat3x3_007af99c + iVar3 * g_mat3x3_007af99e +
-                                      iVar2 * g_mat3x3_007af9a0 >> 0xc) + (short)g_vtxTransZ);
-  g_vtxOut2_y =
-       (int)(short)((short)(iVar1 * g_mat3x3_007af996 + iVar2 * g_mat3x3_007af99a + iVar3 * g_mat3x3_007af998 >>
-                           0xc) + (short)g_vtxTransY);
-  iVar1 = 0x2000000;
-  if ((int)g_min_007af988 > 1) {
-    iVar1 = 0x2000000 / (int)g_min_007af988;     /* signed 32-bit idiv */
-  }
-  (*(unsigned short *)((char *)&g_vtxScreenP2X + 0)) = (short)((uint)((iVar1 * g_vtxOut2_x >> 0x10) * 0x1999a) >> 0x10) + 0x140;
-  (*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) = (short)((uint)((iVar1 * g_vtxOut2_y >> 0x10) * 0x1e000) >> 0x10) + 0xf0;
-  Helper_EmitLine(2);
-  return;
+    Helper_EmitLine(0);
+    Helper_EmitLine(1);
+    Helper_EmitLine(2);
 }
 #else
 __declspec(naked) void ProjectTwoVertices(void)

@@ -41156,10 +41156,10 @@ void Vec3ColorShiftClamp(int param_1,byte param_2)
   if (0x1f < iVar3) {
     iVar3 = 0x1f;
   }
-  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)(param_1 + 0x14)) & 0x1f ^
-          *(ushort *)(param_1 + 0x14);
+  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)MK4_PTR(param_1 + 0x14)) & 0x1f ^
+          *(ushort *)MK4_PTR(param_1 + 0x14);
   uVar2 = uVar1 & 0x1f;
-  *(ushort *)(param_1 + 0x14) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
+  *(ushort *)MK4_PTR(param_1 + 0x14) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
   iVar3 = g_min_007af988 >> (param_2 & 0x1f);
   if (iVar3 < 0) {
     iVar3 = 0;
@@ -41167,10 +41167,10 @@ void Vec3ColorShiftClamp(int param_1,byte param_2)
   if (0x1f < iVar3) {
     iVar3 = 0x1f;
   }
-  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)(param_1 + 0x16)) & 0x1f ^
-          *(ushort *)(param_1 + 0x16);
+  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)MK4_PTR(param_1 + 0x16)) & 0x1f ^
+          *(ushort *)MK4_PTR(param_1 + 0x16);
   uVar2 = uVar1 & 0x1f;
-  *(ushort *)(param_1 + 0x16) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
+  *(ushort *)MK4_PTR(param_1 + 0x16) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
   iVar3 = g_min_007af98c >> (param_2 & 0x1f);
   if (iVar3 < 0) {
     iVar3 = 0;
@@ -41178,10 +41178,10 @@ void Vec3ColorShiftClamp(int param_1,byte param_2)
   if (0x1f < iVar3) {
     iVar3 = 0x1f;
   }
-  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)(param_1 + 0x18)) & 0x1f ^
-          *(ushort *)(param_1 + 0x18);
+  uVar1 = (byte)(-(char)iVar3 - 1U ^ (byte)*(ushort *)MK4_PTR(param_1 + 0x18)) & 0x1f ^
+          *(ushort *)MK4_PTR(param_1 + 0x18);
   uVar2 = uVar1 & 0x1f;
-  *(ushort *)(param_1 + 0x18) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
+  *(ushort *)MK4_PTR(param_1 + 0x18) = uVar1 & 0x801f | uVar2 << 5 | uVar2 << 10;
   return;
 }
 #else

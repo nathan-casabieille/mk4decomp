@@ -32,9 +32,62 @@ TEX_VA = 0x01100000
 # ((shade & 0xf0) << 13) + idx*2, so it must span 0xf0<<13 + 0x20000 = 2 MB.
 PAL_VA = 0x01200000
 PAL_SZ = 0x00200000
-W, H = 320, 240                   # a real-ish frame
+W, H = 320, 240                   # hand-seeded rect scene (arbitrary size)
+# The ENGINE's screen is 640x480: the projection helpers add the screen centre
+# as 0x140 / 0xf0, and Helper_DrawCursor's envelope test rejects x > 0x280 and
+# y > 0x1e0. A mesh frame must therefore be rendered at 640x480 or the whole
+# projected scene lands off the bottom-right of the framebuffer.
+EMIT_W, EMIT_H = 640, 480
 RENDER_MODE_VA = 0x4f4b3c
 REC = 0xf71310                    # draw-queue record start (sort key at +0x12)
+
+
+# Globals the ORIGINAL accesses 16 bits at a time (movsx/mov word). gdef
+# defaults everything to 32-bit, which is wrong for a packed s16: its high word
+# is the NEXT entry, so a dword read is polluted and a dword write clobbers the
+# neighbour. Same opt-in set the co-exec harness uses (verify_project.WIDTH16),
+# kept explicit rather than inferred - flipping a global to 16-bit changes
+# results whenever bit 15 is set, so it must never be guessed.
+WIDTH16 = {
+    'g_mat3x3_007af990', 'g_mat3x3_007af992', 'g_mat3x3_007af994',
+    'g_mat3x3_007af996', 'g_mat3x3_007af998', 'g_mat3x3_007af99a',
+    'g_mat3x3_007af99c', 'g_mat3x3_007af99e', 'g_mat3x3_007af9a0',
+    'g_vtxMat', 'g_wtMatExtraWord',
+    'g_triStripX0', 'g_triStripX1', 'g_triStripX2',
+    'g_dispatchSave1626', 'g_vtxIn1_y', 'g_vtxIn1_z',
+    'g_vtxIn2_x', 'g_vtxIn2_y', 'g_vtxIn2_z',
+}
+
+# A definition of `name` that is NOT inside a #ifdef NON_MATCHING block, i.e. a
+# function already converted to unconditional byte-matching pure C. These read
+# as "no twin" to extract_twin_any (there is no NON_MATCHING block to find) but
+# are perfectly usable portable C - AdvanceTriStripRing, MinOfThree and
+# MaxOfThree are all in this category, and without them the emitter chain looks
+# unbuildable when it is in fact complete.
+def extract_pure_c(name):
+    sig = re.compile(r'^[A-Za-z_][\w \*]*?\b%s\s*\(([^;{)]*)\)\s*\{' % re.escape(name),
+                     re.M)
+    for f in sorted((vc.ROOT / 'src').rglob('*.c')):
+        s = f.read_text(errors='ignore')
+        m = sig.search(s)
+        if not m:
+            continue
+        # reject if this definition sits inside a #ifdef ... #endif region
+        pre = s[:m.start()]
+        if pre.count('#ifdef') + pre.count('#ifndef') + pre.count('#if ') > \
+           pre.count('#endif'):
+            continue
+        i = s.index('{', m.end() - 1)
+        k, depth = i, 0
+        while k < len(s):
+            if s[k] == '{':
+                depth += 1
+            elif s[k] == '}':
+                depth -= 1
+                if depth == 0:
+                    return s[m.start():k + 1]
+            k += 1
+    return None
 
 
 def collect(seed, fn_va):
@@ -47,8 +100,11 @@ def collect(seed, fn_va):
             continue
         t = vc.extract_twin_any(name)
         if t is None:
-            need_stub.add(name)
-            continue
+            pure = extract_pure_c(name)
+            if pure is None:
+                need_stub.add(name)
+                continue
+            t = (pure,)
         body = t[0]
         bodies[name] = body
         order.append(name)
@@ -61,6 +117,9 @@ def collect(seed, fn_va):
 def gdef_arena(g, va, alltext):
     """Body-usage-aware lvalue alias into the arena (mirrors verify_coexec.gdef
     but resolves to MK4_VA(...) instead of an absolute VA)."""
+    if g in WIDTH16:
+        # signed: the geometry path reads these with movsx, never movzx
+        return '#define %s (*(short *)MK4_VA(short, 0x%xu))\n' % (g, va)
     if re.search(r'\(\s*\*\s*%s\s*\)\s*\(' % g, alltext) or \
        re.search(r'\b%s\s*\(' % g, alltext):
         return '#define %s (*(unsigned int (**)())MK4_VA(unsigned int, 0x%xu))\n' % (g, va)
@@ -80,7 +139,11 @@ def gdef_arena(g, va, alltext):
 
 def main():
     fn_va, gl_va = vt.load_maps()
-    seed = ['FlushDrawQueue']
+    # --emit drives the FULL chain: a real strip mesh through the projection
+    # + emitter layer into the draw queue, then the sort/dispatch/rasterize
+    # pipeline. Without it only the pipeline half runs, off hand-seeded records.
+    emit = '--emit' in sys.argv
+    seed = ['TristripBatchEmit', 'FlushDrawQueue'] if emit else ['FlushDrawQueue']
     bodies, order, need_stub = collect(seed, fn_va)
     # Renderer_GetMode is the only SW-path callee we satisfy ourselves.
     need_stub.discard('FlushDrawQueue')
@@ -97,36 +160,70 @@ def main():
     P('#include <stdio.h>')
     P('#include <stdlib.h>')
     P('#include <string.h>')
+    P('#include "types.h"')
     P('#include "portable/ghidra_types.h"')
     P('#include "portable/mem_model.h"')
     P('')
     P('unsigned char *g_mk4Arena = 0;       /* arena base (32-bit in wasm32) */')
     P('unsigned int   g_mk4ArenaSize = 0;')
     P('')
-    P('/* --- global aliases into the linear arena (contiguous by construction) --- */')
-    for g in globs:
-        if g in gl_va:
-            P(gdef_arena(g, gl_va[g], alltext).rstrip())
+    # NOTE: the aliases are emitted PER FUNCTION, not once globally. The same
+    # VA is legitimately viewed differently by different bodies -
+    # AdvanceTriStripRing indexes g_triStripRingA[0..2] as an array while
+    # TristripBatchEmit reads it as a scalar dword AND takes &g for a +2 word
+    # access - so one shared macro cannot serve both. The co-exec verifier has
+    # never hit this because it compiles a separate blob per function, each
+    # with a gdef tuned to that body; scoping the macros reproduces exactly
+    # that, and keeps every body byte-for-byte the verified source.
     P('')
     P('/* --- forward declarations --- */')
     for n in order:
-        P('void %s(void);' % n)
-    P('static int Renderer_GetMode(void);')
+        # Use the body's own signature: several collected functions take
+        # arguments (TristripBatchEmit(mesh, parity, sortpick),
+        # Helper_EmitLine(slot), Vec3ColorShiftClamp(entry, n)), so a blanket
+        # `void f(void)` would be a conflicting declaration.
+        sig = bodies[n][:bodies[n].index('{')].strip().rstrip()
+        P('%s;' % ' '.join(sig.split()))
+    if 'Renderer_GetMode' not in bodies:
+        P('static int Renderer_GetMode(void);')
     P('')
     P('/* --- render twin bodies (verified portable C) --- */')
     for n in order:
-        P(bodies[n])
+        body = bodies[n]
+        used = [g for g in sorted(set(re.findall(r'\bg_\w+', body))) if g in gl_va]
+        P('/* ---- %s ---- */' % n)
+        for g in used:
+            P(gdef_arena(g, gl_va[g], body).rstrip())
+        P(body)
+        for g in used:
+            P('#undef %s' % g)
         P('')
-    P('static int Renderer_GetMode(void) {')
-    P('    return *(int *)MK4_VA(int, 0x%xu);' % RENDER_MODE_VA)
-    P('}')
+    if 'Renderer_GetMode' not in bodies:
+        P('static int Renderer_GetMode(void) {')
+        P('    return *(int *)MK4_VA(int, 0x%xu);' % RENDER_MODE_VA)
+        P('}')
     P('')
     # ---- driver ----
     sdl = '--sdl' in sys.argv
     native = '--native' in sys.argv
     fmt = dict(fb_va=FB_VA, tex_va=TEX_VA, pal_va=PAL_VA, pal_sz=PAL_SZ,
-               w=W, h=H, mode_va=RENDER_MODE_VA, rec=REC)
+               w=EMIT_W if emit else W, h=EMIT_H if emit else H,
+               mode_va=RENDER_MODE_VA, rec=REC)
+    P('/* ---- driver ---- */')
+    DRIVER_GLOBALS = ['g_viewportX', 'g_viewportY', 'g_viewportW', 'g_viewportH',
+                      'g_dispatchSave1400', 'g_dispatchSave1340', 'g_drawQueueSize',
+                      'g_inLoopStep', 'g_dualC']
+    for g in DRIVER_GLOBALS:
+        if g in gl_va:
+            P(gdef_arena(g, gl_va[g], '').rstrip())
     P(DRIVER_COMMON % fmt)
+    if emit:
+        P(DRIVER_EMIT % fmt)
+        P('#define SCENE_INIT()   mesh_init()')
+        P('#define SCENE_FRAME(f) mesh_frame(f)')
+    else:
+        P('#define SCENE_INIT()   ((void)0)')
+        P('#define SCENE_FRAME(f) do { seed_scene(f); FlushDrawQueue(); } while (0)')
     P((DRIVER_NATIVE if native else DRIVER_SDL if sdl else DRIVER_PPM) % fmt)
     sys.stdout.write('\n'.join(out) + '\n')
     sys.stderr.write('twins=%d  stubs_needed=%s  missing_globals=%s\n'
@@ -235,8 +332,8 @@ int main(int argc, char **argv) {
     unsigned short *fb;
     FILE *o; int x, y, nz = 0;
     if (!arena_init(img)) return 2;
-    seed_scene(0);
-    FlushDrawQueue();
+    SCENE_INIT();
+    SCENE_FRAME(0);
     fb = (unsigned short *)MK4_VA(unsigned short, FB_VA);
     o = fopen(outp, "wb");
     if (!o) { fprintf(stderr, "cannot write %%s\n", outp); return 2; }
@@ -266,8 +363,7 @@ static SDL_Texture  *g_tex;
 static int g_frame;
 
 static void tick(void) {
-    seed_scene(g_frame++);
-    FlushDrawQueue();
+    SCENE_FRAME(g_frame++);
     /* the framebuffer is native RGB565 - upload straight into the texture */
     SDL_UpdateTexture(g_tex, NULL, MK4_VA(void, FB_VA), PITCH);
     SDL_RenderClear(g_ren);
@@ -279,6 +375,7 @@ int main(int argc, char **argv) {
     SDL_Window *win;
     const char *img = (argc > 1) ? argv[1] : "build/arena.bin";
     if (!arena_init(img)) return 2;
+    SCENE_INIT();
     SDL_Init(SDL_INIT_VIDEO);
     SDL_CreateWindowAndRenderer(W * 2, H * 2, 0, &win, &g_ren);
     SDL_RenderSetLogicalSize(g_ren, W, H);
@@ -304,6 +401,7 @@ int main(int argc, char **argv) {
     int frame = 0, running = 1, scale = 3;
 
     if (!arena_init(img)) return 2;
+    SCENE_INIT();
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         fprintf(stderr, "SDL_Init: %%s\n", SDL_GetError()); return 2; }
     win = SDL_CreateWindow("MK4 - verified SW render pipeline (native)",
@@ -320,7 +418,7 @@ int main(int argc, char **argv) {
     if (argc > 2 && argv[2][0] == '-' && argv[2][1] == 'n') {
         int n = atoi(argv[2] + 2), i, x, y, nz = 0;
         unsigned short *fb;
-        for (i = 0; i < (n > 0 ? n : 1); i++) { seed_scene(i); FlushDrawQueue(); }
+        for (i = 0; i < (n > 0 ? n : 1); i++) SCENE_FRAME(i);
         fb = (unsigned short *)MK4_VA(unsigned short, FB_VA);
         for (y = 0; y < H; y++) for (x = 0; x < W; x++) if (fb[y * W + x]) nz++;
         fprintf(stderr, "native: %%d frames, %%d non-zero px in last frame\n",
@@ -334,8 +432,7 @@ int main(int argc, char **argv) {
             if (e.type == SDL_QUIT) running = 0;
             if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) running = 0;
         }
-        seed_scene(frame++);
-        FlushDrawQueue();                     /* verified twin: sort + dispatch */
+        SCENE_FRAME(frame++);                 /* verified twins, end to end */
         SDL_UpdateTexture(tex, NULL, MK4_VA(void, FB_VA), PITCH);
         SDL_RenderClear(ren);
         SDL_RenderCopy(ren, tex, NULL, NULL);
@@ -344,6 +441,136 @@ int main(int argc, char **argv) {
     SDL_DestroyTexture(tex); SDL_DestroyRenderer(ren); SDL_DestroyWindow(win);
     SDL_Quit();
     return 0;
+}
+'''
+
+
+DRIVER_EMIT = r'''
+/* ---------------- mesh scene (the FULL verified chain) ----------------------
+   seed_mesh() replaces the hand-seeded draw-queue records with a real triangle
+   -strip mesh, so a frame runs the whole thing:
+
+     mesh -> TristripBatchEmit -> ProjectTwoVertices / ProjectVertex /
+             AdvanceTriStripRing -> backface test -> DrawEntry ->
+             Vec3ColorShiftClamp -> Helper_DrawCursor -> FlushDrawQueue ->
+             (sort) -> rasterizers -> framebuffer
+
+   Every one of those is co-exec verified against the original bytes. The mesh
+   layout is the one the emitter itself defines (see verify_emit.py):
+     M+4 : s32 vtxOff   -> vertices   at M + 4 + vtxOff
+     M+8 : s32 stripOff -> strip list at M + 8 + stripOff
+     strips  : (u16 flags, s16 count) pairs, a NEGATIVE count terminates
+     vertices: 6 s16 each (x,y,z + 3 payload); a strip opens on two vertices
+               then walks count+1 more
+   ------------------------------------------------------------------------- */
+#include <math.h>
+
+#define MESH_VA    0x00f40000u
+#define ENTRIES_VA 0x00f50000u
+#define LUT_VA     0x00b0d008u      /* g_zSortKeyLUT[65536] (u16) */
+#define MAT_VA     0x007af990u      /* nine s16, +2 stride (Q12) */
+
+static void mesh_setw(unsigned int va, int v) {
+    *(short *)MK4_VA(short, va) = (short)v;
+}
+static void mesh_setdw(unsigned int va, int v) {
+    *(int *)MK4_VA(int, va) = v;
+}
+
+/* A cylinder as triangle strips. The emitter consumes vertices STRICTLY
+   sequentially - two to open a strip, then one per inner iteration, and it
+   carries straight on into the next strip - so the vertex array must be
+   written in exactly the order the strips walk it: for each strip, alternate
+   between ring r and ring r+1 so consecutive triples form real triangles.
+   (Laying each ring out contiguously instead gives a fan of near-degenerate
+   slivers - 5 lit pixels for the whole mesh.) */
+#define RINGS  4
+#define SEG    8
+#define RADIUS 0xC0
+#define ZDIST  0x380   /* camera distance, applied as the TRANSLATION */
+#define VPS    (2 * (SEG + 1))          /* vertices per strip */
+#define NSTRIP (RINGS - 1)
+
+static void mesh_build(void) {
+    unsigned int vtx = MESH_VA + 0x100, strip = MESH_VA + 0x800;
+    int r, k, i = 0;
+    mesh_setdw(MESH_VA + 4, (int)(vtx - (MESH_VA + 4)));
+    mesh_setdw(MESH_VA + 8, (int)(strip - (MESH_VA + 8)));
+    for (r = 0; r < NSTRIP; r++) {
+        for (k = 0; k <= SEG; k++) {
+            int q, kk = k %% SEG;
+            double a = 6.283185307 * kk / SEG;
+            for (q = 0; q < 2; q++, i++) {
+                unsigned int v = vtx + (unsigned)i * 12;
+                int rr = r + q;
+                mesh_setw(v + 0, (int)(cos(a) * RADIUS));
+                mesh_setw(v + 2, (rr - RINGS / 2) * 0x60);
+                /* centred on the ORIGIN: the matrix rotates about the
+                   origin, so a mesh built at z = ZDIST would ORBIT out of
+                   frame instead of spinning in place. The distance is added
+                   afterwards by g_vtxTransZ. */
+                mesh_setw(v + 4, (int)(sin(a) * RADIUS));
+                mesh_setw(v + 6, (kk * 32) & 0xff);      /* payload: u / colour */
+                mesh_setw(v + 8, (rr * 48) & 0xff);
+                mesh_setw(v + 10, 0x300 + i);
+            }
+        }
+        mesh_setw(strip + r * 4 + 0, 0x0001);
+        mesh_setw(strip + r * 4 + 2, VPS - 3);   /* opens on 2, walks count+1 */
+    }
+    mesh_setw(strip + NSTRIP * 4 + 0, 0);
+    mesh_setw(strip + NSTRIP * 4 + 2, -1);       /* negative count terminates */
+}
+
+static void mesh_init(void) {
+    unsigned int k;
+    /* Depth -> bucket table. FlushDrawQueue buckets on the +0x12 field that
+       Helper_DrawCursor rewrites through this LUT, and there are exactly 0x400
+       buckets, so every entry MUST land in 0..0x3ff. The static image has the
+       table all-zero (the game fills it at runtime), which would collapse every
+       primitive into bucket 0 - a ramp makes the sort actually order by depth. */
+    for (k = 0; k < 0x10000u; k++)
+        *(unsigned short *)MK4_VA(unsigned short, LUT_VA + k * 2) =
+            (unsigned short)(k >> 6);
+    mesh_build();
+}
+
+/* Q12 rotation about Y composed with a fixed tilt, written into the packed
+   nine-s16 matrix the projection helpers read (movsx word, +2 stride). */
+static void mesh_matrix(int frame) {
+    /* Pure rotation about Y, Q12. Keeping the Y row at identity leaves every
+       vertex at its own height and keeps the transformed Z strictly positive
+       for the whole turn - mixing X/Z into the Y row (an earlier version) drove
+       Z through the near-plane test and blanked the frame part of the way
+       round. */
+    double a = frame * 0.03, c = cos(a), s = sin(a);
+    int m[9];
+    m[0] = (int)(c * 0x1000);  m[1] = 0;      m[2] = (int)(s * 0x1000);
+    m[3] = 0;                  m[4] = 0x1000; m[5] = 0;
+    m[6] = (int)(-s * 0x1000); m[7] = 0;      m[8] = (int)(c * 0x1000);
+    { int i; for (i = 0; i < 9; i++) mesh_setw(MAT_VA + (unsigned)i * 2, m[i]); }
+}
+
+static void seed_mesh(int frame) {
+    setdw(MODE_VA, 5);                       /* SW mode */
+    g_viewportX = FB_VA;                     /* VAs, not host pointers */
+    g_viewportY = PITCH;  g_viewportW = W;  g_viewportH = H;
+    g_dispatchSave1400 = TEX_VA;
+    g_dispatchSave1340 = PAL_VA;
+    g_inLoopStep = 0;                        /* the emitter gate */
+    g_dualC = ENTRIES_VA - 4;                /* DrawEntries at g_dualC + 4 */
+    g_drawQueueSize = 0;                     /* rebuild the queue each frame */
+    mesh_matrix(frame);
+    setdw(0x007af9a4u, 0x10);                /* g_vtxTransX */
+    setdw(0x007af9a8u, 0x00);                /* g_vtxTransY */
+    setdw(0x007af9acu, ZDIST);               /* g_vtxTransZ: push it in front */
+    memset(MK4_VA(void, FB_VA), 0, PITCH * H);
+}
+
+static void mesh_frame(int frame) {
+    seed_mesh(frame);
+    TristripBatchEmit((int)MESH_VA, 0, 0);   /* project + emit + enqueue */
+    FlushDrawQueue();                        /* sort + dispatch + rasterize */
 }
 '''
 

@@ -153,10 +153,10 @@ void TristripBatchEmit2(int param_1,int param_2)
   int local_c;
   ushort local_8;
   
-  if ((g_inLoopStep == 0) && (*(int *)(param_1 + 4) != 0)) {
-    puVar6 = (ushort *)(*(int *)(param_1 + 8) + 8 + param_1);
-    puVar8 = (undefined2 *)(param_1 + 4 + *(int *)(param_1 + 4));
-    puVar7 = (undefined4 *)(g_dualC + 4);
+  if ((g_inLoopStep == 0) && (*(int *)MK4_PTR(param_1 + 4) != 0)) {
+    puVar6 = (ushort *)MK4_PTR(*(int *)MK4_PTR(param_1 + 8) + 8 + param_1);
+    puVar8 = (undefined2 *)MK4_PTR(param_1 + 4 + *(int *)MK4_PTR(param_1 + 4));
+    puVar7 = (undefined4 *)MK4_PTR(g_dualC + 4);
     if (g_dispatchSave1576 < 0x10) {
       uVar4 = 0;
     }
@@ -198,13 +198,13 @@ void TristripBatchEmit2(int param_1,int param_2)
           *puVar7 = g_triStripRingA;
           puVar7[1] = g_vtxScreenP2X;
           puVar7[2] = g_vtxScreenX;
-          *(ushort *)((int)puVar7 + 0x1a) =
-               *(ushort *)((int)puVar7 + 0x1a) & 0xfbff | (ushort)((g_vtxValid & 1) << 10);
+          *(ushort *)((char *)puVar7 + 0x1a) =
+               *(ushort *)((char *)puVar7 + 0x1a) & 0xfbff | (ushort)((g_vtxValid & 1) << 10);
           iVar5 = MaxOfThree();
-          *(short *)((int)puVar7 + 0x12) = (short)(iVar5 + 2000);
-          *(short *)((int)puVar7 + 0x12) = (short)(g_dispatchSave1559 * 0x20 + iVar5 + 2000);
-          *(ushort *)((int)puVar7 + 0x1a) =
-               *(ushort *)((int)puVar7 + 0x1a) & 0xfe6f | (short)(char)((byte)(uVar1 >> 8) & 1) << 7
+          *(short *)((char *)puVar7 + 0x12) = (short)(iVar5 + 2000);
+          *(short *)((char *)puVar7 + 0x12) = (short)(g_dispatchSave1559 * 0x20 + iVar5 + 2000);
+          *(ushort *)((char *)puVar7 + 0x1a) =
+               *(ushort *)((char *)puVar7 + 0x1a) & 0xfe6f | (short)(char)((byte)(uVar1 >> 8) & 1) << 7
           ;
           *(ushort *)(puVar7 + 5) = local_8;
           Helper_DrawCursor(puVar7);
