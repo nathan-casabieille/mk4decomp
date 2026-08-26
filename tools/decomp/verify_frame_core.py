@@ -147,6 +147,22 @@ SEEDS = {
         ('paused up front',   dict(TICKCFG, **{'g_tickInitFlag': 0, 'g_framePauseFlag': 1,
                                                'g_tickDecay': 5, 'g_tickW1': 0x40})),
     ],
+    # GameStateMachine: g_gameState picks the block, and for state 0 the `cmd`
+    # argument picks the new state through the second jump table. The menu and
+    # mode blocks call into helpers that co-execute as original bytes.
+    'GameStateMachine': [
+        ('state 0, cmd 1',    {'g_gameState': 0}, (1,)),
+        ('state 0, cmd 2, flag clear', {'g_gameState': 0, 'g_gsmFlag': 0}, (2,)),
+        ('state 0, cmd 2, flag set',   {'g_gameState': 0, 'g_gsmFlag': 1}, (2,)),
+        ('state 0, cmd 8',    {'g_gameState': 0}, (8,)),
+        ('state 0, cmd 0',    {'g_gameState': 0}, (0,)),
+        ('state 0, cmd 9',    {'g_gameState': 0}, (9,)),
+        ('state 0, cmd -1',   {'g_gameState': 0}, (0xffffffff,)),
+        ('state 1 (default)', {'g_gameState': 1}, (0,)),
+        ('state 13 (default)',{'g_gameState': 13}, (0,)),
+        ('state out of range',{'g_gameState': 0x40}, (0,)),
+        ('state 0x1c config', {'g_gameState': 0x1c}, (0,)),
+    ],
     'Mem_Free': [
         ('below the heap',      _blocks(),          (0x7b0000,)),
         ('above the heap',      _blocks(),          (0xac0000,)),

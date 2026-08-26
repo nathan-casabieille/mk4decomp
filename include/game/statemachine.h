@@ -37,7 +37,7 @@ extern "C" {
 
 s32 GameStateMachine(s32 cmd);                           /* 0x004b6340 */
 
-void DrawMenu(void *menu_items, s32 selection);          /* 0x004b65c0 */
+s32  DrawMenu(void *menu_items, s32 selection);          /* 0x004b65c0 - returns non-zero while the menu is still up */
 
 /* === Globals ================================================ */
 
@@ -148,7 +148,12 @@ extern u32 g_gsmOut4;            /* 0x00543820 */
 extern u32 g_gsmActiveFlag;      /* 0x00ab4334 */
 
 /* Per-state helper functions. */
+/* Same function at 0x004c3490 under two names: the naked branches call it
+ * Helper_AudioRelease2, while config/symbols.yaml (and audio/sound.h) call it
+ * Helper_AudioRelease - which is the spelling the co-exec harness and the
+ * VA -> native trampoline can resolve, so twins use that one. */
 void Helper_AudioRelease2(s32 channel);                  /* 0x004c3490 */
+void Helper_AudioRelease(s32 channel);                   /* 0x004c3490 */
 void Audio_PlaySoundId(s32 a, s32 b, s32 c);        /* 0x004c3960 */
 s32  Helper_GSM_HandleEvent(void);                       /* 0x004b84d0 */
 s32  Helper_GSM_VS(void);                                /* 0x004b6900 */
@@ -157,13 +162,13 @@ s32  Helper_GSM_Practice(void);                          /* 0x004b7b10 */
 s32  Helper_GSM_Options(void);                           /* 0x004b7df0 */
 s32  Helper_GSM_Config(void);                            /* 0x004b81f0 */
 void Helper_GSM_PlayMusic(s32 track);                    /* 0x004b40a0 */
-s32  Menu_HelpScreen(s32 cmd);                          /* 0x004b8630 */
-s32  Menu_GlideUnavailableDialog(s32 cmd);                          /* 0x004b8730 */
-s32  Menu_Direct3DUnavailableDialog(s32 cmd);                          /* 0x004b8830 */
-s32  Menu_DirectDrawUnavailableDialog(s32 cmd);                          /* 0x004b8930 */
-s32  Menu_PauseMenu(s32 cmd);                          /* 0x004b8a30 */
-s32  Menu_ColorDepthErrorDialog(s32 cmd);                     /* 0x004b8bd0 */
-s32  Menu_InsertCDDialog(s32 cmd);                     /* 0x004b8d70 */
+s32  Menu_HelpScreen(void);                          /* 0x004b8630 */
+s32  Menu_GlideUnavailableDialog(void);                          /* 0x004b8730 */
+s32  Menu_Direct3DUnavailableDialog(void);                          /* 0x004b8830 */
+s32  Menu_DirectDrawUnavailableDialog(void);                          /* 0x004b8930 */
+s32  Menu_PauseMenu(void);                          /* 0x004b8a30 */
+s32  Menu_ColorDepthErrorDialog(void);                     /* 0x004b8bd0 */
+s32  Menu_InsertCDDialog(void);                     /* 0x004b8d70 */
 void Helper_GSM_Reset(void);                             /* 0x004b5840 */
 
 #ifdef __cplusplus

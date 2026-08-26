@@ -144,10 +144,15 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None
            if t in name_to_va and t != name}
     defs += ''.join('extern int %s();\n' % f for f in sorted(fns))
     src = ('#define NON_MATCHING 1\n'
-           # NB: only ghidra_types.h - pulling in the project's types.h drags
-           # win32_types.h with it, whose HWND conflicts with Ghidra's. Twins
-           # therefore spell their signatures in base C types, not u32/s16.
            '#include "portable/ghidra_types.h"\n#include "portable/mem_model.h"\n'
+           # The project's scalar spellings, declared inline rather than by
+           # including types.h - that header drags in win32_types.h, whose HWND
+           # collides with Ghidra's. These names do not overlap ghidra_types.h.
+           'typedef signed char s8; typedef unsigned char u8;\n'
+           'typedef short s16; typedef unsigned short u16;\n'
+           'typedef int s32; typedef unsigned int u32;\n'
+           'typedef long long s64; typedef unsigned long long u64;\n'
+           'typedef float f32; typedef double f64;\n'
            + defs + body + '\n')
     # A twin that does a 64-bit divide (e.g. the perspective divide in
     # ProjectVertex) emits a libgcc helper call (__divdi3/...). build_twin_blob
@@ -176,6 +181,11 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None
                  # skipped as "unresolved call: sqrt"; with it, gcc emits fsqrt
                  # inline - matching what the original actually does.
                  '-fno-math-errno',
+                 # build_twin_blob loads the twin's .text and nothing else, so a
+                 # switch lowered to a jump table in .rodata would jump into
+                 # unmapped memory (UC_ERR_FETCH_UNMAPPED). Comparison chains
+                 # keep the whole dispatch inside .text.
+                 '-fno-jump-tables',
                  # CC is mingw (defines _WIN32), so win32_types.h would gate its
                  # DWORD/HWND/... typedefs off; force the shim branch on so Win32-typed
                  # twins compile (windows.h is not included under -ffreestanding).
@@ -215,10 +225,18 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None
     # the neighbour then executes garbage. With no self-reference the placement
     # buys nothing, so fall back to the scratch code window and verify anyway
     # instead of skipping the function entirely.
-    self_ref = any(syms[r['sym_idx']] is not None and
-                   _strip(syms[r['sym_idx']]['name']) == name
-                   for r in text['relocs']
-                   if 0 <= r['sym_idx'] < len(syms))
+    #
+    # Detect the self-reference from the SOURCE, not from the relocation
+    # symbols: for a function defined in the same object COFF emits a SECTION
+    # symbol plus an addend, not the function's own name, so a name-based scan
+    # over the relocs misses exactly the case that matters (an install-self
+    # twin storing its own address into a node field). The body mentions its
+    # own name once in the signature; more than that means it takes its address.
+    self_ref = len(re.findall(r'\b%s\b' % re.escape(name), body)) > 1 or \
+        any(syms[r['sym_idx']] is not None and
+            _strip(syms[r['sym_idx']]['name']) == name
+            for r in text['relocs']
+            if 0 <= r['sym_idx'] < len(syms))
     if (not self_ref and next_fn_va is not None
             and load_base + len(buf) > next_fn_va):
         load_base = CODE

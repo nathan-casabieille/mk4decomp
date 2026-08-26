@@ -191,6 +191,7 @@ src/engine/zero_three_slots.c
 src/game/event_queue.c
 src/game/fight.c
 src/game/game_tick.c
+src/game/statemachine.c
 src/game/tick.c
 src/platform/exit.c
 src/platform/win32/app_shutdown.c

@@ -11,6 +11,25 @@
  */
 #include "game/statemachine.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_gameState (*(unsigned int *)MK4_VA(unsigned int, 0xab438cu))
+#define g_gsmActiveFlag (*(unsigned int *)MK4_VA(unsigned int, 0xab4334u))
+#define g_gsmDirty1 (*(unsigned int *)MK4_VA(unsigned int, 0xab4374u))
+#define g_gsmDirty2 (*(unsigned int *)MK4_VA(unsigned int, 0xab4378u))
+#define g_gsmDirty3 (*(unsigned int *)MK4_VA(unsigned int, 0xab437cu))
+#define g_gsmFlag (*(unsigned int *)MK4_VA(unsigned int, 0x543930u))
+#define g_gsmOut1 (*(unsigned int *)MK4_VA(unsigned int, 0x543818u))
+#define g_gsmOut2 (*(unsigned int *)MK4_VA(unsigned int, 0x543814u))
+#define g_gsmOut3 (*(unsigned int *)MK4_VA(unsigned int, 0x543810u))
+#define g_gsmOut4 (*(unsigned int *)MK4_VA(unsigned int, 0x543820u))
+#define g_gsmStateAa4 (*(unsigned int *)MK4_VA(unsigned int, 0x543aa4u))
+#endif
+
+
+extern void Helper_TitleAudioReset(void);   /* 0x004b5840, see audio/sound.h */
+
 /*
  * @addr 0x004b6340
  *
@@ -20,6 +39,116 @@
  * fall-through "set_state -> check_state -> audio re-arm" tail
  * are all hand-tuned.  Pure C wouldn't reproduce identically.
  */
+#ifdef NON_MATCHING
+/* Portable twin. The two dispatch tables read out as:
+ *
+ *   byte table @0x4b6580, state 0..0x1c -> case index; every state not listed
+ *   below maps to case 15, which is the shared tail.
+ *   jump table @0x4b6540, case index -> block.
+ *   jump table @0x4b65a0, (cmd - 1) for state 0 -> the new state.
+ *
+ * State 0's sub-dispatch is the subtle one. ECX still holds g_gameState (zero,
+ * since we are in state 0) all the way to the audio check, so both the
+ * out-of-range `cmd` and the g_gsmFlag == 0 path reach that check with ECX
+ * still zero and re-arm nothing. Only a case that actually assigned a new
+ * state gets the audio. `next` models that register.
+ *
+ * The state-6 block is six SEQUENTIAL ifs in the original, not else-ifs; the
+ * values are mutually exclusive anyway, so it is written as it reads.
+ *
+ * Both range checks (`cmp ecx, 0x1c` and `cmp eax, 7`) are `ja`, i.e. UNSIGNED,
+ * which is what rejects a negative cmd.
+ */
+s32 GameStateMachine(s32 cmd)
+{
+    unsigned int state = (unsigned int)g_gameState;
+    unsigned int next;
+    s32 r;
+
+    switch (state > 0x1cu ? 0xffffffffu : state) {
+    case 0:                                     /* main menu: sub-dispatch */
+        next = 0;
+        if ((unsigned int)(cmd - 1) <= 7u) {
+            switch (cmd) {
+            case 1: next = 5; break;
+            case 2: if (g_gsmFlag != 0) next = 6; break;
+            case 3: next = 7; break;
+            case 4: next = 9; break;
+            case 5: next = 0xa; break;
+            case 6: next = 8; break;
+            case 7: next = 0xb; break;
+            case 8: next = 0xc; break;
+            }
+            if (next != 0)
+                g_gameState = (s32)next;
+        }
+        if (next != 0) {
+            Helper_AudioRelease(0x4a);
+            Audio_PlaySoundId(0x4a, -1, -1);
+        }
+        break;
+
+    case 4:                                     /* title / attract */
+        if (DrawMenu(0, -1) == 0) {
+            g_gameState = 0;
+            Helper_TitleAudioReset();
+            if (g_gsmDirty1 != 0) { g_gsmDirty1 = 0; g_gsmOut1 = 1; }
+            if (g_gsmDirty2 != 0) { g_gsmDirty2 = 0; g_gsmOut2 = 1; }
+            if (g_gsmDirty3 != 0) { g_gsmDirty3 = 0; g_gsmOut3 = 1; }
+        }
+        break;
+
+    case 6:                                     /* in-game event pump */
+        r = Helper_GSM_HandleEvent();
+        if (r == 0x45) g_gameState = 4;
+        if (r == 0x18) g_gameState = r;
+        if (r == 0x19) g_gameState = r;
+        if (r == 0x1a) g_gameState = r;
+        if (r == 0x1b) g_gameState = r;
+        if (r == 0x1c) g_gameState = r;
+        break;
+
+    /* modal dialogs and menus: 0x45 means "back to the title" */
+    case 5:  r = Menu_HelpScreen();                    goto menu_done;
+    case 7:  r = Menu_PauseMenu();                     goto menu_done;
+    case 8:  r = Menu_GlideUnavailableDialog();        goto menu_done;
+    case 9:  r = Menu_Direct3DUnavailableDialog();     goto menu_done;
+    case 10: r = Menu_DirectDrawUnavailableDialog();   goto menu_done;
+    case 11: r = Menu_InsertCDDialog();                goto menu_done;
+    case 12: r = Menu_ColorDepthErrorDialog();
+    menu_done:
+        if (r == 0x45)
+            g_gameState = 4;
+        break;
+
+    /* mode screens: 3 means "start the match" */
+    case 24: r = Helper_GSM_VS();          goto mode_done;
+    case 25: r = Helper_GSM_Tournament();  goto mode_done;
+    case 26: r = Helper_GSM_Practice();    goto mode_done;
+    case 27: r = Helper_GSM_Options();
+    mode_done:
+        if (r == 3)
+            g_gameState = 6;
+        break;
+
+    case 28:                                    /* config screen */
+        if (Helper_GSM_Config() == 3) {
+            s32 music = g_gsmStateAa4;
+
+            g_gameState = 6;
+            Helper_GSM_PlayMusic(music);
+        }
+        break;
+
+    default:
+        break;
+    }
+
+    g_gsmOut4 = 0;
+    g_gsmActiveFlag = (g_gameState != 0);
+    return g_gameState;
+}
+#else
 __declspec(naked) s32 GameStateMachine(s32 cmd)
 {
     __asm {
@@ -330,3 +459,4 @@ tail:
         _emit    0x00
     }
 }
+#endif
