@@ -6,9 +6,42 @@
  */
 #include "engine/scenegraph.h"
 
+extern s32 g_sinTable[4096];
+
 /*
  * @addr 0x004b3940
  */
+#ifdef NON_MATCHING
+/* Co-exec verified (tools/decomp/verify_rot.py).
+ *
+ * Axis order B. Same fixed point as OrderA/C: g_sinTable holds sin * 2^28,
+ * read `>> 16` into Q12, products `>> 12`. Entry +0xc is a bare negation with
+ * NO shift, which is what distinguishes this tree's middle column.
+ */
+void BuildRotMatrix_OrderB(short *angles, short *mat3x3)
+{
+    const int *tab = (const int *)&g_sinTable;
+    int x = angles[0], y = angles[1], z = angles[2];
+    int sx  = tab[x & 0xfff] >> 16;
+    int cxr = tab[(x - 0x400) & 0xfff] >> 16;
+    int sy  = tab[y & 0xfff] >> 16;
+    int cyr = tab[(y - 0x400) & 0xfff] >> 16;
+    int sz  = tab[z & 0xfff] >> 16;
+    int czr = tab[(z - 0x400) & 0xfff] >> 16;
+    int r = (short)((cyr * sz) >> 12);
+    int t = (short)((czr * cyr) >> 12);
+
+    mat3x3[0] = (short)((sz * sy) >> 12);
+    mat3x3[1] = (short)((cxr * r - czr * sx) >> 12);
+    mat3x3[2] = (short)((sx * r + czr * cxr) >> 12);
+    mat3x3[3] = (short)((czr * sy) >> 12);
+    mat3x3[4] = (short)((cxr * t + sz * sx) >> 12);
+    mat3x3[5] = (short)((sx * t - cxr * sz) >> 12);
+    mat3x3[6] = (short)(-cyr);
+    mat3x3[7] = (short)((cxr * sy) >> 12);
+    mat3x3[8] = (short)((sy * sx) >> 12);
+}
+#else
 __declspec(naked) void BuildRotMatrix_OrderB(s16 *angles, s16 *mat3x3)
 {
     __asm {
@@ -110,3 +143,4 @@ __declspec(naked) void BuildRotMatrix_OrderB(s16 *angles, s16 *mat3x3)
         ret
     }
 }
+#endif

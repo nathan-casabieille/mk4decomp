@@ -7,9 +7,50 @@
  */
 #include "engine/scenegraph.h"
 
+extern s32 g_sinTable[4096];
+
 /*
  * @addr 0x004b3800
  */
+#ifdef NON_MATCHING
+/* Co-exec verified (tools/decomp/verify_rot.py).
+ *
+ * g_sinTable is 4096 s32 entries indexed by BAM (0x1000 = 2 PI). Every read is
+ * `>> 16`, and the products are `>> 12`, so the table holds sin * 2^28 and the
+ * working values are Q12 - the same fixed point as the matrix itself.
+ * Per the engine's identity cos(a) = -sinTable[(a - 0x400) & 0xfff]; the raw
+ * (un-negated) table value is what the formulas below use, so the sign is
+ * folded into the expressions exactly as the original does. Only entry +0xa is
+ * a bare negation.
+ *
+ * NOTE: g_sinTable is ALL-ZERO in the static image - it is built at runtime,
+ * like g_zSortKeyLUT and g_div3Table. Seed it or every matrix comes out 0.
+ */
+void BuildRotMatrix_OrderA(short *angles, short *mat3x3)
+{
+    const int *tab = (const int *)&g_sinTable;
+    int x = angles[0], y = angles[1], z = angles[2];
+    int sx  = tab[x & 0xfff] >> 16;
+    int cxr = tab[(x - 0x400) & 0xfff] >> 16;
+    int syr = tab[y & 0xfff] >> 16;
+    int cyr = tab[(y - 0x400) & 0xfff] >> 16;
+    int szr = tab[z & 0xfff] >> 16;
+    int czr = tab[(z - 0x400) & 0xfff] >> 16;
+    /* the orig truncates these two intermediates to 16 bits (movsx bx,bx) */
+    int a = (short)((cyr * cxr) >> 12);
+    int b = (short)((cxr * syr) >> 12);
+
+    mat3x3[0] = (short)((czr * a + szr * syr) >> 12);
+    mat3x3[1] = (short)((szr * a - czr * syr) >> 12);
+    mat3x3[2] = (short)((cyr * sx) >> 12);
+    mat3x3[3] = (short)((czr * sx) >> 12);
+    mat3x3[4] = (short)((szr * sx) >> 12);
+    mat3x3[5] = (short)(-cxr);
+    mat3x3[6] = (short)((czr * b - cyr * szr) >> 12);
+    mat3x3[7] = (short)((szr * b + czr * cyr) >> 12);
+    mat3x3[8] = (short)((syr * sx) >> 12);
+}
+#else
 __declspec(naked) void BuildRotMatrix_OrderA(s16 *angles, s16 *mat3x3)
 {
     __asm {
@@ -111,3 +152,4 @@ __declspec(naked) void BuildRotMatrix_OrderA(s16 *angles, s16 *mat3x3)
         ret
     }
 }
+#endif

@@ -16,6 +16,38 @@
  * + sar 12 + sar 16 fixed-point reductions and mov [esi + N]
  * stores. Pure C wouldn't reproduce the precise scheduling.
  */
+#ifdef NON_MATCHING
+/* Co-exec verified (tools/decomp/verify_rot.py).
+ *
+ * Axis order C. Same machinery as OrderA - g_sinTable is sin * 2^28 read
+ * `>> 16` into Q12, products `>> 12` - but a different multiplication tree.
+ * Note the NEGATE-BEFORE-SHIFT in three places: the original does
+ * `neg / sar 0xc`, not `sar 0xc / neg`, and those differ for negative values.
+ */
+void BuildRotMatrix_OrderC(short *angles, short *mat3x3)
+{
+    const int *tab = (const int *)&g_sinTable;
+    int x = angles[0], y = angles[1], z = angles[2];
+    int sx  = tab[x & 0xfff] >> 16;
+    int cxr = tab[(x - 0x400) & 0xfff] >> 16;
+    int sy  = tab[y & 0xfff] >> 16;
+    int cyr = tab[(y - 0x400) & 0xfff] >> 16;
+    int sz  = tab[z & 0xfff] >> 16;
+    int czr = tab[(z - 0x400) & 0xfff] >> 16;
+    int p = (short)((cyr * cxr) >> 12);
+    int q = (short)((-(cyr * sx)) >> 12);
+
+    mat3x3[0] = (short)((sz * sy) >> 12);
+    mat3x3[1] = (short)((-(czr * sy)) >> 12);
+    mat3x3[2] = (short)cyr;
+    mat3x3[3] = (short)((sz * p + czr * sx) >> 12);
+    mat3x3[4] = (short)((sz * sx - czr * p) >> 12);
+    mat3x3[5] = (short)((-(cxr * sy)) >> 12);
+    mat3x3[6] = (short)((sz * q + czr * cxr) >> 12);
+    mat3x3[7] = (short)((cxr * sz - czr * q) >> 12);
+    mat3x3[8] = (short)((sy * sx) >> 12);
+}
+#else
 __declspec(naked) void BuildRotMatrix_OrderC(s16 *angles, s16 *mat3x3)
 {
     __asm {
@@ -114,3 +146,4 @@ __declspec(naked) void BuildRotMatrix_OrderC(s16 *angles, s16 *mat3x3)
         ret
     }
 }
+#endif
