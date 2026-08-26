@@ -5,11 +5,25 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_gsmSubOther1Base;
 extern unsigned int g_dispatchSave572;
 extern unsigned int g_dispatchSave1482;
 extern unsigned int g_dispatchSave1485;
 extern unsigned int g_dispatchSave1499;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_dispatchSave1482 (*(unsigned int *)MK4_VA(unsigned int, 0xab42d8u))
+#define g_dispatchSave1485 (*(unsigned int *)MK4_VA(unsigned int, 0xab42f8u))
+#define g_dispatchSave1499 (*(unsigned int *)MK4_VA(unsigned int, 0xab4384u))
+#define g_dispatchSave572 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4f64u))
+#define g_gsmSubOther1Base (*(unsigned int *)MK4_VA(unsigned int, 0x4f4f60u))
+#define g_mode4PauseGate (*(unsigned int *)MK4_VA(unsigned int, 0x4ffd78u))
+#endif
+
 /* Real signatures. The auto-generated placeholders all said `(void)`, but the
  * original pushes two stack args for the two selectable-scanners and one for
  * the poll, and every caller uses the returned value. */
@@ -17,7 +31,7 @@ extern int          DrawMenu(void *menu, int sel);
 extern unsigned int Menu_PollNavInput(int mode);
 extern unsigned int Menu_FindNextSelectable(int cur, void *menu);
 extern unsigned int Menu_FindPrevSelectable(int cur, void *menu);
-extern void Helper_GSM_PlayMusic(void);
+extern void Helper_GSM_PlayMusic(int track);   /* placeholder said (void) */
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */

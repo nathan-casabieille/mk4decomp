@@ -287,6 +287,12 @@ SEEDS = {
         ('unknown mode 9',  {'g_clampedRendererMode': 9}, (0xb98000, 0xb98010)),
         ('null out params', {'g_clampedRendererMode': 1}, (0, 0)),
     ],
+    'Helper_DrawMenu_PostRender': [
+        ('centred box',   {}, (200, 150, 240, 120)),
+        ('at the origin', {}, (0, 0, 640, 480)),
+        ('negative x',    {}, (-40, 20, 300, 100)),
+        ('degenerate',    {}, (100, 100, 0, 0)),
+    ],
     'Mem_Free': [
         ('below the heap',      _blocks(),          (0x7b0000,)),
         ('above the heap',      _blocks(),          (0xac0000,)),
