@@ -136,10 +136,12 @@ void GeoTransformDispatchAndApply(void)
     iVar1 = iVar1 + 1;
     g_walkCallback = iVar1;
   }
-  g_dualC = *(code **)((iVar1 + g_dispatchVar20) * 4);
-                    /* WARNING: Could not recover jumptable at 0x004898a2. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
-  (*g_dualC)();
+  /* Ghidra called this an unrecoverable jumptable; it is an ordinary indirect
+   * tail-call through a packed-pointer slot. The slot holds an original code
+   * VA, so it goes through the MK4_ResolveCode trampoline - raw, that VA is
+   * meaningless natively. */
+  g_dualC = *MK4_NODE(unsigned int, iVar1 + g_dispatchVar20);
+  ((void (*)(void))MK4_ResolveCode(g_dualC))();
   return;
 }
 #else

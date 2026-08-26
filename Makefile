@@ -99,6 +99,11 @@ help:
 	@echo "Verification harnesses (co-exec vs the original bytes):"
 	@echo "  build/venv/bin/python tools/decomp/verify_{scanline,tri,flush,submit}.py"
 	@echo "  build/venv/bin/python tools/decomp/verify_{project,emit,mesh}.py"
+	@echo "  make frame-core-check   - SEEDED co-exec for MainLoopStep's frame-core"
+	@echo "                            twins (guards are 0 at rest, so an unseeded"
+	@echo "                            run passes without executing the body)"
+	@echo "  make closure ROOT=NAME  - static call closure + the live-stub blockers"
+	@echo "                            still standing between it and running natively"
 	@echo "  build/venv/bin/python tools/decomp/disasm_fn.py NAME   - original bytes"
 	@echo "  build/venv/bin/python tools/geo_mesh.py FILE --blocks  - .geo mesh format"
 	@echo
@@ -107,6 +112,22 @@ help:
 	@echo "  ./tools/decomp/setup-msvc50.sh"
 	@echo "  (then place MSVC 5.0 binaries - see docs/MSVC50.md)"
 	@echo "  ./tools/decomp/test-toolchain.sh"
+
+# frame-core-check: the seeded co-exec suite for the d2..d5 band that
+# `make closure` identifies as MainLoopStep's real work-list. Seeded because
+# every one of those twins is guarded on a counter or flag that is ZERO in the
+# at-rest image - unseeded, they "verify" without running their body at all.
+frame-core-check:
+	@build/venv/bin/python tools/decomp/verify_frame_core.py
+
+# closure: what still stands between a root function and running natively.
+# Disassembles the original, walks direct call/jmp edges from ROOT, and lists
+# the functions in that closure that only have a weak stub in native-full.
+ROOT ?= MainLoopStep
+closure:
+	@build/venv/bin/python tools/decomp/closure.py $(ROOT)
+
+.PHONY: frame-core-check closure
 
 all: matching
 

@@ -47,7 +47,7 @@ CTYPE = {
     'unsigned char': 'unsigned char', 'byte': 'unsigned char',
     's32': 'int', 'int': 'int', 'u32': 'unsigned int',
     'unsigned int': 'unsigned int', 'undefined4': 'unsigned int',
-    'undefined2': 'unsigned short', 'float': 'float',
+    'undefined2': 'unsigned short', 'float': 'float', 'double': 'double',
 }
 
 
@@ -75,6 +75,13 @@ WIDTH16 = {
 # vertical smears. The matching Y names (…P1Y, …P2Y, g_vtxScreenY) really are
 # the 16-bit halves and stay narrow.
 WIDTH32 = {'g_vtxScreenP1X', 'g_vtxScreenP2X', 'g_vtxScreenX'}
+
+
+def _strip_decls(text):
+    """Drop `extern ...;` lines and comments - what is left is real code."""
+    text = re.sub(r'/\*.*?\*/', '', text, flags=re.S)
+    return '\n'.join(l for l in text.split('\n')
+                     if not l.lstrip().startswith('extern'))
 
 
 def declared_type(g, src):
@@ -204,6 +211,20 @@ def main():
     out = lines[:ins] + alias + lines[ins:]
     path.write_text('\n'.join(out))
     print('%s: %d variable externs guarded, %d aliases' % (path, n_guard, len(globs)))
+
+    # The block goes after the LAST guarded extern run, so a function written
+    # ABOVE that point does not see the aliases. When the global has no other
+    # declaration that is a compile error, but when a header also declares it
+    # the file silently SPLITS: early uses hit the plain C variable, later ones
+    # hit the arena. Both halves then read different storage for one global.
+    # (Appending a twin whose own externs form a new trailing run is the usual
+    # way this happens - move those externs up into the file's main run.)
+    head = '\n'.join(out[:ins])
+    early = sorted(g for g in globs
+                   if re.search(r'\b%s\b' % re.escape(g), _strip_decls(head)))
+    if early:
+        print('  WARNING: used before the alias block, so NOT aliased there: %s'
+              % ', '.join(early))
     return 0
 
 

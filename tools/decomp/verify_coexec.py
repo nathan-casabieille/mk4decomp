@@ -82,7 +82,8 @@ unsigned long long __umoddi3(unsigned long long a, unsigned long long b) {
 '''
 
 
-def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None):
+def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None,
+                    fptypes=None, next_fn_va=None):
     """Compile twin -> .text, relocated so external calls target the
     ORIGINAL function VAs (callees co-execute as original bytes in the
     arena) and intra-twin labels resolve within the loaded blob. When
@@ -108,6 +109,13 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None
         # untouched. Signed because the geometry path uses movsx, not movzx.
         if width16 and g in width16:
             return '#define %s (*(short *)0x%xu)\n' % (g, va)
+        # Floating-point .rdata constants: the default below types EVERY global
+        # as `unsigned int`, which silently reinterprets a qword double's low
+        # half as an integer - the twin then computes garbage and the mismatch
+        # looks like a logic bug. fptypes comes from the twin's own file, where
+        # the global is declared `extern double g_x;` / `extern float g_x;`.
+        if fptypes and g in fptypes:
+            return '#define %s (*(%s *)0x%xu)\n' % (g, fptypes[g], va)
         if re.search(r'\(\s*\*\s*%s\s*\)\s*\(' % g, body) or re.search(r'\b%s\s*\(' % g, body):
             return '#define %s (*(unsigned int (**)())0x%xu)\n' % (g, va)
         deref = False
@@ -159,6 +167,12 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None
                  # the engine reads fixed VAs (incl. base-0 packed-ptr tables);
                  # don't let gcc treat those as UB null derefs and emit ud2.
                  '-fno-delete-null-pointer-checks',
+                 # The original's FPU helpers use bare x87 (fsqrt, fabs) with no
+                 # errno bookkeeping. Without this gcc turns sqrt() into a libm
+                 # CALL, which has no original VA to relocate to and the twin is
+                 # skipped as "unresolved call: sqrt"; with it, gcc emits fsqrt
+                 # inline - matching what the original actually does.
+                 '-fno-math-errno',
                  # CC is mingw (defines _WIN32), so win32_types.h would gate its
                  # DWORD/HWND/... typedefs off; force the shim branch on so Win32-typed
                  # twins compile (windows.h is not included under -ffreestanding).
@@ -166,7 +180,11 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None
                  '-I' + str(ROOT / 'include'), '-w', str(c), '-o', str(o)],
                 capture_output=True, text=True)
             if r.returncode:
-                return None, None, None, 'compile: ' + (r.stderr.strip().splitlines() or [''])[-1]
+                # report the FIRST diagnostic line, not the last: gcc's caret
+                # line is last and says nothing.
+                errs = [l for l in r.stderr.splitlines() if 'error:' in l]
+                return None, None, None, 'compile: ' + (
+                    errs or r.stderr.strip().splitlines() or [''])[0].strip()
             syms, sections = syn.parse_obj_full(o.read_bytes())
         undef = {_strip(s['name']) for s in syms if s and s['sec'] <= 0}
         if attempt == 0 and (undef & LIBGCC):
@@ -187,6 +205,20 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None
     # original writes - otherwise the twin stores its blob address and we get a
     # spurious MISMATCH at the stored-pointer slot.
     load_base = (fn_self_va - entry) if fn_self_va is not None else CODE
+    # Placing the blob at the original VA only matters when the twin references
+    # its OWN address (a continuation that stores &name into a node field). A
+    # compiled twin is often longer than the original, and when it is, that
+    # placement runs over the NEXT function's bytes - any scenario that calls
+    # the neighbour then executes garbage. With no self-reference the placement
+    # buys nothing, so fall back to the scratch code window and verify anyway
+    # instead of skipping the function entirely.
+    self_ref = any(syms[r['sym_idx']] is not None and
+                   _strip(syms[r['sym_idx']]['name']) == name
+                   for r in text['relocs']
+                   if 0 <= r['sym_idx'] < len(syms))
+    if (not self_ref and next_fn_va is not None
+            and load_base + len(buf) > next_fn_va):
+        load_base = CODE
     for r in text['relocs']:
         sym = syms[r['sym_idx']] if 0 <= r['sym_idx'] < len(syms) else None
         if sym is None:
@@ -221,6 +253,28 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None
             struct.pack_into('<I', buf, off,
                              (target - (load_base + off + 4) + existing) & 0xffffffff)
     return bytes(buf), entry, load_base, None
+
+
+def fp_globals_for(name):
+    """Map global -> 'double'/'float' for the file that defines twin `name`.
+
+    The engine's FPU helpers multiply by qword constants in .rdata. gdef has no
+    way to know a global's width from the twin body alone, but the file that
+    holds the twin declares it (`extern double g_fpInvFixed16;`), so read it
+    from there."""
+    sig = re.compile(r'\b%s\s*\(' % re.escape(name))
+    for f in (ROOT / 'src').rglob('*.c'):
+        s = f.read_text(errors='ignore')
+        # Match the file that holds the TWIN, not merely one that mentions the
+        # name - engine_autostubs.c carries a weak stub for every frontier
+        # symbol and would otherwise shadow the real declarations.
+        if not any(sig.search(s[m.end():s.find('#else', m.end())])
+                   for m in re.finditer(r'#ifdef NON_MATCHING\b', s)
+                   if s.find('#else', m.end()) > 0):
+            continue
+        return {g: t for t, g in re.findall(
+            r'\bextern\s+(float|double)\s+(g_\w+)\s*;', s)}
+    return {}
 
 
 def extract_twin_any(name):
@@ -332,21 +386,27 @@ def run_at(uc, eip, full, nargs=0, argvals=None):
 
 
 def verify(name, fn_va, gl_va, name_to_va, arena, width16=None, argvals=None):
+    fptypes = fp_globals_for(name)
     if name not in fn_va:
         return 'SKIP no-addr'
     t = extract_twin_any(name)
     if not t:
         return 'SKIP no-twin'
     body, nargs, returns_value = t
+    nxt = min((v for v in fn_va.values() if v > fn_va[name]), default=None)
     blob, entry, load_base, err = build_twin_blob(
-        name, body, gl_va, name_to_va, fn_self_va=fn_va[name], width16=width16)
+        name, body, gl_va, name_to_va, fn_self_va=fn_va[name], width16=width16,
+        fptypes=fptypes, next_fn_va=nxt)
     if blob is None:
         return 'SKIP ' + err
     try:
         uc1, full = uc_new(arena)
         orig = run_at(uc1, fn_va[name], full, nargs, argvals)
         uc2, _ = uc_new(arena)
-        if load_base + len(blob) > full:           # blob outside arena map
+        # blob outside the arena map - and not in the scratch CODE window,
+        # which uc_new already mapped
+        if load_base + len(blob) > full and not (
+                CODE <= load_base and load_base + len(blob) <= CODE + 0x100000):
             uc2.mem_map(load_base & ~0xFFF,
                         ((len(blob) + (load_base & 0xFFF) + 0xFFF) & ~0xFFF))
         uc2.mem_write(load_base, blob)             # twin lands at its own VA
@@ -357,14 +417,14 @@ def verify(name, fn_va, gl_va, name_to_va, arena, width16=None, argvals=None):
         # then executes garbage and hangs (DrawMeshBlock's twin is 0x440 bytes
         # over a 0x430 original, clobbering TristripBatchEmit3Cap right after
         # it). Report it instead of letting it look like a twin bug.
-        nxt = min((v for v in fn_va.values() if v > fn_va[name]), default=None)
-        if nxt is not None and load_base + len(blob) > nxt:
+        relocated = CODE <= load_base < CODE + 0x100000
+        if not relocated and nxt is not None and load_base + len(blob) > nxt:
             over = load_base + len(blob) - nxt
             victim = next((k for k, v in fn_va.items() if v == nxt), hex(nxt))
             _overrun = 'blob overruns %s by %d bytes' % (victim, over)
         else:
             _overrun = None
-        twin, twin_ret, twin_eax = run_at(uc2, fn_va[name], full, nargs, argvals)
+        twin, twin_ret, twin_eax = run_at(uc2, load_base + entry, full, nargs, argvals)
     except Exception as e:
         return 'SKIP unicorn: %s' % e
     orig, orig_ret, orig_eax = orig

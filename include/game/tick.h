@@ -88,7 +88,7 @@ extern u32 g_fightTableC2;            /* 0x004d50b0 */
  * and calls one of TickInner / TickAlt; g_framePauseFlag aborts the
  * sequence. */
 void Helper_PreTick(void);                               /* 0x004b9770 */
-void Helper_TickInit(s32 zero);                          /* 0x004b8ec0 */
+void Helper_TickInit(unsigned int base);                 /* 0x004b8ec0 */
 void Helper_TickInner(void);                             /* 0x004ba130 */
 void Helper_TickAlt(void);                               /* 0x004bae90 */
 void Helper_TickReinit(void);                            /* 0x004bc7e0 */

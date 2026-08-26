@@ -12,6 +12,30 @@
 #include "engine/scenegraph.h"
 #include "portable/ghidra_types.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
+extern unsigned int g_eventQueuePending;   /* 0x005420c8, packed node ptr */
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeFlags (*(unsigned int *)MK4_VA(unsigned int, 0x542084u))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dualC (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_dualD (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
+#define g_eventQueueChild (*(unsigned int *)MK4_VA(unsigned int, 0x542080u))
+#define g_eventQueueCurrent (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_eventQueueHead (*(unsigned int *)MK4_VA(unsigned int, 0x53a2f0u))
+#define g_eventQueueNotMask (*(unsigned int *)MK4_VA(unsigned int, 0x54207cu))
+#define g_eventQueuePending (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_eventQueueWorkType (*(unsigned int *)MK4_VA(unsigned int, 0x542074u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#endif
+
+
 /*
  * @addr 0x0045c6c0
  *

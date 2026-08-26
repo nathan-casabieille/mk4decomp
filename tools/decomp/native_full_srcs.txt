@@ -4,7 +4,9 @@ src/audio/aux_audio_teardown.c
 src/audio/debug.c
 src/audio/dual_add_sar.c
 src/audio/empty_stubs.c
+src/audio/fpu_sqrt_mul.c
 src/audio/helper_aux_audio_post_init.c
+src/audio/helper_tick_frame_misc.c
 src/audio/range_mul_mod.c
 src/audio/store_pause_imul_shr16.c
 src/boot/boot_chain_push_add_sign_flag.c
@@ -18,6 +20,7 @@ src/boot/m_stack_push2_chain_insert.c
 src/boot/main_loop.c
 src/boot/mul10_tail.c
 src/boot/node_chain_mask_match.c
+src/boot/node_unlink.c
 src/boot/or_list_loop.c
 src/boot/push_set_xfm_mask_call_pop.c
 src/boot/save_call_restore.c
@@ -51,6 +54,7 @@ src/engine/com_release_pair.c
 src/engine/com_two_gate_call.c
 src/engine/cond_install_dispatch.c
 src/engine/copy_jmp.c
+src/engine/countdown_clamp_walk.c
 src/engine/distance3_d_mul10_chain.c
 src/engine/double_stack_push_and_jmp.c
 src/engine/double_stack_push_and_jmp7b.c
@@ -68,6 +72,7 @@ src/engine/ecm.c
 src/engine/esi_install_bit_call_chain_variants.c
 src/engine/esi_install_dec_call_chain_variants.c
 src/engine/event_queue_drain_loop.c
+src/engine/fight_frame_step.c
 src/engine/flush_draw_queue.c
 src/engine/getters.c
 src/engine/guarded_chain_dual_add.c
@@ -105,6 +110,7 @@ src/engine/m_stack_push_dual_jmp.c
 src/engine/mat3x3_vec_mul6_bit.c
 src/engine/mat_vec2_multiply.c
 src/engine/max_of_three.c
+src/engine/mem_heap_free.c
 src/engine/min_of_three.c
 src/engine/mstack_calls.c
 src/engine/mstack_push_set_bit_variants.c
@@ -114,6 +120,7 @@ src/engine/nine_entry_flag_dispatch.c
 src/engine/not_shr_cmp1_store.c
 src/engine/or_store_dec_stack_pop.c
 src/engine/packed_advance_call_tail_jmp.c
+src/engine/packed_list_visitor.c
 src/engine/packed_select_load6.c
 src/engine/project_two.c
 src/engine/project_vertex.c

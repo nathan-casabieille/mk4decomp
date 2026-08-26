@@ -125,7 +125,7 @@ void Joystick_Init(void);                                /* 0x004b5230 */
 
 /* Helper called 256 times in the Joystick_Init tail loop with
  * the iteration index as the arg. */
-void Input_GetAsyncKey(s32 idx);                      /* 0x004b5450 */
+s32  Input_GetAsyncKey(s32 vk);                        /* 0x004b5450 - (GetAsyncKeyState(vk) >> 15) & 1 */
 
 extern u32 g_joyCalA[16];        /* 0x007b00c8 */
 extern u32 g_joyCalB[16];        /* 0x007b0088 */

@@ -29,9 +29,11 @@ extern unsigned int g_dispatchSave26;
 extern unsigned int g_dispatchSave25;
 extern unsigned int g_dispatchVar39;
 extern u32 g_appInitFlag1;
-extern void Input_GetAsyncKey(void);
-extern void Input_PollPlayerJoystick(void);
-extern void Input_PollPlayerKeyboard(void);
+/* Real signatures - the auto-generated placeholders said `(void)` and the twin
+ * calls all three with a player/key argument (and uses GetAsyncKey's result). */
+extern s32  Input_GetAsyncKey(s32 vk);
+extern void Input_PollPlayerJoystick(s32 player);
+extern void Input_PollPlayerKeyboard(s32 player);
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
