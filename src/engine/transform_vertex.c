@@ -20,6 +20,83 @@
  *   - useless spill/reload of ebx through [esp+0x18]
  *   - fail-first tail layout with explicit jmp from the success path
  */
+#ifdef NON_MATCHING
+/* Co-exec verified (tools/decomp/verify_project.py, pos/neg/mixed seeds).
+ *
+ * Argument mapping, recovered by counting the pushes (two of the comments in
+ * the naked body below are off): at 3 pushes `[esp+0x18]` is Z, and at 5
+ * pushes `[esp+0x18]` / `[esp+0x1c]` are X / Y. So edi=x, edx=y, ebp=z.
+ *
+ * Access widths matter here and are all explicit through the address:
+ *   - the six RGB scales are PACKED BYTES at 0x7af9f2..f7, so a 32-bit read
+ *     would pull in its neighbours (the original reads g_vtxRGBScale0_g as a
+ *     dword and masks 0xff, which is the same byte);
+ *   - g_vtxColor / g_vtxColorSaved / g_vtxColorCopy are stored as WORDS.
+ *
+ * Light 1's operand pairing looks wrong and is not: g_vtxLight1_y multiplies
+ * Z and g_vtxLight1_z multiplies Y. The two NAMES are swapped relative to
+ * their VAs (0x7af9e8 / 0x7af9ec), the arithmetic is the natural one.
+ */
+void TransformVertex(short x, short y, short z)
+{
+    int r, g, b, dot, t;
+    unsigned int prev;
+    /* One 16-bit accessor for the working colour: every read AND write below
+       goes through it. Mixing a 32-bit read (the gdef lvalue) with a 16-bit
+       store is a strict-aliasing violation and -O2 hoists the reads, so only
+       the last store survives. */
+    unsigned short *col = (unsigned short *)&g_vtxColor;
+
+    /* two-deep colour history shift (16-bit each) */
+    *(unsigned short *)&g_vtxColorCopy  = *(unsigned short *)&g_vtxColorSaved;
+    *(unsigned short *)&g_vtxColorSaved = *col;
+
+    prev = g_vtxColorPrev & 0xffff;
+    r = (int)((prev >> 10) & 0x1f);
+    g = (int)((prev >> 5) & 0x1f);
+    b = (int)(prev & 0x1f);
+
+    /* light 0 - products accumulate through unsigned (signed overflow is UB) */
+    dot = (int)((unsigned)((int)g_vtxLight0_x * (int)x)
+              + (unsigned)((int)g_vtxLight0_y * (int)y)
+              + (unsigned)((int)g_vtxLight0_z * (int)z)) >> 0xc;
+    if (dot > 0) {
+        t = (int)((unsigned)*(unsigned char *)&g_vtxRGBScale0_r * (unsigned)dot);
+        r += t >> 0xc;
+        t = (int)((unsigned)*(unsigned char *)&g_vtxRGBScale0_g * (unsigned)dot);
+        g += t >> 0xc;
+        t = (int)((unsigned)*(unsigned char *)&g_vtxRGBScale0_b * (unsigned)dot);
+        b += t >> 0xc;
+    }
+
+    /* light 1 - see the note above about the y/z naming */
+    dot = (int)((unsigned)((int)g_vtxLight1_x * (int)x)
+              + (unsigned)((int)g_vtxLight1_y * (int)z)
+              + (unsigned)((int)g_vtxLight1_z * (int)y)) >> 0xc;
+    if (dot > 0) {
+        t = (int)((unsigned)*(unsigned char *)&g_vtxRGBScale1_r * (unsigned)dot);
+        r += t >> 0xc;
+        t = (int)((unsigned)*(unsigned char *)&g_vtxRGBScale1_g * (unsigned)dot);
+        g += t >> 0xc;
+        t = (int)((unsigned)*(unsigned char *)&g_vtxRGBScale1_b * (unsigned)dot);
+        b += t >> 0xc;
+    }
+
+    /* repack one channel at a time, each step storing g_vtxColor as a word.
+       Note these are NOT clamps to [0,31]: a negative channel keeps its value
+       and is folded by the following mask, exactly as the original does. */
+    if (r > 0x1f)
+        r = 0x1f;
+    *col = (unsigned short)((*col & 0x83ff) | (unsigned)((r & 0x1f) << 10));
+
+    t = (g > 0x1f) ? 0x1f : g;
+    *col = (unsigned short)((*col & 0xfc1f) | (unsigned)((t & 0x1f) << 5));
+
+    t = (b > 0x1f) ? 0x1f : b;
+    /* blue goes in by XOR: cx ^= (colour ^ blue) & 0x1f */
+    *col = (unsigned short)(*col ^ ((*col ^ (unsigned)t) & 0x1f));
+}
+#else
 __declspec(naked) void TransformVertex(s16 x, s16 y, s16 z)
 {
     __asm {
@@ -144,3 +221,4 @@ b_clamped:
         ret
     }
 }
+#endif

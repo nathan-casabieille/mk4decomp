@@ -108,6 +108,17 @@ def seed_common(a, vx=0x0040, vy=0x0030, vz=0x0500,
         setdw(a, va, ((MATRIX[(i * 2 + 3) % 9] & 0xffff)
                       | (MATRIX[(i * 2 + 4) % 9] << 16)))
     setdw(a, 0xab4e24, 0x0120)                 # g_dispatchSave1569 (negated into vec[1])
+    # --- TransformVertex inputs ----------------------------------------------
+    # PACKED 16-bit: 0x7af9f8/fa/fc are adjacent words, so dword seeds would
+    # trample their neighbours (g_vtxColor read back as 0 until this was fixed).
+    setw(a, 0x7af9f0, 0x3def)                  # g_vtxColorPrev (RGB555 source)
+    setw(a, 0x7af9fc, 0x1234)                  # g_vtxColor     (working colour)
+    setw(a, 0x7af9f8, 0x0abc)                  # g_vtxColorCopy
+    setw(a, 0x7af9fa, 0x0def)                  # g_vtxColorSaved
+    # the six RGB scales are PACKED BYTES at 0x7af9f2..f7 - seed them as bytes
+    for va, v in ((0x7af9f2, 0x40), (0x7af9f3, 0x22), (0x7af9f4, 0x60),
+                  (0x7af9f5, 0x33), (0x7af9f6, 0x80), (0x7af9f7, 0x55)):
+        a[va - BASE] = v
 
 
 # Scalar (non-pointer) arguments, per function. verify_coexec's default hands
@@ -118,6 +129,9 @@ ARGVALS = {
     'Helper_EmitLine': (0,),          # vertex slot; 0/1/2 are the real callers
     'Helper_EmitLine#1': (1,),
     'Helper_EmitLine#2': (2,),
+    # TransformVertex(x, y, z) takes a VERTEX NORMAL - small signed words.
+    'TransformVertex': (0x30, -0x20, 0x50),
+    'TransformVertex#1': (-0x70, 0x10, -0x40),   # drive both dot products < 0
     'AltCamMatrixProject': (VEC_VA, 0),   # (vec3 *, mode); 0 = no alt matrix
     'AltCamMatrixProject#1': (VEC_VA, 1),  # 1 = swap the alt camera matrix in
 }
@@ -126,7 +140,7 @@ ARGVALS = {
 def main():
     names = sys.argv[1:] or ['MatVec2Multiply', 'ProjectVertex',
                              'ProjectTwoVertices', 'TransformVertex',
-                             'AltCamMatrixProject', 'Helper_EmitLine',
+                             'AltCamMatrixProject', 'TransformVertex#1', 'Helper_EmitLine',
                              'Helper_EmitLine#1', 'Helper_EmitLine#2',
                              'AltCamMatrixProject#1']
     fn_va, gl_va = vt.load_maps()
