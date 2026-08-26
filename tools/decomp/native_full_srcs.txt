@@ -7,6 +7,7 @@ src/audio/empty_stubs.c
 src/audio/fpu_sqrt_mul.c
 src/audio/helper_aux_audio_post_init.c
 src/audio/helper_tick_frame_misc.c
+src/audio/helper_title_audio_reset.c
 src/audio/range_mul_mod.c
 src/audio/store_pause_imul_shr16.c
 src/boot/boot_chain_push_add_sign_flag.c
@@ -191,7 +192,15 @@ src/engine/zero_three_slots.c
 src/game/event_queue.c
 src/game/fight.c
 src/game/game_tick.c
+src/game/helper_gsm_handle_event.c
+src/game/helper_gsm_sub18.c
+src/game/helper_gsm_sub19.c
+src/game/helper_gsm_sub1_a.c
+src/game/helper_gsm_sub1_c.c
+src/game/menu_nav_poll.c
 src/game/statemachine.c
+src/game/table_search_asc.c
+src/game/table_search_desc.c
 src/game/tick.c
 src/platform/exit.c
 src/platform/win32/app_shutdown.c

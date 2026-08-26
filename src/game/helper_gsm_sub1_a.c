@@ -6,15 +6,31 @@
 #include "game/tick.h"
 
 /* Menu_Direct3DUnavailableDialog - sister of 0x4b8630 for 0x004f5050 menu. */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_menuD3dUnavailFlags;
 extern unsigned int g_gsmVar2;
 extern unsigned int g_dispatchSave868;
 extern unsigned int g_dispatchSave1486;
 extern unsigned int g_dispatchSave1496;
-extern void DrawMenu(void);
-extern void Menu_PollNavInput(void);
-extern void Menu_FindNextSelectable(void);
-extern void Menu_FindPrevSelectable(void);
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_dispatchSave1486 (*(unsigned int *)MK4_VA(unsigned int, 0xab4304u))
+#define g_dispatchSave1496 (*(unsigned int *)MK4_VA(unsigned int, 0xab436cu))
+#define g_dispatchSave868 (*(unsigned int *)MK4_VA(unsigned int, 0x4f5054u))
+#define g_gsmVar2 (*(unsigned int *)MK4_VA(unsigned int, 0x4f5050u))
+#define g_menuD3dUnavailFlags (*(unsigned int *)MK4_VA(unsigned int, 0xab42ecu))
+#endif
+
+/* Real signatures. The auto-generated placeholders all said `(void)`, but the
+ * original pushes two stack args for the two selectable-scanners and one for
+ * the poll, and every caller uses the returned value. */
+extern int          DrawMenu(void *menu, int sel);
+extern unsigned int Menu_PollNavInput(int mode);
+extern unsigned int Menu_FindNextSelectable(int cur, void *menu);
+extern unsigned int Menu_FindPrevSelectable(int cur, void *menu);
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
@@ -40,7 +56,7 @@ int Menu_Direct3DUnavailableDialog(void)
         g_dispatchSave1486 = Menu_FindNextSelectable(g_dispatchSave1486,&g_gsmVar2);
       }
       if ((uVar1 & 0x10) != 0) {
-        g_dispatchSave1496 = (int)*(short *)(&g_dispatchSave868 + g_dispatchSave1486 * 8);
+        g_dispatchSave1496 = (int)*(short *)((unsigned char *)&g_dispatchSave868 + g_dispatchSave1486 * 8);
       }
       if ((uVar1 & 0x20) != 0) {
         g_dispatchSave1496 = 0x45;

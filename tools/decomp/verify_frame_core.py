@@ -56,6 +56,35 @@ B1_USER = 0x7b41a0 + 0x40 + 0xc
 
 TICKCFG = {'g_tickCurConfig': 0xb93000, '@0xb93000': 0, '@0xb93004': 0}
 
+# `mov eax, 0x8000 ; ret 4` - a __stdcall GetAsyncKeyState that reports every
+# key HELD (bit 15 set), so Menu_PollNavInput returns a full bit set and the
+# menu twins actually take their navigation branches. Without it every key
+# reads as up, the poll returns 0, and the interesting paths never run.
+KEY_STUB_VA = 0x00b94000
+KEY_DOWN = {'@0x%x' % KEY_STUB_VA: b'\xb8\x00\x80\x00\x00\xc2\x04\x00',
+            'g_iat_GetAsyncKeyState': KEY_STUB_VA}
+
+# A four-entry menu table at MENU_VA. Each entry is 8 bytes: [+0] non-zero
+# means present, [+4] is a s16 that is 1 for a selectable row.
+#   0 present+selectable, 1 present+selectable, 2 present+NOT selectable,
+#   3 absent (end of table)
+MENU_VA = 0x00b95000
+MENU = {'@0x%x' % (MENU_VA + 0): 1, '@0x%x' % (MENU_VA + 4): 1,
+        '@0x%x' % (MENU_VA + 8): 1, '@0x%x' % (MENU_VA + 12): 1,
+        '@0x%x' % (MENU_VA + 16): 1, '@0x%x' % (MENU_VA + 20): 0,
+        '@0x%x' % (MENU_VA + 24): 0, '@0x%x' % (MENU_VA + 28): 0}
+
+# Menu_PollNavInput reaches the keyboard and the joysticks through Win32 IAT
+# slots the verifier has no implementation for, so unseeded it just runs to the
+# instruction cap. Overwriting the two readers' own entry bytes with
+# `mov eax, IMM ; ret` makes them deterministic - and since the bytes are
+# patched in the arena BOTH runs share, the comparison stays honest.
+def _readers(key, joy):
+    def imm_ret(v):
+        return b'\xb8' + (v & 0xffffffff).to_bytes(4, 'little') + b'\xc3'
+    return {'@0x4b5450': imm_ret(key),        # Input_GetAsyncKey
+            '@0x4b5380': imm_ret(joy)}        # Input_PollJoystick
+
 RET_STUB = 0x0041f2e0                    # AllocateNode's `ret`
 DISPATCH = dict([('g_dispatchVar20', 0xb92000 // 4)] +
                 [('@0x%x' % (0xb92000 + i * 4), RET_STUB) for i in range(4)])
@@ -162,6 +191,46 @@ SEEDS = {
         ('state 13 (default)',{'g_gameState': 13}, (0,)),
         ('state out of range',{'g_gameState': 0x40}, (0,)),
         ('state 0x1c config', {'g_gameState': 0x1c}, (0,)),
+    ],
+    # Menu_HelpScreen's two co-executable paths run the REAL DrawMenu end to
+    # end - 1281 and 1279 matching writes - which is what makes them worth
+    # having. Its g_dispatchSave1494 == 2 branch is NOT co-executable: it goes
+    # through Menu_PollNavInput into GetAsyncKeyState via an IAT slot the
+    # verifier has no implementation for, and past the instruction cap the run
+    # simply walks off into zeroed pages. Seeding a `mov eax, 0x8000 ; ret 4`
+    # stub over the slot gets further but not out. The one defect that branch
+    # carried - Ghidra striding the 8-byte menu table on a uint pointer, i.e.
+    # by 32 - is settled directly by the original's own encoding,
+    # `movsx ecx, word ptr [eax*8 + 0x4f5094]`.
+    'Menu_HelpScreen': [
+        ('first entry',        {'g_menuHelpScreenFlags': 0}),
+        ('exit state 0x45',    {'g_menuHelpScreenFlags': 1, 'g_dispatchSave1494': 0x45}),
+    ],
+    'Menu_FindNextSelectable': [
+        ('from -1',            dict(MENU), (-1, MENU_VA)),
+        ('from 0',             dict(MENU), (0, MENU_VA)),
+        ('from 1',             dict(MENU), (1, MENU_VA)),
+        ('from 2 (walks off)', dict(MENU), (2, MENU_VA)),
+        ('cur below -1',       dict(MENU), (-9, MENU_VA)),
+    ],
+    'Menu_FindPrevSelectable': [
+        ('from 3',             dict(MENU), (3, MENU_VA)),
+        ('from 2',             dict(MENU), (2, MENU_VA)),
+        ('from 1',             dict(MENU), (1, MENU_VA)),
+        ('from 0 (mask path)', dict(MENU), (0, MENU_VA)),
+        ('negative cur',       dict(MENU), (-4, MENU_VA)),
+    ],
+    'AppInit_Misc2': [
+        ('at rest',            {}),
+        ('dirty heap head',    {'@0x7b41a0': 0xdeadbeef, '@0x7b41a8': 0}),
+    ],
+    'Menu_PollNavInput': [
+        ('nothing pressed',   dict(_readers(0, 0), **{'g_dispatchSave1491': 0}), (0,)),
+        ('every key down',    dict(_readers(1, 0), **{'g_dispatchSave1491': 0}), (0,)),
+        ('every key, held',   dict(_readers(1, 0), **{'g_dispatchSave1491': 3}), (0,)),
+        ('joystick dpad',     dict(_readers(0, 0xf0000000), **{'g_dispatchSave1491': 0}), (0,)),
+        ('joy buttons, arg 0',dict(_readers(0, 0x00000fff), **{'g_dispatchSave1491': 0}), (0,)),
+        ('joy buttons, arg 1',dict(_readers(0, 0x00000fff), **{'g_dispatchSave1491': 0}), (1,)),
     ],
     'Mem_Free': [
         ('below the heap',      _blocks(),          (0x7b0000,)),
@@ -294,7 +363,10 @@ SEEDS = {
 def seed(arena, gl_va, spec):
     for k, v in spec.items():
         va = int(k[1:], 16) if k.startswith('@') else gl_va[k]
-        struct.pack_into('<I', arena, va - BASE, v & 0xffffffff)
+        if isinstance(v, (bytes, bytearray)):      # raw stub code / byte run
+            arena[va - BASE:va - BASE + len(v)] = v
+        else:
+            struct.pack_into('<I', arena, va - BASE, v & 0xffffffff)
 
 
 def main():

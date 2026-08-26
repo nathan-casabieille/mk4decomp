@@ -24,10 +24,13 @@ extern unsigned int g_dispatchSave1481;
 extern unsigned int g_dispatchSave1488;
 extern unsigned int g_dispatchSave1500;
 extern void AppInit_Misc8(void);
-extern void DrawMenu(void);
-extern void Menu_PollNavInput(void);
-extern void Menu_FindNextSelectable(void);
-extern void Menu_FindPrevSelectable(void);
+/* Real signatures. The auto-generated placeholders all said `(void)`, but the
+ * original pushes two stack args for the two selectable-scanners and one for
+ * the poll, and every caller uses the returned value. */
+extern int          DrawMenu(void *menu, int sel);
+extern unsigned int Menu_PollNavInput(int mode);
+extern unsigned int Menu_FindNextSelectable(int cur, void *menu);
+extern unsigned int Menu_FindPrevSelectable(int cur, void *menu);
 extern void Thunk_ExitGame(void);
 
 __declspec(naked) void Menu_InsertCDDialog(void) {

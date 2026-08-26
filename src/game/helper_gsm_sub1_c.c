@@ -5,6 +5,7 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_gsmHelperBase;
 extern unsigned int g_dispatchSave573;
 extern u32 g_gsmOut4;
@@ -14,10 +15,29 @@ extern u32 g_gsmDirty1;
 extern u32 g_gsmDirty2;
 extern u32 g_gsmDirty3;
 extern unsigned int g_dispatchSave1498;
-extern void DrawMenu(void);
-extern void Menu_PollNavInput(void);
-extern void Menu_FindNextSelectable(void);
-extern void Menu_FindPrevSelectable(void);
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_dispatchSave1480 (*(unsigned int *)MK4_VA(unsigned int, 0xab42ccu))
+#define g_dispatchSave1483 (*(unsigned int *)MK4_VA(unsigned int, 0xab42dcu))
+#define g_dispatchSave1498 (*(unsigned int *)MK4_VA(unsigned int, 0xab4380u))
+#define g_dispatchSave573 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4f34u))
+#define g_gsmDirty1 (*(unsigned int *)MK4_VA(unsigned int, 0xab4374u))
+#define g_gsmDirty2 (*(unsigned int *)MK4_VA(unsigned int, 0xab4378u))
+#define g_gsmDirty3 (*(unsigned int *)MK4_VA(unsigned int, 0xab437cu))
+#define g_gsmHelperBase (*(unsigned int *)MK4_VA(unsigned int, 0x4f4f30u))
+#define g_gsmOut4 (*(unsigned int *)MK4_VA(unsigned int, 0x543820u))
+#endif
+
+/* Real signatures. The auto-generated placeholders all said `(void)`, but the
+ * original pushes two stack args for the two selectable-scanners and one for
+ * the poll, and every caller uses the returned value. */
+extern int          DrawMenu(void *menu, int sel);
+extern unsigned int Menu_PollNavInput(int mode);
+extern unsigned int Menu_FindNextSelectable(int cur, void *menu);
+extern unsigned int Menu_FindPrevSelectable(int cur, void *menu);
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
@@ -50,7 +70,7 @@ int Menu_PauseMenu(void)
     if (g_gsmOut4 == 0) {
       g_dispatchSave1498 = 0x45;
     }
-    switch(*(undefined2 *)(&g_dispatchSave573 + g_dispatchSave1483 * 8)) {
+    switch(*(undefined2 *)((unsigned char *)&g_dispatchSave573 + g_dispatchSave1483 * 8)) {
     case 0x14:
       if ((uVar2 == 0) && ((uVar1 & 0x10) != 0)) {
         g_dispatchSave1498 = 0x45;

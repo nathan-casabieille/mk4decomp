@@ -10,10 +10,13 @@ extern unsigned int g_gsmVar;
 extern unsigned int g_dispatchSave869;
 extern unsigned int g_dispatchSave1487;
 extern unsigned int g_dispatchSave1497;
-extern void DrawMenu(void);
-extern void Menu_PollNavInput(void);
-extern void Menu_FindNextSelectable(void);
-extern void Menu_FindPrevSelectable(void);
+/* Real signatures. The auto-generated placeholders all said `(void)`, but the
+ * original pushes two stack args for the two selectable-scanners and one for
+ * the poll, and every caller uses the returned value. */
+extern int          DrawMenu(void *menu, int sel);
+extern unsigned int Menu_PollNavInput(int mode);
+extern unsigned int Menu_FindNextSelectable(int cur, void *menu);
+extern unsigned int Menu_FindPrevSelectable(int cur, void *menu);
 
 __declspec(naked) void Menu_DirectDrawUnavailableDialog(void)
 {

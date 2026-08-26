@@ -10,15 +10,31 @@
  *   Uses (g_menuFlags4f5018, g_dispatchSave1489, g_dispatchSave1495) instead of (00ab42d4, 00ab41a0, 00ab4364).
  *   Pushed table addresses are 0x004f5018 / 0x004f501c.
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_menuFlags4f5018;
 extern unsigned int g_gsmVar3;
 extern unsigned int g_dispatchSave867;
 extern unsigned int g_dispatchSave1489;
 extern unsigned int g_dispatchSave1495;
-extern void DrawMenu(void);
-extern void Menu_PollNavInput(void);
-extern void Menu_FindNextSelectable(void);
-extern void Menu_FindPrevSelectable(void);
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_dispatchSave1489 (*(unsigned int *)MK4_VA(unsigned int, 0xab4320u))
+#define g_dispatchSave1495 (*(unsigned int *)MK4_VA(unsigned int, 0xab4368u))
+#define g_dispatchSave867 (*(unsigned int *)MK4_VA(unsigned int, 0x4f501cu))
+#define g_gsmVar3 (*(unsigned int *)MK4_VA(unsigned int, 0x4f5018u))
+#define g_menuFlags4f5018 (*(unsigned int *)MK4_VA(unsigned int, 0xab4300u))
+#endif
+
+/* Real signatures. The auto-generated placeholders all said `(void)`, but the
+ * original pushes two stack args for the two selectable-scanners and one for
+ * the poll, and every caller uses the returned value. */
+extern int          DrawMenu(void *menu, int sel);
+extern unsigned int Menu_PollNavInput(int mode);
+extern unsigned int Menu_FindNextSelectable(int cur, void *menu);
+extern unsigned int Menu_FindPrevSelectable(int cur, void *menu);
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
@@ -44,7 +60,7 @@ int Menu_GlideUnavailableDialog(void)
         g_dispatchSave1489 = Menu_FindNextSelectable(g_dispatchSave1489,&g_gsmVar3);
       }
       if ((uVar1 & 0x10) != 0) {
-        g_dispatchSave1495 = (int)*(short *)(&g_dispatchSave867 + g_dispatchSave1489 * 8);
+        g_dispatchSave1495 = (int)*(short *)((unsigned char *)&g_dispatchSave867 + g_dispatchSave1489 * 8);
       }
       if ((uVar1 & 0x20) != 0) {
         g_dispatchSave1495 = 0x45;

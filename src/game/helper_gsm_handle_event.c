@@ -5,15 +5,31 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_gsmEventBase;
 extern unsigned int g_dispatchSave870;
 extern unsigned int g_dispatchSave1478;
 extern unsigned int g_dispatchSave1484;
 extern unsigned int g_dispatchSave1493;
-extern void DrawMenu(void);
-extern void Menu_PollNavInput(void);
-extern void Menu_FindNextSelectable(void);
-extern void Menu_FindPrevSelectable(void);
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_dispatchSave1478 (*(unsigned int *)MK4_VA(unsigned int, 0xab41c4u))
+#define g_dispatchSave1484 (*(unsigned int *)MK4_VA(unsigned int, 0xab42f4u))
+#define g_dispatchSave1493 (*(unsigned int *)MK4_VA(unsigned int, 0xab4360u))
+#define g_dispatchSave870 (*(unsigned int *)MK4_VA(unsigned int, 0x4f512cu))
+#define g_gsmEventBase (*(unsigned int *)MK4_VA(unsigned int, 0x4f5128u))
+#endif
+
+/* Real signatures. The auto-generated placeholders all said `(void)`, but the
+ * original pushes two stack args for the two selectable-scanners and one for
+ * the poll, and every caller uses the returned value. */
+extern int          DrawMenu(void *menu, int sel);
+extern unsigned int Menu_PollNavInput(int mode);
+extern unsigned int Menu_FindNextSelectable(int cur, void *menu);
+extern unsigned int Menu_FindPrevSelectable(int cur, void *menu);
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
@@ -40,7 +56,7 @@ int Helper_GSM_HandleEvent(void)
         g_dispatchSave1478 = Menu_FindNextSelectable(g_dispatchSave1478,&g_gsmEventBase);
       }
       if ((uVar1 & 0x10) != 0) {
-        g_dispatchSave1493 = (int)*(short *)(&g_dispatchSave870 + g_dispatchSave1478 * 8);
+        g_dispatchSave1493 = (int)*(short *)((unsigned char *)&g_dispatchSave870 + g_dispatchSave1478 * 8);
       }
       if ((uVar1 & 0x20) != 0) {
         g_dispatchSave1493 = 0x45;

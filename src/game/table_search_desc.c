@@ -5,15 +5,34 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
+#endif
 
 /* @addr 0x004b5a80 (52b)
  *   rep stos zero-fill 0xc0000 dwords starting at 0x007b41a0;
  *   then mask + or bits, set [0x007b41a8] = 0x007b41a0 (self-link list head).
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern u8 g_memHeapStart[];
 extern unsigned int g_dispatchSave1654;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchSave1654 (*(unsigned int *)MK4_VA(unsigned int, 0x7b41a8u))
+#define g_memHeapStart (*(unsigned char *)MK4_VA(unsigned char, 0x7b41a0u))
+#endif
+
+/* Both auto-split halves of misc_matchesDD.c carry this same function. The
+ * matching build tolerates the pair, but linking two definitions natively is a
+ * duplicate symbol, so the portable one lives in table_search_asc.c and this
+ * copy is matching-only. */
+#ifndef NON_MATCHING
 __declspec(naked) void AppInit_Misc2(void) {
     __asm {
         push    edi
@@ -31,6 +50,7 @@ __declspec(naked) void AppInit_Misc2(void) {
         ret
     }
 }
+#endif
 
 /* @addr 0x004b62c0 (55b)
  *   table search descending from arg-1; each entry is 8 bytes.
@@ -38,26 +58,29 @@ __declspec(naked) void AppInit_Misc2(void) {
  *   complex tail computing the final index.
  */
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-uint Menu_FindPrevSelectable(uint param_1,int param_2)
-
+/* Portable twin - the mirror of Menu_FindNextSelectable, walking down from
+ * cur - 1. Falling off the bottom returns 0 when cur < 1 and cur otherwise:
+ * `setl al ; dec eax ; and eax, edx` builds a 0 / all-ones mask from that test.
+ *
+ * The menu pointer is a `void *`, not the `int` Ghidra emitted - an arena
+ * address does not survive a 32-bit round trip on a 64-bit host. */
+int Menu_FindPrevSelectable(int cur, void *menu)
 {
-  uint uVar1;
-  int *piVar2;
-  
-  uVar1 = param_1 - 1;
-  if (-1 < (int)uVar1) {
-    piVar2 = (int *)(param_2 + uVar1 * 8);
-    do {
-      if (*piVar2 == 0) break;
-      if ((short)piVar2[1] != 1) {
-        return uVar1;
-      }
-      uVar1 = uVar1 - 1;
-      piVar2 = piVar2 + -2;
-    } while (-1 < (int)uVar1);
-  }
-  return ((int)param_1 < 1) - 1 & param_1;
+    unsigned char *e;
+    int i = cur - 1;
+
+    if (i >= 0) {
+        e = (unsigned char *)menu + i * 8;
+        while (*(int *)e != 0) {
+            if (*(short *)(e + 4) != 1)
+                return i;
+            i--;
+            e -= 8;
+            if (i < 0)
+                break;
+        }
+    }
+    return cur < 1 ? 0 : cur;
 }
 #else
 __declspec(naked) void Menu_FindPrevSelectable(void) {

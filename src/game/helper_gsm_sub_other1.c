@@ -10,11 +10,14 @@ extern unsigned int g_dispatchSave572;
 extern unsigned int g_dispatchSave1482;
 extern unsigned int g_dispatchSave1485;
 extern unsigned int g_dispatchSave1499;
-extern void DrawMenu(void);
+/* Real signatures. The auto-generated placeholders all said `(void)`, but the
+ * original pushes two stack args for the two selectable-scanners and one for
+ * the poll, and every caller uses the returned value. */
+extern int          DrawMenu(void *menu, int sel);
+extern unsigned int Menu_PollNavInput(int mode);
+extern unsigned int Menu_FindNextSelectable(int cur, void *menu);
+extern unsigned int Menu_FindPrevSelectable(int cur, void *menu);
 extern void Helper_GSM_PlayMusic(void);
-extern void Menu_PollNavInput(void);
-extern void Menu_FindNextSelectable(void);
-extern void Menu_FindPrevSelectable(void);
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
@@ -48,7 +51,7 @@ int Menu_ColorDepthErrorDialog(void)
     if ((iVar2 != 4) || (g_mode4PauseGate != 0)) {
       g_dispatchSave1499 = 0x45;
     }
-    switch(*(undefined2 *)(&g_dispatchSave572 + g_dispatchSave1485 * 8)) {
+    switch(*(undefined2 *)((unsigned char *)&g_dispatchSave572 + g_dispatchSave1485 * 8)) {
     case 0xd:
       if ((uVar3 == 0) && ((uVar1 & 0x10) != 0)) {
         Helper_GSM_PlayMusic(1);
