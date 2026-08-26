@@ -355,7 +355,8 @@ Brute-forcing all combinations against the 799-entry table yielded:
   `forest_g`, `ice_pit_`, `lair_geo`, `theatre_`, `shaolin_`, ...)
 - `menu.tga` (256×256 16-bit TGA, 131 KB)
 
-**Coverage: 797 / 799 = 99.7%**. Two entries (0, 1) remain unidentified -
+**Coverage: 799 / 799 = 100%** (entries 0 and 1 identified 2026-08-26 as the
+.AP0/.AP1 animation pack - see "Entries 0 and 1" below). Historically they read as -
 hashes `0x2da2df95` (small, 2964 B) and `0x2da3df95` (1.1 MB). The
 1-char-off pattern in their hashes suggests they're a numbered pair or
 a base/data pair (e.g. `*idx.bin` + `*data.bin`). Not in any of the
@@ -1090,7 +1091,52 @@ Constants live in `.rdata`:
 - C2 = 1.52587890625e-05 (= 2⁻¹⁶) at 0x004d2a58
 - C3 = -1.0 at 0x004d2a60
 
-### Mystery entries 0 and 1 of FILESYS.DAT (PARTIAL)
+### Entries 0 and 1 of FILESYS.DAT = the ANIMATION PACK (IDENTIFIED 2026-08-26)
+
+The archive's last two unidentified files are the animation pack. They are
+`<anim-dir><name>.AP0` and `.AP1`, built and opened by `Anim_LoadPackFile`
+(`0x00401120`) with the format strings `"%s%s.AP0"` (`0x4d5040`) and
+`"%s%s.AP1"` (`0x4d5060`) applied to the directory prefix
+`c:\source\mk4\win\anim\` (`0x4d506c`). Decoder:
+[tools/anim_pack.py](../../tools/anim_pack.py).
+
+```
+AP0 (entry 0, 2964 B) - the directory
+    0x000 .. 0x1ff   512-byte header (contents not yet decoded)
+    0x200 ..         records of { u16 id_and_flag; u16 size; }
+                       id   = id_and_flag & 0x7fff
+                       flag = id_and_flag & 0x8000  -> descriptor +8 bit 15
+                     terminated by a record whose first word is 0xffff
+AP1 (entry 1, 1138516 B) - the per-id blobs, concatenated in index order
+```
+
+**Proof**: the 612 record sizes sum to exactly 1,138,516 bytes = AP1's size, and
+the ids are 0..611 with no repeats. (The earlier note below summed the file
+from offset 0 and got 1,269,068, which is why the two looked unrelated - the
+records start after the 512-byte header.)
+
+`Anim_LoadPackFile` allocates a buffer the size of AP1, reads AP0 into it,
+walks the directory into a 12-byte descriptor per id at `0x004ffdec`
+(`{ +0 data pointer, +4 ?, +8 flags }`) accumulating the sizes into pointers,
+then reads AP1 over the same buffer - so those pointers land in the animation
+data. It asserts `sizeof(AP0) <= sizeof(AP1)`.
+
+The exact `<name>` is still unknown: it is sprintf'd at runtime so it never
+appears as a whole string, and the trailing 0/1 digit puts the two hashes
+0x10000 apart only for names whose length is a multiple of 4 - an exhaustive
+`[a-z0-9_]` sweep of length 4 found nothing. The data needs no name; extract
+both by offset with
+[tools/fsys_extract_by_offset.py](../../tools/fsys_extract_by_offset.py).
+
+**Per-animation payload - NOT yet decoded.** 571 of the 612 blobs carry the
+0x8000 flag and start with a 24-byte header of three (max, min) s32 pairs - a
+bounding box - followed by high-entropy data, so the flag most likely means
+"compressed". The 41 unflagged ids are much larger (7200 / 10800 / 6768 bytes)
+and do NOT share that header shape, so they are a different record kind rather
+than an uncompressed variant. Decoding this needs the consumer side
+(`SkelAnimUpdaterCluster` `0x49d940`, `AnimNodeKindDispatch` `0x4b40d0`).
+
+### (superseded) Mystery entries 0 and 1 of FILESYS.DAT (PARTIAL)
 
 The two FILESYS.DAT entries we couldn't recover names for via brute
 force. Hashes differ by exactly `0x00010000`, indicating their names
@@ -1814,7 +1860,8 @@ doesn't reveal further architectural surprises.
 
 ### Still open
 
-- **2 unidentified FILESYS.DAT entries** (entries 0 and 1) - small (3 KB)
+- ~~2 unidentified FILESYS.DAT entries~~ IDENTIFIED: the .AP0/.AP1 animation
+  pack (see above). Their per-animation payload format is still open. (3 KB)
   and large (1.1 MB), with hashes `0x2da2df95` / `0x2da3df95` differing
   by one char. Probably a base/data pair outside the standard
   `c:\source\mk4\` prefix.
