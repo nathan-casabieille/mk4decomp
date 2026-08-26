@@ -4,6 +4,12 @@
 #include "engine/scenegraph.h"
 #include "portable/ghidra_types.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#endif
+
+
 /* @addr 0x004c5800 (61b)
  *   if (arg[0xc] & 0x40) zero arg[0xc] and return -1;
  *   else: call 0x4c6ff0(arg); call 0x4c5840(arg) → save eax;

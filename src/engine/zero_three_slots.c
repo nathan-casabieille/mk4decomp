@@ -20,6 +20,14 @@
  */
 #include "engine/scenegraph.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_fightGroupHead (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#endif
+
+
 /* @addr 0x00490780 */
 void ZeroThreeSlots_00490780(void) {
     u32 base = (u32)g_fightGroupHead << 2;

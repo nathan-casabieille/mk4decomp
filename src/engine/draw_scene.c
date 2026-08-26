@@ -8,6 +8,14 @@
 #include "platform/win32.h"
 #include "portable/mmsystem_shim.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_clampedRendererMode (*(unsigned int *)MK4_VA(unsigned int, 0x4f4b3cu))
+#define g_drawSceneTimeMs (*(unsigned int *)MK4_VA(unsigned int, 0x7afa00u))
+#endif
+
+
 /*
  * @addr 0x004b42e0
  *

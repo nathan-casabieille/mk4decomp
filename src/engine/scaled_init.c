@@ -19,11 +19,14 @@
 #include "engine/scenegraph.h"
 
 /* New globals. */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;   /* 0x00542044 */
 extern unsigned int g_xformEntityIdx;   /* 0x00542048 */
+#endif
 
 /* Table address externs - referenced only by `&` to force a
  * relocation; the linker fills the imm32 with the table's VA. */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_sceneInitBlob_005420f0;   /* 0x005420f0 */
 extern unsigned int g_sceneInitBlob_004e56d8;   /* 0x004e56d8 */
 extern unsigned int g_sceneInitBlob_004e7c90;   /* 0x004e7c90 */
@@ -35,6 +38,28 @@ extern unsigned int g_sceneInitBlob_00542d00;   /* 0x00542d00 */
 extern unsigned int g_sceneInitBlob_00542fb0;   /* 0x00542fb0 */
 extern unsigned int g_dispCfgBlob_004f1ba0;   /* 0x004f1ba0 */
 extern unsigned int g_dispCfgBlob_004f1be8;   /* 0x004f1be8 */
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispCfgBlob_004f1ba0 (*(unsigned int *)MK4_VA(unsigned int, 0x4f1ba0u))
+#define g_dispCfgBlob_004f1be8 (*(unsigned int *)MK4_VA(unsigned int, 0x4f1be8u))
+#define g_eventQueueTotal (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
+#define g_sceneInitBlob_004e56d8 (*(unsigned int *)MK4_VA(unsigned int, 0x4e56d8u))
+#define g_sceneInitBlob_004e7c48 (*(unsigned int *)MK4_VA(unsigned int, 0x4e7c48u))
+#define g_sceneInitBlob_004e7c90 (*(unsigned int *)MK4_VA(unsigned int, 0x4e7c90u))
+#define g_sceneInitBlob_005420f0 (*(unsigned int *)MK4_VA(unsigned int, 0x5420f0u))
+#define g_sceneInitBlob_00542d00 (*(unsigned int *)MK4_VA(unsigned int, 0x542d00u))
+#define g_sceneInitBlob_00542e48 (*(unsigned int *)MK4_VA(unsigned int, 0x542e48u))
+#define g_sceneInitBlob_00542ea8 (*(unsigned int *)MK4_VA(unsigned int, 0x542ea8u))
+#define g_sceneInitBlob_00542ef8 (*(unsigned int *)MK4_VA(unsigned int, 0x542ef8u))
+#define g_sceneInitBlob_00542fb0 (*(unsigned int *)MK4_VA(unsigned int, 0x542fb0u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#endif
+
 
 /* Externs for jump targets. */
 extern void Phase4SevenPackedDispatch(void);   /* 0x00417e40 */

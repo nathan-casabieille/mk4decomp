@@ -14,6 +14,13 @@
  */
 #include "game/tick.h"   /* g_framePauseFlag */
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#endif
+
+
 /* Externs for guarded-sequel targets. */
 extern void PendingMatch_LeaPlus22StoreSelf(void);   /* 0x00401b70 */
 extern void MStackPushTwoEntryChainCall(void);   /* 0x004058c0 */

@@ -10,6 +10,17 @@
 #include "engine/render.h"
 #include "game/tick.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_appFlags (*(unsigned int *)MK4_VA(unsigned int, 0x7af914u))
+#define g_inLoopStep (*(unsigned int *)MK4_VA(unsigned int, 0x7af92cu))
+#define g_lastFrameTime (*(unsigned int *)MK4_VA(unsigned int, 0x7af908u))
+#define g_loopCounter (*(unsigned int *)MK4_VA(unsigned int, 0x7af90cu))
+#define g_sleepBudgetMs (*(unsigned int *)MK4_VA(unsigned int, 0x7af910u))
+#endif
+
+
 /*
  * @addr 0x004b2750
  */

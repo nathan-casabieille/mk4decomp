@@ -9,10 +9,23 @@
 #include "engine/scenegraph.h"
 
 /* New globals. */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00535df0;   /* 0x00535df0 */
 extern unsigned int g_cj_00542054;   /* 0x00542054 */
 extern unsigned int g_cj_00542058;   /* 0x00542058 */
 extern unsigned int g_cj_0054205c;   /* 0x0054205c */
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_cj_00535df0 (*(unsigned int *)MK4_VA(unsigned int, 0x535df0u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#endif
+
 
 /* Externs for jump targets. */
 extern void GuardedChainPushSetCallPop(void);   /* 0x00406bb0 */

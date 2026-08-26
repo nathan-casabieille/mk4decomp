@@ -5,7 +5,9 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
+#endif
 
 /* @addr 0x004ab700 (73b)
  *   Audio mixer step: load d0/d4/walk, sum=d0+d4, sign=sar 31,
@@ -18,9 +20,22 @@ extern unsigned int g_currentNodeIdx;
  * first register use; with esi used for sign/adj, the earliest MSVC
  * can defer push esi is after 2 loads (byte 11) - not past an add.
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dispatchSave1163;
 extern unsigned int g_dispatchSave1164;
 extern unsigned int g_dispatchSave404;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchSave1163 (*(unsigned int *)MK4_VA(unsigned int, 0x4d5100u))
+#define g_dispatchSave1164 (*(unsigned int *)MK4_VA(unsigned int, 0x4d5104u))
+#define g_dispatchSave404 (*(unsigned int *)MK4_VA(unsigned int, 0x53814cu))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#endif
+
 extern void Mul10Tail(int, int);
 
 #ifdef NON_MATCHING

@@ -4,6 +4,12 @@
 #include "engine/ecm.h"
 #include <string.h>
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#endif
+
+
 /*
  * One-shot decode: zero a stack-local ecm_state, plug in src/dst,
  * dispatch, return state.offset_b on success or 0 on a null arg

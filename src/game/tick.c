@@ -11,6 +11,16 @@
 #include "engine/scenegraph.h"
 #include "audio/sound.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_frameCounter (*(unsigned int *)MK4_VA(unsigned int, 0x7af930u))
+#define g_gameStateResult (*(unsigned int *)MK4_VA(unsigned int, 0x7af918u))
+#define g_logicStepFlag (*(unsigned int *)MK4_VA(unsigned int, 0x54381cu))
+#define g_mode4PauseGate (*(unsigned int *)MK4_VA(unsigned int, 0x4ffd78u))
+#endif
+
+
 /*
  * @addr 0x004b26d0
  */

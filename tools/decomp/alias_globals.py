@@ -21,7 +21,8 @@ Per file this tool:
 The matching build never defines MK4_ARENA, so it keeps the externs and sees no
 aliases at all - `make matching` stays byte-identical.
 
-  build/venv/bin/python tools/decomp/alias_globals.py FILE FN [FN ...]
+  build/venv/bin/python tools/decomp/alias_globals.py FILE [FN ...]
+    with no FN, every function the file defines is used
 """
 import re
 import sys
@@ -108,11 +109,20 @@ def gdef(g, va, text, ctype=None):
 
 
 def main():
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 2:
         print(__doc__)
         return 2
     path = Path(sys.argv[1])
     names = sys.argv[2:]
+    if not names:
+        # Discover every function the file defines - both NON_MATCHING twins and
+        # unconditional pure C - so a whole TU can be aliased without naming
+        # each one. Aliasing must cover the WHOLE file: an aliased TU and a
+        # non-aliased TU see DIFFERENT storage for the same global.
+        src0 = path.read_text()
+        names = sorted(set(
+            re.findall(r'(?m)^[A-Za-z_][\w \*]*?\b(\w+)\s*\([^;{)]*\)\s*$', src0) +
+            re.findall(r'(?m)^[A-Za-z_][\w \*]*?\b(\w+)\s*\([^;{)]*\)\s*\{', src0)))
     fn_va, gl_va = vt.load_maps()
     src = path.read_text()
     if BEGIN in src:
@@ -134,8 +144,7 @@ def main():
             if pure:
                 text += '\n' + pure
     if not text:
-        print('%s: no twin bodies for %s' % (path, names))
-        return 1
+        text = src          # fall back to the whole file for usage inference
     # Alias every global the twin touches AND every one the file declares
     # itself. Leaving a declared-but-unaliased extern behind is an undefined
     # symbol at link time: the variable no longer exists anywhere, because the

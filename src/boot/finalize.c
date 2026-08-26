@@ -8,6 +8,14 @@
 #include "game/tick.h"
 #include "engine/scenegraph.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_logicFrameCounter (*(unsigned int *)MK4_VA(unsigned int, 0x53a79cu))
+#endif
+
+
 /*
  * Wrap up the current frame: run TickAllEntities, then advance
  * the logic counter when not paused.

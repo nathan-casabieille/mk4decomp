@@ -5,7 +5,20 @@
 #include "engine/scenegraph.h"
 
 /* Base of the 20-entry packed-ptr ring buffer (0x0053a4b8..0x0053a508). */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_eventQueueDrainBase;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_eventQueueActive (*(unsigned int *)MK4_VA(unsigned int, 0x53a31cu))
+#define g_eventQueueDrainBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a4b8u))
+#define g_eventQueuePending (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_eventQueueTotal (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#endif
+
 
 /* Drain loop lives in src/engine/misc_matchesQQ.c at 0x0045c840. The
  * linker pads the gap between this function's tail jmp and the loop

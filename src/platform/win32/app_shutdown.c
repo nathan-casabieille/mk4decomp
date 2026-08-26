@@ -3,6 +3,12 @@
  */
 #include "engine/scenegraph.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#endif
+
+
 /* @addr 0x004b2690 (60b): pure call chain - 11 calls + 1 jmp */
 extern void TestCallIat(void);
 extern void Helper_GfxCleanup(void);

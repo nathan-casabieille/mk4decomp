@@ -28,10 +28,23 @@
 
 extern void (__stdcall *g_iat_InvalidateRect)(int, int, int);
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern int g_renderer3_surface_active;
 extern void *g_lock_0058c874;
 extern int g_renderer5_surface_active;
 extern void *g_lock_0058c8f4;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_iat_InvalidateRect (*(unsigned int (**)())MK4_VA(unsigned int, 0x4d2210u))
+#define g_lock_0058c874 (*(unsigned int *)MK4_VA(unsigned int, 0x58c874u))
+#define g_lock_0058c8f4 (*(unsigned int *)MK4_VA(unsigned int, 0x58c8f4u))
+#define g_renderer3_surface_active (*(int *)MK4_VA(int, 0x58c884u))
+#define g_renderer5_surface_active (*(int *)MK4_VA(int, 0x58c904u))
+#endif
+
 
 extern void Renderer3_EndScene_SW_FS(void);
 extern void ComRelease_g_comptr_0058c870(void);

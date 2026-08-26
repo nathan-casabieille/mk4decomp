@@ -24,6 +24,16 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"   /* g_framePauseFlag */
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_fightGroupHead (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_matrixStackTop (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
+#endif
+
+
 /* Externs for call targets. */
 extern void MStackCall_MStackPush2ChainInsert_004062a0(void);   /* 0x545ecf1e */
 extern void MStackPush2ChainInsert(void);   /* 0x545ecf6e */

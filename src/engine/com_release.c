@@ -7,11 +7,24 @@
  */
 #include "engine/com.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern Mk4ComObj *g_comptr_0058c7b8;   /* 0x0058c7b8 */
 extern Mk4ComObj *g_comptr_0058c7bc;   /* 0x0058c7bc */
 extern Mk4ComObj *g_comptr_0058c7c0;   /* 0x0058c7c0 */
 extern Mk4ComObj *g_comptr_0058c870;   /* 0x0058c870 */
 extern Mk4ComObj *g_comptr_0058c8f0;   /* 0x0058c8f0 */
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_comptr_0058c7b8 (*(unsigned int *)MK4_VA(unsigned int, 0x58c7b8u))
+#define g_comptr_0058c7bc (*(unsigned int *)MK4_VA(unsigned int, 0x58c7bcu))
+#define g_comptr_0058c7c0 (*(unsigned int *)MK4_VA(unsigned int, 0x58c7c0u))
+#define g_comptr_0058c870 (*(unsigned int *)MK4_VA(unsigned int, 0x58c870u))
+#define g_comptr_0058c8f0 (*(unsigned int *)MK4_VA(unsigned int, 0x58c8f0u))
+#endif
+
 
 /* @addr 0x004aedc0 */
 void ComRelease_g_comptr_0058c7b8(void) {

@@ -11,9 +11,20 @@
  *   style) to set up a timer; returns 1 on success, 0 on failure.
  *   Stashes audio pre-state and start-of-period markers.
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern u32 g_audioPreState;
 extern u32 g_audioState08;
 extern unsigned int g_iat_mciSendCommandA;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_audioPreState (*(unsigned int *)MK4_VA(unsigned int, 0x5438e8u))
+#define g_audioState08 (*(unsigned int *)MK4_VA(unsigned int, 0x543908u))
+#define g_iat_mciSendCommandA (*(unsigned int *)MK4_VA(unsigned int, 0x4d2244u))
+#endif
+
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */

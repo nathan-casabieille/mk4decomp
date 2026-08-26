@@ -56,8 +56,13 @@
  * mode and the presented size while the right combination is pinned down. */
 static int s_w = 640, s_h = 480;
 
-extern int g_currentRendererMode;
-extern int g_clampedRendererMode;
+/* The renderer-mode globals are written AT THEIR VA, not through the
+ * same-named C variable: every engine TU is arena-aliased now, so Renderer_GetMode
+ * and DrawScene read the arena. Writing the C variable instead leaves the mode
+ * at 0 and nothing dispatches - which is exactly what a half-aliased build
+ * looks like from the outside (a frame that runs and draws nothing). */
+#define MK4_MODE_CUR_VA      0x004f4b3cu   /* g_currentRendererMode */
+#define MK4_MODE_CLAMPED_VA  0x004f4b38u   /* g_clampedRendererMode */
 
 static int env_int(const char *name, int dflt)
 {
@@ -111,8 +116,8 @@ void MK4_NativeVideoInit(void)
     s_w = env_int("MK4_VIDEO_W", 640);
     s_h = env_int("MK4_VIDEO_H", 480);
 
-    g_currentRendererMode = mode;
-    g_clampedRendererMode = mode;
+    *(int *)MK4_VA(int, MK4_MODE_CUR_VA) = mode;
+    *(int *)MK4_VA(int, MK4_MODE_CLAMPED_VA) = mode;
 
     memset(MK4_VA(void, MK4_FB_VA), 0, (unsigned)(s_w * s_h * 2));
 

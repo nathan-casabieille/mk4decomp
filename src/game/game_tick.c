@@ -12,6 +12,32 @@
 #include "engine/scenegraph.h"
 #include "audio/sound.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_gameMode (*(unsigned int *)MK4_VA(unsigned int, 0x543800u))
+#define g_gtAxisX (*(unsigned int *)MK4_VA(unsigned int, 0xab4e44u))
+#define g_gtAxisY (*(unsigned int *)MK4_VA(unsigned int, 0xab4e48u))
+#define g_gtAxisZ (*(unsigned int *)MK4_VA(unsigned int, 0xab4e4cu))
+#define g_gtConfig4f (*(unsigned int *)MK4_VA(unsigned int, 0x4f3234u))
+#define g_gtFightTickCounter (*(unsigned int *)MK4_VA(unsigned int, 0x53a498u))
+#define g_gtModeFlag (*(unsigned int *)MK4_VA(unsigned int, 0x543590u))
+#define g_gtOtherFlag (*(unsigned int *)MK4_VA(unsigned int, 0x54356cu))
+#define g_gtPauseMode (*(unsigned int *)MK4_VA(unsigned int, 0x543804u))
+#define g_gtPlayerEnabled (*(unsigned int *)MK4_VA(unsigned int, 0x4d5714u))
+#define g_gtPlayerProbe1 (*(unsigned int *)MK4_VA(unsigned int, 0x53803cu))
+#define g_gtPlayerProbe2 (*(unsigned int *)MK4_VA(unsigned int, 0x538038u))
+#define g_gtState438 (*(unsigned int *)MK4_VA(unsigned int, 0x543438u))
+#define g_player1NodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x538158u))
+#define g_player2NodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x53815cu))
+#define g_player3NodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x538160u))
+#define g_player4NodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x538164u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#endif
+
+
 /*
  * @addr 0x0041fd70
  */

@@ -21,7 +21,18 @@ extern void IntroComboFsmCluster(void);
  * DIR32 reloc into the imm32 slot; that keeps `addr >> 2` from being
  * constant-folded and lets MSVC SP3 /O2 emit the runtime shift. */
 extern unsigned int g_orphanTbl_004e4780;   /* 0x004e4780 */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_sceneInitBlob_004e56d8;   /* 0x004e56d8 */
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_eventQueueEnd (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_sceneInitBlob_004e56d8 (*(unsigned int *)MK4_VA(unsigned int, 0x4e56d8u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#endif
+
 
 /* @addr 0x004368f0 */
 void ScaledAddrInit_InstallSelfMStackPushDispatch(void) {

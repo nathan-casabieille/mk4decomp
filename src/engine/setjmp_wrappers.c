@@ -11,8 +11,27 @@
 #include "engine/scenegraph.h"
 
 /* New globals referenced by these wrappers. */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_chainAccumCur;   /* 0x00542078 */
 extern unsigned int g_setjmp;   /* 0x00ab5750 */
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_currentNodeFlags (*(unsigned int *)MK4_VA(unsigned int, 0x542084u))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_eventQueueChild (*(unsigned int *)MK4_VA(unsigned int, 0x542080u))
+#define g_eventQueueCurrent (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_eventQueueEnd (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_eventQueueIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_eventQueueNotMask (*(unsigned int *)MK4_VA(unsigned int, 0x54207cu))
+#define g_eventQueueWorkType (*(unsigned int *)MK4_VA(unsigned int, 0x542074u))
+#define g_setjmp (*(unsigned int *)MK4_VA(unsigned int, 0xab5750u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#endif
+
 
 /* Externs for jump targets. */
 extern void ZeroAndDirty4(void);   /* 0x00405430 */

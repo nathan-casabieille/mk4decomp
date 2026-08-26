@@ -10,6 +10,15 @@
 #include "platform/win32.h"     /* g_hInstance */
 #include "engine/render.h"      /* g_currentRendererMode */
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_currentRendererMode (*(unsigned int *)MK4_VA(unsigned int, 0x4f4b3cu))
+#define g_dsoundContext (*(unsigned int *)MK4_VA(unsigned int, 0xf9efc8u))
+#define g_hInstance (*(unsigned int *)MK4_VA(unsigned int, 0xf9f7c4u))
+#endif
+
+
 /*
  * @addr 0x004b3db0
  * Returns the currently-selected renderer mode (0=SW, 1=Glide,

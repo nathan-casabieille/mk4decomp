@@ -5,6 +5,7 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_distRefX;
 extern unsigned int g_distRefZ;
 extern unsigned int g_eventQueueSeed;
@@ -21,7 +22,9 @@ extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 extern unsigned int g_phaseTimer;
+#endif
 extern unsigned int g_dispatchSave_00537ef4;
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_secondary_00538068;
 extern unsigned int g_phaseInstallSlot;
 extern unsigned int g_phaseThunkState;
@@ -30,6 +33,49 @@ extern unsigned int g_scenegraphWalkEnd;
 extern unsigned int g_bootInitSaveSlot;
 extern unsigned int g_chainAccumCur;
 extern unsigned int g_xformScratch94;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_audioBridgeSlot2 (*(unsigned int *)MK4_VA(unsigned int, 0x52d720u))
+#define g_bootInitSaveSlot (*(unsigned int *)MK4_VA(unsigned int, 0x541dc4u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_currentNodeFlags (*(unsigned int *)MK4_VA(unsigned int, 0x542084u))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchVar14 (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b4u))
+#define g_dispatchVar35 (*(unsigned int *)MK4_VA(unsigned int, 0x52d738u))
+#define g_distRefX (*(unsigned int *)MK4_VA(unsigned int, 0x52ab04u))
+#define g_distRefZ (*(unsigned int *)MK4_VA(unsigned int, 0x52ab08u))
+#define g_dualC (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_eventQueueChild (*(unsigned int *)MK4_VA(unsigned int, 0x542080u))
+#define g_eventQueueCurrent (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_eventQueueNotMask (*(unsigned int *)MK4_VA(unsigned int, 0x54207cu))
+#define g_eventQueuePending (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_eventQueueSeed (*(unsigned int *)MK4_VA(unsigned int, 0x52ab10u))
+#define g_eventQueueWorkType (*(unsigned int *)MK4_VA(unsigned int, 0x542074u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_phaseInstallSlot (*(unsigned int *)MK4_VA(unsigned int, 0x53a42cu))
+#define g_phaseThunkSlot6 (*(unsigned int *)MK4_VA(unsigned int, 0x535de8u))
+#define g_phaseThunkSlot7 (*(unsigned int *)MK4_VA(unsigned int, 0x52ab50u))
+#define g_phaseThunkState (*(unsigned int *)MK4_VA(unsigned int, 0x53a730u))
+#define g_phaseTimer (*(unsigned int *)MK4_VA(unsigned int, 0x537e94u))
+#define g_player1NodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x538158u))
+#define g_player2NodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x53815cu))
+#define g_primary_0052d74c (*(unsigned int *)MK4_VA(unsigned int, 0x52d74cu))
+#define g_scenegraphWalkEnd (*(unsigned int *)MK4_VA(unsigned int, 0x541d68u))
+#define g_secondary_00538068 (*(unsigned int *)MK4_VA(unsigned int, 0x538068u))
+#define g_walkBoundsLimit (*(unsigned int *)MK4_VA(unsigned int, 0x535d60u))
+#define g_walkBoundsSlot (*(unsigned int *)MK4_VA(unsigned int, 0x535d68u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
 extern void DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThresholdRevertAdvance(void);
 extern void DualInstallCallSwap_CjChainResetThreshold_then_CjChainResetThreshold(void);
 extern void FpuSqrtMul(void);

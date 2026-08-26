@@ -11,7 +11,16 @@ extern void R2_Cleanup(void);
 extern void DDraw3_Cleanup(void);
 extern void DDraw5_Cleanup(void);
 extern void RendererTeardownSW(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern int g_currentRendererMode;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_currentRendererMode (*(int *)MK4_VA(int, 0x4f4b3cu))
+#endif
+
 void Helper_GfxCleanup(void) {
     Helper_GSM_PlayMusic(4);
     TryInitRenderer();

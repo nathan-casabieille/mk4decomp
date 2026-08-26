@@ -25,12 +25,30 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
 extern unsigned int g_phaseThunkArr3;
 extern unsigned int g_phaseThunkArr2;
 extern unsigned int g_roundResetSlot;
 extern unsigned int g_phaseThunkArr;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_eventQueuePending (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_phaseThunkArr (*(unsigned int *)MK4_VA(unsigned int, 0x53a474u))
+#define g_phaseThunkArr2 (*(unsigned int *)MK4_VA(unsigned int, 0x53a518u))
+#define g_phaseThunkArr3 (*(unsigned int *)MK4_VA(unsigned int, 0x53a1a0u))
+#define g_player1NodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x538158u))
+#define g_roundResetSlot (*(unsigned int *)MK4_VA(unsigned int, 0x53a3e4u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#endif
+
 
 /* @addr 0x00433d30
  *   NON-COAXABLE: MSVC assigns eax to the later-declared symbol (0x0053a518)

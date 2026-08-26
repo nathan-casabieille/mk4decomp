@@ -8,6 +8,18 @@
  */
 #include "engine/scenegraph.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_eventQueueChild (*(unsigned int *)MK4_VA(unsigned int, 0x542080u))
+#define g_eventQueueCurrent (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_eventQueueIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_fightGroupHead (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#endif
+
+
 
 extern void GuardedSeq_CopyJmp_then_MStackPushDualJmp(void);   /* 0x00428350 */
 extern void CallDualStoreXorBit(void);   /* 0x004285e0 */

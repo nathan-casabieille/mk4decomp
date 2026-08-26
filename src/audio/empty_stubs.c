@@ -17,6 +17,12 @@
 #include "engine/render.h"
 #include "game/statemachine.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#endif
+
+
 /* @addr 0x0048bfe0 - "DOWNLOAD Player N" debug print (varargs).
  * The orig is a single `c3` ret with no return-value materialisation,
  * so we declare it `void` here even though callers ignore an
