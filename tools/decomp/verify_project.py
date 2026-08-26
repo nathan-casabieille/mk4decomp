@@ -24,6 +24,7 @@ import verify_coexec as vc
 BASE = vc.BASE
 MAT = 0x7af990        # g_mat3x3_007af990: nine s16, +2 stride (projection matrix)
 LIGHTMAT = 0x7af9c0   # g_lightMat00.. (dword-spaced)
+VEC_VA = 0x007af820   # seeded vec3 argument (in-arena scratch)
 
 
 def setw(a, va, v):
@@ -92,6 +93,21 @@ def seed_common(a, vx=0x0040, vy=0x0030, vz=0x0500,
     setdw(a, 0x7af9e4, 0x0050)                 # g_vtxLight1_x
     setdw(a, 0x7af9ec, 0x0030)                 # g_vtxLight1_y
     setdw(a, 0x7af9e8, 0x0400)                 # g_vtxLight1_z (note: y/z swapped VAs)
+    # --- AltCamMatrixProject inputs -------------------------------------------
+    # A real vec3 argument (ARG_BASE's self-referential scratch is an ADDRESS,
+    # so Mat3x3VecMul6Bit would fold huge values and the z-test never fires).
+    setdw(a, VEC_VA + 0, vx)
+    setdw(a, VEC_VA + 4, vy)
+    setdw(a, VEC_VA + 8, vz)
+    # the main matrix it installs (packed s16 PAIRS - this function moves them
+    # a dword at a time) and the alt-camera matrix it swaps in for mode 1
+    for i, va in enumerate((0xab4878, 0xab487c, 0xab4880, 0xab4884, 0xab4888)):
+        setdw(a, va, (MATRIX[i * 2] & 0xffff) | (MATRIX[i * 2 + 1] << 16)
+              if i * 2 + 1 < 9 else MATRIX[8] & 0xffff)
+    for i, va in enumerate((0xab4d58, 0xab4d5c, 0xab4d60, 0xab4d64, 0xab4d68)):
+        setdw(a, va, ((MATRIX[(i * 2 + 3) % 9] & 0xffff)
+                      | (MATRIX[(i * 2 + 4) % 9] << 16)))
+    setdw(a, 0xab4e24, 0x0120)                 # g_dispatchSave1569 (negated into vec[1])
 
 
 # Scalar (non-pointer) arguments, per function. verify_coexec's default hands
@@ -102,8 +118,8 @@ ARGVALS = {
     'Helper_EmitLine': (0,),          # vertex slot; 0/1/2 are the real callers
     'Helper_EmitLine#1': (1,),
     'Helper_EmitLine#2': (2,),
-    'AltCamMatrixProject': (None, 0),  # (vec3 *, mode) - mode 0 = no alt matrix
-    'AltCamMatrixProject#1': (None, 1),
+    'AltCamMatrixProject': (VEC_VA, 0),   # (vec3 *, mode); 0 = no alt matrix
+    'AltCamMatrixProject#1': (VEC_VA, 1),  # 1 = swap the alt camera matrix in
 }
 
 

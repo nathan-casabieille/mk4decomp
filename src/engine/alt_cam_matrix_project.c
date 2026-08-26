@@ -148,65 +148,65 @@ extern void Mat3x3VecMul6Bit(void);
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void AltCamMatrixProject(undefined4 *param_1,int param_2)
-
+void AltCamMatrixProject(int *param_1, int param_2)
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
-  undefined4 uVar3;
-  undefined2 uVar4;
-  undefined4 local_2c;
-  int local_28;
-  int local_24;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
-  undefined4 local_14;
-  undefined2 local_10;
-  
-  uVar4 = g_mat3x3_007af9a0;
-  uVar3 = g_mat3x3_007af99c;
-  uVar2 = g_mat3x3_007af998;
-  uVar1 = g_mat3x3_007af994;
-  if (param_2 == 0) {
-    local_2c = *param_1;
-    local_24 = param_1[2];
-  }
-  else {
-    local_20 = g_mat3x3_007af990;
-    g_mat3x3_007af990 = g_dispatchSave1554;
-    g_mat3x3_007af998 = g_dispatchSave1556;
-    g_mat3x3_007af99c = g_dispatchSave1557;
-    g_mat3x3_007af994 = g_dispatchSave1555;
-    g_mat3x3_007af9a0 = g_dispatchSave1558;
-    Mat3x3VecMul6Bit(param_1,&local_2c);
-    local_18 = uVar2;
-    local_1c = uVar1;
-    local_14 = uVar3;
-    local_10 = uVar4;
-  }
-  g_mat3x3_007af990 = g_vtxMatBase;
-  g_mat3x3_007af994 = g_dispatchSave1530;
-  local_28 = -g_dispatchSave1569;
-  g_mat3x3_007af99c = g_dispatchSave1532;
-  g_mat3x3_007af998 = g_dispatchSave1531;
-  g_mat3x3_007af9a0 = g_dispatchSave1533;
-  Mat3x3VecMul6Bit(&local_2c,&local_2c);
-  if (param_2 != 0) {
-    g_mat3x3_007af990 = local_20;
-    g_mat3x3_007af994 = local_1c;
-    g_mat3x3_007af998 = local_18;
-    g_mat3x3_007af99c = local_14;
-    g_mat3x3_007af9a0 = local_10;
-  }
-  g_screenH = 0x1e0;
-  if (0 < local_24) {
-    g_walkCallback = (((local_28 << 9) / local_24) * 0x1e000 >> 0x10) + 0xf0;
-    if ((0 < g_walkCallback) && (g_walkCallback < 0x1e0)) {
-      g_screenH = (undefined2)g_walkCallback;
+    /* The nine matrix entries are packed s16 at 0x7af990 +2. THIS function
+       moves them a DWORD at a time - two entries per store - while the
+       projection helpers read them one word at a time with movsx. So every
+       access here is explicitly 32-bit THROUGH THE ADDRESS, independent of how
+       gdef happens to type the global; the 16-bit view writes half the bytes
+       (that was the mismatch at 0x7af990/994/998). 0x7af9a0 is the odd ninth
+       entry and really is a word. */
+    int vec[3];            /* the vec3 at [esp+0x10]; Mat3x3VecMul6Bit writes
+                              three dwords through the pointer, so it must be
+                              an array, not three separate locals. */
+    unsigned int save990, save994, save998, save99c;
+    unsigned short save9a0;
+    int t;
+
+    save994 = *(unsigned int *)&g_mat3x3_007af994;
+    save998 = *(unsigned int *)&g_mat3x3_007af998;
+    save99c = *(unsigned int *)&g_mat3x3_007af99c;
+    save9a0 = *(unsigned short *)&g_mat3x3_007af9a0;
+    save990 = *(unsigned int *)&g_mat3x3_007af990;
+
+    if (param_2 != 0) {                       /* swap in the alt camera matrix */
+        *(unsigned int *)&g_mat3x3_007af990 = g_dispatchSave1554;
+        *(unsigned int *)&g_mat3x3_007af994 = g_dispatchSave1555;
+        *(unsigned int *)&g_mat3x3_007af998 = g_dispatchSave1556;
+        *(unsigned int *)&g_mat3x3_007af99c = g_dispatchSave1557;
+        *(unsigned short *)&g_mat3x3_007af9a0 = (unsigned short)g_dispatchSave1558;
+        Mat3x3VecMul6Bit(param_1, vec);
+    } else {
+        vec[0] = param_1[0];
+        vec[2] = param_1[2];
     }
-  }
-  return;
+
+    *(unsigned int *)&g_mat3x3_007af990 = g_vtxMatBase;
+    *(unsigned int *)&g_mat3x3_007af994 = g_dispatchSave1530;
+    *(unsigned int *)&g_mat3x3_007af998 = g_dispatchSave1531;
+    *(unsigned int *)&g_mat3x3_007af99c = g_dispatchSave1532;
+    *(unsigned short *)&g_mat3x3_007af9a0 = (unsigned short)g_dispatchSave1533;
+    vec[1] = -(int)g_dispatchSave1569;
+    Mat3x3VecMul6Bit(vec, vec);
+
+    if (param_2 != 0) {                       /* put the real matrix back */
+        *(unsigned int *)&g_mat3x3_007af990 = save990;
+        *(unsigned int *)&g_mat3x3_007af994 = save994;
+        *(unsigned int *)&g_mat3x3_007af998 = save998;
+        *(unsigned int *)&g_mat3x3_007af99c = save99c;
+        *(unsigned short *)&g_mat3x3_007af9a0 = save9a0;
+    }
+
+    *(unsigned short *)&g_screenH = 0x1e0;    /* orig: mov word ptr, 0x1e0 */
+    if (vec[2] > 0) {
+        t = ((int)((unsigned)vec[1] << 9)) / vec[2];   /* shl 9 / cdq / idiv */
+        t = (int)(((unsigned)t * 15u) << 13) >> 0x10;  /* lea,lea,shl 0xd,sar 0x10 */
+        t = t + 0xf0;
+        g_walkCallback = t;                   /* stored even when out of range */
+        if (t > 0 && t < 0x1e0)
+            *(unsigned short *)&g_screenH = (unsigned short)t;
+    }
 }
 #else
 __declspec(naked) void AltCamMatrixProject(void) {

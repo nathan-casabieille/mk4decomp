@@ -44916,26 +44916,45 @@ extern s32 g_vtxLight1_y;
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
 void MatVec2Multiply(void)
-
 {
-  short local_20;
-  short local_1e;
-  short local_1c;
-  short local_1a;
-  short local_18;
-  short local_16;
-  short local_14;
-  short local_12;
-  short local_10;
-  
-  Word9Reorder(&g_mat3x3_007af990,&local_20);
-  g_lightMat20 = g_lightMat00 * local_20 + g_lightMat01 * local_1e + g_lightMat02 * local_1c >> 0xc;
-  g_lightMat21 = g_lightMat00 * local_1a + g_lightMat01 * local_18 + g_lightMat02 * local_16 >> 0xc;
-  g_lightMat22 = g_lightMat00 * local_14 + g_lightMat01 * local_12 + g_lightMat02 * local_10 >> 0xc;
-  g_vtxLight1_x = g_dispatchSave1627 * local_20 + g_dispatchSave1628 * local_1e + g_dispatchSave1629 * local_1c >> 0xc;
-  g_vtxLight1_z = g_dispatchSave1627 * local_1a + g_dispatchSave1628 * local_18 + g_dispatchSave1629 * local_16 >> 0xc;
-  g_vtxLight1_y = g_dispatchSave1627 * local_14 + g_dispatchSave1628 * local_12 + g_dispatchSave1629 * local_10 >> 0xc;
-  return;
+    /* Word9Reorder transposes a 3x3 s16 matrix through a POINTER, writing 18
+       consecutive bytes. The Ghidra lift declared nine separate `short` locals
+       and passed `&local_20`: nothing makes separate locals contiguous or
+       ordered, so the callee scribbled over the frame - FETCH_UNMAPPED under
+       co-exec. It has to be an array. */
+    short t[9];
+    unsigned acc;
+
+    Word9Reorder((short *)&g_mat3x3_007af990, t);
+
+    /* orig reads the temps with movsx and shifts with sar, so this is all
+       SIGNED; the products accumulate through unsigned because three 32x16
+       products can exceed INT_MAX and signed overflow is UB. */
+    acc = (unsigned)((int)g_lightMat00 * (int)t[0])
+        + (unsigned)((int)g_lightMat01 * (int)t[1])
+        + (unsigned)((int)g_lightMat02 * (int)t[2]);
+    g_lightMat20 = (int)acc >> 0xc;
+    acc = (unsigned)((int)g_lightMat00 * (int)t[3])
+        + (unsigned)((int)g_lightMat01 * (int)t[4])
+        + (unsigned)((int)g_lightMat02 * (int)t[5]);
+    g_lightMat21 = (int)acc >> 0xc;
+    acc = (unsigned)((int)g_lightMat00 * (int)t[6])
+        + (unsigned)((int)g_lightMat01 * (int)t[7])
+        + (unsigned)((int)g_lightMat02 * (int)t[8]);
+    g_lightMat22 = (int)acc >> 0xc;
+
+    acc = (unsigned)((int)g_dispatchSave1627 * (int)t[0])
+        + (unsigned)((int)g_dispatchSave1628 * (int)t[1])
+        + (unsigned)((int)g_dispatchSave1629 * (int)t[2]);
+    g_vtxLight1_x = (int)acc >> 0xc;
+    acc = (unsigned)((int)g_dispatchSave1627 * (int)t[3])
+        + (unsigned)((int)g_dispatchSave1628 * (int)t[4])
+        + (unsigned)((int)g_dispatchSave1629 * (int)t[5]);
+    g_vtxLight1_z = (int)acc >> 0xc;
+    acc = (unsigned)((int)g_dispatchSave1627 * (int)t[6])
+        + (unsigned)((int)g_dispatchSave1628 * (int)t[7])
+        + (unsigned)((int)g_dispatchSave1629 * (int)t[8]);
+    g_vtxLight1_y = (int)acc >> 0xc;
 }
 #else
 __declspec(naked) void MatVec2Multiply(void) {
