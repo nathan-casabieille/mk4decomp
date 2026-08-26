@@ -617,6 +617,28 @@ as absolute file offsets (the earlier guess) yields garbage: strip counts like
   terminates. A strip opens on 2 vertices then walks `count + 1` more, and
   strips consume the vertex array STRICTLY sequentially.
 - **vertices**: 12 bytes = 3x s16 position + 3x s16 normal.
+- **triangles** (at `block + 12 + ofs_c`, `count` entries of 8 bytes):
+
+```c
+struct geo_tri {
+    uint8_t pad;        // always 0 in every asset checked
+    uint8_t tex_index;  // 0..47 (48 distinct in sc_geo)
+    uint8_t u0, v0, u1, v1, u2, v2;
+};
+```
+
+  The table is exactly `count * 8` bytes and ends precisely where the NEXT
+  block's strip list begins, and consecutive rows share two UV pairs - the
+  sliding window of a triangle strip. The six UV bytes are exactly the three
+  (u,v) pairs `FlushDrawQueue` decodes from a draw entry at `+0xc..+0x11`.
+
+  This resolves a puzzle in the emitters: neither `TristripBatchEmit` nor
+  `DrawMeshBlock` writes a draw entry's u/v bytes, yet both advance the entry
+  cursor by `0x1c` per TRIANGLE whether or not they submit. The entry array at
+  `g_dualC + 4` is a persistent per-mesh table that a separate setup pass fills
+  from this triangle table, in the same triangle order; the emitters only
+  rewrite the fields that vary per frame. `make native-geo` reproduces that
+  setup pass.
 
 Two independent invariants pin the format down on the real assets:
 
