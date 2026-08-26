@@ -366,6 +366,39 @@ See [tools/fsys_hash.py](../../tools/fsys_hash.py) (hash + table reader)
 and [tools/fsys_bruteforce.py](../../tools/fsys_bruteforce.py) (name
 discovery).
 
+### The .geo asset tables (FOUND 2026-08-26)
+
+Two static tables tie the roster to its mesh files. Dump both with
+[tools/geo_roster.py](../../tools/geo_roster.py).
+
+| Table | VA | Shape |
+|---|---|---|
+| ASSET  | `0x004f65a0` | 121 x `{ char *name; u32 (slot << 16) | kind; u32 }` |
+| ROSTER | `0x00516d2c` | 12-byte records; `+0` points at every FOURTH asset record |
+
+The asset records come in groups of FOUR sharing a slot number - the base mesh
+plus its `_a_` / `_g_` / `_e_` variants - and `LoadGeoAsset_Textures`
+(`0x004bd6e0`) is what indexes them:
+
+```
+esi = g_currentNodeIdx * 4        // the node address
+edx = [esi]                       // node[+0] = the asset table pointer
+ecx = arg0 * 3                    // records are 3 dwords
+name = [edx + ecx*4]
+sprintf(g_geoAssetPath, "c:\source\mk4\win\geogfx\%s", name)
+Mem_Malloc(&node[+4], FSYS_fsize(path), 1)   // the buffer lands in node[+4]
+```
+
+The roster's 16 valid entries are eight characters x two slots (sc, ra, sb, lk,
+sz, wg, ns, nns), and the asset table runs to slot 29 (`shared_g.geo`, the only
+`kind=8` record).
+
+NOTE: neither table is referenced by any instruction - the code reaches the
+asset table through `node[+0]`, so an xref search for either address finds
+nothing. They were located by finding the `*.geo` name strings and then
+searching for dwords that point AT them, which is a useful trick for
+data-driven tables generally.
+
 ### Character / scene naming convention
 
 Decoded from the recovered `.geo` names:
