@@ -1189,8 +1189,31 @@ LRU-ish counter at `0x523ae8`. The decoder's inputs are staged in
 `g_dispatchSave19` (stream), `g_phaseThunkSave` (frames), `g_dispatchSave5`
 (node_count - 3), `g_dispatchSave12` (frame) and `g_dispatchSave11` (slot).
 
-Still open: the meaning of the individual dwords in a frame record, the bit
-fields of the compressed form, and the 512-byte AP0 header.
+**How a frame reaches a joint (verified by EXECUTION, not by reading).**
+`tools/anim_frame.py` runs the original `Anim_AcquireFrameData` under Unicorn
+with a seeded descriptor and asserts the return equals
+`(data >> 2) + node_count * frame`. It does, and the returned PACKED pointer is
+exactly the shape the transform setters consume:
+
+```
+NodeApplyTransform_A_Direct (0x004bdc00) reads
+    cx = word [g_xformEntityIdx*4 + 0]
+    dx = word [g_xformEntityIdx*4 + 4]
+    ax = word [g_xformEntityIdx*4 + 8]
+```
+
+- a PACKED pointer to THREE CONSECUTIVE DWORDS, taking the low 16 bits of each
+as a BAM angle (negated). So an 18-dword frame is **6 node records of 3 dwords**.
+
+This cross-confirms the "two angle formats" observation made earlier from the
+handler pair: in one real frame record, node 0's three dwords are small enough
+to be 16-bit BAM while nodes 1..5 are far larger - the 16.16-radian form that
+the non-`_Direct` setters convert with `bam = ((x >> 2) * 10430) >> 18`. Both
+formats genuinely coexist inside a single frame, selected per node.
+
+Still open: which node record drives which mesh block (the node tree is built
+at runtime - `RenderSceneNode` reads the block index from a node field), the
+bit fields of the compressed form, and the 512-byte AP0 header.
 
 **(older observations)** 571 of the 612 blobs carry the
 0x8000 flag and start with a 24-byte header of three (max, min) s32 pairs - a
