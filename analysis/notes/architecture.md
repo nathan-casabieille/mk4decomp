@@ -1157,8 +1157,40 @@ accumulator with a bit counter in `esi`, refilled with the usual
 offset (`edi*8 - esi + field`) and converts it back to a dword pointer plus a
 shift, so the 13-bit fields are partly back-references into the stream.
 
-What each field MEANS is still open, as is the 512-byte AP0 header and the 41
-unflagged (larger, differently-shaped) blobs.
+**The static descriptor table** at `0x004ffdec` (612 x 12 bytes, `+0 == -1`
+terminates - exactly the 612 directory entries) supplies the rest:
+
+```c
+struct anim_desc {
+    s32 data;        // 0 in the image; Anim_LoadPackFile fills it
+    s32 frames;      // 1..519, median ~30
+    u32 nodes_flags; // (node_count << 16) | flags; bit 15 = compressed
+};
+```
+
+`node_count` is **18** for 575 of the 612 animations (24 for 25 of them, and a
+handful of 4/6/9/13/20), so 18 is the standard skeleton.
+
+**The 41 unflagged animations need no decoder at all.** `Anim_AcquireFrameData`
+returns `(data >> 2) + node_count * frame` - a PACKED pointer - for them, so
+their payload is simply
+
+```c
+s32 data[frames][node_count];
+```
+
+PROVEN: for all 41, `size == 4 * node_count * frames` exactly. (These are the
+larger blobs the earlier note found puzzling; they are not compressed, which is
+why they have no bounding-box header and why they are big.)
+
+Compressed animations go through `Anim_DecodeBitstream` into a 128-byte cache
+slot at `0x523b58 + slot*128`, with 12 slots tracked at `0x523b28` and an
+LRU-ish counter at `0x523ae8`. The decoder's inputs are staged in
+`g_dispatchSave19` (stream), `g_phaseThunkSave` (frames), `g_dispatchSave5`
+(node_count - 3), `g_dispatchSave12` (frame) and `g_dispatchSave11` (slot).
+
+Still open: the meaning of the individual dwords in a frame record, the bit
+fields of the compressed form, and the 512-byte AP0 header.
 
 **(older observations)** 571 of the 612 blobs carry the
 0x8000 flag and start with a 24-byte header of three (max, min) s32 pairs - a

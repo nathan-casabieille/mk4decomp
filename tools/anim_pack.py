@@ -28,6 +28,25 @@ per id at 0x004ffdec { +0 data pointer, +4 ?, +8 flags }, running the offsets
 cumulatively, and then reads AP1 over the same buffer - so the pointers land in
 the animation data.
 
+DESCRIPTOR TABLE (static, in the EXE at 0x004ffdec, 612 x 12 bytes, +0 == -1
+terminates - exactly the 612 animations in the directory):
+
+    +0  s32  data pointer  (0 in the image; the loader fills it)
+    +4  s32  FRAME COUNT   (1..519, median ~30)
+    +8  u32  (node_count << 16) | flags   node_count is 18 for 575 of the 612
+                                          animations; bit 15 = compressed
+
+UNCOMPRESSED animations (41 of 612) need no decoder at all. Anim_AcquireFrameData
+(0x00401000) returns `(data >> 2) + node_count * frame` - a PACKED pointer - so
+the payload is simply
+
+    s32 data[frame_count][node_count]
+
+PROVEN: for all 41 of them, size == 4 * node_count * frame_count exactly.
+
+Compressed ones go through Anim_DecodeBitstream (0x004013a0) into a 128-byte
+cache slot at 0x523b58 + slot*128, with 12 slots tracked at 0x523b28.
+
   build/venv/bin/python tools/anim_pack.py AP0 AP1 [--dump ID [out.bin]]
 """
 import struct

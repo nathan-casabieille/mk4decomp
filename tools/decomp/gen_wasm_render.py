@@ -580,9 +580,17 @@ static void mesh_init(void) {
        buckets, so every entry MUST land in 0..0x3ff. The static image has the
        table all-zero (the game fills it at runtime), which would collapse every
        primitive into bucket 0 - a ramp makes the sort actually order by depth. */
-    for (k = 0; k < 0x10000u; k++)
-        *(unsigned short *)MK4_VA(unsigned short, LUT_VA + k * 2) =
-            (unsigned short)(k >> 6);
+    /* The key fed in is a projected Z (a few hundred for a character at this
+       camera distance), and there are exactly 0x400 buckets, so `k >> 6` would
+       crush the whole model into a handful of them and depth would be decided
+       by emission order instead. Bias and clamp so the useful range spreads
+       across the full histogram. */
+    for (k = 0; k < 0x10000u; k++) {
+        int v = (int)k - 0x100;
+        if (v < 0) v = 0;
+        if (v > 0x3ff) v = 0x3ff;
+        *(unsigned short *)MK4_VA(unsigned short, LUT_VA + k * 2) = (unsigned short)v;
+    }
     mesh_build();
 }
 
@@ -701,13 +709,14 @@ static int geo_load(const char *path) {
     return g_geoNBlocks > 0;
 }
 
-/* Each mesh block is a body part in its OWN local space - the per-part
-   placement lives in the scene graph (the .geo blocks are skeleton nodes), so
-   drawing them all with one transform piles them on the origin. Until the node
-   walk is converted, lay the parts out on a grid: it shows every block
-   decoding and rasterizing, and it is honest about what is still missing. */
-#define GEO_COLS 6
-#define GEO_CELL 0x50
+/* The mesh blocks are already positioned in MODEL space - the head sits around
+   y = +38, the torso spans down to -147, the legs to -138, and the left/right
+   pairs are mirrored about x = 0. So drawing every block through ONE transform
+   assembles the character; no per-part placement is needed for the rest pose.
+   (An earlier version laid the parts out on a grid because they LOOKED like
+   they piled up on the origin. They did not: g_viewportX is per-DISPATCH
+   scratch and was not re-armed between blocks, so only the FIRST block ever
+   rendered - the grid was working around a bug that had already been fixed.) */
 
 /* The lighting DrawMeshBlock needs. MatVec2Multiply (which it calls) turns
    g_lightMat00/01/02 + g_dispatchSave1627/28/29 and the transposed vertex
@@ -754,20 +763,38 @@ static void geo_fill_uvs(int blk) {
             e[0xc + j] = tri[2 + j];
 }
 
+/* Model space has +Y UP; the screen has +Y DOWN (the projection just adds the
+   0xf0 centre), so the Y row of the matrix is negated or the character renders
+   upside down - head off the bottom of the frame. Rotation is about Y. */
+static void geo_matrix(int frame) {
+    double a = frame * 0.02, c = cos(a), s = sin(a);
+    int m[9];
+    m[0] = (int)(c * 0x1000);  m[1] = 0;       m[2] = (int)(s * 0x1000);
+    m[3] = 0;                  m[4] = -0x1000; m[5] = 0;
+    m[6] = (int)(-s * 0x1000); m[7] = 0;       m[8] = (int)(c * 0x1000);
+    { int i; for (i = 0; i < 9; i++) mesh_setw(MAT_VA + (unsigned)i * 2, m[i]); }
+}
+
 static void geo_frame(int frame) {
     int i;
     seed_mesh(frame);                     /* viewport, palette, gate, matrix */
     geo_lighting();
-    setdw(0x007af9acu, 0x2c0);            /* g_vtxTransZ */
+    geo_matrix(frame);                    /* ... then the Y-flipped one */
+    setdw(0x007af9a4u, 0);                /* g_vtxTransX */
+    setdw(0x007af9a8u, -0x0d);            /* g_vtxTransY: model centre is y=-13 */
+    setdw(0x007af9acu, 0x280);            /* g_vtxTransZ: fits the 268-unit height */
+    /* Emit EVERY block into one queue and dispatch once: FlushDrawQueue's
+       counting sort is what resolves depth, so flushing per block would only
+       sort within a block and paint each one over the last. Helper_DrawCursor
+       copies each entry into the queue, so the staging area at g_dualC+4 can be
+       reused per block as long as g_drawQueueSize keeps accumulating. */
+    g_drawQueueSize = 0;
     for (i = 0; i < g_geoNBlocks; i++) {
-        setdw(0x007af9a4u, (i %% GEO_COLS - GEO_COLS / 2) * GEO_CELL);      /* transX */
-        setdw(0x007af9a8u, (i / GEO_COLS - g_geoNBlocks / GEO_COLS / 2) * GEO_CELL); /* transY */
-        g_drawQueueSize = 0;              /* the emitter refills g_dualC+4 per block */
         geo_fill_uvs(i);                  /* the setup pass the emitters assume */
         DrawMeshBlock(g_geoBlocks[i], 0, 0);   /* the .geo MAIN path */
-        viewport_arm();                   /* consumed by the previous dispatch */
-        FlushDrawQueue();                 /* draw this block before the next */
     }
+    viewport_arm();                       /* consumed by each dispatch */
+    FlushDrawQueue();                     /* sort ALL of it, then rasterize */
 }
 """
 
