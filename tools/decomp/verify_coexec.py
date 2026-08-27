@@ -529,8 +529,17 @@ def verify(name, fn_va, gl_va, name_to_va, arena, width16=None, argvals=None,
     ou = sorted(set(do) - set(dt))
     on = sorted(set(dt) - set(do))
     vd = sorted(o for o in set(do) & set(dt) if do[o] != dt[o])
+    # Show the VALUES for a value difference - an address alone says a twin
+    # disagrees but not by how much, and "off by one" reads very differently
+    # from "wrong global".
     return 'MISMATCH orig_only=%s twin_only=%s vdiff=%s' % (
-        [hex(o) for o in ou[:3]], [hex(o) for o in on[:3]], [hex(o) for o in vd[:3]])
+        [hex(o) for o in ou[:3]], [hex(o) for o in on[:3]],
+        ['%s: orig=%s twin=%s' % (hex(o), _hexval(do[o]), _hexval(dt[o]))
+         for o in vd[:3]])
+
+
+def _hexval(v):
+    return v.hex() if isinstance(v, (bytes, bytearray)) else '0x%x' % v
 
 
 def all_twins():

@@ -5,6 +5,7 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -15,6 +16,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -57,6 +59,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -64,6 +67,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -98,6 +102,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -108,6 +113,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
 /* @addr 0x004b9640 (301b engine.render) - vibration/feedback frame update.
  *   Reads g_fightGroupHead & 0x180000; if both bits 0, skip. Else loads
@@ -120,6 +126,7 @@ extern unsigned int g_fightAxisPosY;
  *   Convert via DoubleToInt64, write to g_walkCallback, shift right by 4,
  *   call Transform9Words(esi, &local); OR bit 0x30 of high byte of g_xformDirtyFlags.
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dispatchSave887;
 extern unsigned int g_dispatchSave888;
 extern unsigned int g_dispatchSave554;
@@ -127,52 +134,128 @@ extern unsigned int g_fpuConst;
 extern unsigned int g_dispatchSave553;
 extern unsigned int g_dispatchSave502;
 extern unsigned int g_dispatchSave552;
+#endif
 extern void DoubleToInt64(void);
+#ifdef NON_MATCHING
+extern void Transform9Words(short *dst, int *src);
+#else
 extern void Transform9Words(void);
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchSave502 (*(unsigned int *)MK4_VA(unsigned int, 0x4f6578u))
+#define g_dispatchSave552 (*(unsigned int *)MK4_VA(unsigned int, 0x4f657cu))
+#define g_dispatchSave553 (*(unsigned int *)MK4_VA(unsigned int, 0x4f6574u))
+#define g_dispatchSave554 (*(unsigned int *)MK4_VA(unsigned int, 0x4f6508u))
+#define g_dispatchSave887 (*(unsigned int *)MK4_VA(unsigned int, 0x4d2a00u))
+#define g_dispatchSave888 (*(unsigned int *)MK4_VA(unsigned int, 0x4d2a10u))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_dualC (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_fpuConst (*(unsigned int *)MK4_VA(unsigned int, 0x4f6570u))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void VibrationFrameUpdate(int param_1)
+#include "portable/mem_model.h"
 
+/* Portable twin, rewritten from the disassembly rather than patched: the lift
+ * had the FPU block as a bare `__ftol()` with no argument, and every double
+ * here was declared `unsigned int`.
+ *
+ * Only mode 2 runs the oscillator. It steps g_fpuConst by a signed increment
+ * and FLIPS that increment's sign whenever the value leaves [0.9, 1.1], so the
+ * scale ping-pongs between the two bounds. The increment's two halves are
+ * written as raw dwords, as the original does - they are exact bit patterns,
+ * not decimals. Every other mode skips straight to the broadcast.
+ *
+ * The scale is applied as `(int)((double)(int)g_walkCallback * g_fpuConst)`:
+ * `fild` reads the slot SIGNED, and the CRT's helper truncates toward zero,
+ * which is what a C cast does. */
+void VibrationFrameUpdate(int node)
 {
-  int iVar1;
-  int iVar2;
-  int local_c;
-  int local_8;
-  int local_4;
-  
-  if ((g_cj_0054205c & 0x180000) != 0) {
-    iVar2 = MK4_NODE_AT(int, param_1, 0x1c);
-    if (iVar2 == -0x14) {
-      iVar2 = 2;
-    }
-    if ((0 < iVar2) && (iVar2 < 0x19)) {
-      g_walkCallback = *MK4_NODE(int, &g_dispatchSave554 + iVar2);
-      if (g_walkCallback != 0x10000) {
-        iVar1 = g_dualC * 4;
-        if (iVar2 == 2) {
-          g_fpuConst = g_dispatchSave502 + g_fpuConst;
-          if (g_fpuConst < g_dispatchSave887) {
-            g_fpuConst = 0.9;
-            g_dispatchSave502 = 0xd2f1a9fc;
-            g_dispatchSave552 = 0x3f90624d;
-          }
-          if (g_dispatchSave888 < g_fpuConst) {
-            g_fpuConst = 1.1;
-            g_dispatchSave502 = 0xbc6a7efa;
-            g_dispatchSave552 = 0xbf789374;
-          }
-          g_walkCallback = __ftol();
+    int mode, t;
+    int v[3];
+
+    if ((g_cj_0054205c & 0x180000) == 0)
+        return;
+
+    mode = MK4_NODE_AT(int, node, 0x1c);
+    if (mode == -0x14)
+        mode = 2;
+    if (mode <= 0 || mode > 0x18)
+        return;
+
+    g_walkCallback = *(unsigned int *)MK4_VA(unsigned int,
+                                             0x004f6508u + (unsigned)mode * 4u);
+    if (g_walkCallback == 0x10000)
+        return;
+
+    if (mode == 2) {
+        /* VOLATILE, and that is load-bearing. The clamps below rewrite these
+         * two doubles through an `unsigned int` lens - the exact-dword form
+         * the original uses - and at -O2 strict aliasing lets the compiler
+         * keep the pre-clamp value in a register. The twin then multiplied by
+         * the UNCLAMPED scale: 64 * 1.5 instead of 64 * 1.1. */
+        volatile double *k    = MK4_VA(volatile double, 0x004f6570u);
+        volatile double *step = MK4_VA(volatile double, 0x004f6578u);
+
+        *k += *step;
+        /* All four constants go in as their exact dwords, the way the
+         * original writes them. A decimal literal would be right to the bit
+         * but would live in .rodata, which the co-exec harness does not
+         * relocate - the twin then multiplied by zero and only the clamped
+         * cases showed it. */
+        if (*k < *MK4_VA(double, 0x004d2a00u)) {
+            *(unsigned int *)MK4_VA(unsigned int, 0x004f6570u) = 0xcccccccdu;
+            *(unsigned int *)MK4_VA(unsigned int, 0x004f6574u) = 0x3fecccccu;
+            *(unsigned int *)MK4_VA(unsigned int, 0x004f6578u) = 0xd2f1a9fcu;
+            *(unsigned int *)MK4_VA(unsigned int, 0x004f657cu) = 0x3f90624du;
         }
-        local_c = g_walkCallback >> 4;
-        local_8 = local_c;
-        local_4 = local_c;
-        Transform9Words(iVar1,&local_c);
-        g_xformDirtyFlags = g_xformDirtyFlags | 0x30;
-      }
+        if (*k > *MK4_VA(double, 0x004d2a10u)) {
+            *(unsigned int *)MK4_VA(unsigned int, 0x004f6570u) = 0x9999999au;
+            *(unsigned int *)MK4_VA(unsigned int, 0x004f6574u) = 0x3ff19999u;
+            *(unsigned int *)MK4_VA(unsigned int, 0x004f6578u) = 0xbc6a7efau;
+            *(unsigned int *)MK4_VA(unsigned int, 0x004f657cu) = 0xbf789374u;
+        }
+        g_walkCallback = (unsigned int)(int)((double)(int)g_walkCallback * *k);
     }
-  }
-  return;
+
+    t = (int)g_walkCallback >> 4;
+    v[2] = t;
+    v[1] = t;
+    v[0] = t;
+    Transform9Words(MK4_NODE(short, g_dualC), v);
+    g_xformDirtyFlags |= 0x30;
 }
 #else
 __declspec(naked) void VibrationFrameUpdate(void) {

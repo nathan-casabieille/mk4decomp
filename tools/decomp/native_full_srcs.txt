@@ -252,3 +252,4 @@ src/engine/geo.c
 src/engine/pvs_merge_driver.c
 src/boot/scaled_load_guarded_jmp.c
 src/audio/linked_list_insert.c
+src/engine/vibration_frame_update.c

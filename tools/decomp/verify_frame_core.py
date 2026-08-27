@@ -222,6 +222,30 @@ def _geoblk():
         d.setdefault('@0x%x' % (0xab4e00 + i * 2), 0)
     return d
 
+
+# VibrationFrameUpdate's FPU state: the running scale at 0x004f6570, its signed
+# increment at 0x004f6578, and the two bounds at 0x004d2a00 / 0x004d2a10 - all
+# doubles, seeded as their exact bit patterns.
+def _vib(k=1.0, step=0.01):
+    import struct
+
+    def halves(x):
+        return struct.unpack('<II', struct.pack('<d', x))
+
+    d = {'g_cj_0054205c': 0x180000, 'g_dualC': 0x2e4040,
+         'g_xformDirtyFlags': 0, 'g_walkCallback': 0x40,
+         '@0x4f6510': 0x40, '@0x4f6514': 0x40, '@0x4f6518': 0x40,
+         '@0x4f651c': 0x40, '@0x4f6520': 0x40}
+    for va, x in ((0x4f6570, k), (0x4f6578, step),
+                  (0x4d2a00, 0.9), (0x4d2a10, 1.1)):
+        lo, hi = halves(x)
+        d['@0x%x' % va] = lo
+        d['@0x%x' % (va + 4)] = hi
+    # the 3x3 Transform9Words scales, at the pending node
+    for i in range(5):
+        d['@0x%x' % (0xb90100 + i * 4)] = 0x00100010
+    return d
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -569,6 +593,18 @@ SEEDS = {
     # The callees are real code here - GuardedChainPushSetCallPop and the two
     # walkers - so the cases stay shallow: the null-node early out, the paused
     # exit that SKIPS the mstack pops, and a node with both child chains empty.
+    # Mode 2 is the oscillator; anything else skips to the broadcast. The
+    # bounds live at 0x004d2a00 / 0x004d2a10 as doubles.
+    'VibrationFrameUpdate': [
+        ('gate clear', {'g_cj_0054205c': 0}, (0x2e4000,)),
+        ('mode 5: broadcast only', dict(_vib(), **{'@0xb9001c': 5}), (0x2e4000,)),
+        ('mode 2: steps the scale', dict(_vib(), **{'@0xb9001c': 2}), (0x2e4000,)),
+        # the -0x14 sentinel means mode 2
+        ('sentinel is mode 2', dict(_vib(), **{'@0xb9001c': 0xffffffec}), (0x2e4000,)),
+        # scale already above the top: the increment must flip sign
+        ('above the upper bound', dict(_vib(k=1.5), **{'@0xb9001c': 2}), (0x2e4000,)),
+        ('below the lower bound', dict(_vib(k=0.5), **{'@0xb9001c': 2}), (0x2e4000,)),
+    ],
     'LinkedListInsert': [
         ('prepend to an empty head', {
             'g_matrixStackTop': 0x2e5000, 'g_chainInsertSlot': 0x77,
