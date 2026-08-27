@@ -239,3 +239,6 @@ src/engine/store_at_minus8.c
 src/engine/chain_walk_cleanup.c
 src/engine/chain_stream_mat_mul_vec_add.c
 src/engine/matrix_transform3x3_q12.c
+src/engine/state_install_or_forward.c
+src/engine/state_install_thunks.c
+src/engine/arg_sar_add_deref_jmp.c

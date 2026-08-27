@@ -14,6 +14,9 @@ extern int PushPopScaled18();
 extern int ScaledAndMaskInitJmp();
 extern int Thunk_MStackPush2ChainPrepend();
 extern int PushPopScaled14();
+extern int MStackPushCallCallPop_func_00405b30();
+extern int MStackPushCallCallPop_func_00405dd0();
+extern int MStackPushCallCallPop_func_00405e20();
 extern int MStackCall_MStackPush2ChainInsert_00406250();
 extern int MStackCall_MStackPush2ChainInsert_004062a0();
 extern int MStackCall_MStackPush2ChainPrepend_004062f0();
@@ -196,6 +199,28 @@ extern int FightFrameStep_Inner();
 extern int DispatchEventQueue();
 extern int EventQueueDrainLoop();
 extern int DispatchEventQueue_Commit();
+extern int Thunk_StateInstall_0045ca00();
+extern int Thunk_StateInstall_0045ca60();
+extern int Thunk_StateInstall_0045ca80();
+extern int Thunk_StateInstall_0045caa0();
+extern int Thunk_StateInstall_0045cac0();
+extern int Thunk_StateInstall_0045cb40();
+extern int Thunk_StateInstall_0045cbe0();
+extern int Thunk_StateInstall_0045cc90();
+extern int Thunk_StateInstall_0045cd00();
+extern int Thunk_StateInstall_0045cda0();
+extern int Thunk_StateInstall_0045cdb0();
+extern int Thunk_StateInstall_0045ce40();
+extern int Thunk_StateInstall_0045ced0();
+extern int Thunk_StateInstall_0045cf30();
+extern int Thunk_StateInstall_0045cf50();
+extern int Thunk_StateInstall_0045cf70();
+extern int Thunk_StateInstall_0045cf90();
+extern int Thunk_StateInstall_0045d010();
+extern int Thunk_StateInstall_0045d0b0();
+extern int Thunk_StateInstall_0045d450();
+extern int Thunk_StateInstall_0045d4c0();
+extern int Thunk_StateInstall_0045d560();
 extern int Thunk_Thunk();
 extern int Thunk_Thunk_0049cbc0_0045e0f0();
 extern int SetJmp_SixSubdispatchSpan_0045ebf0();
@@ -306,6 +331,9 @@ extern int ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490();
 extern int LeaPlus22StoreSelf();
 extern int ScaledIndexCondCopy();
 extern int IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0();
+extern int StateInstallOrForward_0048e6b0();
+extern int StateInstallOrForward_0048e6e0();
+extern int ArgSarAddDerefJmp();
 extern int ScaledChain3c74Jmp();
 extern int Wrapper_IterLoad_0048fd30_004f12a0();
 extern int CopyJmp_ScaledSubStore_g_currentNodeIdx();
@@ -421,7 +449,9 @@ extern int Mat3x3VecMul6Bit();
 extern int BuildRotMatrix_OrderC();
 extern int BuildRotMatrix_OrderA();
 extern int BuildRotMatrix_OrderB();
+extern int Transform9Words();
 extern int Word9Reorder();
+extern int MatrixTransform3x3Q12();
 extern int MinOfThree();
 extern int MaxOfThree();
 extern int Renderer_GetMode();
@@ -440,6 +470,8 @@ extern int Helper_GeoStub_5A70();
 extern int AppInit_Misc2();
 extern int Thunk_AppInit_Misc2();
 extern int Helper_MemMalloc_Post();
+extern int SetHi6();
+extern int StoreAtMinus8();
 extern int Mem_Free();
 extern int PackedListVisitor();
 extern int Helper_MenuStub_62B0();
@@ -461,11 +493,20 @@ extern int Helper_MenuStub_8EB0();
 extern int Helper_TickInit();
 extern int AltCamMatrixProject();
 extern int TickAllEntities();
+extern int VtableDispatchSetDirty();
 extern int Helper_TickInner();
+extern int RenderSceneGraphIterate();
+extern int ZBucketClampStore();
+extern int DirtyBitTripleWriteOrCall();
+extern int DirtyTestScaledCopy();
+extern int RenderSceneNode();
 extern int Helper_TickAlt();
 extern int DrawMeshBlock();
 extern int TristripBatchEmit3Cap();
 extern int TristripBatchEmit();
+extern int ChainWalkCleanup();
+extern int LeaScaledCall();
+extern int CleanupCallTwice();
 extern int Helper_GeoLoadPre();
 extern int TestCallPush4Zero();
 extern int Thunk_LoadGeoAsset_Default();
@@ -473,6 +514,9 @@ extern int Helper_GeoLoadPost();
 extern int Thunk_Helper_GeoLoadPre();
 extern int AppInit_Misc4();
 extern int XformChainAdvance();
+extern int ChainStreamMatMulVecAdd();
+extern int WtSnapshotPushCall();
+extern int Push2GlobalsCall();
 extern int InitOrAllZeroLoopback();
 extern int NodeApplyTransform_A();
 extern int NodeApplyTransform_A_Direct();
@@ -480,11 +524,13 @@ extern int DispatchProbeOrTransformB();
 extern int NodeApplyTransform_B();
 extern int NodeApplyTransform_B_Direct();
 extern int DispatchProbeOrTransformC();
+extern int TransformAccumulate();
 extern int NodeApplyTransform_C();
 extern int NodeApplyTransform_C_Direct();
 extern int NodeApplyTransform_C_Inverse();
 extern int NodeApplyMatrix();
 extern int NodeApplyTransform_B_Swapped();
+extern int ScaledNegThreeWords();
 extern int Helper_TitleAudioCleanup();
 extern int Thunk_FlushDrawQueue();
 extern int SetViewport();
@@ -524,6 +570,9 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x405a00u, (void*)ScaledAndMaskInitJmp},
     {0x405ac0u, (void*)Thunk_MStackPush2ChainPrepend},
     {0x405ad0u, (void*)PushPopScaled14},
+    {0x405b30u, (void*)MStackPushCallCallPop_func_00405b30},
+    {0x405dd0u, (void*)MStackPushCallCallPop_func_00405dd0},
+    {0x405e20u, (void*)MStackPushCallCallPop_func_00405e20},
     {0x406250u, (void*)MStackCall_MStackPush2ChainInsert_00406250},
     {0x4062a0u, (void*)MStackCall_MStackPush2ChainInsert_004062a0},
     {0x4062f0u, (void*)MStackCall_MStackPush2ChainPrepend_004062f0},
@@ -706,6 +755,28 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x45c820u, (void*)DispatchEventQueue},
     {0x45c840u, (void*)EventQueueDrainLoop},
     {0x45c8d0u, (void*)DispatchEventQueue_Commit},
+    {0x45ca00u, (void*)Thunk_StateInstall_0045ca00},
+    {0x45ca60u, (void*)Thunk_StateInstall_0045ca60},
+    {0x45ca80u, (void*)Thunk_StateInstall_0045ca80},
+    {0x45caa0u, (void*)Thunk_StateInstall_0045caa0},
+    {0x45cac0u, (void*)Thunk_StateInstall_0045cac0},
+    {0x45cb40u, (void*)Thunk_StateInstall_0045cb40},
+    {0x45cbe0u, (void*)Thunk_StateInstall_0045cbe0},
+    {0x45cc90u, (void*)Thunk_StateInstall_0045cc90},
+    {0x45cd00u, (void*)Thunk_StateInstall_0045cd00},
+    {0x45cda0u, (void*)Thunk_StateInstall_0045cda0},
+    {0x45cdb0u, (void*)Thunk_StateInstall_0045cdb0},
+    {0x45ce40u, (void*)Thunk_StateInstall_0045ce40},
+    {0x45ced0u, (void*)Thunk_StateInstall_0045ced0},
+    {0x45cf30u, (void*)Thunk_StateInstall_0045cf30},
+    {0x45cf50u, (void*)Thunk_StateInstall_0045cf50},
+    {0x45cf70u, (void*)Thunk_StateInstall_0045cf70},
+    {0x45cf90u, (void*)Thunk_StateInstall_0045cf90},
+    {0x45d010u, (void*)Thunk_StateInstall_0045d010},
+    {0x45d0b0u, (void*)Thunk_StateInstall_0045d0b0},
+    {0x45d450u, (void*)Thunk_StateInstall_0045d450},
+    {0x45d4c0u, (void*)Thunk_StateInstall_0045d4c0},
+    {0x45d560u, (void*)Thunk_StateInstall_0045d560},
     {0x45dae0u, (void*)Thunk_Thunk},
     {0x45e0f0u, (void*)Thunk_Thunk_0049cbc0_0045e0f0},
     {0x45ebf0u, (void*)SetJmp_SixSubdispatchSpan_0045ebf0},
@@ -816,6 +887,9 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x48e4d0u, (void*)LeaPlus22StoreSelf},
     {0x48e590u, (void*)ScaledIndexCondCopy},
     {0x48e680u, (void*)IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0},
+    {0x48e6b0u, (void*)StateInstallOrForward_0048e6b0},
+    {0x48e6e0u, (void*)StateInstallOrForward_0048e6e0},
+    {0x48e710u, (void*)ArgSarAddDerefJmp},
     {0x48e780u, (void*)ScaledChain3c74Jmp},
     {0x48ec20u, (void*)Wrapper_IterLoad_0048fd30_004f12a0},
     {0x48ee80u, (void*)CopyJmp_ScaledSubStore_g_currentNodeIdx},
@@ -931,7 +1005,9 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4b36c0u, (void*)BuildRotMatrix_OrderC},
     {0x4b3800u, (void*)BuildRotMatrix_OrderA},
     {0x4b3940u, (void*)BuildRotMatrix_OrderB},
+    {0x4b3a90u, (void*)Transform9Words},
     {0x4b3b30u, (void*)Word9Reorder},
+    {0x4b3b80u, (void*)MatrixTransform3x3Q12},
     {0x4b3d70u, (void*)MinOfThree},
     {0x4b3d90u, (void*)MaxOfThree},
     {0x4b3db0u, (void*)Renderer_GetMode},
@@ -950,6 +1026,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4b5a80u, (void*)AppInit_Misc2},
     {0x4b5ac0u, (void*)Thunk_AppInit_Misc2},
     {0x4b5ad0u, (void*)Helper_MemMalloc_Post},
+    {0x4b5ae0u, (void*)SetHi6},
+    {0x4b5b00u, (void*)StoreAtMinus8},
     {0x4b5b10u, (void*)Mem_Free},
     {0x4b5c90u, (void*)PackedListVisitor},
     {0x4b62b0u, (void*)Helper_MenuStub_62B0},
@@ -971,11 +1049,20 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4b8ec0u, (void*)Helper_TickInit},
     {0x4b9840u, (void*)AltCamMatrixProject},
     {0x4b9e50u, (void*)TickAllEntities},
+    {0x4ba040u, (void*)VtableDispatchSetDirty},
     {0x4ba130u, (void*)Helper_TickInner},
+    {0x4ba1c0u, (void*)RenderSceneGraphIterate},
+    {0x4ba5d0u, (void*)ZBucketClampStore},
+    {0x4ba630u, (void*)DirtyBitTripleWriteOrCall},
+    {0x4ba6c0u, (void*)DirtyTestScaledCopy},
+    {0x4ba720u, (void*)RenderSceneNode},
     {0x4bae90u, (void*)Helper_TickAlt},
     {0x4bb250u, (void*)DrawMeshBlock},
     {0x4bb680u, (void*)TristripBatchEmit3Cap},
     {0x4bbb80u, (void*)TristripBatchEmit},
+    {0x4bd4a0u, (void*)ChainWalkCleanup},
+    {0x4bd510u, (void*)LeaScaledCall},
+    {0x4bd530u, (void*)CleanupCallTwice},
     {0x4bd570u, (void*)Helper_GeoLoadPre},
     {0x4bd590u, (void*)TestCallPush4Zero},
     {0x4bd5c0u, (void*)Thunk_LoadGeoAsset_Default},
@@ -983,6 +1070,9 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4bd8d0u, (void*)Thunk_Helper_GeoLoadPre},
     {0x4bd960u, (void*)AppInit_Misc4},
     {0x4bd990u, (void*)XformChainAdvance},
+    {0x4bd9a0u, (void*)ChainStreamMatMulVecAdd},
+    {0x4bda70u, (void*)WtSnapshotPushCall},
+    {0x4bdae0u, (void*)Push2GlobalsCall},
     {0x4bdb00u, (void*)InitOrAllZeroLoopback},
     {0x4bdb50u, (void*)NodeApplyTransform_A},
     {0x4bdc00u, (void*)NodeApplyTransform_A_Direct},
@@ -990,11 +1080,13 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4bdca0u, (void*)NodeApplyTransform_B},
     {0x4bdd50u, (void*)NodeApplyTransform_B_Direct},
     {0x4bddc0u, (void*)DispatchProbeOrTransformC},
+    {0x4bddf0u, (void*)TransformAccumulate},
     {0x4bde90u, (void*)NodeApplyTransform_C},
     {0x4bdf40u, (void*)NodeApplyTransform_C_Direct},
     {0x4bdfb0u, (void*)NodeApplyTransform_C_Inverse},
     {0x4be050u, (void*)NodeApplyMatrix},
     {0x4be130u, (void*)NodeApplyTransform_B_Swapped},
+    {0x4be210u, (void*)ScaledNegThreeWords},
     {0x4bea40u, (void*)Helper_TitleAudioCleanup},
     {0x4bf320u, (void*)Thunk_FlushDrawQueue},
     {0x4bf330u, (void*)SetViewport},

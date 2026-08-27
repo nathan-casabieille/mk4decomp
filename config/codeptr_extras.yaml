@@ -1,0 +1,31 @@
+# Extra VA -> native-function entries for the MK4_ResolveCode trampoline.
+#
+# gen_codeptr_table.py builds its table from symbols.yaml, so a callback
+# target that has no symbol - typically a small handler packed inside a
+# larger blob entry - cannot be registered there. Listing it here adds it to
+# the trampoline without touching symbols.yaml, and so without any risk to
+# the matching build. The named function must be defined in a TU listed in
+# native_full_srcs.txt.
+entries:
+  0x45ca00: Thunk_StateInstall_0045ca00
+  0x45ca60: Thunk_StateInstall_0045ca60
+  0x45ca80: Thunk_StateInstall_0045ca80
+  0x45caa0: Thunk_StateInstall_0045caa0
+  0x45cac0: Thunk_StateInstall_0045cac0
+  0x45cb40: Thunk_StateInstall_0045cb40
+  0x45cbe0: Thunk_StateInstall_0045cbe0
+  0x45cc90: Thunk_StateInstall_0045cc90
+  0x45cd00: Thunk_StateInstall_0045cd00
+  0x45cda0: Thunk_StateInstall_0045cda0
+  0x45cdb0: Thunk_StateInstall_0045cdb0
+  0x45ce40: Thunk_StateInstall_0045ce40
+  0x45ced0: Thunk_StateInstall_0045ced0
+  0x45cf30: Thunk_StateInstall_0045cf30
+  0x45cf50: Thunk_StateInstall_0045cf50
+  0x45cf70: Thunk_StateInstall_0045cf70
+  0x45cf90: Thunk_StateInstall_0045cf90
+  0x45d010: Thunk_StateInstall_0045d010
+  0x45d0b0: Thunk_StateInstall_0045d0b0
+  0x45d450: Thunk_StateInstall_0045d450
+  0x45d4c0: Thunk_StateInstall_0045d4c0
+  0x45d560: Thunk_StateInstall_0045d560

@@ -423,6 +423,10 @@ SEEDS = {
                       '@0xb90010': 0xf000},
                      (0xb90000, 0xb90000)),
     ],
+    'ArgSarAddDerefJmp': [
+        ('zero base',   {'g_tickFlagF': 0, '@0xb90000': RET_STUB}, (0xb90000,)),
+        ('offset base', {'g_tickFlagF': 0x40, '@0xb90100': RET_STUB}, (0xb90000,)),
+    ],
     'ChainStreamMatMulVecAdd': [
         ('project and accumulate', {'g_eventQueueTotal': 0x2e4040,
                                     'g_xformEntityIdx': 0x2e4000,
