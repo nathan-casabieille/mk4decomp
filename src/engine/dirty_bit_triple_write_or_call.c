@@ -4,6 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -14,6 +15,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -56,6 +58,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -63,6 +66,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -97,6 +101,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -107,17 +112,96 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
 /* @addr 0x004ba630 (140b engine.render) - dirty-bit gated triple-write or
  *   func call: if (g_xformDirtyFlags & 0x30): write ecx to 3 stack slots and
  *   call func_4b3a90(arr_main[g_pendingNodeType], esp). Else: write ecx to
  *   arr_main[g_pendingNodeType]+0,+8,+10 and zero +4,+0xc. Always set state |= 0x30.
  */
+#ifdef NON_MATCHING
+extern void Transform9Words(short *dst, int *src);
+#else
 extern void Transform9Words(void);
+#endif
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_arr_ba630_disp_48;
 extern unsigned int g_arr_ba630_main;
+#endif
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_arr_ba630_disp_48 (*(unsigned int *)MK4_VA(unsigned int, 0x48u))
+#define g_arr_ba630_main (*(unsigned int *)MK4_VA(unsigned int, 0x0u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
+
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+/* Portable twin. One scaled field of the transform entity is broadcast three
+ * times. If the two dirty bits are already set the broadcast goes through
+ * Transform9Words - which reads dwords and writes back s16 - otherwise it is
+ * written straight into the pending node at a stride of eight, with the odd
+ * words zeroed.
+ *
+ * Transform9Words dereferences its second argument directly, so a plain C
+ * local carries it; it is never handed back as a packed pointer. */
+void DirtyBitTripleWriteOrCall(void)
+{
+    int v = (int)MK4_NODE_AT(unsigned int, g_xformEntityIdx, 0x48) >> 4;
+
+    if (g_xformDirtyFlags & 0x30) {
+        int scratch[3];
+
+        scratch[2] = v;
+        scratch[1] = v;
+        scratch[0] = v;
+        Transform9Words(MK4_NODE(short, g_pendingNodeType), scratch);
+    } else {
+        unsigned int d = g_pendingNodeType;
+
+        MK4_NODE_AT(unsigned int, d, 0)    = (unsigned int)v;
+        MK4_NODE_AT(unsigned int, d, 8)    = (unsigned int)v;
+        MK4_NODE_AT(unsigned int, d, 0x10) = (unsigned int)v;
+        MK4_NODE_AT(unsigned int, d, 4)    = 0;
+        MK4_NODE_AT(unsigned int, d, 0xc)  = 0;
+    }
+    g_xformDirtyFlags |= 0x30;
+}
+#else
 void DirtyBitTripleWriteOrCall(void) {
     __asm {
         mov     eax, dword ptr [g_xformEntityIdx]
@@ -164,3 +248,4 @@ void DirtyBitTripleWriteOrCall(void) {
         }
 }
 
+#endif

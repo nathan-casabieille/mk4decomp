@@ -4,6 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -14,6 +15,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -56,6 +58,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -63,6 +66,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -97,6 +101,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -107,6 +112,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
 /* @addr 0x004bddf0 (151b engine.geo) - vec3 transform + accumulate:
  *   src = &arr_src[g_eventQueueTotal]; load v3 from src to g_walkCallback/
@@ -115,12 +121,87 @@ extern unsigned int g_fightAxisPosY;
  *   add g_walkCallback to arr_b[+0], g_eventQueueCurrent to arr_b[+4],
  *   g_xformEntityIdx to arr_b[+8].
  */
+#ifdef NON_MATCHING
+extern void Mat3x3VecMul6Bit(int *src, int *dst);
+#else
 extern void Mat3x3VecMul6Bit(void);
+#endif
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_arr_4bddf0_a;
 extern unsigned int g_arr_4bddf0_b;
 extern unsigned int g_arr_4bddf0_src;
+#endif
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_arr_4bddf0_a (*(unsigned int *)MK4_VA(unsigned int, 0x0u))
+#define g_arr_4bddf0_b (*(unsigned int *)MK4_VA(unsigned int, 0x0u))
+#define g_arr_4bddf0_src (*(unsigned int *)MK4_VA(unsigned int, 0x0u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_eventQueueCurrent (*(unsigned int **)MK4_VA(unsigned int, 0x542070u))
+#define g_eventQueueCurrent_mm (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_eventQueueTotal (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformEntityIdx (*(unsigned int **)MK4_VA(unsigned int, 0x542048u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
+
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+/* Portable twin. Saves the source vector into the three scratch globals,
+ * projects the pending node's vector into the current node through
+ * Mat3x3VecMul6Bit, then adds the saved components back on top - an
+ * accumulate, not a replace.
+ *
+ * All three arrays are base-0 packed tables (disp32 = 0 in the original), so
+ * they go through MK4_NODE_AT. Mat3x3VecMul6Bit dereferences both arguments
+ * directly, so they are host pointers rather than VAs. */
+void TransformAccumulate(void)
+{
+    unsigned int src = g_eventQueueTotal;
+
+    g_walkCallback         = MK4_NODE_AT(unsigned int, src, 0);
+    g_eventQueueCurrent_mm = MK4_NODE_AT(unsigned int, src, 4);
+    g_xformEntityIdx       = MK4_NODE_AT(unsigned int, src, 8);
+
+    Mat3x3VecMul6Bit(MK4_NODE(int, g_pendingNodeType),
+                     MK4_NODE(int, g_currentNodeIdx));
+
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0) += g_walkCallback;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 4) += g_eventQueueCurrent_mm;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 8) += g_xformEntityIdx;
+}
+#else
 void TransformAccumulate(void) {
     __asm {
         mov     eax, dword ptr [g_eventQueueTotal]
@@ -154,3 +235,4 @@ void TransformAccumulate(void) {
         }
 }
 
+#endif

@@ -5,6 +5,7 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_phaseThunkInst;
 extern unsigned int g_dispatchSave537;
 extern unsigned int g_dispatchSave536;
@@ -29,6 +30,42 @@ extern unsigned int g_dispatchSave26;
 extern unsigned int g_dispatchSave25;
 extern unsigned int g_dispatchVar39;
 extern u32 g_appInitFlag1;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_appInitFlag1 (*(unsigned int *)MK4_VA(unsigned int, 0x7af920u))
+#define g_demoModeFlag (*(unsigned int *)MK4_VA(unsigned int, 0x4ffd7cu))
+#define g_dispatchSave1323 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4e98u))
+#define g_dispatchSave25 (*(unsigned int *)MK4_VA(unsigned int, 0x543370u))
+#define g_dispatchSave26 (*(unsigned int *)MK4_VA(unsigned int, 0x54336cu))
+#define g_dispatchSave27 (*(unsigned int *)MK4_VA(unsigned int, 0x543368u))
+#define g_dispatchSave517 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4df4u))
+#define g_dispatchSave518 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4df0u))
+#define g_dispatchSave532 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4dfcu))
+#define g_dispatchSave533 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4df8u))
+#define g_dispatchSave534 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4ddcu))
+#define g_dispatchSave535 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4dd8u))
+#define g_dispatchSave536 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4dccu))
+#define g_dispatchSave537 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4dc8u))
+#define g_dispatchSave625 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4e04u))
+#define g_dispatchSave626 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4e00u))
+#define g_dispatchSave627 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4de4u))
+#define g_dispatchSave628 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4de0u))
+#define g_dispatchSave629 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4dd4u))
+#define g_dispatchSave630 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4dd0u))
+#define g_dispatchVar39 (*(unsigned int *)MK4_VA(unsigned int, 0x54357cu))
+#define g_fightTableC0 (*(unsigned int *)MK4_VA(unsigned int, 0x4d50a4u))
+#define g_fightTableC1 (*(unsigned int *)MK4_VA(unsigned int, 0x4d50a8u))
+#define g_fightTableC2 (*(unsigned int *)MK4_VA(unsigned int, 0x4d50b0u))
+#define g_gameStateResult (*(unsigned int *)MK4_VA(unsigned int, 0x7af918u))
+#define g_phaseThunkInst (*(unsigned int *)MK4_VA(unsigned int, 0x4d50acu))
+#define g_renderer2_var5 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4e98u))
+#define g_renderer2_var6 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4decu))
+#define g_renderer2_var7 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4de8u))
+#endif
+
 /* Real signatures - the auto-generated placeholders said `(void)` and the twin
  * calls all three with a player/key argument (and uses GetAsyncKey's result). */
 extern s32  Input_GetAsyncKey(s32 vk);

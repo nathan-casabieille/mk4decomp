@@ -113,6 +113,15 @@ RET_STUB = 0x0041f2e0                    # AllocateNode's `ret`
 DISPATCH = dict([('g_dispatchVar20', 0xb92000 // 4)] +
                 [('@0x%x' % (0xb92000 + i * 4), RET_STUB) for i in range(4)])
 
+
+# The engine's real 3x3, at 0x007af990 - what the projection helpers read.
+MAT3 = {'@0x7af990': 0x00100010, '@0x7af994': 0xfff00010,
+        '@0x7af998': 0x0010fff0, '@0x7af99c': 0x00100010,
+        '@0x7af9a0': 0x0010}
+
+# The vtable at 0x004f7868 the dispatch indexes: 32 slots, every one a `ret`.
+VTBL = dict([('@0x%x' % (0x4f7868 + i * 4), RET_STUB) for i in range(32)])
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -392,6 +401,55 @@ SEEDS = {
                                          'g_pendingNodeType': 0x2e4000})),
         ('dirty, other bits kept', dict(MAT, **{'g_xformDirtyFlags': 0xff,
                                          'g_pendingNodeType': 0x2e4000})),
+    ],
+    # The 3x3 the projection helpers read, at its real address.
+    'Transform9Words': [
+        ('all positive', {'@0x7af990': 0x02000100, '@0x7af994': 0x04000300,
+                          '@0x7af998': 0x06000500, '@0x7af99c': 0x08000700,
+                          '@0x7af9a0': 0x0900,
+                          '@0xb90100': 0x1000, '@0xb90104': 0x2000,
+                          '@0xb90108': 0x0800},
+                         (0x7af990, 0xb90100)),
+        # A Q12 scale is signed on both sides; all-positive seeds cannot tell
+        # `sar esi, 0xc` from a logical shift.
+        ('negative words', {'@0x7af990': 0xff00fe00, '@0x7af994': 0x0400fd00,
+                            '@0x7af998': 0xfc000500, '@0x7af99c': 0x0800fb00,
+                            '@0x7af9a0': 0xfa00,
+                            '@0xb90100': 0x1000, '@0xb90104': 0xffffe000,
+                            '@0xb90108': 0x0800},
+                           (0x7af990, 0xb90100)),
+    ],
+    'TransformAccumulate': [
+        ('accumulate', dict(MAT3, **{'g_eventQueueTotal': 0x2e4040,
+                                     'g_pendingNodeType': 0x2e4080,
+                                     'g_currentNodeIdx': 0x2e40c0,
+                                     '@0xb90100': 11, '@0xb90104': 22, '@0xb90108': 33,
+                                     '@0xb90200': 0x40, '@0xb90204': 0xffffffc0,
+                                     '@0xb90208': 0x80,
+                                     '@0xb90300': 5, '@0xb90304': 6, '@0xb90308': 7})),
+    ],
+    'DirtyBitTripleWriteOrCall': [
+        ('straight write', {'g_xformDirtyFlags': 0, 'g_xformEntityIdx': 0x2e4000,
+                            'g_pendingNodeType': 0x2e4040, '@0xb90048': 0x800}),
+        # sar 4, not shr - a negative field is what separates them.
+        ('straight write, negative', {'g_xformDirtyFlags': 1,
+                            'g_xformEntityIdx': 0x2e4000,
+                            'g_pendingNodeType': 0x2e4040, '@0xb90048': 0xfffff800}),
+        ('through Transform9Words', dict(MAT3,
+                           **{'g_xformDirtyFlags': 0x10, 'g_xformEntityIdx': 0x2e4000,
+                              'g_pendingNodeType': 0x1ebe64, '@0xb90048': 0x8000})),
+    ],
+    'VtableDispatchSetDirty': [
+        ('low bank, no pause', dict(VTBL, **{'g_currentNodeFlags': 0x03000000,
+                                             'g_fightGroupHead': 0}), (7,)),
+        # bit 8 selects the second bank of eight at +0x10
+        ('high bank', dict(VTBL, **{'g_currentNodeFlags': 0x0300f100,
+                                    'g_fightGroupHead': 0}), (7,)),
+        ('paused after the call', dict(VTBL, **{'g_currentNodeFlags': 0x03000000,
+                                    'g_framePauseFlag': 1, 'g_fightGroupHead': 0}), (7,)),
+        ('odd flags take the extra call', dict(VTBL,
+                                   **{'g_currentNodeFlags': 0x03000000,
+                                      'g_fightGroupHead': 1}), (7,)),
     ],
     'WtSnapshotPushCall': [
         ('snapshot', dict(MAT, **{'g_xformEntityIdx': 0x2e4000,

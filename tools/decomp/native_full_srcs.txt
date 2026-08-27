@@ -228,3 +228,7 @@ src/game/tick.c
 src/platform/exit.c
 src/platform/win32/app_shutdown.c
 src/platform/win32/test_call_iat.c
+src/engine/transform_accumulate.c
+src/engine/vtable_dispatch_set_dirty.c
+src/engine/dirty_bit_triple_write_or_call.c
+src/engine/transform9_words.c
