@@ -242,3 +242,5 @@ src/engine/matrix_transform3x3_q12.c
 src/engine/state_install_or_forward.c
 src/engine/state_install_thunks.c
 src/engine/arg_sar_add_deref_jmp.c
+src/engine/helper_pre_tick.c
+src/game/dispatch_scaled_lea.c

@@ -427,6 +427,29 @@ SEEDS = {
         ('zero base',   {'g_tickFlagF': 0, '@0xb90000': RET_STUB}, (0xb90000,)),
         ('offset base', {'g_tickFlagF': 0x40, '@0xb90100': RET_STUB}, (0xb90000,)),
     ],
+    # The fallback path scales g_tickFlagF, not g_phaseIdx - eax is never
+    # reloaded on it. Two different flag values pin that.
+    'DispatchScaledLEA': [
+        ('flag 2 uses the phase', {'g_tickFlagF': 2, 'g_phaseIdx': 3,
+                                   'g_tickCurConfig': 0x4f6240,
+                                   'g_dispatchSave1571': 0}),
+        ('flag 5 scales itself',  {'g_tickFlagF': 5, 'g_phaseIdx': 3,
+                                   'g_tickCurConfig': 0x4f62a8,
+                                   'g_dispatchSave1571': 0x4f62a8}),
+    ],
+    'Helper_PreTick': [
+        ('pause after the transform', {'g_framePauseFlag': 1,
+                                       'g_eventQueueSeed': 0x2e4000,
+                                       'g_tickFlagF': 2, 'g_phaseIdx': 0}),
+        ('full publish', {'g_framePauseFlag': 0,
+                          'g_eventQueueSeed': 0x2e4000,
+                          'g_tickFlagF': 2, 'g_phaseIdx': 0,
+                          # nine packed s16, mixed signs: the shl 4 widening is
+                          # signed, so all-positive seeds prove nothing.
+                          '@0xab4878': 0xf0000100, '@0xab487c': 0x0200f100,
+                          '@0xab4880': 0xf2000300, '@0xab4884': 0x0400f300,
+                          '@0xab4888': 0x8000f400}),
+    ],
     'ChainStreamMatMulVecAdd': [
         ('project and accumulate', {'g_eventQueueTotal': 0x2e4040,
                                     'g_xformEntityIdx': 0x2e4000,

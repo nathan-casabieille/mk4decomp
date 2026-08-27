@@ -491,6 +491,7 @@ extern int Menu_ColorDepthErrorDialog();
 extern int Menu_InsertCDDialog();
 extern int Helper_MenuStub_8EB0();
 extern int Helper_TickInit();
+extern int Helper_PreTick();
 extern int AltCamMatrixProject();
 extern int TickAllEntities();
 extern int VtableDispatchSetDirty();
@@ -1047,6 +1048,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4b8d70u, (void*)Menu_InsertCDDialog},
     {0x4b8eb0u, (void*)Helper_MenuStub_8EB0},
     {0x4b8ec0u, (void*)Helper_TickInit},
+    {0x4b9770u, (void*)Helper_PreTick},
     {0x4b9840u, (void*)AltCamMatrixProject},
     {0x4b9e50u, (void*)TickAllEntities},
     {0x4ba040u, (void*)VtableDispatchSetDirty},
