@@ -247,3 +247,4 @@ src/game/dispatch_scaled_lea.c
 src/engine/helper_tex_upload.c
 src/engine/tex_rle.c
 src/engine/mem_alloc.c
+src/engine/fsys.c

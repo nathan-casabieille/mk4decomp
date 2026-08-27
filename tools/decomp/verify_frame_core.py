@@ -146,6 +146,39 @@ def _heap3():
     d['@0xb90200'] = 0
     return d
 
+
+# A sixteen-entry FILESYS directory at 0x007ab0e0: {key, offset, size}, keys
+# ascending by 0x100. `want` picks which key the lookup is given, seeded as the
+# already-hashed value at the path FSYS_fopen will be handed - the hash runs on
+# a path that normalizes to the same string in both runs either way.
+def _fsysdir(want=8):
+    # Helper_FSeek / Helper_FRead are MSVC CRT stdio; executed as original
+    # bytes they try to do real I/O and run to the instruction cap. Patch their
+    # entry points to `mov eax, IMM ; ret` - cdecl, so the caller cleans up -
+    # in the arena BOTH runs share, which keeps the comparison honest.
+    def imm_ret(v):
+        return b'\xb8' + (v & 0xffffffff).to_bytes(4, 'little') + b'\xc3'
+    d = {'@0x7af4e4': 16, '@0x7af4e0': 1, '@0x4f4a50': 0,
+         '@0x4c5a90': imm_ret(0),      # Helper_FSeek
+         '@0x4c5b70': imm_ret(4),      # Helper_FRead -> 4 items
+         '@0x4c5580': imm_ret(0)}      # Helper_Sprintf
+    # The path FSYS_fopen is handed normalizes to "C:\\A", whose FSYS_HashName
+    # is 0x415c3a47. `want` says which SLOT carries it, so the same lookup can
+    # be driven to the first, middle and last entry - the interesting thing is
+    # the bisection's path, not the key.
+    KEY = 0x415c3a47
+    for i in range(16):
+        b = 0x7ab0e0 + i * 12
+        d['@0x%x' % b]       = (KEY - (want - i) * 0x10) & 0xffffffff
+        d['@0x%x' % (b + 4)] = 0x1000 + i * 0x800     # archive offset
+        d['@0x%x' % (b + 8)] = 0x400                  # entry size
+        d['@0x%x' % (0x7ae0e0 + i * 4)] = 0
+    # "C:\A" - short, so the hash is cheap and deterministic
+    d['@0xb91000'] = 0x415c3a43
+    d['@0xb91004'] = 0
+    d['@0xb92000'] = 0
+    return d
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -480,6 +513,45 @@ SEEDS = {
     # channel-expanding one, and only the second rewrites the pixels.
     # A three-block heap: free / used / free-to-the-end. The split path and the
     # exact-fit path take different branches through the back-link fixups.
+    'FSYS_HashName': [
+        ('mixed case and length', {'@0xb90000': 0x415c3a43, '@0xb90004': 0x2e4f4f46,
+                                   '@0xb90008': 0x004f4547}, (0xb90000,)),
+    ],
+    'FSYS_NormalizePath': [
+        ('null argument',  {'@0xb90000': 0}, (0,)),
+        ('empty string',   {'@0xb90000': 0}, (0xb90000,)),
+        # "c:\foo.geo" - lowercase, and a valid DOS absolute so no error path
+        ('uppercases', {'@0xb90000': 0x665c3a63, '@0xb90004': 0x672e6f6f,
+                        '@0xb90008': 0x00006f65}, (0xb90000,)),
+    ],
+    # The directory is 12-byte entries with the key first, ascending. Sixteen
+    # of them, so the hand-rolled bisection takes several steps.
+    # Helper_FOpen and Helper_FRead are stubbed to succeed, so the run reaches
+    # the directory walk and the O(n^2) sort check rather than an error exit.
+    'AppInit_PreInstall': [
+        ('reads the directory', dict(_fsysdir(8),
+            **{'@0x4c5db0': b'\xb8\x01\x00\x00\x00\xc3',   # Helper_FOpen -> 1
+               '@0x4c5b70': b'\xb8\x01\x00\x00\x00\xc3'})),  # Helper_FRead -> 1
+    ],
+    'FSYS_fopen': [
+        ('key in the middle', _fsysdir(8),  (0xb91000, 0)),
+        ('key first',         _fsysdir(0),  (0xb91000, 0)),
+        ('key last',          _fsysdir(15), (0xb91000, 0)),
+    ],
+    'FSYS_fseek': [
+        ('out of range handle', _fsysdir(), (0x401, 0, 0)),
+        ('absolute',           _fsysdir(), (3, 0x40, 0)),
+        ('relative',           _fsysdir(), (3, 0x40, 1)),
+        ('from the end',       _fsysdir(), (3, 0, 2)),
+        ('clamped to the end', _fsysdir(), (3, 0xffff, 0)),
+    ],
+    'FSYS_fread': [
+        ('out of range handle', _fsysdir(), (0xb92000, 1, 4, 0x401)),
+        ('fits',                _fsysdir(), (0xb92000, 4, 4, 3)),
+        ('clamped by the entry end', _fsysdir(), (0xb92000, 4, 0x1000, 3)),
+        # size 0 must divide by one rather than fault
+        ('zero element size',   _fsysdir(), (0xb92000, 0, 4, 3)),
+    ],
     'Mem_Malloc': [
         ('split the last fit', _heap3(), (0xb90200, 0x20, 5)),
         # sized so `need` lands exactly on the last block: no split, and the

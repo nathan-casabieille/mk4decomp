@@ -7,6 +7,13 @@
 #include "engine/fsys.h"
 #include "platform/install.h"  /* for ShowErrorMessage */
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_fsys_files ((int *)MK4_VA(int, 0x7ae0dcu))
+#endif
+
+
 extern int sprintf(char *buf, const char *fmt, ...);                    /* CRT */
 extern int fseek(void *stream, long offset, int origin);                /* CRT */
 extern unsigned int fread(void *buf, unsigned int sz, unsigned int n,
@@ -59,6 +66,46 @@ int FSYS_ftell(int fh)
 static const char k_partial_filename[] = "Partial filename";
 
 
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+/* Portable twin. Uppercases the path into the 1 KB buffer at 0x007af0e0 and
+ * then INSISTS it is a DOS absolute - byte 1 ':' and byte 2 '\\' - reporting
+ * "Partial filename" if not. Returns the buffer, or null for a null/empty
+ * argument.
+ *
+ * The copy stops after 0x3ff characters, and the terminator is written at
+ * whatever index it stopped at, so an over-long path is truncated rather than
+ * overflowing. */
+char *FSYS_NormalizePath(const char *path)
+{
+    char *dst = MK4_VA(char, 0x007af0e0u);
+    unsigned int i;
+
+    if (path == 0 || *path == 0)
+        return 0;
+
+    for (i = 0; i < 0x3ffu; ) {
+        unsigned char c = (unsigned char)*path;
+
+        if (c >= 'a' && c <= 'z')
+            c = (unsigned char)(c - 0x20);
+        dst[i] = (char)c;
+        i++;
+        if (path[1] == 0) {
+            path++;
+            break;
+        }
+        path++;
+    }
+    dst[i] = 0;
+
+    if (dst[1] != ':' || dst[2] != '\\')
+        ShowErrorMessage((const char *)MK4_PTR(0x004f4aa4u));
+
+    return dst;
+}
+#else
 __declspec(naked) char *FSYS_NormalizePath(const char *path)
 {
     __asm {
@@ -115,6 +162,7 @@ ret_null:
         ret
     }
 }
+#endif
 
 /*
  * Open a file in the asset archive. Normalizes the path, hashes
@@ -152,6 +200,60 @@ ret_null:
  */
 static const char k_fopen_errfmt[] = "FSYS_fopen(\"%s\")";
 
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+extern int Helper_Sprintf(char *buf, const char *fmt, ...);
+
+/* Portable twin. Hashes the normalized path and binary-searches the archive
+ * directory - 12-byte entries from 0x007ab0e0, key first, sorted ascending.
+ *
+ * The search is hand-rolled and keeps its own [lo, hi) in ecx/edi rather than
+ * the usual pair, which is why it is transcribed step for step instead of
+ * rewritten as a textbook bisection. A miss is FATAL: it formats the original
+ * (un-normalized) path into the message and reports it, and does not return a
+ * failure code.
+ *
+ * The handle is the entry index PLUS ONE, so zero stays available as "no
+ * file"; every other FSYS entry point indexes the tables with that 1-based
+ * value against bases shifted back by one slot. */
+int FSYS_fopen(const char *path, const char *mode)
+{
+    unsigned char *A = (unsigned char *)MK4_PTR(0u);
+    unsigned int key = FSYS_HashName(FSYS_NormalizePath(path));
+    int hi  = (int)*(unsigned int *)(A + 0x007af4e4u);   /* entry count */
+    int lo  = 0;
+    int mid = hi >> 1;
+    unsigned int probe = *(unsigned int *)(A + 0x007ab0e0u + (unsigned int)mid * 12u);
+
+    (void)mode;
+    if (key != probe) {
+        while (lo < hi - 1) {
+            if (key < probe) {
+                hi  = mid;
+                mid = ((mid - lo) >> 1) + lo;
+            } else {
+                int prev = mid;
+
+                mid = ((hi - lo) >> 1) + lo;
+                lo  = prev;
+            }
+            probe = *(unsigned int *)(A + 0x007ab0e0u + (unsigned int)mid * 12u);
+            if (key == probe)
+                break;
+        }
+    }
+
+    if (key != *(unsigned int *)(A + 0x007ab0e0u + (unsigned int)mid * 12u)) {
+        char msg[0x400];
+
+        Helper_Sprintf(msg, (const char *)MK4_PTR(0x004f4a90u), path);
+        ShowErrorMessage(msg);
+    }
+
+    *(unsigned int *)(A + 0x007ae0e0u + (unsigned int)mid * 4u) = 0;
+    return mid + 1;
+}
+#else
 __declspec(naked) int FSYS_fopen(const char *path, const char *mode)
 {
     __asm {
@@ -228,6 +330,7 @@ do_init:
         ret
     }
 }
+#endif
 
 static const char k_fsys_archive_path[] = "filesys.dat";
 static const char k_fsys_init_err1[]    = "AppInit_PreInstall(1)";
@@ -248,6 +351,78 @@ static const char k_fsys_rb[]           = "rb";
  *
  * @addr 0x004b1cf0
  */
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+extern int Helper_FOpen(const char *path, const char *mode);
+extern int Helper_FRead(void *buf, unsigned int size, unsigned int count, int fh);
+
+/* Portable twin. Opens filesys.dat, reads its 12 KB directory in one go, then
+ * counts the entries and validates that their keys ascend.
+ *
+ * The position table is pre-filled with -1, NOT zero - FSYS_fopen writes a
+ * real zero when it hands out a handle, so -1 marks "never opened".
+ *
+ * The count walk stops on the first entry whose key is zero, and separately at
+ * the end of the 12 KB region; the sort check that follows is O(n^2) and
+ * reports rather than repairs. Both are startup integrity checks and are kept
+ * as they are. */
+void AppInit_PreInstall(void)
+{
+    unsigned char *A = (unsigned char *)MK4_PTR(0u);
+    unsigned int *dir = (unsigned int *)(A + 0x007ab0e0u);
+    unsigned int *pos = (unsigned int *)(A + 0x007ae0e0u);
+    unsigned int i, n;
+    int fh, base;
+
+    for (i = 0; i < 0xc00u; i++)
+        dir[i] = 0;
+    for (i = 0; i < 0x400u; i++)
+        pos[i] = 0xffffffffu;
+
+    fh = Helper_FOpen((const char *)MK4_PTR(0x004f4a84u),
+                      (const char *)MK4_PTR(0x004d505cu));
+    *(unsigned int *)(A + 0x007af4e0u) = (unsigned int)fh;
+    if (fh == 0) {
+        ShowErrorMessage((const char *)MK4_PTR(0x004f4a74u));
+        fh = (int)*(unsigned int *)(A + 0x007af4e0u);
+    }
+
+    if (Helper_FRead(dir, 0x3000u, 1u, fh) != 1)
+        ShowErrorMessage((const char *)MK4_PTR(0x004f4a64u));
+
+    n = 0;
+    *(unsigned int *)(A + 0x007af4e4u) = 0;
+    if (dir[0] != 0) {
+        unsigned int va = 0x007ab0e0u;
+
+        while ((int)va < (int)0x007ae0e0u) {
+            unsigned int nextkey = *(unsigned int *)(A + va + 0xc);
+
+            va += 0xc;
+            n++;
+            if (nextkey == 0)
+                break;
+        }
+        *(unsigned int *)(A + 0x007af4e4u) = n;
+    }
+
+    for (base = 1; base - 1 < (int)n; base++) {
+        int j;
+
+        for (j = base; j < (int)n; j++) {
+            unsigned int here = *(unsigned int *)(A + 0x007ab0e0u
+                                                 + (unsigned int)j * 12u);
+            unsigned int root = *(unsigned int *)(A + 0x007ab0e0u
+                                                 + (unsigned int)(base - 1) * 12u);
+
+            if (here <= root) {
+                ShowErrorMessage((const char *)MK4_PTR(0x004f4a54u));
+                n = *(unsigned int *)(A + 0x007af4e4u);
+            }
+        }
+    }
+}
+#else
 __declspec(naked) void AppInit_PreInstall(void)
 {
     __asm {
@@ -345,6 +520,7 @@ done:
         ret
     }
 }
+#endif
 
 /*
  * Read up to `n` elements of `sz` bytes from the open file `fh`.
@@ -355,6 +531,49 @@ done:
  *
  * @addr 0x004b1fb0
  */
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+extern int Helper_FSeek(int fh, int offset, int whence);
+extern int Helper_FRead(void *buf, unsigned int size, unsigned int count, int fh);
+
+/* Portable twin. Reads out of the archive at the handle's current position,
+ * re-seeking only when the last seek was for a different handle OR this
+ * handle is still at offset zero.
+ *
+ * The clamp is the interesting part: if the request would run past the entry's
+ * end it recomputes the COUNT as (remaining / size) - and guards `size == 0`
+ * by dividing by one, so a zero element size yields the byte count rather than
+ * faulting. */
+int FSYS_fread(void *buf, u32 sz, u32 n, int fh)
+{
+    unsigned char *A = (unsigned char *)MK4_PTR(0u);
+    unsigned int pos, end, count;
+
+    if ((unsigned int)fh > 0x400u)
+        return 0;
+
+    if (*(unsigned int *)(A + 0x004f4a50u) != (unsigned int)fh
+        || *(unsigned int *)(A + 0x007ae0dcu + (unsigned int)fh * 4u) == 0) {
+        pos = *(unsigned int *)(A + 0x007ae0dcu + (unsigned int)fh * 4u);
+        *(unsigned int *)(A + 0x004f4a50u) = (unsigned int)fh;
+        Helper_FSeek((int)*(unsigned int *)(A + 0x007af4e0u),
+                     (int)(*(unsigned int *)(A + 0x007ab0d8u
+                                             + (unsigned int)fh * 12u) + pos),
+                     0);
+    }
+
+    pos   = *(unsigned int *)(A + 0x007ae0dcu + (unsigned int)fh * 4u);
+    end   = *(unsigned int *)(A + 0x007ab0dcu + (unsigned int)fh * 12u);
+    count = n;
+    if (n * sz + pos >= end)
+        count = (end - pos) / (sz != 0 ? sz : 1u);
+
+    count = (unsigned int)Helper_FRead(buf, sz, count,
+                                       (int)*(unsigned int *)(A + 0x007af4e0u));
+    *(unsigned int *)(A + 0x007ae0dcu + (unsigned int)fh * 4u) = pos + count * sz;
+    return (int)count;
+}
+#else
 __declspec(naked) int FSYS_fread(void *buf, u32 sz, u32 n, int fh)
 {
     __asm {
@@ -426,6 +645,7 @@ no_clamp:
         ret
     }
 }
+#endif
 
 /*
  * Seek within an open archived file. SEEK_SET / SEEK_CUR / SEEK_END
@@ -438,6 +658,47 @@ no_clamp:
  *
  * @addr 0x004b2070
  */
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+extern int Helper_FSeek(int fh, int offset, int whence);
+
+/* Portable twin. Moves the handle's position, clamps it to the entry's end,
+ * and seeks the ARCHIVE to entry_offset + position - the per-file position is
+ * bookkeeping here, the real file pointer is shared.
+ *
+ * whence 1 is relative to the current position and 2 to the entry's end;
+ * anything else, including 0, is absolute. The clamp is unsigned, so a
+ * negative relative seek wraps large and lands on the end rather than before
+ * the start. */
+int FSYS_fseek(int fh, u32 offset, int whence)
+{
+    unsigned char *A = (unsigned char *)MK4_PTR(0u);
+    unsigned int pos, end;
+
+    if ((unsigned int)fh > 0x400u)
+        return -1;
+
+    if (whence == 1)
+        pos = *(unsigned int *)(A + 0x007ae0dcu + (unsigned int)fh * 4u) + offset;
+    else if (whence == 2)
+        pos = *(unsigned int *)(A + 0x007ab0dcu + (unsigned int)fh * 12u) + offset;
+    else
+        pos = offset;
+
+    *(unsigned int *)(A + 0x007ae0dcu + (unsigned int)fh * 4u) = pos;
+
+    end = *(unsigned int *)(A + 0x007ab0dcu + (unsigned int)fh * 12u);
+    if (*(unsigned int *)(A + 0x007ae0dcu + (unsigned int)fh * 4u) > end)
+        *(unsigned int *)(A + 0x007ae0dcu + (unsigned int)fh * 4u) = end;
+
+    return Helper_FSeek((int)*(unsigned int *)(A + 0x007af4e0u),
+                        (int)(*(unsigned int *)(A + 0x007ab0d8u
+                                                + (unsigned int)fh * 12u)
+                              + *(unsigned int *)(A + 0x007ae0dcu
+                                                  + (unsigned int)fh * 4u)),
+                        0);
+}
+#else
 __declspec(naked) int FSYS_fseek(int fh, u32 offset, int whence)
 {
     __asm {
@@ -489,6 +750,7 @@ skip_clamp:
         ret
     }
 }
+#endif
 
 /*
  * Open a file, read it whole into the caller's buffer, close.
