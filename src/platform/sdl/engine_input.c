@@ -55,6 +55,18 @@ static SDL_Scancode vk_to_scancode(int vk)
 int Input_GetAsyncKey(int vk)
 {
     const Uint8 *keys;
+    /* MK4_FAKE_KEY=<vk decimal> reports that one key as held. Headless runs
+     * have no keyboard, so this is how the menu's navigation gets exercised -
+     * it drives the real Menu_PollNavInput, the real state machine and the
+     * real DrawMenu, only the key state is substituted. */
+    {
+        static const char *fake;
+        static int checked;
+
+        if (!checked) { checked = 1; fake = SDL_getenv("MK4_FAKE_KEY"); }
+        if (fake && vk == SDL_atoi(fake))
+            return 1;
+    }
     SDL_Scancode sc = vk_to_scancode(vk);
     int n = 0;
 
