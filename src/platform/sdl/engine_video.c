@@ -74,6 +74,12 @@ static int env_int(const char *name, int dflt)
 void Renderer5_BeginFrame_SW_FS_Hi(int flag, int *base, int *pitch, int *unused)
 {
     (void)flag;
+    /* On Windows this LOCKS a DirectDraw back buffer, which the flip leaves
+     * undefined - so the engine redraws the whole frame every time and never
+     * clears. Here the framebuffer persists, so successive frames accumulate:
+     * a menu sliding in leaves a copy at every position it passed through.
+     * Clearing on entry is what the surface lock effectively gives. */
+    memset(MK4_VA(void, MK4_FB_VA), 0, (unsigned)(s_w * s_h * 2));
     if (base)   *base  = (int)MK4_FB_VA;      /* a VA - the seam translates */
     if (pitch)  *pitch = s_w * 2;             /* RGB-555, 2 bytes per pixel */
     if (unused) *unused = 0;
@@ -87,6 +93,14 @@ void Renderer5_BeginFrame_SW_FS_Hi(int flag, int *base, int *pitch, int *unused)
  * one, so rows smear. Re-arm the size (SetViewport is engine code) right after
  * BeginFrame. */
 extern void SetViewport(int x, int y, int w, int h);
+
+/* The framebuffer's real geometry, for BeginFrame's viewport call. See the
+ * MK4_ARENA block in src/engine/render.c. */
+void MK4_NativeVideoViewportSize(int *w, int *h)
+{
+    if (w) *w = s_w;
+    if (h) *h = s_h;
+}
 
 void MK4_NativeVideoArmViewport(void)
 {

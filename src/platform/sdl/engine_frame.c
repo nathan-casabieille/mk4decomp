@@ -66,6 +66,7 @@ static void MK4_EngineStateInit(void)
      * GameStateMachine does not itself draw. Whatever stages the first screen
      * lives further up the boot path than AppInit, and that is the next thing
      * to find. */
+    if (getenv("MK4_NO_DISC")) g_titlePauseGate = 0;   /* TEMP experiment */
     if (g_titlePauseGate == 0)
         GameStateMachine(7);
     g_appInitFlag1 = 0;
@@ -120,6 +121,15 @@ void MK4_GameFrame(void)
         DrawScene();
         PresentFrame();
     } else {
+        /* Arm the framebuffer before the frame body. On Windows BeginFrame
+         * gets base and pitch by LOCKING a DirectDraw surface and feeds them
+         * to SetViewport; here that path does not run, so g_viewportX/W/H stay
+         * zero and FlushDrawQueue rasterises into nothing - the queue fills
+         * (57 entries for the insert-CD screen) and every pixel is discarded.
+         *
+         * The rearm variant, not SetViewport: SetViewport also zeroes
+         * g_drawQueueSize, which would throw the frame away. */
+        { extern void MK4_NativeVideoRearmFB(void); MK4_NativeVideoRearmFB(); }
         MainLoopStep();      /* BeginFrame / GameLogicStep / DrawScene / Present */
     }
     MK4_NativeVideoPresent();/* arena framebuffer -> the SDL window */

@@ -7,6 +7,18 @@
 /* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
 #ifdef MK4_ARENA
 #include "portable/mem_model.h"
+/* The renderer MODE, both copies. These are the split that mattered: the SDL
+ * video layer writes them at their VA (engine_video.c sets mode 5), while this
+ * file was reading plain C variables that stayed 0 - so BeginFrame's switch
+ * matched no case, SetViewport got a base of 0, and FlushDrawQueue rasterised
+ * a 57-entry queue into nothing.
+ *
+ * The rest of this file's globals are deliberately NOT aliased: they are COM
+ * interface pointers used as `g_rendererN_obj->vtbl->...`, and an unsigned-int
+ * alias will not compile. Nothing outside this file reaches them through the
+ * arena, so a C variable is self-consistent for those. */
+#define g_currentRendererMode (*(unsigned int *)MK4_VA(unsigned int, 0x4f4b3cu))
+#define g_clampedRendererMode (*(unsigned int *)MK4_VA(unsigned int, 0x4f4b38u))
 #define g_drawQueueSize (*(unsigned int *)MK4_VA(unsigned int, 0xf85b40u))
 #define g_viewportH (*(unsigned int *)MK4_VA(unsigned int, 0x4ffd48u))
 #define g_viewportW (*(unsigned int *)MK4_VA(unsigned int, 0x4ffd44u))
@@ -55,6 +67,21 @@ void BeginFrame(int flag)
             width = 320; height = 240;
             break;
     }
+#ifdef MK4_ARENA
+    /* The port renders at the engine's real screen size, 640x480 - the
+     * projection adds the centre as 0x140/0xf0 and Helper_DrawCursor's envelope
+     * rejects x > 0x280 / y > 0x1e0. Mode 5's own branch above hardcodes
+     * 320x240, which is right for a DirectDraw surface of that size but not for
+     * this backend's framebuffer: the rasterisers then clip against half the
+     * frame while the pitch is for the whole one, and the picture comes out
+     * half-width with every other scanline dropped.
+     *
+     * Asking the video driver rather than hardcoding it keeps the geometry in
+     * one place. Gated on the relocated model, so the matching build is
+     * untouched. */
+    { extern void MK4_NativeVideoViewportSize(int *w, int *h);
+      if (width) MK4_NativeVideoViewportSize(&width, &height); }
+#endif
     SetViewport(slot_c, slot_8, width, height);
 }
 
