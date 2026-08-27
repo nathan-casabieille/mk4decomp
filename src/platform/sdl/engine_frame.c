@@ -9,6 +9,7 @@
  * still needs (PAL video routing, host timer, FSM cluster) are provided as
  * stubs in engine_stubs.c until each is lit up for real.
  */
+#include <SDL2/SDL.h>
 #include "platform/pal.h"
 
 #include <stdlib.h>
@@ -30,6 +31,8 @@ extern void MK4_NativeVideoPresent(void);
  * Anything still on the weak stub frontier is a no-op for now, so this runs
  * what exists rather than all of it; `make native-arena-check` reports which
  * VAs are still empty. */
+extern void MK4_NativeVideoClaimTexSlots(void);
+extern void AppInit_PreInstall(void);   /* FILESYS: open the archive, read its directory */
 extern void AppInit_Misc2(void);        /* heap: clear 3 MB, seed the free head */
 extern void AppInit_Misc3(void);        /* zero the 42-dword scratch block */
 extern void AppInit_Misc4(void);
@@ -47,9 +50,19 @@ extern int  GameStateMachine(int cmd);
 
 static void MK4_EngineStateInit(void)
 {
+    /* AppInit runs this FIRST, before the heap: everything the engine loads
+     * comes through the FILESYS archive, and a lookup against an unread
+     * directory is fatal rather than a miss. */
+    AppInit_PreInstall();
+    SDL_Log("filesys: %u entries from the archive directory",
+            *(unsigned int *)MK4_VA(unsigned int, 0x007af4e4u));
     AppInit_Misc2();
     AppInit_Misc3();
     AppInit_Misc4();
+    /* Misc4 CLEARS the texture-slot occupancy table and Misc7 loads the first
+     * .geo into it, so this is the only window where the backend can claim the
+     * slots it staged. Claiming earlier is wiped; later is too late. */
+    MK4_NativeVideoClaimTexSlots();
     MStackPackedInit();
     Set2FiveCallPauseJmp();
     AppInit_Misc7();
@@ -57,6 +70,11 @@ static void MK4_EngineStateInit(void)
     /* AppInit seeds the PRNG from timeGetTime; a fixed seed keeps the native
      * build reproducible, which the frame gates depend on. */
     Crt_srand(1);
+
+    /* The backend staged content into the texture page before any of this ran,
+     * and the engine's init clears the slot-occupancy table - so the slots the
+     * backend owns are claimed here, once, or the first .geo the engine loads
+     * takes slot 0 and overwrites them. */
 
     /* AppInit's own bootstrap: with the disc check UNsatisfied it hands the
      * state machine command 7, which selects the insert-CD dialog. Transcribed

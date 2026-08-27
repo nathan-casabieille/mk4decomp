@@ -40,6 +40,39 @@
                                       * is 16 x 256x256 = 2 MB. menu.tga goes
                                       * to slot 15; models use slot 0. */
 #define MK4_TEX_SLOT_TEXELS 0x10000u
+
+/* The engine allocates texture slots out of a sixteen-entry occupancy table at
+ * 0x00ab4e00 (u16 per slot, non-zero = taken), scanning from the cursor at
+ * 0x00ab4e74. Anything this backend preloads into the page has to be marked
+ * there or LoadGeoAsset_Textures will hand the same slot to the first .geo it
+ * reads and overwrite it. */
+static int s_texMenuLoaded;
+
+static void MK4_TexSlotReserve(unsigned slot)
+{
+    if (slot < MK4_TEX_SLOTS)
+        *(unsigned short *)MK4_VA(unsigned short, 0x00ab4e00u + slot * 2u) = 0xffff;
+}
+
+/* Called from MK4_EngineStateInit, AFTER the engine has finished setting up -
+ * its own init clears this table, so claiming during video init is wiped. On
+ * a diagnostic scene the page is entirely this backend's, so every slot is
+ * claimed; on the real frame path only the two it actually staged. */
+void MK4_NativeVideoClaimTexSlots(void)
+{
+    unsigned s;
+
+    if (getenv("MK4_SCENE") || getenv("MK4_TEX_SOLID") || getenv("MK4_TEX_ROWS")) {
+        for (s = 0; s < MK4_TEX_SLOTS; s++)
+            MK4_TexSlotReserve(s);
+        return;
+    }
+    /* On the real frame path slot 0 belongs to the ENGINE - AppInit_Misc7
+     * loads its font there, which is what the original does - so only the
+     * menu staging is claimed. */
+    if (s_texMenuLoaded)
+        MK4_TexSlotReserve(15);
+}
 #define MK4_LUT_VA    0x01300000u     /* 16 x 128 KB shading pages, above it */
 #define MK4_ENTRIES_VA 0x00f50000u    /* DrawEntry staging (g_dualC + 4) */
 
@@ -227,6 +260,7 @@ void MK4_NativeVideoInit(void)
             }
             fclose(tf);
         }
+        s_texMenuLoaded = loaded;
         if (loaded) {
             SDL_Log("native video: menu.tga loaded into the texture page");
         } else {
@@ -352,6 +386,7 @@ int MK4_NativeSceneGeoLoad(const char *path)
         if (tf) {
             size_t got = fread(MK4_VA(void, MK4_TEX_VA), 1, 256u * 256u * 2u, tf);
             fclose(tf);
+
             SDL_Log("scene: texture atlas %lu bytes from %s",
                     (unsigned long)got, tex_path);
         } else {

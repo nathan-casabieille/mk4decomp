@@ -5,6 +5,13 @@
 #include "engine/fsys.h"
 #include "engine/scenegraph.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#endif
+
+
 /*
  * Convenience wrapper: load .geo textures with the default flag (0).
  *
@@ -37,6 +44,125 @@ static const char $SG_geofmt[] = "c:\\source\\mk4\\win\\geogfx\\%s";
  *   add esi,4; mov ebp,[esi]; add esi,4  ; ebp = entry->data_size; esi -> rle_data
  *   ...; lea esi,[esi+ebp*2]             ; advance past this entry's RLE stream
  */
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+extern int  Helper_Sprintf(char *buf, const char *fmt, ...);
+extern void Helper_GeoLoadPre(void);
+extern void Helper_GeoLoadPost(void);
+extern s32  Mem_Malloc(void **out_ptr, s32 size, s32 tag);
+extern void Tex_DecodeRLE16(s32 slot, s32 width, s32 height, const u8 *src);
+
+/* Portable twin. Loads one .geo file's texture chunk into the page.
+ *
+ * Node field +4 caches the loaded block, so a node that already has one is a
+ * no-op - and on either failure (missing file, or the allocator handing back
+ * nothing) it stores the failing value there, which leaves the node marked
+ * unloaded and lets the next call retry.
+ *
+ * The name comes out of a table hanging off node field +0 at a stride of 12,
+ * and is formatted into the 1998 build path "c:\source\mk4\win\geogfx\%s"
+ * - the port's file layer reduces that to a basename.
+ *
+ * Slot allocation is a WRAPPING scan of the sixteen-entry occupancy table at
+ * 0x00ab4e00, starting from wherever the last one left off and giving up after
+ * fifteen tries. On giving up it still advances the cursor and skips the
+ * decode, so the entry keeps the 0xffff it was pre-marked with rather than
+ * pointing at somebody else's texture.
+ *
+ * Every pointer that lives in a 32-bit slot here - the node's block, the name,
+ * the table base - is a VA, so it goes through the seam; the buffers handed to
+ * the file layer and the decoder are host pointers. */
+void LoadGeoAsset_Textures(s32 index)
+{
+    unsigned int node = g_currentNodeIdx * 4u;
+    unsigned int entry, blk, chunk, rec, slotkey;
+    unsigned int size;
+    int count;
+
+    if (*(unsigned int *)MK4_PTR(node + 4) != 0)
+        return;
+
+    Helper_GeoLoadPre();
+
+    entry = *(unsigned int *)MK4_PTR(node) + (unsigned int)index * 12u;
+    Helper_Sprintf(MK4_VA(char, 0x00ab43d8u),
+                   (const char *)MK4_PTR(0x004f6584u),
+                   (const char *)MK4_PTR(*(unsigned int *)MK4_PTR(entry)));
+
+    size = FSYS_fsize(MK4_VA(char, 0x00ab43d8u));
+    if (size == 0) {
+        *(unsigned int *)MK4_PTR(node + 4) = 0;
+        return;
+    }
+
+    blk = (unsigned int)Mem_Malloc((void **)MK4_PTR(node + 4), (s32)size, 1);
+    if (blk == 0) {
+        *(unsigned int *)MK4_PTR(node + 4) = 0;
+        return;
+    }
+
+    FSYS_fload(MK4_VA(char, 0x00ab43d8u), MK4_PTR(blk), size);
+
+    slotkey = *(unsigned short *)MK4_PTR(entry + 6);
+    *(unsigned int *)MK4_PTR(0x00ab4e78u + slotkey * 4u) = g_currentNodeIdx;
+
+    chunk = blk + 4u + *(unsigned int *)MK4_PTR(blk + 4);
+    count = *(unsigned short *)MK4_PTR(chunk);
+    chunk += 4;
+    *(unsigned int *)MK4_PTR(0x00ab5038u + slotkey * 4u) = (unsigned int)count;
+
+    /* Two cursors, both starting at the chunk: `rec` walks the four-byte slot
+     * records at a fixed stride, `chunk` walks the variable-length data. They
+     * are the same address only on the first texture. */
+    rec = chunk;
+    while (count > 0) {
+        unsigned int w     = *(unsigned short *)MK4_PTR(chunk);
+        unsigned int h     = *(unsigned short *)MK4_PTR(chunk + 2);
+        unsigned int words;
+        unsigned int slot;
+        int tries, found;
+
+        chunk += 4;
+        words = *(unsigned int *)MK4_PTR(chunk);
+        chunk += 4;
+
+        *(unsigned short *)MK4_PTR(rec) = 0xffff;
+
+        slot  = *(unsigned int *)MK4_PTR(0x00ab4e74u);
+        tries = 0;
+        found = 0;
+        for (;;) {
+            if ((int)slot >= 0xf)
+                slot = 0;
+            if (*(unsigned short *)MK4_PTR(0x00ab4e00u + slot * 2u) == 0) {
+                found = 1;
+                break;
+            }
+            tries++;
+            slot++;
+            if (tries >= 0xf)
+                break;
+        }
+        /* the cursor advances on BOTH exits - giving up still moves it on */
+        *(unsigned int *)MK4_PTR(0x00ab4e74u) = slot;
+
+        if (found) {
+            Tex_DecodeRLE16((s32)slot, (s32)w, (s32)h, (const u8 *)MK4_PTR(chunk));
+            slot = *(unsigned int *)MK4_PTR(0x00ab4e74u);
+            *(unsigned short *)MK4_PTR(rec)     = (unsigned short)slot;
+            *(unsigned short *)MK4_PTR(rec + 2) = (unsigned short)slot;
+            *(unsigned short *)MK4_PTR(0x00ab4e00u + slot * 2u) = 0xffff;
+        }
+
+        rec   += 4;
+        chunk += (unsigned int)(((int)words >> 1) * 2);
+        count--;
+    }
+
+    Helper_GeoLoadPost();
+}
+#else
 __declspec(naked) void LoadGeoAsset_Textures(s32 flag)
 {
     __asm {
@@ -167,3 +293,4 @@ done_main:
         ret
     }
 }
+#endif

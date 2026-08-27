@@ -179,6 +179,49 @@ def _fsysdir(want=8):
     d['@0xb92000'] = 0
     return d
 
+
+# A .geo texture block for LoadGeoAsset_Textures. The node is at packed index
+# 0x2e4000 (VA 0xb90000): +0 is the name table, +4 the cached block. The
+# loaded file lands at 0xb95000 - its +4 is the offset to the texture chunk,
+# then a count and two entries of {w, h, words, data...}.
+def _geoblk():
+    def imm_ret(v):
+        return b'\xb8' + (v & 0xffffffff).to_bytes(4, 'little') + b'\xc3'
+    d = {
+        'g_currentNodeIdx': 0x2e4000,
+        '@0xb90000': 0xb90100,          # name table
+        '@0xb90004': 0,                 # not loaded yet
+        '@0xb90100': 0xb90800,          # entry[0].name
+        '@0xb90106': 0x00000002,        # entry[0] +6: the slot key (u16 = 2)
+        '@0xb90800': 0x004f4f46,        # "FOO"
+        '@0xb95004': 0x10,              # offset from +4 to the chunk
+        '@0xb95014': 0x00000002,        # count = 2
+        '@0xb95018': 0x00040004,        # tex0: w=4 h=4
+        '@0xb9501c': 0x00000004,        # tex0: words
+        '@0xb95020': 0x001f001f,
+        '@0xb95024': 0x001f001f,
+        '@0xb95028': 0x00020002,        # tex1: w=2 h=2
+        '@0xb9502c': 0x00000002,        # tex1: words
+        '@0xb95030': 0x7c1f7c1f,
+        '@0xab4e74': 0,                 # slot cursor
+        '@0xf85b34': 0x00ba0000,        # texture page base
+        'g_texturedTriVar': 0,
+        'g_texXorKey': 0,
+        # FSYS_fsize -> 0x100, FSYS_fload -> nothing, Mem_Malloc -> 0xb95000
+        '@0x4b2120': imm_ret(0x100),
+        '@0x4b2160': b'\xc3',
+        '@0x4b5bc0': (b'\x8b\x4c\x24\x04'          # mov ecx, [esp+4]
+                      b'\xb8\x00\x50\xb9\x00'      # mov eax, 0xb95000
+                      b'\x89\x01'                    # mov [ecx], eax
+                      b'\xc3'),                       # ret
+        '@0x4c5580': imm_ret(0),        # Helper_Sprintf
+        '@0x4bd570': b'\xc3',           # Helper_GeoLoadPre
+        '@0x4bd6d0': b'\xc3',           # Helper_GeoLoadPost
+    }
+    for i in range(16):
+        d.setdefault('@0x%x' % (0xab4e00 + i * 2), 0)
+    return d
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -513,6 +556,16 @@ SEEDS = {
     # channel-expanding one, and only the second rewrites the pixels.
     # A three-block heap: free / used / free-to-the-end. The split path and the
     # exact-fit path take different branches through the back-link fixups.
+    # A two-texture .geo block in scratch, with the loader's own callees
+    # stubbed: the file layer and the allocator are verified separately, and
+    # executed for real here they would run to the instruction cap.
+    'LoadGeoAsset_Textures': [
+        ('already loaded is a no-op', dict(_geoblk(), **{'@0xb90004': 0x12345678}), (0,)),
+        ('two textures', _geoblk(), (0,)),
+        # every slot occupied: the search gives up, the record keeps its 0xffff
+        ('no free slot', dict(_geoblk(), **{
+            '@0x%x' % (0xab4e00 + i * 2): 0xffffffff for i in range(0, 16, 2)}), (0,)),
+    ],
     'FSYS_HashName': [
         ('mixed case and length', {'@0xb90000': 0x415c3a43, '@0xb90004': 0x2e4f4f46,
                                    '@0xb90008': 0x004f4547}, (0xb90000,)),
