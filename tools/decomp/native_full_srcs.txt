@@ -232,3 +232,7 @@ src/engine/transform_accumulate.c
 src/engine/vtable_dispatch_set_dirty.c
 src/engine/dirty_bit_triple_write_or_call.c
 src/engine/transform9_words.c
+src/engine/cleanup_call_twice.c
+src/engine/scaled_neg_three_words.c
+src/engine/set_hi6.c
+src/engine/store_at_minus8.c

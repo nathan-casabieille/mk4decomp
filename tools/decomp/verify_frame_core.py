@@ -403,6 +403,17 @@ SEEDS = {
                                          'g_pendingNodeType': 0x2e4000})),
     ],
     # The 3x3 the projection helpers read, at its real address.
+    'ScaledNegThreeWords': [
+        ('mixed signs', {'g_currentNodeIdx': 0x2e4000, 'g_xformDirtyFlags': 1,
+                         '@0xb90000': 0xfe000100, '@0xb90004': 0x8000}),
+    ],
+    'CleanupCallTwice': [
+        ('null slot',  {'@0xb90200': 0}, (0xb90200,)),
+        ('cleans up',  {'@0xb90200': 0xb90100,
+                        '@0xb900f4': 0x3f123456,      # header at user - 0xc
+                        '@0xb900f8': 0},              # owner slot at user - 8
+                       (0xb90200,)),
+    ],
     'Transform9Words': [
         ('all positive', {'@0x7af990': 0x02000100, '@0x7af994': 0x04000300,
                           '@0x7af998': 0x06000500, '@0x7af99c': 0x08000700,
