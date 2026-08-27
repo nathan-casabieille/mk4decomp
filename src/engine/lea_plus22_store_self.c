@@ -28,6 +28,6 @@ extern unsigned int g_baseSel;
 void LeaPlus22StoreSelf(void) {
     u32 base = g_baseSel;
     u32 v = base + 0x22;
-    g_walkCallback = (NodeHandlerFn)v;
-    *(u32 *)(base * 4 + 4) = v;
+    g_walkCallback = (NodeHandlerFn)MK4_PTR(v);
+    *(u32 *)MK4_PTR((base * 4 + 4)) = v;
 }

@@ -45,5 +45,5 @@ void GuardedDirtyXformFromTable(void) {
         v = g_dispatchSave417;
         g_xformEntityIdx = v;
     }
-    *(unsigned int *)(v * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((v * 4)) = g_currentNodeIdx;
 }

@@ -5,7 +5,7 @@ Stored function pointers in the engine hold ORIGINAL code VAs (0x4xxxxx); under
 the arena those are not native code. This generates a sorted {orig_VA -> native
 fn} table over the functions actually compiled into native-full, plus
 MK4_ResolveCode(va) (binary search) that maps a stored VA to the native function
-(or returns the VA unchanged if unknown). Indirect call sites become
+(or a reporting no-op if the target is not linked natively). Call sites become
   ((fn)MK4_ResolveCode(stored_va))(...)
 A startup self-test asserts a few known VAs resolve to their native &fn.
 Gated MK4_NATIVE_FULL.
@@ -32,6 +32,8 @@ L += ['extern int %s();' % n for n, _ in items]
 L += ['', 'static const struct { unsigned va; void *fn; } g_codePtrTable[] = {']
 L += ['    {0x%xu, (void*)%s},' % (va, n) for n, va in items]
 L += ['};', 'enum { MK4_CODEPTR_N = sizeof(g_codePtrTable)/sizeof(g_codePtrTable[0]) };', '',
+      'static void MK4_CodeMissing(void) { }',
+      '',
       'void *MK4_ResolveCode(unsigned va) {',
       '    int lo = 0, hi = MK4_CODEPTR_N - 1;',
       '    while (lo <= hi) {',
@@ -40,7 +42,15 @@ L += ['};', 'enum { MK4_CODEPTR_N = sizeof(g_codePtrTable)/sizeof(g_codePtrTable
       '        if (m == va) return g_codePtrTable[mid].fn;',
       '        if (m < va) lo = mid + 1; else hi = mid - 1;',
       '    }',
-      '    return (void*)(unsigned long)va;   /* unknown: pass through (unconverted target) */',
+      '    /* Unknown VA. Passing it through means the caller JUMPS to a raw',
+      '     * VA - unmapped here, so the process dies with no indication of which',
+      '     * target was missing. Report it once and hand back a no-op instead, so',
+      '     * one unconverted callback does not hide the rest of the frame. */',
+      '    { static unsigned seen[32]; static int n; int i;',
+      '      for (i = 0; i < n; i++) if (seen[i] == va) return (void*)MK4_CodeMissing;',
+      '      if (n < 32) { seen[n++] = va;',
+      '        SDL_Log("unresolved code VA 0x%08x - target not linked natively", va); } }',
+      '    return (void*)MK4_CodeMissing;',
       '}', '',
       'void MK4_CodePtrSelfTest(void) {',
       '    int i, ok = 0;',

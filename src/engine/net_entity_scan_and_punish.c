@@ -209,10 +209,10 @@ void NetEntityScanAndPunish(void)
         if (g_framePauseFlag != 0) {
           return;
         }
-        puVar1 = (undefined4 *)((int)g_matrixStackTop * 4);
+        puVar1 = (undefined4 *)MK4_PTR(((int)g_matrixStackTop * 4));
         g_matrixStackTop = g_matrixStackTop + -1;
         MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x5c) = *puVar1;
-        puVar1 = (undefined4 *)((int)g_matrixStackTop * 4);
+        puVar1 = (undefined4 *)MK4_PTR(((int)g_matrixStackTop * 4));
         g_matrixStackTop = g_matrixStackTop + -1;
         MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x54) = *puVar1;
         g_walkCallback = 0xfffff852;

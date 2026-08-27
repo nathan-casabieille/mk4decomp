@@ -184,7 +184,7 @@ void InstallSelfStackReset(void)
   
   iVar1 = g_baseSel * 4;
   iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
-  *(undefined4 *)(iVar1 + 0x84) = 0;
+  *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 0;
   if (iVar2 != 0) {
     g_walkCallback = 0;
     g_audioBank2State = 0;
@@ -201,7 +201,7 @@ void InstallSelfStackReset(void)
     (g_currentNodeIdx) = g_walkCallback + 0x137f26;
     g_dualC = *MK4_NODE(undefined4, (g_currentNodeIdx));
     *(code **)(iVar1 + 8) = InstallSelfStackReset;
-    *(undefined4 *)(iVar1 + 0x84) = 1;
+    *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 1;
     g_framePauseFlag = 1;
     return;
   }

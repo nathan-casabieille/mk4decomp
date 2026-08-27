@@ -28,9 +28,9 @@ extern unsigned int g_phaseTimer;
 extern void HalveChainTriplePop2(void);
 void DoubleStackPushAndJmp(void) {
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = g_currentNodeIdx;
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_fightGroupHead;
+    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = g_fightGroupHead;
     g_currentNodeIdx = 0x7c;
     HalveChainTriplePop2();
 }

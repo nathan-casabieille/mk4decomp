@@ -23,9 +23,9 @@ extern unsigned int g_currentNodeIdx;
 extern void func_004740d0_zz(void);
 void DoubleStackPushAndJmp7b(void) {
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = g_currentNodeIdx;
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_fightGroupHead;
+    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = g_fightGroupHead;
     g_currentNodeIdx = 0x7b;
     func_004740d0_zz();
 }

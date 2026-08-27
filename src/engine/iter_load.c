@@ -37,7 +37,7 @@ extern void DualScaledStoreZero(void);
 void IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0(int arg) {
     int p = arg >> 2;
     g_eventQueueTotal = p;
-    g_xformEntityIdx = *(unsigned int *)(p * 4);
+    g_xformEntityIdx = *(unsigned int *)MK4_PTR((p * 4));
     p++;
     g_eventQueueTotal = p;
     Thunk_Thunk_0049cbc0_0049cbb0();
@@ -47,7 +47,7 @@ void IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0(int arg) {
 void IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall(int arg) {
     int p = arg >> 2;
     g_eventQueueTotal = p;
-    g_currentNodeIdx = *(unsigned int *)(p * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((p * 4));
     p++;
     g_eventQueueTotal = p;
     MStackPush4IndirectCall();
@@ -57,7 +57,7 @@ void IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall(int arg) {
 void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(int arg) {
     int p = arg >> 2;
     g_eventQueueTotal = p;
-    g_xformEntityIdx = *(unsigned int *)(p * 4);
+    g_xformEntityIdx = *(unsigned int *)MK4_PTR((p * 4));
     p++;
     g_eventQueueTotal = p;
     DualScaledStoreZero();

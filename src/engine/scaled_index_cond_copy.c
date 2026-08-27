@@ -28,11 +28,11 @@ void ScaledIndexCondCopy(int arg) {
     unsigned int packed = (unsigned int)(arg >> 2);
     unsigned int v;
     g_eventQueueTotal = packed;
-    v = *(unsigned int *)(packed * 4 + 0);
+    v = *(unsigned int *)MK4_PTR((packed * 4 + 0));
     g_currentNodeIdx = v;
     if (g_fightGroupHead != g_player1NodeIdx) {
-        v = *(unsigned int *)(packed * 4 + 4);
+        v = *(unsigned int *)MK4_PTR((packed * 4 + 4));
         g_currentNodeIdx = v;
     }
-    g_walkCallback = (void (*)(void))(*(unsigned int *)(v * 4 + 0));
+    g_walkCallback = (void (*)(void))(*(unsigned int *)MK4_PTR((v * 4 + 0)));
 }

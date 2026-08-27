@@ -34,8 +34,8 @@ extern void ScaledAndMaskInitJmp(void);
 void PushPopScaled18(void) {
     unsigned int v;
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
-    v = ((ScenegraphNode *)(g_currentNodeIdx * 4))->child_chain;
+    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = g_currentNodeIdx;
+    v = ((ScenegraphNode *)MK4_PTR((g_currentNodeIdx * 4)))->child_chain;
     g_walkCallback = (void (*)(void))v;
     if (v != 0) {
         g_currentNodeIdx = v;
@@ -44,7 +44,7 @@ void PushPopScaled18(void) {
             return;
         }
     }
-    g_currentNodeIdx = *(unsigned int *)(g_matrixStackTop * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((g_matrixStackTop * 4));
     g_matrixStackTop--;
 }
 
@@ -53,8 +53,8 @@ extern void MStackPush2ChainPrepend(void);
 void PushPopScaled14(void) {
     unsigned int v;
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
-    v = ((ScenegraphNode *)(g_xformEntityIdx * 4))->not_mask;
+    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = g_xformEntityIdx;
+    v = ((ScenegraphNode *)MK4_PTR((g_xformEntityIdx * 4)))->not_mask;
     g_walkCallback = (void (*)(void))v;
     if (v != 0) {
         g_xformEntityIdx = v;
@@ -63,7 +63,7 @@ void PushPopScaled14(void) {
     if (g_framePauseFlag != 0) {
         return;
     }
-    g_xformEntityIdx = *(unsigned int *)(g_matrixStackTop * 4);
+    g_xformEntityIdx = *(unsigned int *)MK4_PTR((g_matrixStackTop * 4));
     g_matrixStackTop--;
 }
 
@@ -73,15 +73,15 @@ extern void PushSetCallCleanup(void);
 void PushPopScaled1cDoubleCall(void) {
     unsigned int v;
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_xformEntityIdx;
+    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = g_xformEntityIdx;
     func_00409970_ii();
     if (g_framePauseFlag != 0) return;
-    v = ((ScenegraphNode *)(g_fightGroupHead * 4))->alloc_flags;
+    v = ((ScenegraphNode *)MK4_PTR((g_fightGroupHead * 4)))->alloc_flags;
     g_xformEntityIdx = v;
     if (v != 0) {
         PushSetCallCleanup();
         if (g_framePauseFlag != 0) return;
     }
-    g_xformEntityIdx = *(unsigned int *)(g_matrixStackTop * 4);
+    g_xformEntityIdx = *(unsigned int *)MK4_PTR((g_matrixStackTop * 4));
     g_matrixStackTop--;
 }

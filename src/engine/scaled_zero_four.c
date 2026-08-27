@@ -26,7 +26,7 @@ extern unsigned int g_currentNodeIdx;
  */
 extern void ZeroThreeSlots_00490780(void);
 void ScaledZeroFour(void) {
-    unsigned int *base = (unsigned int *)(g_fightGroupHead * 4);
+    unsigned int *base = (unsigned int *)MK4_PTR((g_fightGroupHead * 4));
     g_walkCallback = 0;
     base[0x6c/4] = 0;
     base[0x70/4] = (unsigned int)g_walkCallback;

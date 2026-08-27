@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -15,11 +16,11 @@ extern void Mul10Tail(void);
 extern void (*g_iatPtr)(void);
 void IncStoreCallIATDec(void) {
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueChild;
+    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = g_eventQueueChild;
     g_iatPtr();
     if (g_framePauseFlag != 0) {
         return;
     }
-    g_eventQueueChild = *(unsigned int *)(g_matrixStackTop * 4);
+    g_eventQueueChild = *(unsigned int *)MK4_PTR((g_matrixStackTop * 4));
     g_matrixStackTop--;
 }

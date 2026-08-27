@@ -32,7 +32,7 @@ extern unsigned int g_currentNodeIdx;
 extern void NodeUnlink(unsigned int);
 void LoadShlDerefCallSkip(void) {
     unsigned int p = g_pendingNodeType * 4;
-    if (((ScenegraphNode *)p)->ptr_field) {
+    if (((ScenegraphNode *)MK4_PTR(p))->ptr_field) {
         NodeUnlink(p);
     }
 }

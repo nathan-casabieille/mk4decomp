@@ -25,6 +25,6 @@ extern unsigned int g_currentNodeIdx;
  */
 extern void ScaledStoreCurDirtyOr1(void);
 void ScaledLoadDecJmp(void) {
-    g_eventQueueCurrent = *(unsigned int*)(g_currentNodeIdx * 4 + 4) - 1;
+    g_eventQueueCurrent = *(unsigned int*)MK4_PTR((g_currentNodeIdx * 4 + 4)) - 1;
     ScaledStoreCurDirtyOr1();
 }

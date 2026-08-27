@@ -32,8 +32,8 @@ extern unsigned int g_currentNodeIdx;
  */
 extern void ScaledLoadOrSetJmp(void);
 void DualScaledStoreZero(void) {
-    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end = g_xformEntityIdx;
+    ((ScenegraphNode *)MK4_PTR((g_fightGroupHead * 4)))->queue_end = g_xformEntityIdx;
     g_walkCallback = (void (*)(void))0;
-    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = 0;
+    ((ScenegraphNode *)MK4_PTR((g_fightGroupHead * 4)))->queue_idx = 0;
     ScaledLoadOrSetJmp();
 }

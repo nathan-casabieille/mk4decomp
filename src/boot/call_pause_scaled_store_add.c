@@ -41,6 +41,6 @@ extern void BootChainPushAddSignFlag(void);
 void CallPauseScaledStoreAdd(void) {
     BootChainPushAddSignFlag();
     if (g_framePauseFlag != 0) return;
-    ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_idx = (unsigned int)g_walkCallback;
+    ((ScenegraphNode *)MK4_PTR((g_fightGroupHead * 4)))->queue_idx = (unsigned int)g_walkCallback;
     g_bootInitSaveSlot = g_fightGroupHead + 0x0a;
 }

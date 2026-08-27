@@ -29,7 +29,7 @@ extern unsigned int g_currentNodeIdx;
  *   ret
  */
 void ScaledNeg1SetPause(void) {
-    ScenegraphNode *node = (ScenegraphNode *)(g_baseSel * 4);
+    ScenegraphNode *node = (ScenegraphNode *)MK4_PTR((g_baseSel * 4));
     if (node->ptr_field != 0) {
         node->ptr_field = 0xffffffff;
         g_framePauseFlag = 1;

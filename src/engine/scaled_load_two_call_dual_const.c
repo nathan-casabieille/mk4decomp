@@ -42,7 +42,7 @@ extern void MStackBracket7_DispatchAndChain(void);
 
 /* @addr 0x0044ba30 */
 void ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_0044ba30(void) {
-    g_fightGroupHead = *(unsigned int*)(g_baseSel * 4 + 0x4c);
+    g_fightGroupHead = *(unsigned int*)MK4_PTR((g_baseSel * 4 + 0x4c));
     MStackPush2RunCountdown();
     if (g_framePauseFlag) return;
     MStackBracket7_DispatchAndChain();
@@ -53,7 +53,7 @@ void ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_Disp
 
 /* @addr 0x00467c30 */
 void ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_00467c30(void) {
-    g_fightGroupHead = *(unsigned int*)(g_baseSel * 4 + 0x4c);
+    g_fightGroupHead = *(unsigned int*)MK4_PTR((g_baseSel * 4 + 0x4c));
     MStackPush2RunCountdown();
     if (g_framePauseFlag) return;
     MStackBracket7_DispatchAndChain();

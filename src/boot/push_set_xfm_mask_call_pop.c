@@ -162,13 +162,13 @@ void PushSetXfmMaskCallPop(void) {
     unsigned int wcb;
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_xformEntityIdx;
+    *(unsigned int *)MK4_PTR((top * 4)) = g_xformEntityIdx;
     wcb = (unsigned int)g_walkCallback;
     g_xformEntityIdx = wcb;
-    g_xformEntityIdx = ((int)*(int *)(wcb * 4) >> 2) & 0x3fffff;
+    g_xformEntityIdx = ((int)*(int *)MK4_PTR((wcb * 4)) >> 2) & 0x3fffff;
     BootDispatchSlotInit();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    g_xformEntityIdx = *(unsigned int *)(top * 4);
+    g_xformEntityIdx = *(unsigned int *)MK4_PTR((top * 4));
     g_matrixStackTop = top - 1;
 }

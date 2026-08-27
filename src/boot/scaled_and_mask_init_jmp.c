@@ -37,9 +37,9 @@ extern void Helper_TickAlt(void);
 extern void ScaledAndMaskInitJmp(void);
 void ScaledAndMaskInitJmp(void) {
     unsigned int v;
-    ((ScenegraphNode *)(g_currentNodeIdx * 4))->flags &= 0xffffff7fu;
+    ((ScenegraphNode *)MK4_PTR((g_currentNodeIdx * 4)))->flags &= 0xffffff7fu;
     g_walkCallback = (void (*)(void))&ScaledAndMaskInitJmp;
-    v = *(unsigned int *)(g_currentNodeIdx * 4);
+    v = *(unsigned int *)MK4_PTR((g_currentNodeIdx * 4));
     g_eventQueueCurrent = v;
     if (v == 0) return;
     Helper_TickAlt();

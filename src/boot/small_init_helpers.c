@@ -38,5 +38,5 @@ void MStackPackedInit(void) {
  *   ret
  */
 void ScaledStoreIdx24(void) {
-    ((ScenegraphNode *)(g_currentNodeIdx * 4))->queue_end = (unsigned int)g_walkCallback;
+    ((ScenegraphNode *)MK4_PTR((g_currentNodeIdx * 4)))->queue_end = (unsigned int)g_walkCallback;
 }

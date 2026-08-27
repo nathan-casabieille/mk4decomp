@@ -28,12 +28,12 @@ extern unsigned int g_baseSel;
  */
 void StackPopDispatchTagged(void) {
     unsigned int base = g_baseSel;
-    unsigned int top = *(unsigned int *)(base * 4 + 4) - 1;
+    unsigned int top = *(unsigned int *)MK4_PTR((base * 4 + 4)) - 1;
     unsigned int walk;
     g_currentNodeIdx = top;
-    g_walkCallback = (void (*)(void))*(unsigned int *)(top * 4);
-    *(unsigned int *)(base * 4 + 4) = top;
-    ((ScenegraphNode *)(g_baseSel * 4))->install_flag = (unsigned int)((int)g_walkCallback >> 24);
+    g_walkCallback = (void (*)(void))*(unsigned int *)MK4_PTR((top * 4));
+    *(unsigned int *)MK4_PTR((base * 4 + 4)) = top;
+    ((ScenegraphNode *)MK4_PTR((g_baseSel * 4)))->install_flag = (unsigned int)((int)g_walkCallback >> 24);
     walk = (unsigned int)g_walkCallback & 0xffffff;
     g_walkCallback = (void (*)(void))walk;
     ((void (*)(void))walk)();

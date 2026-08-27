@@ -31,7 +31,7 @@ extern unsigned int g_currentNodeIdx;
 extern void MStackBracket3PackedSlotInit(void);
 void DualScaledLoadStoreJmp(void) {
     unsigned int idx = g_xformEntityIdx;
-    g_walkCallback = (void (*)(void))((ScenegraphNode *)(idx * 4))->child_a;
-    g_eventQueueCurrent = ((ScenegraphNode *)(idx * 4))->child_c;
+    g_walkCallback = (void (*)(void))((ScenegraphNode *)MK4_PTR((idx * 4)))->child_a;
+    g_eventQueueCurrent = ((ScenegraphNode *)MK4_PTR((idx * 4)))->child_c;
     MStackBracket3PackedSlotInit();
 }

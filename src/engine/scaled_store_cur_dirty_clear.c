@@ -31,6 +31,6 @@ extern unsigned int g_currentNodeIdx;
  */
 void ScaledStoreCurDirtyClear(void) {
     unsigned int idx = g_fightGroupHead;
-    ((ScenegraphNode *)(idx * 4))->queue_idx = g_eventQueueCurrent;
+    ((ScenegraphNode *)MK4_PTR((idx * 4)))->queue_idx = g_eventQueueCurrent;
     g_xformDirtyFlags = g_xformDirtyFlags & 0xFFFFFFFEu;
 }

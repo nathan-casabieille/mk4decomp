@@ -193,14 +193,14 @@ void BootChainPushAddSignFlag(void)
   }
   g_walkCallback = g_walkCallback + MK4_NODE_AT(int, (g_currentNodeIdx), 0x28);
   if ((int)g_walkCallback < 0) {
-    puVar1 = (undefined4 *)((int)g_matrixStackTop * 4);
+    puVar1 = (undefined4 *)MK4_PTR(((int)g_matrixStackTop * 4));
     g_matrixStackTop = g_matrixStackTop + -1;
     g_eventQueuePending = *puVar1;
     g_walkCallback = MK4_NODE_AT(int, iVar2, 4) + -1;
     g_xformDirtyFlags = g_xformDirtyFlags | 1;
     return;
   }
-  puVar1 = (undefined4 *)((int)g_matrixStackTop * 4);
+  puVar1 = (undefined4 *)MK4_PTR(((int)g_matrixStackTop * 4));
   g_matrixStackTop = g_matrixStackTop + -1;
   g_eventQueuePending = *puVar1;
   g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;

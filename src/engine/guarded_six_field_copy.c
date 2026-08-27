@@ -168,8 +168,8 @@ void GuardedSixFieldCopy(void) {
     g_walkCallback = (void (*)(void))2;
     DirtyDoubleDeref();
     if (g_framePauseFlag != 0) return;
-    src = (unsigned char *)(g_currentNodeIdx * 4);
-    base = (unsigned char *)(g_baseSel * 4);
+    src = (unsigned char *)MK4_PTR((g_currentNodeIdx * 4));
+    base = (unsigned char *)MK4_PTR((g_baseSel * 4));
     *(unsigned int *)(base + 0x30) = g_currentNodeIdx;
     v = *(unsigned int *)(src + 0x14);
     g_walkCallback = (void (*)(void))v;

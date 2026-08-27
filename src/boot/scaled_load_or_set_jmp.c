@@ -32,7 +32,7 @@ extern unsigned int g_currentNodeIdx;
 extern void MStackCall_MStackPush2ChainInsert_00406b50(void);
 void ScaledLoadOrSetJmp(void) {
     unsigned int idx = g_fightGroupHead;
-    unsigned int v = *(unsigned int *)(idx * 4 + 0x10);
+    unsigned int v = *(unsigned int *)MK4_PTR((idx * 4 + 0x10));
     g_walkCallback = (void (*)(void))v;
     if (v) return;
     g_currentNodeIdx = idx;

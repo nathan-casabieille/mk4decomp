@@ -272,11 +272,11 @@ done:
  */
 void NodeApplyTransform_A_Direct(void)
 {
-    s16 *angles = (s16 *)(g_xformEntityIdx * 4);
+    s16 *angles = (s16 *)MK4_PTR((g_xformEntityIdx * 4));
     g_xformTempAngles[0] = -angles[0];
     g_xformTempAngles[1] = -angles[2];
     g_xformTempAngles[2] = -angles[4];
-    BuildRotMatrix_OrderA(g_xformTempAngles, (s16 *)(g_currentNodeIdx * 4));
+    BuildRotMatrix_OrderA(g_xformTempAngles, (s16 *)MK4_PTR((g_currentNodeIdx * 4)));
     g_xformDirtyFlags |= 0x30;
 }
 
@@ -302,31 +302,31 @@ void NodeApplyTransform_A_Direct(void)
  */
 void NodeApplyTransform_A(void)
 {
-    s32 *angles = (s32 *)(g_xformEntityIdx * 4);
+    s32 *angles = (s32 *)MK4_PTR((g_xformEntityIdx * 4));
     g_xformTempAngles[0] = (s16)-(((angles[0] >> 2) * 10430) >> 18);
     g_xformTempAngles[1] = (s16)-(((angles[1] >> 2) * 10430) >> 18);
     g_xformTempAngles[2] = (s16)-(((angles[2] >> 2) * 10430) >> 18);
-    BuildRotMatrix_OrderA(g_xformTempAngles, (s16 *)(g_currentNodeIdx * 4));
+    BuildRotMatrix_OrderA(g_xformTempAngles, (s16 *)MK4_PTR((g_currentNodeIdx * 4)));
     g_xformDirtyFlags |= 0x30;
 }
 
 void NodeApplyTransform_B(void)
 {
-    s32 *angles = (s32 *)(g_xformEntityIdx * 4);
+    s32 *angles = (s32 *)MK4_PTR((g_xformEntityIdx * 4));
     g_xformTempAngles[0] = (s16)-(((angles[0] >> 2) * 10430) >> 18);
     g_xformTempAngles[1] = (s16)-(((angles[1] >> 2) * 10430) >> 18);
     g_xformTempAngles[2] = (s16)-(((angles[2] >> 2) * 10430) >> 18);
-    BuildRotMatrix_OrderB(g_xformTempAngles, (s16 *)(g_currentNodeIdx * 4));
+    BuildRotMatrix_OrderB(g_xformTempAngles, (s16 *)MK4_PTR((g_currentNodeIdx * 4)));
     g_xformDirtyFlags |= 0x30;
 }
 
 void NodeApplyTransform_C(void)
 {
-    s32 *angles = (s32 *)(g_xformEntityIdx * 4);
+    s32 *angles = (s32 *)MK4_PTR((g_xformEntityIdx * 4));
     g_xformTempAngles[0] = (s16)-(((angles[0] >> 2) * 10430) >> 18);
     g_xformTempAngles[1] = (s16)-(((angles[1] >> 2) * 10430) >> 18);
     g_xformTempAngles[2] = (s16)-(((angles[2] >> 2) * 10430) >> 18);
-    BuildRotMatrix_OrderC(g_xformTempAngles, (s16 *)(g_currentNodeIdx * 4));
+    BuildRotMatrix_OrderC(g_xformTempAngles, (s16 *)MK4_PTR((g_currentNodeIdx * 4)));
     g_xformDirtyFlags |= 0x30;
 }
 
@@ -458,31 +458,31 @@ paused:
  */
 void NodeApplyTransform_C_Inverse(void)
 {
-    s32 *angles = (s32 *)(g_xformEntityIdx * 4);
+    s32 *angles = (s32 *)MK4_PTR((g_xformEntityIdx * 4));
     g_xformTempAngles[0] = (s16)(((angles[0] >> 2) * 10430) >> 18);
     g_xformTempAngles[1] = (s16)(((angles[1] >> 2) * 10430) >> 18);
     g_xformTempAngles[2] = (s16)(((angles[2] >> 2) * 10430) >> 18);
-    BuildRotMatrix_OrderC(g_xformTempAngles, (s16 *)(g_currentNodeIdx * 4));
+    BuildRotMatrix_OrderC(g_xformTempAngles, (s16 *)MK4_PTR((g_currentNodeIdx * 4)));
     g_xformDirtyFlags |= 0x30;
 }
 
 void NodeApplyTransform_B_Direct(void)
 {
-    s16 *angles = (s16 *)(g_xformEntityIdx * 4);
+    s16 *angles = (s16 *)MK4_PTR((g_xformEntityIdx * 4));
     g_xformTempAngles[0] = -angles[0];
     g_xformTempAngles[1] = -angles[2];
     g_xformTempAngles[2] = -angles[4];
-    BuildRotMatrix_OrderB(g_xformTempAngles, (s16 *)(g_currentNodeIdx * 4));
+    BuildRotMatrix_OrderB(g_xformTempAngles, (s16 *)MK4_PTR((g_currentNodeIdx * 4)));
     g_xformDirtyFlags |= 0x30;
 }
 
 void NodeApplyTransform_C_Direct(void)
 {
-    s16 *angles = (s16 *)(g_xformEntityIdx * 4);
+    s16 *angles = (s16 *)MK4_PTR((g_xformEntityIdx * 4));
     g_xformTempAngles[0] = -angles[0];
     g_xformTempAngles[1] = -angles[2];
     g_xformTempAngles[2] = -angles[4];
-    BuildRotMatrix_OrderC(g_xformTempAngles, (s16 *)(g_currentNodeIdx * 4));
+    BuildRotMatrix_OrderC(g_xformTempAngles, (s16 *)MK4_PTR((g_currentNodeIdx * 4)));
     g_xformDirtyFlags |= 0x30;
 }
 
@@ -494,9 +494,9 @@ void NodeApplyTransform_C_Direct(void)
  * that the synth's 0x90-fill restores. */
 void DispatchProbeOrTransformB(void) {
     unsigned int idx = g_xformEntityIdx;
-    if (*(unsigned int *)(idx * 4 + 0) == 0 &&
-        *(unsigned int *)(idx * 4 + 4) == 0 &&
-        *(unsigned int *)(idx * 4 + 8) == 0) {
+    if (*(unsigned int *)MK4_PTR((idx * 4 + 0)) == 0 &&
+        *(unsigned int *)MK4_PTR((idx * 4 + 4)) == 0 &&
+        *(unsigned int *)MK4_PTR((idx * 4 + 8)) == 0) {
         InitOrAllZeroLoopback();
         return;
     }
@@ -508,9 +508,9 @@ void DispatchProbeOrTransformB(void) {
  */
 void DispatchProbeOrTransformC(void) {
     unsigned int idx = g_xformEntityIdx;
-    if (*(unsigned int *)(idx * 4 + 0) == 0 &&
-        *(unsigned int *)(idx * 4 + 4) == 0 &&
-        *(unsigned int *)(idx * 4 + 8) == 0) {
+    if (*(unsigned int *)MK4_PTR((idx * 4 + 0)) == 0 &&
+        *(unsigned int *)MK4_PTR((idx * 4 + 4)) == 0 &&
+        *(unsigned int *)MK4_PTR((idx * 4 + 8)) == 0) {
         InitOrAllZeroLoopback();
         return;
     }

@@ -29,7 +29,7 @@ extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void CallPauseScaledStoreCopyJmp(void);
 void PushPop84TripleCall(void) {
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeFlags;
+    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = g_currentNodeFlags;
     ScaledZeroFour();
     if (g_framePauseFlag != 0) {
         return;
@@ -42,6 +42,6 @@ void PushPop84TripleCall(void) {
     if (g_framePauseFlag != 0) {
         return;
     }
-    g_currentNodeFlags = *(unsigned int *)(g_matrixStackTop * 4);
+    g_currentNodeFlags = *(unsigned int *)MK4_PTR((g_matrixStackTop * 4));
     g_matrixStackTop--;
 }

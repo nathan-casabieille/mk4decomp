@@ -42,7 +42,7 @@ void NotShrCmp1Store(void) {
     }
     e = ~g_fightTableC0;
     g_walkCallback = (void(*)(void))e;
-    chain = ((FightGroupNode *)(g_fightGroupHead * 4))->tag;
+    chain = ((FightGroupNode *)MK4_PTR((g_fightGroupHead * 4)))->tag;
     g_eventQueueCurrent = chain;
     if (chain == 1) return;
     g_walkCallback = (void(*)(void))(e >> 8);

@@ -98,11 +98,11 @@ void GameTick(s32 param)
     if (param == 0) {
         p = g_player1NodeIdx;
         if (p != 0) {
-            ScenegraphNode *n = (ScenegraphNode *)(p * 4);
+            ScenegraphNode *n = (ScenegraphNode *)MK4_PTR((p * 4));
             g_currentNodeIdx = p;
             if (n->player_id == 1 &&
                 g_gtPlayerProbe1 != 0 &&
-                ((ScenegraphNode *)(g_gtPlayerProbe1 * 4))->fsm_state != 0x501) {
+                ((ScenegraphNode *)MK4_PTR((g_gtPlayerProbe1 * 4)))->fsm_state != 0x501) {
                 if (g_gtPlayerEnabled != 0 && n->position_y > (s32)0xffff0000) {
                     u32 v = n->state_mask | 0x1000;
                     g_walkCallback = (void (*)(void))v;
@@ -114,11 +114,11 @@ void GameTick(s32 param)
         }
         p = g_player2NodeIdx;
         if (p != 0) {
-            ScenegraphNode *n = (ScenegraphNode *)(p * 4);
+            ScenegraphNode *n = (ScenegraphNode *)MK4_PTR((p * 4));
             g_currentNodeIdx = p;
             if (n->player_id == 2 &&
                 g_gtPlayerProbe2 != 0 &&
-                ((ScenegraphNode *)(g_gtPlayerProbe2 * 4))->fsm_state != 0x501) {
+                ((ScenegraphNode *)MK4_PTR((g_gtPlayerProbe2 * 4)))->fsm_state != 0x501) {
                 if (g_gtPlayerEnabled != 0 && n->position_y > (s32)0xffff0000) {
                     u32 v = n->state_mask | 0x1000;
                     g_walkCallback = (void (*)(void))v;
@@ -130,7 +130,7 @@ void GameTick(s32 param)
         }
         p = g_player3NodeIdx;
         if (p != 0) {
-            ScenegraphNode *n = (ScenegraphNode *)(p * 4);
+            ScenegraphNode *n = (ScenegraphNode *)MK4_PTR((p * 4));
             g_currentNodeIdx = p;
             if (n->player_id == 3) {
                 if (g_gtPlayerEnabled != 0 && n->position_y > (s32)0xffff0000) {
@@ -144,7 +144,7 @@ void GameTick(s32 param)
         }
         p = g_player4NodeIdx;
         if (p != 0) {
-            ScenegraphNode *n = (ScenegraphNode *)(p * 4);
+            ScenegraphNode *n = (ScenegraphNode *)MK4_PTR((p * 4));
             g_currentNodeIdx = p;
             if (n->player_id == 4) {
                 if (g_gtPlayerEnabled != 0 && n->position_y > (s32)0xffff0000) {

@@ -153,16 +153,16 @@ extern unsigned int g_fightAxisPosY;
 /* @addr 0x00467ca0 (136b) - guarded 3-call chain + chain OR + 0xa0000 set + tail. */
 void GuardedTripleCallSetTail(void) {
     unsigned int v;
-    g_cj_0054205c = *(unsigned int *)(g_baseSel * 4 + 0x64);
+    g_cj_0054205c = *(unsigned int *)MK4_PTR((g_baseSel * 4 + 0x64));
     MStackPush2RunCountdown();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))2;
     ChainDirtyBitWalker();
     if (g_framePauseFlag != 0) return;
-    v = *(unsigned int *)(g_xformEntityIdx * 4) | 4;
-    *(unsigned int *)(g_xformEntityIdx * 4) = v;
+    v = *(unsigned int *)MK4_PTR((g_xformEntityIdx * 4)) | 4;
+    *(unsigned int *)MK4_PTR((g_xformEntityIdx * 4)) = v;
     g_walkCallback = (void (*)(void))0xa0000;
-    ((ScenegraphNode *)(g_xformEntityIdx * 4))->state_mask = 0xa0000;
+    ((ScenegraphNode *)MK4_PTR((g_xformEntityIdx * 4)))->state_mask = 0xa0000;
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))2;

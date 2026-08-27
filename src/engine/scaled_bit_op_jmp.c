@@ -29,9 +29,9 @@ extern unsigned int g_currentNodeIdx;
 extern void CondInstallDispatch_00476e20(void);
 void ScaledOr4Jmp(void) {
     unsigned int scaled = g_currentNodeIdx;
-    unsigned int v = ((ScenegraphNode *)(scaled * 4))->flags | 4;
+    unsigned int v = ((ScenegraphNode *)MK4_PTR((scaled * 4)))->flags | 4;
     g_walkCallback = (void (*)(void))v;
-    ((ScenegraphNode *)(scaled * 4))->flags = v;
+    ((ScenegraphNode *)MK4_PTR((scaled * 4)))->flags = v;
     CondInstallDispatch_00476e20();
 }
 
@@ -39,8 +39,8 @@ void ScaledOr4Jmp(void) {
 extern void CondInstallDispatch_00477000(void);
 void ScaledAndFBJmp(void) {
     unsigned int scaled = g_currentNodeIdx;
-    unsigned int v = ((ScenegraphNode *)(scaled * 4))->flags & 0xfffffffbu;
+    unsigned int v = ((ScenegraphNode *)MK4_PTR((scaled * 4)))->flags & 0xfffffffbu;
     g_walkCallback = (void (*)(void))v;
-    ((ScenegraphNode *)(scaled * 4))->flags = v;
+    ((ScenegraphNode *)MK4_PTR((scaled * 4)))->flags = v;
     CondInstallDispatch_00477000();
 }

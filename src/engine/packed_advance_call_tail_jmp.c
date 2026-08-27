@@ -31,6 +31,6 @@ void PackedAdvanceCallTailJmp(packed_ptr arg) {
     StorePauseImulShr16();
     if (g_framePauseFlag) return;
     g_currentNodeIdx += (unsigned int)g_walkCallback;
-    g_currentNodeIdx = *(unsigned int *)(g_currentNodeIdx * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((g_currentNodeIdx * 4));
     ((void (*)(void))g_currentNodeIdx)();
 }

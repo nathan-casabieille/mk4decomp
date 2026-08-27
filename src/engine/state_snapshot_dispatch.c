@@ -187,7 +187,7 @@ void StateSnapshotDispatch(int param_1)
   }
   g_cj_00542058 = *MK4_NODE(undefined4, (param_1 >> 2));
   g_cj_00542054 = (param_1 >> 2) + 1;
-  piVar1 = (int *)(g_baseSel * 4 + 4);
+  piVar1 = (int *)MK4_PTR((g_baseSel * 4 + 4));
   (g_currentNodeIdx) = *piVar1;
   *MK4_NODE(undefined4, (g_currentNodeIdx)) = MK4_NODE_AT(undefined4, g_cj_00542054, 0);
   (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
@@ -198,7 +198,7 @@ void StateSnapshotDispatch(int param_1)
   GuardedScaledChainJmpIndirect(&(*(unsigned int *)MK4_VA(unsigned int, 0x4e9fc0)));
   if (g_framePauseFlag == 0) {
     g_matrixStackTop = g_matrixStackTop + 1;
-    *(undefined **)((int)g_matrixStackTop * 4) = &(*(unsigned int *)MK4_VA(unsigned int, 0x460c40));
+    *(undefined **)MK4_PTR(((int)g_matrixStackTop * 4)) = &(*(unsigned int *)MK4_VA(unsigned int, 0x460c40));
     EsiInstallChainCallIndirect();
     return;
   }

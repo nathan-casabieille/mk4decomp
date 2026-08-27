@@ -23,6 +23,6 @@ extern unsigned int g_currentNodeIdx;
 /* @addr 0x00429730 (31b): same shape, or al,1 instead of and al,0xfe */
 void ScaledStoreCurDirtyOr1(void) {
     unsigned int idx = g_fightGroupHead;
-    ((ScenegraphNode *)(idx * 4))->queue_idx = g_eventQueueCurrent;
+    ((ScenegraphNode *)MK4_PTR((idx * 4)))->queue_idx = g_eventQueueCurrent;
     g_xformDirtyFlags = g_xformDirtyFlags | 1;
 }

@@ -28,8 +28,8 @@ extern unsigned int g_currentNodeIdx;
  */
 extern void WalkCallbackSetClearDirty(void);
 void ScaledChain3c74Jmp(void) {
-    unsigned int v = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
+    unsigned int v = ((ScenegraphNode *)MK4_PTR((g_baseSel * 4)))->child_a;
     g_currentNodeIdx = v;
-    g_walkCallback = (void (*)(void))((ScenegraphNode *)(v * 4))->fsm_state;
+    g_walkCallback = (void (*)(void))((ScenegraphNode *)MK4_PTR((v * 4)))->fsm_state;
     WalkCallbackSetClearDirty();
 }

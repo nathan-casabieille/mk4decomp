@@ -32,7 +32,7 @@ void InitOrAllZeroLoopback(void)
 {
   undefined4 *puVar1;
   
-  puVar1 = (undefined4 *)((g_currentNodeIdx) * 4);
+  puVar1 = (undefined4 *)MK4_PTR(((g_currentNodeIdx) * 4));
   *puVar1 = 0x1000;
   puVar1[1] = 0;
   puVar1[2] = 0x1000;

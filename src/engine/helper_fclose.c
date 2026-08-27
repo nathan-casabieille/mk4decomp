@@ -25,8 +25,8 @@ undefined4 Helper_FClose(int param_1)
 {
   undefined4 uVar1;
   
-  if ((*(byte *)(param_1 + 0xc) & 0x40) != 0) {
-    *(undefined4 *)(param_1 + 0xc) = 0;
+  if ((*(byte *)MK4_PTR((param_1 + 0xc)) & 0x40) != 0) {
+    *(undefined4 *)MK4_PTR((param_1 + 0xc)) = 0;
     return 0xffffffff;
   }
   RangePathIATDispatch_Lock(param_1);

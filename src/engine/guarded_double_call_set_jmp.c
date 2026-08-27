@@ -41,6 +41,6 @@ void GuardedDoubleCallSetJmp(void) {
     g_walkCallback = (void (*)(void))0x0c;
     top++;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = (unsigned int)&func_004602b0_pp;
+    *(unsigned int *)MK4_PTR((top * 4)) = (unsigned int)&func_004602b0_pp;
     MstackPopScaledChainPlusThunks();
 }

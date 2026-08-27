@@ -33,7 +33,7 @@ extern unsigned int g_currentNodeIdx;
 extern void Thunk_ChainNodeInit(void);
 extern void MStackPush4IndirectCall(void);
 void ScaledChainCallPauseSetJmp(void) {
-    g_currentNodeIdx = ((ScenegraphNode *)(g_baseSel * 4))->child_a;
+    g_currentNodeIdx = ((ScenegraphNode *)MK4_PTR((g_baseSel * 4)))->child_a;
     Thunk_ChainNodeInit();
     if (g_framePauseFlag != 0) return;
     g_currentNodeIdx = 0x0048fa20;

@@ -174,7 +174,7 @@ void NodeChainMaskMatch(void)
     return;
   }
   do {
-    if (*(int *)(iVar1 + 0xd8) != 0) {
+    if (*(int *)MK4_PTR((iVar1 + 0xd8)) != 0) {
       (g_currentNodeIdx) = iVar1 >> 2;
       g_eventQueueWorkType = MK4_NODE_AT(uint, (g_currentNodeIdx), 0xc) & g_eventQueueCurrent;
       if (g_eventQueueWorkType == g_walkCallback) {
@@ -182,7 +182,7 @@ void NodeChainMaskMatch(void)
         return;
       }
     }
-    iVar1 = *(int *)(iVar1 + 0xe4);
+    iVar1 = *(int *)MK4_PTR((iVar1 + 0xe4));
   } while (iVar1 != 0);
   g_xformDirtyFlags = g_xformDirtyFlags & 0xfffffffe;
   return;

@@ -178,13 +178,13 @@ void BootScheduledNodeTimerWalk(void)
         g_framePauseFlag = 0;
         return;
       }
-      if (((g_gameMode == 0) || (g_gameMode == *(int *)(iVar2 + 0xd8))) ||
-         (*(int *)(iVar2 + 0xe0) == 0x11)) break;
+      if (((g_gameMode == 0) || (g_gameMode == *(int *)MK4_PTR((iVar2 + 0xd8)))) ||
+         (*(int *)MK4_PTR((iVar2 + 0xe0)) == 0x11)) break;
 LAB_0041f6ef:
-      iVar2 = *(int *)(iVar2 + 0xe4);
+      iVar2 = *(int *)MK4_PTR((iVar2 + 0xe4));
     }
-    *(short *)(iVar2 + 0xdc) = *(short *)(iVar2 + 0xdc) + -1;
-    if (*(short *)(iVar2 + 0xdc) < 1) {
+    *(short *)MK4_PTR((iVar2 + 0xdc)) = *(short *)MK4_PTR((iVar2 + 0xdc)) + -1;
+    if (*(short *)MK4_PTR((iVar2 + 0xdc)) < 1) {
       g_baseSel = iVar2 >> 2;
       g_eventQueueNotMask = MK4_NODE_AT(undefined4, g_baseSel, 0x14);
       g_eventQueueChild = MK4_NODE_AT(undefined4, g_baseSel, 0x18);
@@ -194,26 +194,29 @@ LAB_0041f6ef:
       g_cj_0054205c = MK4_NODE_AT(undefined4, g_baseSel, 0x2c);
       g_currentNodeFlags = MK4_NODE_AT(undefined4, g_baseSel, 0x1c);
       g_xformScratch2088 = MK4_NODE_AT(undefined4, g_baseSel, 0x20);
-      *(undefined4 *)(iVar2 + 0xd8) = MK4_NODE_AT(undefined4, g_baseSel, 8);
+      *(undefined4 *)MK4_PTR((iVar2 + 0xd8)) = MK4_NODE_AT(undefined4, g_baseSel, 8);
       g_framePauseFlag = 0;
-      g_dispatchSave105 = *(undefined4 *)(iVar2 + 0xd8);
-      (*(MK4ComMethod *)(iVar2 + 0xd8))();
-      if ((*(int *)(iVar2 + 0xd8) != -1) && (*(int *)(iVar2 + 0xd8) != 0)) {
-        *(undefined4 *)(iVar2 + 0xd8) = MK4_NODE_AT(undefined4, g_baseSel, 8);
+      g_dispatchSave105 = *(undefined4 *)MK4_PTR((iVar2 + 0xd8));
+      /* Node +0xd8 holds a stored CODE VA, so it needs both seams: MK4_PTR to
+       * read the slot out of the arena, and MK4_ResolveCode to turn the VA it
+       * contains into the native function. */
+      ((void (*)(void))MK4_ResolveCode(*(unsigned int *)MK4_PTR(iVar2 + 0xd8)))();
+      if ((*(int *)MK4_PTR((iVar2 + 0xd8)) != -1) && (*(int *)MK4_PTR((iVar2 + 0xd8)) != 0)) {
+        *(undefined4 *)MK4_PTR((iVar2 + 0xd8)) = MK4_NODE_AT(undefined4, g_baseSel, 8);
         iVar1 = g_baseSel * 4;
-        *(undefined4 *)(iVar1 + 0x14) = g_eventQueueNotMask;
-        *(undefined4 *)(iVar1 + 0x18) = g_eventQueueChild;
-        *(undefined4 *)(iVar1 + 0x1c) = g_currentNodeFlags;
-        *(undefined4 *)(iVar1 + 0x20) = g_xformScratch2088;
-        *(undefined4 *)(iVar1 + 0x10) = g_dualC;
-        *(undefined4 *)(iVar1 + 0x24) = g_cj_00542054;
-        *(undefined4 *)(iVar1 + 0x28) = g_cj_00542058;
-        *(undefined4 *)(iVar1 + 0x2c) = g_cj_0054205c;
-        *(undefined2 *)(iVar2 + 0xdc) = (undefined2)g_dualC;
+        *(undefined4 *)MK4_PTR((iVar1 + 0x14)) = g_eventQueueNotMask;
+        *(undefined4 *)MK4_PTR((iVar1 + 0x18)) = g_eventQueueChild;
+        *(undefined4 *)MK4_PTR((iVar1 + 0x1c)) = g_currentNodeFlags;
+        *(undefined4 *)MK4_PTR((iVar1 + 0x20)) = g_xformScratch2088;
+        *(undefined4 *)MK4_PTR((iVar1 + 0x10)) = g_dualC;
+        *(undefined4 *)MK4_PTR((iVar1 + 0x24)) = g_cj_00542054;
+        *(undefined4 *)MK4_PTR((iVar1 + 0x28)) = g_cj_00542058;
+        *(undefined4 *)MK4_PTR((iVar1 + 0x2c)) = g_cj_0054205c;
+        *(undefined2 *)MK4_PTR((iVar2 + 0xdc)) = (undefined2)g_dualC;
       }
     }
-    if (*(int *)(iVar2 + 0xd8) != -1) goto LAB_0041f6ef;
-    iVar1 = *(int *)(iVar2 + 0xe4);
+    if (*(int *)MK4_PTR((iVar2 + 0xd8)) != -1) goto LAB_0041f6ef;
+    iVar1 = *(int *)MK4_PTR((iVar2 + 0xe4));
     NodeUnlink(iVar2);
     iVar2 = iVar1;
   } while( true );

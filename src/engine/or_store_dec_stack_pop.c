@@ -27,10 +27,10 @@ extern unsigned int g_currentNodeIdx;
  *   load g_matrixStackTop; pop top into eventQueueNotMask; dec ; store.
  */
 void OrStoreDecStackPop(void) {
-    FightGroupNode *n = (FightGroupNode *)(g_fightGroupHead * 4);
+    FightGroupNode *n = (FightGroupNode *)MK4_PTR((g_fightGroupHead * 4));
     unsigned int v = g_eventQueueNotMask | n->bits;
     g_eventQueueCurrent = v;
     n->bits = v;
-    g_eventQueueNotMask = *(unsigned int *)(g_matrixStackTop * 4);
+    g_eventQueueNotMask = *(unsigned int *)MK4_PTR((g_matrixStackTop * 4));
     g_matrixStackTop--;
 }

@@ -178,7 +178,7 @@ void GuardedScaledChainJmpIndirect(int arg) {
     newIdx = g_eventQueueTotal + walk;
     g_walkCallback = (void (*)(void))walk;
     g_eventQueueTotal = newIdx;
-    target = *(unsigned int *)(newIdx * 4);
+    target = *(unsigned int *)MK4_PTR((newIdx * 4));
     g_eventQueueTotal = target;
     if (target == 0) return;
     ((void (*)(void))target)();

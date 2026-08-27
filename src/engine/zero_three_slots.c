@@ -32,16 +32,16 @@
 void ZeroThreeSlots_00490780(void) {
     u32 base = (u32)g_fightGroupHead << 2;
     g_walkCallback = 0;
-    *(u32 *)(base + 0x78) = 0;
-    *(u32 *)(base + 0x7c) = (u32)*(volatile void **)&g_walkCallback;
-    *(u32 *)(base + 0x80) = (u32)*(volatile void **)&g_walkCallback;
+    *(u32 *)MK4_PTR((base + 0x78)) = 0;
+    *(u32 *)MK4_PTR((base + 0x7c)) = (u32)*(volatile void **)&g_walkCallback;
+    *(u32 *)MK4_PTR((base + 0x80)) = (u32)*(volatile void **)&g_walkCallback;
 }
 
 /* @addr 0x004ac010 */
 void ZeroThreeSlots_004ac010(void) {
     u32 base = (u32)g_fightGroupHead << 2;
     g_walkCallback = 0;
-    *(u32 *)(base + 0x78) = 0;
-    *(u32 *)(base + 0x7c) = (u32)*(volatile void **)&g_walkCallback;
-    *(u32 *)(base + 0x80) = (u32)*(volatile void **)&g_walkCallback;
+    *(u32 *)MK4_PTR((base + 0x78)) = 0;
+    *(u32 *)MK4_PTR((base + 0x7c)) = (u32)*(volatile void **)&g_walkCallback;
+    *(u32 *)MK4_PTR((base + 0x80)) = (u32)*(volatile void **)&g_walkCallback;
 }

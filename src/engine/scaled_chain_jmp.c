@@ -35,16 +35,16 @@ extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429960(void);
 
 /* @addr 0x00429470 */
 void ScaledChainJmp_00429470(void) {
-    unsigned int p = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
+    unsigned int p = ((ScenegraphNode *)MK4_PTR((g_fightGroupHead * 4)))->queue_end;
     g_currentNodeIdx = p;
-    g_walkCallback = (void (*)(void))(*(unsigned int *)(p * 4 + 4) - 1);
+    g_walkCallback = (void (*)(void))(*(unsigned int *)MK4_PTR((p * 4 + 4)) - 1);
     ScaledArrStore_EsiInstallBitCallChain_004293b0();
 }
 
 /* @addr 0x004298e0 */
 void ScaledChainJmp_004298e0(void) {
-    unsigned int p = ((ScenegraphNode *)(g_fightGroupHead * 4))->queue_end;
+    unsigned int p = ((ScenegraphNode *)MK4_PTR((g_fightGroupHead * 4)))->queue_end;
     g_currentNodeIdx = p;
-    g_walkCallback = (void (*)(void))(*(unsigned int *)(p * 4 + 4) - 1);
+    g_walkCallback = (void (*)(void))(*(unsigned int *)MK4_PTR((p * 4 + 4)) - 1);
     ScaledArrStore_GuardedChainCmpDualBitXor_00429960();
 }

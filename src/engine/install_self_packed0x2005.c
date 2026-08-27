@@ -178,7 +178,7 @@ void InstallSelfPacked0x2005(void)
   
   iVar1 = g_baseSel * 4;
   iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
-  *(undefined4 *)(iVar1 + 0x84) = 0;
+  *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 0;
   if (iVar2 != 0) {
     GuardedDirtyDispatch();
     return;
@@ -191,10 +191,10 @@ void InstallSelfPacked0x2005(void)
     g_eventQueueChild = 0x1e;
     *(code **)(iVar1 + 8) = InstallSelfPacked0x2005;
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-    (g_currentNodeIdx) = *(int *)(iVar1 + 4);
+    (g_currentNodeIdx) = *(int *)MK4_PTR((iVar1 + 4));
     *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x1437a90;
     (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
-    *(int *)(iVar1 + 4) = (g_currentNodeIdx);
+    *(int *)MK4_PTR((iVar1 + 4)) = (g_currentNodeIdx);
     MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
     StateGateMStackOverlap();
     g_framePauseFlag = 1;

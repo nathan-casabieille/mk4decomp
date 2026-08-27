@@ -154,14 +154,14 @@ extern unsigned int g_fightAxisPosY;
  *   double pop on success. */
 void DualPushSet7dCallPop(void) {
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_cj_0054205c;
+    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = g_cj_0054205c;
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = g_currentNodeIdx;
     g_currentNodeIdx = 0x7d;
     PreFightInstallCluster();
     if (g_framePauseFlag != 0) return;
-    g_currentNodeIdx = *(unsigned int *)(g_matrixStackTop * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((g_matrixStackTop * 4));
     g_matrixStackTop--;
-    g_cj_0054205c = *(unsigned int *)(g_matrixStackTop * 4);
+    g_cj_0054205c = *(unsigned int *)MK4_PTR((g_matrixStackTop * 4));
     g_matrixStackTop--;
 }

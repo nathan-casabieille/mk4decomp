@@ -165,12 +165,12 @@ void ScaledChainPushCall(int arg0) {
     unsigned int packed = (unsigned int)(arg0 >> 2);
     unsigned int v;
     g_eventQueueTotal = packed;
-    g_walkCallback = (void (*)(void))*(unsigned int *)(packed * 4);
+    g_walkCallback = (void (*)(void))*(unsigned int *)MK4_PTR((packed * 4));
     g_eventQueueTotal = packed + 1;
     StorePauseImulShr16();
     if (g_framePauseFlag != 0) return;
     g_eventQueueTotal = g_eventQueueTotal + (unsigned int)g_walkCallback;
-    v = *(unsigned int *)(g_eventQueueTotal * 4);
+    v = *(unsigned int *)MK4_PTR((g_eventQueueTotal * 4));
     g_walkCallback = (void (*)(void))v;
     g_eventQueueCurrent = v;
     v &= 0xffff;

@@ -37,7 +37,7 @@ extern int PackedAdvanceCallTailJmp(void *p);
 
 /* @addr 0x00433960 */
 void ScaledLoadInstallOrCall_00433960(void) {
-    unsigned int cb = *(unsigned int*)(g_baseSel * 4 + 0x30);
+    unsigned int cb = *(unsigned int*)MK4_PTR((g_baseSel * 4 + 0x30));
     g_walkCallback = cb;
     if (cb) {
         PackedAdvanceCallTailJmp(&g_litEightFlag);
@@ -46,7 +46,7 @@ void ScaledLoadInstallOrCall_00433960(void) {
 
 /* @addr 0x00433990 */
 void ScaledLoadInstallOrCall_00433990(void) {
-    unsigned int cb = *(unsigned int*)(g_baseSel * 4 + 0x30);
+    unsigned int cb = *(unsigned int*)MK4_PTR((g_baseSel * 4 + 0x30));
     g_walkCallback = cb;
     if (cb) {
         PackedAdvanceCallTailJmp(&g_litNineFlag);

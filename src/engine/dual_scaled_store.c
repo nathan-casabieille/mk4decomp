@@ -29,6 +29,6 @@ extern unsigned int g_currentNodeIdx;
  *   ret
  */
 void DualScaledStore(void) {
-    *(unsigned int *)(g_baseSel * 4 + 0x64) = g_eventQueueEnd;
-    *(unsigned int *)(g_baseSel * 4 + 0x68) = g_eventQueueIdx;
+    *(unsigned int *)MK4_PTR((g_baseSel * 4 + 0x64)) = g_eventQueueEnd;
+    *(unsigned int *)MK4_PTR((g_baseSel * 4 + 0x68)) = g_eventQueueIdx;
 }

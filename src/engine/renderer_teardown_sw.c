@@ -175,7 +175,7 @@ void RendererTeardownSW(void) {
     unsigned int zero = 0;
     Renderer4_EndScene_SW_Win();
     if (g_dispatchSave1620 != zero) {
-        FreeImpl((void *)g_dispatchSave1620);
+        FreeImpl((void *)MK4_PTR(g_dispatchSave1620));
         g_dispatchSave1620 = zero;
     }
     if (g_dispatchSave1621 != zero) {

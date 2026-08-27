@@ -167,16 +167,16 @@ void GuardedDoubleIncCmpJmp(void) {
     if (g_framePauseFlag != 0) return;
     idx_cj = g_cj_0054205c;
     idx_scaled = g_currentNodeIdx;
-    val = ((ScenegraphNode *)(idx_cj * 4))->queue_idx + 1;
+    val = ((ScenegraphNode *)MK4_PTR((idx_cj * 4)))->queue_idx + 1;
     g_eventQueueCurrent = val;
-    cmp_val = *(int *)(idx_scaled * 4 + 4);
+    cmp_val = *(int *)MK4_PTR((idx_scaled * 4 + 4));
     if ((int)val >= cmp_val) {
         ScaledLoadDecJmp();
         return;
     }
     val++;
     g_eventQueueCurrent = val;
-    cmp_val = *(int *)(idx_scaled * 4 + 4);
+    cmp_val = *(int *)MK4_PTR((idx_scaled * 4 + 4));
     if ((int)val >= cmp_val) {
         ScaledLoadDecJmp();
         return;

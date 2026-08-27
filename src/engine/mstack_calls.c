@@ -52,12 +52,12 @@ extern void PushPopScaled1cDoubleCall(void);   /* 0x54633efe */
 void MStackCall_MStackPush2ChainInsert_00406250(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((top * 4)) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
     MStackCall_MStackPush2ChainInsert_004062a0();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((top * 4));
     g_matrixStackTop = top - 1;
 }
 
@@ -65,12 +65,12 @@ void MStackCall_MStackPush2ChainInsert_00406250(void) {
 void MStackCall_MStackPush2ChainInsert_004062a0(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((top * 4)) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
     MStackPush2ChainInsert();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((top * 4));
     g_matrixStackTop = top - 1;
 }
 
@@ -78,12 +78,12 @@ void MStackCall_MStackPush2ChainInsert_004062a0(void) {
 void MStackCall_MStackPush2ChainPrepend_004062f0(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((top * 4)) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
     MStackCall_MStackPush2ChainPrepend_00406340();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((top * 4));
     g_matrixStackTop = top - 1;
 }
 
@@ -91,12 +91,12 @@ void MStackCall_MStackPush2ChainPrepend_004062f0(void) {
 void MStackCall_MStackPush2ChainPrepend_00406340(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((top * 4)) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
     MStackPush2ChainPrepend();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((top * 4));
     g_matrixStackTop = top - 1;
 }
 
@@ -104,12 +104,12 @@ void MStackCall_MStackPush2ChainPrepend_00406340(void) {
 void MStackCall_MStackPush2ChainPrepend_00406390(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((top * 4)) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
     MStackPush2ChainPrepend();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((top * 4));
     g_matrixStackTop = top - 1;
 }
 
@@ -117,12 +117,12 @@ void MStackCall_MStackPush2ChainPrepend_00406390(void) {
 void MStackCall_MStackPush2ChainPrepend_004063e0(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((top * 4)) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
     MStackPush2ChainPrepend();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((top * 4));
     g_matrixStackTop = top - 1;
 }
 
@@ -130,12 +130,12 @@ void MStackCall_MStackPush2ChainPrepend_004063e0(void) {
 void MStackCall_MStackPush2ChainInsert_004065b0(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((top * 4)) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
     MStackPush2ChainInsert();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((top * 4));
     g_matrixStackTop = top - 1;
 }
 
@@ -143,12 +143,12 @@ void MStackCall_MStackPush2ChainInsert_004065b0(void) {
 void MStackCall_MStackPush2ChainPrepend_00406600(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((top * 4)) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
     MStackPush2ChainPrepend();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((top * 4));
     g_matrixStackTop = top - 1;
 }
 
@@ -156,12 +156,12 @@ void MStackCall_MStackPush2ChainPrepend_00406600(void) {
 void MStackCall_MStackPush2ChainLLInsert(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((top * 4)) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
     MStackPush2ChainLLInsert();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((top * 4));
     g_matrixStackTop = top - 1;
 }
 
@@ -169,12 +169,12 @@ void MStackCall_MStackPush2ChainLLInsert(void) {
 void MStackCall_MStackPush2ChainInsert_00406b50(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((top * 4)) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
     MStackPush2ChainInsert();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((top * 4));
     g_matrixStackTop = top - 1;
 }
 
@@ -182,12 +182,12 @@ void MStackCall_MStackPush2ChainInsert_00406b50(void) {
 void MStackCall_PushPopScaled1cDoubleCall(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR((top * 4)) = g_currentNodeIdx;
     g_currentNodeIdx = g_fightGroupHead;
     PushPopScaled1cDoubleCall();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
-    g_currentNodeIdx = *(unsigned int *)(top * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR((top * 4));
     g_matrixStackTop = top - 1;
 }
 

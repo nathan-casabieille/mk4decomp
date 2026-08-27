@@ -295,14 +295,14 @@ void TristripBatchEmit3Cap(int param_1,int param_2,int param_3)
           ;
           *(ushort *)(puVar7 + 5) = local_8;
           if (g_dispatchSave1570 != 0) {
-            if (g_screenH < *(short *)((int)puVar7 + 2)) {
-              *(short *)((int)puVar7 + 2) = g_screenH;
+            if (g_screenH < *(short *)MK4_PTR(((int)puVar7 + 2))) {
+              *(short *)MK4_PTR(((int)puVar7 + 2)) = g_screenH;
             }
-            if (g_screenH < *(short *)((int)puVar7 + 6)) {
-              *(short *)((int)puVar7 + 6) = g_screenH;
+            if (g_screenH < *(short *)MK4_PTR(((int)puVar7 + 6))) {
+              *(short *)MK4_PTR(((int)puVar7 + 6)) = g_screenH;
             }
-            if (g_screenH < *(short *)((int)puVar7 + 10)) {
-              *(short *)((int)puVar7 + 10) = g_screenH;
+            if (g_screenH < *(short *)MK4_PTR(((int)puVar7 + 10))) {
+              *(short *)MK4_PTR(((int)puVar7 + 10)) = g_screenH;
             }
           }
           Helper_DrawCursor(puVar7);

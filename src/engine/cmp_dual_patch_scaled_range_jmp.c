@@ -165,7 +165,7 @@ void CmpDualPatchScaledRangeJmp(int arg) {
     unsigned int walk;
     unsigned int chain;
     g_currentNodeIdx = idx;
-    walk = ((ScenegraphNode *)(g_baseSel * 4))->state_mask;
+    walk = ((ScenegraphNode *)MK4_PTR((g_baseSel * 4)))->state_mask;
     g_walkCallback = (void (*)(void))walk;
     if (walk == 0x10) {
         walk = 2;
@@ -185,7 +185,7 @@ void CmpDualPatchScaledRangeJmp(int arg) {
     }
     idx += walk;
     g_currentNodeIdx = idx;
-    chain = *(unsigned int *)(idx * 4);
+    chain = *(unsigned int *)MK4_PTR((idx * 4));
     g_eventQueueNotMask = chain;
     if (chain == 0) {
         Thunk_InstallSelfChainSetB333v2();

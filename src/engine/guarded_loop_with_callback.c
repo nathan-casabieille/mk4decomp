@@ -24,6 +24,6 @@ extern void func_0041f780_pp(void);
 extern void GuardedLoopWithCallback_Callback_004284c0(void);
 void GuardedLoopWithCallback(void) {
     g_matrixStackTop++;
-    *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)&GuardedLoopWithCallback_Callback_004284c0;
+    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = (unsigned int)&GuardedLoopWithCallback_Callback_004284c0;
     EsiInstallChainCallIndirect();
 }

@@ -180,7 +180,7 @@ void EsiInstallDecCallChain_StackPopDispatchTagged_004293d0(void)
   
   iVar1 = g_baseSel * 4;
   iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
-  *(undefined4 *)(iVar1 + 0x84) = 0;
+  *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 0;
   if ((iVar2 != 0) && (g_eventQueueChild = g_eventQueueChild + -1, g_eventQueueChild == 0)) {
     StackPopDispatchTagged();
     return;
@@ -192,7 +192,7 @@ void EsiInstallDecCallChain_StackPopDispatchTagged_004293d0(void)
       return;
     }
     *(code **)(iVar1 + 8) = EsiInstallDecCallChain_StackPopDispatchTagged_004293d0;
-    *(undefined4 *)(iVar1 + 0x84) = 1;
+    *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 1;
     g_dualC = 1;
     g_framePauseFlag = 1;
   }
@@ -252,7 +252,7 @@ void EsiInstallDecCallChain_StackPopDispatchTagged_004294a0(void)
   
   iVar1 = g_baseSel * 4;
   iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
-  *(undefined4 *)(iVar1 + 0x84) = 0;
+  *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 0;
   if (iVar2 == 0) {
     CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
     if (g_framePauseFlag != 0) {
@@ -273,7 +273,7 @@ void EsiInstallDecCallChain_StackPopDispatchTagged_004294a0(void)
       return;
     }
     *(code **)(iVar1 + 8) = EsiInstallDecCallChain_StackPopDispatchTagged_004294a0;
-    *(undefined4 *)(iVar1 + 0x84) = 1;
+    *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 1;
     g_dualC = 1;
     g_framePauseFlag = 1;
   }

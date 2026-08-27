@@ -177,12 +177,12 @@ void InstallSelfMStackPushDispatch(void)
   
   iVar1 = g_baseSel * 4;
   iVar3 = MK4_NODE_AT(int, g_baseSel, 0x84);
-  *(undefined4 *)(iVar1 + 0x84) = 0;
+  *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 0;
   if (iVar3 == 0) {
     g_cj_00542058 = MK4_NODE_AT(undefined4, g_cj_00542054, 0);
     g_eventQueueChild = *MK4_NODE(undefined4, (g_cj_00542054 + 1));
     g_cj_00542054 = g_cj_00542054 + 2;
-    piVar2 = (int *)(g_baseSel * 4 + 4);
+    piVar2 = (int *)MK4_PTR((g_baseSel * 4 + 4));
     (g_currentNodeIdx) = *piVar2;
     *MK4_NODE(undefined4, (g_currentNodeIdx)) = MK4_NODE_AT(undefined4, g_cj_00542054, 0);
     (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
@@ -211,7 +211,7 @@ void InstallSelfMStackPushDispatch(void)
     }
   }
   *(code **)(iVar1 + 8) = InstallSelfMStackPushDispatch;
-  *(undefined4 *)(iVar1 + 0x84) = 1;
+  *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 1;
   g_dualC = 1;
   g_framePauseFlag = 1;
   return;

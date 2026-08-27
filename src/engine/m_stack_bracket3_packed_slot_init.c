@@ -198,22 +198,22 @@ void MStackBracket3PackedSlotInit(void)
       g_matrixStackTop = g_matrixStackTop + 1;
       iVar1 = (g_currentNodeIdx) * 4;
       *MK4_NODE(undefined4, (int)g_matrixStackTop) = g_eventQueuePending;
-      MK4_NODE_AT(uint, *(int *)(iVar1 + 0x18), 0x20) =
-           MK4_NODE_AT(uint, *(int *)(iVar1 + 0x18), 0x20) & 0xfffff9ff;
+      MK4_NODE_AT(uint, *(int *)MK4_PTR((iVar1 + 0x18)), 0x20) =
+           MK4_NODE_AT(uint, *(int *)MK4_PTR((iVar1 + 0x18)), 0x20) & 0xfffff9ff;
       g_eventQueuePending = *MK4_NODE(undefined4, (int)g_matrixStackTop);
       g_matrixStackTop = g_matrixStackTop + -1;
-      *(undefined4 *)(iVar1 + 0x60) = 0x1921f;
+      *(undefined4 *)MK4_PTR((iVar1 + 0x60)) = 0x1921f;
       g_walkCallback = g_pendingMatchVar;
       AudioMixerStep();
       if (g_framePauseFlag == 0) {
-        *(undefined4 *)(iVar1 + 100) = g_walkCallback;
-        *(undefined4 *)(iVar1 + 0x58) = 0xfffffae2;
-        puVar2 = (undefined4 *)((int)g_matrixStackTop * 4);
+        *(undefined4 *)MK4_PTR((iVar1 + 100)) = g_walkCallback;
+        *(undefined4 *)MK4_PTR((iVar1 + 0x58)) = 0xfffffae2;
+        puVar2 = (undefined4 *)MK4_PTR(((int)g_matrixStackTop * 4));
         g_matrixStackTop = g_matrixStackTop + -1;
-        *(undefined4 *)(iVar1 + 0x5c) = *puVar2;
+        *(undefined4 *)MK4_PTR((iVar1 + 0x5c)) = *puVar2;
         g_walkCallback = *MK4_NODE(undefined4, (int)g_matrixStackTop);
         g_matrixStackTop = g_matrixStackTop + -1;
-        *(undefined4 *)(iVar1 + 0x54) = g_walkCallback;
+        *(undefined4 *)MK4_PTR((iVar1 + 0x54)) = g_walkCallback;
         g_cj_0054205c = *MK4_NODE(int, (int)g_matrixStackTop);
         g_matrixStackTop = g_matrixStackTop + -1;
       }

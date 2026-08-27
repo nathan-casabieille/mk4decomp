@@ -14,20 +14,28 @@
 
 void *MK4_PtrChecked(unsigned va, const char *file, int line)
 {
-    unsigned off = va - 0x00400000u;
+    long off = (long)va - (long)0x00400000u;   /* signed: see mem_model.h */
 
-    if (va < 0x00400000u || off >= g_mk4ArenaSize) {
+    if (va < 0x00400000u || off >= (long)g_mk4ArenaSize) {
         static int reported;
 
         /* Only the first few, then stop: a bad VA inside a walk repeats. */
-        if (reported++ < 16)
+        if (reported++ < 24)
             fprintf(stderr, "MK4_PTR out of range: va=0x%08x (offset 0x%08x, "
                             "arena %u bytes) at %s:%d\n",
-                    va, off, g_mk4ArenaSize, file, line);
+                    va, (unsigned)off, g_mk4ArenaSize, file, line);
         if (getenv("MK4_ARENA_CHECK_ABORT"))
             abort();
-        return g_mk4Arena;          /* a mapped page, so the walk can continue */
     }
+    /* Always the SAME address the plain macro computes, in range or not.
+     *
+     * A diagnostic build that returns something else is not diagnosing the
+     * program any more, it is running a different one - and this bit it: a
+     * BASE-0 packed table is spelled MK4_VA(T, 0) and indexed by the VA, so
+     * `g_siblingTable[idx]` deliberately relies on 0 - 0x400000 wrapping and
+     * the index adding the VA back. Substituting the arena base for that made
+     * fifteen correct accesses look like faults and let the checked build
+     * finish a frame the real one could not. */
     return g_mk4Arena + off;
 }
 

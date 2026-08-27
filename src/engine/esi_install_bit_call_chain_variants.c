@@ -178,7 +178,7 @@ void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_
   
   iVar1 = g_baseSel * 4;
   iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
-  *(undefined4 *)(iVar1 + 0x84) = 0;
+  *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 0;
   if ((iVar2 == 0) && (CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(), g_framePauseFlag != 0)) {
     return;
   }
@@ -189,7 +189,7 @@ void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_
       return;
     }
     *(code **)(iVar1 + 8) = EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429530;
-    *(undefined4 *)(iVar1 + 0x84) = 1;
+    *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 1;
     g_dualC = 1;
     g_framePauseFlag = 1;
   }
@@ -246,7 +246,7 @@ void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_
   
   iVar1 = g_baseSel * 4;
   iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
-  *(undefined4 *)(iVar1 + 0x84) = 0;
+  *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 0;
   if ((iVar2 == 0) && (CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(), g_framePauseFlag != 0)) {
     return;
   }
@@ -257,7 +257,7 @@ void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_
       return;
     }
     *(code **)(iVar1 + 8) = EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_004295a0;
-    *(undefined4 *)(iVar1 + 0x84) = 1;
+    *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 1;
     g_dualC = 1;
     g_framePauseFlag = 1;
   }
@@ -314,7 +314,7 @@ void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_
   
   iVar1 = g_baseSel * 4;
   iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
-  *(undefined4 *)(iVar1 + 0x84) = 0;
+  *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 0;
   if ((iVar2 == 0) && (CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(), g_framePauseFlag != 0)) {
     return;
   }
@@ -325,7 +325,7 @@ void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_
       return;
     }
     *(code **)(iVar1 + 8) = EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429610;
-    *(undefined4 *)(iVar1 + 0x84) = 1;
+    *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 1;
     g_dualC = 1;
     g_framePauseFlag = 1;
   }

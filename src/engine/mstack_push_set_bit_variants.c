@@ -24,7 +24,7 @@ void MStackPushSet0200(void) {
     unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = acc;
+    *(unsigned int *)MK4_PTR((top * 4)) = acc;
     g_eventQueueNotMask = 0x0200;
     OrStoreDecStackPop();
 }
@@ -34,7 +34,7 @@ void MStackPushSet0080(void) {
     unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = acc;
+    *(unsigned int *)MK4_PTR((top * 4)) = acc;
     g_eventQueueNotMask = 0x0080;
     OrStoreDecStackPop();
 }
@@ -44,7 +44,7 @@ void MStackPushSet0008(void) {
     unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = acc;
+    *(unsigned int *)MK4_PTR((top * 4)) = acc;
     g_eventQueueNotMask = 8;
     OrStoreDecStackPop();
 }
@@ -54,7 +54,7 @@ void MStackPushSet0020(void) {
     unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = acc;
+    *(unsigned int *)MK4_PTR((top * 4)) = acc;
     g_eventQueueNotMask = 0x20;
     OrStoreDecStackPop();
 }
@@ -64,7 +64,7 @@ void MStackPushSet0040(void) {
     unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = acc;
+    *(unsigned int *)MK4_PTR((top * 4)) = acc;
     g_eventQueueNotMask = 0x40;
     OrStoreDecStackPop();
 }
@@ -74,7 +74,7 @@ void MStackPushSet0004(void) {
     unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = acc;
+    *(unsigned int *)MK4_PTR((top * 4)) = acc;
     g_eventQueueNotMask = 4;
     OrStoreDecStackPop();
 }
@@ -84,7 +84,7 @@ void MStackPushSet0001(void) {
     unsigned int acc = g_eventQueueNotMask;
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = acc;
+    *(unsigned int *)MK4_PTR((top * 4)) = acc;
     g_eventQueueNotMask = 1;
     OrStoreDecStackPop();
 }

@@ -164,8 +164,8 @@ void GuardedChainDualAdd(void) {
     MStackPushVec3Mul10();
     if (g_framePauseFlag) return;
     g_currentNodeIdx = g_installOwnerNode;
-    g_eventQueueCurrent = ((ScenegraphNode *)(g_cj_00542058 * 4))->position_x;
-    g_eventQueueCurrent += ((ScenegraphNode *)(g_baseSel * 4))->child_a;
-    g_eventQueueWorkType = ((ScenegraphNode *)(g_cj_00542058 * 4))->position_z;
-    g_eventQueueWorkType += ((ScenegraphNode *)(g_baseSel * 4))->child_c;
+    g_eventQueueCurrent = ((ScenegraphNode *)MK4_PTR((g_cj_00542058 * 4)))->position_x;
+    g_eventQueueCurrent += ((ScenegraphNode *)MK4_PTR((g_baseSel * 4)))->child_a;
+    g_eventQueueWorkType = ((ScenegraphNode *)MK4_PTR((g_cj_00542058 * 4)))->position_z;
+    g_eventQueueWorkType += ((ScenegraphNode *)MK4_PTR((g_baseSel * 4)))->child_c;
 }

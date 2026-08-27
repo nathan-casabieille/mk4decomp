@@ -33,7 +33,7 @@ extern void * g_fsys_archive;
 
 extern void Helper_FClose(void *p);
 void TestCallZero(void) {
-    void *v = (void *)g_fsys_archive;
+    void *v = (void *)MK4_PTR(g_fsys_archive);
     if (v != 0) {
         Helper_FClose(v);
     }

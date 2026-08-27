@@ -37,9 +37,9 @@ void ScaledIncCmpJmp(void) {
     int cmp_val;
     idx = g_fightGroupHead;
     scaled = g_currentNodeIdx;
-    v = ((ScenegraphNode *)(idx * 4))->queue_idx + 1;
+    v = ((ScenegraphNode *)MK4_PTR((idx * 4)))->queue_idx + 1;
     g_eventQueueCurrent = v;
-    cmp_val = *(int *)(scaled * 4 + 4);
+    cmp_val = *(int *)MK4_PTR((scaled * 4 + 4));
     if ((int)v < cmp_val) {
         ScaledStoreCurDirtyClear();
         return;

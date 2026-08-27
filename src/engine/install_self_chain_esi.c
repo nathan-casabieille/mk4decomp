@@ -170,8 +170,8 @@ void InstallSelfChainEsi(void)
   int iVar2;
   
   iVar2 = g_baseSel * 4;
-  iVar1 = *(int *)(iVar2 + 0x84);
-  *(undefined4 *)(iVar2 + 0x84) = 0;
+  iVar1 = *(int *)MK4_PTR((iVar2 + 0x84));
+  *(undefined4 *)MK4_PTR((iVar2 + 0x84)) = 0;
   if (iVar1 != 0) {
     MK4_NODE_AT(undefined4, g_cj_0054205c, 0x24) = g_cj_00542054;
     g_walkCallback = 0;
@@ -186,10 +186,10 @@ void InstallSelfChainEsi(void)
   g_eventQueueChild = 0;
   *(code **)(iVar2 + 8) = InstallSelfChainEsi;
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-  (g_currentNodeIdx) = *(int *)(iVar2 + 4);
+  (g_currentNodeIdx) = *(int *)MK4_PTR((iVar2 + 4));
   *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x14753b0;
   (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
-  *(int *)(iVar2 + 4) = (g_currentNodeIdx);
+  *(int *)MK4_PTR((iVar2 + 4)) = (g_currentNodeIdx);
   MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
   SelfInstallPhaseDispatch_StackPopDispatchTagged();
   g_framePauseFlag = 1;

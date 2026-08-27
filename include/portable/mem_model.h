@@ -61,8 +61,16 @@ extern unsigned char *g_mk4Arena;       /* base of the reserved data arena */
 void *MK4_PtrChecked(unsigned va, const char *file, int line);
 #define MK4_PTR(va)  MK4_PtrChecked((unsigned)(va), __FILE__, __LINE__)
 #else
+/* The offset is SIGNED, and that is load-bearing rather than tidiness.
+ *
+ * A BASE-0 packed table is spelled MK4_VA(T, 0) and indexed by the VA itself -
+ * g_siblingTable[idx] with idx = VA/4 - so the base is deliberately below the
+ * image and the index adds the VA back. Computed unsigned, `0 - 0x400000` is
+ * 0xffc00000, and adding THAT to a 64-bit pointer does not wrap back: the
+ * access lands 4 GB high and dies. Signed, the base is arena - 4 MB and the
+ * index brings it home. In-range VAs are unaffected either way. */
 #define MK4_PTR(va) \
-    ((void *)(g_mk4Arena + ((unsigned)(va) - MK4_ORIG_IMAGE_BASE)))
+    ((void *)(g_mk4Arena + ((long)(unsigned)(va) - (long)MK4_ORIG_IMAGE_BASE)))
 #endif
 #define MK4_NODE(T, idx)     ((T *)MK4_PTR((unsigned)(idx) * 4u))
 #define MK4_VA(T, va)        ((T *)MK4_PTR((unsigned)(va)))

@@ -6,6 +6,7 @@
  * a single bit-clear on the fight-group entry's flag-field.
  */
 #include "engine/scenegraph.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -68,5 +69,5 @@ void Push16Call(void) {
  *   ret
  */
 void ClearBit2x34(void) {
-    ((ScenegraphNode *)(g_fightGroupHead * 4))->state_mask &= ~4u;
+    ((ScenegraphNode *)MK4_PTR((g_fightGroupHead * 4)))->state_mask &= ~4u;
 }
