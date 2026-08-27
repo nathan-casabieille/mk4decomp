@@ -191,7 +191,7 @@ void MK4_NativeVideoInit(void)
          * stage their own content and the rect one in particular reads this
          * page directly, so replacing its bright placeholder with menu.tga -
          * which is 69% black - would just darken a test picture. */
-        FILE *tf = getenv("MK4_SCENE") ? NULL
+        FILE *tf = (getenv("MK4_SCENE") || getenv("MK4_TEX_SOLID")) ? NULL
                                        : fopen("build/assets/menu.tga", "rb");
         int loaded = 0;
 
@@ -219,10 +219,20 @@ void MK4_NativeVideoInit(void)
         if (loaded) {
             SDL_Log("native video: menu.tga loaded into the texture page");
         } else {
+            /* MK4_TEX_SOLID=1 fills the page with one colour. It is a
+             * diagnostic, and a decisive one: with it the rect scene renders
+             * 61800 pixels of pure red, which proves ScanlineTexBlit reads
+             * this page, while the menu barely changes - so the menu's panels
+             * are drawn by a flat/blended branch and only its TEXT samples the
+             * texture. */
+            unsigned short fill = getenv("MK4_TEX_SOLID")
+                                 ? (unsigned short)0x7c00u   /* solid red */
+                                 : 0;
             for (k = 0; k < 0x10000u; k++)   /* placeholder 256x256 RGB-555 */
                 *(unsigned short *)MK4_VA(unsigned short, MK4_TEX_VA + k * 2) =
-                    (unsigned short)((((k >> 4) & 0x1f) << 10) |
-                                     ((k & 0x1f) << 5) | 0x10);
+                    fill ? fill
+                         : (unsigned short)((((k >> 4) & 0x1f) << 10) |
+                                            ((k & 0x1f) << 5) | 0x10);
             SDL_Log("native video: no build/assets/menu.tga - placeholder page");
         }
     }
