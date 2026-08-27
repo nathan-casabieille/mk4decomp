@@ -148,6 +148,17 @@ closure:
 signed-audit:
 	@build/venv/bin/python tools/decomp/audit_signed.py
 
+# global-refs-audit: a pure-C body that the matching build SYNTHESIZES rather
+# than compiles is never validated by `make matching` - it can name the wrong
+# global and nothing notices until the native build links it. DirtyPushCallPop
+# was exactly that: it tested g_walkCallback (0x54206c) where 0x004055b0 tests
+# g_currentNodeIdx (0x542044). This compares the data VAs a twin names against
+# the ones its original bytes reference and reports a SYMMETRIC difference -
+# the C names one address, the original touches another, neither the other.
+# A review queue, not a verdict: co-exec is what settles a hit.
+global-refs-audit:
+	@build/venv/bin/python tools/decomp/audit_global_refs.py
+
 # width-audit: everything downstream types a fixed-VA global `unsigned int`,
 # which for a packed byte or halfword field makes each store 32 bits wide and
 # wipes its neighbours. The original's encodings settle the real width (and
