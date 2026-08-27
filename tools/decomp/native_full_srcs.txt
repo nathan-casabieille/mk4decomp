@@ -138,10 +138,12 @@ src/engine/packed_list_visitor.c
 src/engine/packed_select_load6.c
 src/engine/project_two.c
 src/engine/project_vertex.c
+src/engine/push2_globals_call.c
 src/engine/push_pop84_triple_call.c
 src/engine/quad_field_early_jmp_then_install.c
 src/engine/quad_mul10_tail_fpu_chain.c
 src/engine/render.c
+src/engine/render_scene_graph_iterate.c
 src/engine/renderer1_begin_frame_glide.c
 src/engine/renderer1_present_frame.c
 src/engine/renderer2_present_frame.c

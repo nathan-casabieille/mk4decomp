@@ -280,4 +280,10 @@ __attribute__((weak)) int PendingMatch_004c9df0(){return 0;}
 __attribute__((weak)) int SentinelInitTripleCall(){return 0;}
 __attribute__((weak)) int Anim_LoadPackFile(){return 0;}
 __attribute__((weak)) int Init0AndMax(){return 0;}
+__attribute__((weak)) int CameraSetupAndCullFan(){return 0;}
+__attribute__((weak)) int ChainStreamMatMulVecAdd(){return 0;}
+__attribute__((weak)) int ChainWalkCleanup(){return 0;}
+__attribute__((weak)) int ScaledNegThreeWords(){return 0;}
+__attribute__((weak)) int RenderSceneNode(){return 0;}
+__attribute__((weak)) int MatrixTransform3x3Q12(){return 0;}
 #endif /* MK4_NATIVE_FULL */

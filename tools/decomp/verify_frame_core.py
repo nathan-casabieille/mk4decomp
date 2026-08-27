@@ -312,6 +312,32 @@ SEEDS = {
                                'g_dispatchSave1500': 2, 'g_dispatchSave1481': 0,
                                'g_dispatchSave1491': 0, '@0x4f4fd4': b'\x00\x00'})),
     ],
+    # RenderSceneGraphIterate walks ONE node: NODE at SCRATCH (index 0x2e4000).
+    # +0x18 is the child chain (zero ends the walk), +0x34 the flag word,
+    # +0x60/64/68 the transform that decides identity vs dispatch, +0x2c the
+    # matrix source and +0x3c the distance node.
+    'RenderSceneGraphIterate': [
+        ('no child: early out', {'g_currentNodeIdx': 0x2e4000, '@0xb90018': 0}),
+        ('flags bit 2: cleanup', {'g_currentNodeIdx': 0x2e4000, '@0xb90018': 0x2e4100,
+                                  '@0xb90034': 4, '@0xb90100': 0}),
+        ('identity, bit 0 clear', {'g_currentNodeIdx': 0x2e4000, '@0xb90018': 0x2e4040,
+                                   '@0xb90034': 0, '@0xb90060': 0, '@0xb90064': 0,
+                                   '@0xb90068': 0, '@0xb9002c': 0, '@0xb9003c': 0,
+                                   'g_dispatchSave1573': 0, '@0xb90118': 0, '@0xb90134': 0}),
+        ('identity, bit 0 set',  {'g_currentNodeIdx': 0x2e4000, '@0xb90018': 0x2e4040,
+                                  '@0xb90034': 1, '@0xb90060': 0, '@0xb90064': 0,
+                                  '@0xb90068': 0, '@0xb9002c': 0, '@0xb9003c': 0,
+                                  'g_dispatchSave1573': 0, '@0xb90118': 0, '@0xb90134': 0}),
+        ('alt bases (bit 1)',    {'g_currentNodeIdx': 0x2e4000, '@0xb90018': 0x2e4040,
+                                  '@0xb90034': 2, '@0xb90060': 0, '@0xb90064': 0,
+                                  '@0xb90068': 0, '@0xb9002c': 0, '@0xb9003c': 0,
+                                  'g_dispatchSave1573': 0, '@0xb90118': 0, '@0xb90134': 0}),
+        ('distance node set',    {'g_currentNodeIdx': 0x2e4000, '@0xb90018': 0x2e4040,
+                                  '@0xb90034': 0, '@0xb90060': 0, '@0xb90064': 0,
+                                  '@0xb90068': 0, '@0xb9002c': 0,
+                                  '@0xb9003c': 0x2e4400, '@0xb9103c': 0x4000,
+                                  'g_dispatchSave1573': 0, '@0xb90118': 0, '@0xb90134': 0}),
+    ],
     'Mem_Free': [
         ('below the heap',      _blocks(),          (0x7b0000,)),
         ('above the heap',      _blocks(),          (0xac0000,)),
