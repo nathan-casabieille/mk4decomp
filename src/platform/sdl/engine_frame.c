@@ -66,7 +66,13 @@ static void MK4_EngineStateInit(void)
      * GameStateMachine does not itself draw. Whatever stages the first screen
      * lives further up the boot path than AppInit, and that is the next thing
      * to find. */
-    if (getenv("MK4_NO_DISC")) g_titlePauseGate = 0;   /* TEMP experiment */
+    /* MK4_NO_DISC=1 clears the gate, which is what AppInit_Misc8 would do on a
+     * machine without the disc. It is the only way to reach a drawing state
+     * today - the arena has the gate SET, so the bootstrap below is skipped and
+     * the state stays 0, which draws nothing - so it is how the menu render
+     * path gets exercised until the boot sequence above AppInit is converted. */
+    if (getenv("MK4_NO_DISC"))
+        g_titlePauseGate = 0;
     if (g_titlePauseGate == 0)
         GameStateMachine(7);
     g_appInitFlag1 = 0;
