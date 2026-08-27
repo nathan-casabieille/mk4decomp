@@ -13,6 +13,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "portable/mem_model.h"
 
 extern void MainLoopStep(void);
 extern void MK4_NativeVideoInit(void);
@@ -37,6 +38,12 @@ extern void Set2FiveCallPauseJmp(void);
 extern void AppInit_Misc7(void);
 extern void AppInit_Misc8(void);
 extern void Crt_srand(unsigned seed);
+extern int  GameStateMachine(int cmd);
+/* Fixed-VA globals, reached through the seam rather than as C variables - this
+ * file is the port's, so it is not run through alias_globals.py. */
+#define g_titlePauseGate (*(unsigned int *)MK4_VA(unsigned int, 0x004ffd7cu))
+#define g_appInitFlag1   (*(unsigned int *)MK4_VA(unsigned int, 0x007af920u))
+#define g_texXorKey      (*(unsigned int *)MK4_VA(unsigned int, 0x007af91cu))
 
 static void MK4_EngineStateInit(void)
 {
@@ -50,6 +57,19 @@ static void MK4_EngineStateInit(void)
     /* AppInit seeds the PRNG from timeGetTime; a fixed seed keeps the native
      * build reproducible, which the frame gates depend on. */
     Crt_srand(1);
+
+    /* AppInit's own bootstrap: with the disc check UNsatisfied it hands the
+     * state machine command 7, which selects the insert-CD dialog. Transcribed
+     * faithfully, and on this arena it does not fire - g_titlePauseGate is 1 at
+     * rest, i.e. "disc present", and AppInit_Misc8 (the check) is still a weak
+     * stub that leaves it alone. So the state stays 0, the main menu, which
+     * GameStateMachine does not itself draw. Whatever stages the first screen
+     * lives further up the boot path than AppInit, and that is the next thing
+     * to find. */
+    if (g_titlePauseGate == 0)
+        GameStateMachine(7);
+    g_appInitFlag1 = 0;
+    g_texXorKey = 0;
 }
 
 int MK4_GameInit(int argc, char **argv)
