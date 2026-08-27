@@ -191,7 +191,8 @@ void MK4_NativeVideoInit(void)
          * stage their own content and the rect one in particular reads this
          * page directly, so replacing its bright placeholder with menu.tga -
          * which is 69% black - would just darken a test picture. */
-        FILE *tf = (getenv("MK4_SCENE") || getenv("MK4_TEX_SOLID")) ? NULL
+        FILE *tf = (getenv("MK4_SCENE") || getenv("MK4_TEX_SOLID")
+                    || getenv("MK4_TEX_ROWS")) ? NULL
                                        : fopen("build/assets/menu.tga", "rb");
         int loaded = 0;
 
@@ -228,11 +229,19 @@ void MK4_NativeVideoInit(void)
             unsigned short fill = getenv("MK4_TEX_SOLID")
                                  ? (unsigned short)0x7c00u   /* solid red */
                                  : 0;
+            /* MK4_TEX_ROWS=1 encodes the texture ROW in every texel, so the
+             * rendered colour says which texture row each output pixel sampled.
+             * A solid fill cannot show that - a uniform texture looks right at
+             * any stride - which is exactly the blind spot MK4_TEX_SOLID has. */
+            int rows = getenv("MK4_TEX_ROWS") != NULL;
+
             for (k = 0; k < 0x10000u; k++)   /* placeholder 256x256 RGB-555 */
                 *(unsigned short *)MK4_VA(unsigned short, MK4_TEX_VA + k * 2) =
-                    fill ? fill
-                         : (unsigned short)((((k >> 4) & 0x1f) << 10) |
-                                            ((k & 0x1f) << 5) | 0x10);
+                    rows ? (unsigned short)((((k >> 8) & 0x1f) << 10) |
+                                            ((((k >> 8) >> 5) & 0x1f) << 5))
+                    : fill ? fill
+                           : (unsigned short)((((k >> 4) & 0x1f) << 10) |
+                                              ((k & 0x1f) << 5) | 0x10);
             SDL_Log("native video: no build/assets/menu.tga - placeholder page");
         }
     }
