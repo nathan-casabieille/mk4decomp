@@ -566,6 +566,47 @@ SEEDS = {
         ('no free slot', dict(_geoblk(), **{
             '@0x%x' % (0xab4e00 + i * 2): 0xffffffff for i in range(0, 16, 2)}), (0,)),
     ],
+    # The callees are real code here - GuardedChainPushSetCallPop and the two
+    # walkers - so the cases stay shallow: the null-node early out, the paused
+    # exit that SKIPS the mstack pops, and a node with both child chains empty.
+    'LinkedListInsert': [
+        ('prepend to an empty head', {
+            'g_matrixStackTop': 0x2e5000, 'g_chainInsertSlot': 0x77,
+            'g_pendingNodeType': 0x88, 'g_currentNodeIdx': 0x2e4040,
+            'g_xformEntityIdx': 0x2e4000,
+            '@0xb90000': 0, '@0xb90004': 0, '@0xb90008': 0}),
+        # head[+4] is an OFFSET added to the node index, not a pointer
+        ('non-zero link offset', {
+            'g_matrixStackTop': 0x2e5000, 'g_chainInsertSlot': 0x77,
+            'g_pendingNodeType': 0x88, 'g_currentNodeIdx': 0x2e4040,
+            'g_xformEntityIdx': 0x2e4000,
+            '@0xb90000': 0x2e4080, '@0xb90004': 0x10, '@0xb90008': 3}),
+    ],
+    'DirtyPushCallPop': [
+        ('null node', {'g_currentNodeIdx': 0, 'g_xformDirtyFlags': 0}),
+        ('inserts', {'g_xformDirtyFlags': 0, 'g_xformEntityIdx': 0x99,
+                     'g_matrixStackTop': 0x2e5000,
+                     'g_bootChainState4': 0x2e4000,
+                     'g_currentNodeIdx': 0x2e4040, 'g_framePauseFlag': 0,
+                     '@0xb90000': 0, '@0xb90004': 0, '@0xb90008': 0}),
+    ],
+    'MStackPush2ChainLLInsert': [
+        ('null node', {'g_currentNodeIdx': 0, 'g_xformDirtyFlags': 0xff}),
+        ('paused before the walk', {'g_currentNodeIdx': 0x2e4000,
+                                    'g_framePauseFlag': 1,
+                                    'g_xformDirtyFlags': 0,
+                                    'g_matrixStackTop': 0x2e5000,
+                                    'g_xformEntityIdx': 0x11,
+                                    'g_fightGroupHead': 0x22}),
+        ('no children', {'g_currentNodeIdx': 0x2e4000,
+                         'g_framePauseFlag': 0,
+                         'g_xformDirtyFlags': 0,
+                         'g_matrixStackTop': 0x2e5000,
+                         'g_xformEntityIdx': 0x11,
+                         'g_fightGroupHead': 0x2e4000,
+                         'g_bootChainPair0': 0,
+                         '@0xb9001c': 0, '@0xb90018': 0}),
+    ],
     'FSYS_HashName': [
         ('mixed case and length', {'@0xb90000': 0x415c3a43, '@0xb90004': 0x2e4f4f46,
                                    '@0xb90008': 0x004f4547}, (0xb90000,)),

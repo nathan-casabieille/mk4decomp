@@ -171,6 +171,7 @@ __attribute__((weak)) int Helper_PerPlayerTick(){return 0;}
 __attribute__((weak)) int Helper_TickFrame_Misc(){return 0;}
 __attribute__((weak)) int HitReactionDispatcher(){return 0;}
 __attribute__((weak)) int Input_TickPlayers(){return 0;}
+__attribute__((weak)) int LinkedListInsert(){return 0;}
 __attribute__((weak)) int InstallSelfChainSet2011(){return 0;}
 __attribute__((weak)) int InstallSelfChainSetB333(){return 0;}
 __attribute__((weak)) int InstallSelfMStackIndirect(){return 0;}
@@ -180,6 +181,8 @@ __attribute__((weak)) int LinkedListBitMaskSearch(){return 0;}
 __attribute__((weak)) int LoadGeoAsset_Default(){return 0;}
 __attribute__((weak)) int Lock(){return 0;}
 __attribute__((weak)) int MStackBracket7_DispatchAndChain(){return 0;}
+__attribute__((weak)) int MStackPushZeroCallPop(){return 0;}
+__attribute__((weak)) int PvsMergeDriver(){return 0;}
 __attribute__((weak)) int MStackChainInstallDispatch(){return 0;}
 __attribute__((weak)) int MStackNegAwareMul10Pair(){return 0;}
 __attribute__((weak)) int MStackPush2ChainLLInsert(){return 0;}

@@ -249,3 +249,6 @@ src/engine/tex_rle.c
 src/engine/mem_alloc.c
 src/engine/fsys.c
 src/engine/geo.c
+src/engine/pvs_merge_driver.c
+src/boot/scaled_load_guarded_jmp.c
+src/audio/linked_list_insert.c
