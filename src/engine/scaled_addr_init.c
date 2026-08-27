@@ -36,18 +36,18 @@ extern unsigned int g_sceneInitBlob_004e56d8;   /* 0x004e56d8 */
 
 /* @addr 0x004368f0 */
 void ScaledAddrInit_InstallSelfMStackPushDispatch(void) {
-    g_eventQueueEnd = (unsigned int)((int)&g_orphanTbl_004e4780 >> 2);
+    g_eventQueueEnd = (unsigned int)((int)MK4_UNPTR(&g_orphanTbl_004e4780) >> 2);
     InstallSelfMStackPushDispatch();
 }
 
 /* @addr 0x004677c0 */
 void ScaledAddrInit_IntroComboFsmCluster_004677c0(void) {
-    g_walkCallback = (void (*)(void))((int)&g_sceneInitBlob_004e56d8 >> 2);
+    g_walkCallback = (void (*)(void))((int)MK4_UNPTR(&g_sceneInitBlob_004e56d8) >> 2);
     IntroComboFsmCluster();
 }
 
 /* @addr 0x004677e0 */
 void ScaledAddrInit_IntroComboFsmCluster_004677e0(void) {
-    g_walkCallback = (void (*)(void))((int)&g_sceneInitBlob_004e56d8 >> 2);
+    g_walkCallback = (void (*)(void))((int)MK4_UNPTR(&g_sceneInitBlob_004e56d8) >> 2);
     IntroComboFsmCluster();
 }

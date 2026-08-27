@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -123,7 +124,7 @@ extern unsigned int g_dispatchSave907;
 void BootCallChainDoubleMul10(void) {
     unsigned int v;
     g_eventQueueEnd = g_fightGroupHead;
-    g_cj_00542058 = (unsigned int)&g_dispatchSave907 >> 2;
+    g_cj_00542058 = (unsigned int)MK4_UNPTR(&g_dispatchSave907) >> 2;
     g_eventQueueNotMask = 0xc1;
     ((void (*)(int, int))StoreTwoCall)(0x0049db40, 0xc0);
     if (g_xformDirtyFlags & 1) return;

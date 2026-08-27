@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 
@@ -16,7 +17,7 @@ extern unsigned int g_dispatchSave1178;
 extern unsigned int g_dispatchSave_0053a1c0;
 extern void Helper_Sprintf(void *buf, void *fmt, unsigned int arg);
 void Sprintf2WaySelect(void) {
-    g_currentNodeIdx = (unsigned int)&g_dispatchSave_0053a1c0 >> 2;
+    g_currentNodeIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave_0053a1c0) >> 2;
     if (g_currentNodeFlags == 2) {
         Helper_Sprintf(&g_dispatchSave_0053a1c0, &g_dispatchSave1177, (unsigned int)g_walkCallback);
         return;

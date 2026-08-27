@@ -19,6 +19,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"   /* g_framePauseFlag */
+#include "portable/mem_model.h"
 
 /* New globals. */
 extern unsigned int g_gs;   /* 0x00542048 */
@@ -43,7 +44,7 @@ extern void MStackPush8(void);   /* 0x004ab790 */
 void GuardedScaled_MStackPush8_then_PendingMatch(void) {
     MStackPush8();
     if (g_framePauseFlag == 0) {
-        g_eventQueueTotal = (unsigned int)&g_orphanTbl_004d7238 >> 2;
+        g_eventQueueTotal = (unsigned int)MK4_UNPTR(&g_orphanTbl_004d7238) >> 2;
         PendingMatch_MStackPush2RunCountdown_0040cd50();
     }
 }
@@ -52,7 +53,7 @@ void GuardedScaled_MStackPush8_then_PendingMatch(void) {
 void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00474fd0(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs = (unsigned int)&g_orphanTbl_004ecaf0 >> 2;
+        g_gs = (unsigned int)MK4_UNPTR(&g_orphanTbl_004ecaf0) >> 2;
         LinkedListSearch();
     }
 }
@@ -61,7 +62,7 @@ void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00474fd0(void) {
 void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475000(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs = (unsigned int)&g_orphanTbl_004ecb10 >> 2;
+        g_gs = (unsigned int)MK4_UNPTR(&g_orphanTbl_004ecb10) >> 2;
         LinkedListSearch();
     }
 }
@@ -70,7 +71,7 @@ void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475000(void) {
 void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475030(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs = (unsigned int)&g_orphanTbl_004ecb20 >> 2;
+        g_gs = (unsigned int)MK4_UNPTR(&g_orphanTbl_004ecb20) >> 2;
         LinkedListSearch();
     }
 }
@@ -79,7 +80,7 @@ void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475030(void) {
 void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475060(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs = (unsigned int)&g_orphanTbl_004ecb28 >> 2;
+        g_gs = (unsigned int)MK4_UNPTR(&g_orphanTbl_004ecb28) >> 2;
         LinkedListSearch();
     }
 }
@@ -88,7 +89,7 @@ void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475060(void) {
 void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475090(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs = (unsigned int)&g_orphanTbl_004ecb40 >> 2;
+        g_gs = (unsigned int)MK4_UNPTR(&g_orphanTbl_004ecb40) >> 2;
         LinkedListSearch();
     }
 }
@@ -97,7 +98,7 @@ void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475090(void) {
 void GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_004750c0(void) {
     TestP1ReplaceCurrent();
     if (g_framePauseFlag == 0) {
-        g_gs = (unsigned int)&g_orphanTbl_004ecb48 >> 2;
+        g_gs = (unsigned int)MK4_UNPTR(&g_orphanTbl_004ecb48) >> 2;
         LinkedListSearch();
     }
 }

@@ -2,6 +2,7 @@
  * Small boot-phase init helpers (one-off matches).
  */
 #include "engine/scenegraph.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 
@@ -16,7 +17,7 @@ extern unsigned int g_orphanTbl_00538168;   /* 0x00538168 (uninit .data) */
  *   ret
  */
 void MStackPackedInit(void) {
-    g_matrixStackTop = (int)((unsigned int)&g_orphanTbl_00538168 >> 2);
+    g_matrixStackTop = (int)((unsigned int)MK4_UNPTR(&g_orphanTbl_00538168) >> 2);
 }
 
 /* @addr 0x00406ce0 (19b)

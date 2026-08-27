@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -120,7 +121,7 @@ extern unsigned int g_fightAxisPosY;
 extern unsigned int g_dispatchSave413;
 void GuardedSetupTailMStackJmp(void) {
     unsigned int v;
-    g_xformEntityIdx = (unsigned int)&g_dispatchSave413 >> 2;
+    g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave413) >> 2;
     DispatcherComplex260_FramePauseScaledStore();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;

@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -122,7 +123,7 @@ void BootMStackBracketedScaledStores(void) {
     ((void (*)(int))ThreeChanPackClamp)(0x408040);
     ((void (*)(unsigned int))CopyThreeFields)(g_fightGroupHead);
     g_eventQueueEnd = g_fightGroupHead;
-    g_walkCallback = (unsigned int)&g_dispatchSave906 >> 2;
+    g_walkCallback = (unsigned int)MK4_UNPTR(&g_dispatchSave906) >> 2;
     PushSetXfmMaskCallPop();
     if (g_framePauseFlag != 0) return;
     if (!(g_xformDirtyFlags & 4)) {

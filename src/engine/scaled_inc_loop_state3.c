@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -14,7 +15,7 @@ extern unsigned int g_currentNodeIdx;
  */
 extern unsigned int g_scaledIncLoopBase;
 void ScaledIncLoopState3(void) {
-    unsigned int p = (unsigned int)&g_scaledIncLoopBase >> 2;
+    unsigned int p = (unsigned int)MK4_UNPTR(&g_scaledIncLoopBase) >> 2;
     g_walkCallback = (void (*)(void))0;
     g_currentNodeIdx = p;
     g_xformLoopCounter = 3;

@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -123,9 +124,9 @@ extern unsigned int g_dispatchSave898;
 extern unsigned int g_stateFlag;
 void Screen_EnterInitials(void) {
     if (g_stateFlag == 0) {
-        g_xformEntityIdx = (unsigned int)&g_dispatchSave899 >> 2;
+        g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave899) >> 2;
     } else {
-        g_xformEntityIdx = (unsigned int)&g_dispatchSave900 >> 2;
+        g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave900) >> 2;
     }
     g_walkCallback = 0x0a;
     g_eventQueueCurrent = 4;
@@ -135,11 +136,11 @@ void Screen_EnterInitials(void) {
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;
     g_eventQueueNotMask += 0x00140000;
-    g_xformEntityIdx = (unsigned int)&g_dispatchSave897 >> 2;
+    g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave897) >> 2;
     Push70CallScaleArith();
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) return;
     g_eventQueueNotMask = 0x00780000;
-    g_xformEntityIdx = (unsigned int)&g_dispatchSave898 >> 2;
+    g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave898) >> 2;
     Push70CallScaleArith();
 }

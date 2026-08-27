@@ -19,6 +19,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_xformEntityIdx;
@@ -27,10 +28,10 @@ extern unsigned int g_xformEntityIdx;
 extern unsigned int g_installCountdownSlot;
 void DualScaledInitCmp_0046dbd0(void) {
     g_pendingNodeType = g_player1NodeIdx;
-    g_currentNodeIdx = (unsigned int)&g_installCountdownSlot >> 2;
-    g_xformEntityIdx = (unsigned int)&g_nodeSlotsHdr_end >> 2;
+    g_currentNodeIdx = (unsigned int)MK4_UNPTR(&g_installCountdownSlot) >> 2;
+    g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_nodeSlotsHdr_end) >> 2;
     if (g_fightGroupHead != g_player1NodeIdx) {
-        g_currentNodeIdx = (unsigned int)&g_nodeSlotsHdr_end >> 2;
+        g_currentNodeIdx = (unsigned int)MK4_UNPTR(&g_nodeSlotsHdr_end) >> 2;
     }
 }
 
@@ -39,9 +40,9 @@ extern unsigned int g_dispatchSave13;
 extern unsigned int g_phaseThunkSlot3;
 void DualScaledInitCmp_0046df50(void) {
     g_pendingNodeType = g_player1NodeIdx;
-    g_currentNodeIdx = (unsigned int)&g_dispatchSave13 >> 2;
-    g_xformEntityIdx = (unsigned int)&g_phaseThunkSlot3 >> 2;
+    g_currentNodeIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave13) >> 2;
+    g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_phaseThunkSlot3) >> 2;
     if (g_fightGroupHead != g_player1NodeIdx) {
-        g_currentNodeIdx = (unsigned int)&g_phaseThunkSlot3 >> 2;
+        g_currentNodeIdx = (unsigned int)MK4_UNPTR(&g_phaseThunkSlot3) >> 2;
     }
 }

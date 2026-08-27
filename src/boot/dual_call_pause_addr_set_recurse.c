@@ -6,6 +6,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern void MStackPush2RunCountdown(void);
 extern void MStackBracket7_DispatchAndChain(void);
@@ -36,11 +37,11 @@ void DualCallPauseAddrSetRecurse_func_004196c0_jj(void) {
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x0a;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave1185 >> 2;
+    g_pendingNodeType = (unsigned int)MK4_UNPTR(&g_dispatchSave1185) >> 2;
     func_004196c0_jj();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x09;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave1184 >> 2;
+    g_pendingNodeType = (unsigned int)MK4_UNPTR(&g_dispatchSave1184) >> 2;
     func_004196c0_jj();
 }
 
@@ -51,11 +52,11 @@ void DualCallPauseAddrSetRecurse_func_00419780_jj(void) {
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x06;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave1194 >> 2;
+    g_pendingNodeType = (unsigned int)MK4_UNPTR(&g_dispatchSave1194) >> 2;
     func_00419780_jj();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x05;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave1197 >> 2;
+    g_pendingNodeType = (unsigned int)MK4_UNPTR(&g_dispatchSave1197) >> 2;
     func_00419780_jj();
 }
 
@@ -66,11 +67,11 @@ void DualCallPauseAddrSetRecurse_func_00419840_jj(void) {
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x0c;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave1189 >> 2;
+    g_pendingNodeType = (unsigned int)MK4_UNPTR(&g_dispatchSave1189) >> 2;
     func_00419840_jj();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x0b;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave1188 >> 2;
+    g_pendingNodeType = (unsigned int)MK4_UNPTR(&g_dispatchSave1188) >> 2;
     func_00419840_jj();
 }
 
@@ -81,11 +82,11 @@ void DualCallPauseAddrSetRecurse_func_00419980_jj(void) {
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x0e;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave1187 >> 2;
+    g_pendingNodeType = (unsigned int)MK4_UNPTR(&g_dispatchSave1187) >> 2;
     func_00419980_jj();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x0d;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave1186 >> 2;
+    g_pendingNodeType = (unsigned int)MK4_UNPTR(&g_dispatchSave1186) >> 2;
     func_00419980_jj();
 }
 
@@ -96,11 +97,11 @@ void DualCallPauseAddrSetRecurse_func_00419a40_jj(void) {
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x08;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave1193 >> 2;
+    g_pendingNodeType = (unsigned int)MK4_UNPTR(&g_dispatchSave1193) >> 2;
     func_00419a40_jj();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x07;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave1192 >> 2;
+    g_pendingNodeType = (unsigned int)MK4_UNPTR(&g_dispatchSave1192) >> 2;
     func_00419a40_jj();
 }
 
@@ -111,10 +112,10 @@ void DualCallPauseAddrSetRecurse_func_00419b00_jj(void) {
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x10;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave1191 >> 2;
+    g_pendingNodeType = (unsigned int)MK4_UNPTR(&g_dispatchSave1191) >> 2;
     func_00419b00_jj();
     if (g_framePauseFlag) return;
     g_eventQueueWorkType = 0x0f;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave1190 >> 2;
+    g_pendingNodeType = (unsigned int)MK4_UNPTR(&g_dispatchSave1190) >> 2;
     func_00419b00_jj();
 }

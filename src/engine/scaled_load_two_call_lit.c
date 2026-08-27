@@ -22,6 +22,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_baseSel;
 extern void MStackPush2RunCountdown(void);
@@ -36,7 +37,7 @@ void ScaledLoadTwoCallLit_MStackPush2RunCountdown_then_MStackBracket7_DispatchAn
     if (g_framePauseFlag != 0) return;
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag != 0) return;
-    g_eventQueueEnd = (unsigned int)&g_dispatchSave1259 >> 2;
+    g_eventQueueEnd = (unsigned int)MK4_UNPTR(&g_dispatchSave1259) >> 2;
     StunDownCluster();
 }
 
@@ -48,6 +49,6 @@ void ScaledLoadTwoCallLit_MStackPush2RunCountdown_then_MStackBracket7_DispatchAn
     if (g_framePauseFlag != 0) return;
     MStackBracket7_DispatchAndChain();
     if (g_framePauseFlag != 0) return;
-    g_eventQueueEnd = (unsigned int)&g_dispatchSave1258 >> 2;
+    g_eventQueueEnd = (unsigned int)MK4_UNPTR(&g_dispatchSave1258) >> 2;
     StunDownCluster();
 }

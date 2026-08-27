@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -124,13 +125,13 @@ extern s32 g_dlNalt2;
 int DualPathDownloadChar(void) {
     if (g_active_0053a408 != 0) {
         g_walkCallback = (void (*)(void))g_dlNalt1;
-        g_eventQueueEnd = (unsigned int)&g_dataArr_00535cfc >> 2;
+        g_eventQueueEnd = (unsigned int)MK4_UNPTR(&g_dataArr_00535cfc) >> 2;
         g_eventQueueCurrent = 0;
         DownloadPlayerChar();
         return g_framePauseFlag;
     }
     g_walkCallback = (void (*)(void))g_dlNalt2;
-    g_eventQueueEnd = (unsigned int)&g_dataArr_0053a1d0 >> 2;
+    g_eventQueueEnd = (unsigned int)MK4_UNPTR(&g_dataArr_0053a1d0) >> 2;
     g_eventQueueCurrent = 1;
     return ((int (*)(void))DownloadPlayerChar)();
 }

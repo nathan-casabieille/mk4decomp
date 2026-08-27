@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -21,7 +22,7 @@ extern unsigned int g_bootInitSaveSlot;
 extern void AnimEventUpdateCluster(void);
 extern unsigned int g_orphanTbl_004f1e20;
 void LoadCmpAddrJmp(void) {
-    unsigned int packed = (unsigned int)((int)&g_orphanTbl_004f1e20 >> 2);
+    unsigned int packed = (unsigned int)((int)MK4_UNPTR(&g_orphanTbl_004f1e20) >> 2);
     g_bootInitSaveSlot = packed;
     if ((unsigned int)g_walkCallback == packed) {
         AnimEventUpdateCluster();

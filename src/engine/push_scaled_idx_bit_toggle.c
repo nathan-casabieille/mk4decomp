@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -125,7 +126,7 @@ void PushScaledIdxBitToggle(void) {
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_currentNodeIdx;
-    p = ((unsigned int)&g_scaledIncLoopBase >> 2) + (unsigned int)g_walkCallback;
+    p = ((unsigned int)MK4_UNPTR(&g_scaledIncLoopBase) >> 2) + (unsigned int)g_walkCallback;
     g_currentNodeIdx = p;
     dirty = g_xformDirtyFlags | 4;
     v = *(unsigned int *)(p * 4);

@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -128,7 +129,7 @@ void ChainInit3CallTailJmp(void) {
     CopyGlobal();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0x0a;
-    g_xformEntityIdx = (unsigned int)&g_dispatchSave666 >> 2;
+    g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave666) >> 2;
     g_eventQueueCurrent = 4;
     g_chainAccumCur = 0;
     g_eventQueueNotMask = 0xff9c0000;
@@ -136,6 +137,6 @@ void ChainInit3CallTailJmp(void) {
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0x10000;
     *(unsigned int *)(g_currentNodeIdx * 4 + 0x5c) = 0x10000;
-    g_eventQueueIdx = (unsigned int)&g_dispatchSave667 >> 2;
+    g_eventQueueIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave667) >> 2;
     OpcodeStreamDispatch();
 }

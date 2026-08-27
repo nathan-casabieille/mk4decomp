@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -117,7 +118,7 @@ extern unsigned int g_fightAxisPosY;
  */
 extern unsigned int g_dispatchTableArr;
 void DualSetCallPair(void) {
-    g_xformEntityIdx = (unsigned int)&g_dispatchTableArr >> 2;
+    g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_dispatchTableArr) >> 2;
     ScaledArrStore_ScaledChainJmp_004298c0();
     if (g_framePauseFlag != 0) return;
     g_xformScratch2088 = 0xffffb334;

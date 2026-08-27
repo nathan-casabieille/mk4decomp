@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -130,7 +131,7 @@ void TwoStageAudioInit(void) {
     if (g_framePauseFlag != 0) return;
     TestCmpZeroFour();
     if (g_framePauseFlag != 0) return;
-    g_eventQueueEnd = (unsigned int)&g_dataArr_00535cfc >> 2;
+    g_eventQueueEnd = (unsigned int)MK4_UNPTR(&g_dataArr_00535cfc) >> 2;
     g_dlEnabledFlag = 1;
     g_walkCallback = (void (*)(void))g_dlNalt1;
     g_eventQueueCurrent = 0;

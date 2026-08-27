@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -18,6 +19,6 @@ extern void PendingMatch_StoreTwoCall_00411210(void);
 extern void PendingMatch_StoreTwoCall_00411210(void);
 void TestByteSelectInit(void) {
     if (g_bootGatedByte360c == 0) return;
-    g_eventQueueIdx = (unsigned int)&g_dispatchSave1181 >> 2;
+    g_eventQueueIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave1181) >> 2;
     PendingMatch_StoreTwoCall_00411210();
 }

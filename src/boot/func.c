@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -12,7 +13,7 @@ extern unsigned int g_dispatchSave1180;
  * PendingMatch_StoreTwoCall_00411210 (= PendingMatch_StoreTwoCall_00411210). The 4-byte nop gap before this
  * entry is filled by 0x90-fill. Referenced from g_dispatchSave904 in data.c. */
 void func_set_g_eventQueueIdx_then_PendingMatch(void) {
-    g_eventQueueIdx = (unsigned int)&g_dispatchSave1180 >> 2;
+    g_eventQueueIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave1180) >> 2;
     PendingMatch_StoreTwoCall_00411210();
 }
 

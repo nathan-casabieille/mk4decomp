@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -154,7 +155,7 @@ void PushSetEventQueueCallStore(void) {
     top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
     *(unsigned int *)(top * 4) = g_eventQueueEnd;
-    g_eventQueueEnd = (unsigned int)&g_bootClampMod6Base >> 2;
+    g_eventQueueEnd = (unsigned int)MK4_UNPTR(&g_bootClampMod6Base) >> 2;
     StoreTwoCall(0x00426da0, 0x23c);
     top = g_matrixStackTop;
     g_eventQueueEnd = *(unsigned int *)(top * 4);

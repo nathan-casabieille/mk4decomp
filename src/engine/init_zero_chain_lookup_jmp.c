@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -131,7 +132,7 @@ void InitZeroChainLookupJmp(void) {
     *(unsigned int *)(idx + 0x60) = 0;
     *(unsigned int *)(idx + 0x64) = (unsigned int)g_walkCallback;
     *(unsigned int *)(idx + 0x68) = (unsigned int)g_walkCallback;
-    eax_val = (unsigned int)&g_dispatchSave422 >> 2;
+    eax_val = (unsigned int)MK4_UNPTR(&g_dispatchSave422) >> 2;
     g_currentNodeIdx = eax_val;
     adj = ((FightGroupNode *)(g_cj_0054205c * 4))->tag - 0x60;
     eax_val += adj;

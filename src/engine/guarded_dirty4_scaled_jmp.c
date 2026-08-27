@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 
@@ -32,6 +33,6 @@ void GuardedDirty4ScaledJmp(void) {
     if (g_framePauseFlag != 0) {
         return;
     }
-    g_walkCallback = (void (*)(void))((unsigned int)&g_orphanTbl_004ec9e8 >> 2);
+    g_walkCallback = (void (*)(void))((unsigned int)MK4_UNPTR(&g_orphanTbl_004ec9e8) >> 2);
     TripleChainSetupDualCall();
 }

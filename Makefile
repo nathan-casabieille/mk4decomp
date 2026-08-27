@@ -108,6 +108,8 @@ help:
 	@echo "                            UNSIGNED by the arena alias typing"
 	@echo "  make width-audit        - real ACCESS WIDTH of every fixed-VA global,"
 	@echo "                            read off the original's own encodings"
+	@echo "  make packed-ptr-audit   - packed pointers built from a truncated HOST"
+	@echo "                            address instead of a VA (--fix rewrites them)"
 	@echo "  build/venv/bin/python tools/decomp/disasm_fn.py NAME   - original bytes"
 	@echo "  build/venv/bin/python tools/geo_mesh.py FILE --blocks  - .geo mesh format"
 	@echo
@@ -151,7 +153,16 @@ signed-audit:
 width-audit:
 	@build/venv/bin/python tools/decomp/audit_widths.py
 
-.PHONY: frame-core-check closure signed-audit width-audit
+# packed-ptr-audit: a twin that needs a packed pointer for a global writes it
+# the way the original does, `(u32)&g_x >> 2`. Under the arena that casts a
+# 64-bit HOST pointer down to 32 bits and the result points nowhere - it is why
+# the frame loop segfaulted in FightFrameStep_Inner. MK4_UNPTR(&x) is the VA
+# that pointer stands for, and under the identity model it is exactly the same
+# expression, so matching and every existing co-exec verification are untouched.
+packed-ptr-audit:
+	@build/venv/bin/python tools/decomp/audit_packed_ptr.py
+
+.PHONY: frame-core-check closure signed-audit width-audit packed-ptr-audit
 
 all: matching
 

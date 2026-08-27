@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -15,7 +16,7 @@ extern void MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledTestPauseStore(void);
 extern unsigned int g_orphanTbl_0051140c;
 void SpecialInitDirtyJmp(void) {
-    g_xformEntityIdx = (unsigned int)&g_orphanTbl_0051140c >> 2;
+    g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_orphanTbl_0051140c) >> 2;
     MStackBracket1_TreeWalkRecursive2();
     if (g_framePauseFlag != 0) {
         return;

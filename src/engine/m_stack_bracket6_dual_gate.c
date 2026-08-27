@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -132,7 +133,7 @@ void MStackBracket6_DualGate(void) {
     if (v != 0 && (int)v < 0xccc) {
         g_walkCallback = g_walkCallbackSrc;
         if (g_walkCallbackSrc == 0) {
-            g_fightGroupHead = (unsigned int)&g_dispatchSave711 >> 2;
+            g_fightGroupHead = (unsigned int)MK4_UNPTR(&g_dispatchSave711) >> 2;
             VersusSwapCluster();
             if (g_framePauseFlag != 0) return;
             g_walkCallbackSrc = 1;
@@ -143,7 +144,7 @@ void MStackBracket6_DualGate(void) {
     if (v != 0 && (int)v < 0xccc) {
         g_walkCallback = g_walkCallbackSrc2;
         if (g_walkCallbackSrc2 == 0) {
-            g_fightGroupHead = (unsigned int)&g_dispatchSave712 >> 2;
+            g_fightGroupHead = (unsigned int)MK4_UNPTR(&g_dispatchSave712) >> 2;
             VersusSwapCluster();
             if (g_framePauseFlag != 0) return;
             g_walkCallback = 1;

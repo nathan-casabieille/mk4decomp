@@ -34,13 +34,13 @@ extern unsigned int g_dispatchClr1;
 extern void CountdownClampWalk(void);
 void Helper_PostPlayerTick(void) {
     g_eventQueueCurrent = 4;
-    g_currentNodeIdx = (unsigned int)&g_clamp_0053a328 >> 2;
-    g_xformEntityIdx = (unsigned int)&g_dispatchSave39 >> 2;
+    g_currentNodeIdx = (unsigned int)MK4_UNPTR(&g_clamp_0053a328) >> 2;
+    g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave39) >> 2;
     CountdownClampWalk();
     if (g_framePauseFlag != 0) return;
     g_eventQueueCurrent = 0x40;
-    g_currentNodeIdx = (unsigned int)&g_clamp_0053e348 >> 2;
-    g_xformEntityIdx = (unsigned int)&g_dispatchClr1 >> 2;
+    g_currentNodeIdx = (unsigned int)MK4_UNPTR(&g_clamp_0053e348) >> 2;
+    g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_dispatchClr1) >> 2;
     CountdownClampWalk();
 }
 

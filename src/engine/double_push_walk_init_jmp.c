@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -121,6 +122,6 @@ void DoublePushWalkInitJmp(void) {
     *(unsigned int *)(g_matrixStackTop * 4) = g_cj_0054205c;
     g_walkCallback = (void (*)(void))0x63;
     g_gameCountdown = 0x63;
-    g_currentNodeIdx = (unsigned int)&g_dispatchSave1303 >> 2;
+    g_currentNodeIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave1303) >> 2;
     SpawnListBatchLoader();
 }

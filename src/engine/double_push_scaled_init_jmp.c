@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 
@@ -18,6 +19,6 @@ void DoublePushScaledInitJmp(void) {
     *(unsigned int *)(g_matrixStackTop * 4) = g_currentNodeIdx;
     g_matrixStackTop++;
     *(unsigned int *)(g_matrixStackTop * 4) = g_eventQueueWorkType;
-    g_walkCallback = (void (*)(void))((unsigned int)&g_orphanTbl_004e5e28 >> 2);
+    g_walkCallback = (void (*)(void))((unsigned int)MK4_UNPTR(&g_orphanTbl_004e5e28) >> 2);
     PendingMatch_PushSetXfmMaskCallPop_00444ef0();
 }

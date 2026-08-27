@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -126,11 +127,11 @@ extern unsigned int g_player1State;
 extern unsigned int g_player2State;
 void AudioModeInit(void) {
     if (g_gtModeFlag == 1) {
-        g_currentNodeIdx = (unsigned int)&g_active_0053a408 >> 2;
-        g_xformEntityIdx = (unsigned int)&g_player1State >> 2;
+        g_currentNodeIdx = (unsigned int)MK4_UNPTR(&g_active_0053a408) >> 2;
+        g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_player1State) >> 2;
     } else {
-        g_currentNodeIdx = (unsigned int)&g_active_00537e88 >> 2;
-        g_xformEntityIdx = (unsigned int)&g_player2State >> 2;
+        g_currentNodeIdx = (unsigned int)MK4_UNPTR(&g_active_00537e88) >> 2;
+        g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_player2State) >> 2;
     }
     DualScaledStoreConst();
     ClearTwoCallSetStore();

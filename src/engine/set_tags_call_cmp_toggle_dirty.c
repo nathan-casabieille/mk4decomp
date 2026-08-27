@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 
@@ -15,7 +16,7 @@ extern void ScaledMaskByte(void);
 extern unsigned int g_audioRestoreBuf;
 void SetTagsCallCmpToggleDirty(void) {
     g_eventQueueCurrent = (unsigned int)g_walkCallback;
-    g_pendingNodeType = ((unsigned int)&g_audioRestoreBuf >> 2) + 0x3b;
+    g_pendingNodeType = ((unsigned int)MK4_UNPTR(&g_audioRestoreBuf) >> 2) + 0x3b;
     ScaledMaskByte();
     if (g_framePauseFlag != 0) {
         return;

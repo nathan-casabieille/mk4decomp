@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -125,7 +126,7 @@ void TwoStageSelectorInit(void) {
     TableWalkBoundedCmp(6);
     TripleCallCountdown();
     if (g_framePauseFlag != 0) return;
-    g_eventQueueEnd = (unsigned int)&g_dataArr_00535cfc >> 2;
+    g_eventQueueEnd = (unsigned int)MK4_UNPTR(&g_dataArr_00535cfc) >> 2;
     g_dlEnabledFlag = 1;
     g_walkCallback = (void (*)(void))g_dlNalt1;
     g_eventQueueCurrent = 0;
@@ -133,7 +134,7 @@ void TwoStageSelectorInit(void) {
     if (g_framePauseFlag != 0) return;
     {
         unsigned int wv = g_dlNalt2;
-        g_eventQueueEnd = (unsigned int)&g_dataArr_0053a1d0 >> 2;
+        g_eventQueueEnd = (unsigned int)MK4_UNPTR(&g_dataArr_0053a1d0) >> 2;
         g_walkCallback = (void (*)(void))wv;
         g_eventQueueCurrent = 1;
     }

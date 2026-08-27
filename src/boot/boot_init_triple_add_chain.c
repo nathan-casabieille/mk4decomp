@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -127,7 +128,7 @@ void BootInitTripleAddChain(void)
     if (g_framePauseFlag != 0) return;
     g_xformEntityIdx = g_currentNodeIdx;
     g_currentNodeIdx = g_savedNode;
-    g_pendingNodeType = (unsigned int)&g_dispatchSave607 >> 2;
+    g_pendingNodeType = (unsigned int)MK4_UNPTR(&g_dispatchSave607) >> 2;
     QuadInterpolator();
     if (g_framePauseFlag != 0) return;
     g_eventQueueCurrent = 0xcccc;

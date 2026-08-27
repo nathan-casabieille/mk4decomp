@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -127,7 +128,7 @@ int GuardedScaledLookupCallJmp(void) {
     unsigned int st;
     int e;
     idx = g_counter_0053a51c;
-    scaled = ((unsigned int)&g_dispatchSave605 >> 2) + idx;
+    scaled = ((unsigned int)MK4_UNPTR(&g_dispatchSave605) >> 2) + idx;
     g_walkCallback = (void (*)(void))idx;
     g_currentNodeIdx = scaled;
     g_eventQueueWorkType = *(unsigned int *)(scaled * 4);

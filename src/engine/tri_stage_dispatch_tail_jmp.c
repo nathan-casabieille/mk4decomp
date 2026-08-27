@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -136,14 +137,14 @@ void TriStageDispatchTailJmp(void) {
         AudioVolumeRescale();
         if (g_framePauseFlag != 0) return;
         if ((g_xformDirtyFlags & 1) != 0) {
-            g_walkCallback = (unsigned int)&g_dispatchSave709 >> 2;
+            g_walkCallback = (unsigned int)MK4_UNPTR(&g_dispatchSave709) >> 2;
             TripleChainSetupDualCall();
             return;
         }
-        g_walkCallback = (unsigned int)&g_dispatchSave708 >> 2;
+        g_walkCallback = (unsigned int)MK4_UNPTR(&g_dispatchSave708) >> 2;
         TripleChainSetupDualCall();
         return;
     }
-    g_walkCallback = (unsigned int)&g_dispatchSave707 >> 2;
+    g_walkCallback = (unsigned int)MK4_UNPTR(&g_dispatchSave707) >> 2;
     TripleChainSetupDualCall();
 }

@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -124,7 +125,7 @@ void SequencedInit3CallB(void) {
     unsigned int v;
     BootInitGuardedCallChain();
     if (g_framePauseFlag != 0) return;
-    g_currentNodeIdx = (unsigned int)&g_dispatchSave410 >> 2;
+    g_currentNodeIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave410) >> 2;
     LoadGeoAsset_Default();
     if (g_framePauseFlag != 0) return;
     g_walkCallback = 0;

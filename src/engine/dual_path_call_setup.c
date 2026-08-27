@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -126,9 +127,9 @@ void DualPathCallSetup(void) {
     unsigned int v = g_stateFlag;
     g_walkCallback = (void (*)(void))v;
     if (v == 0) {
-        g_xformEntityIdx = (unsigned int)&g_dispatchSave411 >> 2;
+        g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave411) >> 2;
     } else {
-        g_xformEntityIdx = (unsigned int)&g_dispatchSave412 >> 2;
+        g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_dispatchSave412) >> 2;
     }
     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
     if (g_framePauseFlag != 0) return;

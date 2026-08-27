@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -122,7 +123,7 @@ void CmpCondIdxArrLookup(void) {
     unsigned int idx;
     unsigned int adj;
     unsigned int v;
-    idx = ((unsigned int)&g_dispatchSave37 >> 2) + (unsigned int)g_walkCallback * 2;
+    idx = ((unsigned int)MK4_UNPTR(&g_dispatchSave37) >> 2) + (unsigned int)g_walkCallback * 2;
     adj = 0;
     g_walkCallback = (void(*)(void))0;
     if (g_cj_0054205c != g_player1NodeIdx) {

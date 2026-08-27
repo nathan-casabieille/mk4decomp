@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 
@@ -19,8 +20,8 @@ void ScaledChainStore24(void) {
     unsigned int sc;
     int v;
     p = (unsigned int)g_walkCallback;
-    p += (unsigned int)&g_audioVoiceTrioBase >> 2;
-    g_xformEntityIdx = (unsigned int)&g_audioVoiceTrioBase >> 2;
+    p += (unsigned int)MK4_UNPTR(&g_audioVoiceTrioBase) >> 2;
+    g_xformEntityIdx = (unsigned int)MK4_UNPTR(&g_audioVoiceTrioBase) >> 2;
     sc = g_currentNodeIdx;
     v = *(int *)(p * 4) & 0xffffff;
     g_xformEntityIdx = (unsigned int)v;
