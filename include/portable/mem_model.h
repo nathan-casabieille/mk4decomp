@@ -45,8 +45,25 @@
 /* --- Relocated arena (any backend; inert until MK4_ARENA is set) --- */
 extern unsigned char *g_mk4Arena;       /* base of the reserved data arena */
 #define MK4_ORIG_IMAGE_BASE  0x00400000u
+
+#if defined(MK4_ARENA_CHECK)
+/* Diagnostic build: report the VA instead of dying somewhere unrecognisable.
+ *
+ * A VA below the image base wraps - `(unsigned)(0 - 0x400000)` is 0xffc00000 -
+ * so a null packed pointer does not fault at address 0 the way it would in the
+ * original, it faults about 4 GB above the arena with nothing to say for
+ * itself. Twice now that has cost a debugging round. Under MK4_ARENA_CHECK
+ * every deref is range-checked and the offending VA is printed with the call
+ * site, which turns "EXC_BAD_ACCESS somewhere in a twin" into a line number.
+ *
+ * Off by default: the check costs a compare and a branch on every single
+ * memory access the engine makes. */
+void *MK4_PtrChecked(unsigned va, const char *file, int line);
+#define MK4_PTR(va)  MK4_PtrChecked((unsigned)(va), __FILE__, __LINE__)
+#else
 #define MK4_PTR(va) \
     ((void *)(g_mk4Arena + ((unsigned)(va) - MK4_ORIG_IMAGE_BASE)))
+#endif
 #define MK4_NODE(T, idx)     ((T *)MK4_PTR((unsigned)(idx) * 4u))
 #define MK4_VA(T, va)        ((T *)MK4_PTR((unsigned)(va)))
 /* Inverse of MK4_PTR: a host pointer INTO the arena -> the original 32-bit VA

@@ -88,6 +88,8 @@ help:
 	@echo "                            to a PPM        (CHAR=sc|sz|lk, default sc)"
 	@echo "  make native-geo-win     - the same asset in an interactive window"
 	@echo "  make native-full        - the broad engine closure + weak stub frontier"
+	@echo "  make native-arena-check - same build, every arena deref range-checked"
+	@echo "                            (prints the bad VA + source line, not a crash)"
 	@echo "  make native-frame-check - the native app runs the ENGINE'S frame"
 	@echo "                            stages and draws (MK4_SCENE=rect)"
 	@echo "  make native-char-check  - native-full renders a real character and"
@@ -322,6 +324,20 @@ native-full:
 	$(NATIVE_CC) -DNON_MATCHING -DMK4_ARENA -DTARGET_SDL -DMK4_NATIVE_FULL -Iinclude $(SDL_CFLAGS) \
 		-O2 -w $(NATIVE_PORTFLAGS) $(NATIVE_FULL_SRCS) $(SDL_LIBS) -o $(NATIVE_FULL_EXE)
 	@echo "native-full: linked $(NATIVE_FULL_EXE)  [$(words $(NATIVE_FULL_SRCS)) TUs: broad engine closure + weak stub frontier]"
+
+# native-arena-check: the same build with every arena deref range-checked
+# (MK4_ARENA_CHECK). A VA below the image base WRAPS - `(unsigned)(0-0x400000)`
+# is 0xffc00000 - so a null packed pointer does not fault at zero the way it
+# would in the original, it faults about 4 GB above the arena with nothing to
+# identify it. This build prints the offending VA and the source line instead.
+# Slow by design: a compare and a branch on every engine memory access.
+NATIVE_CHECK_EXE := $(BUILD_DIR)/MK4.native.check
+native-arena-check:
+	@mkdir -p $(BUILD_DIR)
+	$(NATIVE_CC) -DNON_MATCHING -DMK4_ARENA -DMK4_ARENA_CHECK -DTARGET_SDL \
+		-DMK4_NATIVE_FULL -Iinclude $(SDL_CFLAGS) -O1 -w $(NATIVE_PORTFLAGS) \
+		$(NATIVE_FULL_SRCS) src/portable/arena_check.c $(SDL_LIBS) -o $(NATIVE_CHECK_EXE)
+	@echo "native-arena-check: linked $(NATIVE_CHECK_EXE)"
 
 # wasm: the VERIFIED SW render pipeline (FlushDrawQueue + the rasterizers) as a
 # self-contained wasm32 bundle. wasm32 is 32-bit (malloc/long/pointers all 32),
