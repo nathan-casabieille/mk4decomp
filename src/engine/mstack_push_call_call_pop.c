@@ -33,6 +33,15 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_fightGroupHead (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_matrixStackTop (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
+#endif
+
+
 extern void func_00405A40(void);
 extern void BootChainBidirRecurseWalk(void);
 extern void MStackCall_MStackPush2ChainLLInsert(void);

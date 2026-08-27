@@ -118,6 +118,7 @@ src/engine/intro_combo_fsm_cluster.c
 src/engine/iter_load.c
 src/engine/juggle_fsm_cluster.c
 src/engine/lea_plus22_store_self.c
+src/engine/lea_scaled_call.c
 src/engine/literal_push_call_ent_zero.c
 src/engine/m_stack_bracket3_packed_slot_init.c
 src/engine/m_stack_push_dual_jmp.c
@@ -127,6 +128,7 @@ src/engine/max_of_three.c
 src/engine/mem_heap_free.c
 src/engine/min_of_three.c
 src/engine/mstack_calls.c
+src/engine/mstack_push_call_call_pop.c
 src/engine/mstack_push_set_bit_variants.c
 src/engine/mul10_tail5x_interp.c
 src/engine/net_entity_scan_and_punish.c
@@ -144,6 +146,7 @@ src/engine/quad_field_early_jmp_then_install.c
 src/engine/quad_mul10_tail_fpu_chain.c
 src/engine/render.c
 src/engine/render_scene_graph_iterate.c
+src/engine/render_scene_node.c
 src/engine/renderer1_begin_frame_glide.c
 src/engine/renderer1_present_frame.c
 src/engine/renderer2_present_frame.c
@@ -200,6 +203,7 @@ src/engine/vec3_color_shift_clamp.c
 src/engine/weighted_sum_clamp_helper.c
 src/engine/word9_reorder.c
 src/engine/wrappers.c
+src/engine/z_bucket_clamp_store.c
 src/engine/zero_three_slots.c
 src/game/draw_menu.c
 src/game/event_queue.c

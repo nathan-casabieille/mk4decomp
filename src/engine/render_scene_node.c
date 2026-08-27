@@ -4,6 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_baseSel;
 extern unsigned int g_eq;
 extern s16 g_vtxMat[];
@@ -35,26 +36,417 @@ extern unsigned int g_dispatchSave1575;
 extern unsigned int g_dispatchSave1576;
 extern unsigned int g_dispatchSave1577;
 extern unsigned int g_dispatchSave1333;
+#endif
 extern void BboxProjectAndStash(void);
 extern void BillboardChainRender(void);
-extern void BillboardSheetDualEmit(void);
+extern void BillboardSheetDualEmit(void *rec, int q);
 extern void DirtyBitTripleWriteOrCall(void);
-extern void DirtyTestScaledCopy(void);
-extern void DrawMeshBlock(void);
-extern void LeaScaledCall(void);
+extern int  DirtyTestScaledCopy(void);
+extern void DrawMeshBlock(void *p, unsigned int f, unsigned short w);
+extern void LeaScaledCall(int a);
 extern void MStackPushCallCallPop_func_00405dd0(void);
-extern void MatrixTransform3x3Q12(void);
+extern void MatrixTransform3x3Q12(unsigned int dst, void *src);
 extern void MovesPanelEmit(void);
 extern void TransformAccumulate(void);
-extern void TristripBatchEmit2(void);
-extern void TristripBatchEmit3Cap(void);
-extern void TristripBatchEmit(void);
-extern void VertexQuadBuilder(void);
-extern void VibrationFrameUpdate(void);
-extern void VtableDispatchSetDirty(void);
+extern void TristripBatchEmit2(void *p, unsigned int f, unsigned short w);
+extern void TristripBatchEmit3Cap(void *p, unsigned int f, unsigned short w);
+extern void TristripBatchEmit(void *p, unsigned int f, unsigned short w);
+extern void VertexQuadBuilder(int a, unsigned int b);
+extern void VibrationFrameUpdate(int node);
+extern void VtableDispatchSetDirty(int node);
 extern void WtSnapshotPushCall(void);
 extern void ZBucketClampStore(void);
 
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+#include "portable/code_va.h"
+
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
+extern unsigned int g_currentNodeIdx, g_currentNodeFlags, g_walkCallback, g_baseSel;
+extern unsigned int g_cj_0054205c, g_cj_00542054, g_dualC, g_dualD;
+extern unsigned int g_eventQueuePending, g_eventQueueCurrent, g_eventQueueWorkType;
+extern unsigned int g_xformDirtyFlags, g_framePauseFlag, g_eq;
+extern unsigned int g_dispatchSave1501, g_dispatchSave1502, g_dispatchSave1503;
+extern unsigned int g_dispatchSave1525, g_dispatchSave1526, g_dispatchSave1527;
+extern unsigned int g_dispatchSave1528, g_dispatchSave1529;
+extern unsigned int g_dispatchSave1554, g_dispatchSave1555, g_dispatchSave1556;
+extern unsigned int g_dispatchSave1557, g_dispatchSave1558;
+extern unsigned int g_dispatchSave1559, g_dispatchSave1570, g_dispatchSave1572;
+extern unsigned int g_dispatchSave1573, g_dispatchSave1575, g_dispatchSave1576;
+extern unsigned int g_dispatchSave1577;
+extern unsigned int g_mat3x3_007af990, g_mat3x3_007af994, g_mat3x3_007af998;
+extern unsigned int g_mat3x3_007af99c, g_mat3x3_007af9a0;
+extern unsigned int g_tickW1, g_tickX1, g_tickFlagZ;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeFlags (*(unsigned int *)MK4_VA(unsigned int, 0x542084u))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchSave1333 (*(unsigned int *)MK4_VA(unsigned int, 0xf00004u))
+#define g_dispatchSave1501 (*(unsigned int *)MK4_VA(unsigned int, 0xab4398u))
+#define g_dispatchSave1502 (*(unsigned int *)MK4_VA(unsigned int, 0xab439cu))
+#define g_dispatchSave1503 (*(unsigned int *)MK4_VA(unsigned int, 0xab43a0u))
+#define g_dispatchSave1525 (*(unsigned int *)MK4_VA(unsigned int, 0xab4838u))
+#define g_dispatchSave1526 (*(unsigned int *)MK4_VA(unsigned int, 0xab483cu))
+#define g_dispatchSave1527 (*(unsigned int *)MK4_VA(unsigned int, 0xab4840u))
+#define g_dispatchSave1528 (*(unsigned int *)MK4_VA(unsigned int, 0xab4844u))
+#define g_dispatchSave1529 (*(unsigned int *)MK4_VA(unsigned int, 0xab4848u))
+#define g_dispatchSave1554 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d58u))
+#define g_dispatchSave1555 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d5cu))
+#define g_dispatchSave1556 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d60u))
+#define g_dispatchSave1557 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d64u))
+#define g_dispatchSave1558 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d68u))
+#define g_dispatchSave1559 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d9cu))
+#define g_dispatchSave1570 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e28u))
+#define g_dispatchSave1572 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e34u))
+#define g_dispatchSave1573 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e38u))
+#define g_dispatchSave1575 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e5cu))
+#define g_dispatchSave1576 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e60u))
+#define g_dispatchSave1577 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e6cu))
+#define g_dualC (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_dualD (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
+#define g_eq (*(unsigned int *)MK4_VA(unsigned int, 0x542098u))
+#define g_eventQueueCurrent (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_eventQueuePending (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_eventQueueWorkType (*(unsigned int *)MK4_VA(unsigned int, 0x542074u))
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_mat3x3_007af990 (*(short *)MK4_VA(short, 0x7af990u))
+#define g_mat3x3_007af994 (*(short *)MK4_VA(short, 0x7af994u))
+#define g_mat3x3_007af998 (*(short *)MK4_VA(short, 0x7af998u))
+#define g_mat3x3_007af99c (*(short *)MK4_VA(short, 0x7af99cu))
+#define g_mat3x3_007af9a0 (*(short *)MK4_VA(short, 0x7af9a0u))
+#define g_tickDecay (*(unsigned int *)MK4_VA(unsigned int, 0xab4e64u))
+#define g_tickFlagZ (*(unsigned int *)MK4_VA(unsigned int, 0xab4e40u))
+#define g_tickW1 (*(unsigned int *)MK4_VA(unsigned int, 0x543550u))
+#define g_tickX1 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d98u))
+#define g_vtxMat ((short *)MK4_VA(short, 0x7af990u))
+#define g_vtxTransX (*(int *)MK4_VA(int, 0x7af9a4u))
+#define g_vtxTransY (*(int *)MK4_VA(int, 0x7af9a8u))
+#define g_vtxTransZ (*(int *)MK4_VA(int, 0x7af9acu))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
+#endif
+
+
+extern void ZBucketClampStore(void);
+extern void WtSnapshotPushCall(void);
+extern void TransformAccumulate(void);
+extern void Helper_TickInit(unsigned int base);
+extern void DirtyBitTripleWriteOrCall(void);
+extern void BillboardChainRender(void);
+extern void MovesPanelEmit(void);
+extern void BboxProjectAndStash(void);
+extern void BillboardSheetDualEmit(void *p, int q);
+extern void MStackPushCallCallPop_func_00405dd0(void);
+extern void Helper_TickAlt(void);
+
+/* Portable twin of the recursive scene-node renderer - the sole caller of
+ * DrawMeshBlock, and the function that finally emits geometry.
+ *
+ * Three seam points, all of them load-bearing:
+ *
+ *  - the per-node-type dispatch reads a CODE VA from a packed-pointer table
+ *    (index (flags >> 24) & 7, plus 8 when flag 0x100 is set) and the second,
+ *    deeper dispatch reads one from a node field; both go through
+ *    MK4_ResolveCode.
+ *  - it installs ITSELF as g_walkCallback before handing off to Helper_TickAlt,
+ *    which is a 32-bit slot, so that is MK4_CODE_VA.
+ *  - it hands the engine a packed pointer to a THREE-WORD STACK LOCAL. That
+ *    cannot survive the round trip on a 64-bit host, so the vector comes from
+ *    the arena scratch stack; every return path below frees it.
+ */
+void RenderSceneNode(void)
+{
+    unsigned int saved_pending = g_eventQueuePending;
+    unsigned int saved_dualC   = g_dualC;
+    unsigned int saved_cj54    = g_cj_00542054;
+    unsigned int node, kind, child, mat, sub;
+    unsigned int *vec;
+    int hit, blk;
+
+    if (g_dispatchSave1573 == 0)
+        goto tail;
+
+    g_currentNodeFlags = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x20);
+    node = g_currentNodeIdx;
+
+    if ((g_currentNodeFlags & 0x2000) != 0) {
+        ZBucketClampStore();
+        if (g_framePauseFlag != 0)
+            return;
+        node = g_currentNodeIdx;
+        if (g_eq == 0) {
+            g_eventQueueWorkType = MK4_NODE_AT(unsigned int, node, 0);
+            saved_pending = g_eventQueuePending;
+            saved_dualC   = g_dualC;
+            saved_cj54    = g_cj_00542054;
+            if (g_eventQueueWorkType == 0)
+                goto tail;
+        }
+    }
+    saved_cj54    = g_cj_00542054;
+    saved_dualC   = g_dualC;
+    saved_pending = g_eventQueuePending;
+    g_dualD = g_dualC;
+
+    vec = (unsigned int *)MK4_ALLOCA(12);
+
+    if (MK4_NODE_AT(int, node, 0x3c) == 0 && MK4_NODE_AT(int, node, 0x40) == 0 &&
+        MK4_NODE_AT(int, node, 0x44) == 0) {
+        g_cj_00542054 = g_eventQueuePending * 4;
+        g_mat3x3_007af990 = *(unsigned int *)MK4_PTR(g_cj_00542054);
+        g_mat3x3_007af994 = *(unsigned int *)MK4_PTR(g_cj_00542054 + 4);
+        g_mat3x3_007af998 = *(unsigned int *)MK4_PTR(g_cj_00542054 + 8);
+        g_mat3x3_007af99c = *(unsigned int *)MK4_PTR(g_cj_00542054 + 12);
+        g_mat3x3_007af9a0 = *(unsigned short *)MK4_PTR(g_cj_00542054 + 16);
+        g_xformDirtyFlags &= 0xffffffefu;
+    } else {
+        g_eventQueuePending = node + 0xf;
+        g_cj_00542054 += 0x14;
+        kind = (g_currentNodeFlags >> 0x18) & 7u;
+        if ((g_currentNodeFlags & 0x100) != 0)
+            kind += 8;
+        g_eventQueueCurrent = *MK4_NODE(unsigned int, kind + 0x13de22u);
+        g_currentNodeIdx = g_cj_00542054 >> 2;
+        ((void (*)(void))MK4_ResolveCode(g_eventQueueCurrent))();
+        if (g_framePauseFlag != 0) { MK4_ALLOCA_FREE(12); return; }
+        g_dualC = g_currentNodeIdx;
+        g_eventQueuePending = saved_pending;
+        WtSnapshotPushCall();
+        if (g_framePauseFlag != 0) { MK4_ALLOCA_FREE(12); return; }
+    }
+
+    g_dualC = node + 0xc;
+    g_currentNodeIdx = 0x2ad0e6;
+    TransformAccumulate();
+    if (g_framePauseFlag != 0) { MK4_ALLOCA_FREE(12); return; }
+
+    if ((g_currentNodeFlags & 0xf00004) != 0)
+        goto cull;
+
+    if ((g_cj_0054205c & 0x60) == 0) {
+        g_vtxTransX = g_dispatchSave1501 >> 8;
+        g_vtxTransY = g_dispatchSave1502 >> 8;
+    } else {
+        g_vtxTransX = g_dispatchSave1501 >> 0x11;
+        g_vtxTransY = g_dispatchSave1502 >> 0x11;
+    }
+    g_vtxTransZ = g_dispatchSave1503 >> 8;
+    g_dualC = g_cj_00542054 >> 2;
+
+    if (((g_currentNodeFlags | g_cj_0054205c) & 0x80) == 0) {
+        g_currentNodeIdx = MK4_NODE_AT(unsigned int, node, 0x24);
+        if (g_currentNodeIdx != 0) {
+            g_eventQueuePending = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 4);
+            g_walkCallback = (g_eventQueuePending >> 0xc) & 0x7ffu;
+            if (g_walkCallback != 0 && DirtyTestScaledCopy() != 0)
+                goto cull;
+        }
+    }
+    g_currentNodeFlags &= 0xffffdfffu;
+    MK4_NODE_AT(unsigned int, node, 0x20) = g_currentNodeFlags;
+    g_dualC = g_cj_00542054 >> 2;
+
+    if ((g_currentNodeFlags & 0x1600) != 0) {
+        if ((g_currentNodeFlags & 0x1000) == 0) {
+            if ((g_cj_0054205c & 2) != 0)
+                goto emit;
+            g_currentNodeIdx = MK4_UNPTR(&g_dispatchSave1525);
+            if ((g_xformDirtyFlags & 0x30) == 0) {
+                g_dispatchSave1525 = 0x1000;
+                g_dispatchSave1526 = 0;
+                g_dispatchSave1527 = 0x1000;
+                g_dispatchSave1528 = 0;
+                g_dispatchSave1529 = 0x1000;
+            } else {
+                g_mat3x3_007af994 = g_dispatchSave1555;
+                g_mat3x3_007af990 = g_dispatchSave1554;
+                g_mat3x3_007af99c = g_dispatchSave1557;
+                g_mat3x3_007af998 = g_dispatchSave1556;
+                g_mat3x3_007af9a0 = g_dispatchSave1558;
+                MatrixTransform3x3Q12(g_dualC * 4, &g_dispatchSave1525);
+            }
+            g_xformDirtyFlags |= 0x30;
+        } else {
+            VtableDispatchSetDirty((int)node);
+        }
+        g_dualC = 0x2ad20e;
+    }
+
+emit:
+    mat = g_dualC;
+    g_dispatchSave1576 = g_tickW1;
+    g_dispatchSave1575 = g_dispatchSave1577;
+    if (g_tickDecay != 0)
+        g_dispatchSave1576 = g_dispatchSave1577;
+
+    g_eventQueuePending = MK4_NODE_AT(unsigned int, node, 0x28);
+    if (g_eventQueuePending == 0) {
+        if (g_tickX1 != 0) {
+            g_currentNodeIdx = node;
+            Helper_TickInit(g_tickX1);
+        }
+    } else {
+        g_walkCallback = MK4_NODE_AT(unsigned int, g_eventQueuePending, 0x10);
+        g_currentNodeIdx = node;
+        if (g_walkCallback != 0) {
+            ((void (*)(void))MK4_ResolveCode(g_walkCallback))();
+            if (g_framePauseFlag != 0) { MK4_ALLOCA_FREE(12); return; }
+            if (g_currentNodeIdx == 0) {
+                g_dispatchSave1573 = 0;
+                g_xformDirtyFlags &= 0xfffffffeu;
+                MK4_ALLOCA_FREE(12);
+                return;
+            }
+            if (g_currentNodeIdx == 0xffffffffu)
+                goto descend;
+        }
+        g_walkCallback = MK4_NODE_AT(unsigned int, g_eventQueuePending, 0);
+        g_dualC = mat;
+        if ((g_walkCallback & 8) != 0)
+            DirtyBitTripleWriteOrCall();
+        if (g_tickFlagZ != 0)
+            VibrationFrameUpdate((int)node);
+    }
+
+    if ((g_xformDirtyFlags & 0x10) != 0) {
+        unsigned int m = g_dualC * 4;
+
+        g_mat3x3_007af990 = *(unsigned int *)MK4_PTR(m);
+        g_mat3x3_007af994 = *(unsigned int *)MK4_PTR(m + 4);
+        g_mat3x3_007af998 = *(unsigned int *)MK4_PTR(m + 8);
+        g_mat3x3_007af99c = *(unsigned int *)MK4_PTR(m + 12);
+        g_mat3x3_007af9a0 = *(unsigned short *)MK4_PTR(m + 16);
+    }
+
+    g_dualD = MK4_NODE_AT(unsigned int, node, 0x24);
+    if (g_dualD == 0) {
+        if ((g_cj_0054205c & 0x20000) != 0) {
+            g_currentNodeIdx = node;
+            BillboardChainRender();
+        }
+    } else {
+        sub = MK4_NODE_AT(unsigned int, g_dualD, 4);
+        g_eventQueuePending = sub;
+        if (sub == 0) {
+            g_currentNodeIdx = node;
+            MovesPanelEmit();
+        } else {
+            blk = MK4_NODE_AT(int, g_dualD, 0x18);
+            if (*(int *)MK4_PTR(sub + 4) > 0) {
+                unsigned char *rec = (unsigned char *)MK4_PTR(
+                    (unsigned int)(blk * 0x10 + 0xc + *(int *)MK4_PTR(sub + 4)));
+                unsigned char tag = rec[0];
+                unsigned short width = *(unsigned short *)MK4_PTR(
+                    *(unsigned int *)MK4_PTR(sub) + 8);
+
+                g_dispatchSave1572 = tag;
+                if ((tag & 0x80) == 0) {
+                    if ((g_currentNodeFlags & 0x40) == 0) {
+                        unsigned int rebuild = 0;
+
+                        g_walkCallback = 0;
+                        g_dualC = MK4_NODE_AT(unsigned int, node, 0x48);
+                        if (g_dualC != 0) {
+                            g_currentNodeIdx = node;
+                            if (*(unsigned int *)MK4_PTR(g_dualC * 4) !=
+                                (MK4_UNPTR(rec) * 0x20 |
+                                 (((int)g_cj_0054205c >> 0x10) & 8) |
+                                 g_dispatchSave1572)) {
+                                rebuild = 1;
+                                g_walkCallback = 1;
+                            }
+                        }
+                        if (g_dualC == 0 || rebuild) {
+                            g_currentNodeIdx = node;
+                            VertexQuadBuilder(blk, rebuild);
+                            if (g_dualC == 0)
+                                goto descend;
+                        }
+                        kind = g_cj_0054205c;
+                        g_dualC += 1;
+                        g_baseSel = 0x1fff;
+                        g_walkCallback = g_cj_0054205c & 1;
+                        g_eventQueuePending = MK4_UNPTR(&g_dispatchSave1559);
+                        if ((g_dispatchSave1572 & 0x40) != 0) {
+                            TristripBatchEmit2(rec, g_walkCallback, width);
+                        } else if ((g_cj_0054205c & 0x80000) != 0 &&
+                                   (g_dispatchSave1572 & 1) != 0) {
+                            g_dispatchSave1570 = g_cj_0054205c & 0x1000;
+                            DrawMeshBlock(rec, g_walkCallback, width);
+                            g_dispatchSave1570 = 0;
+                            if ((kind & 0x40000) != 0) {
+                                g_eventQueuePending = node;
+                                BboxProjectAndStash();
+                            }
+                        } else if ((g_dispatchSave1572 & 2) != 0) {
+                            TristripBatchEmit(rec, g_walkCallback, width);
+                        } else {
+                            TristripBatchEmit3Cap(rec, g_walkCallback, width);
+                        }
+                    }
+                } else {
+                    if ((tag & 1) != 0) {
+                        g_currentNodeIdx = node;
+                        BillboardSheetDualEmit(rec + 0x10, (int)saved_pending);
+                    }
+                    g_currentNodeIdx = node;
+                    g_eventQueuePending = sub;
+                    BillboardSheetDualEmit(rec, (int)saved_pending);
+                }
+            }
+        }
+    }
+    goto descend;
+
+cull:
+    g_currentNodeFlags |= 0x2000;
+    g_currentNodeIdx = node;
+    MK4_NODE_AT(unsigned int, node, 0x20) = g_currentNodeFlags;
+    if ((g_cj_0054205c & 0x4000) != 0) {
+        MStackPushCallCallPop_func_00405dd0();
+        if (g_framePauseFlag != 0) { MK4_ALLOCA_FREE(12); return; }
+        g_dispatchSave1573 = 0;
+        g_xformDirtyFlags &= 0xfffffffeu;
+        MK4_ALLOCA_FREE(12);
+        return;
+    }
+    LeaScaledCall(1);
+
+descend:
+    child = MK4_NODE_AT(unsigned int, node, 0);
+    g_currentNodeIdx = node;
+    if (child != 0) {
+        vec[0] = g_dispatchSave1501;      /* local_c */
+        vec[1] = g_dispatchSave1502;      /* local_8 */
+        vec[2] = g_dispatchSave1503;      /* local_4 */
+        g_walkCallback = MK4_NODE_AT(unsigned int, node, 0xc);
+        g_eventQueuePending = g_cj_00542054 >> 2;
+        g_dualC = MK4_UNPTR(vec) >> 2;
+        if (g_walkCallback == 1) {
+            g_currentNodeIdx = child;
+            RenderSceneNode();
+            if (g_framePauseFlag != 0) { MK4_ALLOCA_FREE(12); return; }
+        } else {
+            g_walkCallback = MK4_CODE_VA(RenderSceneNode);
+            Helper_TickAlt();
+            if (g_framePauseFlag != 0) { MK4_ALLOCA_FREE(12); return; }
+        }
+    }
+    MK4_ALLOCA_FREE(12);
+
+tail:
+    g_cj_00542054       = saved_cj54;
+    g_dualC             = saved_dualC;
+    g_eventQueuePending = saved_pending;
+    g_xformDirtyFlags  &= 0xfffffffeu;
+}
+#else
 __declspec(naked) void RenderSceneNode(void)
 {
     __asm {
@@ -576,4 +968,5 @@ __declspec(naked) void RenderSceneNode(void)
         jmp      L_a78d
     }
 }
+#endif
 

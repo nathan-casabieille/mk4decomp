@@ -338,6 +338,48 @@ SEEDS = {
                                   '@0xb9003c': 0x2e4400, '@0xb9103c': 0x4000,
                                   'g_dispatchSave1573': 0, '@0xb90118': 0, '@0xb90134': 0}),
     ],
+    # RenderSceneNode is gated on g_dispatchSave1573, which is 0 at rest, so
+    # every case sets it. NODE is at SCRATCH: +0x20 flags, +0x3c/40/44 the
+    # transform (all zero picks the identity path), +0 the child chain (zero
+    # stops the recursion), +0x24/28/48 the sub-object, timer and cache slots.
+    'RenderSceneNode': [
+        ('gate clear: early out', {'g_dispatchSave1573': 0}),
+        # the translation words are seeded non-zero, else the vtxTrans stores
+        # write zero over zero and the case "passes" having proved nothing
+        ('identity, no child',    {'g_dispatchSave1573': 1, 'g_currentNodeIdx': 0x2e4000,
+                                   '@0xb90020': 0, '@0xb9003c': 0, '@0xb90040': 0,
+                                   '@0xb90044': 0, '@0xb90000': 0, '@0xb90024': 0,
+                                   '@0xb90028': 0, '@0xb90048': 0,
+                                   'g_dispatchSave1501': 0x12340, 'g_dispatchSave1502': 0x5678,
+                                   'g_dispatchSave1503': 0x9abc,
+                                   'g_eventQueuePending': 0x2e4100, 'g_cj_0054205c': 0}),
+        ('identity, shifted 0x11', {'g_dispatchSave1573': 1, 'g_currentNodeIdx': 0x2e4000,
+                                   '@0xb90020': 0, '@0xb9003c': 0, '@0xb90040': 0,
+                                   '@0xb90044': 0, '@0xb90000': 0, '@0xb90024': 0,
+                                   '@0xb90028': 0, '@0xb90048': 0,
+                                   'g_dispatchSave1501': 0x12340, 'g_dispatchSave1502': 0x5678,
+                                   'g_dispatchSave1503': 0x9abc,
+                                   'g_eventQueuePending': 0x2e4100, 'g_cj_0054205c': 0x60}),
+        ('non-identity: dispatch', {'g_dispatchSave1573': 1, 'g_currentNodeIdx': 0x2e4000,
+                                   '@0xb90020': 0, '@0xb9003c': 0x100, '@0xb90040': 0,
+                                   '@0xb90044': 0, '@0xb90000': 0, '@0xb90024': 0,
+                                   '@0xb90028': 0, '@0xb90048': 0,
+                                   'g_dispatchSave1501': 0x12340,
+                                   'g_eventQueuePending': 0x2e4100, 'g_cj_0054205c': 0}),
+        ('culled (flag 0x4)',     {'g_dispatchSave1573': 1, 'g_currentNodeIdx': 0x2e4000,
+                                   '@0xb90020': 4, '@0xb9003c': 0, '@0xb90040': 0,
+                                   '@0xb90044': 0, '@0xb90000': 0,
+                                   'g_eventQueuePending': 0x2e4100, 'g_cj_0054205c': 0}),
+        ('already z-clamped',     {'g_dispatchSave1573': 1, 'g_currentNodeIdx': 0x2e4000,
+                                   '@0xb90020': 0x2000, '@0xb90000': 0,
+                                   'g_eq': 0, 'g_eventQueuePending': 0x2e4100,
+                                   'g_cj_0054205c': 0}),
+        ('matrix build (0x200)',  {'g_dispatchSave1573': 1, 'g_currentNodeIdx': 0x2e4000,
+                                   '@0xb90020': 0x200, '@0xb9003c': 0, '@0xb90040': 0,
+                                   '@0xb90044': 0, '@0xb90000': 0, '@0xb90024': 0,
+                                   '@0xb90028': 0, '@0xb90048': 0,
+                                   'g_eventQueuePending': 0x2e4100, 'g_cj_0054205c': 0}),
+    ],
     'Mem_Free': [
         ('below the heap',      _blocks(),          (0x7b0000,)),
         ('above the heap',      _blocks(),          (0xac0000,)),

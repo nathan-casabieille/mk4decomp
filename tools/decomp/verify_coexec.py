@@ -142,6 +142,11 @@ def build_twin_blob(name, body, gl_va, name_to_va, fn_self_va=None, width16=None
     defs += ''.join('extern int %s();\n' % f for f in sorted(fns))
     src = ('#define NON_MATCHING 1\n'
            '#include "portable/ghidra_types.h"\n#include "portable/mem_model.h"\n'
+           # code_va.h too: MK4_CODE_VA(f) is how a twin puts a function's VA in
+           # a 32-bit callback slot. Outside MK4_ARENA - which is this harness -
+           # it expands to the original `(unsigned int)&f`, so it relocates the
+           # same way and no existing twin changes.
+           '#include "portable/code_va.h"\n'
            # The project's scalar spellings, declared inline rather than by
            # including types.h - that header drags in win32_types.h, whose HWND
            # collides with Ghidra's. These names do not overlap ghidra_types.h.
