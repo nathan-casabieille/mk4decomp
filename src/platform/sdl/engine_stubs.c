@@ -16,6 +16,9 @@
  * The 5 loop-state globals are plain C variables here (loop bookkeeping, not
  * arena data), defined weak so the arena/data definitions win if ever linked.
  */
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "portable/mem_model.h"
 #include "platform/win32.h"
 #include "engine/render.h"
@@ -81,4 +84,37 @@ __attribute__((weak)) void DrawScene(void)
 __attribute__((weak)) void AppInit_Misc8(void)
 {
     *(unsigned int *)MK4_PTR(0x004ffd7cu) = 1;      /* g_titlePauseGate */
+}
+
+/* --- CRT / error-path replacements --- */
+
+/* The original is MSVC's sprintf internals: a fake FILE on the stack handed to
+ * _output, with the "did it overflow" branch reading the residual count back
+ * out of the frame. None of that survives the port - the host CRT does the
+ * same job - so this is a replacement rather than a conversion.
+ *
+ * Callers pass HOST pointers: the arena VAs they hold (the path buffer, the
+ * format literal, a name out of an asset table) go through the seam at the
+ * call site, the way every other pointer argument in this port does. */
+__attribute__((weak)) int Helper_Sprintf(char *buf, const char *fmt, ...)
+{
+    va_list ap;
+    int n;
+
+    va_start(ap, fmt);
+    n = vsprintf(buf, fmt, ap);
+    va_end(ap);
+    return n;
+}
+
+/* Win32 MessageBox plus a graphics teardown, on the path where the engine has
+ * decided it cannot continue. SDL has no equivalent worth reproducing, and the
+ * useful behaviour for a headless run is to say what happened and stop rather
+ * than to fall through into whatever the caller does next - which for
+ * Mem_Malloc is dereferencing the null it just failed to find. */
+__attribute__((weak)) void ShowErrorMessage(const char *msg)
+{
+    SDL_Log("engine error: %s", msg ? msg : "(null)");
+    MK4_PalShutdown();
+    exit(1);
 }

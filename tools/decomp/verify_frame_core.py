@@ -127,6 +127,25 @@ VTBL = dict([('@0x%x' % (0x4f7868 + i * 4), RET_STUB) for i in range(32)])
 # scratch region so an upload writes somewhere both runs share.
 TEXPAGE = {'@0xf85b34': 0x00ba0000, 'g_texturedTriVar': 0}
 
+
+# Three blocks from g_memHeapStart to g_memHeapEnd: free 0x40, used 0x40, then
+# one free block running to the end of the heap. Mem_Malloc walks to HEAP_HI,
+# so the sizes have to tile the whole region or the walk runs off.
+def _heap3():
+    LO, HI = 0x7b41a0, 0xab4194
+    d = {}
+    d['@0x%x' % LO]         = 0x80000040
+    d['@0x%x' % (LO + 4)]   = 0
+    d['@0x%x' % (LO + 8)]   = LO
+    d['@0x%x' % (LO + 0x40)]     = 0x00000040
+    d['@0x%x' % (LO + 0x44)]     = 0
+    d['@0x%x' % (LO + 0x48)]     = LO
+    d['@0x%x' % (LO + 0x80)]     = 0x80000000 | (HI - (LO + 0x80))
+    d['@0x%x' % (LO + 0x84)]     = 0
+    d['@0x%x' % (LO + 0x88)]     = LO + 0x40
+    d['@0xb90200'] = 0
+    return d
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -459,6 +478,15 @@ SEEDS = {
     # XOR must be skipped), then a literal that ends the row.
     # Both branches: g_texturedTriVar selects a straight row copy or the
     # channel-expanding one, and only the second rewrites the pixels.
+    # A three-block heap: free / used / free-to-the-end. The split path and the
+    # exact-fit path take different branches through the back-link fixups.
+    'Mem_Malloc': [
+        ('split the last fit', _heap3(), (0xb90200, 0x20, 5)),
+        # sized so `need` lands exactly on the last block: no split, and the
+        # back-link fixups are skipped entirely
+        ('exact fit',          _heap3(), (0xb90200, 0x2fff65, 5)),
+        ('first free block is skipped', _heap3(), (0xb90200, 0x30, 0x3f)),
+    ],
     'Helper_TexUpload': [
         ('plain row copy', dict(TEXPAGE, **{
             '@0xf4d050': 0x7c1f001f, '@0xf4d054': 0x03e0ffff,
