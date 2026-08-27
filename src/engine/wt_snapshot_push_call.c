@@ -167,7 +167,7 @@ extern unsigned int g_mat3x3_007af99c;
 #define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
 #endif
 
-extern void MatrixTransform3x3Q12(unsigned int dst_va, unsigned int src_va);
+extern void MatrixTransform3x3Q12(short *src, short *dst);
 
 #ifdef NON_MATCHING
 #include "portable/mem_model.h"
@@ -176,10 +176,9 @@ extern void MatrixTransform3x3Q12(unsigned int dst_va, unsigned int src_va);
  * unconditionally from the transform entity, then handed to
  * MatrixTransform3x3Q12 with the pending node as destination.
  *
- * Both of that function's arguments are VAs in the original (`lea eax,
- * [edx*4]` on a packed index), so they are passed as VAs rather than host
- * pointers - it is still naked, so this pins the convention its twin will
- * have to follow. */
+ * Both of that function's arguments are HOST POINTERS: it dereferences them
+ * directly, even though the call site computes each with `lea eax, [edx*4]`
+ * off a packed index. */
 void WtSnapshotPushCall(void)
 {
     unsigned int m = g_xformEntityIdx;
@@ -192,7 +191,8 @@ void WtSnapshotPushCall(void)
     *(unsigned int   *)MK4_VA(unsigned int,   0x7af998u) = MK4_NODE_AT(unsigned int, m, 8);
     *(unsigned int   *)MK4_VA(unsigned int,   0x7af99cu) = MK4_NODE_AT(unsigned int, m, 0xc);
     *(unsigned short *)MK4_VA(unsigned short, 0x7af9a0u) = MK4_NODE_AT(unsigned short, m, 0x10);
-    MatrixTransform3x3Q12(g_pendingNodeType * 4, g_currentNodeIdx * 4);
+    MatrixTransform3x3Q12(MK4_NODE(short, g_pendingNodeType),
+                          MK4_NODE(short, g_currentNodeIdx));
 }
 #else
 void WtSnapshotPushCall(void) {

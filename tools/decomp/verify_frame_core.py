@@ -403,6 +403,26 @@ SEEDS = {
                                          'g_pendingNodeType': 0x2e4000})),
     ],
     # The 3x3 the projection helpers read, at its real address.
+    # Signs everywhere: a Q12 product with all-positive operands reads the
+    # same whether the shift is arithmetic or logical.
+    'MatrixTransform3x3Q12': [
+        ('mixed signs', {'@0x7af990': 0x10000800, '@0x7af994': 0xf8000000,
+                         '@0x7af998': 0x00001000, '@0x7af99c': 0x0800f800,
+                         '@0x7af9a0': 0x1000,
+                         '@0xb90000': 0x2000f000, '@0xb90004': 0x00001000,
+                         '@0xb90008': 0xe0002000, '@0xb9000c': 0x10000000,
+                         '@0xb90010': 0xf000},
+                        (0xb90000, 0xb90100)),
+        # Destination overlapping the source: the original builds all nine
+        # elements in a stack scratch before copying any of them out.
+        ('in place', {'@0x7af990': 0x10000800, '@0x7af994': 0xf8000000,
+                      '@0x7af998': 0x00001000, '@0x7af99c': 0x0800f800,
+                      '@0x7af9a0': 0x1000,
+                      '@0xb90000': 0x2000f000, '@0xb90004': 0x00001000,
+                      '@0xb90008': 0xe0002000, '@0xb9000c': 0x10000000,
+                      '@0xb90010': 0xf000},
+                     (0xb90000, 0xb90000)),
+    ],
     'ChainStreamMatMulVecAdd': [
         ('project and accumulate', {'g_eventQueueTotal': 0x2e4040,
                                     'g_xformEntityIdx': 0x2e4000,
