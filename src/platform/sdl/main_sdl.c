@@ -9,6 +9,7 @@
  *
  * Compiled only for TARGET=sdl.
  */
+#include "portable/mem_model.h"
 #include "platform/pal.h"
 #include "portable/arena.h"
 
@@ -97,6 +98,21 @@ int main(int argc, char **argv)
             MK4_PalFrameBegin();
             MK4_GameFrame();
             MK4_PalFramePresent();
+#ifdef MK4_NATIVE_FULL
+            /* MK4_TRACE_STATE=1 reports the top-level FSM state whenever it
+             * changes. The menu rendering correctly says nothing about whether
+             * the machine is advancing, and a headless run has no other way to
+             * see that it is stuck. */
+            { static int on = -1, last = -1; int now;
+              if (on < 0) on = getenv("MK4_TRACE_STATE") != NULL;
+              if (on) {
+                  now = (int)*(unsigned int *)MK4_PTR(0xab438cu);
+                  if (now != last) {
+                      SDL_Log("frame %ld: game state %d -> %d", frame, last, now);
+                      last = now;
+                  }
+              } }
+#endif
             if (max_frames && ++frame >= max_frames) {
                 SDL_Log("MK4_MAX_FRAMES=%ld reached; %ld frames ran", max_frames, frame);
                 break;

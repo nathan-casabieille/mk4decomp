@@ -16,6 +16,7 @@
  * The 5 loop-state globals are plain C variables here (loop bookkeeping, not
  * arena data), defined weak so the arena/data definitions win if ever linked.
  */
+#include "portable/mem_model.h"
 #include "platform/win32.h"
 #include "engine/render.h"
 #include "game/tick.h"
@@ -58,4 +59,26 @@ __attribute__((weak)) void DrawScene(void)
             fb[y * W + x] = (unsigned short)
                 (((x + t) & 0x1f) | (((y) & 0x1f) << 5) | (((t >> 1) & 0x1f) << 10));
     MK4_PalBlit555(fb, W, H);
+}
+
+/* --- CD-audio presence check --- */
+
+/* AppInit_Misc8 is the disc check, and it is a CD-AUDIO one: it walks the
+ * first fifteen tracks through the aux-audio device and compares each track's
+ * length against a built-in table (0x5c, 0x5c, ..., 0x7a, 0x10, 0x38, ...,
+ * 0x5a) with a tolerance of 5. All fifteen matching means the MK4 disc is in
+ * the drive, and it sets g_titlePauseGate.
+ *
+ * There is no aux-audio device to walk here - SDL replaces DirectSound
+ * outright, and nothing in this port reads redbook audio - so the probe has no
+ * native equivalent to perform. Reporting the disc PRESENT is the only answer
+ * that lets the state machine leave the insert-CD dialog; with the gate clear
+ * the game sits on that dialog forever, because the retry it offers calls back
+ * into this same check.
+ *
+ * Weak, so a converted app_init_misc8.c takes over if the aux-audio path is
+ * ever brought up for real. */
+__attribute__((weak)) void AppInit_Misc8(void)
+{
+    *(unsigned int *)MK4_PTR(0x004ffd7cu) = 1;      /* g_titlePauseGate */
 }
