@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -27,7 +28,7 @@ extern void StoreLitRetSet2_EntryB_SetWalk2Phase2_0042c3d0(void);
  * the original 48-byte packed block; entry B at +0x20 lives in
  * StoreLitRetSet2_EntryB_SetWalk2Phase2_0042c3d0. The 8-byte nop gap is filled by 0x90-fill. */
 void StoreLitRetSet2(void) {
-    unsigned int addr = (unsigned int)&StoreLitRetSet2_EntryB_SetWalk2Phase2_0042c3d0;
+    unsigned int addr = MK4_CODE_VA(StoreLitRetSet2_EntryB_SetWalk2Phase2_0042c3d0);
     g_currentNodeIdx = addr;
     ((ScenegraphNode *)(g_fightGroupHead * 4))->child_c = addr;
 }

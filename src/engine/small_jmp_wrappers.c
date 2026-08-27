@@ -6,10 +6,11 @@
  *   Init3333Jmp:  init 0x3333 state + tail-jmp
  */
 #include "engine/scenegraph.h"
+#include "portable/mem_model.h"
 
 /* @addr 0x00438160 (6b): jmp [g_eventQueueIdx]  (indirect jump through global) */
 void IndirectJmp(void) {
-    ((void (*)(void))g_eventQueueIdx)();
+    ((void (*)(void))MK4_ResolveCode(g_eventQueueIdx))();
 }
 
 /* @addr 0x00460400 (30b)

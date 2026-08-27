@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern void Helper_GlidePostInit(void);
 extern unsigned int g_glideFnTable;
@@ -24,7 +25,7 @@ void Helper_GlideError(void) {
     if (g_glideFnTable != 0) {
         if (g_glideF8 != 0) {
             if (g_dispatchSave1642 != 0) {
-                ((void(*)(void))g_dispatchSave1642)();
+                ((void(*)(void))MK4_ResolveCode(g_dispatchSave1642))();
             }
         }
         ((void(__stdcall *)(unsigned int))g_iat_FreeLibrary)(g_glideFnTable);

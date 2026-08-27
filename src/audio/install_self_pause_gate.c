@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -126,7 +127,7 @@ void InstallSelfPauseGate(void) {
         return;
     }
     g_cj_0054205c = g_currentNodeIdx;
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPauseGate;
+    *(unsigned int *)(base + 8) = MK4_CODE_VA(InstallSelfPauseGate);
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 0x26;
     g_framePauseFlag = 1;

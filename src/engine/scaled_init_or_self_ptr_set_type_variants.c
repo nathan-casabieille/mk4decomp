@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -20,7 +21,7 @@ void ScaledInitOrSelfPtrSetType_00434d60(void) {
         ThresholdInitInstallSelfChain();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&ScaledInitOrSelfPtrSetType_00434d60;
+    *(unsigned int *)(base + 8) = MK4_CODE_VA(ScaledInitOrSelfPtrSetType_00434d60);
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 8;
     g_framePauseFlag = 1;
@@ -37,7 +38,7 @@ void ScaledInitOrSelfPtrSetType_0046a5e0(void) {
         QuadEntryGateChain();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&ScaledInitOrSelfPtrSetType_0046a5e0;
+    *(unsigned int *)(base + 8) = MK4_CODE_VA(ScaledInitOrSelfPtrSetType_0046a5e0);
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 3;
     g_framePauseFlag = 1;
@@ -54,7 +55,7 @@ void ScaledInitOrSelfPtrSetType_0047a620(void) {
         TripleSubInstallSelfPair();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&ScaledInitOrSelfPtrSetType_0047a620;
+    *(unsigned int *)(base + 8) = MK4_CODE_VA(ScaledInitOrSelfPtrSetType_0047a620);
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 0xa;
     g_framePauseFlag = 1;

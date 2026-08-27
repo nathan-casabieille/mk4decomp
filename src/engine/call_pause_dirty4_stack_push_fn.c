@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -23,7 +24,7 @@ void CallPauseDirty4StackPushFn(void) {
     if (g_framePauseFlag != 0) return;
     if ((g_xformDirtyFlags & 4) != 0) {
         g_matrixStackTop++;
-        *(unsigned int *)(g_matrixStackTop * 4) = (unsigned int)&InstallSelfOrChainJmp;
+        *(unsigned int *)(g_matrixStackTop * 4) = MK4_CODE_VA(InstallSelfOrChainJmp);
         GameDispatchValidateState();
         return;
     }

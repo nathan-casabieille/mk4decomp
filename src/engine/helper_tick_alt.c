@@ -52,7 +52,7 @@ void Helper_TickAlt(void)
             sib = g_siblingTable[walkIdx];               /* esi = node[walkIdx].f0 */
             g_currentNodeIdx = cur;                      /* eax (redundant store) */
             g_walkCallback = saved_cb;                   /* edi restored before call */
-            ((void (*)(void))saved_cb)();
+            ((void (*)(void))MK4_ResolveCode(saved_cb))();
             if (g_framePauseFlag) goto ret;              /* L_ilw_ret: no dirty update */
             if (g_xformDirtyFlags & 1) break;            /* L_ilw_setMask -> finish */
             cur  = sib;

@@ -4,6 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 #include "portable/mem_model.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -23,6 +24,6 @@ void func_set_g_eventQueueIdx_then_PendingMatch(void) {
 extern void StoreTwoCall(unsigned int, unsigned int);
 extern void PoseFsmCluster_PendingMatch_00416e50(void);
 void PendingMatch_00416e20(void) {
-    StoreTwoCall((unsigned int)&PoseFsmCluster_PendingMatch_00416e50, 0xb6);
+    StoreTwoCall(MK4_CODE_VA(PoseFsmCluster_PendingMatch_00416e50), 0xb6);
     ((ScenegraphNode *)(g_currentNodeIdx * 4))->group_head = g_fightGroupHead;
 }

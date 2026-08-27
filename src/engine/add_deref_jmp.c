@@ -2,6 +2,7 @@
  * Add two queue indices + dereference + indirect-jmp.
  */
 #include "engine/scenegraph.h"
+#include "portable/mem_model.h"
 
 /* @addr 0x00433e70 (32b)
  *   mov     eax, [g_xformEntityIdx]
@@ -17,5 +18,5 @@ void AddDerefJmp(void) {
     g_xformEntityIdx = v;
     v = *(unsigned int *)(v * 4);
     g_xformEntityIdx = v;
-    ((void (*)(void))v)();
+    ((void (*)(void))MK4_ResolveCode(v))();
 }

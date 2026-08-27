@@ -112,6 +112,9 @@ help:
 	@echo "                            read off the original's own encodings"
 	@echo "  make packed-ptr-audit   - packed pointers built from a truncated HOST"
 	@echo "                            address instead of a VA (--fix rewrites them)"
+	@echo "  make va-deref-audit     - VAs cast straight to host pointers"
+	@echo "  make code-ptr-audit     - indirect calls that jump to a raw VA instead"
+	@echo "                            of going through the VA -> native trampoline"
 	@echo "  build/venv/bin/python tools/decomp/disasm_fn.py NAME   - original bytes"
 	@echo "  build/venv/bin/python tools/geo_mesh.py FILE --blocks  - .geo mesh format"
 	@echo
@@ -164,7 +167,20 @@ width-audit:
 packed-ptr-audit:
 	@build/venv/bin/python tools/decomp/audit_packed_ptr.py
 
+# va-deref-audit / code-ptr-audit: the two remaining "a VA is not a pointer"
+# classes. The first finds VAs cast straight to host pointers (clang's
+# -Wint-to-pointer-cast names every one); the second finds indirect calls
+# through a 32-bit callback global, which can only hold a VA and so must go via
+# MK4_ResolveCode. Both --fix through the seam, which is the identity outside
+# MK4_ARENA - so matching and every co-exec verification are untouched.
+va-deref-audit:
+	@build/venv/bin/python tools/decomp/audit_va_deref.py
+
+code-ptr-audit:
+	@build/venv/bin/python tools/decomp/audit_code_ptr.py
+
 .PHONY: frame-core-check closure signed-audit width-audit packed-ptr-audit
+.PHONY: va-deref-audit code-ptr-audit
 
 all: matching
 

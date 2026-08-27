@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -33,5 +34,5 @@ void CallPauseTripleScaledJmp(void) {
     g_currentNodeIdx = v;
     v = *(unsigned int *)(v * 4);
     g_currentNodeIdx = v;
-    ((void (*)(void))v)();
+    ((void (*)(void))MK4_ResolveCode(v))();
 }

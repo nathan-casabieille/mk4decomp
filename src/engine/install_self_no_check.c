@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -127,7 +128,7 @@ void InstallSelfNoCheck(void) {
         StackPopDispatchTagged();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfNoCheck;
+    *(unsigned int *)(base + 8) = MK4_CODE_VA(InstallSelfNoCheck);
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;

@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -34,7 +35,7 @@ void CallPauseDirtyMStackPushFn(void) {
     if ((g_xformDirtyFlags & 4) != 0) {
         top = g_matrixStackTop + 1;
         g_matrixStackTop = top;
-        *(unsigned int *)(top * 4) = (unsigned int)&PendingMatch_SlotEvent3EntryChain;
+        *(unsigned int *)(top * 4) = MK4_CODE_VA(PendingMatch_SlotEvent3EntryChain);
         GameDispatchValidateState();
         return;
     }

@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -134,5 +135,5 @@ void PushCallPopScaledJmpIndirect(void) {
     g_matrixStackTop = top;
     target = *(unsigned int *)(saved_scaled * 4 + 8);
     g_walkCallback = (void (*)(void))target;
-    ((void (*)(void))target)();
+    ((void (*)(void))MK4_ResolveCode(target))();
 }

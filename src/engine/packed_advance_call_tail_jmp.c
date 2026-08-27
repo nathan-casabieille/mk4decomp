@@ -32,5 +32,5 @@ void PackedAdvanceCallTailJmp(packed_ptr arg) {
     if (g_framePauseFlag) return;
     g_currentNodeIdx += (unsigned int)g_walkCallback;
     g_currentNodeIdx = *(unsigned int *)MK4_PTR((g_currentNodeIdx * 4));
-    ((void (*)(void))g_currentNodeIdx)();
+    ((void (*)(void))MK4_ResolveCode(g_currentNodeIdx))();
 }

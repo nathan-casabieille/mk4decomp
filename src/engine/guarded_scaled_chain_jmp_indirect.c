@@ -181,5 +181,5 @@ void GuardedScaledChainJmpIndirect(int arg) {
     target = *(unsigned int *)MK4_PTR((newIdx * 4));
     g_eventQueueTotal = target;
     if (target == 0) return;
-    ((void (*)(void))target)();
+    ((void (*)(void))MK4_ResolveCode(target))();
 }

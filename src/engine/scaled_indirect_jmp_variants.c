@@ -27,7 +27,7 @@ extern unsigned int g_baseSel;
 void ScaledIndirectJmp_00433bf0(void) {
     unsigned int v = *(unsigned int *)MK4_PTR((g_baseSel * 4 + 0x6c));
     g_currentNodeIdx = v;
-    ((void(*)(void))v)();
+    ((void(*)(void))MK4_ResolveCode(v))();
 }
 
 /* @addr 0x0049c850 (19b)
@@ -39,5 +39,5 @@ void ScaledIndirectJmp_00433bf0(void) {
 void ScaledIndirectJmp_0049c850(void) {
     unsigned int v = ((ScenegraphNode *)MK4_PTR((g_eventQueueEnd * 4)))->alloc_work_type;
     g_currentNodeIdx = v;
-    ((void(*)(void))v)();
+    ((void(*)(void))MK4_ResolveCode(v))();
 }

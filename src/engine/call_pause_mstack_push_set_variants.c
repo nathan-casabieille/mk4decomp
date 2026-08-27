@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -31,7 +32,7 @@ void CallPauseMStackPushSet0Jmp(void) {
     g_walkCallback = (void (*)(void))0;
     top++;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = (unsigned int)&SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30;
+    *(unsigned int *)(top * 4) = MK4_CODE_VA(SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30);
     MstackPopScaledChainPlusThunks();
 }
 
@@ -46,7 +47,7 @@ void CallPauseMStackPushSet9Jmp(void) {
     g_walkCallback = (void (*)(void))9;
     top++;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = (unsigned int)&SelfInstallPhaseDispatch_DualGatedStateYield_00460000;
+    *(unsigned int *)(top * 4) = MK4_CODE_VA(SelfInstallPhaseDispatch_DualGatedStateYield_00460000);
     MstackPopScaledChainPlusThunks();
 }
 
@@ -61,7 +62,7 @@ void CallPauseMStackPushSet3Jmp(void) {
     g_walkCallback = (void (*)(void))3;
     top++;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = (unsigned int)&CjInstallSelfRouter;
+    *(unsigned int *)(top * 4) = MK4_CODE_VA(CjInstallSelfRouter);
     MstackPopScaledChainPlusThunks();
 }
 
@@ -75,6 +76,6 @@ void CallPauseMStackPushSet4Jmp(void) {
     g_walkCallback = (void (*)(void))4;
     top++;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = (unsigned int)&CjInstallSelfRouter;
+    *(unsigned int *)(top * 4) = MK4_CODE_VA(CjInstallSelfRouter);
     MstackPopScaledChainPlusThunks();
 }

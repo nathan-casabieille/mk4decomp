@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -131,7 +132,7 @@ void InstallSelfSetTagJmp(void) {
     if (g_framePauseFlag != 0) return;
     g_walkCallback = (void (*)(void))0x2011;
     ((ScenegraphNode *)(g_baseSel * 4))->fsm_state = 0x2011;
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfSetTagJmp;
+    *(unsigned int *)(base + 8) = MK4_CODE_VA(InstallSelfSetTagJmp);
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 6;
     g_framePauseFlag = 1;

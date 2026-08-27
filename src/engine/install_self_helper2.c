@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -130,7 +131,7 @@ void InstallSelfHelper2(void) {
     if (g_framePauseFlag != 0) return;
     ScaledChainJmp_004298e0();
     if (g_framePauseFlag != 0) return;
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfHelper2;
+    *(unsigned int *)(base + 8) = MK4_CODE_VA(InstallSelfHelper2);
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 0xa;
     g_framePauseFlag = 1;

@@ -5,6 +5,7 @@
  * g_walkCallback initial values (3 vs 1) before tail-jmping.
  */
 #include "engine/scenegraph.h"
+#include "portable/code_va.h"
 
 extern void DualCallPauseJmpDual(void);
 extern void func_DualScaledInitClear_then_FiveCallGuardSetTail(void);
@@ -23,7 +24,7 @@ void MStackPushPtr1Jmp_00438e70(void) {
     g_walkCallback = (void (*)(void))3;
     v++;
     g_matrixStackTop = v;
-    *(unsigned int *)(v * 4) = (unsigned int)&DualCallPauseJmpDual;
+    *(unsigned int *)(v * 4) = MK4_CODE_VA(DualCallPauseJmpDual);
     MstackPopScaledChainPlusThunks();
 }
 
@@ -41,6 +42,6 @@ void MStackPushPtr1Jmp_00438ef0(void) {
     g_walkCallback = (void (*)(void))1;
     v++;
     g_matrixStackTop = v;
-    *(unsigned int *)(v * 4) = (unsigned int)&func_DualScaledInitClear_then_FiveCallGuardSetTail;
+    *(unsigned int *)(v * 4) = MK4_CODE_VA(func_DualScaledInitClear_then_FiveCallGuardSetTail);
     MstackPopScaledChainPlusThunks();
 }

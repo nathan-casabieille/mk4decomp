@@ -16,6 +16,7 @@
 /* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
 #ifdef MK4_ARENA
 #include "portable/mem_model.h"
+#include "portable/code_va.h"
 #define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
 #define g_tickByteFlag (*(unsigned int *)MK4_VA(unsigned int, 0x543720u))
@@ -97,7 +98,7 @@ void TickAllEntities(void)
         g_currentNodeIdx = 0x53a738 >> 2;
         if (*MK4_NODE(unsigned int, g_currentNodeIdx) != 0) {
             g_tickCurMask = 0xffc0;
-            g_walkCallback = (unsigned int)&RenderSceneGraphIterate;
+            g_walkCallback = MK4_CODE_VA(RenderSceneGraphIterate);
             Helper_TickInner();
             if (g_framePauseFlag != 0)
                 return;
@@ -106,14 +107,14 @@ void TickAllEntities(void)
         /* pass 2 */
         g_tickCurMask = 0;
         g_currentNodeIdx = 0x53a1e0 >> 2;
-        g_walkCallback = (unsigned int)&RenderSceneGraphIterate;
+        g_walkCallback = MK4_CODE_VA(RenderSceneGraphIterate);
         Helper_TickInner();
         if (g_framePauseFlag != 0)
             return;
 
         /* pass 3 */
         cfg = (unsigned char *)MK4_PTR(g_tickCurConfig);
-        g_walkCallback = (unsigned int)&RenderSceneGraphIterate;
+        g_walkCallback = MK4_CODE_VA(RenderSceneGraphIterate);
         g_tickCurMask = (unsigned short)(cfg[4] != 0 ? 0 : 0x60);
         g_currentNodeIdx = 0x541e50 >> 2;
         if (g_tickFlagV == 0)
@@ -128,7 +129,7 @@ void TickAllEntities(void)
         cfg = (unsigned char *)MK4_PTR(g_tickCurConfig);
         g_tickX1 = *(unsigned short *)(cfg + 2);
         g_currentNodeIdx = 0x535df0 >> 2;
-        g_walkCallback = (unsigned int)&RenderSceneGraphIterate;
+        g_walkCallback = MK4_CODE_VA(RenderSceneGraphIterate);
         if (cfg[5] == 0)
             Helper_TickInner();
         else
@@ -137,7 +138,7 @@ void TickAllEntities(void)
             return;
 
         /* pass 5 */
-        g_walkCallback = (unsigned int)&RenderSceneGraphIterate;
+        g_walkCallback = MK4_CODE_VA(RenderSceneGraphIterate);
         g_currentNodeIdx = 0x53a2c0 >> 2;
         Helper_TickInner();
         if (g_framePauseFlag != 0)
@@ -147,7 +148,7 @@ void TickAllEntities(void)
     /* main sub-tree, every frame */
     g_tickCurMask = 0x40;
     g_currentNodeIdx = 0x538070 >> 2;
-    g_walkCallback = (unsigned int)&RenderSceneGraphIterate;
+    g_walkCallback = MK4_CODE_VA(RenderSceneGraphIterate);
     Helper_TickInner();
     if (g_framePauseFlag != 0)
         return;

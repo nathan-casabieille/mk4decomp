@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -129,7 +130,7 @@ void PushSetDualDeref(void) {
     g_eventQueueWorkType = v2;
     ((ScenegraphNode *)(v2 * 4))->not_mask = walk;
     g_walkCallback = (void (*)(void))&ClampMulShiftStore;
-    *(unsigned int *)(g_eventQueueWorkType * 4 + 0x10) = (unsigned int)&ClampMulShiftStore;
+    *(unsigned int *)(g_eventQueueWorkType * 4 + 0x10) = MK4_CODE_VA(ClampMulShiftStore);
     top = g_matrixStackTop;
     g_eventQueueWorkType = *(unsigned int *)(top * 4);
     g_matrixStackTop = top - 1;

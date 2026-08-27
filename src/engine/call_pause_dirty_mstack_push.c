@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -33,7 +34,7 @@ void CallPauseDirtyMStackPush484b40(void) {
     if ((g_xformDirtyFlags & 4) != 0) {
         v = g_matrixStackTop + 1;
         g_matrixStackTop = v;
-        *(unsigned int *)(v * 4) = (unsigned int)&GuardedDispatch4_00484b40;
+        *(unsigned int *)(v * 4) = MK4_CODE_VA(GuardedDispatch4_00484b40);
         GameDispatchValidateState();
         return;
     }

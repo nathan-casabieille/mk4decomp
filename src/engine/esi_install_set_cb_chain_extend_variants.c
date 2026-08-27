@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -124,12 +125,12 @@ void EsiInstallSetCbChainExtend_0048a810(void) {
     g_fightGroupHead = g_eventQueueSeed;
     ZeroSixStores6c80();
     g_eventQueueChild = 0x0048aad0;
-    *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a810;
+    *(unsigned int *)(base + 8) = MK4_CODE_VA(EsiInstallSetCbChainExtend_0048a810);
     ((ScenegraphNode *)(g_baseSel * 4))->install_flag = 1;
     {
         unsigned int t = *(unsigned int *)(base + 4);
         g_currentNodeIdx = t;
-        *(unsigned int *)(t * 4) = (unsigned int)&EsiInstallSetCbChainExtend_0048a810 + 0x01000000;
+        *(unsigned int *)(t * 4) = MK4_CODE_VA(EsiInstallSetCbChainExtend_0048a810) + 0x01000000;
         g_currentNodeIdx = g_currentNodeIdx + 1;
         *(unsigned int *)(base + 4) = g_currentNodeIdx;
     }
@@ -151,12 +152,12 @@ void EsiInstallSetCbChainExtend_0048a8c0(void) {
     g_fightGroupHead = g_eventQueueSeed;
     ZeroSixStores6c80();
     g_eventQueueChild = 0x0048ab40;
-    *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a8c0;
+    *(unsigned int *)(base + 8) = MK4_CODE_VA(EsiInstallSetCbChainExtend_0048a8c0);
     ((ScenegraphNode *)(g_baseSel * 4))->install_flag = 1;
     {
         unsigned int t = *(unsigned int *)(base + 4);
         g_currentNodeIdx = t;
-        *(unsigned int *)(t * 4) = (unsigned int)&EsiInstallSetCbChainExtend_0048a8c0 + 0x01000000;
+        *(unsigned int *)(t * 4) = MK4_CODE_VA(EsiInstallSetCbChainExtend_0048a8c0) + 0x01000000;
         g_currentNodeIdx = g_currentNodeIdx + 1;
         *(unsigned int *)(base + 4) = g_currentNodeIdx;
     }
@@ -178,12 +179,12 @@ void EsiInstallSetCbChainExtend_0048a970(void) {
     g_fightGroupHead = g_eventQueueSeed;
     ZeroSixStores6c80();
     g_eventQueueChild = 0x0048abc0;
-    *(unsigned int *)(base + 8) = (unsigned int)&EsiInstallSetCbChainExtend_0048a970;
+    *(unsigned int *)(base + 8) = MK4_CODE_VA(EsiInstallSetCbChainExtend_0048a970);
     ((ScenegraphNode *)(g_baseSel * 4))->install_flag = 1;
     {
         unsigned int t = *(unsigned int *)(base + 4);
         g_currentNodeIdx = t;
-        *(unsigned int *)(t * 4) = (unsigned int)&EsiInstallSetCbChainExtend_0048a970 + 0x01000000;
+        *(unsigned int *)(t * 4) = MK4_CODE_VA(EsiInstallSetCbChainExtend_0048a970) + 0x01000000;
         g_currentNodeIdx = g_currentNodeIdx + 1;
         *(unsigned int *)(base + 4) = g_currentNodeIdx;
     }

@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -124,7 +125,7 @@ int ChainWalkSelfRecursive(void) {
     g_eventQueueWorkType = link;
     if ((unsigned int)g_walkCallback != 0) {
         ((ScenegraphNode *)(g_currentNodeIdx * 4))->not_mask = (unsigned int)g_walkCallback;
-        g_xformEntityIdx = (unsigned int)&HitReactionDispatcher;
+        g_xformEntityIdx = MK4_CODE_VA(HitReactionDispatcher);
         Thunk_ChainNodeInit();
         return g_framePauseFlag;
     }

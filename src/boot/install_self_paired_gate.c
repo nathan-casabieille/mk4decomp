@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -129,7 +130,7 @@ void InstallSelfPairedGate(void) {
     Eleven404b90_404c00();
     if (g_framePauseFlag != 0) return;
     g_pendingNodeType = g_pendingNodeTypeSrc;
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfPairedGate;
+    *(unsigned int *)(base + 8) = MK4_CODE_VA(InstallSelfPairedGate);
     ((ScenegraphNode *)base)->install_flag = 1;
     g_framePauseFlag = 1;
 }

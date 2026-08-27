@@ -11,6 +11,7 @@ extern unsigned int g_currentNodeIdx;
 /* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
 #ifdef MK4_ARENA
 #include "portable/mem_model.h"
+#include "portable/code_va.h"
 #define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_matrixStackTop (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
 #endif
@@ -24,6 +25,6 @@ extern void func_0041f780_pp(void);
 extern void GuardedLoopWithCallback_Callback_004284c0(void);
 void GuardedLoopWithCallback(void) {
     g_matrixStackTop++;
-    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = (unsigned int)&GuardedLoopWithCallback_Callback_004284c0;
+    *(unsigned int *)MK4_PTR((g_matrixStackTop * 4)) = MK4_CODE_VA(GuardedLoopWithCallback_Callback_004284c0);
     EsiInstallChainCallIndirect();
 }

@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -32,5 +33,5 @@ void ScaledChainCmpDispatch(int arg) {
     g_currentNodeIdx = idx;
     target = *(unsigned int *)(idx * 4);
     g_currentNodeIdx = target;
-    ((void (*)(void))target)();
+    ((void (*)(void))MK4_ResolveCode(target))();
 }

@@ -36,5 +36,5 @@ void StackPopDispatchTagged(void) {
     ((ScenegraphNode *)MK4_PTR((g_baseSel * 4)))->install_flag = (unsigned int)((int)g_walkCallback >> 24);
     walk = (unsigned int)g_walkCallback & 0xffffff;
     g_walkCallback = (void (*)(void))walk;
-    ((void (*)(void))walk)();
+    ((void (*)(void))MK4_ResolveCode(walk))();
 }

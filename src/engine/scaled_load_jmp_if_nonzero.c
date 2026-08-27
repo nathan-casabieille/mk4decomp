@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/mem_model.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -30,6 +31,6 @@ void ScaledLoadJmpIfNonzero(void) {
     g_walkCallback = (void (*)(void))0;
     *(unsigned int *)(idx * 4 + 0x4c) = 0;
     if (g_pendingNodeType != 0) {
-        ((void (*)(void))g_pendingNodeType)();
+        ((void (*)(void))MK4_ResolveCode(g_pendingNodeType))();
     }
 }

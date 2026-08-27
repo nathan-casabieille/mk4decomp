@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -29,6 +30,6 @@ void CallPauseCallTestStackPushJmp(void) {
     g_walkCallback = (void (*)(void))2;
     top++;
     g_matrixStackTop = top;
-    *(unsigned int *)(top * 4) = (unsigned int)&FiveCallGuardSetTail;
+    *(unsigned int *)(top * 4) = MK4_CODE_VA(FiveCallGuardSetTail);
     MstackPopScaledChainPlusThunks();
 }

@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_currentNodeIdx;
 
@@ -20,7 +21,7 @@ void GuardedSelfRefSet(void) {
     do {
         if (g_fightGroupHead == g_player1NodeIdx) break;
         if (g_fightGroupHead == g_player2NodeIdx) break;
-        *(unsigned int *)(base + 8) = (unsigned int)&GuardedSelfRefSet;
+        *(unsigned int *)(base + 8) = MK4_CODE_VA(GuardedSelfRefSet);
         ((ScenegraphNode *)base)->install_flag = 1;
         g_pendingNodeType = 0x0a;
         g_framePauseFlag = 1;

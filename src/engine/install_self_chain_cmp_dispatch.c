@@ -3,6 +3,7 @@
  */
 #include "engine/scenegraph.h"
 #include "game/tick.h"
+#include "portable/code_va.h"
 
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -137,7 +138,7 @@ void InstallSelfChainCmpDispatch(void) {
         CjInstallSelfRouter();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)&InstallSelfChainCmpDispatch;
+    *(unsigned int *)(base + 8) = MK4_CODE_VA(InstallSelfChainCmpDispatch);
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
