@@ -244,3 +244,5 @@ src/engine/state_install_thunks.c
 src/engine/arg_sar_add_deref_jmp.c
 src/engine/helper_pre_tick.c
 src/game/dispatch_scaled_lea.c
+src/engine/helper_tex_upload.c
+src/engine/tex_rle.c

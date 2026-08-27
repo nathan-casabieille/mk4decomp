@@ -122,6 +122,11 @@ MAT3 = {'@0x7af990': 0x00100010, '@0x7af994': 0xfff00010,
 # The vtable at 0x004f7868 the dispatch indexes: 32 slots, every one a `ret`.
 VTBL = dict([('@0x%x' % (0x4f7868 + i * 4), RET_STUB) for i in range(32)])
 
+
+# The texture page base lives in a 32-bit slot at 0x00f85b34; point it at a
+# scratch region so an upload writes somewhere both runs share.
+TEXPAGE = {'@0xf85b34': 0x00ba0000, 'g_texturedTriVar': 0}
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -449,6 +454,38 @@ SEEDS = {
                           '@0xab4878': 0xf0000100, '@0xab487c': 0x0200f100,
                           '@0xab4880': 0xf2000300, '@0xab4884': 0x0400f300,
                           '@0xab4888': 0x8000f400}),
+    ],
+    # RLE stream at 0xb90000: literal, run-of-4, run with a zero colour (the
+    # XOR must be skipped), then a literal that ends the row.
+    # Both branches: g_texturedTriVar selects a straight row copy or the
+    # channel-expanding one, and only the second rewrites the pixels.
+    'Helper_TexUpload': [
+        ('plain row copy', dict(TEXPAGE, **{
+            '@0xf4d050': 0x7c1f001f, '@0xf4d054': 0x03e0ffff,
+            '@0xf4d250': 0x12345678, '@0xf4d254': 0x9abcdef0}),
+         (3, 2, 1, 4, 2)),
+        ('channel expand', dict(TEXPAGE, **{
+            'g_texturedTriVar': 1,
+            '@0xf4d050': 0x7c1f001f, '@0xf4d054': 0x03e0ffff,
+            '@0xf4d250': 0x12345678, '@0xf4d254': 0x9abcdef0}),
+         (3, 2, 1, 4, 2)),
+        ('zero height writes nothing', dict(TEXPAGE, **{
+            '@0xf4d050': 0x7c1f001f}), (3, 0, 0, 4, 0)),
+    ],
+    'Tex_DecodeRLE16': [
+        ('literals and runs', dict(TEXPAGE, **{
+            'g_texXorKey': 0x1234,
+            '@0xb90000': 0x8004001f,       # lit 0x001f, then code 0x8004...
+            '@0xb90004': 0x03800002,
+            '@0xb90008': 0x7c1f8000,
+            '@0xb9000c': 0x00000002}),
+         (3, 8, 2, 0xb90000)),
+        # a negative slot must clamp to 14, not index backwards
+        ('negative slot clamps', dict(TEXPAGE, **{
+            'g_texXorKey': 0,
+            '@0xb90000': 0x001f001f, '@0xb90004': 0x001f001f,
+            '@0xb90008': 0x001f001f, '@0xb9000c': 0x001f001f}),
+         (0xffffffff, 4, 1, 0xb90000)),
     ],
     'ChainStreamMatMulVecAdd': [
         ('project and accumulate', {'g_eventQueueTotal': 0x2e4040,

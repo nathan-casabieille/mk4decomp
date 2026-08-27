@@ -108,11 +108,14 @@ extern u16  g_texSlots[16];                               /* 0x00ab4e00 */
 extern u32  g_texNodeIdx[];                               /* 0x00ab4e78 */
 extern u32  g_texCount[];                                 /* 0x00ab5038 */
 
-/* Decode a RLE-555 texture block into the staging buffer at
- * 0xf4d050. row_width is clamped to 14 (or kept at <=14) and
- * passed to the upload helper at the end. */
-void Tex_DecodeRLE16(s32 row_width, s32 row_pixels, s32 row_count,
-                     const u8 *src, s32 arg5);           /* 0x004bd5f0 */
+/* Decode a RLE-555 texture block into the 256-pixel-wide staging
+ * buffer at 0xf4d050, then upload the rectangle. The first argument
+ * is the TEXTURE SLOT, clamped unsigned to 14, and it is what the
+ * upload helper receives - it is not a width. LoadGeoAsset_Textures
+ * pushes exactly four arguments; the fifth this used to declare does
+ * not exist. */
+void Tex_DecodeRLE16(s32 slot, s32 width, s32 height,
+                     const u8 *src);                     /* 0x004bd5f0 */
 
 /* === Joystick subsystem ===================================== */
 

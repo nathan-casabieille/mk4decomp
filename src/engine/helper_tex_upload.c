@@ -13,10 +13,29 @@
  *       write to [0xf85b34 + offset]. Step both by 0x200 between rows.
  *   Else: bulk rep movsd/movsb copy [0xf4d050] → [0xf85b34], rows of 0x200 bytes.
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_texturedTriVar;
 extern unsigned int g_dispatchSave1400;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_dispatchSave1352 (*(unsigned int *)MK4_VA(unsigned int, 0xf6e058u))
+#define g_dispatchSave1400 (*(unsigned int *)MK4_VA(unsigned int, 0xf85b34u))
+#define g_texStripeBuf (*(unsigned short *)MK4_VA(unsigned short, 0xf4d050u))
+#define g_texturedTriVar (*(unsigned int *)MK4_VA(unsigned int, 0x4ffd4cu))
+#endif
+
 
 #ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+/* The 256-pixel-wide staging buffer Tex_DecodeRLE16 fills, and the texture
+ * page base - a VA in a 32-bit slot, so every destination goes through the
+ * seam. The source is a fixed address and can be aliased directly. */
+#define g_texStripeBuf (*(unsigned int *)MK4_VA(unsigned int, 0x00f4d050u))
+
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
 void Helper_TexUpload(uint param_1,int param_2,int param_3,int param_4,int param_5)
 
@@ -32,14 +51,16 @@ void Helper_TexUpload(uint param_1,int param_2,int param_3,int param_4,int param
   undefined4 *puVar9;
   
   iVar8 = g_texturedTriVar;
-  (&g_dispatchSave1352)[param_1 & 0xf] = 1;
+  /* BYTE-indexed in the original (`mov byte ptr [ecx + 0xf6e058], 1`); the
+     lift had it as a dword array, which put slot 3's flag at +0xc. */
+  *(unsigned char *)MK4_VA(unsigned char, 0x00f6e058u + (param_1 & 0xf)) = 1;
   iVar1 = (param_1 & 0xf) * 0x10000;
   if (iVar8 == 0) {
     if (0 < param_5) {
       puVar4 = &g_texStripeBuf;
       iVar8 = (param_3 * 0x100 + param_2 + iVar1) * 2;
       do {
-        puVar9 = (undefined4 *)(g_dispatchSave1400 + iVar8);
+        puVar9 = (undefined4 *)MK4_PTR(g_dispatchSave1400 + iVar8);
         iVar8 = iVar8 + 0x200;
         puVar7 = puVar4;
         for (uVar3 = (uint)(param_4 * 2) >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
@@ -67,7 +88,7 @@ void Helper_TexUpload(uint param_1,int param_2,int param_3,int param_4,int param
       if (0 < param_4) {
         do {
           iVar6 = iVar6 + -1;
-          *(ushort *)(g_dispatchSave1400 + -2 + iVar1 + 2) = (*puVar2 & 0xffe0) << 1 | *puVar2 & 0x3f;
+          *(ushort *)MK4_PTR(g_dispatchSave1400 + iVar1) = (*puVar2 & 0xffe0) << 1 | *puVar2 & 0x3f;
           puVar2 = puVar2 + 1;
           iVar1 = iVar1 + 2;
         } while (iVar6 != 0);
