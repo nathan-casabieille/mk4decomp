@@ -4,11 +4,16 @@
  * Each compiles to `push CONST; call Target; add esp, 4; ret`
  * (14 bytes). Likely auto-generated trampolines for static-init
  * constructors or per-table dispatch helpers.
+ *
+ * The constant each pushes is a VA. Where the target takes a POINTER it has
+ * to go through the seam - passed raw it is a host-pointer deref of an
+ * address in the 0x4xxxxx range, which is exactly nothing on this host.
  */
+#include "portable/mem_model.h"
 
 /* Externs for wrapper targets. */
 extern void SaveCallRestore(unsigned int arg);   /* 0x004049d0 */
-extern void OrListLoop(unsigned int arg);   /* 0x0041fcc0 */
+extern void OrListLoop(int *table);   /* 0x0041fcc0 - takes a POINTER */
 extern void PackedAdvanceCallTailJmp(unsigned int arg);   /* 0x004392c0 */
 extern void CmpDualPatchScaledRangeJmp(unsigned int arg);   /* 0x004399c0 */
 extern void ArgSarStoreJmp(unsigned int arg);   /* 0x004594f0 */
@@ -19,10 +24,10 @@ extern void Cascade5StageInit(unsigned int arg);   /* 0x00491520 */
 
 /* The wrappers. */
 /* @addr 0x0041fcf0 */
-void Wrapper_OrListLoop_004de3f8(void) { OrListLoop(0x004de3f8u); }
+void Wrapper_OrListLoop_004de3f8(void) { OrListLoop((int *)MK4_PTR(0x004de3f8u)); }
 
 /* @addr 0x0041fd00 */
-void Wrapper_OrListLoop_004d8e80(void) { OrListLoop(0x004d8e80u); }
+void Wrapper_OrListLoop_004d8e80(void) { OrListLoop((int *)MK4_PTR(0x004d8e80u)); }
 
 /* @addr 0x00433940 */
 void Wrapper_PackedAdvanceCallTailJmp_004e44f0(void) { PackedAdvanceCallTailJmp(0x004e44f0u); }

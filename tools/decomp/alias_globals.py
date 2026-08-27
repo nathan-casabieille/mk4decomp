@@ -84,6 +84,26 @@ def _strip_decls(text):
                      if not l.lstrip().startswith('extern'))
 
 
+_HDRS = None
+
+
+def header_array_decl(g):
+    """Return the element type when include/ declares `extern T g[];`.
+
+    A file often uses a global it does not declare itself - g_nodeSlotsArea is
+    declared once in engine/scenegraph.h and memset by zero_large_block.c - and
+    a scalar alias there passes the global's VALUE as the pointer. Zero, at
+    rest, which is how the boot path came to memset a null."""
+    global _HDRS
+    if _HDRS is None:
+        _HDRS = ''
+        for h in (Path(__file__).resolve().parents[2] / 'include').rglob('*.h'):
+            _HDRS += h.read_text(errors='ignore')
+    m = re.search(r'(?m)^extern\s+((?:unsigned\s+|signed\s+|const\s+)*\w+)\s+\**%s\s*\['
+                  % re.escape(g), _HDRS)
+    return CTYPE.get(m.group(1).strip()) if m else None
+
+
 _WIDTHS = None
 
 
@@ -105,6 +125,18 @@ def binary_width(g):
 
 def declared_type(g, src):
     """Base type from the file's own `extern <type> g;` line, if it has one."""
+    # An ARRAY declaration wins over the binary-derived width map. That map is
+    # built from direct absolute-VA operands only, so it cannot see a
+    # register-indirect access - `rep stosd` over 42 dwords from 0x7af958 is
+    # invisible to it, and it duly reported that address as a 2-byte field.
+    # If the source says the name is an array base, it is a base.
+    if header_array_decl(g) and not re.search(
+            r'(?m)^extern\s+[\w ]+\**%s\s*;' % re.escape(g), src):
+        return header_array_decl(g)
+    if re.search(r'(?m)^extern\s+[\w ]+\**%s\s*\[' % re.escape(g), src):
+        m = re.search(r'(?m)^extern\s+((?:unsigned\s+|signed\s+)?\w+)\s+\**%s\s*\['
+                      % re.escape(g), src)
+        return CTYPE.get(m.group(1).strip()) if m else None
     if g in WIDTH16:
         return 'short'          # authoritative; the source declaration is wrong
     if g in WIDTH32:
@@ -115,9 +147,15 @@ def declared_type(g, src):
     return CTYPE.get(m.group(1).strip())
 
 
-def gdef(g, va, text, ctype=None):
-    """Usage-aware alias - mirrors verify_coexec.gdef / gen_wasm_render.gdef_arena."""
+def gdef(g, va, text, ctype=None, is_array=False):
+    """Usage-aware alias - mirrors verify_coexec.gdef / gen_wasm_render.gdef_arena.
+
+    `is_array` comes from the file's own `extern T g[];`. Usage alone cannot
+    always tell: a global handed straight to memset (or any pointer parameter)
+    appears bare, and a scalar alias then passes its VALUE as the pointer."""
     t = ctype or 'unsigned int'
+    if is_array:
+        return '#define %s ((%s *)MK4_VA(%s, 0x%xu))' % (g, t, t, va)
     if re.search(r'\(\s*\*\s*%s\s*\)\s*\(' % g, text) or re.search(r'\b%s\s*\(' % g, text):
         return '#define %s (*(unsigned int (**)())MK4_VA(unsigned int, 0x%xu))' % (g, va)
     if re.search(r'\b%s\s*\[' % g, text):
@@ -216,7 +254,17 @@ def main():
              '#ifdef MK4_ARENA',
              '#include "portable/mem_model.h"']
     for g in globs:
-        alias.append(gdef(g, gl_va[g], text, declared_type(g, src)))
+        # Array form ONLY when the file declares the name as an array AND
+        # never takes its address. `&g_x` on a scalar alias already yields the
+        # right address and is the established spelling in the verified render
+        # twins; turning those into an array alias would make `&g_x` the
+        # address of an rvalue, which will not even compile.
+        declared_array = bool(re.search(
+            r'(?m)^extern\s+[\w ]+\**%s\s*\[' % re.escape(g), src)) \
+            or header_array_decl(g) is not None
+        takes_address = bool(re.search(r'&\s*%s\b' % re.escape(g), text))
+        alias.append(gdef(g, gl_va[g], text, declared_type(g, src),
+                          is_array=declared_array and not takes_address))
     alias += ['#endif', '']
 
     # 2. place the alias block after the last guarded run, or after the last

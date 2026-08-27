@@ -60,6 +60,21 @@ __attribute__((weak)) int g_renderer5_surface;
 long long __alldiv(long long a, long long b) { return b ? a / b : 0; }
 long long __allshl(long long a, int n)       { return a << (n & 63); }
 
+/* --- MSVC CRT per-thread data block ----------------------------------------
+ * Crt_srand and Crt_rand keep the PRNG seed at offset 0x14 of the block this
+ * returns - MSVC's _getptd. The port has no MSVC CRT, so it supplies the block
+ * directly: single-threaded, zero-initialised, which is what the original
+ * starts from anyway. Without it the getter is a weak stub returning 0 and
+ * srand writes to address 0x14.
+ *
+ * 0x80 bytes is comfortably past every offset the linked CRT twins touch. */
+void *PendingMatch_004c9df0(void)
+{
+    static unsigned char ptd[0x80];
+
+    return ptd;
+}
+
 /* --- engine functions still naked, reached from the newly linked TUs ------- */
 __attribute__((weak)) void CjChainResetThreshold(void)     { }
 __attribute__((weak)) void DualSubFromField(void)          { }

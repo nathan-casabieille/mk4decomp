@@ -3,6 +3,12 @@
  */
 #include "engine/scenegraph.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#endif
+
+
 extern void *PendingMatch_004c9df0(void);
 
 void Crt_srand(int x) {

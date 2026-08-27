@@ -3,6 +3,7 @@
  * placeholders. All weak, gated by MK4_NATIVE_FULL. The native-port work-list. */
 
 #ifdef MK4_NATIVE_FULL
+__attribute__((weak)) unsigned int g_dispatchSave1161;
 __attribute__((weak)) unsigned int g_audioPreState;
 __attribute__((weak)) unsigned int g_audioRestoreSlot3;
 __attribute__((weak)) unsigned int g_audioState00;
@@ -274,4 +275,9 @@ __attribute__((weak)) int Menu_InsertCDDialog(){return 0;}
 __attribute__((weak)) int Menu_PauseMenu(){return 0;}
 __attribute__((weak)) int Helper_DrawMenu_PostRender(){return 0;}
 __attribute__((weak)) int AppInit_Misc8(){return 0;}
+__attribute__((weak)) int GlobalsResetInit(){return 0;}
+__attribute__((weak)) int PendingMatch_004c9df0(){return 0;}
+__attribute__((weak)) int SentinelInitTripleCall(){return 0;}
+__attribute__((weak)) int Anim_LoadPackFile(){return 0;}
+__attribute__((weak)) int Init0AndMax(){return 0;}
 #endif /* MK4_NATIVE_FULL */

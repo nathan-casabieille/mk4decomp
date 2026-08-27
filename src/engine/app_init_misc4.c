@@ -20,9 +20,20 @@
  *   pop     edi
  *   ret
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dispatchSave1578;
 extern unsigned int g_dispatchSave1568;
 extern unsigned int g_dispatchSave1513;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_dispatchSave1513 (*(unsigned int *)MK4_VA(unsigned int, 0xab44f8u))
+#define g_dispatchSave1568 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e00u))
+#define g_dispatchSave1578 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e78u))
+#endif
+
 extern void *memset(void *, int, unsigned int);
 #pragma intrinsic(memset)
 void AppInit_Misc4(void) {

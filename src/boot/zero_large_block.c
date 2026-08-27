@@ -16,9 +16,11 @@ extern unsigned int g_extra_0052ab3c;
 #define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
 #define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_extra_0052ab3c (*(unsigned int *)MK4_VA(unsigned int, 0x52ab3cu))
-#define g_nodeSlotsArea (*(unsigned int *)MK4_VA(unsigned int, 0x53e368u))
+#define g_nodeSlotsArea ((unsigned char *)MK4_VA(unsigned char, 0x53e368u))
 #endif
 
+extern void *memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
 
 void ZeroLargeBlock(void) {
     g_extra_0052ab3c = 0;

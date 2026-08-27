@@ -3,6 +3,12 @@
  */
 #include "engine/scenegraph.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#endif
+
+
 /* @addr 0x004c6510 (45b)
  *   call F; mul-by-N pattern via lea/shl on [eax + 0x14];
  *   ((x * 13 << 4) + x) << 8 - x → effectively x * (13<<12 - 1) etc.

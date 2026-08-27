@@ -4,9 +4,20 @@
 #include "engine/scenegraph.h"
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
+#include "engine/geo.h"   /* LoadGeoAsset_Default */
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#endif
+
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+/* Portable twin. The whole function is 13 bytes - set the current node to
+ * the packed pointer for 0x51134c, then TAIL-JUMP into LoadGeoAsset_Default.
+ * (config/symbols.yaml gives it 5812 bytes; that span is padding and the
+ * functions after it, not this one.) */
 void AppInit_Misc7(void)
 
 {

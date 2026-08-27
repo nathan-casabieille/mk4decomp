@@ -18,12 +18,47 @@ extern void MainLoopStep(void);
 extern void MK4_NativeVideoInit(void);
 extern void MK4_NativeVideoPresent(void);
 
+/* The engine's own state initialisers, in AppInit's order.
+ *
+ * AppInit splits cleanly in two. Its first half is hardware - Timer_Init,
+ * Joystick_Init, Gfx_Init, AuxAudio_Init, DSound_Init, TryInitRenderer - and
+ * that is precisely the half this backend replaces with SDL, so none of it is
+ * called here. Its tail builds the game state the frame body then walks, and
+ * without it MainLoopStep dereferences packed pointers of zero.
+ *
+ * Anything still on the weak stub frontier is a no-op for now, so this runs
+ * what exists rather than all of it; `make native-arena-check` reports which
+ * VAs are still empty. */
+extern void AppInit_Misc2(void);        /* heap: clear 3 MB, seed the free head */
+extern void AppInit_Misc3(void);        /* zero the 42-dword scratch block */
+extern void AppInit_Misc4(void);
+extern void MStackPackedInit(void);
+extern void Set2FiveCallPauseJmp(void);
+extern void AppInit_Misc7(void);
+extern void AppInit_Misc8(void);
+extern void Crt_srand(unsigned seed);
+
+static void MK4_EngineStateInit(void)
+{
+    AppInit_Misc2();
+    AppInit_Misc3();
+    AppInit_Misc4();
+    MStackPackedInit();
+    Set2FiveCallPauseJmp();
+    AppInit_Misc7();
+    AppInit_Misc8();
+    /* AppInit seeds the PRNG from timeGetTime; a fixed seed keeps the native
+     * build reproducible, which the frame gates depend on. */
+    Crt_srand(1);
+}
+
 int MK4_GameInit(int argc, char **argv)
 {
     (void)argc; (void)argv;
     /* Point the renderer's BeginFrame hook at an arena framebuffer and fill
      * the tables the boot path would have built. See engine_video.c. */
     MK4_NativeVideoInit();
+    MK4_EngineStateInit();
     return 0;
 }
 

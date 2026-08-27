@@ -10,6 +10,7 @@ src/audio/helper_tick_frame_misc.c
 src/audio/helper_title_audio_reset.c
 src/audio/range_mul_mod.c
 src/audio/store_pause_imul_shr16.c
+src/boot/app_init_misc3.c
 src/boot/boot_chain_push_add_sign_flag.c
 src/boot/boot_scheduled_node_timer_walk.c
 src/boot/call_pause_scaled_store_add.c
@@ -22,6 +23,7 @@ src/boot/main_loop.c
 src/boot/mul10_tail.c
 src/boot/node_chain_mask_match.c
 src/boot/node_unlink.c
+src/boot/once_call.c
 src/boot/or_list_loop.c
 src/boot/push_set_xfm_mask_call_pop.c
 src/boot/save_call_restore.c
@@ -29,15 +31,21 @@ src/boot/scaled_and_mask_init_jmp.c
 src/boot/scaled_load_or_set_jmp.c
 src/boot/scaled_neg1_set_pause.c
 src/boot/scaled_pushpop_helpers.c
+src/boot/set2_five_call_pause_jmp.c
+src/boot/small_init_helpers.c
 src/boot/stack_pop_dispatch_tagged.c
 src/boot/struct_array_walk_cond_call.c
 src/boot/table_lookup_iat_call.c
 src/boot/zero_and_dirty4.c
 src/boot/zero_large_block.c
 src/crt/crt_heap_commit_free_cluster.c
+src/crt/crt_rand.c
+src/crt/crt_srand.c
 src/engine/alarm_countdown_install.c
 src/engine/allocate_node.c
 src/engine/alt_cam_matrix_project.c
+src/engine/app_init_misc4.c
+src/engine/app_init_misc7.c
 src/engine/arg_sar_store_jmp.c
 src/engine/blit_blend16bpp.c
 src/engine/call_dual_store_xor_bit.c

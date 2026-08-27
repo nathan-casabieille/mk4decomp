@@ -41,7 +41,13 @@ extern unsigned int g_currentNodeIdx;
  *   ret
  */
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+/* Portable twin. The table is {target VA, value} pairs, terminated by a pair
+ * of zeros; each step ORs the value's packed form into the word the target VA
+ * names. The target is a VA, so it goes through the seam - used raw it is a
+ * host-pointer deref of an address like 0x004d72b4, which is nothing here.
+ *
+ * The terminator test compares the RAW entry against zero, not the translated
+ * pointer: MK4_PTR(0) is not null, it is the arena base minus 0x400000. */
 void OrListLoop(int *param_1)
 
 {
@@ -49,10 +55,10 @@ void OrListLoop(int *param_1)
   uint *puVar2;
   
   while( true ) {
-    puVar2 = (uint *)*param_1;
+    puVar2 = (uint *)MK4_PTR((unsigned)*param_1);
     piVar1 = param_1 + 1;
     param_1 = param_1 + 2;
-    if ((*piVar1 == 0) && (puVar2 == (uint *)0x0)) break;
+    if ((*piVar1 == 0) && (*(param_1 - 2) == 0)) break;
     *puVar2 = *puVar2 | *piVar1 >> 2;
   }
   return;
