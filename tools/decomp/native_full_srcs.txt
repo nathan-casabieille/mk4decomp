@@ -236,3 +236,5 @@ src/engine/cleanup_call_twice.c
 src/engine/scaled_neg_three_words.c
 src/engine/set_hi6.c
 src/engine/store_at_minus8.c
+src/engine/chain_walk_cleanup.c
+src/engine/chain_stream_mat_mul_vec_add.c

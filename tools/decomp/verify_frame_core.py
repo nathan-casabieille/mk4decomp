@@ -403,6 +403,36 @@ SEEDS = {
                                          'g_pendingNodeType': 0x2e4000})),
     ],
     # The 3x3 the projection helpers read, at its real address.
+    'ChainStreamMatMulVecAdd': [
+        ('project and accumulate', {'g_eventQueueTotal': 0x2e4040,
+                                    'g_xformEntityIdx': 0x2e4000,
+                                    'g_pendingNodeType': 0x2e4080,
+                                    'g_currentNodeIdx': 0x2e40c0,
+                                    '@0xb90000': 0x00100010, '@0xb90004': 0xfff00010,
+                                    '@0xb90008': 0x0010fff0, '@0xb9000c': 0x00100010,
+                                    '@0xb90010': 0x0010,
+                                    '@0xb90100': 11, '@0xb90104': 22, '@0xb90108': 0x2e4100,
+                                    '@0xb90200': 0x40, '@0xb90204': 0xffffffc0,
+                                    '@0xb90208': 0x80,
+                                    '@0xb90300': 5, '@0xb90304': 6, '@0xb90308': 7,
+                                    '@0xb90400': 3, '@0xb90404': 4, '@0xb90408': 5}),
+    ],
+    # Each case ends the walk a different way: the null link, the yield to
+    # Helper_TickAlt, and a two-node hop that reaches the null link.
+    'ChainWalkCleanup': [
+        ('null link, no handle', {'g_currentNodeIdx': 0x2e4000,
+                                  '@0xb90000': 0, '@0xb90048': 0}),
+        ('handle released first', {'g_currentNodeIdx': 0x2e4000,
+                                  '@0xb90000': 0, '@0xb90048': 0xb90100,
+                                  '@0xb900f4': 0x3f123456, '@0xb900f8': 0}),
+        ('yields on a non-1 field', {'g_currentNodeIdx': 0x2e4000,
+                                  '@0xb90000': 0x2e4040, '@0xb90048': 0,
+                                  '@0xb9000c': 7}),
+        ('hops one node then stops', {'g_currentNodeIdx': 0x2e4000,
+                                  '@0xb90000': 0x2e4040, '@0xb90048': 0,
+                                  '@0xb9000c': 1,
+                                  '@0xb90100': 0, '@0xb90148': 0}),
+    ],
     'ScaledNegThreeWords': [
         ('mixed signs', {'g_currentNodeIdx': 0x2e4000, 'g_xformDirtyFlags': 1,
                          '@0xb90000': 0xfe000100, '@0xb90004': 0x8000}),
