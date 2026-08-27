@@ -35,7 +35,12 @@
  * seam reaches them and every offset stays positive. */
 #define MK4_FB_VA     0x01000000u
 #define MK4_TEX_VA    0x01100000u
-#define MK4_LUT_VA    0x01200000u     /* 16 x 128 KB shading pages */
+#define MK4_TEX_SLOTS 16u            /* Helper_TexUpload puts the slot in bits
+                                      * 16..19 of the texel index, so the page
+                                      * is 16 x 256x256 = 2 MB. menu.tga goes
+                                      * to slot 15; models use slot 0. */
+#define MK4_TEX_SLOT_TEXELS 0x10000u
+#define MK4_LUT_VA    0x01300000u     /* 16 x 128 KB shading pages, above it */
 #define MK4_ENTRIES_VA 0x00f50000u    /* DrawEntry staging (g_dualC + 4) */
 
 /* Runtime-built tables: ALL THREE are zero in the static image because the
@@ -206,11 +211,16 @@ void MK4_NativeVideoInit(void)
                 unsigned char row[256 * 2];
                 int y;
 
+                /* Slot 15, which is where AppInit_Misc1 uploads it -
+                 * Helper_TexUpload's destination index is (slot << 16) | (y << 8) | x,
+                 * so the menu font lives 15 * 64K texels into the page. */
+                unsigned base = MK4_TEX_VA + 15u * MK4_TEX_SLOT_TEXELS * 2u;
+
                 fseek(tf, 18 + hdr[0], SEEK_SET);       /* skip the ID field */
                 for (y = 0; y < 256; y++) {
                     if (fread(row, 1, sizeof row, tf) != sizeof row)
                         break;
-                    memcpy(MK4_VA(void, MK4_TEX_VA + (unsigned)(255 - y) * 512u),
+                    memcpy(MK4_VA(void, base + (unsigned)(255 - y) * 512u),
                            row, sizeof row);
                 }
                 loaded = (y == 256);
@@ -296,7 +306,7 @@ void MK4_NativeSceneRects(int frame)
  * block+8 are relative TO THEIR OWN FIELD, so loading the file verbatim keeps
  * every offset valid. Only type-1 blocks are drawn; type-0 is a parallel
  * LOD/variant set that would render on top of itself. */
-#define MK4_GEO_VA  0x01400000u
+#define MK4_GEO_VA  0x01500000u
 
 extern void DrawMeshBlock(int block, int a1, int a2);
 

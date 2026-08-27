@@ -121,9 +121,9 @@ void *MK4_PtrChecked(unsigned va, const char *file, int line);
  * Discipline: every MK4_ALLOCA needs a matching MK4_ALLOCA_FREE on EVERY path
  * out, early returns included - the originals pop their stack unconditionally.
  */
-#define MK4_SCRATCH_TOP_VA  0x01440000u
-#define MK4_SCRATCH_BASE    0x01440010u
-#define MK4_SCRATCH_END     0x01450000u
+#define MK4_SCRATCH_TOP_VA  0x01600000u
+#define MK4_SCRATCH_BASE    0x01600010u
+#define MK4_SCRATCH_END     0x01610000u
 #define MK4_SCRATCH_SIZE    (MK4_SCRATCH_END - MK4_SCRATCH_TOP_VA)
 
 #define MK4_SCRATCH_TOP     (*(unsigned int *)MK4_VA(unsigned int, MK4_SCRATCH_TOP_VA))
