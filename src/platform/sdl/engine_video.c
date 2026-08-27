@@ -174,9 +174,58 @@ void MK4_NativeVideoInit(void)
      * exactly what crashed ScanlineTexBlit on the first attempt. */
     *(unsigned int *)MK4_VA(unsigned int, 0x00f85b34u) = MK4_TEX_VA;  /* 1400 */
     *(unsigned int *)MK4_VA(unsigned int, 0x00f4d028u) = MK4_LUT_VA;  /* 1340 */
-    for (k = 0; k < 0x10000u; k++)     /* a placeholder 256x256 RGB-555 page */
-        *(unsigned short *)MK4_VA(unsigned short, MK4_TEX_VA + k * 2) =
-            (unsigned short)((((k >> 4) & 0x1f) << 10) | ((k & 0x1f) << 5) | 0x10);
+    /* The real menu art if it has been extracted, else a placeholder page.
+     *
+     * `c:\source\mk4\win\menu.tga` in FILESYS.DAT is a 256x256 16-bit TGA -
+     * 1-5-5-5 little-endian, which IS the engine's texture format, so the
+     * pixels go in as-is. TGA stores rows bottom-up unless bit 5 of the image
+     * descriptor says otherwise, and this one does not, so the rows are
+     * flipped on the way in.
+     *
+     * Note this is the SHARED texture page: 0xf85b34 is the one base every
+     * blit reads, and the game refills it per screen. Loading the menu art
+     * here is right for the menu and will need to become per-screen once
+     * more of the asset path is converted. */
+    {
+        /* Only on the real frame path. The MK4_SCENE smoke scenes (rect, .geo)
+         * stage their own content and the rect one in particular reads this
+         * page directly, so replacing its bright placeholder with menu.tga -
+         * which is 69% black - would just darken a test picture. */
+        FILE *tf = getenv("MK4_SCENE") ? NULL
+                                       : fopen("build/assets/menu.tga", "rb");
+        int loaded = 0;
+
+        if (tf) {
+            unsigned char hdr[18];
+
+            if (fread(hdr, 1, sizeof hdr, tf) == sizeof hdr &&
+                hdr[2] == 2 && hdr[16] == 16 &&
+                (hdr[12] | (hdr[13] << 8)) == 256 &&
+                (hdr[14] | (hdr[15] << 8)) == 256) {
+                unsigned char row[256 * 2];
+                int y;
+
+                fseek(tf, 18 + hdr[0], SEEK_SET);       /* skip the ID field */
+                for (y = 0; y < 256; y++) {
+                    if (fread(row, 1, sizeof row, tf) != sizeof row)
+                        break;
+                    memcpy(MK4_VA(void, MK4_TEX_VA + (unsigned)(255 - y) * 512u),
+                           row, sizeof row);
+                }
+                loaded = (y == 256);
+            }
+            fclose(tf);
+        }
+        if (loaded) {
+            SDL_Log("native video: menu.tga loaded into the texture page");
+        } else {
+            for (k = 0; k < 0x10000u; k++)   /* placeholder 256x256 RGB-555 */
+                *(unsigned short *)MK4_VA(unsigned short, MK4_TEX_VA + k * 2) =
+                    (unsigned short)((((k >> 4) & 0x1f) << 10) |
+                                     ((k & 0x1f) << 5) | 0x10);
+            SDL_Log("native video: no build/assets/menu.tga - placeholder page");
+        }
+    }
 
     SDL_Log("native video: mode=%d %dx%d, fb@VA 0x%x, tables seeded "
             "(sin/div3/zsort/shading)", mode, s_w, s_h, MK4_FB_VA);

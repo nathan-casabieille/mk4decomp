@@ -480,6 +480,14 @@ $(GEO_ASSET):
 	build/venv/bin/python tools/fsys_extract.py game/FILESYS.DAT \
 		'c:\source\mk4\win\geogfx\$(CHAR)_geo.geo' $@
 
+# The menu's own texture page: a 256x256 16-bit TGA in FILESYS.DAT, which is
+# 1-5-5-5 little-endian, i.e. the engine's texture format unchanged.
+MENU_TEX := $(BUILD_DIR)/assets/menu.tga
+$(MENU_TEX):
+	@mkdir -p $(BUILD_DIR)/assets
+	build/venv/bin/python tools/fsys_extract.py game/FILESYS.DAT \
+		'c:\source\mk4\win\menu.tga' $@
+
 GEO_TEX := $(BUILD_DIR)/assets/$(CHAR)_tex.bin
 $(GEO_TEX): $(GEO_ASSET)
 	build/venv/bin/python tools/geo_decode.py $(GEO_ASSET) 0 --raw $@
@@ -519,7 +527,7 @@ native-geo: $(NATIVE_GEO_PPM) $(GEO_ASSET) $(GEO_TEX)
 #   BeginFrame -> Renderer5_BeginFrame_SW_FS_Hi (the port's video hook)
 #              -> SetViewport -> DrawScene -> FlushDrawQueue -> rasterisers
 #              -> arena framebuffer -> SDL
-native-frame-check: native-full $(ARENA_BLOB)
+native-frame-check: native-full $(ARENA_BLOB) $(MENU_TEX)
 	@MK4_SCENE=rect MK4_MAX_FRAMES=3 MK4_DUMP_PPM=$(BUILD_DIR)/native/frame.ppm \
 		$(NATIVE_FULL_EXE) $(ARENA_BLOB) 2>&1 | grep -E "native video|non-zero" || true
 	@build/venv/bin/python -c "import sys; d=open('$(BUILD_DIR)/native/frame.ppm','rb').read(); \
