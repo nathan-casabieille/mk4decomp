@@ -104,6 +104,11 @@ def _readers(key, joy):
     return {'@0x4b5450': imm_ret(key),        # Input_GetAsyncKey
             '@0x4b5380': imm_ret(joy)}        # Input_PollJoystick
 
+# A 3x3 matrix in a scratch node: four dwords plus a trailing halfword.
+MAT = {'@0xb90000': 0x11112222, '@0xb90004': 0x33334444,
+       '@0xb90008': 0x55556666, '@0xb9000c': 0x77778888,
+       '@0xb90010': 0x9999}
+
 RET_STUB = 0x0041f2e0                    # AllocateNode's `ret`
 DISPATCH = dict([('g_dispatchVar20', 0xb92000 // 4)] +
                 [('@0x%x' % (0xb92000 + i * 4), RET_STUB) for i in range(4)])
@@ -379,6 +384,19 @@ SEEDS = {
                                    '@0xb90044': 0, '@0xb90000': 0, '@0xb90024': 0,
                                    '@0xb90028': 0, '@0xb90048': 0,
                                    'g_eventQueuePending': 0x2e4100, 'g_cj_0054205c': 0}),
+    ],
+    # Both copy a 3x3 out of a node; MAT seeds that node so the copy is visible.
+    'DirtyTestScaledCopy': [
+        ('dirty bit clear', {'g_xformDirtyFlags': 0}),
+        ('dirty bit set',   dict(MAT, **{'g_xformDirtyFlags': 0x10,
+                                         'g_pendingNodeType': 0x2e4000})),
+        ('dirty, other bits kept', dict(MAT, **{'g_xformDirtyFlags': 0xff,
+                                         'g_pendingNodeType': 0x2e4000})),
+    ],
+    'WtSnapshotPushCall': [
+        ('snapshot', dict(MAT, **{'g_xformEntityIdx': 0x2e4000,
+                                  'g_pendingNodeType': 0x2e4040,
+                                  'g_currentNodeIdx': 0x2e4080})),
     ],
     'Mem_Free': [
         ('below the heap',      _blocks(),          (0x7b0000,)),

@@ -65,6 +65,7 @@ src/engine/com_two_gate_call.c
 src/engine/cond_install_dispatch.c
 src/engine/copy_jmp.c
 src/engine/countdown_clamp_walk.c
+src/engine/dirty_test_scaled_copy.c
 src/engine/distance3_d_mul10_chain.c
 src/engine/double_stack_push_and_jmp.c
 src/engine/double_stack_push_and_jmp7b.c
@@ -203,6 +204,7 @@ src/engine/vec3_color_shift_clamp.c
 src/engine/weighted_sum_clamp_helper.c
 src/engine/word9_reorder.c
 src/engine/wrappers.c
+src/engine/wt_snapshot_push_call.c
 src/engine/z_bucket_clamp_store.c
 src/engine/zero_three_slots.c
 src/game/draw_menu.c

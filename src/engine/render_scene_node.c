@@ -45,7 +45,7 @@ extern int  DirtyTestScaledCopy(void);
 extern void DrawMeshBlock(void *p, unsigned int f, unsigned short w);
 extern void LeaScaledCall(int a);
 extern void MStackPushCallCallPop_func_00405dd0(void);
-extern void MatrixTransform3x3Q12(unsigned int dst, void *src);
+extern void MatrixTransform3x3Q12(unsigned int dst_va, unsigned int src_va);
 extern void MovesPanelEmit(void);
 extern void TransformAccumulate(void);
 extern void TristripBatchEmit2(void *p, unsigned int f, unsigned short w);
@@ -269,7 +269,7 @@ void RenderSceneNode(void)
                 g_mat3x3_007af99c = g_dispatchSave1557;
                 g_mat3x3_007af998 = g_dispatchSave1556;
                 g_mat3x3_007af9a0 = g_dispatchSave1558;
-                MatrixTransform3x3Q12(g_dualC * 4, &g_dispatchSave1525);
+                MatrixTransform3x3Q12(g_dualC * 4, MK4_UNPTR(&g_dispatchSave1525));
             }
             g_xformDirtyFlags |= 0x30;
         } else {
