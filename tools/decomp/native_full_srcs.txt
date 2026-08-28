@@ -11,6 +11,8 @@ src/audio/helper_aux_audio_post_init.c
 src/audio/helper_tick_frame_misc.c
 src/audio/helper_title_audio_reset.c
 src/audio/init_dispatchers_jmp.c
+src/audio/input_poll_flag_bits.c
+src/audio/input_poll_flag_bits_half.c
 src/audio/linked_list_insert.c
 src/audio/load_geo_assets_state_machine.c
 src/audio/m_stack_push_chain_step_index.c

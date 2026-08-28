@@ -168,9 +168,19 @@ void MK4_GameFrame(void)
              * three loading-screen work flags. Then the same two calls
              * Screen_ArcadeEnding makes: FSM to in-game, and the loading
              * screen's tick entry scheduled as a node callback. */
-            *MK4_VA(unsigned int, 0x537f48u) = 0;   /* P1 character index */
-            *MK4_VA(unsigned int, 0x5380e0u) = 1;   /* P2 character index */
-            *MK4_VA(unsigned int, 0x53a51cu) = 0;   /* arena index */
+            /* AudioInitSequence PUBLISHES these into the live slots
+             * (g_dlNalt1/2 at 0x537f48/0x5380e0), so stage its sources -
+             * writing the live slots directly is overwritten. */
+            {   const char *p1 = getenv("MK4_P1"), *p2 = getenv("MK4_P2");
+                const char *ar = getenv("MK4_ARENA_IDX");
+                *MK4_VA(unsigned int, 0x53a790u) = p1 ? (unsigned)atoi(p1) : 0;
+                *MK4_VA(unsigned int, 0x537ea0u) = p2 ? (unsigned)atoi(p2) : 1;
+                *MK4_VA(unsigned int, 0x541eccu) = 0;   /* P1 alt id */
+                *MK4_VA(unsigned int, 0x541ed0u) = 0;   /* P2 alt id */
+                *MK4_VA(unsigned int, 0x537edcu) = 0;   /* dest record 1 */
+                *MK4_VA(unsigned int, 0x53a1ccu) = 0;   /* dest record 2 */
+                *MK4_VA(unsigned int, 0x53a51cu) = ar ? (unsigned)atoi(ar) : 0;
+            }
             *MK4_VA(unsigned int, 0x543810u) = 1;   /* world re-init */
             *MK4_VA(unsigned int, 0x543814u) = 1;   /* audio re-init */
             *MK4_VA(unsigned int, 0x543818u) = 1;   /* hand to the loader */
@@ -181,7 +191,42 @@ void MK4_GameFrame(void)
              * the loading screen sets it to its own VA only while it owns
              * the frame, which would starve the node we just queued. */
             *MK4_VA(unsigned int, 0x543800u) = 0xffffffffu;
+            {   /* MK4_BOOT_MODE=vs|tour|prac picks the pump's mode entry
+                 * (the 0x4f512c table: 0x18 VS, 0x19 tournament, 0x1a
+                 * practice); without it the pump keeps its own selection. */
+                const char *m = getenv("MK4_BOOT_MODE");
+                if (m) {
+                    unsigned int c = !strcmp(m, "tour") ? 0x19u
+                                   : !strcmp(m, "prac") ? 0x1au : 0x18u;
+                    *MK4_VA(unsigned int, 0xab4360u) = c;
+                    SDL_Log("boot-match: mode command %x staged", c);
+                }
+            }
+            /* The loader's state 3 waits on the DirectSound stream-busy
+             * bits (0xc / 0xc00 of 0x4d50b4). Nothing sets them natively,
+             * so without this the loader waits there forever. */
+            if (!getenv("MK4_BOOT_NO_AUDIO_BITS"))
+                *MK4_VA(unsigned int, 0x4d50b4u) |= 4u;
             SDL_Log("boot-match: FSM -> 6, loading screen scheduled");
+        }
+        if (getenv("MK4_BOOT_MATCH") && (frame == 40 || frame == 199))
+            SDL_Log("boot f%-3d mode=%x tickW1=%-4x dl1=%x dl2=%x 89c=%x "
+                    "loaderState=%x texNode0=%x",
+                    frame, *MK4_VA(unsigned int, 0x543800u),
+                    *MK4_VA(unsigned int, 0x543550u),
+                    *MK4_VA(unsigned int, 0x537f48u),
+                    *MK4_VA(unsigned int, 0x5380e0u),
+                    (unsigned)*MK4_VA(unsigned char, 0x54389cu),
+                    0u, *MK4_VA(unsigned int, 0xab4e78u));
+        if (getenv("MK4_BOOT_MATCH") && (frame == 40 || frame == 199)) {
+            unsigned int n = *MK4_VA(unsigned int, 0x52ab3cu);
+            while (n) {
+                SDL_Log("   node %x handler=%08x state=%x timer=%d",
+                        n, *MK4_VA(unsigned int, n + 0xd8u),
+                        *MK4_VA(unsigned int, n + 0x84u),
+                        (int)*MK4_VA(short, n + 0xdcu));
+                n = *MK4_VA(unsigned int, n + 0xe4u);
+            }
         }
         if (getenv("MK4_TRACE_MSTACK") && (frame % 4) == 0)
             SDL_Log("f%-3d mstackTop=%08x nodeIdx=%08x", frame,

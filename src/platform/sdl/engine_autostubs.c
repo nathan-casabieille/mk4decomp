@@ -334,8 +334,6 @@ __attribute__((weak)) int EffectTableWalker(){return 0;}
 __attribute__((weak)) int GuardedSetupCallTailJmp(){return 0;}
 __attribute__((weak)) int Helper_AudioStop(){return 0;}
 __attribute__((weak)) int InitDispatchersJmp(){return 0;}
-__attribute__((weak)) int InputPollFlagBits(){return 0;}
-__attribute__((weak)) int InputPollFlagBitsHalf(){return 0;}
 __attribute__((weak)) int IterFnPtrs(){return 0;}
 __attribute__((weak)) int PushPopScaledInit343c(){return 0;}
 __attribute__((weak)) int RecordIter170(){return 0;}

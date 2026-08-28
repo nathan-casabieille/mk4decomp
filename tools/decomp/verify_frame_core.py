@@ -1276,6 +1276,28 @@ SEEDS = {
     ],
     # The geo-group walk: entries of the 0xab4e78 table are packed node
     # indices; entry word +4 selects the group. GeoLoadFixupLoop stubbed.
+    # The two button pollers: any of five state bits reports 1, else the
+    # fall-through bit. Both read only the two DirectSound state bytes.
+    'InputPollFlagBits': [
+        ('nothing down', {'@0x4d50b8': 0, '@0x4d50b4': 0}),
+        ('pad bit 1', {'@0x4d50b8': 2, '@0x4d50b4': 0}),
+        ('state bit 6', {'@0x4d50b8': 0, '@0x4d50b4': 0x40}),
+        ('pad bit 0', {'@0x4d50b8': 1, '@0x4d50b4': 0}),
+        ('state bit 4', {'@0x4d50b8': 0, '@0x4d50b4': 0x10}),
+        ('state bit 5', {'@0x4d50b8': 0, '@0x4d50b4': 0x20}),
+        ('fall-through pad bit 2', {'@0x4d50b8': 4, '@0x4d50b4': 0}),
+        ('fall-through, high bit set', {'@0x4d50b8': 0x84, '@0x4d50b4': 0}),
+    ],
+    'InputPollFlagBitsHalf': [
+        ('nothing down', {'@0x4d50b8': 0, '@0x4d50b4': 0}),
+        ('pad bit 5', {'@0x4d50b8': 0x20, '@0x4d50b4': 0}),
+        ('dword bit 14', {'@0x4d50b8': 0, '@0x4d50b4': 0x4000}),
+        ('pad bit 4', {'@0x4d50b8': 0x10, '@0x4d50b4': 0}),
+        ('dword bit 12', {'@0x4d50b8': 0, '@0x4d50b4': 0x1000}),
+        ('dword bit 13', {'@0x4d50b8': 0, '@0x4d50b4': 0x2000}),
+        ('fall-through pad bit 6', {'@0x4d50b8': 0x40, '@0x4d50b4': 0}),
+        ('fall-through, high bit set', {'@0x4d50b8': 0x80, '@0x4d50b4': 0}),
+    ],
     'TableWalkBoundedCmp': [
         ('one entry matches the group', {'@0xab4e78': 0x2e4000, '@0xab5030': 0x5a5a,
             '@0xb90000': 0xb94000, '@0xb94004': 8, 'g_currentNodeIdx': 0x1234,
