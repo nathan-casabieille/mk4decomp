@@ -14,8 +14,20 @@
  */
 #include "engine/scenegraph.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dualBitGate;     /* 0x004d57b0 (mirrors back) */
 extern unsigned int g_or;     /* 0x0052ab40 */
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventQueueCurrent (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_or (*(unsigned int *)MK4_VA(unsigned int, 0x52ab40u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#endif
+
 
 /* @addr 0x0048a190 */
 void OrDualStore_0048a190(void) {

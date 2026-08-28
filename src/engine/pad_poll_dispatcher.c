@@ -234,16 +234,8 @@ void Input_PollPlayerKeyboard(int player)
     unsigned int b, tgt, mask;
     int vk;
 
-#ifdef MK4_ARENA
-    /* The guard is a Win32 alt-tab courtesy, and under the arena the import
-     * slot holds no callable target - SDL owns window focus here, so it is
-     * dropped. This one line is the only part of the body the native build
-     * does not run; the thirteen-button loop below is what co-exec checks. */
-#else
-    if (((int (__stdcall *)(int))
-         MK4_ResolveCode(*MK4_VA(unsigned int, 0x4d21c0u)))(0x12) & 0x8001)
+    if (MK4_ALT_KEY_DOWN() & 0x8001)
         return;
-#endif
 
     for (b = 0; b < 13; b++) {
         vk = *MK4_VA(int, 0x543ab8u + b * 8u + (unsigned)player * 4u);

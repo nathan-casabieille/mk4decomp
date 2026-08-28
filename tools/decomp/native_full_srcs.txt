@@ -95,6 +95,7 @@ src/engine/chain_stream_mat_mul_vec_add.c
 src/engine/chain_walk_cleanup.c
 src/engine/cleanup_call_twice.c
 src/engine/cmp2_call_dirty_call.c
+src/engine/cmp2_dirty_toggle.c
 src/engine/cmp_dual_patch_scaled_range_jmp.c
 src/engine/cmp_jmp_two_branch.c
 src/engine/cmp_p1_dual_init_store.c
@@ -112,6 +113,7 @@ src/engine/dirty_bit_triple_write_or_call.c
 src/engine/dirty_test_scaled_copy.c
 src/engine/dispatcher_complex_260.c
 src/engine/distance3_d_mul10_chain.c
+src/engine/double_push_walk_init_jmp.c
 src/engine/double_stack_push_and_jmp.c
 src/engine/double_stack_push_and_jmp7b.c
 src/engine/double_stack_push_and_jmp7d.c
@@ -119,9 +121,11 @@ src/engine/download_char_setup.c
 src/engine/download_dual_push.c
 src/engine/draw_mesh_block.c
 src/engine/draw_scene.c
+src/engine/dual_bit_gate_init_call.c
 src/engine/dual_call_pause_dirty_jmp.c
 src/engine/dual_install_call_swap.c
 src/engine/dual_load_dual_store_jmp.c
+src/engine/dual_push_call_store.c
 src/engine/dual_push_set7d_call_pop.c
 src/engine/dual_scaled_lit_init_jmp.c
 src/engine/dual_scaled_load_store_jmp.c
@@ -201,6 +205,7 @@ src/engine/mul10_tail5x_interp.c
 src/engine/net_entity_scan_and_punish.c
 src/engine/nine_entry_flag_dispatch.c
 src/engine/not_shr_cmp1_store.c
+src/engine/or_dual_store.c
 src/engine/or_store_dec_stack_pop.c
 src/engine/pack_color.c
 src/engine/packed_advance_call_tail_jmp.c

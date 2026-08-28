@@ -144,6 +144,22 @@ void *MK4_PtrChecked(unsigned va, const char *file, int line);
 #define MK4_NODE_AT(T, idx, off) \
     (*(T *)((unsigned char *)MK4_NODE(unsigned char, (idx)) + (off)))
 
+/* The Win32 alt-tab courtesy check at the head of Input_PollPlayerKeyboard.
+ * The original asks the GetAsyncKeyState import whether Alt is held and
+ * skips the whole poll while it is, so a window switch does not land as a
+ * fistful of inputs. Under the arena the import slot holds no callable
+ * target and SDL owns window focus, so it reports "not held"; everywhere
+ * else (matching, and the co-exec harness at identity) it is the original
+ * call. It lives here rather than in the twin because a #ifdef inside a
+ * twin body ends the co-exec extractor's block scan early. */
+#ifdef MK4_ARENA
+#define MK4_ALT_KEY_DOWN()   0
+#else
+#define MK4_ALT_KEY_DOWN()                                              \
+    (((int (__stdcall *)(int))                                          \
+      MK4_ResolveCode(*MK4_VA(unsigned int, 0x4d21c0u)))(0x12))
+#endif
+
 /* Indirect-call seam: a stored function pointer holds an ORIGINAL code VA.
  * Under the relocated native build it must be mapped to the native function;
  * everywhere else (matching, verifier identity, flat 32-bit) it is the VA
