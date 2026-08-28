@@ -8,8 +8,23 @@
 #include "engine/scenegraph.h"
 #include "portable/mem_model.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_fightGroupHead (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_lit16_00542074 (*(unsigned short *)MK4_VA(unsigned short, 0x542074u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
+#define g_zerotriple_00541de8 (*(unsigned int *)MK4_VA(unsigned int, 0x541de8u))
+#define g_zerotriple_00541dec (*(unsigned int *)MK4_VA(unsigned int, 0x541decu))
+#endif
+
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
+#endif
 
 /* @addr 0x004296c0 (17b)
  *   mov     eax, [g_xformDirtyFlags]
@@ -30,8 +45,10 @@ void DirtyOrJmp(void) {
  *   mov     [g_X2], eax
  *   ret
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_zerotriple_00541de8;
 extern unsigned int g_zerotriple_00541dec;
+#endif
 void ZeroTriple(void) {
     g_walkCallback        = 0;
     g_zerotriple_00541de8 = 0;
@@ -57,7 +74,11 @@ void Add0fJmp(void) {
  *   add     esp, 4
  *   ret
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned short g_lit16_00542074;
+#endif
+
+
 extern int TaggedSceneDispatch(unsigned short);
 void Push16Call(void) {
     TaggedSceneDispatch(g_lit16_00542074);

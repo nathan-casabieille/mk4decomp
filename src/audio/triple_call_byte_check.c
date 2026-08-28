@@ -4,8 +4,10 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
+#endif
 
 /* @addr 0x004b2690 (60b): pure call chain - 11 calls + 1 jmp */
 extern void TestCallIat(void);
@@ -41,7 +43,18 @@ void AppShutdown(void) {
 extern int TestQueueGateState(void);
 extern int InputPollFlagBits(void);
 extern int InputPollFlagBitsHalf(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned char g_gtModeFlag;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_gtModeFlag (*(unsigned char *)MK4_VA(unsigned char, 0x543590u))
+#endif
+
 int TripleCallByteCheck(void) {
     if (TestQueueGateState() != 0) {
         g_gtModeFlag = 1;

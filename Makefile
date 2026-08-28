@@ -159,6 +159,14 @@ signed-audit:
 global-refs-audit:
 	@build/venv/bin/python tools/decomp/audit_global_refs.py
 
+# unaliased-writes-audit: a LINKED native TU that writes an engine global
+# without an arena alias. The assignment lands in the weak native global of
+# the same name - a host variable - instead of the arena word every other TU
+# reads, so the write is silently private and the value never arrives. The
+# geo loader hit exactly this and opened an empty asset name.
+unaliased-writes-audit:
+	@build/venv/bin/python tools/decomp/audit_unaliased_writes.py
+
 # linked-widths-audit: config/global_widths.yaml records which fixed-VA globals
 # the original only ever touches 1 or 2 bytes wide. A LINKED twin that spells
 # such a global 32 bits wide stores four bytes at a two-byte address. That is

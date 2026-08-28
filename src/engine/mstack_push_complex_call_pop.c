@@ -35,9 +35,24 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_tickFrameNodeA;
 extern unsigned int g_tickFrameNodeB;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_matrixStackTop (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
+#define g_tickFrameNodeA (*(unsigned int *)MK4_VA(unsigned int, 0x541e90u))
+#define g_tickFrameNodeB (*(unsigned int *)MK4_VA(unsigned int, 0x541e94u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#endif
+
 extern void MStackPush2ChainPrepend(void);
 
 #ifdef NON_MATCHING
