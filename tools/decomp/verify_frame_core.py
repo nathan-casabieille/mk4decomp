@@ -838,6 +838,26 @@ def _b2i():
     }
 
 
+def _mim():
+    RET = b'\xc3'
+    d = {
+        'g_baseSel': 0x2e4000, '@0xb90084': 1, '@0xb90004': 0x2e4900,
+        'g_framePauseFlag': 0, 'g_xformDirtyFlags': 0, 'g_walkCallback': 0,
+        'g_currentNodeIdx': 0x1234, 'g_eventQueueCurrent': 0,
+        'g_xformScratch94': 0, 'g_dlNalt1': 0, 'g_dlNalt2': 1,
+        'g_iatPtr_00542058': 0,
+        '@0x53a7d8': 3, '@0x53a51c': 0, '@0x52ab40': 0, '@0x535dac': 0,
+        '@0x53a178': 0, '@0x53a250': 0, '@0x54371c': 0, '@0x543438': 0,
+        '@0x52aac4': 0, '@0x538038': 0, '@0x53803c': 0, '@0x541df8': 0,
+    }
+    for va in (0x429ac0, 0x4223e0, 0x423870, 0x421c20, 0x464350, 0x431260,
+               0x422e20, 0x422ef0, 0x422fc0, 0x4230b0, 0x4236a0, 0x4232e0,
+               0x49cb40, 0x4231b0, 0x48a190, 0x48a1c0, 0x422ce0, 0x4613b0,
+               0x461b70, 0x4776b0, 0x41f780, 0x4647f0):
+        d['@%x' % va] = RET
+    return d
+
+
 def _fpss():
     clear4 = b'\x83\x25' + (0x54208c).to_bytes(4, 'little') + b'\xfb\xc3'
     return {
@@ -1476,6 +1496,24 @@ SEEDS = {
             '@0x4c3ad0': (b'\x8b\x44\x24\x04'
                           b'\x01\x05\x00\x80\xb9\x00'
                           b'\xc3')}),
+    ],
+    # Match init. Every callee is stubbed at its VA with a plain ret (or a
+    # pause) so what is checked is the ORDER, the guards and the three
+    # scheduled handlers - the sequence that turns a loaded pair of
+    # characters into a live fight.
+    'MatchInitMonsterChain': [
+        ('state 0: re-arms and yields', dict(_mim(), **{'@0xb90084': 0})),
+        ('full init', _mim()),
+        ('dirty-1 branches taken', dict(_mim(), **{'g_xformDirtyFlags': 1})),
+        ('mode bit 8: extra zero-triple', dict(_mim(), **{'@0x52ab40': 0x100})),
+        ('mode bit 9 skips the arena-4 pair', dict(_mim(), **{'@0x52ab40': 0x200})),
+        ('arena 4 takes the dual-bit gate', dict(_mim(), **{'@0x53a51c': 4})),
+        ('arena 1 record iterator', dict(_mim(), **{'@0x53a51c': 1})),
+        ('character 15 skips the iterators', dict(_mim(), **{'g_dlNalt1': 0xf})),
+        ('pause inside the round reset', dict(_mim(), **{
+            '@0x4223e0': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+        ('pause inside the player spawn', dict(_mim(), **{
+            '@0x422e20': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
     ],
     'TableSearch': [
         ('id 100 or more: refused', {'@0x4f7d40': 0}, (100,)),

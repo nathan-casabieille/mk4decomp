@@ -183,6 +183,7 @@ src/engine/m_stack_push_dual_jmp.c
 src/engine/mat3x3_vec_mul.c
 src/engine/mat3x3_vec_mul6_bit.c
 src/engine/mat_vec2_multiply.c
+src/engine/match_init_monster_chain.c
 src/engine/matrix_transform3x3_q12.c
 src/engine/max_of_three.c
 src/engine/mem_alloc.c
