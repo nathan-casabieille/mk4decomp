@@ -263,3 +263,4 @@ src/engine/vec3_normalize_scale_store.c
 src/engine/color15_bit_packer.c
 src/engine/pack_color.c
 src/engine/sunbeam_sprite_emit.c
+src/engine/gamepad_seq_record.c

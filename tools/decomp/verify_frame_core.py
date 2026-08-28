@@ -49,6 +49,16 @@ TYPES = {
         'g_mat3x3_007af99e': 'short', 'g_mat3x3_007af9a0': 'short',
         'g_dispatchSave1626': 'short',
     },
+    # The six record words at 0x00ab48b8..c2. The twin's own width macros are
+    # DROPPED by the extractor (it keeps only the function body), so without
+    # this the harness types them as dwords - and every case still passes
+    # except the one where a carry or a cross-word read touches the high half,
+    # which here was the abs-diff snap reading its neighbour into the compare.
+    'GamepadSeqRecord': {
+        'g_dispatchSave1534': 'short', 'g_dispatchSave1535': 'short',
+        'g_dispatchSave1536': 'short', 'g_dispatchSave1537': 'short',
+        'g_dispatchSave1538': 'short', 'g_dispatchSave1539': 'short',
+    },
 }
 
 BASE = 0x00400000
@@ -421,6 +431,16 @@ def _beam():
         '@0x7af998': 0x0010fff0, '@0x7af99c': 0x00100010,
         '@0x7af9a0': 0x0010,
         'g_drawQueueSize': 0,
+    }
+
+
+# GamepadSeqRecord: the six record words seeded distinct, and the renderer
+# mode picked per case (Renderer_GetMode runs live and reads 0x004f4b3c).
+def _gsr(mode):
+    return {
+        '@0x4f4b3c': mode,
+        '@0xab48b8': 100, '@0xab48ba': 200, '@0xab48bc': 300,
+        '@0xab48be': 400, '@0xab48c0': 500, '@0xab48c2': 600,
     }
 
 HEAP = [
@@ -808,6 +828,20 @@ SEEDS = {
     ],
     # The projection leaves run LIVE; Helper_DrawCursor too - four submits
     # land in the queue. The two clamp cases prove the step retargeting.
+    # A nudger: three renderer-mode branches x two `which` branches, each
+    # bumping the six record words by per-panel deltas. The 0x4ed020 panel has
+    # the only conditional - an abs-diff snap - driven both ways.
+    'GamepadSeqRecord': [
+        ('sw, panel 40',  dict(_gsr(0), **{}), (0x4ed040, 0)),
+        ('sw, panel 00',  dict(_gsr(0), **{}), (0x4ed000, 0)),
+        ('sw, panel 20, which 1', dict(_gsr(0), **{}), (0x4ed020, 1)),
+        ('hw, panel 40',  dict(_gsr(2), **{}), (0x4ed040, 0)),
+        ('hw, panel 60, which 1', dict(_gsr(1), **{}), (0x4ed060, 1)),
+        ('hw, panel 20: snaps',   dict(_gsr(2), **{'@0xab48b8': 500,
+                                                   '@0xab48c0': 500}), (0x4ed020, 0)),
+        ('hw, panel 20: far apart', dict(_gsr(2), **{}), (0x4ed020, 0)),
+        ('not a panel', _gsr(0), (0xb90000, 0)),
+    ],
     'SunbeamSpriteEmit': [
         ('pulses up from the low bound', dict(_beam(), **{
             '@0x4f6580': 0x50, '@0xab51fc': 4})),

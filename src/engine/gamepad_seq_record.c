@@ -5,6 +5,7 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -15,6 +16,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -57,6 +59,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -64,6 +67,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -98,6 +102,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -108,7 +113,9 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_installCountdownEnd;
 extern unsigned int g_dispatchCmpEnd2;
 extern unsigned int g_movesPanelEnd;
@@ -119,10 +126,69 @@ extern unsigned int g_dispatchSave1536;
 extern unsigned int g_dispatchSave1537;
 extern unsigned int g_dispatchSave1538;
 extern unsigned int g_dispatchSave1539;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchCmpEnd (*(unsigned int *)MK4_VA(unsigned int, 0x4ed060u))
+#define g_dispatchCmpEnd2 (*(unsigned int *)MK4_VA(unsigned int, 0x4ed020u))
+#define g_dispatchSave1534 (*(unsigned int *)MK4_VA(unsigned int, 0xab48b8u))
+#define g_dispatchSave1535 (*(unsigned int *)MK4_VA(unsigned int, 0xab48bau))
+#define g_dispatchSave1536 (*(unsigned int *)MK4_VA(unsigned int, 0xab48bcu))
+#define g_dispatchSave1537 (*(unsigned int *)MK4_VA(unsigned int, 0xab48beu))
+#define g_dispatchSave1538 (*(unsigned int *)MK4_VA(unsigned int, 0xab48c0u))
+#define g_dispatchSave1539 (*(unsigned int *)MK4_VA(unsigned int, 0xab48c2u))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_installCountdownEnd (*(unsigned int *)MK4_VA(unsigned int, 0x4ed000u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_movesPanelEnd (*(unsigned int *)MK4_VA(unsigned int, 0x4ed040u))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void GamepadSeqRecord(undefined *param_1,int param_2)
+#include "portable/mem_model.h"
+
+/* The record's six screen words at 0x00ab48b8..c2 - v0/v1/v2 x,y pairs. The
+ * generic externs make them dwords; every access in the original is a word
+ * (`inc word ptr`, `add word ptr`), and as dwords each nudge would carry into
+ * its neighbour. */
+#define g_dispatchSave1534 (*(short *)MK4_VA(short, 0xab48b8u))
+#define g_dispatchSave1535 (*(short *)MK4_VA(short, 0xab48bau))
+#define g_dispatchSave1536 (*(short *)MK4_VA(short, 0xab48bcu))
+#define g_dispatchSave1537 (*(short *)MK4_VA(short, 0xab48beu))
+#define g_dispatchSave1538 (*(short *)MK4_VA(short, 0xab48c0u))
+#define g_dispatchSave1539 (*(short *)MK4_VA(short, 0xab48c2u))
+
+/* Ghidra-decompiled twin. The first argument is the PANEL's VA - the original
+ * compares it against the four sentinel records directly, so the compares stay
+ * VA literals rather than host pointers. */
+void GamepadSeqRecord(unsigned int panel_va, int param_2)
 
 {
   int iVar1;
@@ -132,7 +198,7 @@ void GamepadSeqRecord(undefined *param_1,int param_2)
   iVar1 = Renderer_GetMode();
   if ((iVar1 == 2) || (iVar1 = Renderer_GetMode(), iVar1 == 1)) {
     if (param_2 == 0) {
-      if (param_1 == &g_movesPanelEnd) {
+      if (panel_va == 0x4ed040u) {
         g_dispatchSave1534 = g_dispatchSave1534 + 1;
         g_dispatchSave1535 = g_dispatchSave1535 + -2;
         g_dispatchSave1536 = g_dispatchSave1536 + 2;
@@ -140,19 +206,19 @@ void GamepadSeqRecord(undefined *param_1,int param_2)
         g_dispatchSave1538 = g_dispatchSave1538 + 2;
         g_dispatchSave1539 = g_dispatchSave1539 + -1;
       }
-      if (param_1 == &g_dispatchCmpEnd) {
+      if (panel_va == 0x4ed060u) {
         g_dispatchSave1535 = g_dispatchSave1535 + -2;
         g_dispatchSave1536 = g_dispatchSave1536 + 2;
         g_dispatchSave1537 = g_dispatchSave1537 + -2;
         g_dispatchSave1538 = g_dispatchSave1538 + 2;
         g_dispatchSave1539 = g_dispatchSave1539 + -1;
       }
-      if (param_1 == &g_installCountdownEnd) {
+      if (panel_va == 0x4ed000u) {
         g_dispatchSave1534 = g_dispatchSave1534 + 1;
         g_dispatchSave1536 = g_dispatchSave1536 + 1;
         g_dispatchSave1538 = g_dispatchSave1538 + 1;
       }
-      if (param_1 == &g_dispatchCmpEnd2) {
+      if (panel_va == 0x4ed020u) {
         g_dispatchSave1538 = g_dispatchSave1538 + 2;
         g_dispatchSave1536 = g_dispatchSave1536 + 2;
         uVar2 = (int)g_dispatchSave1538 - (int)(short)(g_dispatchSave1534 + -1);
@@ -166,7 +232,7 @@ void GamepadSeqRecord(undefined *param_1,int param_2)
       }
     }
     else {
-      if (param_1 == &g_movesPanelEnd) {
+      if (panel_va == 0x4ed040u) {
         g_dispatchSave1534 = g_dispatchSave1534 + 1;
         g_dispatchSave1535 = g_dispatchSave1535 + -2;
         g_dispatchSave1536 = g_dispatchSave1536 + 1;
@@ -174,18 +240,18 @@ void GamepadSeqRecord(undefined *param_1,int param_2)
         g_dispatchSave1538 = g_dispatchSave1538 + 2;
         g_dispatchSave1539 = g_dispatchSave1539 + -1;
       }
-      if (param_1 == &g_dispatchCmpEnd) {
+      if (panel_va == 0x4ed060u) {
         g_dispatchSave1535 = g_dispatchSave1535 + -2;
         g_dispatchSave1537 = g_dispatchSave1537 + -1;
         g_dispatchSave1538 = g_dispatchSave1538 + 2;
         g_dispatchSave1539 = g_dispatchSave1539 + -1;
       }
-      if (param_1 == &g_installCountdownEnd) {
+      if (panel_va == 0x4ed000u) {
         g_dispatchSave1534 = g_dispatchSave1534 + 1;
         g_dispatchSave1536 = g_dispatchSave1536 + 1;
         g_dispatchSave1538 = g_dispatchSave1538 + 1;
       }
-      if (param_1 == &g_dispatchCmpEnd2) {
+      if (panel_va == 0x4ed020u) {
         g_dispatchSave1538 = g_dispatchSave1538 + 2;
         g_dispatchSave1536 = g_dispatchSave1536 + -1;
         uVar2 = (int)g_dispatchSave1538 - (int)(short)(g_dispatchSave1534 + -1);
@@ -199,22 +265,22 @@ void GamepadSeqRecord(undefined *param_1,int param_2)
     }
   }
   else if (param_2 == 0) {
-    if (param_1 == &g_movesPanelEnd) {
+    if (panel_va == 0x4ed040u) {
       g_dispatchSave1534 = g_dispatchSave1534 + 1;
       g_dispatchSave1536 = g_dispatchSave1536 + 3;
       g_dispatchSave1538 = g_dispatchSave1538 + 3;
     }
-    if (param_1 == &g_dispatchCmpEnd) {
+    if (panel_va == 0x4ed060u) {
       g_dispatchSave1536 = g_dispatchSave1536 + 2;
       g_dispatchSave1538 = g_dispatchSave1538 + 2;
     }
-    if (param_1 == &g_installCountdownEnd) {
+    if (panel_va == 0x4ed000u) {
       g_dispatchSave1534 = g_dispatchSave1534 + 1;
       g_dispatchSave1536 = g_dispatchSave1536 + 1;
       g_dispatchSave1538 = g_dispatchSave1538 + 1;
       g_dispatchSave1539 = g_dispatchSave1539 + 1;
     }
-    if (param_1 == &g_dispatchCmpEnd2) {
+    if (panel_va == 0x4ed020u) {
       g_dispatchSave1536 = g_dispatchSave1536 + 2;
 LAB_004bcd7f:
       g_dispatchSave1534 = g_dispatchSave1534 + 1;
@@ -225,22 +291,22 @@ LAB_004bcd7f:
     }
   }
   else {
-    if (param_1 == &g_movesPanelEnd) {
+    if (panel_va == 0x4ed040u) {
       g_dispatchSave1534 = g_dispatchSave1534 + 1;
       g_dispatchSave1536 = g_dispatchSave1536 + 1;
       g_dispatchSave1538 = g_dispatchSave1538 + 3;
     }
-    if (param_1 == &g_dispatchCmpEnd) {
+    if (panel_va == 0x4ed060u) {
       g_dispatchSave1538 = g_dispatchSave1538 + 2;
     }
-    if (param_1 == &g_installCountdownEnd) {
+    if (panel_va == 0x4ed000u) {
       g_dispatchSave1534 = g_dispatchSave1534 + 1;
       g_dispatchSave1536 = g_dispatchSave1536 + 1;
       g_dispatchSave1537 = g_dispatchSave1537 + 1;
       g_dispatchSave1538 = g_dispatchSave1538 + 1;
       g_dispatchSave1539 = g_dispatchSave1539 + 1;
     }
-    if (param_1 == &g_dispatchCmpEnd2) {
+    if (panel_va == 0x4ed020u) {
       g_dispatchSave1536 = g_dispatchSave1536 + 1;
       goto LAB_004bcd7f;
     }
