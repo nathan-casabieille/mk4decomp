@@ -1,0 +1,106 @@
+#!/usr/bin/env python3
+"""Check that every LINKED twin spells its narrow globals at the real width.
+
+config/global_widths.yaml records the C type of each fixed-VA global the
+original only ever touches one or two bytes wide. A twin that names such a
+global while its file gives it the 32-bit spelling reads or writes four bytes
+at a two-byte address - for the working 3x3 that means every read pulls TWO
+neighbouring elements, unsigned, and the arithmetic lands thousands of units
+off. BboxProjectAndStash had exactly that.
+
+The co-exec harnesses do NOT catch it on their own: they type globals
+themselves (verify_project.py's WIDTH16, verify_frame_core.py's TYPES), so a
+harness can report VERIFIED while the file the native build compiles still says
+`unsigned int`.
+
+This reads every TU in native_full_srcs.txt and reports a global that
+  - global_widths.yaml calls narrow,
+  - the file's NON_MATCHING code actually uses, and
+  - the file spells 32 bits wide (or does not spell at all, so the generic
+    alias pass gives it the 32-bit form).
+
+Usage:  build/venv/bin/python tools/decomp/audit_linked_widths.py
+"""
+import re
+import pathlib
+
+import yaml
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+widths = yaml.safe_load((ROOT / 'config' / 'global_widths.yaml').read_text()) or {}
+extras = yaml.safe_load((ROOT / 'config' / 'extras_map.yaml').read_text()) or {}
+addr = {k: (v if isinstance(v, int) else int(str(v), 16)) for k, v in extras.items()}
+occupied = sorted(set(addr.values()))
+
+SIZE = {'unsigned char': 1, 'signed char': 1, 'char': 1,
+        'unsigned short': 2, 'short': 2}
+
+
+def clobbers_a_neighbour(name, ctype):
+    """A 32-bit store at a narrow global's address overwrites the three or two
+    bytes after it. Only when ANOTHER known global lives in that window is the
+    wide spelling actually destructive - a lone byte flag with nothing behind
+    it reads and writes the same value either way. This is what separates the
+    real defects from the 32-bit spellings that are merely untidy."""
+    a = addr.get(name)
+    if a is None:
+        return False
+    w = SIZE.get(ctype, 4)
+    lo, hi = a + w, a + 4
+    import bisect
+    i = bisect.bisect_left(occupied, lo)
+    return i < len(occupied) and occupied[i] < hi
+
+NARROW = re.compile(r'\b(char|short)\b')
+
+
+def narrow_spelling(text, name):
+    """True if the file gives `name` a 1- or 2-byte spelling."""
+    for m in re.finditer(r'#define\s+%s\s+\(\*\(([^)]*)\)' % re.escape(name), text):
+        if NARROW.search(m.group(1)):
+            return True
+    for m in re.finditer(r'extern\s+([\w ]*?)\s+%s\s*[;\[]' % re.escape(name), text):
+        if NARROW.search(m.group(1)):
+            return True
+    return False
+
+
+def spelled_wide(text, name):
+    """True if the file gives `name` a 32-bit spelling somewhere."""
+    return bool(re.search(r'#define\s+%s\s+\(\*\(unsigned int' % re.escape(name), text)
+                or re.search(r'extern\s+(unsigned\s+)?int\s+%s\s*[;\[]' % re.escape(name), text)
+                or re.search(r'extern\s+u32\s+%s\s*[;\[]' % re.escape(name), text))
+
+
+def main():
+    srcs = [l.strip() for l in
+            (ROOT / 'tools' / 'decomp' / 'native_full_srcs.txt').read_text().split()]
+    hits = 0
+    for src in srcs:
+        path = ROOT / src
+        if not path.exists():
+            continue
+        text = path.read_text(errors='ignore')
+        # only the NON_MATCHING side is what the native build compiles
+        bad = []
+        for name, ctype in widths.items():
+            if name not in text:
+                continue
+            if narrow_spelling(text, name):
+                continue
+            if not spelled_wide(text, name):
+                continue
+            if clobbers_a_neighbour(name, ctype):
+                bad.append((name, ctype))
+        if bad:
+            hits += 1
+            print('%s' % src)
+            for name, ctype in sorted(bad):
+                print('    %-34s should be %-14s (0x%06x, a neighbour is inside '
+                      'the 4 bytes a wide store would touch)'
+                      % (name, ctype, addr[name]))
+    print('\naudit-linked-widths: %d of %d linked TUs spell a narrow global 32 bits '
+          'wide WHERE THAT CLOBBERS A NEIGHBOUR' % (hits, len(srcs)))
+
+
+main()

@@ -159,6 +159,18 @@ signed-audit:
 global-refs-audit:
 	@build/venv/bin/python tools/decomp/audit_global_refs.py
 
+# linked-widths-audit: config/global_widths.yaml records which fixed-VA globals
+# the original only ever touches 1 or 2 bytes wide. A LINKED twin that spells
+# such a global 32 bits wide stores four bytes at a two-byte address. That is
+# only destructive when a neighbour sits inside the window, so this reports
+# exactly those - the packed clusters (the cursor quad, the six RGB scales, the
+# working 3x3) rather than every lone byte flag.
+#
+# The co-exec harnesses do NOT catch this: they type globals themselves, so one
+# can report VERIFIED while the file the native build compiles is still wrong.
+linked-widths-audit:
+	@build/venv/bin/python tools/decomp/audit_linked_widths.py
+
 # width-audit: everything downstream types a fixed-VA global `unsigned int`,
 # which for a packed byte or halfword field makes each store 32 bits wide and
 # wipes its neighbours. The original's encodings settle the real width (and
