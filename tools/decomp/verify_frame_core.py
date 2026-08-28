@@ -59,6 +59,15 @@ TYPES = {
         'g_dispatchSave1536': 'short', 'g_dispatchSave1537': 'short',
         'g_dispatchSave1538': 'short', 'g_dispatchSave1539': 'short',
     },
+    # Same signed-word matrix as BboxProjectAndStash - `movsx` reads in the
+    # original, and the file's own width defines are dropped by the extractor.
+    'Mat3x3VecMul': {
+        'g_mat3x3_007af990': 'short', 'g_mat3x3_007af992': 'short',
+        'g_mat3x3_007af994': 'short', 'g_mat3x3_007af996': 'short',
+        'g_mat3x3_007af998': 'short', 'g_mat3x3_007af99a': 'short',
+        'g_mat3x3_007af99c': 'short', 'g_mat3x3_007af99e': 'short',
+        'g_mat3x3_007af9a0': 'short',
+    },
 }
 
 # Twins whose ORIGINAL carries packed internal entry points (continuations
@@ -557,6 +566,29 @@ def _sheet():
         'g_drawQueueSize': 0,
     }
 
+
+# Helper_TickReinit: two vec3 rows in the camera table, the wt snapshot and
+# its alternate both seeded, the BAM angles non-zero, the seed node's +0x58
+# carrying `half` in bits 8..23.
+def _reinit():
+    return {
+        'g_inLoopStep': 0, 'g_tickX2': 2,
+        'g_eventQueueSeed': 0x2e4000,
+        '@0xb90058': 0x00340000,             # half = 0x34
+        '@0xab44f8': 0x00200100, '@0xab44fc': 0x01400030,
+        '@0xab4500': 0x00600180, '@0xab4504': 0x00000050,
+        # wt snapshot at 0xab4d58 and the alternate at 0xab4878
+        '@0xab4d58': 0x00100010, '@0xab4d5c': 0xfff00010,
+        '@0xab4d60': 0x0010fff0, '@0xab4d64': 0x00100010,
+        '@0xab4d68': 0x0010,
+        '@0xab4878': 0x00100010, '@0xab487c': 0xfff00010,
+        '@0xab4880': 0x0010fff0, '@0xab4884': 0x00100010,
+        '@0xab4888': 0x0010,
+        '@0xab47f8': 0x0800,                 # camRotXBam
+        '@0xab47fc': 0xf800,                 # camRotZBam (negative word)
+        'g_drawQueueSize': 0,
+    }
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -968,6 +1000,27 @@ SEEDS = {
             'g_currentNodeFlags': 0x4000}), (0xb90210, 0x2e4100)),
         ('degenerate pair collapses', dict(_sheet(), **{
             '@0xb90214': 0, '@0xb90216': 0}), (0xb90210, 0x2e4100)),
+    ],
+    # The ground-strip emitter: one vec3 pair, all callees LIVE. `half` comes
+    # from bits 8..23 of the seed's +0x58; the pair from the camera table.
+    'Helper_TickReinit': [
+        ('loop-step gate', {'g_inLoopStep': 1, 'g_tickX2': 2}),
+        ('no rows', {'g_inLoopStep': 0, 'g_tickX2': 0}),
+        ('one strip pair', _reinit()),
+        # negative camera angles drive the sideways correction the other way
+        ('negative rotation', dict(_reinit(), **{'@0xab47f8': 0xf000,
+                                                 '@0xab47fc': 0x0800})),
+    ],
+    'Mat3x3VecMul': [
+        # negative matrix elements: an unsigned read pulls the neighbour
+        ('mixed signs', {'@0x7af990': 0x0800f000, '@0x7af994': 0xf8000000,
+                         '@0x7af998': 0x00001000, '@0x7af99c': 0x0800f800,
+                         '@0x7af9a0': 0x1000,
+                         '@0xb90000': 0x100, '@0xb90004': 0xffffff00,
+                         '@0xb90008': 0x80}, (0xb90000, 0xb90100)),
+    ],
+    'Init16BitFields': [
+        ('resets the BAM trio', {'@0xab47f8': 0x12345678, '@0xab47fc': 0x9abc}),
     ],
     'LinkedListSwapHead': [
         ('no chain', {'g_currentNodeIdx': 0x2e4000, '@0xb9002c': 0,

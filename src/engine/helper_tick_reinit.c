@@ -4,6 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_eventQueueSeed;
 extern u32 g_inLoopStep;
 extern unsigned int g_dispatchSave1626[];
@@ -46,14 +47,242 @@ extern unsigned int g_dispatchSave1555;
 extern unsigned int g_dispatchSave1556;
 extern unsigned int g_dispatchSave1557;
 extern unsigned int g_dispatchSave1558;
+#endif
+#ifndef NON_MATCHING
 extern void AdvanceTriStripRing(void);
+#endif
+#ifndef NON_MATCHING
 extern void Helper_DrawCursor(void);
+#endif
+#ifndef NON_MATCHING
 extern void Init16BitFields(void);
+#endif
+#ifndef NON_MATCHING
 extern void Mat3x3VecMul(void);
+#endif
+#ifndef NON_MATCHING
 extern void MaxOfThree(void);
+#endif
+#ifndef NON_MATCHING
+extern void ProjectTwoVertices(void);
+#endif
+#ifndef NON_MATCHING
+extern void ProjectVertex(void);
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_camRotXBam (*(unsigned int **)MK4_VA(unsigned int, 0xab47f8u))
+#define g_camRotZBam (*(unsigned int **)MK4_VA(unsigned int, 0xab47fcu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchSave1513 (*(unsigned int *)MK4_VA(unsigned int, 0xab44f8u))
+#define g_dispatchSave1530 (*(unsigned int *)MK4_VA(unsigned int, 0xab487cu))
+#define g_dispatchSave1531 (*(unsigned int *)MK4_VA(unsigned int, 0xab4880u))
+#define g_dispatchSave1532 (*(unsigned int *)MK4_VA(unsigned int, 0xab4884u))
+#define g_dispatchSave1533 (*(unsigned int *)MK4_VA(unsigned int, 0xab4888u))
+#define g_dispatchSave1554 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d58u))
+#define g_dispatchSave1555 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d5cu))
+#define g_dispatchSave1556 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d60u))
+#define g_dispatchSave1557 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d64u))
+#define g_dispatchSave1558 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d68u))
+#define g_dispatchSave1626 ((unsigned int *)MK4_VA(unsigned int, 0x7af958u))
+#define g_eventQueueSeed (*(unsigned int *)MK4_VA(unsigned int, 0x52ab10u))
+#define g_inLoopStep (*(unsigned int *)MK4_VA(unsigned int, 0x7af92cu))
+#define g_mat3x3_007af994 (*(short *)MK4_VA(short, 0x7af994u))
+#define g_mat3x3_007af998 (*(short *)MK4_VA(short, 0x7af998u))
+#define g_mat3x3_007af99c (*(short *)MK4_VA(short, 0x7af99cu))
+#define g_mat3x3_007af9a0 (*(short *)MK4_VA(short, 0x7af9a0u))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_tickX2 (*(unsigned int *)MK4_VA(unsigned int, 0xab51f4u))
+#define g_triStripRingA (*(unsigned int *)MK4_VA(unsigned int, 0x7af9b4u))
+#define g_triStripRingB (*(unsigned int *)MK4_VA(unsigned int, 0x7af984u))
+#define g_triStripX0 (*(short *)MK4_VA(short, 0x7af95cu))
+#define g_triStripX1 (*(short *)MK4_VA(short, 0x7af962u))
+#define g_triStripX2 (*(short *)MK4_VA(short, 0x7af968u))
+#define g_vtxIn1_y (*(short *)MK4_VA(short, 0x7af95eu))
+#define g_vtxIn1_z (*(short *)MK4_VA(short, 0x7af960u))
+#define g_vtxIn2_x (*(short *)MK4_VA(short, 0x7af95au))
+#define g_vtxIn2_y (*(short *)MK4_VA(short, 0x7af964u))
+#define g_vtxIn2_z (*(short *)MK4_VA(short, 0x7af966u))
+#define g_vtxMat ((short *)MK4_VA(short, 0x7af990u))
+#define g_vtxMatBase (*(unsigned int *)MK4_VA(unsigned int, 0xab4878u))
+#define g_vtxOut2_z (*(int *)MK4_VA(int, 0x7af988u))
+#define g_vtxOut_z (*(int *)MK4_VA(int, 0x7af98cu))
+#define g_vtxScreenP1Y (*(short *)MK4_VA(short, 0x7af9b6u))
+#define g_vtxScreenP2X (*(unsigned int *)MK4_VA(unsigned int, 0x7af9b8u))
+#define g_vtxScreenP2Y (*(short *)MK4_VA(short, 0x7af9bau))
+#define g_vtxScreenX (*(unsigned int *)MK4_VA(unsigned int, 0x7af9bcu))
+#define g_vtxScreenY (*(short *)MK4_VA(short, 0x7af9beu))
+#define g_vtxTransX (*(int *)MK4_VA(int, 0x7af9a4u))
+#define g_vtxTransY (*(int *)MK4_VA(int, 0x7af9a8u))
+#define g_vtxTransZ (*(int *)MK4_VA(int, 0x7af9acu))
+#define g_vtxValid (*(int *)MK4_VA(int, 0x7af9b0u))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#endif
+
+
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+extern void Init16BitFields(void);
+extern void Mat3x3VecMul(int *in, int *out);
 extern void ProjectTwoVertices(void);
 extern void ProjectVertex(void);
+extern int  MaxOfThree(void);
+extern void AdvanceTriStripRing(s16 v0, s16 v1, s16 v2);
+extern void Helper_DrawCursor(void *entry);
 
+/* Portable twin of GameTick's last engine blocker, written from the
+ * disassembly. Despite the name it EMITS: the ground strips. For each PAIR of
+ * s16 vec3s in the camera table at 0x00ab44f8 (g_tickX2 / 2 pairs - the rows
+ * CameraSetupAndCullFan wrote), both endpoints are rotated through the wt
+ * matrix (Mat3x3VecMul on the 0x00ab4d58 snapshot), corrected sideways by the
+ * camera's X and Z BAM angles - x' = x - ((y + half) * rotX >> 12), z' = z -
+ * ((y + half) * rotZ >> 12), with `half` the s16 extracted from bits 8..23 of
+ * the seed node's +0x58 - and the segment between them becomes a quad: the
+ * strip is widened by a quarter of its own span on each side, projected under
+ * the ALTERNATE matrix at 0x00ab4878, and submitted as two tris.
+ *
+ * The record's colour bytes are (0x1c, 0x64) three times, its colour word is
+ * ZERO, and its flags start at 0xf; the sort key is MaxOfThree() before every
+ * submit, with no g_tickCurMask fallback - unlike every other emitter.
+ *
+ * Seeding note: g_eventQueueSeed's +0x58 supplies `half`; the vec3 pairs are
+ * whatever the camera left in the table. */
+void Helper_TickReinit(void)
+{
+    unsigned int tbl, count;
+    unsigned int rec[7];
+    int in[3], out1[3], out2[3];
+    int half, rotx, rotz;
+    int sx1, z1, sx2, z2, dq, dz4;
+    int p1x, p1y, p2x, p2y, sx, sy, valid;
+
+    if (g_inLoopStep != 0)
+        return;
+    if (g_tickX2 == 0)
+        return;
+
+    Init16BitFields();
+    count = (unsigned int)((int)g_tickX2 / 2);
+
+    g_vtxTransX = 0;
+    g_vtxTransY = 0;
+    g_vtxTransZ = 0;
+    g_currentNodeIdx = g_eventQueueSeed;
+    half = (int)(short)((int)(MK4_NODE_AT(unsigned int, g_eventQueueSeed, 0x58)
+                              << 8) >> 16);
+
+    ((unsigned char *)rec)[0xc]  = 0x1c;
+    ((unsigned char *)rec)[0xd]  = 0x64;
+    ((unsigned char *)rec)[0xe]  = 0x1c;
+    ((unsigned char *)rec)[0xf]  = 0x64;
+    ((unsigned char *)rec)[0x10] = 0x1c;
+    ((unsigned char *)rec)[0x11] = 0x64;
+    ((unsigned short *)rec)[0xa] = 0;              /* +0x14: colour word */
+    ((unsigned short *)rec)[0xd] = 0xf;            /* +0x1a: flags       */
+    ((unsigned short *)rec)[0xb] = 0; ((unsigned short *)rec)[0xc] = 0;
+
+    if ((int)count <= 0)
+        return;
+
+    tbl = 0xab44f8u;
+    while (count != 0) {
+        rotx = (int)*MK4_VA(short, 0xab47f8u);     /* g_camRotXBam */
+        rotz = (int)*MK4_VA(short, 0xab47fcu);     /* g_camRotZBam */
+
+        *MK4_VA(unsigned int, 0x7af990u) = *MK4_VA(unsigned int, 0xab4d58u);
+        *MK4_VA(unsigned int, 0x7af994u) = *MK4_VA(unsigned int, 0xab4d58 + 4u);
+        *MK4_VA(unsigned int, 0x7af998u) = *MK4_VA(unsigned int, 0xab4d58 + 8u);
+        *MK4_VA(unsigned int, 0x7af99cu) = *MK4_VA(unsigned int, 0xab4d58 + 0xcu);
+        *MK4_VA(unsigned short, 0x7af9a0u) = *MK4_VA(unsigned short, 0xab4d58 + 0x10u);
+
+        in[0] = (int)*MK4_VA(short, tbl);
+        in[1] = (int)*MK4_VA(short, tbl + 2);
+        in[2] = (int)*MK4_VA(short, tbl + 4);
+        Mat3x3VecMul(in, out1);
+        g_xformEntityIdx = (unsigned int)out1[1];
+        g_currentNodeIdx = (unsigned int)out1[0];
+        g_pendingNodeType = (unsigned int)out1[2];
+        sx1 = out1[0] + (((-(out1[1] + half)) * rotx) >> 12);
+        z1  = out1[2] + (((-(out1[1] + half)) * rotz) >> 12);
+        tbl += 6;
+
+        in[0] = (int)*MK4_VA(short, tbl);
+        in[1] = (int)*MK4_VA(short, tbl + 2);
+        in[2] = (int)*MK4_VA(short, tbl + 4);
+        Mat3x3VecMul(in, out2);
+        g_xformEntityIdx = (unsigned int)out2[1];
+        g_currentNodeIdx = (unsigned int)out2[0];
+        g_pendingNodeType = (unsigned int)out2[2];
+        sx2 = out2[0] + (((-(out2[1] + half)) * rotx) >> 12);
+        z2  = out2[2] + (((-(out2[1] + half)) * rotz) >> 12);
+        tbl += 6;
+
+        dq  = (sx2 - sx1) / 4;                     /* cdq/and/sar: signed */
+        dz4 = (z2 - z1) / 4;
+
+        *MK4_VA(short, 0x7af958u) = (short)(sx1 - dz4);
+        *MK4_VA(short, 0x7af95eu) = (short)-half;
+        *MK4_VA(short, 0x7af964u) = (short)(z1 + dq);
+        *MK4_VA(short, 0x7af95au) = (short)(sx1 + dz4);
+        *MK4_VA(short, 0x7af960u) = (short)-half;
+        *MK4_VA(short, 0x7af966u) = (short)(z1 - dq);
+        *MK4_VA(short, 0x7af95cu) = (short)(sx2 - dz4);
+        *MK4_VA(short, 0x7af962u) = (short)-half;
+        *MK4_VA(short, 0x7af968u) = (short)(z2 + dq);
+
+        *MK4_VA(unsigned int, 0x7af990u) = *MK4_VA(unsigned int, 0xab4878u);
+        *MK4_VA(unsigned int, 0x7af994u) = *MK4_VA(unsigned int, 0xab4878 + 4u);
+        *MK4_VA(unsigned int, 0x7af998u) = *MK4_VA(unsigned int, 0xab4878 + 8u);
+        *MK4_VA(unsigned int, 0x7af99cu) = *MK4_VA(unsigned int, 0xab4878 + 0xcu);
+        *MK4_VA(unsigned short, 0x7af9a0u) = *MK4_VA(unsigned short, 0xab4878 + 0x10u);
+
+        ProjectTwoVertices();
+        p1x = (int)*MK4_VA(short, 0x7af9b4u);
+        p1y = (int)*MK4_VA(short, 0x7af9b6u);
+        p2x = (int)*MK4_VA(short, 0x7af9b8u);
+        p2y = (int)*MK4_VA(short, 0x7af9bau);
+        sx  = (int)*MK4_VA(short, 0x7af9bcu);
+        sy  = (int)*MK4_VA(short, 0x7af9beu);
+        valid = ((sy - p1y) * (p2x - p1x) - (p2y - p1y) * (sx - p1x)) <= 0;
+        rec[0] = *MK4_VA(unsigned int, 0x7af9b4u);
+        rec[1] = *MK4_VA(unsigned int, 0x7af9b8u);
+        rec[2] = *MK4_VA(unsigned int, 0x7af9bcu);
+        *MK4_VA(unsigned int, 0x7af9b0u) = (unsigned int)valid;
+        ((unsigned short *)rec)[0xd] = (unsigned short)
+            ((((unsigned short *)rec)[0xd] & 0xfbffu) | ((unsigned)valid << 10));
+        ((unsigned short *)rec)[9] = (unsigned short)MaxOfThree();
+        if ((int)*MK4_VA(int, 0x7af984u) > 0 && (int)*MK4_VA(int, 0x7af988u) > 0
+            && (int)*MK4_VA(int, 0x7af98cu) > 0)
+            Helper_DrawCursor(rec);
+
+        AdvanceTriStripRing((short)(sx2 + dz4), (short)-half,
+                            (short)(z2 - dq));
+        ProjectVertex();
+        p1x = (int)*MK4_VA(short, 0x7af9b4u);
+        p1y = (int)*MK4_VA(short, 0x7af9b6u);
+        p2x = (int)*MK4_VA(short, 0x7af9b8u);
+        p2y = (int)*MK4_VA(short, 0x7af9bau);
+        sx  = (int)*MK4_VA(short, 0x7af9bcu);
+        sy  = (int)*MK4_VA(short, 0x7af9beu);
+        valid = ((sy - p1y) * (p2x - p1x) - (p2y - p1y) * (sx - p1x)) <= 0;
+        rec[0] = *MK4_VA(unsigned int, 0x7af9b4u);
+        rec[1] = *MK4_VA(unsigned int, 0x7af9b8u);
+        rec[2] = *MK4_VA(unsigned int, 0x7af9bcu);
+        *MK4_VA(unsigned int, 0x7af9b0u) = (unsigned int)valid;
+        ((unsigned short *)rec)[0xd] = (unsigned short)
+            ((((unsigned short *)rec)[0xd] & 0xfbffu) | ((unsigned)valid << 10));
+        ((unsigned short *)rec)[9] = (unsigned short)MaxOfThree();
+        if ((int)*MK4_VA(int, 0x7af984u) > 0 && (int)*MK4_VA(int, 0x7af988u) > 0
+            && (int)*MK4_VA(int, 0x7af98cu) > 0)
+            Helper_DrawCursor(rec);
+
+        count--;
+    }
+}
+#else
 __declspec(naked) void Helper_TickReinit(void)
 {
     __asm {
@@ -349,3 +578,4 @@ __declspec(naked) void Helper_TickReinit(void)
     }
 }
 
+#endif

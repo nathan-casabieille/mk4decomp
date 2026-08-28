@@ -271,3 +271,6 @@ src/boot/m_stack_bracket2_tree_walk_recursive.c
 src/engine/linked_list_swap_head.c
 src/engine/copy_args16_to_globals.c
 src/engine/billboard_sheet_dual_emit.c
+src/engine/helper_tick_reinit.c
+src/engine/init16_bit_fields.c
+src/engine/mat3x3_vec_mul.c
