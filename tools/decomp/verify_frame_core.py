@@ -39,6 +39,16 @@ TYPES = {
         'g_dispatchSave1617': 'unsigned short', 'g_dispatchSave1618': 'unsigned short',
         'g_dispatchSave1619': 'unsigned short',
     },
+    # BboxProjectAndStash reads the working 3x3 as SIGNED WORDS - every one is
+    # a `movsx eax, word ptr [...]`. As `unsigned int` each read pulls a dword
+    # spanning two neighbouring elements, and the projection lands thousands of
+    # units off. g_dispatchSave1626 is a word for the same reason.
+    'BboxProjectAndStash': {
+        'g_mat3x3_007af992': 'short', 'g_mat3x3_007af994': 'short',
+        'g_mat3x3_007af998': 'short', 'g_mat3x3_007af99a': 'short',
+        'g_mat3x3_007af99e': 'short', 'g_mat3x3_007af9a0': 'short',
+        'g_dispatchSave1626': 'short',
+    },
 }
 
 BASE = 0x00400000
@@ -275,6 +285,35 @@ def _vqb():
         '@0xb90248': 0x0f0f0f0f, '@0xb9024c': 0x0f0f0f0f,
         '@0x4bd510': b'\xc3',               # LeaScaledCall: cdecl, plain ret
     })
+    return d
+
+
+# BboxProjectAndStash reads a bbox out of the table at 0x004f63e8 (0x10-byte
+# entries, indexed by g_walkCallback), projects it through the 3x3 at
+# 0x007af990, and stashes the result into the packed s16 triples at 0x00ab44f8.
+def _bbox():
+    d = {
+        # the index is LOADED from the node's +0x1c, not read from a global -
+        # seeding g_walkCallback does nothing, the function overwrites it
+        '@0xb9001c': 1,
+        'g_tickCurConfig': 0xb96000,
+        '@0xb96000': 1,                       # *g_tickCurConfig == 1
+        'g_dispatchSave1580': 0,
+        'g_tickX2': 0,
+        'g_dispatchSave1559': 0,
+        'g_vtxTransX': 0x10, 'g_vtxTransY': 0x20, 'g_vtxTransZ': 0x30,
+        'g_pointPosX': 0x400, 'g_pointPosY': 0x500, 'g_pointPosZ': 0x600,
+        'g_eventQueuePending': 0x2e4000,
+        '@0xb90000': 0x40, '@0xb90004': 0x50, '@0xb90008': 0x60,
+        # the bbox entry for index 1: base + 0x10
+        '@0x4f63f8': 0,                       # the byte gate, clear
+        '@0x4f63fa': 0x00200010,              # +2 / +4 of the entry
+        '@0x4f63fe': 0x00400030,
+        # the working 3x3
+        '@0x7af990': 0x00100010, '@0x7af994': 0xfff00010,
+        '@0x7af998': 0x0010fff0, '@0x7af99c': 0x00100010,
+        '@0x7af9a0': 0x0010,
+    }
     return d
 
 HEAP = [
@@ -629,6 +668,21 @@ SEEDS = {
     # Mem_Malloc runs for real against the seeded heap; LeaScaledCall is
     # stubbed to a ret. The entry table hangs off g_xformEntityIdx, which is a
     # RAW VA in this function rather than a packed index.
+    # The guards are narrow: g_walkCallback in 1..0x10, the byte at
+    # 0x004f63e8 + idx*0x10 must be zero, and g_tickCurConfig decides which of
+    # two entry conditions applies. Without all three the body never runs and
+    # the emitter harness reports a WEAK pass.
+    'BboxProjectAndStash': [
+        ('index out of range', dict(_bbox(), **{'@0xb9001c': 0x11})),
+        ('byte gate set',      dict(_bbox(), **{'@0x4f63f8': 0x01})),
+        ('config is the sentinel, already done', dict(_bbox(), **{
+            'g_tickCurConfig': 0x4f6264, 'g_dispatchSave1580': 1})),
+        ('config is the sentinel, first time', dict(_bbox(), **{
+            'g_tickCurConfig': 0x4f6264, 'g_dispatchSave1580': 0})),
+        ('projects and stashes', _bbox()),
+        # a negative bbox corner: the projection shifts are arithmetic
+        ('negative corner', dict(_bbox(), **{'@0x4f63ea': 0xfe00fd00})),
+    ],
     'VertexQuadBuilder': [
         ('zero vertex count', dict(_vqb(), **{'@0xb9020e': 0,
                                               'g_pendingNodeType': 0x1234,

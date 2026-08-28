@@ -255,3 +255,4 @@ src/audio/linked_list_insert.c
 src/engine/vibration_frame_update.c
 src/engine/vertex_quad_builder.c
 src/engine/tristrip_batch_emit2.c
+src/engine/bbox_project_and_stash.c
