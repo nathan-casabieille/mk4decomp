@@ -1466,6 +1466,24 @@ SEEDS = {
             '@0xb90020': 0xffffffff, 'g_walkCallback': 0,
             'g_eventQueueCurrent': 0}),
     ],
+    # Linear search of the 16-entry sound-id table; a hit returns index+2.
+    # The 170-record iterator: two loops over the per-character table,
+    # each entry converted (id < 101 -> +2000, else /5) and handed to the
+    # slot teardown. Loop 1 skips index 60.
+    'TwinRecordIter': [
+        ('both loops run', {'@0xb98000': 0,
+            '@0x4c37e0': b'\xc3',
+            '@0x4c3ad0': (b'\x8b\x44\x24\x04'
+                          b'\x01\x05\x00\x80\xb9\x00'
+                          b'\xc3')}),
+    ],
+    'TableSearch': [
+        ('id 100 or more: refused', {'@0x4f7d40': 0}, (100,)),
+        ('first slot hit', {'@0x4f7d40': 7, '@0x4f7d44': 9}, (7,)),
+        ('third slot hit', {'@0x4f7d40': 1, '@0x4f7d44': 2, '@0x4f7d48': 3},
+         (3,)),
+        ('miss', {'@0x4f7d40': 1, '@0x4f7d44': 2}, (55,)),
+    ],
     'ScaledTestPauseStore': [
         ('already queued', {'g_currentNodeIdx': 0x2e4000, '@0xb90028': 0x77,
             'g_xformDirtyFlags': 0xff, 'g_walkCallback': 0,

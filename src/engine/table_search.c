@@ -29,6 +29,25 @@ extern unsigned int g_currentNodeIdx;
  *   ret
  */
 extern int g_orphanTbl_004f7d40[16];
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+/* @addr 0x004be760 (46b) - NATIVE twin.
+ *
+ * Linear search of the 16-entry sound-id table at 0x4f7d40 for the id
+ * passed as a 16-bit argument. Returns the slot index PLUS TWO on a hit,
+ * zero on a miss - and zero straight away for an id of 100 or more, which
+ * is how the caller spells "not a table sound". */
+int TableSearch(short id)
+{
+    unsigned int i;
+
+    if (id >= 100) return 0;
+    for (i = 0; i < 16; i++)
+        if (*MK4_VA(int, 0x4f7d40u + i * 4u) == (int)id)
+            return (int)i + 2;
+    return 0;
+}
+#else
 void TableSearch(void) {
     __asm {
         mov     ax, word ptr [esp + 4]
@@ -53,3 +72,4 @@ void TableSearch(void) {
         xor     eax, eax
         }
 }
+#endif

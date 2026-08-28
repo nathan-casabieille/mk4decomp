@@ -278,10 +278,7 @@ __attribute__((weak)) int Menu_InsertCDDialog(){return 0;}
 __attribute__((weak)) int GDispatch4(){return 0;}
 __attribute__((weak)) int DispatcherComplex260_FramePauseScaledStore(){return 0;}
 __attribute__((weak)) int Loop16Init(){return 0;}
-__attribute__((weak)) int TwinRecordIter(){return 0;}
-__attribute__((weak)) int TableSearch(){return 0;}
 __attribute__((weak)) int StoreTwoCall(){return 0;}
-__attribute__((weak)) int SixDoublePushCall(){return 0;}
 __attribute__((weak)) int Audio_TimerSet(){return 0;}
 __attribute__((weak)) int SunbeamSpriteEmit(){return 0;}
 __attribute__((weak)) int GamepadSeqRecord(){return 0;}
@@ -323,7 +320,6 @@ __attribute__((weak)) int PushPopScaled1cDoubleCall(){return 0;}
 __attribute__((weak)) int AudioInitSequence(){return 0;}
 __attribute__((weak)) int AudioInstallSelfStatePush(){return 0;}
 __attribute__((weak)) int BootInitGuardedCallChain(){return 0;}
-__attribute__((weak)) int CopyGlobal(){return 0;}
 __attribute__((weak)) int EffectTableWalker(){return 0;}
 __attribute__((weak)) int GuardedSetupCallTailJmp(){return 0;}
 __attribute__((weak)) int Helper_AudioStop(){return 0;}
@@ -350,4 +346,5 @@ __attribute__((weak)) int BootGatedInitInstallPair(){return 0;}
 __attribute__((weak)) int MStackPush2Burst6Init(){return 0;}
 __attribute__((weak)) int SlotInitAndChainLink(){return 0;}
 __attribute__((weak)) int SetDirty4XorScaledLoad(){return 0;}
+__attribute__((weak)) int Snd3DSourceCleanup(){return 0;}
 #endif /* MK4_NATIVE_FULL */

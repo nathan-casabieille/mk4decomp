@@ -3,6 +3,7 @@ src/audio/audio_mixer_step.c
 src/audio/audio_timer_teardown.c
 src/audio/audio_volume_rescale.c
 src/audio/aux_audio_teardown.c
+src/audio/copy_global.c
 src/audio/debug.c
 src/audio/dual_add_sar.c
 src/audio/empty_stubs.c
@@ -254,6 +255,7 @@ src/engine/scanline_tex_blit_paletted.c
 src/engine/scenegraph.c
 src/engine/set_hi6.c
 src/engine/setjmp_wrappers.c
+src/engine/six_double_push_call.c
 src/engine/small_helpers.c
 src/engine/state_install_or_forward.c
 src/engine/state_install_thunks.c
@@ -262,6 +264,7 @@ src/engine/store_at_minus8.c
 src/engine/store_two_call.c
 src/engine/submit_draw.c
 src/engine/sunbeam_sprite_emit.c
+src/engine/table_search.c
 src/engine/table_walk_bounded_cmp.c
 src/engine/tagged_scene_dispatch.c
 src/engine/test_call_push4_zero.c
@@ -281,6 +284,7 @@ src/engine/tristrip.c
 src/engine/tristrip_batch_emit.c
 src/engine/tristrip_batch_emit2.c
 src/engine/tristrip_batch_emit3_cap.c
+src/engine/twin_record_iter.c
 src/engine/vec3_color_shift_clamp.c
 src/engine/vec3_normalize_scale_store.c
 src/engine/vertex_quad_builder.c

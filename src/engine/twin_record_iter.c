@@ -116,7 +116,11 @@ extern unsigned int g_fightAxisPosY;
  *   loop2: for di 0x157c..0x158f (20 entries), same convert+call.
  */
 extern void Audio_TimerTeardown(void);
+#ifdef NON_MATCHING
+extern void Snd3DSourceCleanup(int, int);
+#else
 extern void Snd3DSourceCleanup(void);
+#endif
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
