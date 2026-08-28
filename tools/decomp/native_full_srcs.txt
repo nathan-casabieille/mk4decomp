@@ -42,6 +42,7 @@ src/boot/m_stack_bracket5_linked_list_unlink.c
 src/boot/m_stack_push2_chain_insert.c
 src/boot/m_stack_push2_chain_prepend.c
 src/boot/m_stack_push3_linked_list_walk.c
+src/boot/m_stack_push_two_entry_chain_call.c
 src/boot/main_loop.c
 src/boot/mul10_tail.c
 src/boot/node_chain_mask_match.c
@@ -52,16 +53,20 @@ src/boot/push_set_call_cleanup.c
 src/boot/push_set_xfm_mask_call_pop.c
 src/boot/save_call_restore.c
 src/boot/scaled_and_mask_init_jmp.c
+src/boot/scaled_init_helpers.c
 src/boot/scaled_load_guarded_jmp.c
 src/boot/scaled_load_or_set_jmp.c
+src/boot/scaled_mask_or_store.c
 src/boot/scaled_neg1_set_pause.c
 src/boot/scaled_pushpop_helpers.c
 src/boot/scaled_store_three.c
+src/boot/scaled_test_pause_store.c
 src/boot/set2_five_call_pause_jmp.c
 src/boot/small_init_helpers.c
 src/boot/stack_pop_dispatch_tagged.c
 src/boot/struct_array_walk_cond_call.c
 src/boot/table_lookup_iat_call.c
+src/boot/vertex_slot_init_flag_walk.c
 src/boot/zero_and_dirty4.c
 src/boot/zero_large_block.c
 src/crt/crt_heap_commit_free_cluster.c
@@ -171,6 +176,7 @@ src/engine/lea_plus22_store_self.c
 src/engine/lea_scaled_call.c
 src/engine/linked_list_swap_head.c
 src/engine/literal_push_call_ent_zero.c
+src/engine/m_stack_bracket2_init_chain_split_insert.c
 src/engine/m_stack_bracket3_packed_slot_init.c
 src/engine/m_stack_push_dual_jmp.c
 src/engine/mat3x3_vec_mul.c

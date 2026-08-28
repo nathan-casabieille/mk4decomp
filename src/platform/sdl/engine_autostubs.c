@@ -193,7 +193,6 @@ __attribute__((weak)) int MStackPush2DirtyCall(){return 0;}
 __attribute__((weak)) int MStackPush2RunCountdown(){return 0;}
 __attribute__((weak)) int MStackPush3CmpCall(){return 0;}
 __attribute__((weak)) int MStackPush4IndirectCall(){return 0;}
-__attribute__((weak)) int MStackPushTwoEntryChainCall(){return 0;}
 __attribute__((weak)) int MStackPushVec3Mul10(){return 0;}
 __attribute__((weak)) int MoveSelectorCluster(){return 0;}
 __attribute__((weak)) int MstackPopScaledChainPlusThunks(){return 0;}
@@ -319,12 +318,8 @@ __attribute__((weak)) int BootChainBidirRecurseWalk(){return 0;}
 __attribute__((weak)) int CleanupCallTwice(){return 0;}
 __attribute__((weak)) int MStackBracket2_TreeWalkRecursive(){return 0;}
 __attribute__((weak)) int func_00405A40(){return 0;}
-__attribute__((weak)) int VertexSlotInitFlagWalk(){return 0;}
 __attribute__((weak)) int MStackPushCallCallPop_func_00405e20(){return 0;}
 __attribute__((weak)) int PushPopScaled1cDoubleCall(){return 0;}
-__attribute__((weak)) int ScaledTestPauseStore(){return 0;}
-__attribute__((weak)) int ScaledLoadCallSet1c(){return 0;}
-__attribute__((weak)) int MStackBracket2InitChainSplitInsert(){return 0;}
 __attribute__((weak)) int AudioInitSequence(){return 0;}
 __attribute__((weak)) int AudioInstallSelfStatePush(){return 0;}
 __attribute__((weak)) int BootInitGuardedCallChain(){return 0;}
@@ -351,4 +346,8 @@ __attribute__((weak)) int StateInitShuffle(){return 0;}
 __attribute__((weak)) int ZeroState(){return 0;}
 __attribute__((weak)) int TablePushAccumTailJmp(){return 0;}
 __attribute__((weak)) int Input_PollPlayerJoystick(){return 0;}
+__attribute__((weak)) int BootGatedInitInstallPair(){return 0;}
+__attribute__((weak)) int MStackPush2Burst6Init(){return 0;}
+__attribute__((weak)) int SlotInitAndChainLink(){return 0;}
+__attribute__((weak)) int SetDirty4XorScaledLoad(){return 0;}
 #endif /* MK4_NATIVE_FULL */

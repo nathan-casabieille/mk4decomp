@@ -234,9 +234,10 @@ void MK4_GameFrame(void)
         { extern void MK4_NativeInputPublish(void); MK4_NativeInputPublish(); }
         { extern void MK4_NativeFakeKeyTick(void); MK4_NativeFakeKeyTick(); }
         if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
-            SDL_Log("f%-3d queue=%u tickInit=%x head738=%x head1e0=%x "
+            SDL_Log("f%-3d queue=%u mode=%x tickInit=%x head738=%x head1e0=%x "
                     "head1e50=%x",
                     frame, *MK4_VA(unsigned int, 0x00f85b40u),
+                    *MK4_VA(unsigned int, 0x00543800u),
                     *MK4_VA(unsigned int, 0x00ab4e70u),
                     *MK4_VA(unsigned int, 0x0053a738u),
                     *MK4_VA(unsigned int, 0x0053a1e0u),

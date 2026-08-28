@@ -8,7 +8,22 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_eventQueueCurrent (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_eventQueueEnd (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#endif
+
 
 /* @addr 0x004084b0 (81b)
  *   load scaled, eventQueueCurrent; load scaled[+0x1c] into eax;
@@ -20,6 +35,33 @@ extern void Helper_TickAlt(void);
 extern void BootGatedInitInstallPair(void);
 extern void SlotInitAndChainLink(void);
 
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+#include "portable/code_va.h"
+/* @addr 0x004084b0 (81b) - NATIVE twin.
+ *
+ * Raises the element counter to the node's +0x1c value if that is larger,
+ * then, when the node's word 0 is set, re-installs ITSELF as the walk
+ * callback and runs the alt tick over it. Clearing dirty bit 0 on the way
+ * out is the "counted" signal the list installer above reads. */
+void ScaledLoadCallSet1c(void)
+{
+    unsigned int lim = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x1c);
+    unsigned int w;
+
+    if ((int)g_eventQueueCurrent < (int)lim)
+        g_eventQueueCurrent = lim;
+
+    w = *MK4_NODE(unsigned int, g_currentNodeIdx);
+    g_walkCallback = w;
+    if (w != 0) {
+        g_walkCallback = MK4_CODE_VA(ScaledLoadCallSet1c);
+        Helper_TickAlt();
+        if (g_framePauseFlag != 0) return;
+    }
+    g_xformDirtyFlags &= 0xfffffffeu;
+}
+#else
 void ScaledLoadCallSet1c(void) {
     __asm {
         mov     ecx, dword ptr [g_currentNodeIdx]
@@ -45,12 +87,14 @@ void ScaledLoadCallSet1c(void) {
         mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
+#endif
 
 /* @addr 0x004147b0 (87b)
  *   set dirty |= 4; if g_scaledInit != 0:
  *     dirty ^= 4 (back); load scaled+0x18 → scaled; load scaled+0x28 → eax;
  *     set walk = 0x414600 + store at [eax*4 + 0x10]; ret.
  */
+#ifndef NON_MATCHING
 void SetDirty4XorScaledLoad(void) {
     __asm {
         mov     eax, dword ptr [g_xformDirtyFlags]
@@ -76,6 +120,7 @@ void SetDirty4XorScaledLoad(void) {
         mov     dword ptr [eax*4 + 0x10], ecx
         }
 }
+#endif
 
 /* @addr 0x004196c0 (83b)
  *   call F; pause → ret; testb 4,[dirty] → ret;
@@ -87,9 +132,17 @@ void CallPauseDirty4ScaledSet_tag_0x81(void) {
     SlotInitAndChainLink();
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
+#ifdef MK4_ARENA
+    MK4_NODE_AT(unsigned int, g_eventQueueEnd, 0) = 0x81;
+#else
     ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x81;
-    g_walkCallback = (void(*)(void))0x14ccc;
+#endif
+    g_walkCallback = 0x14ccc;
+#ifdef MK4_ARENA
+    MK4_NODE_AT(unsigned int, g_xformEntityIdx, 0x48) = 0x14ccc;
+#else
     *(unsigned int *)(g_xformEntityIdx * 4 + 0x48) = 0x14ccc;
+#endif
     g_currentNodeIdx = g_eventQueueEnd + 0x15;
     BootGatedInitInstallPair();
 }

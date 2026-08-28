@@ -74,6 +74,8 @@ TYPES = {
 # behind the same symbol). Their blobs must not be based at the function's own
 # VA or they cover those offsets - see verify_coexec.verify(offsite=).
 OFFSITE = {'Screen_Loading', 'Screen_Loading_Tick_004a42e0',
+           'ChainSplit_SizeFits_00425ba0',
+           'ChainCall_SecondEntry_00405960',
            'PvsMergeDriver', 'PvsMerge_MatchEnd_00425f90',
            'PvsMerge_MatchNode_00425fd0', 'MStackBracket2_TreeWalkRecursive', 'BillboardSheetDualEmit'}
 
@@ -812,6 +814,30 @@ def _itp():
     }
 
 
+def _vsi():
+    return {
+        'g_eventQueueTotal': 0x2e4000, 'g_xformEntityIdx': 3,
+        'g_pendingNodeType': 0x40, 'g_currentNodeIdx': 0x2e5000,
+        'g_eventQueueEnd': 3, 'g_xformDirtyFlags': 0,
+        'g_xformLoopCounter': 0,
+    }
+
+
+def _b2i():
+    # the walk stub reports "found" (dirty bit 2 clear) and hands back node
+    # 0x2e4000, whose +0xc size leaves a splittable remainder.
+    return {
+        'g_matrixStackTop': 0x2e5000, 'g_xformEntityIdx': 0x111,
+        'g_eventQueueCurrent': 0x222, 'g_walkCallback': 0x40,
+        'g_vertexInitFlag': 0x2e6000, 'g_vertexInitVar': 0x2e7000,
+        'g_currentNodeIdx': 0, 'g_xformDirtyFlags': 0, 'g_framePauseFlag': 0,
+        '@0xb9000c': 0x100, '@0xb90004': 0,
+        '@0x4bae90': b'\x83\x25\x8c\x20\x54\x00\xfb'
+                     b'\xc7\x05\x44\x20\x54\x00\x00\x40\x2e\x00\xc3',
+        '@0x409aa0': b'\xc3', '@0x409870': b'\xc3',
+    }
+
+
 def _fpss():
     clear4 = b'\x83\x25' + (0x54208c).to_bytes(4, 'little') + b'\xfb\xc3'
     return {
@@ -1367,6 +1393,108 @@ SEEDS = {
         ('one stick only', {'@0x4f46a0': 0x57, '@0x4f46a4': 0x26,
             '@0x4f46a8': 0x5a, '@0x4f46ac': 0x28, '@0x543b68': 0x1234,
             '@0x543b6c': 0x5678, '@0x7b018e': 1}),
+    ],
+    # The node's +0x28 queue-entry cache: set means "already queued" (clear
+    # dirty bit 2 and out), clear runs the burst init and stamps the entity.
+    # The vertex-slot chain: header words, then count-1 links threaded at a
+    # pending-type stride, each carrying the record and a back-pointer.
+    'VertexSlotInitFlagWalk': [
+        ('count zero: header only', dict(_vsi(), **{'g_eventQueueEnd': 0})),
+        ('count one: no links', dict(_vsi(), **{'g_eventQueueEnd': 1})),
+        ('count two: one link', dict(_vsi(), **{'g_eventQueueEnd': 2})),
+        ('count five: four links', dict(_vsi(), **{'g_eventQueueEnd': 5})),
+    ],
+    'ChainSplit_SizeFits_00425ba0': [
+        ('block is big enough', {'g_currentNodeIdx': 0x2e4000, '@0xb9000c': 0x20,
+            'g_eventQueueCurrent': 0x40, 'g_xformDirtyFlags': 0xff,
+            'g_walkCallback': 0}),
+        ('block too small', {'g_currentNodeIdx': 0x2e4000, '@0xb9000c': 0x80,
+            'g_eventQueueCurrent': 0x40, 'g_xformDirtyFlags': 0,
+            'g_walkCallback': 0}),
+    ],
+    # The block allocator with a split: the walk finds a free block, it is
+    # unlinked and re-inserted, and a leftover of 8+ words becomes a second
+    # block back on the free chain.
+    'MStackBracket2InitChainSplitInsert': [
+        ('walk finds nothing', dict(_b2i(), **{
+            '@0x4bae90': b'\x83\x0d\x8c\x20\x54\x00\x04\xc3'})),
+        ('exact fit: no split', dict(_b2i(), **{'@0xb9000c': 0x44})),
+        ('leftover splits off', _b2i()),
+        ('pause inside the walk', dict(_b2i(), **{
+            '@0x4bae90': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+        ('pause inside the re-insert', dict(_b2i(), **{
+            '@0x409870': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+        ('request under the minimum is clamped', dict(_b2i(), **{
+            'g_walkCallback': 1})),
+    ],
+    'ChainCall_SecondEntry_00405960': [
+        ('no children: stamps and returns', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90000': 0, 'g_walkCallback': 0, 'g_eventQueueCurrent': 0x99,
+            'g_framePauseFlag': 0, '@0x405880': b'\xc3', '@0x4bae90': b'\xc3'}),
+        ('walks the child list', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90000': 0x2e4800, 'g_walkCallback': 0,
+            'g_eventQueueCurrent': 0, 'g_framePauseFlag': 0,
+            '@0x405880': b'\xc3', '@0x4bae90': b'\xc3'}),
+        ('pause inside the stamp', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90000': 0x2e4800, 'g_walkCallback': 0,
+            'g_eventQueueCurrent': 0, 'g_framePauseFlag': 0,
+            '@0x405880': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'}),
+    ],
+    'MStackPushTwoEntryChainCall': [
+        ('no child: bracket in and out', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90018': 0, 'g_matrixStackTop': 0x2e5000, 'g_walkCallback': 0,
+            'g_framePauseFlag': 0, '@0x405880': b'\xc3', '@0x4bae90': b'\xc3'}),
+        ('child with no list', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90018': 0x2e4800, '@0xb92000': 0, 'g_matrixStackTop': 0x2e5000,
+            'g_walkCallback': 0, 'g_eventQueueCurrent': 0x99,
+            'g_framePauseFlag': 0, '@0x405880': b'\xc3', '@0x4bae90': b'\xc3'}),
+        ('child with a list: walks it', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90018': 0x2e4800, '@0xb92000': 0x2e4900,
+            'g_matrixStackTop': 0x2e5000, 'g_walkCallback': 0,
+            'g_eventQueueCurrent': 0, 'g_framePauseFlag': 0,
+            '@0x405880': b'\xc3', '@0x4bae90': b'\xc3'}),
+        ('pause in the stamp leaks the bracket', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90018': 0x2e4800, 'g_matrixStackTop': 0x2e5000,
+            'g_walkCallback': 0, 'g_framePauseFlag': 0,
+            '@0x405880': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'}),
+    ],
+    'ScaledMaskOrStore': [
+        ('replaces the type nibble', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90020': 0x0a123456, 'g_walkCallback': 0x9000000,
+            'g_eventQueueCurrent': 0}),
+        ('zero walk clears it', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90020': 0xffffffff, 'g_walkCallback': 0,
+            'g_eventQueueCurrent': 0}),
+    ],
+    'ScaledTestPauseStore': [
+        ('already queued', {'g_currentNodeIdx': 0x2e4000, '@0xb90028': 0x77,
+            'g_xformDirtyFlags': 0xff, 'g_walkCallback': 0,
+            '@0x405450': b'\xc3'}),
+        ('stamps the entity', {'g_currentNodeIdx': 0x2e4000, '@0xb90028': 0,
+            'g_xformDirtyFlags': 0xff, 'g_walkCallback': 0,
+            'g_xformEntityIdx': 0x2e4444, 'g_framePauseFlag': 0,
+            '@0x405450': b'\xc3'}),
+        ('pause inside the burst init', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90028': 0, 'g_xformDirtyFlags': 0xff, 'g_walkCallback': 0,
+            'g_xformEntityIdx': 0x2e4444, 'g_framePauseFlag': 0,
+            '@0x405450': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'}),
+    ],
+    # Raises the element counter to the node's +0x1c, then re-installs
+    # itself as the walk callback over the node's word 0.
+    'ScaledLoadCallSet1c': [
+        ('counter already higher, no children', {'g_currentNodeIdx': 0x2e4000,
+            'g_eventQueueCurrent': 9, '@0xb9001c': 3, '@0xb90000': 0,
+            'g_xformDirtyFlags': 0xff, 'g_walkCallback': 0,
+            '@0x4bae90': b'\xc3'}),
+        ('counter raised, children walked', {'g_currentNodeIdx': 0x2e4000,
+            'g_eventQueueCurrent': 1, '@0xb9001c': 7, '@0xb90000': 0x2e4800,
+            'g_xformDirtyFlags': 0xff, 'g_walkCallback': 0,
+            'g_framePauseFlag': 0, '@0x4bae90': b'\xc3'}),
+        ('pause inside the alt tick', {'g_currentNodeIdx': 0x2e4000,
+            'g_eventQueueCurrent': 1, '@0xb9001c': 7, '@0xb90000': 0x2e4800,
+            'g_xformDirtyFlags': 0xff, 'g_walkCallback': 0,
+            'g_framePauseFlag': 0,
+            '@0x4bae90': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'}),
     ],
     'InputPollFlagBits': [
         ('nothing down', {'@0x4d50b8': 0, '@0x4d50b4': 0}),
@@ -2138,6 +2266,8 @@ def main():
     # config/codeptr_extras.yaml for the native trampoline; the harness needs
     # their VAs here to verify their C directly. Offsite, like their parent.
     fn_va['Screen_Loading_Tick_004a42e0'] = 0x4a42e0
+    fn_va['ChainSplit_SizeFits_00425ba0'] = 0x425ba0
+    fn_va['ChainCall_SecondEntry_00405960'] = 0x405960
     fn_va['PvsMerge_MatchEnd_00425f90'] = 0x425f90
     fn_va['PvsMerge_MatchNode_00425fd0'] = 0x425fd0
     names = sys.argv[1:] or sorted(SEEDS)
