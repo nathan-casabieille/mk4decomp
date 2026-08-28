@@ -4,6 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -14,6 +15,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -56,6 +58,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -63,6 +66,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -97,6 +101,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -107,6 +112,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
 /* @addr 0x004b8ec0 (92b)
  *   eax = arg0; g_dispatchSave1559 = eax;
@@ -118,6 +124,7 @@ extern unsigned int g_fightAxisPosY;
  *   eax += 0x7c0; g_dispatchSave1564=ecx; g_dispatchSave1565=edx;
  *   g_dispatchSave1566=eax; ret.
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dispatchSave1559;
 extern unsigned int g_dispatchSave1560;
 extern unsigned int g_dispatchSave1561;
@@ -126,6 +133,7 @@ extern unsigned int g_dispatchSave1563;
 extern unsigned int g_dispatchSave1564;
 extern unsigned int g_dispatchSave1565;
 extern unsigned int g_dispatchSave1566;
+#endif
 extern void MStackBracket5_LinkedListUnlink(void);
 extern void CountdownClampWalk(void);
 extern void DownloadPlayerChar(void);
@@ -138,9 +146,11 @@ extern void DualCallPauseDirtyJmp_00490c30(void);
 extern void CallPauseScaledStoreCopyJmp(void);
 extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
 extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_counter_0053a51c;
 extern unsigned int g_tickFlagF;
 extern unsigned int g_hitPhase;
+#endif
 extern void StreamChainStringInstall(void);
 extern void StorePauseImulShr16(void);
 extern void Mul10TailPairMidChain(void);
@@ -149,9 +159,11 @@ extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
 extern void Wrapper_ScaledChainPushCall_004ef858(void);
 extern void PendingMatch_StoreTwoCall_0042b930(void);
 extern void FpuSqrtMul(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dualB_00538038;
 extern unsigned int g_dualB_0053803c;
 extern unsigned int g_bootInitSaveSlot;
+#endif
 extern void TripleSubVec3(void);
 extern void Mul10SumSqrt(void);
 extern void MStackPushTableWalk(void);
@@ -169,8 +181,10 @@ extern void IdCascadeBitSet(void);
 extern void Scaled3StorePushCallJmp(void);
 extern void Thunk_InstallSelfChainSet2011(void);
 extern void StateDispatchYield(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dispatchState;
 extern unsigned int g_stateFlag;
+#endif
 extern void PushPopState70Mask(void);
 extern void Thunk_LinkedListBitMaskSearch(void);
 extern void CopyJmp_ScaledSubStore_g_currentNodeIdx(void);
@@ -249,14 +263,172 @@ extern void Vec2SumMul10ChainCompute(void);
 extern void GuardedSeq_MStackCall_then_CallSetPause_0049a650(void);
 extern void AtanDualDeltaThreshold(void);
 extern void Set43DualCallJmp(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_scaledArgChain;
 extern unsigned int g_distRefX;
 extern unsigned int g_distRefZ;
 extern unsigned int g_eventQueueSeed;
 extern s32 g_dlNalt1;
 extern s32 g_dlNalt2;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_bootInitSaveSlot (*(unsigned int *)MK4_VA(unsigned int, 0x541dc4u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_chainInsertSlot (*(unsigned int *)MK4_VA(unsigned int, 0x53a168u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_counter_0053a51c (*(unsigned int *)MK4_VA(unsigned int, 0x53a51cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchSave1559 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d9cu))
+#define g_dispatchSave1560 (*(unsigned int *)MK4_VA(unsigned int, 0xab4da0u))
+#define g_dispatchSave1561 (*(unsigned int *)MK4_VA(unsigned int, 0xab4da4u))
+#define g_dispatchSave1562 (*(unsigned int *)MK4_VA(unsigned int, 0xab4da8u))
+#define g_dispatchSave1563 (*(unsigned int *)MK4_VA(unsigned int, 0xab4dacu))
+#define g_dispatchSave1564 (*(unsigned int *)MK4_VA(unsigned int, 0xab4db0u))
+#define g_dispatchSave1565 (*(unsigned int *)MK4_VA(unsigned int, 0xab4db4u))
+#define g_dispatchSave1566 (*(unsigned int *)MK4_VA(unsigned int, 0xab4db8u))
+#define g_dispatchState (*(unsigned int *)MK4_VA(unsigned int, 0x53a478u))
+#define g_distRefX (*(unsigned int *)MK4_VA(unsigned int, 0x52ab04u))
+#define g_distRefZ (*(unsigned int *)MK4_VA(unsigned int, 0x52ab08u))
+#define g_dlNalt1 (*(int *)MK4_VA(int, 0x537f48u))
+#define g_dlNalt2 (*(int *)MK4_VA(int, 0x5380e0u))
+#define g_dualB_00538038 (*(unsigned int *)MK4_VA(unsigned int, 0x538038u))
+#define g_dualB_0053803c (*(unsigned int *)MK4_VA(unsigned int, 0x53803cu))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_eventQueueCurrent (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_eventQueueEnd (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_eventQueueSeed (*(unsigned int *)MK4_VA(unsigned int, 0x52ab10u))
+#define g_eventQueueTotal (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_hitPhase (*(unsigned int *)MK4_VA(unsigned int, 0x537f30u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_matrixStackTop (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_scaledArgChain (*(unsigned int *)MK4_VA(unsigned int, 0x541e68u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_stateFlag (*(unsigned int *)MK4_VA(unsigned int, 0x537e98u))
+#define g_tickFlagF (*(unsigned int *)MK4_VA(unsigned int, 0x52aac4u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
 extern unsigned int g_dataArr_00535cfc;
 extern unsigned int g_dataArr_0053a1d0;
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+
+/* @addr 0x00409aa0 (485b) - NATIVE ONLY; the matching build synthesizes it.
+ *
+ * Despite the name this is not a tree walk: it UNLINKS one node from a
+ * doubly-linked list whose links are stored RELATIVE - each neighbour is
+ * reached as `link + g_xformEntityIdx` - under a five-value mstack bracket
+ * (g_chainInsertSlot, g_eventQueueCurrent, g_pendingNodeType,
+ * g_eventQueueTotal, g_eventQueueEnd all saved and restored around it).
+ *
+ * The two null-link cases patch the list HEAD instead of a neighbour: with no
+ * +8 back-link the forward link lands in prev[0], and with no forward link
+ * the back-link lands in prev[+4]. prev's element count at +0xc is
+ * decremented, and the node's three link fields are zeroed through
+ * g_walkCallback - the original routes both stores through that global, so it
+ * ends the call holding zero.
+ *
+ * No calls, no pause checks: the paused exits its CALLERS take react to a flag
+ * set elsewhere. Empty matching side - the co-exec extractor recognises a twin
+ * only as an ifdef/else pair. */
+void MStackBracket5_LinkedListUnlink(void)
+{
+    unsigned int node, prev, next, fwd;
+
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_chainInsertSlot;
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_eventQueueCurrent;
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_pendingNodeType;
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_eventQueueTotal;
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_eventQueueEnd;
+
+    node = g_currentNodeIdx + g_xformEntityIdx;
+    g_pendingNodeType = node;
+    prev = MK4_NODE_AT(unsigned int, node, 4);
+    g_eventQueueTotal = prev;
+    next = MK4_NODE_AT(unsigned int, node, 8);
+    g_eventQueueCurrent = next;
+
+    if (next == 0) {
+        fwd = MK4_NODE_AT(unsigned int, node, 0);
+        g_walkCallback = fwd;
+        *MK4_NODE(unsigned int, prev) = fwd;
+    } else {
+        unsigned int back = next + g_xformEntityIdx;
+
+        g_eventQueueEnd = back;
+        fwd = MK4_NODE_AT(unsigned int, node, 0);
+        g_walkCallback = fwd;
+        *MK4_NODE(unsigned int, back) = fwd;
+    }
+
+    fwd = MK4_NODE_AT(unsigned int, node, 0);
+    g_eventQueueCurrent = fwd;
+    if (fwd == 0) {
+        g_walkCallback = MK4_NODE_AT(unsigned int, node, 8);
+        MK4_NODE_AT(unsigned int, prev, 4) = g_walkCallback;
+    } else {
+        unsigned int ahead = fwd + g_xformEntityIdx;
+
+        g_eventQueueEnd = ahead;
+        g_walkCallback = MK4_NODE_AT(unsigned int, node, 8);
+        MK4_NODE_AT(unsigned int, ahead, 8) = g_walkCallback;
+    }
+
+    MK4_NODE_AT(unsigned int, g_eventQueueTotal, 0xc) -= 1;
+
+    g_walkCallback = 0;
+    MK4_NODE_AT(unsigned int, g_pendingNodeType, 4) = 0;
+    MK4_NODE_AT(unsigned int, g_pendingNodeType, 8) = g_walkCallback;
+    *MK4_NODE(unsigned int, g_pendingNodeType) = g_walkCallback;
+
+    g_eventQueueEnd = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+    g_eventQueueTotal = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+    g_pendingNodeType = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+    g_eventQueueCurrent = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+    g_chainInsertSlot = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+}
+#else
+/* no matching-side C for the unlink - see above */
+#endif
+
+#ifndef NON_MATCHING   /* the native build takes src/engine/countdown_clamp_walk.c */
 void Helper_TickInit(unsigned int base) {
     g_dispatchSave1559 = base;
     g_dispatchSave1560 = base + 0x200;
@@ -267,3 +439,4 @@ void Helper_TickInit(unsigned int base) {
     g_dispatchSave1565 = base + 0x780;
     g_dispatchSave1566 = base + 0x7c0;
 }
+#endif

@@ -443,6 +443,28 @@ def _gsr(mode):
         '@0xab48be': 400, '@0xab48c0': 500, '@0xab48c2': 600,
     }
 
+
+# MStackBracket5_LinkedListUnlink: the node lives at g_currentNodeIdx + xe
+# (0x2e4000 + 0x40); its +4 names prev, +8 the back link, +0 the forward link,
+# both RELATIVE (neighbour = link + xe).
+def _unlink(back, fwd):
+    d = {
+        'g_currentNodeIdx': 0x2e4000, 'g_xformEntityIdx': 0x40,
+        'g_matrixStackTop': 0x2e5000,
+        'g_chainInsertSlot': 0x11, 'g_eventQueueCurrent': 0x22,
+        'g_pendingNodeType': 0x33, 'g_eventQueueTotal': 0x44,
+        'g_eventQueueEnd': 0x55,
+        '@0xb90100': fwd,                    # node[0]: forward link
+        '@0xb90104': 0x2e4200,               # node[+4]: prev
+        '@0xb90108': back,                   # node[+8]: back link
+        '@0xb9080c': 7,                      # prev[+0xc]: element count
+    }
+    if back:
+        d['@0x%x' % ((back + 0x40) * 4)] = 0x9999
+    if fwd:
+        d['@0x%x' % ((fwd + 0x40) * 4 + 0x20)] = 0x8888
+    return d
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -833,6 +855,15 @@ SEEDS = {
     # the only conditional - an abs-diff snap - driven both ways.
     # MStackBracket5_LinkedListUnlink (485B, unconverted) is stubbed to a ret
     # at its VA in the shared arena; the bracket writes are the observables.
+    # A relative-linked list: node at base+xe, neighbours reached as
+    # link + xe. Four link shapes: middle, head (no back-link), tail (no
+    # forward link), and sole element.
+    'MStackBracket5_LinkedListUnlink': [
+        ('middle of the list', _unlink(back=0x100, fwd=0x180)),
+        ('first element',      _unlink(back=0,     fwd=0x180)),
+        ('last element',       _unlink(back=0x100, fwd=0)),
+        ('sole element',       _unlink(back=0,     fwd=0)),
+    ],
     'MStackPushZeroCallPop': [
         ('brackets and pops', {'g_matrixStackTop': 0x2e5000, 'g_xformEntityIdx': 0x77,
                                'g_framePauseFlag': 0, '@0x409aa0': b'\xc3'}),
