@@ -1041,6 +1041,16 @@ SEEDS = {
     # Branch selection on the tag's LOW WORD; the six callees are stubbed at
     # their VAs (ret / ret-with-value), so the writes are the dispatcher's own.
     # AllocateNode runs LIVE against the slot table; the arg is a code VA.
+    # The 411262-unit angle wrap: in range untouched (no store), negative by
+    # one and by many periods, and high by one and by many.
+    'BootMod6487eClampAndChainMul10': [
+        ('in range: no store', {'g_walkCallback': 0x1234}),
+        ('negative one period', {'g_walkCallback': 0xffffff00}),
+        ('negative many periods', {'g_walkCallback': 0xffc00000}),
+        ('high one period', {'g_walkCallback': 0x70000}),
+        ('high many periods', {'g_walkCallback': 0x500000}),
+        ('exactly the period', {'g_walkCallback': 0x6487e}),
+    ],
     'StoreTwoCall': [
         ('parks and allocates', {'g_nodeListTail': 0,
             '@0x53e440': 0, 'g_eventQueueWorkType': 0}, (0x48caa0, 0x71)),
