@@ -103,7 +103,8 @@ SCEN = [
 
 
 def main():
-    names = sys.argv[1:] or ['TristripBatchEmit', 'TristripBatchEmit3Cap']
+    names = sys.argv[1:] or ['TristripBatchEmit', 'TristripBatchEmit2',
+                             'TristripBatchEmit3Cap']
     fn_va, gl_va = vt.load_maps()
     base = bytearray(vc.ARENA.read_bytes())
     vc.ARG_BASE = 0x7af800
