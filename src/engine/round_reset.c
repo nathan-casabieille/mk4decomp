@@ -4,6 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -14,6 +15,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -56,6 +58,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -63,6 +66,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -97,6 +101,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -107,13 +112,17 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_tickFlagF;
 extern u32 g_dlSomeFlag2;
 extern unsigned int g_quadEntryGate;
 extern unsigned int g_phaseTimer;
 extern unsigned int g_dst_00537ea4;
+#endif
 extern unsigned int g_dispatchSave_00537ef4;
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dispatchVar11;
 extern unsigned int g_hitPhase;
 extern unsigned int g_audioBank2State;
@@ -135,6 +144,7 @@ extern unsigned int g_titleDemoState2;
 extern u32 g_dlState;
 extern u32 g_dlAux;
 extern unsigned int g_dispatchSave37;
+#endif
 extern unsigned int g_clusterArr541f60_n6;
 extern unsigned int g_clusterArr541f60_n5;
 extern unsigned int g_clusterArr541f60_n4;
@@ -174,12 +184,184 @@ extern unsigned int g_clusterArr541f60_6;
 extern unsigned int g_clusterArr541f60_7;
 extern unsigned int g_clusterArr541f60_8;
 extern unsigned int g_clusterArr541f60_9;
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_tripleEntryFlag;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBank2State (*(unsigned int *)MK4_VA(unsigned int, 0x537f98u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_audioStreamState (*(unsigned int *)MK4_VA(unsigned int, 0x53a430u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchClr1 (*(unsigned int *)MK4_VA(unsigned int, 0x53e34cu))
+#define g_dispatchSave37 (*(unsigned int *)MK4_VA(unsigned int, 0x541ee8u))
+#define g_dispatchSave39 (*(unsigned int *)MK4_VA(unsigned int, 0x53a788u))
+#define g_dispatchVar11 (*(unsigned int *)MK4_VA(unsigned int, 0x537f04u))
+#define g_dlAux (*(unsigned int *)MK4_VA(unsigned int, 0x541e38u))
+#define g_dlSomeFlag1 (*(unsigned int *)MK4_VA(unsigned int, 0x53a510u))
+#define g_dlSomeFlag2 (*(unsigned int *)MK4_VA(unsigned int, 0x52aafcu))
+#define g_dlState (*(unsigned int *)MK4_VA(unsigned int, 0x541e34u))
+#define g_dst_00537ea4 (*(unsigned int *)MK4_VA(unsigned int, 0x537ea4u))
+#define g_dst_0053a6e0 (*(unsigned int *)MK4_VA(unsigned int, 0x53a6e0u))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_fightTickSavedSlot (*(unsigned int *)MK4_VA(unsigned int, 0x5380d8u))
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_hitPhase (*(unsigned int *)MK4_VA(unsigned int, 0x537f30u))
+#define g_installCountdownSlot2 (*(unsigned int *)MK4_VA(unsigned int, 0x541d84u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_phaseInstallSlot (*(unsigned int *)MK4_VA(unsigned int, 0x53a42cu))
+#define g_phaseThunkArr (*(unsigned int *)MK4_VA(unsigned int, 0x53a474u))
+#define g_phaseThunkSlot4 (*(unsigned int *)MK4_VA(unsigned int, 0x53a6f8u))
+#define g_phaseThunkState (*(unsigned int *)MK4_VA(unsigned int, 0x53a730u))
+#define g_phaseTimer (*(unsigned int *)MK4_VA(unsigned int, 0x537e94u))
+#define g_quadEntryGate (*(unsigned int *)MK4_VA(unsigned int, 0x52d724u))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_roundResetSlot (*(unsigned int *)MK4_VA(unsigned int, 0x53a3e4u))
+#define g_smState4Way (*(unsigned int *)MK4_VA(unsigned int, 0x541dc8u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_tickFlagF (*(unsigned int *)MK4_VA(unsigned int, 0x52aac4u))
+#define g_titleDemoState (*(unsigned int *)MK4_VA(unsigned int, 0x541df0u))
+#define g_titleDemoState2 (*(unsigned int *)MK4_VA(unsigned int, 0x541df4u))
+#define g_tripleEntryFlag (*(unsigned int *)MK4_VA(unsigned int, 0x54380cu))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
 extern void Cmp2DirtyToggle(void);
 extern void TestCmpZeroFour(void);
 extern void TriBranchFlagWrite(void);
 extern void TwoStateCopyDup(void);
 
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+extern void Cmp2DirtyToggle(void);
+extern void TwoStateCopyDup(void);
+extern void TestCmpZeroFour(void);
+extern void TriBranchFlagWrite(void);
+
+/* @addr 0x004223e0 (523b) - NATIVE twin; the matching build keeps the
+ * __asm body below.
+ *
+ * The round reset. Three guarded calls at the head (the dirty toggle, the
+ * state copy when bit 0 came back set, and the zero-four check when the
+ * tick flag is 2), then two 0x10000 stamps, the hit-phase clear, and a
+ * long run of zeroed state - most of it the 0x541eec..0x541f84 pair table,
+ * cleared high word before low word exactly as the original walks it.
+ * The tail runs the tri-branch flag write and, on a clean return, saves
+ * the fight tick counter. */
+void RoundReset(void)
+{
+    Cmp2DirtyToggle();
+    if (g_framePauseFlag != 0) return;
+    if (g_xformDirtyFlags & 1) {
+        TwoStateCopyDup();
+        if (g_framePauseFlag != 0) return;
+    }
+    g_walkCallback = *MK4_VA(unsigned int, 0x52aac4u);
+    if (*MK4_VA(unsigned int, 0x52aac4u) == 2) {
+        TestCmpZeroFour();
+        if (g_framePauseFlag != 0) return;
+    }
+    *MK4_VA(unsigned int, 0x53a3e4u) = 0x10000;
+    *MK4_VA(unsigned int, 0x53a474u) = 0x10000;
+    g_walkCallback = *MK4_VA(unsigned int, 0x537f30u);
+    if (*MK4_VA(unsigned int, 0x537f30u) == 1) {
+        *MK4_VA(unsigned int, 0x53a6e0u) = 0;
+        *MK4_VA(unsigned int, 0x537ea4u) = 0;
+    }
+    *MK4_VA(unsigned int, 0x53a6e0u) = 0;
+    *MK4_VA(unsigned int, 0x537ea4u) = 0;
+    *MK4_VA(unsigned int, 0x541df0u) = 0;
+    *MK4_VA(unsigned int, 0x541df4u) = 0;
+    *MK4_VA(unsigned char, 0x54380cu) = 0;
+    *MK4_VA(unsigned int, 0x53a6f8u) = 0;
+    *MK4_VA(unsigned int, 0x53a788u) = 0;
+    *MK4_VA(unsigned int, 0x53e34cu) = 0;
+    *MK4_VA(unsigned int, 0x541dc8u) = 0;
+    *MK4_VA(unsigned int, 0x537e94u) = 0;
+    *MK4_VA(unsigned int, 0x53a42cu) = 0;
+    *MK4_VA(unsigned int, 0x537ef4u) = 0;
+    *MK4_VA(unsigned int, 0x537f94u) = 0;
+    *MK4_VA(unsigned int, 0x52d724u) = 0;
+    *MK4_VA(unsigned int, 0x537f98u) = 0;
+    *MK4_VA(unsigned int, 0x53a730u) = 0;
+    *MK4_VA(unsigned int, 0x541d84u) = 0;
+    *MK4_VA(unsigned int, 0x53a430u) = 0;
+    *MK4_VA(unsigned int, 0x537f04u) = 0;
+    *MK4_VA(unsigned int, 0x53a510u) = 0;
+    *MK4_VA(unsigned int, 0x52aafcu) = 0;
+    *MK4_VA(unsigned int, 0x541e34u) = 0;
+    *MK4_VA(unsigned int, 0x541e38u) = 0;
+    *MK4_VA(unsigned int, 0x5380d8u) = 0;
+    *MK4_VA(unsigned int, 0x541eecu) = 0;
+    *MK4_VA(unsigned int, 0x541ee8u) = 0;
+    *MK4_VA(unsigned int, 0x541ef4u) = 0;
+    *MK4_VA(unsigned int, 0x541ef0u) = 0;
+    *MK4_VA(unsigned int, 0x541efcu) = 0;
+    *MK4_VA(unsigned int, 0x541ef8u) = 0;
+    *MK4_VA(unsigned int, 0x541f04u) = 0;
+    *MK4_VA(unsigned int, 0x541f00u) = 0;
+    *MK4_VA(unsigned int, 0x541f0cu) = 0;
+    *MK4_VA(unsigned int, 0x541f08u) = 0;
+    *MK4_VA(unsigned int, 0x541f14u) = 0;
+    *MK4_VA(unsigned int, 0x541f10u) = 0;
+    *MK4_VA(unsigned int, 0x541f1cu) = 0;
+    *MK4_VA(unsigned int, 0x541f18u) = 0;
+    *MK4_VA(unsigned int, 0x541f24u) = 0;
+    *MK4_VA(unsigned int, 0x541f20u) = 0;
+    *MK4_VA(unsigned int, 0x541f2cu) = 0;
+    *MK4_VA(unsigned int, 0x541f28u) = 0;
+    *MK4_VA(unsigned int, 0x541f34u) = 0;
+    *MK4_VA(unsigned int, 0x541f30u) = 0;
+    *MK4_VA(unsigned int, 0x541f3cu) = 0;
+    *MK4_VA(unsigned int, 0x541f38u) = 0;
+    *MK4_VA(unsigned int, 0x541f44u) = 0;
+    *MK4_VA(unsigned int, 0x541f40u) = 0;
+    *MK4_VA(unsigned int, 0x541f4cu) = 0;
+    *MK4_VA(unsigned int, 0x541f48u) = 0;
+    *MK4_VA(unsigned int, 0x541f54u) = 0;
+    *MK4_VA(unsigned int, 0x541f50u) = 0;
+    *MK4_VA(unsigned int, 0x541f5cu) = 0;
+    *MK4_VA(unsigned int, 0x541f58u) = 0;
+    *MK4_VA(unsigned int, 0x541f64u) = 0;
+    *MK4_VA(unsigned int, 0x541f60u) = 0;
+    *MK4_VA(unsigned int, 0x541f6cu) = 0;
+    *MK4_VA(unsigned int, 0x541f68u) = 0;
+    *MK4_VA(unsigned int, 0x541f74u) = 0;
+    *MK4_VA(unsigned int, 0x541f70u) = 0;
+    *MK4_VA(unsigned int, 0x541f7cu) = 0;
+    *MK4_VA(unsigned int, 0x541f78u) = 0;
+    *MK4_VA(unsigned int, 0x541f84u) = 0;
+    *MK4_VA(unsigned int, 0x541f80u) = 0;
+    TriBranchFlagWrite();
+    if (g_framePauseFlag != 0) return;
+    g_walkCallback = *MK4_VA(unsigned int, 0x53a498u);
+    *MK4_VA(unsigned int, 0x5380d8u) = *MK4_VA(unsigned int, 0x53a498u);
+}
+#else
 __declspec(naked) void RoundReset(void)
 {
     __asm {
@@ -286,3 +468,4 @@ __declspec(naked) void RoundReset(void)
         ret
     }
 }
+#endif

@@ -354,7 +354,6 @@ __attribute__((weak)) int PvpAngleDistSeed(){return 0;}
 __attribute__((weak)) int QuadGuardedCjSet_00422fc0(){return 0;}
 __attribute__((weak)) int QuadGuardedCjSet_004230b0(){return 0;}
 __attribute__((weak)) int RecordListIterMStack(){return 0;}
-__attribute__((weak)) int RoundReset(){return 0;}
 __attribute__((weak)) int StageParticleEmitterInit(){return 0;}
 __attribute__((weak)) int SpawnListBatchLoader(){return 0;}
 __attribute__((weak)) int DownloadPlayerChar_Variant(){return 0;}
@@ -365,4 +364,6 @@ __attribute__((weak)) int SlotPhaseResetInstallChain(){return 0;}
 __attribute__((weak)) int ScaledAddDeref(){return 0;}
 __attribute__((weak)) int BootInitChainHeavy(){return 0;}
 __attribute__((weak)) int PendingMatch_ZeroNDwords(){return 0;}
+__attribute__((weak)) int TwoStateCopyDup(){return 0;}
+__attribute__((weak)) int TriBranchFlagWrite(){return 0;}
 #endif /* MK4_NATIVE_FULL */

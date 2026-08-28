@@ -236,6 +236,7 @@ src/engine/renderer_teardown_sw.c
 src/engine/rot_matrix_a.c
 src/engine/rot_matrix_b.c
 src/engine/rot_matrix_c.c
+src/engine/round_reset.c
 src/engine/scaled_addr_init.c
 src/engine/scaled_array_store.c
 src/engine/scaled_bit_op_jmp.c
