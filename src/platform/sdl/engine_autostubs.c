@@ -275,6 +275,8 @@ __attribute__((weak)) int Menu_DirectDrawUnavailableDialog(){return 0;}
 __attribute__((weak)) int Menu_GlideUnavailableDialog(){return 0;}
 __attribute__((weak)) int Menu_HelpScreen(){return 0;}
 __attribute__((weak)) int Menu_InsertCDDialog(){return 0;}
+__attribute__((weak)) int SunbeamSpriteEmit(){return 0;}
+__attribute__((weak)) int GamepadSeqRecord(){return 0;}
 __attribute__((weak)) int Menu_PauseMenu(){return 0;}
 __attribute__((weak)) int Helper_DrawMenu_PostRender(){return 0;}
 __attribute__((weak)) int AppInit_Misc8(){return 0;}

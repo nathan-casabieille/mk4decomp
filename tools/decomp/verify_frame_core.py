@@ -316,6 +316,33 @@ def _bbox():
     }
     return d
 
+
+# MovesPanelEmit: g_eventQueueTotal's node holds the panel index at +0x18, and
+# the panel must be one of the four sentinel records - 0x004ed000 here, so the
+# vertex fields are the dwords at 0x4ed004/0c/14/1c.
+def _panel():
+    return {
+        # the PANEL is one of the four sentinel records - g_eventQueueTotal*4
+        # must be 0x4ed000 - and its +0x18 names the NODE the vertices and the
+        # colour test read.
+        'g_eventQueueTotal': 0x4ed000 // 4,
+        '@0x4ed018': 0x2e4000,
+        'g_inLoopStep': 0,
+        'g_tickW1': 0x20,
+        '@0xab4e20': 0x1234,                  # g_tickCurMask (word)
+        '@0xb90000': 0xa000,                  # picks the 0x0a colour
+        '@0xb90004': 0x11002200, '@0xb9000c': 0x33004400,
+        '@0xb90014': 0x55006600, '@0xb9001c': 0x77008800,
+        # the working 3x3 + translate, for ProjectTwoVertices
+        '@0x7af990': 0x00100010, '@0x7af994': 0xfff00010,
+        '@0x7af998': 0x0010fff0, '@0x7af99c': 0x00100010,
+        '@0x7af9a0': 0x0010,
+        'g_vtxTransX': 0, 'g_vtxTransY': 0, 'g_vtxTransZ': 0x280,
+        '@0x4bcc70': b'\xc3',                 # GamepadSeqRecord
+        '@0x4bd270': b'\xc3',                 # SunbeamSpriteEmit
+        '@0x4c3360': b'\xc3',                 # Helper_DrawCursor
+    }
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -672,6 +699,17 @@ SEEDS = {
     # 0x004f63e8 + idx*0x10 must be zero, and g_tickCurConfig decides which of
     # two entry conditions applies. Without all three the body never runs and
     # the emitter harness reports a WEAK pass.
+    # GamepadSeqRecord (750B, unconverted), SunbeamSpriteEmit and
+    # Helper_DrawCursor are stubbed to `ret` in the shared arena - the record
+    # stores all land BEFORE those calls, so they stay observable.
+    'MovesPanelEmit': [
+        ('small node goes to the sunbeam', dict(_panel(), **{'@0x4ed018': 3})),
+        ('not a panel record', dict(_panel(), **{'g_eventQueueTotal': 0x2e4100,
+                                                 '@0xb90418': 0x2e4000})),
+        ('both edges', _panel()),
+        # middle vertex flipped: the second edge's winding bit changes
+        ('winding flip', dict(_panel(), **{'@0xb9001c': 0xe000f00f})),
+    ],
     'BboxProjectAndStash': [
         ('index out of range', dict(_bbox(), **{'@0xb9001c': 0x11})),
         ('byte gate set',      dict(_bbox(), **{'@0x4f63f8': 0x01})),

@@ -5,6 +5,7 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -15,6 +16,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -57,6 +59,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -64,6 +67,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -98,6 +102,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -108,7 +113,9 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_installCountdownEnd;
 extern unsigned int g_dispatchCmpEnd2;
 extern unsigned int g_movesPanelEnd;
@@ -145,87 +152,227 @@ extern unsigned int g_dispatchSave1545;
 extern unsigned int g_dispatchSave1546;
 extern unsigned int g_dispatchSave1547;
 extern unsigned int g_dispatchSave1548;
+#endif
+#ifndef NON_MATCHING   /* the twin declares these with their real signatures */
 extern void GamepadSeqRecord(void);
 extern void Helper_DrawCursor(void);
 extern void ProjectTwoVertices(void);
 extern void SunbeamSpriteEmit(void);
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchCmpEnd (*(unsigned int *)MK4_VA(unsigned int, 0x4ed060u))
+#define g_dispatchCmpEnd2 (*(unsigned int *)MK4_VA(unsigned int, 0x4ed020u))
+#define g_dispatchSave1534 (*(unsigned int *)MK4_VA(unsigned int, 0xab48b8u))
+#define g_dispatchSave1536 (*(unsigned int *)MK4_VA(unsigned int, 0xab48bcu))
+#define g_dispatchSave1538 (*(unsigned int *)MK4_VA(unsigned int, 0xab48c0u))
+#define g_dispatchSave1540 (*(unsigned int *)MK4_VA(unsigned int, 0xab48c4u))
+#define g_dispatchSave1541 (*(unsigned int *)MK4_VA(unsigned int, 0xab48c5u))
+#define g_dispatchSave1542 (*(unsigned int *)MK4_VA(unsigned int, 0xab48c6u))
+#define g_dispatchSave1543 (*(unsigned int *)MK4_VA(unsigned int, 0xab48c7u))
+#define g_dispatchSave1544 (*(unsigned int *)MK4_VA(unsigned int, 0xab48c8u))
+#define g_dispatchSave1545 (*(unsigned int *)MK4_VA(unsigned int, 0xab48c9u))
+#define g_dispatchSave1546 (*(unsigned int *)MK4_VA(unsigned int, 0xab48cau))
+#define g_dispatchSave1547 (*(unsigned int *)MK4_VA(unsigned int, 0xab48ccu))
+#define g_dispatchSave1548 (*(unsigned int *)MK4_VA(unsigned int, 0xab48d2u))
+#define g_dispatchSave1626 ((unsigned int *)MK4_VA(unsigned int, 0x7af958u))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_eventQueueTotal (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_inLoopStep (*(unsigned int *)MK4_VA(unsigned int, 0x7af92cu))
+#define g_installCountdownEnd (*(unsigned int *)MK4_VA(unsigned int, 0x4ed000u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_movesPanelEnd (*(unsigned int *)MK4_VA(unsigned int, 0x4ed040u))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_tickCurMask (*(unsigned int *)MK4_VA(unsigned int, 0xab4e20u))
+#define g_tickW1 (*(unsigned int *)MK4_VA(unsigned int, 0x543550u))
+#define g_triStripRingA (*(unsigned int *)MK4_VA(unsigned int, 0x7af9b4u))
+#define g_triStripRingB (*(unsigned int *)MK4_VA(unsigned int, 0x7af984u))
+#define g_triStripX0 (*(short *)MK4_VA(short, 0x7af95cu))
+#define g_triStripX1 (*(short *)MK4_VA(short, 0x7af962u))
+#define g_triStripX2 (*(short *)MK4_VA(short, 0x7af968u))
+#define g_vtxIn1_y (*(short *)MK4_VA(short, 0x7af95eu))
+#define g_vtxIn1_z (*(short *)MK4_VA(short, 0x7af960u))
+#define g_vtxIn2_x (*(short *)MK4_VA(short, 0x7af95au))
+#define g_vtxIn2_y (*(short *)MK4_VA(short, 0x7af964u))
+#define g_vtxIn2_z (*(short *)MK4_VA(short, 0x7af966u))
+#define g_vtxOut2_z (*(int *)MK4_VA(int, 0x7af988u))
+#define g_vtxOut_z (*(int *)MK4_VA(int, 0x7af98cu))
+#define g_vtxScreenP1Y (*(short *)MK4_VA(short, 0x7af9b6u))
+#define g_vtxScreenP2X (*(unsigned int *)MK4_VA(unsigned int, 0x7af9b8u))
+#define g_vtxScreenP2Y (*(short *)MK4_VA(short, 0x7af9bau))
+#define g_vtxScreenX (*(unsigned int *)MK4_VA(unsigned int, 0x7af9bcu))
+#define g_vtxScreenY (*(short *)MK4_VA(short, 0x7af9beu))
+#define g_vtxValid (*(int **)MK4_VA(int, 0x7af9b0u))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void MovesPanelEmit(void)
+#include "portable/mem_model.h"
 
+extern void SunbeamSpriteEmit(void);
+extern void ProjectTwoVertices(void);
+extern void GamepadSeqRecord(unsigned int va, int which);
+extern void Helper_DrawCursor(void *entry);
+
+/* Portable twin, written from the disassembly. The record this fills is a
+ * PACKED draw-queue entry: three screen dwords at 0x00ab48b8, six colour BYTES
+ * at +0xc, and three words behind those - the lift assigned every field as an
+ * int, which is the same four-bytes-into-a-byte-field class the width audit
+ * exists for. Every store here is spelled at the original's width.
+ *
+ * The edge sequence appears TWICE, expanded inline: the co-exec extractor
+ * compiles the function body alone, so neither a static helper nor a macro
+ * defined beside it survives extraction.
+ *
+ * The staging slots at 0x007af958 are nine s16: each source field is a packed
+ * pair split as (v << 16 >> 19, v >> 19) - a 13-bit signed extract of each
+ * half, not a shift of the whole.
+ *
+ * The four sentinel compares are against VAs: the original compares
+ * `node * 4` to 0x4ed060/40/20/00 directly, so the twin keeps the VA form
+ * rather than materialising pointers. GamepadSeqRecord's first argument is a
+ * VA for the same reason - 750 bytes of it compare that argument to the same
+ * table. */
+void MovesPanelEmit(void)
 {
-  int iVar1;
-  bool bVar2;
-  undefined *puVar3;
-  uint uVar4;
-  
-  g_eventQueuePending = MK4_NODE_AT(int, g_dualD, 0x18);
-  if (g_eventQueuePending < 8) {
-    SunbeamSpriteEmit();
-    return;
-  }
-  if ((g_inLoopStep == 0) &&
-     ((((puVar3 = (undefined *)(g_dualD * 4), puVar3 == &g_dispatchCmpEnd ||
-        (puVar3 == &g_movesPanelEnd)) || (puVar3 == &g_dispatchCmpEnd2)) || (puVar3 == &g_installCountdownEnd)))) {
-    if (g_tickW1 < 0x10) {
-      uVar4 = 0;
+    unsigned int node, va, u, w1, f;
+    unsigned char col;
+    int p1x, p1y, p2x, p2y, x, y, valid;
+
+    node = MK4_NODE_AT(unsigned int, g_eventQueueTotal, 0x18);
+    g_xformEntityIdx = node;
+    if ((int)node < 8) {
+        SunbeamSpriteEmit();
+        return;
     }
-    else {
-      uVar4 = ((int)(g_tickW1 + (g_tickW1 >> 0x1f & 7U)) >> 3) - 1;
-    }
-    iVar1 = g_eventQueuePending * 4;
-    g_dispatchSave1546 = g_tickCurMask;
-    g_dispatchSave1540 = (-(MK4_NODE_AT(int, g_eventQueuePending, 0) == 0xa000) & 0xf4U) + 0x16;
-    g_dispatchSave1548 = 0xf;
-    g_dispatchSave1543 = 100;
-    g_dispatchSave1545 = 100;
-    g_dispatchSave1541 = 100;
-    g_dispatchSave1547 = (ushort)((uVar4 << 5 | uVar4) << 5) | (ushort)uVar4;
-    g_vtxIn2_y = 0;
-    g_dispatchSave1626 = (short)*(undefined4 *)(iVar1 + 4) >> 3;
-    g_vtxIn1_y = (short)((int)*(undefined4 *)(iVar1 + 4) >> 0x13);
-    g_vtxIn2_z = 0;
-    g_vtxIn2_x = (short)*(undefined4 *)(iVar1 + 0xc) >> 3;
-    g_vtxIn1_z = (short)((int)*(undefined4 *)(iVar1 + 0xc) >> 0x13);
-    g_triStripX2 = 0;
-    g_triStripX0 = (short)*(undefined4 *)(iVar1 + 0x14) >> 3;
-    g_triStripX1 = (short)((int)*(undefined4 *)(iVar1 + 0x14) >> 0x13);
-    g_dispatchSave1542 = g_dispatchSave1540;
-    g_dispatchSave1544 = g_dispatchSave1540;
+    if (g_inLoopStep != 0)
+        return;
+
+    /* TWO different indices, easy to conflate: the sentinel compare is on the
+     * PANEL's own VA (g_eventQueueTotal * 4), while the vertex fields and the
+     * 0xa000 colour test read the NODE the panel's +0x18 names. My first
+     * transcription tested node * 4 and the seeded run caught it. */
+    va = g_eventQueueTotal * 4u;
+    if (va != 0x4ed060u && va != 0x4ed040u && va != 0x4ed020u && va != 0x4ed000u)
+        return;
+
+    w1 = g_tickW1;
+    if ((int)w1 < 0x10)
+        u = 0;
+    else
+        u = (unsigned int)(((int)(w1 + ((w1 >> 31) & 7u)) >> 3) - 1);
+
+    col = (unsigned char)(((*MK4_NODE(unsigned int, node) == 0xa000u
+                            ? 0xffffffffu : 0u) & 0xf4u) + 0x16u);
+
+    *MK4_VA(unsigned short, 0xab48cau) = (unsigned short)g_tickCurMask;
+    *MK4_VA(unsigned short, 0xab48d2u) = 0xf;
+    *MK4_VA(unsigned char, 0xab48c6u) = col;
+    *MK4_VA(unsigned char, 0xab48c8u) = col;
+    *MK4_VA(unsigned char, 0xab48c4u) = col;
+    *MK4_VA(unsigned char, 0xab48c7u) = 0x64;
+    *MK4_VA(unsigned char, 0xab48c9u) = 0x64;
+    *MK4_VA(unsigned char, 0xab48c5u) = 0x64;
+    *MK4_VA(unsigned short, 0xab48ccu) =
+        (unsigned short)((((u << 5) | u) << 5) | u);
+
+    f = MK4_NODE_AT(unsigned int, node, 4);
+    *MK4_VA(short, 0x7af964u) = 0;
+    *MK4_VA(short, 0x7af958u) = (short)((int)(f << 16) >> 19);
+    *MK4_VA(short, 0x7af95eu) = (short)((int)f >> 19);
+
+    f = MK4_NODE_AT(unsigned int, node, 0xc);
+    *MK4_VA(short, 0x7af966u) = 0;
+    *MK4_VA(short, 0x7af95au) = (short)((int)(f << 16) >> 19);
+    *MK4_VA(short, 0x7af960u) = (short)((int)f >> 19);
+
+    f = MK4_NODE_AT(unsigned int, node, 0x14);
+    *MK4_VA(short, 0x7af968u) = 0;
+    *MK4_VA(short, 0x7af95cu) = (short)((int)(f << 16) >> 19);
+    *MK4_VA(short, 0x7af962u) = (short)((int)f >> 19);
+
+    /* --- edge 0: project, winding, stash, submit -------------------- */
     ProjectTwoVertices();
-    g_dispatchSave1534 = g_triStripRingA;
-    g_dispatchSave1536 = g_vtxScreenP2X;
-    bVar2 = ((int)(*(unsigned short *)((char *)&g_vtxScreenX + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
-            ((int)(short)g_vtxScreenP2X - (int)(short)g_triStripRingA) -
-            ((int)(*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
-            ((int)(short)g_vtxScreenX - (int)(short)g_triStripRingA) < 1;
-    g_vtxValid = (uint)bVar2;
-    g_dispatchSave1538 = g_vtxScreenX;
-    g_dispatchSave1548 = g_dispatchSave1548 & 0xfbff | (ushort)bVar2 << 10;
-    GamepadSeqRecord(g_dualD * 4,0);
-    if (((0 < (int)g_min_007af984) && (0 < (int)g_min_007af988)) && (0 < (int)g_min_007af98c)) {
-      Helper_DrawCursor(&g_dispatchSave1534);
-    }
-    g_vtxIn2_z = 0;
-    g_vtxIn2_x = (short)*(undefined4 *)(iVar1 + 0x1c) >> 3;
-    g_vtxIn1_z = (short)((int)*(undefined4 *)(iVar1 + 0x1c) >> 0x13);
+
+    p1x = (int)*MK4_VA(short, 0x7af9b4u);
+    p1y = (int)*MK4_VA(short, 0x7af9b6u);
+    p2x = (int)*MK4_VA(short, 0x7af9b8u);
+    p2y = (int)*MK4_VA(short, 0x7af9bau);
+    x   = (int)*MK4_VA(short, 0x7af9bcu);
+    y   = (int)*MK4_VA(short, 0x7af9beu);
+    valid = ((y - p1y) * (p2x - p1x) - (p2y - p1y) * (x - p1x)) <= 0;
+
+    *MK4_VA(unsigned int, 0xab48b8u) = *MK4_VA(unsigned int, 0x7af9b4u);
+    *MK4_VA(unsigned int, 0xab48bcu) = *MK4_VA(unsigned int, 0x7af9b8u);
+    *MK4_VA(unsigned int, 0xab48c0u) = *MK4_VA(unsigned int, 0x7af9bcu);
+    *MK4_VA(unsigned int, 0x7af9b0u) = (unsigned int)valid;     /* g_vtxValid */
+    *MK4_VA(unsigned short, 0xab48d2u) =
+        (unsigned short)((*MK4_VA(unsigned short, 0xab48d2u) & 0xfbffu)
+                         | ((unsigned)valid << 10));
+
+    GamepadSeqRecord(g_eventQueueTotal * 4u, 0);
+
+    if ((int)*MK4_VA(int, 0x7af984u) > 0 && (int)*MK4_VA(int, 0x7af988u) > 0
+        && (int)*MK4_VA(int, 0x7af98cu) > 0)
+        Helper_DrawCursor(MK4_VA(void, 0xab48b8u));
+
+    /* the second edge replaces only the middle vertex */
+    f = MK4_NODE_AT(unsigned int, node, 0x1c);
+    *MK4_VA(short, 0x7af966u) = 0;
+    *MK4_VA(short, 0x7af95au) = (short)((int)(f << 16) >> 19);
+    *MK4_VA(short, 0x7af960u) = (short)((int)f >> 19);
+
+    /* --- edge 1: project, winding, stash, submit -------------------- */
     ProjectTwoVertices();
-    g_dispatchSave1534 = g_triStripRingA;
-    g_dispatchSave1536 = g_vtxScreenP2X;
-    bVar2 = ((int)(*(unsigned short *)((char *)&g_vtxScreenX + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
-            ((int)(short)g_vtxScreenP2X - (int)(short)g_triStripRingA) -
-            ((int)(*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
-            ((int)(short)g_vtxScreenX - (int)(short)g_triStripRingA) < 1;
-    g_vtxValid = (uint)bVar2;
-    g_dispatchSave1538 = g_vtxScreenX;
-    g_dispatchSave1548 = g_dispatchSave1548 & 0xfbff | (ushort)bVar2 << 10;
-    GamepadSeqRecord(g_dualD * 4,1);
-    if (((0 < (int)g_min_007af984) && (0 < (int)g_min_007af988)) && (0 < (int)g_min_007af98c)) {
-      Helper_DrawCursor(&g_dispatchSave1534);
-    }
-  }
-  return;
+
+    p1x = (int)*MK4_VA(short, 0x7af9b4u);
+    p1y = (int)*MK4_VA(short, 0x7af9b6u);
+    p2x = (int)*MK4_VA(short, 0x7af9b8u);
+    p2y = (int)*MK4_VA(short, 0x7af9bau);
+    x   = (int)*MK4_VA(short, 0x7af9bcu);
+    y   = (int)*MK4_VA(short, 0x7af9beu);
+    valid = ((y - p1y) * (p2x - p1x) - (p2y - p1y) * (x - p1x)) <= 0;
+
+    *MK4_VA(unsigned int, 0xab48b8u) = *MK4_VA(unsigned int, 0x7af9b4u);
+    *MK4_VA(unsigned int, 0xab48bcu) = *MK4_VA(unsigned int, 0x7af9b8u);
+    *MK4_VA(unsigned int, 0xab48c0u) = *MK4_VA(unsigned int, 0x7af9bcu);
+    *MK4_VA(unsigned int, 0x7af9b0u) = (unsigned int)valid;     /* g_vtxValid */
+    *MK4_VA(unsigned short, 0xab48d2u) =
+        (unsigned short)((*MK4_VA(unsigned short, 0xab48d2u) & 0xfbffu)
+                         | ((unsigned)valid << 10));
+
+    GamepadSeqRecord(g_eventQueueTotal * 4u, 1);
+
+    if ((int)*MK4_VA(int, 0x7af984u) > 0 && (int)*MK4_VA(int, 0x7af988u) > 0
+        && (int)*MK4_VA(int, 0x7af98cu) > 0)
+        Helper_DrawCursor(MK4_VA(void, 0xab48b8u));
 }
 #else
 __declspec(naked) void MovesPanelEmit(void)
