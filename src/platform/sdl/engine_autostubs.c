@@ -225,7 +225,6 @@ __attribute__((weak)) int SelfInstallPhaseDispatch_StackPopDispatchTagged(){retu
 __attribute__((weak)) int SendNotifyMessageA(){return 0;}
 __attribute__((weak)) int SixSubdispatchSpan(){return 0;}
 __attribute__((weak)) int SlotCmp3way(){return 0;}
-__attribute__((weak)) int StateDispatchTable(){return 0;}
 __attribute__((weak)) int StateDispatchYield(){return 0;}
 __attribute__((weak)) int StateGateMStackOverlap(){return 0;}
 __attribute__((weak)) int StructArrayWalkCondCall(){return 0;}
@@ -363,5 +362,6 @@ __attribute__((weak)) int DownloadPlayerChar_Variant(){return 0;}
 __attribute__((weak)) int TripleStateSwapCall(){return 0;}
 __attribute__((weak)) int Phase3InstallSelf(){return 0;}
 __attribute__((weak)) int ScaledLoadCmp0fJmp(){return 0;}
-__attribute__((weak)) int ZeroSlotsGatedDispatch(){return 0;}
+__attribute__((weak)) int SlotPhaseResetInstallChain(){return 0;}
+__attribute__((weak)) int ScaledAddDeref(){return 0;}
 #endif /* MK4_NATIVE_FULL */

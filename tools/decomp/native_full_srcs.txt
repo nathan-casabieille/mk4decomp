@@ -269,6 +269,7 @@ src/engine/set_hi6.c
 src/engine/setjmp_wrappers.c
 src/engine/six_double_push_call.c
 src/engine/small_helpers.c
+src/engine/state_dispatch_table.c
 src/engine/state_install_or_forward.c
 src/engine/state_install_thunks.c
 src/engine/state_snapshot_dispatch.c
@@ -307,6 +308,7 @@ src/engine/word9_reorder.c
 src/engine/wrappers.c
 src/engine/wt_snapshot_push_call.c
 src/engine/z_bucket_clamp_store.c
+src/engine/zero_slots_gated_dispatch.c
 src/engine/zero_three_slots.c
 src/game/dispatch_scaled_lea.c
 src/game/download_player.c
