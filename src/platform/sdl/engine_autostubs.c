@@ -277,6 +277,12 @@ __attribute__((weak)) int Menu_DirectDrawUnavailableDialog(){return 0;}
 __attribute__((weak)) int Menu_GlideUnavailableDialog(){return 0;}
 __attribute__((weak)) int Menu_HelpScreen(){return 0;}
 __attribute__((weak)) int Menu_InsertCDDialog(){return 0;}
+__attribute__((weak)) int Loop16Init(){return 0;}
+__attribute__((weak)) int TwinRecordIter(){return 0;}
+__attribute__((weak)) int TableSearch(){return 0;}
+__attribute__((weak)) int StoreTwoCall(){return 0;}
+__attribute__((weak)) int SixDoublePushCall(){return 0;}
+__attribute__((weak)) int Audio_TimerSet(){return 0;}
 __attribute__((weak)) int SunbeamSpriteEmit(){return 0;}
 __attribute__((weak)) int GamepadSeqRecord(){return 0;}
 __attribute__((weak)) int Menu_PauseMenu(){return 0;}

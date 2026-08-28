@@ -26,15 +26,18 @@
 
 #include "portable/mem_model.h"
 
-#define HEAP_LO  0x007b41a0u
-#define HEAP_HI  0x00ab4194u
-
 extern void Helper_MemMalloc_Post(void);
 
-#define HDR(va)  (*(unsigned int *)MK4_PTR(va))
-
+/* Self-contained like Mem_Malloc: the co-exec extractor compiles the function
+ * BODY alone, so file-scope macros (the old HEAP_LO/HDR) never reach it - and
+ * with the extractor now searching the LINKED files first, this body is the
+ * one the harness actually checks. */
 void Mem_Free(void *ptr)
 {
+    unsigned char *A = (unsigned char *)MK4_PTR(0u);
+#define HEAP_LO  0x007b41a0u
+#define HEAP_HI  0x00ab4194u
+#define HDR(va)  (*(unsigned int *)(A + (va)))
     unsigned int p = MK4_UNPTR(ptr);
     unsigned int blk, owner, hdr, prev, next;
 
@@ -72,6 +75,9 @@ void Mem_Free(void *ptr)
             HDR(next + 8) = blk;
     }
     Helper_MemMalloc_Post();
+#undef HEAP_LO
+#undef HEAP_HI
+#undef HDR
 }
 
 #else

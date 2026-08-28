@@ -341,6 +341,31 @@ def fp_globals_for(name):
     return {}
 
 
+def _twin_search_order():
+    """The files to search for a twin, DETERMINISTICALLY: first the TUs the
+    native build actually links (native_full_srcs.txt, in its order), then the
+    rest of src/ sorted. 177 twin names have more than one home - the
+    auto-split kept stale lifts inside the big variants files - and plain
+    rglob is filesystem-order, so without this the harness can verify a body
+    the native build never links. It did: Mem_Free and
+    MStackPush2ChainLLInsert were green against the five_block copies, both of
+    which DIFFER from the linked twins."""
+    listed = []
+    seen = set()
+    nfs = ROOT / 'tools' / 'decomp' / 'native_full_srcs.txt'
+    if nfs.exists():
+        for line in nfs.read_text().split():
+            q = ROOT / line
+            if q.exists() and q not in seen:
+                listed.append(q)
+                seen.add(q)
+    for f in sorted((ROOT / 'src').rglob('*.c')):
+        if f not in seen:
+            listed.append(f)
+            seen.add(f)
+    return listed
+
+
 def extract_twin_any(name):
     """Like verify_twin.extract_twin but for ANY signature (not just
     void(void)). Returns (body, nargs, returns_value) or None.
@@ -348,7 +373,7 @@ def extract_twin_any(name):
     returns_value = the body has a `return <expr>;` (so EAX is meaningful)."""
     sig = re.compile(r'\b[A-Za-z_][\w *]*?\b(%s)\s*\(([^){]*)\)\s*\{'
                      % re.escape(name))
-    for f in (ROOT / 'src').rglob('*.c'):
+    for f in _twin_search_order():
         s = f.read_text(errors='ignore')
         for m in re.finditer(r'#ifdef NON_MATCHING\b', s):
             j = s.find('#else', m.end())

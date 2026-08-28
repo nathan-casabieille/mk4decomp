@@ -589,6 +589,24 @@ def _reinit():
         'g_drawQueueSize': 0,
     }
 
+
+# TaggedSceneDispatch: every callee stubbed - the reset trio and iterator to
+# plain rets, TableSearch to "miss" (eax=0), the two audio calls to
+# ret-with-value so the s8 store is observable.
+def _tsd():
+    def imm_ret(v):
+        return b'\xb8' + (v & 0xffffffff).to_bytes(4, 'little') + b'\xc3'
+    return {
+        'g_texXorKey': 0,
+        '@0x4be610': b'\xc3',                # CallZero2
+        '@0x4be630': b'\xc3',                # SixDoublePushCall
+        '@0x4be590': b'\xc3',                # TwinRecordIter
+        '@0x4be760': imm_ret(0),             # TableSearch: miss
+        '@0x4ac650': b'\xc3',                # Audio_TimerSet
+        '@0x4c3960': imm_ret(0xa5),          # Audio_PlaySoundId -> s8 0xa5
+        '@0x4f7d84': 0x1234,                 # table entry for hit=3
+    }
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -1010,6 +1028,32 @@ SEEDS = {
         # negative camera angles drive the sideways correction the other way
         ('negative rotation', dict(_reinit(), **{'@0xab47f8': 0xf000,
                                                  '@0xab47fc': 0x0800})),
+    ],
+    # LinkedListInsert's reversed sibling: prepend to an empty and a
+    # non-empty relative list.
+    # Branch selection on the tag's LOW WORD; the six callees are stubbed at
+    # their VAs (ret / ret-with-value), so the writes are the dispatcher's own.
+    'TaggedSceneDispatch': [
+        ('gated by the xor key', dict(_tsd(), **{'g_texXorKey': 1}), (5,)),
+        ('tag -1: the reset trio', _tsd(), (0xffffffff,)),
+        ('tag -2: iterator only', _tsd(), (0xfffffffe,)),
+        ('small tag: iterate and play +2000', _tsd(), (5,)),
+        ('mid tag: no iterate, magic divide', _tsd(), (0x3e8,)),
+        ('range tag: iterate then divide', _tsd(), (0x1580,)),
+        ('table hit: timer set', dict(_tsd(), **{
+            '@0x4be760': b'\xb8\x03\x00\x00\x00\xc3'}), (0x3e8,)),
+    ],
+    'MStackPush2ChainPrepend': [
+        ('empty list', {'g_matrixStackTop': 0x2e5000, 'g_chainInsertSlot': 0x11,
+                        'g_pendingNodeType': 0x22, 'g_currentNodeIdx': 0x2e4040,
+                        'g_xformEntityIdx': 0x2e4000,
+                        '@0xb90000': 0, '@0xb90004': 0, '@0xb90008': 0x10,
+                        '@0xb9000c': 0}),
+        ('non-empty list', {'g_matrixStackTop': 0x2e5000, 'g_chainInsertSlot': 0x11,
+                        'g_pendingNodeType': 0x22, 'g_currentNodeIdx': 0x2e4040,
+                        'g_xformEntityIdx': 0x2e4000,
+                        '@0xb90000': 0x2e4080, '@0xb90004': 0x2e4080,
+                        '@0xb90008': 0x10, '@0xb9000c': 3}),
     ],
     'Mat3x3VecMul': [
         # negative matrix elements: an unsigned read pulls the neighbour

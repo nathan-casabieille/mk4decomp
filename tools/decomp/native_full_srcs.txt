@@ -274,3 +274,6 @@ src/engine/billboard_sheet_dual_emit.c
 src/engine/helper_tick_reinit.c
 src/engine/init16_bit_fields.c
 src/engine/mat3x3_vec_mul.c
+src/boot/m_stack_push2_chain_prepend.c
+src/engine/tagged_scene_dispatch.c
+src/engine/call_zero2.c
