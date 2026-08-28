@@ -267,3 +267,5 @@ src/engine/gamepad_seq_record.c
 src/engine/mstack_push_zero_call_pop.c
 src/boot/guarded_chain_push_set_call_pop.c
 src/boot/m_stack_bracket5_linked_list_unlink.c
+src/boot/m_stack_bracket2_tree_walk_recursive.c
+src/engine/linked_list_swap_head.c

@@ -65,7 +65,7 @@ TYPES = {
 # behind the same symbol). Their blobs must not be based at the function's own
 # VA or they cover those offsets - see verify_coexec.verify(offsite=).
 OFFSITE = {'PvsMergeDriver', 'PvsMerge_MatchEnd_00425f90',
-           'PvsMerge_MatchNode_00425fd0'}
+           'PvsMerge_MatchNode_00425fd0', 'MStackBracket2_TreeWalkRecursive'}
 
 BASE = 0x00400000
 
@@ -493,6 +493,31 @@ def _pvs():
         '@0xb90400': 0, '@0xb90404': 0x2e4200, '@0xb90408': 0,
     }
 
+
+# MStackBracket2_TreeWalkRecursive: a parent node at 0x2e4000 whose +0x14 is
+# clear (no unlink for itself); children hang off node[0] and remove
+# THEMSELVES via the offset-4 unlink, whose prev field points back at the
+# parent's head slot. The boot list head and the DirtyPushCallPop state head
+# are small scratch nodes.
+def _tree():
+    return {
+        'g_currentNodeIdx': 0x2e4000, 'g_xformEntityIdx': 0x11,
+        'g_pendingNodeType': 0x22, 'g_matrixStackTop': 0x2e5000,
+        'g_xformDirtyFlags': 0, 'g_framePauseFlag': 0,
+        'g_fightGroupHead': 0,
+        'g_bootChainSlot2': 0x2e4800, 'g_bootChainState4': 0x2e4900,
+        # parent: no children, +0x14/+0x18/+0x1c/+0x28/+0x2c all clear
+        '@0xb90000': 0, '@0xb90014': 0, '@0xb90018': 0, '@0xb9001c': 0,
+        '@0xb90028': 0, '@0xb9002c': 0,
+        # child at 0x2e4040 (used by the one-child case): +0x14 = parent, so
+        # its unlink patches parent[0]; leaf otherwise
+        '@0xb90100': 0, '@0xb90128': 0, '@0xb9012c': 0, '@0xb9011c': 0,
+        # boot list head fields the insert reads
+        '@0xb92000': 0, '@0xb92004': 0, '@0xb92008': 0, '@0xb9200c': 0,
+        '@0xb92400': 0, '@0xb92404': 0, '@0xb92408': 0,
+        '@0x4bd510': b'\xc3',               # LeaScaledCall
+    }
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -889,6 +914,30 @@ SEEDS = {
     # The full merge driver, every callee LIVE: the unlink, Helper_TickAlt
     # walking a one-node sibling list, and the packed continuations at
     # 0x425f90/0x425fd0 running as original bytes in both runs.
+    # The recursive teardown. Every callee LIVE: the unlink is what removes
+    # each child from the parent's list, so the loop drains for real; the
+    # insert lands each node in the boot list. LeaScaledCall is stubbed.
+    'LinkedListSwapHead': [
+        ('no chain', {'g_currentNodeIdx': 0x2e4000, '@0xb9002c': 0,
+                      'g_walkCallback': 9}),
+        ('splices a two-node chain', {'g_currentNodeIdx': 0x2e4000,
+             '@0xb9002c': 0x2e4040, 'g_xformEntityIdx': 0x77,
+             'g_matrixStackTop': 0x2e5000, 'g_bootLongChainState': 0x2e4900,
+             '@0xb90100': 0x2e4080, '@0xb90200': 0}),
+    ],
+    'MStackBracket2_TreeWalkRecursive': [
+        ('null node', {'g_currentNodeIdx': 0, 'g_xformEntityIdx': 0x11,
+                       'g_pendingNodeType': 0x22, 'g_matrixStackTop': 0x2e5000,
+                       'g_xformDirtyFlags': 0}),
+        ('leaf node', dict(_tree(), **{})),
+        ('parent with one child', dict(_tree(), **{
+            '@0xb90000': 0x2e4040,
+            '@0xb90114': 0x2e4000, '@0xb90110': 0, '@0xb90118': 0})),
+        ('slot clear and stash', dict(_tree(), **{
+            '@0xb9001c': 5, 'g_fightGroupHead': 0x2e4400,
+            '@0xb9101c': 0x2e4800, '@0xb90028': 0x2e4600,
+            '@0xb91800': 0, '@0xb91804': 0, '@0xb91808': 0})),
+    ],
     'PvsMergeDriver': [
         ('paused at entry', dict(_pvs(), **{'g_framePauseFlag': 1})),
         ('walks found nothing: no merges', dict(_pvs(), **{'@0xb98000': 0})),
