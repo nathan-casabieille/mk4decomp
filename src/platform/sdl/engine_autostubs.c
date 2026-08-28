@@ -363,6 +363,6 @@ __attribute__((weak)) int QuadGuardedCjSet_004230b0(){return 0;}
 __attribute__((weak)) int RecordListIterMStack(){return 0;}
 __attribute__((weak)) int RoundReset(){return 0;}
 __attribute__((weak)) int StageParticleEmitterInit(){return 0;}
-__attribute__((weak)) int DownloadPlayerChar(){return 0;}
 __attribute__((weak)) int GuardedDualPushTailJmp(){return 0;}
+__attribute__((weak)) int Helper_DownloadSetup(){return 0;}
 #endif /* MK4_NATIVE_FULL */

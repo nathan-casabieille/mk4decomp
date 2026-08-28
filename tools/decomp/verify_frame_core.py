@@ -870,6 +870,22 @@ def _dlp():
     }
 
 
+def _dpc():
+    return {
+        '@0x54371c': 1, '@0x542004': 0, '@0x541ec4': 1, '@0x541ec8': 1,
+        '@0x53a178': 4, '@0x53a250': 6, 'g_dlNalt1': 3, 'g_dlNalt2': 5,
+        '@0x53a510': 0, '@0x52aafc': 1, '@0x541e34': 9, '@0x541e38': 9,
+        'g_eventQueueCurrent': 0, 'g_currentNodeIdx': 0x2e4000,
+        'g_matrixStackTop': 0x2e5000, 'g_framePauseFlag': 0,
+        '@0x541ed4': 0, '@0x541ed8': 0, '@0x541edc': 0, '@0x541ee0': 0,
+        '@0xb9000c': 0x2e4400, '@0xb90010': 0x2e4800,
+        '@0xb91004': 0x2e4c00, '@0xb92004': 0x2e5c00,
+        '@0x4d5718': 0x03020100, '@0x4d571c': 0x07060504,
+        '@0x4d5720': 0x0b0a0908, '@0x4d5724': 0x0f0e0d0c,
+        '@0x48bfe0': b'\xc3', '@0x48bc40': b'\xc3', '@0x4bd6e0': b'\xc3',
+    }
+
+
 def _fpss():
     clear4 = b'\x83\x25' + (0x54208c).to_bytes(4, 'little') + b'\xfb\xc3'
     return {
@@ -1541,6 +1557,23 @@ SEEDS = {
         ('spawns player 2', _dlp()),
         ('pause inside the download', dict(_dlp(), **{
             '@0x48bcf0': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+    ],
+    # One fighter's download. The costume-clash correction is the head; the
+    # slot then selects which character index, which flag and which variant
+    # byte apply. The debug print, setup and texture load are stubbed.
+    'DownloadPlayerChar': [
+        ('downloads disabled: nothing', dict(_dpc(), **{'@0x54371c': 0})),
+        ('slot 0, no clash', _dpc()),
+        ('slot 0, same character: costume nudged', dict(_dpc(), **{
+            'g_dlNalt2': 3})),
+        ('slot 1', dict(_dpc(), **{'g_eventQueueCurrent': 1})),
+        ('slot 2', dict(_dpc(), **{'g_eventQueueCurrent': 2})),
+        ('slot 3', dict(_dpc(), **{'g_eventQueueCurrent': 3})),
+        ('flag set: the other chain', dict(_dpc(), **{'@0x53a510': 1})),
+        ('mode 1 clash on the far pair', dict(_dpc(), **{
+            '@0x542004': 1, '@0x53a178': 7, '@0x53a250': 7})),
+        ('pause inside the setup', dict(_dpc(), **{
+            '@0x48bc40': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
     ],
     'TableSearch': [
         ('id 100 or more: refused', {'@0x4f7d40': 0}, (100,)),

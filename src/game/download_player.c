@@ -10,6 +10,18 @@
 #include "engine/scenegraph.h"
 #include "engine/geo.h"
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dlNalt1 (*(unsigned int *)MK4_VA(unsigned int, 0x537f48u))
+#define g_dlNalt2 (*(unsigned int *)MK4_VA(unsigned int, 0x5380e0u))
+#define g_eventQueueCurrent (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_matrixStackTop (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
+#endif
+
+
 extern const char $SG_dl1[];
 extern const char $SG_dl2[];
 extern const char $SG_dl3[];
@@ -24,6 +36,161 @@ extern const char $SG_dl4[];
  * paths reuses ecx/eax/edx loads after each call. Pure C wouldn't
  * line these up the same way.
  */
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+
+/* @addr 0x0048bcf0 (741b) - NATIVE twin; the matching build keeps the
+ * __asm body below (the correction cascade is a long chain of compares
+ * MSVC lays out in an order pure C will not reproduce).
+ *
+ * Downloads one fighter into the scene. The head is the costume-clash
+ * correction: when the same character is picked on both sides (or in the
+ * two-vs-two arrangement the mode word selects), the second costume id is
+ * nudged to a different one so the pair is visually distinct - 0<->1 and
+ * 2<->3 within each half, applied in the fixed order the original tests.
+ * Then the slot (0..3, from g_eventQueueCurrent) picks which character
+ * index and which "some flag" apply, the variant byte comes from the
+ * table at 0x4d5718 indexed by [costume][character], and the setup pass
+ * runs with the node bracketed on the matrix stack. The resulting node
+ * index is parked in this slot's saved-node global, the geo record is
+ * chosen from the node's +0xc or +0x10 chain depending on the flag, and
+ * the textures load with the variant as the index.
+ *
+ * The four debug prints are the original's - they go to the same helper
+ * with a format string per slot and no effect on state. */
+void DownloadPlayerChar(void)
+{
+    unsigned int mode, c13, c24, slot, flag;
+    int variant;
+    unsigned int fin1, fin2, n1, n2, node;
+
+    if (*MK4_VA(unsigned char, 0x54371cu) == 0) return;
+
+    mode = *MK4_VA(unsigned int, 0x542004u);
+    c13  = *MK4_VA(unsigned int, 0x541ec4u);
+    fin1 = *MK4_VA(unsigned int, 0x53a178u);
+    fin2 = *MK4_VA(unsigned int, 0x53a250u);
+    n1   = g_dlNalt1;
+    n2   = g_dlNalt2;
+    *MK4_VA(unsigned int, 0x53a510u) = 0;
+    *MK4_VA(unsigned int, 0x52aafcu) = 1;
+    *MK4_VA(unsigned int, 0x541e34u) = 0;
+    *MK4_VA(unsigned int, 0x541e38u) = 1;
+
+    if ((mode == 1 && (n1 == n2 || fin1 == fin2 || n1 == fin2 || fin1 == n2))
+        || n1 == n2) {
+        c24 = *MK4_VA(unsigned int, 0x541ec8u);
+        if (c13 == 0 && c24 == 0) {
+            c24 = 1; *MK4_VA(unsigned int, 0x541ec8u) = c24;
+        }
+        if (c13 == 0 && c24 == 2) {
+            c24 = 3; *MK4_VA(unsigned int, 0x541ec8u) = c24;
+        }
+        if (c13 == 1 && c24 == 1) {
+            c24 = 0; *MK4_VA(unsigned int, 0x541ec8u) = c24;
+        }
+        if (c13 == 1 && c24 == 3) {
+            c24 = 2; *MK4_VA(unsigned int, 0x541ec8u) = c24;
+        }
+        if (c13 == 2 && c24 == 0) {
+            c24 = 1; *MK4_VA(unsigned int, 0x541ec8u) = c24;
+        }
+        if (c13 == 2 && c24 == 2) {
+            c24 = 3; *MK4_VA(unsigned int, 0x541ec8u) = c24;
+        }
+        if (c13 == 3 && c24 == 1) {
+            c24 = 0; *MK4_VA(unsigned int, 0x541ec8u) = c24;
+        }
+        if (c13 == 3 && c24 == 3) {
+            c24 = 2; *MK4_VA(unsigned int, 0x541ec8u) = c24;
+        }
+    } else {
+        c24 = *MK4_VA(unsigned int, 0x541ec8u);
+    }
+
+    slot = g_eventQueueCurrent;
+    if (slot == 0) {
+        Helper_DownloadDebugPrint((const char *)MK4_PTR(0x4f058cu),
+                                  (int)g_dlNalt1, (int)c13);
+        c13 = *MK4_VA(unsigned int, 0x541ec4u);
+        c24 = *MK4_VA(unsigned int, 0x541ec8u);
+        slot = g_eventQueueCurrent;
+    }
+    if (slot == 1) {
+        Helper_DownloadDebugPrint((const char *)MK4_PTR(0x4f0564u),
+                                  (int)g_dlNalt2, (int)c24);
+        c13 = *MK4_VA(unsigned int, 0x541ec4u);
+        c24 = *MK4_VA(unsigned int, 0x541ec8u);
+        slot = g_eventQueueCurrent;
+    }
+    if (slot == 2) {
+        Helper_DownloadDebugPrint((const char *)MK4_PTR(0x4f053cu),
+                                  (int)*MK4_VA(unsigned int, 0x53a178u),
+                                  (int)c13);
+        c13 = *MK4_VA(unsigned int, 0x541ec4u);
+        c24 = *MK4_VA(unsigned int, 0x541ec8u);
+        slot = g_eventQueueCurrent;
+    }
+    if (slot == 3) {
+        Helper_DownloadDebugPrint((const char *)MK4_PTR(0x4f0514u),
+                                  (int)*MK4_VA(unsigned int, 0x53a250u),
+                                  (int)c24);
+        c13 = *MK4_VA(unsigned int, 0x541ec4u);
+        c24 = *MK4_VA(unsigned int, 0x541ec8u);
+        slot = g_eventQueueCurrent;
+    }
+
+    variant = 0;
+    flag = 0;
+    if (slot == 0) {
+        flag = *MK4_VA(unsigned int, 0x53a510u);
+        variant = *MK4_VA(signed char,
+                          0x4d5718u + c13 + g_dlNalt1 * 4u);
+    }
+    if (slot == 2) {
+        flag = *MK4_VA(unsigned int, 0x53a510u);
+        variant = *MK4_VA(signed char,
+                          0x4d5718u + c13 + *MK4_VA(unsigned int, 0x53a178u) * 4u);
+    }
+    if (slot == 1) {
+        flag = *MK4_VA(unsigned int, 0x52aafcu);
+        variant = *MK4_VA(signed char,
+                          0x4d5718u + c24 + g_dlNalt2 * 4u);
+    }
+    if (slot == 3) {
+        flag = *MK4_VA(unsigned int, 0x52aafcu);
+        variant = *MK4_VA(signed char,
+                          0x4d5718u + c24 + *MK4_VA(unsigned int, 0x53a250u) * 4u);
+    }
+
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_currentNodeIdx;
+    Helper_DownloadSetup();
+    if (g_framePauseFlag != 0) return;          /* bracket leaked */
+
+    slot = g_eventQueueCurrent;
+    node = g_currentNodeIdx;
+    if (slot == 0) *MK4_VA(unsigned int, 0x541ed4u) = node;
+    if (slot == 1) *MK4_VA(unsigned int, 0x541ed8u) = node;
+    if (slot == 2) *MK4_VA(unsigned int, 0x541edcu) = node;
+    if (slot == 3) *MK4_VA(unsigned int, 0x541ee0u) = node;
+
+    if (flag == 0)
+        g_currentNodeIdx = (unsigned int)
+            ((int)MK4_NODE_AT(unsigned int,
+                              MK4_NODE_AT(unsigned int, node, 0xc), 4) >> 2);
+    else
+        g_currentNodeIdx = (unsigned int)
+            ((int)MK4_NODE_AT(unsigned int,
+                              MK4_NODE_AT(unsigned int, node, 0x10), 4) >> 2);
+
+    LoadGeoAsset_Textures(variant);
+
+    g_currentNodeIdx = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+}
+#else
 __declspec(naked) void DownloadPlayerChar(void)
 {
     __asm {
@@ -249,3 +416,4 @@ exit:
         ret
     }
 }
+#endif

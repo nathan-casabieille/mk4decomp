@@ -300,6 +300,7 @@ src/engine/wt_snapshot_push_call.c
 src/engine/z_bucket_clamp_store.c
 src/engine/zero_three_slots.c
 src/game/dispatch_scaled_lea.c
+src/game/download_player.c
 src/game/draw_menu.c
 src/game/event_queue.c
 src/game/fight.c
