@@ -607,6 +607,13 @@ def _tsd():
         '@0x4f7d84': 0x1234,                 # table entry for hit=3
     }
 
+
+# AudioVolumeRescale: DualAddSar left live - seed whatever it reads to a
+# stable pair so both runs see the same comparison base.
+def _avr():
+    return {'g_xformDirtyFlags': 0, 'g_framePauseFlag': 0,
+            'g_bootInitSaveSlot': 0, '@0x53814c': 0}
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -1033,6 +1040,35 @@ SEEDS = {
     # non-empty relative list.
     # Branch selection on the tag's LOW WORD; the six callees are stubbed at
     # their VAs (ret / ret-with-value), so the writes are the dispatcher's own.
+    # AllocateNode runs LIVE against the slot table; the arg is a code VA.
+    'StoreTwoCall': [
+        ('parks and allocates', {'g_nodeListTail': 0,
+            '@0x53e440': 0, 'g_eventQueueWorkType': 0}, (0x48caa0, 0x71)),
+    ],
+    'BootStateTriple': [
+        ('null first link', {'g_fightGroupHead': 0x2e4000, '@0xb9001c': 0,
+                             'g_xformDirtyFlags': 0}),
+        ('full chase', {'g_fightGroupHead': 0x2e4000, '@0xb9001c': 0x2e4040,
+                        'g_walkCallback': 4, 'g_xformDirtyFlags': 0,
+                        '@0xb90110': 0x2e4080, '@0xb90228': 0x99}),
+        ('negative second hop', {'g_fightGroupHead': 0x2e4000,
+                        '@0xb9001c': 0x2e4040, 'g_walkCallback': 4,
+                        'g_xformDirtyFlags': 0, '@0xb90110': 0x80000001}),
+    ],
+    'PushSetCallCleanup': [
+        ('no park, no children', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb9001c': 0, '@0xb90000': 0, 'g_xformDirtyFlags': 1}),
+        ('parks and walks', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb9001c': 2, '@0xb90000': 0x2e4040, 'g_xformEntityIdx': 0x2e5000,
+            'g_xformDirtyFlags': 1, 'g_framePauseFlag': 0,
+            '@0xb90100': 0, '@0xb90108': 0,
+            '@0x4bae90': b'\xc3'}),
+    ],
+    # DualAddSar runs LIVE; the rescale is *125*8 >> 16 = 1000/65536.
+    'AudioVolumeRescale': [
+        ('below: found', dict(_avr(), **{'g_walkCallback': 0x100})),
+        ('above: cleared and zeroed', dict(_avr(), **{'g_walkCallback': 0xf000})),
+    ],
     'TaggedSceneDispatch': [
         ('gated by the xor key', dict(_tsd(), **{'g_texXorKey': 1}), (5,)),
         ('tag -1: the reset trio', _tsd(), (0xffffffff,)),
