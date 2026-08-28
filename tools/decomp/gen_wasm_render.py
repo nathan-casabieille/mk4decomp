@@ -59,6 +59,15 @@ WIDTH16 = {
     'g_vtxIn2_x', 'g_vtxIn2_y', 'g_vtxIn2_z',
 }
 
+# The same problem one byte wide. FlushDrawQueue stores g_dispatchSave1368 with
+# `mov byte ptr [0xf70f7d], cl` at all four of its store sites, and
+# TexturedTriRasterizeShaded reads it back with `mov bl, byte ptr` - nine
+# accesses in the whole image, every one a byte. As a dword each store also
+# wrote over g_dispatchSave1369 at 0x00f70f7e.
+WIDTH8 = {
+    'g_dispatchSave1368',
+}
+
 # A definition of `name` that is NOT inside a #ifdef NON_MATCHING block, i.e. a
 # function already converted to unconditional byte-matching pure C. These read
 # as "no twin" to extract_twin_any (there is no NON_MATCHING block to find) but
@@ -121,6 +130,9 @@ def gdef_arena(g, va, alltext):
     if g in WIDTH16:
         # signed: the geometry path reads these with movsx, never movzx
         return '#define %s (*(short *)MK4_VA(short, 0x%xu))\n' % (g, va)
+    if g in WIDTH8:
+        return ('#define %s (*(unsigned char *)MK4_VA(unsigned char, 0x%xu))\n'
+                % (g, va))
     if re.search(r'\(\s*\*\s*%s\s*\)\s*\(' % g, alltext) or \
        re.search(r'\b%s\s*\(' % g, alltext):
         return '#define %s (*(unsigned int (**)())MK4_VA(unsigned int, 0x%xu))\n' % (g, va)

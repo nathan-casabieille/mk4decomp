@@ -45,7 +45,9 @@ extern unsigned int g_viewportY;
 #define g_dispatchSave1350 (*(unsigned int *)MK4_VA(unsigned int, 0xf6e050u))
 #define g_dispatchSave1356 (*(unsigned int *)MK4_VA(unsigned int, 0xf6e068u))
 #define g_dispatchSave1367 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f7cu))
-#define g_dispatchSave1368 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f7du))
+/* a BYTE at 0x00f70f7d - the original stores it with `mov byte ptr`, and the
+ * dword spelling wrote over the three fields behind it. */
+#define g_dispatchSave1368 (*(unsigned char *)MK4_VA(unsigned char, 0xf70f7du))
 #define g_dispatchSave1369 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f7eu))
 #define g_dispatchSave1371 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f88u))
 #define g_dispatchSave1372 (*(unsigned int *)MK4_VA(unsigned int, 0xf70f8cu))

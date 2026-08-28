@@ -72,6 +72,51 @@ def spelled_wide(text, name):
                 or re.search(r'extern\s+u32\s+%s\s*[;\[]' % re.escape(name), text))
 
 
+CAST = re.compile(r'\*\s*\(\s*(?:unsigned\s+|signed\s+)?(?:char|short)\s*\*\s*\)\s*&\s*$')
+
+
+def native_text(s):
+    """Only what the native build actually compiles: comments gone, and the
+    __asm bodies of the matching side dropped. Assembly mentions a global by
+    name on a bare line, and a doc comment lists them - both looked like wide
+    uses and made this tool over-report."""
+    s = re.sub(r'/\*.*?\*/', ' ', s, flags=re.S)
+    s = re.sub(r'//[^\n]*', ' ', s)
+    out, depth = [], 0
+    for line in s.splitlines(True):
+        if depth == 0 and '__asm' in line:
+            depth = line.count('{') - line.count('}')
+            if depth <= 0 and '{' in line:
+                depth = 1
+            continue
+        if depth > 0:
+            depth += line.count('{') - line.count('}')
+            continue
+        out.append(line)
+    return ''.join(out)
+
+
+def bare_uses(text, name):
+    """Uses of `name` that are NOT immediately behind a narrowing cast.
+    transform_vertex.c aliases the six RGB scales as `unsigned int` and then
+    writes every single access as `*(unsigned char *)&g_vtxRGBScale1_r` - the
+    declaration is wide, the ACCESS is a byte, and the file is correct. Only a
+    bare use actually stores four bytes."""
+    n = 0
+    for m in re.finditer(r'\b%s\b' % re.escape(name), text):
+        before = text[max(0, m.start() - 40):m.start()]
+        if CAST.search(before):
+            continue
+        line = text[text.rfind('\n', 0, m.start()) + 1:m.start()]
+        if line.lstrip().startswith(('#define', 'extern', '*', '/*')):
+            continue
+        n += 1
+    return n
+
+
+BULK = re.compile(r'\b(?:memset|memcpy|rep\s+stos)\b')
+
+
 def main():
     srcs = [l.strip() for l in
             (ROOT / 'tools' / 'decomp' / 'native_full_srcs.txt').read_text().split()]
@@ -81,6 +126,7 @@ def main():
         if not path.exists():
             continue
         text = path.read_text(errors='ignore')
+        native = native_text(text)
         # only the NON_MATCHING side is what the native build compiles
         bad = []
         for name, ctype in widths.items():
@@ -90,15 +136,22 @@ def main():
                 continue
             if not spelled_wide(text, name):
                 continue
-            if clobbers_a_neighbour(name, ctype):
-                bad.append((name, ctype))
+            n = bare_uses(native, name)
+            if not (clobbers_a_neighbour(name, ctype) and n):
+                continue
+            # Using the address as a BLOCK BASE is wide by design:
+            # AppInit_Misc3 memsets 0x2a dwords from 0x007af958, and the map
+            # calls that address narrow because other code touches it as a word.
+            if any(BULK.search(l) for l in native.splitlines() if name in l):
+                continue
+            bad.append((name, ctype, n))
         if bad:
             hits += 1
             print('%s' % src)
-            for name, ctype in sorted(bad):
-                print('    %-34s should be %-14s (0x%06x, a neighbour is inside '
-                      'the 4 bytes a wide store would touch)'
-                      % (name, ctype, addr[name]))
+            for name, ctype, n in sorted(bad):
+                print('    %-34s should be %-14s (0x%06x, %d bare use%s, a '
+                      'neighbour is inside the 4 bytes a wide store would touch)'
+                      % (name, ctype, addr[name], n, '' if n == 1 else 's'))
     print('\naudit-linked-widths: %d of %d linked TUs spell a narrow global 32 bits '
           'wide WHERE THAT CLOBBERS A NEIGHBOUR' % (hits, len(srcs)))
 
