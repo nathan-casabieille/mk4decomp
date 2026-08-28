@@ -19,6 +19,7 @@
  * engine_autostubs.c at link time.
  */
 #include <SDL2/SDL.h>
+#include "portable/mem_model.h"
 
 /* Win32 virtual-key -> SDL scancode. Only the keys the engine actually polls;
  * anything else reads as up, which is the correct answer for a key the port
@@ -52,6 +53,22 @@ static SDL_Scancode vk_to_scancode(int vk)
     }
 }
 
+int g_mk4FakePressVk;
+int g_mk4FakePressLeft;
+
+/* Arm a scripted key press for `frames` frames (the frame loop counts it
+ * down). Used by the boot-match staging to answer edge-detecting gates. */
+void MK4_NativeFakeKeyPress(int vk, int frames)
+{
+    g_mk4FakePressVk = vk;
+    g_mk4FakePressLeft = frames;
+}
+
+void MK4_NativeFakeKeyTick(void)
+{
+    if (g_mk4FakePressLeft > 0) g_mk4FakePressLeft--;
+}
+
 int Input_GetAsyncKey(int vk)
 {
     const Uint8 *keys;
@@ -65,6 +82,13 @@ int Input_GetAsyncKey(int vk)
 
         if (!checked) { checked = 1; fake = SDL_getenv("MK4_FAKE_KEY"); }
         if (fake && vk == SDL_atoi(fake))
+            return 1;
+        /* A scripted PRESS, as opposed to the held key above. Several of
+         * the engine's gates are edge detectors (TestQueueGateState latches
+         * on the first frame its key is down and refuses to fire again
+         * while it stays down), so a headless run needs to be able to let
+         * go. MK4_NativeFakeKeyPress arms one for a couple of frames. */
+        if (g_mk4FakePressVk && vk == g_mk4FakePressVk && g_mk4FakePressLeft)
             return 1;
     }
     SDL_Scancode sc = vk_to_scancode(vk);
@@ -124,4 +148,43 @@ unsigned int Input_PollJoystick(int which)
             bits |= 1u << i;
 
     return bits;
+}
+
+/* ---------------------------------------------------------------------------
+ * The two "is anyone pressing anything" bytes at 0x4d50b8 / 0x4d50b4.
+ *
+ * Nothing in MK4's own code writes them - a linear disassembly of every
+ * function finds reads only (InputPollFlagBits, InputPollFlagBitsHalf,
+ * TripleByteCheck, the audio dispatchers). In the original they are filled
+ * by the input layer behind DirectInput, so under the port they are the
+ * backend's job, exactly like the CD-audio probe and the DirectDraw
+ * surface.
+ *
+ * Only the two pollers' bit positions matter here, and they are a matched
+ * pair one nibble apart: InputPollFlagBits reads bits 0..2 of the pad byte
+ * and 4..6 of the state byte (player 1), InputPollFlagBitsHalf the same
+ * bits shifted up a nibble (player 2). We publish one bit per player - "a
+ * bound key is down" - taken from the SAME key map the engine's own
+ * keyboard poller reads (0x543ab8, filled by ResetConfigToDefaults), so a
+ * rebind moves both together.
+ */
+void MK4_NativeInputPublish(void)
+{
+    unsigned int player, b;
+    unsigned char pad = 0;
+
+    for (player = 0; player < 2; player++) {
+        for (b = 0; b < 13; b++) {
+            int vk = *MK4_VA(int, 0x543ab8u + b * 8u + player * 4u);
+
+            if (vk == 0 || !Input_GetAsyncKey(vk))
+                continue;
+            pad |= player ? 0x10u : 0x01u;
+            break;
+        }
+    }
+    /* Only the pad byte: InputPollFlagBits reads bit 0 for player 1 and
+     * InputPollFlagBitsHalf bit 4 for player 2. The state byte at 0x4d50b4
+     * is left alone - the audio dispatchers read it for their own reasons. */
+    *MK4_VA(unsigned char, 0x4d50b8u) = pad;
 }

@@ -219,6 +219,9 @@ extern int Helper_Sprintf(char *buf, const char *fmt, ...);
 int FSYS_fopen(const char *path, const char *mode)
 {
     unsigned char *A = (unsigned char *)MK4_PTR(0u);
+    #ifdef TARGET_SDL
+    { extern void MK4_NativeTraceOpen(const char *); MK4_NativeTraceOpen(path); }
+#endif
     unsigned int key = FSYS_HashName(FSYS_NormalizePath(path));
     int hi  = (int)*(unsigned int *)(A + 0x007af4e4u);   /* entry count */
     int lo  = 0;

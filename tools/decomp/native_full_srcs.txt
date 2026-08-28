@@ -17,6 +17,7 @@ src/audio/linked_list_insert.c
 src/audio/load_geo_assets_state_machine.c
 src/audio/m_stack_push_chain_step_index.c
 src/audio/range_mul_mod.c
+src/audio/reset_config.c
 src/audio/store_pause_imul_shr16.c
 src/audio/test_queue_gate_state.c
 src/audio/triple_call_byte_check.c
@@ -125,6 +126,7 @@ src/engine/event_queue_drain_loop.c
 src/engine/fight_frame_step.c
 src/engine/flush_draw_queue.c
 src/engine/fsys.c
+src/engine/game_state_machine_maybe_rebuild.c
 src/engine/gamepad_seq_record.c
 src/engine/geo.c
 src/engine/geo_load_fixup_loop.c
@@ -194,6 +196,7 @@ src/engine/pack_color.c
 src/engine/packed_advance_call_tail_jmp.c
 src/engine/packed_list_visitor.c
 src/engine/packed_select_load6.c
+src/engine/pad_poll_dispatcher.c
 src/engine/project_two.c
 src/engine/project_vertex.c
 src/engine/push2_globals_call.c

@@ -19,6 +19,99 @@
  * the trailing block of "individual stores" also reuses ecx/edx/eax
  * across many globals in a way no natural C body produces.
  */
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+/* @addr 0x004acf90 (634b) - NATIVE twin; the matching build keeps the
+ * __asm body below (an alternating-register copy MSVC will not reproduce).
+ *
+ * The config reset: clears the 0x93-dword settings block at 0x543928,
+ * copies the 26 default key bindings from the table at 0x4f46a0 into the
+ * live key map at 0x543ab8 (the map Input_PollPlayerKeyboard reads - the
+ * classic MK4 defaults, W/A/S/D and the arrows plus numpad), stamps the
+ * default volumes and button assignments, then scans the 16-entry joystick
+ * presence table at 0x7b0188 and hands the first two present sticks to
+ * player 0 and player 1 (-1 when none). */
+void ResetConfigToDefaults(void)
+{
+    unsigned int i;
+    int p0 = -1, p1 = -1;
+
+    for (i = 0; i < 0x93; i++)
+        *MK4_VA(unsigned int, 0x543928u + i * 4u) = 0;
+
+    *MK4_VA(unsigned int, 0x543abcu) = *MK4_VA(unsigned int, 0x4f46a4u);
+    *MK4_VA(unsigned int, 0x543ab8u) = *MK4_VA(unsigned int, 0x4f46a0u);
+    *MK4_VA(unsigned int, 0x543ac4u) = *MK4_VA(unsigned int, 0x4f46acu);
+    *MK4_VA(unsigned int, 0x543ac0u) = *MK4_VA(unsigned int, 0x4f46a8u);
+    *MK4_VA(unsigned int, 0x543accu) = *MK4_VA(unsigned int, 0x4f46b4u);
+    *MK4_VA(unsigned int, 0x543ac8u) = *MK4_VA(unsigned int, 0x4f46b0u);
+    *MK4_VA(unsigned int, 0x543ad4u) = *MK4_VA(unsigned int, 0x4f46bcu);
+    *MK4_VA(unsigned int, 0x543ad0u) = *MK4_VA(unsigned int, 0x4f46b8u);
+    *MK4_VA(unsigned int, 0x543adcu) = *MK4_VA(unsigned int, 0x4f46c4u);
+    *MK4_VA(unsigned int, 0x543ad8u) = *MK4_VA(unsigned int, 0x4f46c0u);
+    *MK4_VA(unsigned int, 0x543ae4u) = *MK4_VA(unsigned int, 0x4f46ccu);
+    *MK4_VA(unsigned int, 0x543ae0u) = *MK4_VA(unsigned int, 0x4f46c8u);
+    *MK4_VA(unsigned int, 0x543aecu) = *MK4_VA(unsigned int, 0x4f46d4u);
+    *MK4_VA(unsigned int, 0x543ae8u) = *MK4_VA(unsigned int, 0x4f46d0u);
+    *MK4_VA(unsigned int, 0x543af4u) = *MK4_VA(unsigned int, 0x4f46dcu);
+    *MK4_VA(unsigned int, 0x543af0u) = *MK4_VA(unsigned int, 0x4f46d8u);
+    *MK4_VA(unsigned int, 0x543afcu) = *MK4_VA(unsigned int, 0x4f46e4u);
+    *MK4_VA(unsigned int, 0x543af8u) = *MK4_VA(unsigned int, 0x4f46e0u);
+    *MK4_VA(unsigned int, 0x543b04u) = *MK4_VA(unsigned int, 0x4f46ecu);
+    *MK4_VA(unsigned int, 0x543b00u) = *MK4_VA(unsigned int, 0x4f46e8u);
+    *MK4_VA(unsigned int, 0x543b0cu) = *MK4_VA(unsigned int, 0x4f46f4u);
+    *MK4_VA(unsigned int, 0x543b08u) = *MK4_VA(unsigned int, 0x4f46f0u);
+    *MK4_VA(unsigned int, 0x543b14u) = *MK4_VA(unsigned int, 0x4f46fcu);
+    *MK4_VA(unsigned int, 0x543b10u) = *MK4_VA(unsigned int, 0x4f46f8u);
+    *MK4_VA(unsigned int, 0x543b1cu) = *MK4_VA(unsigned int, 0x4f4704u);
+    *MK4_VA(unsigned int, 0x543b18u) = *MK4_VA(unsigned int, 0x4f4700u);
+    *MK4_VA(unsigned int, 0x543a88u) = 0x64;
+    *MK4_VA(unsigned int, 0x543a90u) = 0x64;
+    *MK4_VA(unsigned int, 0x54392cu) = 1;
+    *MK4_VA(unsigned int, 0x543a84u) = 1;
+    *MK4_VA(unsigned int, 0x543a8cu) = 1;
+    *MK4_VA(unsigned int, 0x543aa4u) = 4;
+    *MK4_VA(unsigned int, 0x543aa8u) = 1;
+    *MK4_VA(unsigned int, 0x543aa0u) = 3;
+    *MK4_VA(unsigned int, 0x543a9cu) = 2;
+    *MK4_VA(unsigned int, 0x543aacu) = 1;
+    *MK4_VA(unsigned int, 0x543ab0u) = 2;
+    *MK4_VA(unsigned int, 0x543ab4u) = 1;
+    *MK4_VA(unsigned int, 0x543a94u) = 0x32;
+    *MK4_VA(unsigned int, 0x543a98u) = 0;
+    *MK4_VA(int, 0x543b6cu) = -1;   /* both stick slots start unassigned */
+    *MK4_VA(unsigned int, 0x543b24u) = 1;
+    *MK4_VA(unsigned int, 0x543b20u) = 1;
+    *MK4_VA(unsigned int, 0x543b44u) = 5;
+    *MK4_VA(unsigned int, 0x543b40u) = 5;
+    *MK4_VA(unsigned int, 0x543b2cu) = 2;
+    *MK4_VA(unsigned int, 0x543b5cu) = 6;
+    *MK4_VA(unsigned int, 0x543b58u) = 6;
+    *MK4_VA(unsigned int, 0x543b28u) = 2;
+    *MK4_VA(unsigned int, 0x543b64u) = 7;
+    *MK4_VA(unsigned int, 0x543b60u) = 7;
+    *MK4_VA(unsigned int, 0x543b34u) = 3;
+    *MK4_VA(unsigned int, 0x543b4cu) = 8;
+    *MK4_VA(unsigned int, 0x543b48u) = 8;
+    *MK4_VA(unsigned int, 0x543b30u) = 3;
+    *MK4_VA(unsigned int, 0x543b54u) = 9;
+    *MK4_VA(unsigned int, 0x543b50u) = 9;
+    *MK4_VA(unsigned int, 0x543b3cu) = 4;
+    *MK4_VA(unsigned int, 0x543b38u) = 4;
+
+    for (i = 0; i < 0x10; i++) {
+        if (*MK4_VA(unsigned char, 0x7b0188u + i) == 0) continue;
+        if (p0 == -1) { p0 = (int)i; continue; }
+        if (p1 == -1) {
+            p1 = (int)i;
+            *MK4_VA(int, 0x543b6cu) = p1;
+        }
+        break;
+    }
+    *MK4_VA(int, 0x543b68u) = p0;
+}
+#else
 __declspec(naked) void ResetConfigToDefaults(void)
 {
     __asm {
@@ -150,3 +243,4 @@ joy_done:
         ret
     }
 }
+#endif

@@ -170,7 +170,6 @@ __attribute__((weak)) int Helper_GSM_PlayMusic(){return 0;}
 __attribute__((weak)) int Helper_PerPlayerTick(){return 0;}
 __attribute__((weak)) int Helper_TickFrame_Misc(){return 0;}
 __attribute__((weak)) int HitReactionDispatcher(){return 0;}
-__attribute__((weak)) int Input_TickPlayers(){return 0;}
 __attribute__((weak)) int LinkedListInsert(){return 0;}
 __attribute__((weak)) int InstallSelfChainSet2011(){return 0;}
 __attribute__((weak)) int InstallSelfChainSetB333(){return 0;}
@@ -351,4 +350,5 @@ __attribute__((weak)) int Screen_ArcadeEnding(){return 0;}
 __attribute__((weak)) int StateInitShuffle(){return 0;}
 __attribute__((weak)) int ZeroState(){return 0;}
 __attribute__((weak)) int TablePushAccumTailJmp(){return 0;}
+__attribute__((weak)) int Input_PollPlayerJoystick(){return 0;}
 #endif /* MK4_NATIVE_FULL */

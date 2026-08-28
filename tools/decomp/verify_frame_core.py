@@ -767,6 +767,51 @@ def _slt(st):
         '@0x4a42d0': b'\xc7\x05\x24\x38\x54\x00\x01\x00\x00\x00\xc3',
     }
 
+def _ipk():
+    # 13 buttons x 2 players. Only button 0 is given a real key (0x41) and a
+    # real target/mask pair; the rest point at a scratch word so a mis-index
+    # shows up as a write to the wrong place. The GetAsyncKey stub reports
+    # key 0x41 down.
+    d = {
+        '@0x4d21c0': 0xb99000,
+        '@0xb99000': b'\x31\xc0\xc2\x04\x00',          # alt: return 0
+        '@0xb99010': (b'\x8b\x44\x24\x04'                # mov eax,[esp+4]
+                      b'\x3d\x41\x00\x00\x00'            # cmp eax, 0x41
+                      b'\x74\x04\x31\xc0\xc3'            # jne -> 0
+                      b'\xb8\x01\x00\x00\x00\xc3'),     # else 1
+        '@0x4b5450': b'\xe9' + ((0xb99010 - (0x4b5450 + 5)) & 0xffffffff
+                                 ).to_bytes(4, 'little'),
+        '@0xb9a000': 0, '@0xb9a004': 0,
+    }
+    for b in range(13):
+        for pl in range(2):
+            d['@%x' % (0x543ab8 + b * 8 + pl * 4)] = 0 if b else (0x41 if pl == 0 else 0)
+            d['@%x' % (0x4f4dcc + b * 0x10 + pl * 8)] = 0xb9a000 if b else 0xb9a000
+            d['@%x' % (0x4f4dc8 + b * 0x10 + pl * 8)] = 0 if b else (0x40 if pl == 0 else 0x80)
+    return d
+
+
+def _itp():
+    return {
+        'g_demoModeFlag': 1, '@0x7af918': 0, '@0x7af920': 0, '@0x4f4e98': 0,
+        '@0x4d50a4': 0x1111, '@0x4d50a8': 0x2222,
+        '@0x4d50ac': 0x3333, '@0x4d50b0': 0x4444,
+        '@0x543368': 0, '@0x54336c': 0, '@0x543370': 0, '@0x54357c': 0,
+        '@0x4f4dcc': 0xb9a000, '@0x4f4dc8': 0x40,
+        '@0x4f4ddc': 0xb9a004, '@0x4f4dd8': 0x40,
+        '@0x4f4dd4': 0xb9a008, '@0x4f4dd0': 0x40,
+        '@0x4f4de4': 0xb9a00c, '@0x4f4de0': 0x40,
+        '@0x4f4dec': 0xb9a010, '@0x4f4de8': 0x40,
+        '@0x4f4dfc': 0xb9a014, '@0x4f4df8': 0x40,
+        '@0x4f4df4': 0xb9a018, '@0x4f4df0': 0x40,
+        '@0x4f4e04': 0xb9a01c, '@0x4f4e00': 0x40,
+        '@0xb9a000': 0xff, '@0xb9a004': 0xff, '@0xb9a008': 0xff,
+        '@0xb9a00c': 0xff, '@0xb9a010': 0xff, '@0xb9a014': 0xff,
+        '@0xb9a018': 0xff, '@0xb9a01c': 0xff,
+        '@0x4b5650': b'\xc3', '@0x4b5470': b'\xc3', '@0x4b5450': b'\x31\xc0\xc3',
+    }
+
+
 def _fpss():
     clear4 = b'\x83\x25' + (0x54208c).to_bytes(4, 'little') + b'\xfb\xc3'
     return {
@@ -1278,6 +1323,51 @@ SEEDS = {
     # indices; entry word +4 selects the group. GeoLoadFixupLoop stubbed.
     # The two button pollers: any of five state bits reports 1, else the
     # fall-through bit. Both read only the two DirectSound state bytes.
+    # The keyboard poller. The import slot 0x4d21c0 is pointed at a scratch
+    # stub (returns 0 = Alt not held, or 0x8001 = held); Input_GetAsyncKey is
+    # stubbed to report one chosen key down. Key map, target and mask tables
+    # are seeded for both players so the indexing is what is under test.
+    # The per-frame input tick: clears the four pad words, runs the two
+    # keyboard and two joystick polls (stubbed here - each sets one bit in
+    # a pad word so the clear/invert sequence is observable), then the
+    # edge-mask passes over four (pointer, mask) pairs and the final
+    # inversion + copy-out.
+    'Input_TickPlayers': [
+        ('demo gate closed: only the clear', dict(_itp(), **{
+            'g_demoModeFlag': 0})),
+        ('gameStateResult set: polls skipped', dict(_itp(), **{
+            '@0x7af918': 1})),
+        ('full pass, nothing pressed', _itp()),
+        ('a pad bit set by the poll stub', dict(_itp(), **{
+            '@0x4b5650': b'\x83\x0d\xa4\x50\x4d\x00\x01\xc3'})),
+        ('escape check clears 1323', dict(_itp(), **{
+            '@0x4f4e98': 1})),
+    ],
+    'Input_PollPlayerKeyboard': [
+        ('alt held: whole poll skipped', dict(_ipk(), **{
+            '@0xb99000': b'\xb8\x01\x80\x00\x00\xc2\x04\x00'}), (0,)),
+        ('player 0, button 0 down', _ipk(), (0,)),
+        ('player 1 uses the other half of each pair', dict(_ipk(), **{
+            '@0x543abc': 0x41}), (1,)),
+        ('no key down: no mask set', dict(_ipk(), **{
+            '@0xb99010': b'\x31\xc0\xc3'}), (0,)),
+    ],
+    # The config reset: a clear, 26 key-binding copies from the defaults
+    # table, the stamped volumes and button assignments, then the joystick
+    # scan. Seeded with two sticks present at slots 3 and 9.
+    'ResetConfigToDefaults': [
+        ('no joysticks present', {'@0x4f46a0': 0x57, '@0x4f46a4': 0x26,
+            '@0x4f46a8': 0x5a, '@0x4f46ac': 0x28, '@0x4f4700': 0x11,
+            '@0x4f4704': 0x22, '@0x543ab8': 0, '@0x543b68': 0x1234,
+            '@0x543b6c': 0x5678}),
+        ('two sticks: 3 and 9', {'@0x4f46a0': 0x57, '@0x4f46a4': 0x26,
+            '@0x4f46a8': 0x5a, '@0x4f46ac': 0x28, '@0x4f4700': 0x11,
+            '@0x4f4704': 0x22, '@0x543ab8': 0, '@0x543b68': 0x1234,
+            '@0x543b6c': 0x5678, '@0x7b018b': 1, '@0x7b0191': 1}),
+        ('one stick only', {'@0x4f46a0': 0x57, '@0x4f46a4': 0x26,
+            '@0x4f46a8': 0x5a, '@0x4f46ac': 0x28, '@0x543b68': 0x1234,
+            '@0x543b6c': 0x5678, '@0x7b018e': 1}),
+    ],
     'InputPollFlagBits': [
         ('nothing down', {'@0x4d50b8': 0, '@0x4d50b4': 0}),
         ('pad bit 1', {'@0x4d50b8': 2, '@0x4d50b4': 0}),

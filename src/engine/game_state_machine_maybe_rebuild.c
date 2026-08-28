@@ -108,21 +108,21 @@ void Input_TickPlayers(void)
       g_phaseThunkInst = 0;
     }
     if (g_appInitFlag1 != 0) {
-      *(uint *)g_renderer2_var6 = *(uint *)g_renderer2_var6 & ~g_renderer2_var7;
-      *(uint *)g_dispatchSave517 = *(uint *)g_dispatchSave517 & ~g_dispatchSave518;
+      *MK4_VA(uint, g_renderer2_var6) = *MK4_VA(uint, g_renderer2_var6) & ~g_renderer2_var7;
+      *MK4_VA(uint, g_dispatchSave517) = *MK4_VA(uint, g_dispatchSave517) & ~g_dispatchSave518;
     }
   }
-  if ((*(uint *)g_dispatchSave536 & g_dispatchSave537) != 0) {
-    *(uint *)g_dispatchSave534 = *(uint *)g_dispatchSave534 & ~g_dispatchSave535;
+  if ((*MK4_VA(uint, g_dispatchSave536) & g_dispatchSave537) != 0) {
+    *MK4_VA(uint, g_dispatchSave534) = *MK4_VA(uint, g_dispatchSave534) & ~g_dispatchSave535;
   }
-  if ((*(uint *)g_dispatchSave629 & g_dispatchSave630) != 0) {
-    *(uint *)g_dispatchSave627 = *(uint *)g_dispatchSave627 & ~g_dispatchSave628;
+  if ((*MK4_VA(uint, g_dispatchSave629) & g_dispatchSave630) != 0) {
+    *MK4_VA(uint, g_dispatchSave627) = *MK4_VA(uint, g_dispatchSave627) & ~g_dispatchSave628;
   }
-  if ((*(uint *)g_renderer2_var6 & g_renderer2_var7) != 0) {
-    *(uint *)g_dispatchSave532 = *(uint *)g_dispatchSave532 & ~g_dispatchSave533;
+  if ((*MK4_VA(uint, g_renderer2_var6) & g_renderer2_var7) != 0) {
+    *MK4_VA(uint, g_dispatchSave532) = *MK4_VA(uint, g_dispatchSave532) & ~g_dispatchSave533;
   }
-  if ((*(uint *)g_dispatchSave517 & g_dispatchSave518) != 0) {
-    *(uint *)g_dispatchSave625 = *(uint *)g_dispatchSave625 & ~g_dispatchSave626;
+  if ((*MK4_VA(uint, g_dispatchSave517) & g_dispatchSave518) != 0) {
+    *MK4_VA(uint, g_dispatchSave625) = *MK4_VA(uint, g_dispatchSave625) & ~g_dispatchSave626;
   }
   g_phaseThunkInst = ~g_phaseThunkInst;
   g_fightTableC2 = ~g_fightTableC2;

@@ -20,6 +20,7 @@
  * case-insensitive filesystem and the shipped names are not consistent.
  */
 #include <stdio.h>
+#include "portable/mem_model.h"
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -114,4 +115,19 @@ __attribute__((weak)) void Helper_FClose(int fh)
         fclose(g_files[fh]);
         g_files[fh] = NULL;
     }
+}
+
+/* MK4_TRACE_FILES=1 logs every archive lookup the engine makes, in order.
+ * The loader opens assets by name out of records the .exe carries, so this
+ * is how a wrong record shows itself: the name is empty or nonsense long
+ * before anything else goes visibly wrong. */
+void MK4_NativeTraceOpen(const char *path)
+{
+    static int on = -1;
+
+    if (on < 0) on = SDL_getenv("MK4_TRACE_FILES") != NULL;
+    if (on) SDL_Log("fsys open: '%s' (node=%x entity=%x)",
+                    path ? path : "(null)",
+                    *MK4_VA(unsigned int, 0x542044u),
+                    *MK4_VA(unsigned int, 0x542048u));
 }

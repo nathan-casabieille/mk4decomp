@@ -32,6 +32,8 @@ extern void MK4_NativeVideoPresent(void);
  * what exists rather than all of it; `make native-arena-check` reports which
  * VAs are still empty. */
 extern void MK4_NativeVideoClaimTexSlots(void);
+extern int Input_GetAsyncKey(int);
+extern void ResetConfigToDefaults(void);
 extern void AppInit_PreInstall(void);   /* FILESYS: open the archive, read its directory */
 extern void AppInit_Misc2(void);        /* heap: clear 3 MB, seed the free head */
 extern void AppInit_Misc3(void);        /* zero the 42-dword scratch block */
@@ -63,6 +65,12 @@ static void MK4_EngineStateInit(void)
      * .geo into it, so this is the only window where the backend can claim the
      * slots it staged. Claiming earlier is wiped; later is too late. */
     MK4_NativeVideoClaimTexSlots();
+    /* In the original this runs inside ValidateInstall, which is the Win32
+     * registry / install-path check the port replaces rather than converts.
+     * Only its config half matters here: without it the key map at 0x543ab8
+     * stays zero and Input_PollPlayerKeyboard asks for key 0 all frame, so
+     * no input ever reaches the game. */
+    ResetConfigToDefaults();
     MStackPackedInit();
     Set2FiveCallPauseJmp();
     AppInit_Misc7();
@@ -185,7 +193,14 @@ void MK4_GameFrame(void)
             *MK4_VA(unsigned int, 0x543814u) = 1;   /* audio re-init */
             *MK4_VA(unsigned int, 0x543818u) = 1;   /* hand to the loader */
             *MK4_VA(unsigned int, 0x543930u) = 1;   /* g_gsmFlag gates cmd 2 */
-            GameStateMachine(2);
+            /* MK4_BOOT_FSM=1 also sends FSM command 2 (state 0 -> 6, the
+             * in-game pump). Off by default: state 6 sets g_gsmActiveFlag,
+             * and that is exactly what makes TestQueueGateState refuse the
+             * Enter key - the loading screen's only working skip, since
+             * nothing in the game writes the pad aggregates the other two
+             * pollers read. */
+            if (getenv("MK4_BOOT_FSM"))
+                GameStateMachine(2);
             StoreTwoCall(0x4a42e0, 0x4000);
             /* -1 is the "run every scheduled node" tag the walk gates on;
              * the loading screen sets it to its own VA only while it owns
@@ -209,29 +224,26 @@ void MK4_GameFrame(void)
                 *MK4_VA(unsigned int, 0x4d50b4u) |= 4u;
             SDL_Log("boot-match: FSM -> 6, loading screen scheduled");
         }
-        if (getenv("MK4_BOOT_MATCH") && (frame == 40 || frame == 199))
-            SDL_Log("boot f%-3d mode=%x tickW1=%-4x dl1=%x dl2=%x 89c=%x "
-                    "loaderState=%x texNode0=%x",
-                    frame, *MK4_VA(unsigned int, 0x543800u),
-                    *MK4_VA(unsigned int, 0x543550u),
-                    *MK4_VA(unsigned int, 0x537f48u),
-                    *MK4_VA(unsigned int, 0x5380e0u),
-                    (unsigned)*MK4_VA(unsigned char, 0x54389cu),
-                    0u, *MK4_VA(unsigned int, 0xab4e78u));
-        if (getenv("MK4_BOOT_MATCH") && (frame == 40 || frame == 199)) {
-            unsigned int n = *MK4_VA(unsigned int, 0x52ab3cu);
-            while (n) {
-                SDL_Log("   node %x handler=%08x state=%x timer=%d",
-                        n, *MK4_VA(unsigned int, n + 0xd8u),
-                        *MK4_VA(unsigned int, n + 0x84u),
-                        (int)*MK4_VA(short, n + 0xdcu));
-                n = *MK4_VA(unsigned int, n + 0xe4u);
-            }
-        }
         if (getenv("MK4_TRACE_MSTACK") && (frame % 4) == 0)
             SDL_Log("f%-3d mstackTop=%08x nodeIdx=%08x", frame,
                     *MK4_VA(unsigned int, 0x4d57acu),
                     *MK4_VA(unsigned int, 0x542044u));
+        /* The two "someone is pressing something" bytes are filled by the
+         * original's DirectInput layer, not by MK4's own code - so the
+         * backend publishes them, once per frame, before the logic runs. */
+        { extern void MK4_NativeInputPublish(void); MK4_NativeInputPublish(); }
+        { extern void MK4_NativeFakeKeyTick(void); MK4_NativeFakeKeyTick(); }
+        /* MK4_BOOT_PRESS=<frame> answers the loading screen's press-start
+         * gate, which is an EDGE detector - a held key latches it once and
+         * never fires again. */
+        if (getenv("MK4_BOOT_MATCH")) {
+            const char *at = getenv("MK4_BOOT_PRESS");
+            if (at && frame == atoi(at)) {
+                extern void MK4_NativeFakeKeyPress(int, int);
+                MK4_NativeFakeKeyPress(0x0d, 2);
+                SDL_Log("boot-match: Enter pressed at frame %d", frame);
+            }
+        }
         frame++;
         MainLoopStep();      /* BeginFrame / GameLogicStep / DrawScene / Present */
     }

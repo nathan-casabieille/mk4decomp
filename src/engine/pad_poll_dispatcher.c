@@ -4,6 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -14,6 +15,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -56,6 +58,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -63,6 +66,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -97,6 +101,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -107,9 +112,11 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
 extern void Input_PollPlayerKeyboard(int player);
 /* extern void Input_GetAsyncKey(int key); -- defined elsewhere with diff sig */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern u32 g_appInitFlag1;
 extern unsigned int g_phaseThunkInst;
 extern unsigned int g_renderer2_var5;
@@ -133,11 +140,127 @@ extern unsigned int g_dispatchSave27;
 extern unsigned int g_dispatchSave26;
 extern unsigned int g_dispatchSave25;
 extern unsigned int g_dispatchVar39;
+#endif
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern u32 g_demoModeFlag;
+#endif
+#ifdef NON_MATCHING
+extern int Input_GetAsyncKey(int);
+#else
 extern void Input_GetAsyncKey(void);
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_appInitFlag1 (*(unsigned int *)MK4_VA(unsigned int, 0x7af920u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_demoModeFlag (*(unsigned int *)MK4_VA(unsigned int, 0x4ffd7cu))
+#define g_dispatchSave25 (*(unsigned int *)MK4_VA(unsigned int, 0x543370u))
+#define g_dispatchSave26 (*(unsigned int *)MK4_VA(unsigned int, 0x54336cu))
+#define g_dispatchSave27 (*(unsigned int *)MK4_VA(unsigned int, 0x543368u))
+#define g_dispatchSave517 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4df4u))
+#define g_dispatchSave518 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4df0u))
+#define g_dispatchSave532 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4dfcu))
+#define g_dispatchSave533 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4df8u))
+#define g_dispatchSave534 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4ddcu))
+#define g_dispatchSave535 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4dd8u))
+#define g_dispatchSave536 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4dccu))
+#define g_dispatchSave537 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4dc8u))
+#define g_dispatchSave625 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4e04u))
+#define g_dispatchSave626 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4e00u))
+#define g_dispatchSave627 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4de4u))
+#define g_dispatchSave628 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4de0u))
+#define g_dispatchSave629 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4dd4u))
+#define g_dispatchSave630 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4dd0u))
+#define g_dispatchVar39 (*(unsigned int *)MK4_VA(unsigned int, 0x54357cu))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_fightTableC0 (*(unsigned int *)MK4_VA(unsigned int, 0x4d50a4u))
+#define g_fightTableC1 (*(unsigned int *)MK4_VA(unsigned int, 0x4d50a8u))
+#define g_fightTableC2 (*(unsigned int *)MK4_VA(unsigned int, 0x4d50b0u))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_gameStateResult (*(unsigned int *)MK4_VA(unsigned int, 0x7af918u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_phaseThunkInst (*(unsigned int *)MK4_VA(unsigned int, 0x4d50acu))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_renderer2_var5 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4e98u))
+#define g_renderer2_var6 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4decu))
+#define g_renderer2_var7 (*(unsigned int *)MK4_VA(unsigned int, 0x4f4de8u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
 extern void Input_PollPlayerJoystick(void);
 
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+/* @addr 0x004b5650 (494b) - NATIVE twin; the matching build takes the
+ * synthesizer's copy (the naked body lives in the QQ variants file).
+ *
+ * Thirteen unrolled button tests, one shape each: read this player's
+ * virtual-key code from the key map, and if the key is down OR the mask
+ * for that button into the target word. Three parallel tables, all
+ * indexed the same way:
+ *   key map  0x543ab8 + button*8  + player*4
+ *   target   0x4f4dcc + button*16 + player*8   (a POINTER, i.e. a VA)
+ *   mask     0x4f4dc8 + button*16 + player*8
+ * The head is the Win32 alt-tab guard: while Alt is held the whole poll
+ * is skipped, so a window switch does not land as a fistful of inputs.
+ * It goes through the import slot, which the trampoline maps. */
+void Input_PollPlayerKeyboard(int player)
+{
+    unsigned int b, tgt, mask;
+    int vk;
+
+#ifdef MK4_ARENA
+    /* The guard is a Win32 alt-tab courtesy, and under the arena the import
+     * slot holds no callable target - SDL owns window focus here, so it is
+     * dropped. This one line is the only part of the body the native build
+     * does not run; the thirteen-button loop below is what co-exec checks. */
+#else
+    if (((int (__stdcall *)(int))
+         MK4_ResolveCode(*MK4_VA(unsigned int, 0x4d21c0u)))(0x12) & 0x8001)
+        return;
+#endif
+
+    for (b = 0; b < 13; b++) {
+        vk = *MK4_VA(int, 0x543ab8u + b * 8u + (unsigned)player * 4u);
+        if (Input_GetAsyncKey(vk)) {
+            tgt  = *MK4_VA(unsigned int,
+                           0x4f4dccu + b * 0x10u + (unsigned)player * 8u);
+            mask = *MK4_VA(unsigned int,
+                           0x4f4dc8u + b * 0x10u + (unsigned)player * 8u);
+            *MK4_VA(unsigned int, tgt) |= mask;
+        }
+    }
+}
+#else
+/* no matching-side C here - the synthesizer provides 0x004b5650. */
+#endif
+
+#ifndef NON_MATCHING /* twin: game_state_machine_maybe_rebuild.c */
 __declspec(naked) void Input_TickPlayers(void)
 {
     __asm {
@@ -268,3 +391,4 @@ __declspec(naked) void Input_TickPlayers(void)
         ret
     }
 }
+#endif
