@@ -282,3 +282,5 @@ src/engine/store_two_call.c
 src/boot/boot_state_triple.c
 src/audio/audio_volume_rescale.c
 src/boot/boot_mod6487e_clamp_and_chain_mul10.c
+src/boot/boot_dispatch_slot_init.c
+src/boot/scaled_store_three.c

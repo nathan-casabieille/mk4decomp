@@ -277,6 +277,8 @@ __attribute__((weak)) int Menu_DirectDrawUnavailableDialog(){return 0;}
 __attribute__((weak)) int Menu_GlideUnavailableDialog(){return 0;}
 __attribute__((weak)) int Menu_HelpScreen(){return 0;}
 __attribute__((weak)) int Menu_InsertCDDialog(){return 0;}
+__attribute__((weak)) int MStackPush3LinkedListWalk(){return 0;}
+__attribute__((weak)) int MStackBracket4_ListInsertZeroFill(){return 0;}
 __attribute__((weak)) int GDispatch4(){return 0;}
 __attribute__((weak)) int DispatcherComplex260_FramePauseScaledStore(){return 0;}
 __attribute__((weak)) int Loop16Init(){return 0;}

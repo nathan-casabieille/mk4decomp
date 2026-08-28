@@ -614,6 +614,27 @@ def _avr():
     return {'g_xformDirtyFlags': 0, 'g_framePauseFlag': 0,
             'g_bootInitSaveSlot': 0, '@0x53814c': 0}
 
+
+# BootDispatchSlotInit: the dispatcher and the three walk callees stubbed -
+# default all `and ~4 / ret`-shaped success (clear bit 2), overridden per case
+# with `or 4` (not-found) or a pause store. The node and its +0x18 list are
+# scratch.
+def _bdsi():
+    clear4 = b'\x83\x25' + (0x54208c).to_bytes(4, 'little') + b'\xfb\xc3'
+    return {
+        'g_matrixStackTop': 0x2e5000, 'g_xformEntityIdx': 0x11,
+        'g_pendingNodeType': 0x22, 'g_walkCallback': 0x2e4100,
+        'g_framePauseFlag': 0, 'g_xformDirtyFlags': 0,
+        'g_currentNodeIdx': 0x2e4000, 'g_fightGroupHead': 0,
+        '@0xb90018': 0x2e4040, '@0xb90020': 0,
+        '@0x407400': clear4,             # DispatcherComplex260
+        '@0x408600': clear4,             # MStackBracket4_ListInsertZeroFill
+        '@0x4088b0': clear4,             # MStackPush3LinkedListWalk
+        '@0x408d30': clear4,             # BootStateTriple
+        '@0x406790': b'\xc3',            # MStackPush2ChainLLInsert
+        '@0x409260': b'\xc3',            # ScaledStoreThree
+    }
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -1043,6 +1064,21 @@ SEEDS = {
     # AllocateNode runs LIVE against the slot table; the arg is a code VA.
     # The 411262-unit angle wrap: in range untouched (no store), negative by
     # one and by many periods, and high by one and by many.
+    # The four callees are stubbed at their VAs - each with a chosen effect on
+    # the dirty bit, so all four routes through the driver are taken.
+    'ScaledStoreThree_00409260': [
+        ('stores the triple', {'g_xformEntityIdx': 0x2e4000, 'g_walkCallback': 0x77,
+                               '@0xb90004': 1, '@0xb90008': 2, '@0xb9000c': 3}),
+    ],
+    'BootDispatchSlotInit': [
+        ('paused inside the dispatcher', dict(_bdsi(), **{
+            '@0x407400': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+        ('dispatcher says not-found: insert path', dict(_bdsi(), **{
+            '@0x407400': b'\x83\x0d\x8c\x20\x54\x00\x04\xc3'})),
+        ('full success path', _bdsi()),
+        ('walk fails after the fill', dict(_bdsi(), **{
+            '@0x4088b0': b'\x83\x0d\x8c\x20\x54\x00\x04\xc3'})),
+    ],
     'BootMod6487eClampAndChainMul10': [
         ('in range: no store', {'g_walkCallback': 0x1234}),
         ('negative one period', {'g_walkCallback': 0xffffff00}),
