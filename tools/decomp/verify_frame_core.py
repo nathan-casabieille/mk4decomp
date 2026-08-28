@@ -246,6 +246,37 @@ def _vib(k=1.0, step=0.01):
         d['@0x%x' % (0xb90100 + i * 4)] = 0x00100010
     return d
 
+
+# VertexQuadBuilder's input: g_xformEntityIdx is a RAW VA (0xb90100), its +4 is
+# the block base, and entry `index` sits at base + index*0x10 + 0xc with the
+# vertex count as the u16 at +2. Two vertices, each 8 source bytes.
+def _vqb():
+    # _heap3, not _blocks: Mem_Malloc walks from g_memHeapStart all the way to
+    # g_memHeapEnd, so the seeded blocks have to tile the WHOLE region or the
+    # allocation fails and the function takes its error path - which shows up
+    # as a suspiciously empty "VERIFIED (0 writes)".
+    d = dict(_heap3())
+    d.update({
+        'g_xformEntityIdx': 0xb90100,
+        'g_currentNodeIdx': 0x2e4000,
+        'g_fightGroupHead': 0x00080000,     # (>> 16) & 8 -> 8
+        'g_dispatchSave1572': 1,
+        'g_pendingNodeType': 0,
+        '@0xb90048': 0,                      # the node's cache slot
+        '@0xb90104': 0xb90200,               # block base
+        # entry 0 is at base + 0*0x10 + 0xc = 0xb9020c
+        '@0xb9020e': 2,                      # entry +2: vertex count
+        '@0xb90218': 0x20,                   # entry +0xc: offset to the stream
+        '@0xb90204': 0x40,                   # base +4: offset to the shade table
+        # the source stream at entry + 0xc + 0x20 = 0xb90238, two 8-byte records
+        '@0xb90238': 0x11110001, '@0xb9023c': 0x33332222,
+        '@0xb90240': 0x44440002, '@0xb90244': 0x66665555,
+        # the shade table
+        '@0xb90248': 0x0f0f0f0f, '@0xb9024c': 0x0f0f0f0f,
+        '@0x4bd510': b'\xc3',               # LeaScaledCall: cdecl, plain ret
+    })
+    return d
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -595,6 +626,19 @@ SEEDS = {
     # exit that SKIPS the mstack pops, and a node with both child chains empty.
     # Mode 2 is the oscillator; anything else skips to the broadcast. The
     # bounds live at 0x004d2a00 / 0x004d2a10 as doubles.
+    # Mem_Malloc runs for real against the seeded heap; LeaScaledCall is
+    # stubbed to a ret. The entry table hangs off g_xformEntityIdx, which is a
+    # RAW VA in this function rather than a packed index.
+    'VertexQuadBuilder': [
+        ('zero vertex count', dict(_vqb(), **{'@0xb9020e': 0,
+                                              'g_pendingNodeType': 0x1234,
+                                              '@0xb90048': 0x5678}), (0, 0)),
+        ('fresh allocation',  _vqb(), (0, 0)),
+        ('reuse rejected: wrong flags', dict(_vqb(), **{
+            '@0xb90048': 0xb90400, '@0xb90400': 0, '@0xb90404': 0x1000}), (0, 1)),
+        ('reuse accepted',    dict(_vqb(), **{
+            '@0xb90048': 0xb90400, '@0xb90400': 8, '@0xb90404': 0x1000}), (0, 1)),
+    ],
     'VibrationFrameUpdate': [
         ('gate clear', {'g_cj_0054205c': 0}, (0x2e4000,)),
         ('mode 5: broadcast only', dict(_vib(), **{'@0xb9001c': 5}), (0x2e4000,)),

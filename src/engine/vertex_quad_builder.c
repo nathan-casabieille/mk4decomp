@@ -5,6 +5,7 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -15,6 +16,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -57,6 +59,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -64,6 +67,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -98,6 +102,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -108,6 +113,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
 /* @addr 0x004bc470 (294b engine.render) - per-tri vertex/UV building from indexed source.
  *   arg0 (esp+8): poly index. Reads [0x542048]+4 (base table); fetches 16-byte
@@ -117,69 +123,138 @@ extern unsigned int g_fightAxisPosY;
  *   `ebp` times copying UV (3 u16) + reading color index (byte) -> palette
  *   byte, masking into output.
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dispatchSave1572;
+#endif
+#ifdef NON_MATCHING
+extern void LeaScaledCall(int);
+extern s32  Mem_Malloc(void **out_ptr, s32 size, s32 tag);
+#else
 extern void LeaScaledCall(void);
 extern void Mem_Malloc(void);
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchSave1572 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e34u))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightGroupHead (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void VertexQuadBuilder(int param_1,int param_2)
+#include "portable/mem_model.h"
 
+/* Portable twin, written from the disassembly. Builds the vertex block for one
+ * mesh entry: 0x1c bytes per vertex, zeroed and then filled from a source
+ * stream.
+ *
+ * g_xformEntityIdx is a RAW VA here, not a packed index - the original
+ * dereferences it as `[ecx + 4]` with no scaling, unlike everywhere else in
+ * the engine that indexes it as `[reg*4 + off]`.
+ *
+ * When `reuse` is set the existing block is kept if its header's low bits match
+ * the wanted flags AND it is already big enough; otherwise the old one is
+ * released and a fresh one allocated. Either failure - a zero vertex count, or
+ * the allocator returning nothing - clears both the pending type and the node's
+ * cache slot, which marks the node unbuilt so the next call retries.
+ *
+ * Two details are transcribed rather than tidied. The header packs the entry
+ * address SHIFTED LEFT five and OR'd with the flags, which discards the top
+ * bits of that address; and the per-vertex tail reads back the halfword it
+ * just zeroed to mask it, so the mask is always against zero. */
+void VertexQuadBuilder(int index, int reuse)
 {
-  int *piVar1;
-  int iVar2;
-  int iVar3;
-  char *pcVar4;
-  uint *puVar5;
-  int iVar6;
-  uint uVar7;
-  uint uVar8;
-  uint uVar9;
-  uint *puVar10;
-  
-  iVar2 = g_eventQueuePending;
-  uVar7 = (uint)*(ushort *)(param_1 * 0x10 + 0xe + *(int *)(g_eventQueuePending + 4));
-  iVar6 = param_1 * 0x10 + 0xc + *(int *)(g_eventQueuePending + 4);
-  if (uVar7 != 0) {
-    piVar1 = (int *)((g_currentNodeIdx) * 4 + 0x48);
-    uVar8 = g_cj_0054205c >> 0x10 & 8U | g_dispatchSave1572;
-    uVar9 = uVar7 * 0x1c;
-    if (param_2 != 0) {
-      puVar5 = (uint *)*piVar1;
-      if (((*puVar5 & 9) == uVar8) && ((int)uVar9 <= (int)puVar5[1])) goto LAB_004bc520;
-      LeaScaledCall(2);
+    unsigned int xe    = g_xformEntityIdx;                  /* a VA */
+    unsigned int base  = *(unsigned int *)MK4_PTR(xe + 4);
+    unsigned int entry = (unsigned)index * 0x10u + base + 0xc;
+    unsigned int count = *(unsigned short *)MK4_PTR(entry + 2);
+    unsigned int slot, flags, need, blk, dst, src, tbl;
+
+    if (count == 0)
+        goto fail;
+
+    flags = (unsigned int)(((int)g_fightGroupHead >> 16) & 8) | g_dispatchSave1572;
+    slot  = g_currentNodeIdx * 4u + 0x48u;
+    need  = count * 0x1cu;                       /* (count << 3) - count, << 2 */
+
+    if (reuse != 0) {
+        blk = *(unsigned int *)MK4_PTR(slot);
+        if ((*(unsigned int *)MK4_PTR(blk) & 9) == flags
+            && (int)need <= (int)*(unsigned int *)MK4_PTR(blk + 4))
+            goto have;
+        LeaScaledCall(2);
     }
-    puVar5 = (uint *)Mem_Malloc(piVar1,uVar9 + 0xc,2);
-    if (puVar5 != (uint *)0x0) {
-      puVar5[1] = uVar9;
-LAB_004bc520:
-      g_dualC = puVar5;
-      *puVar5 = iVar6 * 0x20 | uVar8;
-      iVar2 = *(int *)(iVar2 + 4);
-      iVar3 = *(int *)(iVar2 + 4);
-      puVar5 = puVar5 + 2;
-      pcVar4 = (char *)(*(int *)(iVar6 + 0xc) + 0xc + iVar6);
-      for (; uVar7 != 0; uVar7 = uVar7 - 1) {
-        puVar10 = puVar5;
-        for (iVar6 = 7; iVar6 != 0; iVar6 = iVar6 + -1) {
-          *puVar10 = 0;
-          puVar10 = puVar10 + 1;
-        }
-        *(undefined2 *)(puVar5 + 3) = *(undefined2 *)(pcVar4 + 2);
-        *(undefined2 *)((int)puVar5 + 0xe) = *(undefined2 *)(pcVar4 + 4);
-        *(undefined2 *)(puVar5 + 4) = *(undefined2 *)(pcVar4 + 6);
-        *(ushort *)((int)puVar5 + 0x1a) =
-             *MK4_NODE(byte, iVar3 + iVar2 + 10 + *pcVar4) & 0xff0f |
-             *(ushort *)((int)puVar5 + 0x1a) & 0xfff0;
-        puVar5 = puVar5 + 7;
-        pcVar4 = pcVar4 + 8;
-      }
-      return;
+
+    blk = (unsigned int)Mem_Malloc((void **)MK4_PTR(slot), (s32)(need + 0xc), 2);
+    if (blk == 0)
+        goto fail;
+    *(unsigned int *)MK4_PTR(blk + 4) = need;
+
+have:
+    g_pendingNodeType = blk;
+    *(unsigned int *)MK4_PTR(blk) = (entry << 5) | flags;
+
+    dst = blk + 8;
+    src = entry + 0xc + *(unsigned int *)MK4_PTR(entry + 0xc);
+    base = *(unsigned int *)MK4_PTR(xe + 4);
+    tbl  = base + 8 + *(unsigned int *)MK4_PTR(base + 4);
+
+    while (count != 0) {
+        int shade;
+        unsigned int i;
+
+        for (i = 0; i < 7; i++)
+            *(unsigned int *)MK4_PTR(dst + i * 4) = 0;
+
+        *(unsigned short *)MK4_PTR(dst + 0xc)  = *(unsigned short *)MK4_PTR(src + 2);
+        *(unsigned short *)MK4_PTR(dst + 0xe)  = *(unsigned short *)MK4_PTR(src + 4);
+        *(unsigned short *)MK4_PTR(dst + 0x10) = *(unsigned short *)MK4_PTR(src + 6);
+
+        /* signed byte index into the shade table */
+        shade = (int)*(signed char *)MK4_PTR(src);
+        *(unsigned short *)MK4_PTR(dst + 0x1a) = (unsigned short)
+            ((*(unsigned char *)MK4_PTR(tbl + (unsigned)(shade * 4) + 2) & 0xf)
+             | (*(unsigned short *)MK4_PTR(dst + 0x1a) & 0xfff0));
+
+        dst += 0x1c;
+        src += 8;
+        count--;
     }
-  }
-  g_dualC = (uint *)0x0;
-  MK4_NODE_AT(undefined4, (g_currentNodeIdx), 0x48) = 0;
-  return;
+    return;
+
+fail:
+    g_pendingNodeType = 0;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x48) = 0;
 }
 #else
 __declspec(naked) void VertexQuadBuilder(void) {
