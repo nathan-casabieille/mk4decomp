@@ -404,6 +404,25 @@ def _cam():
         '@0x4b9840': b'\xc3',                # AltCamMatrixProject stub
     }
 
+
+# SunbeamSpriteEmit: entity 2's corner table entry lives at 0x004f6398 + 16
+# (ENTITY MINUS ONE, 16 bytes per entry) - four s16 pairs.
+def _beam():
+    return {
+        'g_xformEntityIdx': 2,
+        'g_inLoopStep': 0,
+        'g_tickW1': 0x20,
+        '@0x4f6580': 0x80, '@0xab51fc': 8,
+        '@0x4f63a8': 0x00200010, '@0x4f63ac': 0xffe00040,
+        '@0x4f63b0': 0x00300050, '@0x4f63b4': 0x00100060,
+        '@0xab4398': 0x00100000, '@0xab439c': 0x00200000,
+        '@0xab43a0': 0x00014000,
+        '@0x7af990': 0x00100010, '@0x7af994': 0xfff00010,
+        '@0x7af998': 0x0010fff0, '@0x7af99c': 0x00100010,
+        '@0x7af9a0': 0x0010,
+        'g_drawQueueSize': 0,
+    }
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -786,6 +805,18 @@ SEEDS = {
     'PackColor': [
         ('lane 0', {}, (0, 300, -5, 0x7f)),
         ('lane 1', {}, (1, 0x10, 0x20, 0x30)),
+    ],
+    # The projection leaves run LIVE; Helper_DrawCursor too - four submits
+    # land in the queue. The two clamp cases prove the step retargeting.
+    'SunbeamSpriteEmit': [
+        ('pulses up from the low bound', dict(_beam(), **{
+            '@0x4f6580': 0x50, '@0xab51fc': 4})),
+        ('bounces at the high bound', dict(_beam(), **{
+            '@0x4f6580': 0xfc, '@0xab51fc': 0x10})),
+        ('loop-step gate', dict(_beam(), **{'g_inLoopStep': 1})),
+        ('emits four beams', _beam()),
+        ('mins negative: none', dict(_beam(), **{'g_vtxTransZ': 0,
+            '@0xab43a0': 0xfffff000})),
     ],
     'CameraSetupAndCullFan': [
         ('camera at the target', _cam()),
