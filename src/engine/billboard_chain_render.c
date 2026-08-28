@@ -4,6 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -14,6 +15,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -56,6 +58,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -63,6 +66,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -97,6 +101,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -107,7 +112,9 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_dispatchSave531;
 extern u32 g_inLoopStep;
 extern unsigned int g_dispatchSave1626[];
@@ -133,9 +140,196 @@ extern unsigned int g_dispatchSave1501;
 extern unsigned int g_dispatchSave1502;
 extern unsigned int g_dispatchSave1503;
 extern unsigned int g_dispatchSave1576;
+#endif
+#ifndef NON_MATCHING
 extern void Helper_DrawCursor(void);
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchSave1501 (*(unsigned int *)MK4_VA(unsigned int, 0xab4398u))
+#define g_dispatchSave1502 (*(unsigned int *)MK4_VA(unsigned int, 0xab439cu))
+#define g_dispatchSave1503 (*(unsigned int *)MK4_VA(unsigned int, 0xab43a0u))
+#define g_dispatchSave1576 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e60u))
+#define g_dispatchSave1626 ((unsigned int *)MK4_VA(unsigned int, 0x7af958u))
+#define g_dispatchSave531 (*(unsigned int *)MK4_VA(unsigned int, 0x4f6238u))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_inLoopStep (*(unsigned int *)MK4_VA(unsigned int, 0x7af92cu))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_triStripRingA (*(unsigned int *)MK4_VA(unsigned int, 0x7af9b4u))
+#define g_triStripRingB (*(unsigned int *)MK4_VA(unsigned int, 0x7af984u))
+#define g_triStripX0 (*(short *)MK4_VA(short, 0x7af95cu))
+#define g_triStripX1 (*(short *)MK4_VA(short, 0x7af962u))
+#define g_triStripX2 (*(short *)MK4_VA(short, 0x7af968u))
+#define g_vtxIn1_y (*(short *)MK4_VA(short, 0x7af95eu))
+#define g_vtxIn1_z (*(short *)MK4_VA(short, 0x7af960u))
+#define g_vtxIn2_x (*(short *)MK4_VA(short, 0x7af95au))
+#define g_vtxIn2_y (*(short *)MK4_VA(short, 0x7af964u))
+#define g_vtxIn2_z (*(short *)MK4_VA(short, 0x7af966u))
+#define g_vtxOut2_z (*(int *)MK4_VA(int, 0x7af988u))
+#define g_vtxOut_z (*(int *)MK4_VA(int, 0x7af98cu))
+#define g_vtxScreenP2X (*(unsigned int *)MK4_VA(unsigned int, 0x7af9b8u))
+#define g_vtxScreenX (*(unsigned int *)MK4_VA(unsigned int, 0x7af9bcu))
+#define g_vtxTransX (*(int *)MK4_VA(int, 0x7af9a4u))
+#define g_vtxTransY (*(int *)MK4_VA(int, 0x7af9a8u))
+#define g_vtxTransZ (*(int *)MK4_VA(int, 0x7af9acu))
+#define g_vtxValid (*(int *)MK4_VA(int, 0x7af9b0u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
 extern void ProjectTwoVertices(void);
 
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+
+extern void ProjectTwoVertices(void);
+extern void Helper_DrawCursor(void *entry);
+
+/* Portable twin, written from the disassembly. Walks the billboard chain
+ * hanging off the node's +0x2c and emits one queue entry per link.
+ *
+ * The entry is built ON THE STACK and handed to Helper_DrawCursor, which
+ * COPIES its seven dwords into the queue and never keeps the pointer - so a
+ * plain C local carries it and no arena scratch is needed. Fields +0xe/+0xf
+ * and +0x16..+0x19 are never written, exactly as in the original, where the
+ * queue receives whatever the frame left on the stack; they are zeroed here
+ * instead, since two co-executing runs cannot share stack garbage.
+ *
+ * The flags word starts at 0x60 and collects three things: the low nibble is
+ * XOR'd with the texture record's nibble (an xor against the CURRENT low
+ * byte, transcribed as-is), bits 7..8 come from the two-bit table at
+ * 0x004f6238 indexed by the link's own two bits, and bit 10 is the winding
+ * from the projection.
+ *
+ * The billboard centre is the CHAIN node's +4/+8 scaled down by 128 and added
+ * to the link's four s16 half-extents - and the staged nine words repeat the
+ * pair: x appears at 0x7af95a and 0x7af95c, y at 0x7af95e and 0x7af960. */
+void BillboardChainRender(void)
+{
+    unsigned int cur, blk, ent, base, src, idx16, tbl, u, w1;
+    unsigned short rec[14];
+    short cx0, ax0, dx0, di0;
+
+    if (g_inLoopStep != 0)
+        return;
+
+    cur = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x2c);
+    g_vtxTransX = (int)g_dispatchSave1501 >> 16;
+    g_vtxTransY = (int)g_dispatchSave1502 >> 16;
+    g_vtxTransZ = (int)g_dispatchSave1503 >> 7;
+    g_currentNodeIdx = cur;
+
+    w1 = g_dispatchSave1576;
+    if ((int)w1 < 0x10)
+        u = 0;
+    else
+        u = (unsigned int)(((int)(w1 + ((w1 >> 31) & 7u)) >> 3) - 1);
+
+    rec[0xd] = 0x60;                                   /* +0x1a: flags       */
+    rec[0x9] = 0x40;                                   /* +0x12: sort key    */
+    rec[0xa] = (unsigned short)((((u << 5) | u) << 5) | u);   /* +0x14 colour */
+    rec[0x7] = 0; rec[0xb] = 0; rec[0xc] = 0;          /* never written by the
+                                                          original - stack
+                                                          garbage there      */
+
+    while (cur != 0) {
+        blk = MK4_NODE_AT(unsigned int, cur, 0xc);
+        g_walkCallback = blk;
+        if (blk != 0) {
+            ent = MK4_NODE_AT(unsigned int, blk, 4);   /* a VA */
+            g_xformEntityIdx = ent;
+            idx16 = MK4_NODE_AT(unsigned int, blk, 0x18) << 4;
+            base = *(unsigned int *)MK4_PTR(ent + 4);
+            if (base != 0) {
+                unsigned int a, c;
+
+                src = idx16 + base + 0xc;
+                tbl = *(unsigned int *)MK4_PTR(base + 4);
+
+                a = *(unsigned char *)MK4_PTR(tbl
+                        + (unsigned int)*(unsigned char *)MK4_PTR(src + 2) * 4u
+                        + base + 0xa);
+                rec[0xd] = (unsigned short)(rec[0xd]
+                            ^ ((a ^ (rec[0xd] & 0xffu)) & 0xfu));
+
+                c = *(unsigned char *)MK4_PTR(src + 1) & 3u;
+                c = *(unsigned char *)MK4_VA(unsigned char, 0x004f6238u + c) & 3u;
+                rec[0xd] = (unsigned short)((rec[0xd] & 0xfe7fu) | (c << 7));
+
+                cx0 = (short)(*(short *)MK4_PTR(src + 8)
+                              + (short)((int)MK4_NODE_AT(int, cur, 4) >> 7));
+                ax0 = (short)(*(short *)MK4_PTR(src + 0xa)
+                              + (short)((int)MK4_NODE_AT(int, cur, 8) >> 7));
+                dx0 = (short)(*(short *)MK4_PTR(src + 4) + cx0);
+                di0 = (short)(*(short *)MK4_PTR(src + 6) + ax0);
+
+                *MK4_VA(short, 0x7af958u) = cx0;
+                *MK4_VA(short, 0x7af95eu) = ax0;
+                *MK4_VA(short, 0x7af964u) = 0;
+                *MK4_VA(short, 0x7af95au) = dx0;
+                *MK4_VA(short, 0x7af960u) = ax0;
+                *MK4_VA(short, 0x7af966u) = 0;
+                *MK4_VA(short, 0x7af95cu) = dx0;
+                *MK4_VA(short, 0x7af962u) = di0;
+                *MK4_VA(short, 0x7af968u) = 0;
+
+                ProjectTwoVertices();
+
+                ((unsigned char *)rec)[0xc] = *(unsigned char *)MK4_PTR(src + 0xc);
+                ((unsigned char *)rec)[0xd] = *(unsigned char *)MK4_PTR(src + 0xd);
+                ((unsigned char *)rec)[0x10] = (unsigned char)
+                    (*(unsigned char *)MK4_PTR(src + 0xe)
+                     + *(unsigned char *)MK4_PTR(src + 0xc));
+                ((unsigned char *)rec)[0x11] = (unsigned char)
+                    (*(unsigned char *)MK4_PTR(src + 0xf)
+                     + *(unsigned char *)MK4_PTR(src + 0xd));
+
+                ((unsigned int *)rec)[0] = *MK4_VA(unsigned int, 0x7af9b4u);
+                ((unsigned int *)rec)[1] = *MK4_VA(unsigned int, 0x7af9b8u);
+                ((unsigned int *)rec)[2] = *MK4_VA(unsigned int, 0x7af9bcu);
+                rec[0xd] = (unsigned short)((rec[0xd] & 0xfbffu)
+                            | ((*MK4_VA(unsigned char, 0x7af9b0u) & 1u) << 10));
+
+                if ((int)*MK4_VA(int, 0x7af984u) > 0
+                    && (int)*MK4_VA(int, 0x7af988u) > 0
+                    && (int)*MK4_VA(int, 0x7af98cu) > 0)
+                    Helper_DrawCursor(rec);
+
+                cur = g_currentNodeIdx;
+            }
+        }
+        cur = *MK4_NODE(unsigned int, cur);
+        g_currentNodeIdx = cur;
+    }
+}
+#else
 __declspec(naked) void BillboardChainRender(void)
 {
     __asm {
@@ -283,3 +477,4 @@ __declspec(naked) void BillboardChainRender(void)
         ret
     }
 }
+#endif

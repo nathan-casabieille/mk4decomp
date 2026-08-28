@@ -343,6 +343,40 @@ def _panel():
         '@0x4c3360': b'\xc3',                 # Helper_DrawCursor
     }
 
+
+# BillboardChainRender: the node's +0x2c heads a chain (one link at 0x2e4040);
+# the link's +0xc names a block whose +4 is the entity VA, and the entity's +4
+# is the mesh base carrying the texture records.
+def _bbc():
+    return {
+        'g_currentNodeIdx': 0x2e4000,
+        'g_inLoopStep': 0,
+        '@0xb9002c': 0x2e4040,               # chain head
+        '@0xb90100': 0,                       # link: next = end
+        '@0xb9010c': 0x2e4080,               # link +0xc: block
+        '@0xb90104': 0x11,                    # link +4: centre x (>>7)
+        '@0xb90108': 0x22,                    # link +8: centre y
+        '@0xb90204': 0xb93000,               # block +4: entity VA
+        '@0xb90218': 1,                       # block +0x18: record index
+        '@0xb93004': 0xb94000,               # entity +4: mesh base
+        '@0xb94004': 0x30,                    # base +4: texture table offset
+        # record 1 at base + 0x10 + 0xc = 0xb9401c
+        '@0xb9401c': 0x02020104, '@0xb94020': 0x00300020,
+        '@0xb94024': 0x00500040, '@0xb94028': 0x0a0a0505,
+        # the two-bit table the flags sample
+        '@0x4f6238': 0x03020100,
+        # texture table entry: tbl + texrec*4 + base + 0xa
+        '@0xb94042': 0x0f0f0f0f,
+        # projection inputs
+        '@0xab4398': 0x00100000, '@0xab439c': 0x00200000,
+        '@0xab43a0': 0x00014000,              # g_dispatchSave1503 (z)
+        '@0xab4e60': 0x20,                    # g_dispatchSave1576
+        '@0x7af990': 0x00100010, '@0x7af994': 0xfff00010,
+        '@0x7af998': 0x0010fff0, '@0x7af99c': 0x00100010,
+        '@0x7af9a0': 0x0010,
+        'g_drawQueueSize': 0,
+    }
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -702,6 +736,17 @@ SEEDS = {
     # GamepadSeqRecord (750B, unconverted), SunbeamSpriteEmit and
     # Helper_DrawCursor are stubbed to `ret` in the shared arena - the record
     # stores all land BEFORE those calls, so they stay observable.
+    # One chain link with a full texture record; Helper_DrawCursor is left
+    # LIVE - it copies the entry into the queue, so the queue slot is the
+    # observable output. The mins-negative case proves the skip.
+    'BillboardChainRender': [
+        ('loop step gate', {'g_inLoopStep': 1}),
+        ('empty chain', dict(_bbc(), **{'@0xb9002c': 0})),
+        ('link without a block', dict(_bbc(), **{'@0xb9010c': 0})),
+        ('emits one entry', _bbc()),
+        ('mins negative: entry skipped', dict(_bbc(), **{'g_vtxTransZ': 0,
+            '@0xab43a0': 0xfffff000})),
+    ],
     'MovesPanelEmit': [
         ('small node goes to the sunbeam', dict(_panel(), **{'@0x4ed018': 3})),
         ('not a panel record', dict(_panel(), **{'g_eventQueueTotal': 0x2e4100,

@@ -257,3 +257,4 @@ src/engine/vertex_quad_builder.c
 src/engine/tristrip_batch_emit2.c
 src/engine/bbox_project_and_stash.c
 src/engine/moves_panel_emit.c
+src/engine/billboard_chain_render.c
