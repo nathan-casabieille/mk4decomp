@@ -7,8 +7,18 @@
  */
 #include "engine/scenegraph.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_baseSel;
 extern u32 g_framePauseFlag;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#endif
+
 
 /* @addr 0x004202c0 (57b)
  *   mov     eax, [g_baseSel]

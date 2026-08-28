@@ -20,6 +20,7 @@ extern void AuxAudio_Teardown(void);
 extern void Helper_GeoStub_5370(void);
 extern void TestCallZero(void);
 extern void Helper_GeoStub_5A70(void);
+#ifndef NON_MATCHING /* stale QQ-split copy */
 void AppShutdown(void) {
     TestCallIat();
     Helper_GfxCleanup();
@@ -34,6 +35,7 @@ void AppShutdown(void) {
     TestCallZero();
     Helper_GeoStub_5A70();
 }
+#endif
 
 /* @addr 0x004a1bf0 (65b): 3-stage call chain with byte/byte/byte stores */
 extern int TestQueueGateState(void);

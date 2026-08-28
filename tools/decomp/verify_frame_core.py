@@ -73,7 +73,8 @@ TYPES = {
 # Twins whose ORIGINAL carries packed internal entry points (continuations
 # behind the same symbol). Their blobs must not be based at the function's own
 # VA or they cover those offsets - see verify_coexec.verify(offsite=).
-OFFSITE = {'PvsMergeDriver', 'PvsMerge_MatchEnd_00425f90',
+OFFSITE = {'Screen_Loading', 'Screen_Loading_Tick_004a42e0',
+           'PvsMergeDriver', 'PvsMerge_MatchEnd_00425f90',
            'PvsMerge_MatchNode_00425fd0', 'MStackBracket2_TreeWalkRecursive', 'BillboardSheetDualEmit'}
 
 BASE = 0x00400000
@@ -712,6 +713,60 @@ def _b4():
         '@0x408580': b'\xc3',
     }
 
+# the match loader and the loading-screen tick: every callee stubbed at its
+# VA. RET1/RET0 for the input gate; DCOK hands out node 0x2e4100 with the
+# dirty bit cleared; QREC records QuadCallPhase2's four args at 0xb98000.
+_RET   = b'\xc3'
+_RET1  = b'\xb8\x01\x00\x00\x00\xc3'
+_RET0  = b'\x31\xc0\xc3'
+_PAUSE = b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'
+_DCOK  = (b'\x83\x25\x8c\x20\x54\x00\xfb'
+          b'\xc7\x05\x44\x20\x54\x00\x00\x41\x2e\x00\xc3')
+_QREC  = (b'\x8b\x44\x24\x04\xa3\x00\x80\xb9\x00'
+          b'\x8b\x44\x24\x08\xa3\x04\x80\xb9\x00'
+          b'\x8b\x44\x24\x0c\xa3\x08\x80\xb9\x00'
+          b'\x8b\x44\x24\x10\xa3\x0c\x80\xb9\x00\xc3')
+
+def _lgsm(st):
+    # node 0x2e4000 is the scheduled node; +0x84 at 0xb90210, +8 at 0xb90020.
+    return {
+        'g_baseSel': 0x2e4000, '@0xb90084': st, 'g_framePauseFlag': 0,
+        'g_pendingNodeType': 0, 'g_xformDirtyFlags': 0, 'g_walkCallback': 0,
+        'g_currentNodeIdx': 0x11111, 'g_xformEntityIdx': 0,
+        'g_tickW1': 0, 'g_tickFlagF': 0, 'g_tickInitFlag': 0,
+        'g_dlNalt1': 2, 'g_dlNalt2': 3,
+        'g_dualB_00538038': 0x2e6000, 'g_dualB_0053803c': 0x2e7000,
+        'g_cj_00542054': 0x2e6000, 'g_cj_00542058': 0x777, 'g_cj_0054205c': 0x888,
+        'g_eventQueueCurrent': 0, 'g_audioStateDisp50b4': 0, 'g_gameMode': 0x11,
+        '@0x4d52c0': 0xb90000, '@0x4d52c4': 0,
+        '@0x4f33c0': 0xb94000, '@0x4f33c4': 0,
+        '@0x4bd890': _RET, '@0x4bd5b0': _RET, '@0x4a1bf0': _RET0,
+        '@0x4a1ad0': _RET, '@0x464800': _RET, '@0x406790': _RET,
+        '@0x407400': _DCOK, '@0x4064b0': _RET, '@0x41f780': _RET,
+    }
+
+def _slt(st):
+    return {
+        'g_baseSel': 0x2e4000, '@0xb90084': st, '@0xb90004': 0x2e4800,
+        'g_framePauseFlag': 0, 'g_pendingNodeType': 0, 'g_walkCallback': 0,
+        'g_currentNodeIdx': 0x11111, 'g_gameMode': 0x11,
+        'g_gsmOut1': 0, 'g_gsmOut2': 0, 'g_gsmOut3': 0, 'g_gsmOut4': 0,
+        'g_gsmActiveFlag': 0, 'g_logicStepFlag': 0, 'g_audioStreamState': 0,
+        'g_audioStateMask50c0': 0, 'g_active_0053a408': 0, 'g_active_00537e88': 0,
+        'g_audioInitScaled': 0, 'g_counter_0053a51c': 0x40,
+        'g_dualB_00538038': 0x2e6000, 'g_dualB_0053803c': 0x2e7000,
+        'g_dlNalt1': 2, 'g_dlNalt2': 3,
+        '@0x54380c': 0, '@0x54389c': 0, '@0x543824': 0,
+        '@0xb98000': 0, '@0xb98004': 0, '@0xb98008': 0, '@0xb9800c': 0,
+        '@0xb98010': 0x11223344, '@0xb9c010': 0x55667788,
+        '@0x4b6340': _RET, '@0x4be610': _RET, '@0x4a1ac0': _RET,
+        '@0x4ac1f0': _RET, '@0x4265d0': _RET, '@0x4aa940': _RET,
+        '@0x4a1fa0': _RET, '@0x4a4260': _RET, '@0x41f830': _RET,
+        '@0x4a41a0': _RET, '@0x4aa8a0': _RET, '@0x4be800': _QREC,
+        '@0x48a130': _RET, '@0x4a42b0': _RET, '@0x4a38d0': _RET,
+        '@0x4a42d0': b'\xc7\x05\x24\x38\x54\x00\x01\x00\x00\x00\xc3',
+    }
+
 def _fpss():
     clear4 = b'\x83\x25' + (0x54208c).to_bytes(4, 'little') + b'\xfb\xc3'
     return {
@@ -1218,6 +1273,105 @@ SEEDS = {
             '@0x425be0': b'\x83\x0d\x8c\x20\x54\x00\x04\xc3'})),
         ('pause inside the insert: leak 5', dict(_b4(), **{
             '@0x425be0': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+    ],
+    # The geo-group walk: entries of the 0xab4e78 table are packed node
+    # indices; entry word +4 selects the group. GeoLoadFixupLoop stubbed.
+    'TableWalkBoundedCmp': [
+        ('one entry matches the group', {'@0xab4e78': 0x2e4000, '@0xab5030': 0x5a5a,
+            '@0xb90000': 0xb94000, '@0xb94004': 8, 'g_currentNodeIdx': 0x1234,
+            'g_walkCallback': 0,
+            '@0x4bd8e0': b'\xc7\x05\x6c\x20\x54\x00\x99\x00\x00\x00\xc3'}, (8,)),
+        ('entry group differs: no fixup', {'@0xab4e78': 0x2e4000, '@0xab5030': 0x5a5a,
+            '@0xb90000': 0xb94000, '@0xb94004': 3, 'g_currentNodeIdx': 0x1234,
+            'g_walkCallback': 0,
+            '@0x4bd8e0': b'\xc7\x05\x6c\x20\x54\x00\x99\x00\x00\x00\xc3'}, (8,)),
+    ],
+    # The unload: texture-id list at rec + [rec+4] + 4, ids every 4 bytes.
+    'GeoLoadFixupLoop': [
+        ('no record: nothing', {'g_currentNodeIdx': 0x2e4000, '@0xb90004': 0}),
+        ('clears two ids, one hole', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90004': 0xb94000, '@0xb94004': 0x40, '@0xb94048': 3,
+            '@0xb9404c': 5, '@0xb94050': 0xffffffff, '@0xb94054': 7,
+            '@0xb90000': 0xb95000, '@0xb95004': 0x00090000,
+            '@0xab4e0a': 0x1111, '@0xab4e0e': 0x2222,
+            'g_curTexSlot': 0x99,
+            '@0x4b5b10': b'\xc3', '@0x4bd6d0': b'\xc3'}),
+    ],
+    'MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0': [
+        ('marks the node and prepends', {'g_matrixStackTop': 0x2e5000,
+            'g_xformEntityIdx': 0x123, 'g_currentNodeIdx': 0x2e4000,
+            '@0xb90008': 0x11, 'g_tickFrameNodeB': 0x456,
+            'g_framePauseFlag': 0, 'g_walkCallback': 0,
+            '@0x409970': b'\xc3'}),
+        ('pause inside the prepend', {'g_matrixStackTop': 0x2e5000,
+            'g_xformEntityIdx': 0x123, 'g_currentNodeIdx': 0x2e4000,
+            '@0xb90008': 0x11, 'g_tickFrameNodeB': 0x456,
+            'g_framePauseFlag': 0, 'g_walkCallback': 0,
+            '@0x409970': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'}),
+    ],
+    'MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430': [
+        ('marks the node and prepends', {'g_matrixStackTop': 0x2e5000,
+            'g_xformEntityIdx': 0x123, 'g_currentNodeIdx': 0x2e4000,
+            '@0xb90008': 0x11, 'g_tickFrameNodeA': 0x456,
+            'g_framePauseFlag': 0, 'g_walkCallback': 0,
+            '@0x409970': b'\xc3'}),
+    ],
+    'AudioInitSequence': [
+        ('publishes the selections and un-parks', {
+            '@0x542040': 0, 'g_walkCallback': 0, 'g_framePauseFlag': 0,
+            '@0x541ecc': 0x11, '@0x541ed0': 0x22, '@0x53a790': 0x33,
+            '@0x537ea0': 0x44, '@0x537edc': 0x55, '@0x53a1cc': 0x66,
+            '@0x53a51c': 0x77, '@0x543800': 0x4a42e0, '@0x52aac4': 9,
+            'g_nodeListTail': 0, 'g_eventQueueWorkType': 0,
+            '@0x4ac1f0': b'\xc3', '@0x4265d0': b'\xc3',
+            '@0x429e30': b'\xc3', '@0x4238b0': b'\xc3',
+            '@0x49cb40': b'\xc3'}),
+        ('pause in the accumulate pass', {
+            '@0x542040': 0, 'g_walkCallback': 0, 'g_framePauseFlag': 0,
+            '@0x541ecc': 0x11, '@0x541ed0': 0x22, '@0x53a790': 0x33,
+            '@0x537ea0': 0x44, '@0x537edc': 0x55, '@0x53a1cc': 0x66,
+            '@0x53a51c': 0x77, '@0x543800': 0x4a42e0,
+            '@0x4ac1f0': b'\xc3', '@0x4265d0': b'\xc3',
+            '@0x429e30': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'}),
+    ],
+    'Loop1cBitMask': [
+        ('clears bit 2 across the stride', {'@0xf8fade': 0xff, '@0xf8fafa': 0xff,
+                                            '@0xf9eb62': 0xff}),
+    ],
+    'LoadGeoAssetsStateMachine': [
+        ('state 0 arms the fade', _lgsm(0)),
+        ('state 1 mid-fade re-arms', dict(_lgsm(1), **{'g_tickW1': 0x28})),
+        ('state 1 loads and sets up the group', dict(_lgsm(1), **{'g_tickW1': 0x14})),
+        ('state 2 fade-in re-arms', _lgsm(2)),
+        ('state 2 completes to 3', dict(_lgsm(2), **{'g_tickW1': 0xf0})),
+        ('state 3 input skip arms 4', dict(_lgsm(3), **{'@0x4a1bf0': _RET1})),
+        ('state 3 audio busy: swap and re-group', dict(_lgsm(3), **{
+            'g_audioStateDisp50b4': 4})),
+        ('state 3 idle re-arms', _lgsm(3)),
+        ('state 4 finalize and link', dict(_lgsm(4), **{'g_tickW1': 0x14})),
+        ('state 5 hands back to the screen', dict(_lgsm(5), **{'g_tickW1': 0xf0})),
+        ('pause inside a geo load', dict(_lgsm(1), **{
+            'g_tickW1': 0x14, '@0x4bd5b0': _PAUSE})),
+    ],
+    'Screen_Loading': [
+        ('arms and chains to zero-call', {'@0x543824': 0, '@0x4be610': _RET}),
+    ],
+    'Screen_Loading_Tick_004a42e0': [
+        ('wait: nothing pending', _slt(0)),
+        ('wait: signal the FSM', dict(_slt(1), **{'g_logicStepFlag': 1})),
+        ('wait: stream counters still busy', dict(_slt(0), **{
+            'g_audioStateMask50c0': 4, 'g_active_0053a408': 7})),
+        ('world re-init band', dict(_slt(0), **{
+            'g_gsmOut3': 1, 'g_gsmActiveFlag': 1})),
+        ('audio re-init band', dict(_slt(0), **{'g_gsmOut2': 1})),
+        ('hand the screen to the loader', dict(_slt(0), **{'g_gsmOut1': 1})),
+        ('ready: queue the state-3 resume', dict(_slt(2), **{'@0x54389c': 1})),
+        ('state 2 not ready re-arms 1', _slt(2)),
+        ('the load band', dict(_slt(3), **{
+            '@0xb98010': 0x11223344, '@0xb9c010': 0x55667788,
+            '@0xb98034': 4, '@0xb9c034': 5, 'g_gsmActiveFlag': 1})),
+        ('the load band, hidden char alt args', dict(_slt(3), **{
+            '@0xb98034': 6, '@0xb9c034': 5})),
     ],
     'MStackBracket1_TreeWalkRecursive2': [
         ('pause inside the alloc: leak 1', dict(_b1(9, 0x12345, 0x18), **{
@@ -1871,6 +2025,7 @@ def main():
     # Packed internal entry points with no symbols.yaml entry, registered in
     # config/codeptr_extras.yaml for the native trampoline; the harness needs
     # their VAs here to verify their C directly. Offsite, like their parent.
+    fn_va['Screen_Loading_Tick_004a42e0'] = 0x4a42e0
     fn_va['PvsMerge_MatchEnd_00425f90'] = 0x425f90
     fn_va['PvsMerge_MatchNode_00425fd0'] = 0x425fd0
     names = sys.argv[1:] or sorted(SEEDS)

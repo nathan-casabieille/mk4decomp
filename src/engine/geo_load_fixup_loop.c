@@ -5,6 +5,7 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -15,6 +16,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -57,6 +59,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -64,6 +67,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -98,6 +102,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -108,6 +113,7 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
 /*
  * @addr 0x004bd8e0 (127b engine.geo) - geometry-unload fixup loop, the
@@ -122,41 +128,89 @@ extern unsigned int g_fightAxisPosY;
  * word table. `mov dx,[eax+6]` then reads the node[0] header's u16 at
  * +6 (the same g_texCount index used by the loader).
  */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern u16 g_texSlots[];
 extern u32 g_curTexSlot;
 extern unsigned int g_texAssetIds;
 extern u32 g_texCount[];
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_curTexSlot (*(unsigned int *)MK4_VA(unsigned int, 0xab4e74u))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_texAssetIds (*(unsigned int *)MK4_VA(unsigned int, 0xab4e78u))
+#define g_texCount ((unsigned int *)MK4_VA(unsigned int, 0xab5038u))
+#define g_texSlots ((unsigned short *)MK4_VA(unsigned short, 0xab4e00u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
 extern void Helper_GeoLoadPost(void);
-extern void Mem_Free(void);
+extern void Mem_Free(unsigned int);
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+/* NATIVE twin, transcribed from the original bytes (the Ghidra lift here
+ * before it wrote dwords into the 16-bit slot table and mangled the
+ * texCount pointer math).
+ *
+ * Unloads one geo record: walks the record's texture-id list (count word
+ * at rec + [rec+4] + 4, ids every 4 bytes, -1 holes) clearing each 16-bit
+ * slot entry, clears the group's node and count slots by the blob's id
+ * word (+6), frees the record, and runs the post-load pass. */
 void GeoLoadFixupLoop(void)
-
 {
-  int iVar1;
-  int iVar2;
-  ushort *puVar3;
-  uint uVar4;
-  
-  iVar2 = (g_currentNodeIdx);
-  iVar1 = MK4_NODE_AT(int, (g_currentNodeIdx), 4);
-  if (iVar1 != 0) {
-    puVar3 = (ushort *)(*(int *)(iVar1 + 4) + 4 + iVar1);
-    for (uVar4 = (uint)*puVar3; uVar4 != 0; uVar4 = uVar4 - 1) {
-      puVar3 = puVar3 + 2;
-      if ((short)*puVar3 != -1) {
-        (&g_dispatchSave1568)[(short)*puVar3] = 0;
-      }
+    unsigned int node, rec, blob, p, n;
+    short id;
+    unsigned short grp;
+
+    node = g_currentNodeIdx;
+    rec = MK4_NODE_AT(unsigned int, node, 4);
+    if (rec == 0) return;
+
+    p = *MK4_VA(unsigned int, rec + 4u) + rec + 4u;
+    n = *MK4_VA(unsigned short, p);
+    p += 4;
+    for (; (int)n > 0; n--) {
+        id = *MK4_VA(short, p);
+        if (id != -1)
+            *MK4_VA(unsigned short, 0xab4e00u + (unsigned int)id * 2u) = 0;
+        p += 4;
     }
-    iVar1 = MK4_NODE_AT(int, iVar2, 0);
-    (&g_dispatchSave1578)[*(ushort *)(iVar1 + 6)] = 0;
-    *MK4_NODE(undefined4, &g_texCount + (uint)*(ushort *)(iVar1 + 6)) = 0;
-    Mem_Free(MK4_NODE_AT(undefined4, iVar2, 4));
+
+    blob = *MK4_NODE(unsigned int, node);
+    grp = *MK4_VA(unsigned short, blob + 6u);
+    *MK4_VA(unsigned int, 0xab4e78u + grp * 4u) = 0;
+    grp = *MK4_VA(unsigned short, blob + 6u);
+    *MK4_VA(unsigned int, 0xab5038u + grp * 4u) = 0;
+    Mem_Free(MK4_NODE_AT(unsigned int, node, 4));
     g_curTexSlot = 0;
     Helper_GeoLoadPost();
-  }
-  return;
 }
 #else
 __declspec(naked) void GeoLoadFixupLoop(void) {

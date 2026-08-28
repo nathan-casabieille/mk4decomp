@@ -4,6 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -14,6 +15,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -56,6 +58,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -63,6 +66,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -97,6 +101,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -107,7 +112,392 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_audioInitScaled (*(unsigned int *)MK4_VA(unsigned int, 0x54343cu))
+#define g_audioStateDisp50b4 (*(unsigned int *)MK4_VA(unsigned int, 0x4d50b4u))
+#define g_audioStateMask50c0 (*(unsigned int *)MK4_VA(unsigned int, 0x4d50c0u))
+#define g_audioStreamState (*(unsigned int *)MK4_VA(unsigned int, 0x53a430u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_counter_0053a51c (*(unsigned int *)MK4_VA(unsigned int, 0x53a51cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dlNalt1 (*(unsigned int *)MK4_VA(unsigned int, 0x537f48u))
+#define g_dlNalt2 (*(unsigned int *)MK4_VA(unsigned int, 0x5380e0u))
+#define g_dualB_00538038 (*(unsigned int *)MK4_VA(unsigned int, 0x538038u))
+#define g_dualB_0053803c (*(unsigned int *)MK4_VA(unsigned int, 0x53803cu))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_eventQueueCurrent (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_gsmActiveFlag (*(unsigned int *)MK4_VA(unsigned int, 0xab4334u))
+#define g_gsmOut1 (*(unsigned int *)MK4_VA(unsigned int, 0x543818u))
+#define g_gsmOut2 (*(unsigned int *)MK4_VA(unsigned int, 0x543814u))
+#define g_gsmOut3 (*(unsigned int *)MK4_VA(unsigned int, 0x543810u))
+#define g_gsmOut4 (*(unsigned int *)MK4_VA(unsigned int, 0x543820u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_logicStepFlag (*(unsigned int *)MK4_VA(unsigned int, 0x54381cu))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_tickFlagF (*(unsigned int *)MK4_VA(unsigned int, 0x52aac4u))
+#define g_tickInitFlag (*(unsigned int *)MK4_VA(unsigned int, 0xab4e70u))
+#define g_tickW1 (*(unsigned int *)MK4_VA(unsigned int, 0x543550u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
+
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+#include "portable/code_va.h"
+#define g_gameMode (*(unsigned int *)MK4_VA(unsigned int, 0x543800u))
+
+extern void TableWalkBoundedCmp(int);
+extern void LoadGeoAsset_Default(void);
+extern int  TripleCallByteCheck(void);
+extern void SetJmp_Push16Call_004a1ad0(void);
+extern void DualScaledLitInitJmp(void);
+extern void MStackPush2ChainLLInsert(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
+extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0(void);
+extern void StackPopDispatchTagged(void);
+extern void QuadCallPhase2(unsigned int, unsigned int, unsigned int, unsigned int);
+extern void PushPopScaledInit343c(void);
+extern void TableLookupCall_g_eventTbl_65(void);
+extern void TestZeroJmp(void);
+extern int  GameStateMachine(int);
+extern void SetJmp_Push16Call_004a1ac0(void);
+extern void CopyGlobal(void);
+extern void BootInitGuardedCallChain(void);
+extern void GuardedSetupCallTailJmp(unsigned int, unsigned int);
+extern void InitDispatchersJmp(void);
+extern void CallSetPause(void);
+extern void AudioInitSequence(void);
+extern void AudioInstallSelfStatePush(void);
+extern void CallZero2(void);
+
+/* @addr 0x004a38d0 (892b) - NATIVE twin; the matching build compiles the
+ * naked body below.
+ *
+ * The match loader, a six-state machine on the scheduled node's +0x84:
+ *   0 fade counter armed (0xc0), re-arm as 1
+ *   1 fade out by 0x14 per tick; at zero, geo group 8 fixups, both player
+ *     records' .geo (table 0x4d52b8, packed) plus the shared 0x506c98,
+ *     then the scene-group setup for the player selected by the 542054
+ *     probe (template 0x508714 + record table 0x4f33b8, both through the
+ *     DC260 dispatcher and the complex prepend); re-arm as 2
+ *   2 fade in to 0x100; re-arm as 3
+ *   3 wait: an input skip arms 4; audio-busy bits (0xc0c of 4d50b4) toggle
+ *     the probe to the OTHER player and re-run the group setup
+ *   4 fade out; at zero, geo group 0xb fixups, the two fixed .geo of
+ *     DualScaledLitInitJmp, link both groups, re-arm as 5
+ *   5+ fade in; at 0x100 the screen tag goes back to the loading screen
+ *     tick (0x4a42e0) and StackPopDispatchTagged runs - the one exit that
+ *     does not pause. */
+void LoadGeoAssetsStateMachine(void)
+{
+    unsigned int st, rec, v;
+
+    st = MK4_NODE_AT(unsigned int, g_baseSel, 0x84);
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
+
+    if (st > 4) goto st5;
+    switch (st) {
+    case 0:
+        g_tickW1 = 0xc0;
+        goto rearm1;
+
+    case 1:
+        v = g_tickW1 - 0x14;
+        g_tickW1 = v;
+        if ((int)v > 0) goto rearm1;
+        g_tickW1 = 0;
+        TableWalkBoundedCmp(8);
+        g_currentNodeIdx = *MK4_VA(unsigned int, 0x4d52b8u + g_dlNalt1 * 4u) >> 2;
+        if (g_currentNodeIdx != 0) {
+            LoadGeoAsset_Default();
+            if (g_framePauseFlag != 0) return;
+        }
+        g_currentNodeIdx = *MK4_VA(unsigned int, 0x4d52b8u + g_dlNalt2 * 4u) >> 2;
+        if (g_currentNodeIdx != 0) {
+            LoadGeoAsset_Default();
+            if (g_framePauseFlag != 0) return;
+        }
+        g_currentNodeIdx = 0x506c98u >> 2;
+        LoadGeoAsset_Default();
+        if (g_framePauseFlag != 0) return;
+        g_tickFlagF = 1;
+        g_tickInitFlag = 1;
+        goto group;
+
+    case 2:
+        v = g_tickW1 + 0x14;
+        g_tickW1 = v;
+        if ((int)v < 0x100) goto rearm2;
+        g_tickW1 = 0x100;
+        goto arm3;
+
+    case 3:
+        if (TripleCallByteCheck() != 0) {
+            SetJmp_Push16Call_004a1ad0();
+            goto rearm4;
+        }
+        v = g_audioStateDisp50b4;
+        if ((v & 0xcu) == 0 && (v & 0xc00u) == 0) goto arm3;
+        /* toggle the probe to the other player, link the finished group,
+         * and run the setup again for the new one */
+        v = g_dualB_00538038;
+        if (g_cj_00542054 == v) v = g_dualB_0053803c;
+        g_cj_00542054 = v;
+        SetJmp_Push16Call_004a1ad0();
+        g_currentNodeIdx = g_cj_00542058;
+        MStackPush2ChainLLInsert();
+        g_currentNodeIdx = g_cj_0054205c;
+        MStackPush2ChainLLInsert();
+        goto group;
+
+    default:                                    /* case 4 */
+        v = g_tickW1 - 0x14;
+        g_tickW1 = v;
+        if ((int)v > 0) goto rearm4;
+        g_tickW1 = 0;
+        TableWalkBoundedCmp(0xb);
+        DualScaledLitInitJmp();
+        g_currentNodeIdx = g_cj_00542058;
+        MStackPush2ChainLLInsert();
+        g_currentNodeIdx = g_cj_0054205c;
+        MStackPush2ChainLLInsert();
+        g_tickFlagF = 4;
+        g_tickInitFlag = 0;
+        goto rearm5;
+    }
+
+group:
+    if (g_cj_00542054 == g_dualB_00538038) {
+        rec = g_dlNalt1;
+        g_walkCallback = 0xff740000u;
+    } else {
+        rec = g_dlNalt2;
+        g_walkCallback = 0x8c0000u;
+    }
+    g_eventQueueCurrent = rec;
+    if (*MK4_VA(unsigned int, 0x4f33b8u + rec * 4u) != 0) {
+        g_xformEntityIdx = 0x508714u >> 2;
+        DispatcherComplex260_FramePauseScaledStore();
+        if (g_framePauseFlag != 0) return;
+        g_cj_0054205c = g_currentNodeIdx;
+        if ((g_xformDirtyFlags & 4u) == 0) {
+            MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0();
+            if (g_framePauseFlag != 0) return;
+        }
+        g_xformEntityIdx =
+            *MK4_VA(unsigned int, 0x4f33b8u + g_eventQueueCurrent * 4u) >> 2;
+        DispatcherComplex260_FramePauseScaledStore();
+        if (g_framePauseFlag != 0) return;
+        g_cj_00542058 = g_currentNodeIdx;
+        if ((g_xformDirtyFlags & 4u) == 0) {
+            MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0();
+            if (g_framePauseFlag != 0) return;
+        }
+    }
+
+rearm2:
+    MK4_NODE_AT(unsigned int, g_baseSel, 8) = MK4_CODE_VA(LoadGeoAssetsStateMachine);
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 2;
+    goto pauseout;
+rearm1:
+    MK4_NODE_AT(unsigned int, g_baseSel, 8) = MK4_CODE_VA(LoadGeoAssetsStateMachine);
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 1;
+    goto pauseout;
+arm3:
+    MK4_NODE_AT(unsigned int, g_baseSel, 8) = MK4_CODE_VA(LoadGeoAssetsStateMachine);
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 3;
+    goto pauseout;
+rearm4:
+    MK4_NODE_AT(unsigned int, g_baseSel, 8) = MK4_CODE_VA(LoadGeoAssetsStateMachine);
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 4;
+    goto pauseout;
+rearm5:
+    MK4_NODE_AT(unsigned int, g_baseSel, 8) = MK4_CODE_VA(LoadGeoAssetsStateMachine);
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 5;
+    goto pauseout;
+
+st5:
+    v = g_tickW1 + 0x14;
+    g_tickW1 = v;
+    if ((int)v < 0x100) goto rearm5;
+    g_tickW1 = 0x100;
+    g_gameMode = 0x4a42e0u;      /* the loading screen tick takes over */
+    StackPopDispatchTagged();
+    return;
+
+pauseout:
+    g_pendingNodeType = 1;
+    g_framePauseFlag = 1;
+}
+
+/* @addr 0x004a42d0 - the loading screen's install entry (canonical home
+ * src/audio/pending_match_variants.c; NATIVE twin lives here beside the
+ * loader it drives). Arms the 543824 byte and tail-jmps CallZero2. */
+void Screen_Loading(void)
+{
+    *MK4_VA(unsigned int, 0x543824u) = 1;
+    CallZero2();                    /* tail-jmp in the original */
+}
+
+/* @addr 0x004a42e0 - the loading screen's TICK entry, +0x10 inside the
+ * Screen_Loading blob, reached only through code pointers (node +8 slot,
+ * the 543800 screen tag, VA|state<<24 queue words). Registered in
+ * config/codeptr_extras.yaml.
+ *
+ * Three bands on the node's +0x84 state:
+ *   0/1 wait for the streaming counters, send FSM command 3 when they
+ *       drain, then service the gsmOut flags: 543810 world re-init
+ *       (static record 0x4d2250), 543814 audio re-init, 543818 hand the
+ *       screen to the match loader with a state-2 resume word queued -
+ *       falling through to the ready check otherwise
+ *   2   ready check: the 54389c byte set means the loader finished - queue
+ *       a state-3 resume word and run the audio install; clear means
+ *       re-arm as 1
+ *   3+  the load itself: both fighters' sound banks via QuadCallPhase2
+ *       (record indices when either character id is 6), the 0x2c event,
+ *       and re-arm as 1 */
+void Screen_Loading_Tick_004a42e0(void)
+{
+    unsigned int st, v, flags, bit2, bit5, c2, c5;
+
+    st = MK4_NODE_AT(unsigned int, g_baseSel, 0x84);
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
+
+    if (st == 2) goto ready_check;
+    if (st >= 3) goto do_load;
+
+    /* states 0 and 1 */
+    g_gsmOut4 = 1;
+    if (g_logicStepFlag != 0) goto signal;
+    flags = g_audioStateMask50c0;
+    bit2 = flags & 4u;
+    c2 = g_active_0053a408;
+    if (bit2 != 0 && c2 != 0) goto after;
+    bit5 = flags & 0x20u;
+    c5 = g_active_00537e88;
+    if (bit5 != 0 && c5 != 0) goto after;
+    if (bit2 == 0 && bit5 == 0) goto after;
+    if (c2 != 0 || c5 != 0) goto after;
+signal:
+    v = *MK4_VA(unsigned char, 0x54380cu);
+    g_logicStepFlag = 0;
+    if ((unsigned char)v == 0 && g_audioStreamState == 0)
+        GameStateMachine(3);
+after:
+    if (g_gsmActiveFlag != 0) {
+        Screen_Loading();
+        g_gameMode = 0x4a42e0u;
+    }
+    if (g_gsmOut3 != 0) {               /* world re-init */
+        g_gsmOut3 = 0;
+        SetJmp_Push16Call_004a1ac0();
+        g_walkCallback = 0;
+        CopyGlobal();
+        BootInitGuardedCallChain();
+        PushPopScaledInit343c();
+        GuardedSetupCallTailJmp(0x4d2250u, 0x640000u);
+        g_audioInitScaled = g_currentNodeIdx;
+        InitDispatchersJmp();
+        CallSetPause();
+        return;
+    }
+    if (g_gsmOut2 != 0) {               /* audio re-init */
+        g_gsmOut2 = 0;
+        SetJmp_Push16Call_004a1ac0();
+        g_walkCallback = 0;
+        CopyGlobal();
+        AudioInitSequence();
+        CallSetPause();
+        return;
+    }
+    if (g_gsmOut1 != 0) {               /* hand the screen to the loader */
+        g_gsmOut1 = 0;
+        g_gameMode = 0x4a38d0u;
+        MK4_NODE_AT(unsigned int, g_baseSel, 8) = 0x4a42e0u;
+        MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 2;    /* transient */
+        v = MK4_NODE_AT(unsigned int, g_baseSel, 4);
+        g_currentNodeIdx = v;
+        *MK4_NODE(unsigned int, v) = 0x4a42e0u + 0x2000000u;
+        g_currentNodeIdx = v + 1;
+        MK4_NODE_AT(unsigned int, g_baseSel, 4) = v + 1;
+        MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
+        LoadGeoAssetsStateMachine();
+        g_framePauseFlag = 1;
+        return;
+    }
+
+ready_check:
+    if (*MK4_VA(unsigned char, 0x54389cu) == 0) goto rearm1_tail;
+    MK4_NODE_AT(unsigned int, g_baseSel, 8) = 0x4a42e0u;
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 3;        /* transient */
+    v = MK4_NODE_AT(unsigned int, g_baseSel, 4);
+    g_currentNodeIdx = v;
+    *MK4_NODE(unsigned int, v) = 0x4a42e0u + 0x3000000u;
+    g_currentNodeIdx = v + 1;
+    MK4_NODE_AT(unsigned int, g_baseSel, 4) = v + 1;
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
+    AudioInstallSelfStatePush();
+    g_framePauseFlag = 1;
+    return;
+
+do_load:
+    {
+        unsigned int p1c = MK4_NODE_AT(unsigned int, g_dualB_00538038, 0x34);
+        unsigned int p2c = MK4_NODE_AT(unsigned int, g_dualB_0053803c, 0x34);
+        if (p1c == 6 || p2c == 6)
+            QuadCallPhase2(g_dlNalt1, g_dlNalt2,
+                           g_counter_0053a51c + 0x12, 0x1d);
+        else
+            QuadCallPhase2(p1c, p2c, g_counter_0053a51c + 0x12, 0x1d);
+    }
+    PushPopScaledInit343c();
+    PushPopScaledInit343c();
+    g_walkCallback = 0x2c;
+    TableLookupCall_g_eventTbl_65();
+    if (g_framePauseFlag != 0) return;
+    *MK4_VA(unsigned char, 0x54389cu) = 0;
+
+rearm1_tail:
+    if (g_gsmActiveFlag == 0) {
+        TestZeroJmp();
+        g_gameMode = 0;
+    }
+    MK4_NODE_AT(unsigned int, g_baseSel, 8) = 0x4a42e0u;
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 1;
+    g_pendingNodeType = 1;
+    g_framePauseFlag = 1;
+}
+#else
 __declspec(naked) void LoadGeoAssetsStateMachine(void)
 {
     __asm {
@@ -1005,3 +1395,4 @@ __declspec(naked) void LoadGeoAssetsStateMachine(void)
         _emit    0x00
     }
 }
+#endif

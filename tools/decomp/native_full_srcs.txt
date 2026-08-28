@@ -1,3 +1,4 @@
+src/audio/audio_init_sequence.c
 src/audio/audio_mixer_step.c
 src/audio/audio_timer_teardown.c
 src/audio/audio_volume_rescale.c
@@ -9,10 +10,14 @@ src/audio/fpu_sqrt_mul.c
 src/audio/helper_aux_audio_post_init.c
 src/audio/helper_tick_frame_misc.c
 src/audio/helper_title_audio_reset.c
+src/audio/init_dispatchers_jmp.c
 src/audio/linked_list_insert.c
+src/audio/load_geo_assets_state_machine.c
 src/audio/m_stack_push_chain_step_index.c
 src/audio/range_mul_mod.c
 src/audio/store_pause_imul_shr16.c
+src/audio/test_queue_gate_state.c
+src/audio/triple_call_byte_check.c
 src/boot/app_init_misc3.c
 src/boot/boot_chain_push_add_sign_flag.c
 src/boot/boot_dispatch_slot_init.c
@@ -107,6 +112,7 @@ src/engine/dual_call_pause_dirty_jmp.c
 src/engine/dual_install_call_swap.c
 src/engine/dual_load_dual_store_jmp.c
 src/engine/dual_push_set7d_call_pop.c
+src/engine/dual_scaled_lit_init_jmp.c
 src/engine/dual_scaled_load_store_jmp.c
 src/engine/dual_scaled_store.c
 src/engine/dual_scaled_store_zero.c
@@ -119,6 +125,7 @@ src/engine/flush_draw_queue.c
 src/engine/fsys.c
 src/engine/gamepad_seq_record.c
 src/engine/geo.c
+src/engine/geo_load_fixup_loop.c
 src/engine/geo_transform_dispatch_and_apply.c
 src/engine/getters.c
 src/engine/guarded_chain_dual_add.c
@@ -173,6 +180,7 @@ src/engine/min_of_three.c
 src/engine/moves_panel_emit.c
 src/engine/mstack_calls.c
 src/engine/mstack_push_call_call_pop.c
+src/engine/mstack_push_complex_call_pop.c
 src/engine/mstack_push_set_bit_variants.c
 src/engine/mstack_push_zero_call_pop.c
 src/engine/mul10_tail5x_interp.c
@@ -189,6 +197,7 @@ src/engine/project_vertex.c
 src/engine/push2_globals_call.c
 src/engine/push_pop84_triple_call.c
 src/engine/pvs_merge_driver.c
+src/engine/quad_call_phase2.c
 src/engine/quad_field_early_jmp_then_install.c
 src/engine/quad_mul10_tail_fpu_chain.c
 src/engine/render.c
@@ -209,6 +218,7 @@ src/engine/scaled_chain_3c74_jmp.c
 src/engine/scaled_chain_call_pause_set_jmp.c
 src/engine/scaled_chain_jmp.c
 src/engine/scaled_chain_push_call.c
+src/engine/scaled_clear_triple_call_jmp.c
 src/engine/scaled_inc_cmp_jmp.c
 src/engine/scaled_index_cond_copy.c
 src/engine/scaled_indirect_jmp_variants.c
@@ -241,9 +251,11 @@ src/engine/store_at_minus8.c
 src/engine/store_two_call.c
 src/engine/submit_draw.c
 src/engine/sunbeam_sprite_emit.c
+src/engine/table_walk_bounded_cmp.c
 src/engine/tagged_scene_dispatch.c
 src/engine/test_call_push4_zero.c
 src/engine/test_call_zero.c
+src/engine/test_cmp_zero_four.c
 src/engine/tex_rle.c
 src/engine/textured_tri_rasterize.c
 src/engine/textured_tri_rasterize_alpha_pal.c
@@ -290,4 +302,6 @@ src/game/table_search_desc.c
 src/game/tick.c
 src/platform/exit.c
 src/platform/win32/app_shutdown.c
+src/platform/win32/iterate_call_skip.c
+src/platform/win32/loop1c_bit_mask.c
 src/platform/win32/test_call_iat.c

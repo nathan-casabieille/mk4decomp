@@ -13,12 +13,14 @@ extern unsigned int g_currentNodeIdx;
  *   adds 0x269ec3, stores back, returns shr 0x10 & 0x7fff.
  */
 extern void *PendingMatch_004c9df0(void);
+#ifndef NON_MATCHING /* stale QQ-split copy */
 int Crt_rand(void) {
     unsigned char *p = (unsigned char *)PendingMatch_004c9df0();
     unsigned int v = *(unsigned int *)(p + 0x14) * 214013u + 0x269ec3u;
     *(unsigned int *)(p + 0x14) = v;
     return (int)((v >> 16) & 0x7fff);
 }
+#endif
 
 /* @addr 0x004c67f0 (48b)
  *   if (g_fnptr_0051ffd8) (*g_fnptr_0051ffd8)();
@@ -45,6 +47,27 @@ void _init_premain(void) {
 extern unsigned int g_texAssetIds_ee[];
 extern void GeoLoadFixupLoop(void);
 extern unsigned int g_dispatchSave1579;
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+/* NATIVE twin: same walk with the two seams applied - the entries of the
+ * 0xab4e78 table are PACKED node indices (deref through MK4_NODE), and the
+ * table bound is a VA, so the loop counts entries instead of comparing a
+ * host pointer against one. */
+void TableWalkBoundedCmp(int arg)
+{
+    unsigned int i, v, slot;
+
+    for (i = 0; i < (0xab5034u - 0xab4e78u) / 4u; i++) {
+        v = *MK4_VA(unsigned int, 0xab4e78u + i * 4u);
+        g_currentNodeIdx = v;
+        if ((int)v > 0) {
+            slot = *MK4_NODE(unsigned int, v);
+            if ((int)(unsigned int)*MK4_VA(unsigned short, slot + 4u) == arg)
+                GeoLoadFixupLoop();
+        }
+    }
+}
+#else
 void TableWalkBoundedCmp(int arg) {
     unsigned int *p = g_texAssetIds_ee;
     do {
@@ -60,3 +83,5 @@ void TableWalkBoundedCmp(int arg) {
         p++;
     } while ((int)p < (int)&g_dispatchSave1579);
 }
+#endif
+

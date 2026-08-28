@@ -154,6 +154,40 @@ void MK4_GameFrame(void)
          * The rearm variant, not SetViewport: SetViewport also zeroes
          * g_drawQueueSize, which would throw the frame away. */
         { extern void MK4_NativeVideoRearmFB(void); MK4_NativeVideoRearmFB(); }
+
+        /* MK4_BOOT_MATCH=1: the native command source the port needs - the
+         * original moves the FSM off state 0 only from the Win32 menu bar.
+         * One FSM command 2 (start game, gated on g_gsmFlag) a few frames in,
+         * once the boot chain has drained; the in-game pump, the loading
+         * screen and the match loader take it from there. */
+        if (frame == 8 && getenv("MK4_BOOT_MATCH")) {
+            extern int GameStateMachine(int);
+            extern void StoreTwoCall(int, int);
+            /* What character select leaves behind, minus the gameplay
+             * records: the two character indices, the arena index, and the
+             * three loading-screen work flags. Then the same two calls
+             * Screen_ArcadeEnding makes: FSM to in-game, and the loading
+             * screen's tick entry scheduled as a node callback. */
+            *MK4_VA(unsigned int, 0x537f48u) = 0;   /* P1 character index */
+            *MK4_VA(unsigned int, 0x5380e0u) = 1;   /* P2 character index */
+            *MK4_VA(unsigned int, 0x53a51cu) = 0;   /* arena index */
+            *MK4_VA(unsigned int, 0x543810u) = 1;   /* world re-init */
+            *MK4_VA(unsigned int, 0x543814u) = 1;   /* audio re-init */
+            *MK4_VA(unsigned int, 0x543818u) = 1;   /* hand to the loader */
+            *MK4_VA(unsigned int, 0x543930u) = 1;   /* g_gsmFlag gates cmd 2 */
+            GameStateMachine(2);
+            StoreTwoCall(0x4a42e0, 0x4000);
+            /* -1 is the "run every scheduled node" tag the walk gates on;
+             * the loading screen sets it to its own VA only while it owns
+             * the frame, which would starve the node we just queued. */
+            *MK4_VA(unsigned int, 0x543800u) = 0xffffffffu;
+            SDL_Log("boot-match: FSM -> 6, loading screen scheduled");
+        }
+        if (getenv("MK4_TRACE_MSTACK") && (frame % 4) == 0)
+            SDL_Log("f%-3d mstackTop=%08x nodeIdx=%08x", frame,
+                    *MK4_VA(unsigned int, 0x4d57acu),
+                    *MK4_VA(unsigned int, 0x542044u));
+        frame++;
         MainLoopStep();      /* BeginFrame / GameLogicStep / DrawScene / Present */
     }
     MK4_NativeVideoPresent();/* arena framebuffer -> the SDL window */

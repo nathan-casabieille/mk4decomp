@@ -2,6 +2,10 @@
  * Auto-split from misc_matchesPP.c
  */
 #include "engine/scenegraph.h"
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_gsmActiveFlag (*(unsigned int *)MK4_VA(unsigned int, 0xab4334u))
+#endif
 #include "game/tick.h"
 
 extern unsigned int g_currentNodeIdx;
@@ -14,7 +18,9 @@ extern unsigned int g_currentNodeIdx;
  *   set-zero-tail: store 0 → [0x4f2fc8]; xor eax,eax; ret.
  *   store-1-tail: store 1 → [0x4f2fc8] (mov imm32 form); xor eax,eax; ret.
  */
+#ifndef MK4_ARENA
 extern u32 g_gsmActiveFlag;
+#endif
 extern unsigned int g_dispatchSave1318;
 extern int Input_GetAsyncKey(int);
 int TestQueueGateState(void) {

@@ -28,7 +28,17 @@ extern unsigned int g_orphanTbl_00538168;   /* 0x00538168 (uninit .data) */
  *   ret
  */
 void MStackPackedInit(void) {
+#ifdef MK4_ARENA
+    /* The &-reference above is an MSVC codegen trick (it defeats constant
+     * folding so the runtime shr survives). Under the arena it yields the
+     * HOST address of the native global, not VA 0x538168 - the packed index
+     * that lands in g_matrixStackTop would then be an ASLR-dependent value
+     * and every matrix-stack push would write outside the arena. Use the VA
+     * the original encodes. */
+    g_matrixStackTop = 0x00538168u >> 2;
+#else
     g_matrixStackTop = (int)((unsigned int)MK4_UNPTR(&g_orphanTbl_00538168) >> 2);
+#endif
 }
 
 /* @addr 0x00406ce0 (19b)

@@ -40,6 +40,51 @@ extern unsigned int g_tickFrameNodeA;
 extern unsigned int g_tickFrameNodeB;
 extern void MStackPush2ChainPrepend(void);
 
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+/* NATIVE twins: identical bodies through the node seam. */
+/* @addr 0x00406430 */
+void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void) {
+    unsigned int idx;
+    unsigned int v;
+    unsigned int top;
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_xformEntityIdx;
+    idx = g_currentNodeIdx;
+    v = MK4_NODE_AT(unsigned int, idx, 0x34);
+    v |= 0xa2;   /* byte-form or al, 0xa2 in the original */
+    g_walkCallback = v;
+    MK4_NODE_AT(unsigned int, idx, 0x34) = v;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x5c) = 0x00010000;
+    g_xformEntityIdx = g_tickFrameNodeA;
+    MStackPush2ChainPrepend();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_xformEntityIdx = *MK4_NODE(unsigned int, top);
+    g_matrixStackTop = top - 1;
+}
+
+/* @addr 0x004064b0 */
+void MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0(void) {
+    unsigned int idx;
+    unsigned int v;
+    unsigned int top;
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_xformEntityIdx;
+    idx = g_currentNodeIdx;
+    v = MK4_NODE_AT(unsigned int, idx, 0x34);
+    v |= 0xa2;   /* byte-form or al, 0xa2 in the original */
+    g_walkCallback = v;
+    MK4_NODE_AT(unsigned int, idx, 0x34) = v;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x5c) = 0x00010000;
+    g_xformEntityIdx = g_tickFrameNodeB;
+    MStackPush2ChainPrepend();
+    if (g_framePauseFlag != 0) return;
+    top = g_matrixStackTop;
+    g_xformEntityIdx = *MK4_NODE(unsigned int, top);
+    g_matrixStackTop = top - 1;
+}
+#else
 /* @addr 0x00406430 */
 void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void) {
     unsigned int idx;
@@ -81,3 +126,5 @@ void MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0(void) {
     g_xformEntityIdx = *(unsigned int *)(top * 4);
     g_matrixStackTop = top - 1;
 }
+#endif
+
