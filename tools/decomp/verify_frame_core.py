@@ -831,6 +831,24 @@ SEEDS = {
     # A nudger: three renderer-mode branches x two `which` branches, each
     # bumping the six record words by per-panel deltas. The 0x4ed020 panel has
     # the only conditional - an abs-diff snap - driven both ways.
+    # MStackBracket5_LinkedListUnlink (485B, unconverted) is stubbed to a ret
+    # at its VA in the shared arena; the bracket writes are the observables.
+    'MStackPushZeroCallPop': [
+        ('brackets and pops', {'g_matrixStackTop': 0x2e5000, 'g_xformEntityIdx': 0x77,
+                               'g_framePauseFlag': 0, '@0x409aa0': b'\xc3'}),
+        ('paused: pop skipped', {'g_matrixStackTop': 0x2e5000, 'g_xformEntityIdx': 0x77,
+                                 'g_framePauseFlag': 1, '@0x409aa0': b'\xc3'}),
+    ],
+    'GuardedChainPushSetCallPop': [
+        ('no child', {'g_currentNodeIdx': 0x2e4000, '@0xb90010': 0,
+                      'g_walkCallback': 5}),
+        ('walks the child', {'g_currentNodeIdx': 0x2e4000, '@0xb90010': 0x2e4040,
+                             'g_matrixStackTop': 0x2e5000, 'g_xformEntityIdx': 0x77,
+                             'g_framePauseFlag': 0, '@0x409aa0': b'\xc3'}),
+        ('paused: pop skipped', {'g_currentNodeIdx': 0x2e4000, '@0xb90010': 0x2e4040,
+                                 'g_matrixStackTop': 0x2e5000, 'g_xformEntityIdx': 0x77,
+                                 'g_framePauseFlag': 1, '@0x409aa0': b'\xc3'}),
+    ],
     'GamepadSeqRecord': [
         ('sw, panel 40',  dict(_gsr(0), **{}), (0x4ed040, 0)),
         ('sw, panel 00',  dict(_gsr(0), **{}), (0x4ed000, 0)),

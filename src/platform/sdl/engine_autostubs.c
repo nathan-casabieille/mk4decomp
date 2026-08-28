@@ -182,6 +182,8 @@ __attribute__((weak)) int LoadGeoAsset_Default(){return 0;}
 __attribute__((weak)) int Lock(){return 0;}
 __attribute__((weak)) int MStackBracket7_DispatchAndChain(){return 0;}
 __attribute__((weak)) int MStackPushZeroCallPop(){return 0;}
+__attribute__((weak)) int PendingMatch_00407d50(){return 0;}
+__attribute__((weak)) int MStackBracket5_LinkedListUnlink(){return 0;}
 __attribute__((weak)) int PvsMergeDriver(){return 0;}
 __attribute__((weak)) int MStackChainInstallDispatch(){return 0;}
 __attribute__((weak)) int MStackNegAwareMul10Pair(){return 0;}
