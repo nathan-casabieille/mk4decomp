@@ -651,6 +651,67 @@ def _bpg():
 
 # FramePauseScaledStore: the field-clear advance stubbed to success; the
 # entity's first word carries the value the split decomposes.
+def _b5():
+    # bracket5: five saved globals with recognizable values; the chain step's
+    # own seeds (slot2 -> head 0x2e4040 whose +4 link is 0, i.e. its own
+    # successor); the walk stubbed to a plain ret.
+    return {
+        'g_xformLoopCounter': 0x111, 'g_xformEntityIdx': 0x222,
+        'g_pendingNodeType': 0x333, 'g_eventQueueTotal': 0x444,
+        'g_eventQueueEnd': 0x555, 'g_matrixStackTop': 0x2e5000,
+        'g_framePauseFlag': 0, 'g_xformDirtyFlags': 0,
+        'g_bootChainSlot2': 0x2e4000,
+        '@0xb90000': 0x2e4040, '@0xb90004': 0, '@0xb90100': 0x777,
+        '@0x409740': b'\xc3',
+    }
+
+# bracket1 (the recursive tree builder): entity record at 0x2e4000 whose
+# first child record overlaps at +7 words. The alloc (bracket5) is stubbed
+# with a COUNTING stub - each call decrements the word at 0xb98000 and fails
+# (bit 2 set, null node) when it reaches zero, else succeeds handing out
+# node 0x2e4100. Prepend and the 405e20 insert are plain-ret stubs.
+_B5CNT = (b'\xff\x0d\x00\x80\xb9\x00'                      # dec dword [0xb98000]
+          b'\x74\x12'                                        # jz FAIL
+          b'\x83\x25\x8c\x20\x54\x00\xfb'                  # and dirty, ~4
+          b'\xc7\x05\x44\x20\x54\x00\x00\x41\x2e\x00'     # cur = 0x2e4100
+          b'\xc3'
+          b'\x83\x0d\x8c\x20\x54\x00\x04'                  # FAIL: or dirty, 4
+          b'\xc7\x05\x44\x20\x54\x00\x00\x00\x00\x00'     # cur = 0
+          b'\xc3')
+
+def _b1(alloc_budget, w0, childw0):
+    return {
+        'g_pendingNodeType': 0x333, 'g_xformEntityIdx': 0x2e4000,
+        'g_matrixStackTop': 0x2e5000, 'g_framePauseFlag': 0,
+        'g_xformDirtyFlags': 0, 'g_xformScratch94': 0, 'g_walkCallback': 0,
+        'g_currentNodeIdx': 0x11111,
+        '@0xb98000': alloc_budget,
+        '@0xb90000': w0, '@0xb9000c': 0x11, '@0xb90010': 0x22,
+        '@0xb90014': 0x33, '@0xb9001c': childw0,
+        '@0x405630': _B5CNT,
+        '@0x409970': b'\xc3', '@0x405e20': b'\xc3',
+    }
+
+def _b4():
+    # bracket4 full-path defaults: node 0x2e4000 with no prior list, +0x18
+    # record at 0x2e4200; set1c reports 3 elements; the insert hands out
+    # block 0x2e4100 (its four words pre-dirtied to prove the zero-fill).
+    return {
+        'g_xformLoopCounter': 0x111, 'g_currentNodeIdx': 0x2e4000,
+        'g_xformEntityIdx': 0x222, 'g_pendingNodeType': 0x333,
+        'g_matrixStackTop': 0x2e5000, 'g_framePauseFlag': 0,
+        'g_xformDirtyFlags': 0, 'g_walkCallback': 0,
+        'g_eventQueueCurrent_mm': 0x99,
+        '@0xb9001c': 0, '@0xb90018': 0x2e4200,
+        '@0xb90400': 0xdead, '@0xb90404': 0xdead,
+        '@0xb90408': 0xdead, '@0xb9040c': 0xdead,
+        '@0x4084b0': b'\xc7\x05\x70\x20\x54\x00\x03\x00\x00\x00\xc3',
+        '@0x425db0': b'\xc3',
+        '@0x425be0': b'\x83\x25\x8c\x20\x54\x00\xfb'
+                     b'\xc7\x05\x44\x20\x54\x00\x00\x41\x2e\x00\xc3',
+        '@0x408580': b'\xc3',
+    }
+
 def _fpss():
     clear4 = b'\x83\x25' + (0x54208c).to_bytes(4, 'little') + b'\xfb\xc3'
     return {
@@ -1109,6 +1170,107 @@ SEEDS = {
     # The gate init: MStackPushChainStepIndex stubbed both ways. The success
     # path zero-fills 21 + 15 words of the fresh node pair and stamps three
     # 0x10000 fields.
+    # The bracketed list walk: elements after the count word at node +0x1c;
+    # positive elements get a ScaledTestPauseStore pass (stub per case).
+    'MStackPush3LinkedListWalk': [
+        ('walks two, skips a hole', {'g_currentNodeIdx': 0x2e4000,
+            'g_xformEntityIdx': 0x222, 'g_pendingNodeType': 0x333,
+            'g_matrixStackTop': 0x2e5000, 'g_framePauseFlag': 0,
+            'g_xformDirtyFlags': 4, 'g_walkCallback': 0,
+            'g_eventQueueCurrent_mm': 0,
+            '@0xb9001c': 0x2e4100, '@0xb90400': 3,
+            '@0xb90404': 0x2e4800, '@0xb90408': 0, '@0xb9040c': 0x2e4900,
+            '@0x408860': b'\xc3'}),
+        ('count zero still takes the first', {'g_currentNodeIdx': 0x2e4000,
+            'g_xformEntityIdx': 0x222, 'g_pendingNodeType': 0x333,
+            'g_matrixStackTop': 0x2e5000, 'g_framePauseFlag': 0,
+            'g_xformDirtyFlags': 4, 'g_walkCallback': 0,
+            'g_eventQueueCurrent_mm': 0,
+            '@0xb9001c': 0x2e4100, '@0xb90400': 0, '@0xb90404': 0x2e4800,
+            '@0x408860': b'\xc3'}),
+        ('pass aborts the walk', {'g_currentNodeIdx': 0x2e4000,
+            'g_xformEntityIdx': 0x222, 'g_pendingNodeType': 0x333,
+            'g_matrixStackTop': 0x2e5000, 'g_framePauseFlag': 0,
+            'g_xformDirtyFlags': 0, 'g_walkCallback': 0,
+            'g_eventQueueCurrent_mm': 0,
+            '@0xb9001c': 0x2e4100, '@0xb90400': 2,
+            '@0xb90404': 0x2e4800, '@0xb90408': 0x2e4900,
+            '@0x408860': b'\x83\x0d\x8c\x20\x54\x00\x04\xc3'}),
+        ('pause inside the pass: leak 3', {'g_currentNodeIdx': 0x2e4000,
+            'g_xformEntityIdx': 0x222, 'g_pendingNodeType': 0x333,
+            'g_matrixStackTop': 0x2e5000, 'g_framePauseFlag': 0,
+            'g_xformDirtyFlags': 0, 'g_walkCallback': 0,
+            'g_eventQueueCurrent_mm': 0,
+            '@0xb9001c': 0x2e4100, '@0xb90400': 1, '@0xb90404': 0x2e4800,
+            '@0x408860': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'}),
+    ],
+    # The list installer: set1c stub reports the element count; the insert
+    # stub hands out block 0x2e4100 (or not-found); cleanup is a plain ret.
+    'MStackBracket4_ListInsertZeroFill': [
+        ('no elements: straight pops', dict(_b4(), **{
+            '@0x4084b0': b'\xc3'})),
+        ('pvs gate taken, then straight pops', dict(_b4(), **{
+            '@0xb9001c': 0x2e4300, '@0x4084b0': b'\xc3'})),
+        ('pause inside the set1c pass: leak 4', dict(_b4(), **{
+            '@0x4084b0': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+        ('insert, fill and cleanup', _b4()),
+        ('insert says not-found: abort', dict(_b4(), **{
+            '@0x425be0': b'\x83\x0d\x8c\x20\x54\x00\x04\xc3'})),
+        ('pause inside the insert: leak 5', dict(_b4(), **{
+            '@0x425be0': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+    ],
+    'MStackBracket1_TreeWalkRecursive2': [
+        ('pause inside the alloc: leak 1', dict(_b1(9, 0x12345, 0x18), **{
+            '@0x405630': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+        ('alloc says not-found: publish null', _b1(1, 0x12345, 0x18)),
+        ('leaf entity: copy and split only', _b1(9, 0x12348, 0x18)),
+        ('one child, sibling stop bit', _b1(9, 0x12345, 0x18)),
+        ('child alloc fails: the insert path', _b1(2, 0x12345, 0x5)),
+    ],
+    'InstallChainInitTailJmp': [
+        ('walk paused', {'g_framePauseFlag': 0, 'g_xformDirtyFlags': 0,
+            'g_matrixStackTop': 0x2e5000, 'g_installChainTailSlot': 0,
+            '@0x406dd0': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'}),
+        ('walk says not-found', {'g_framePauseFlag': 0, 'g_xformDirtyFlags': 0,
+            'g_matrixStackTop': 0x2e5000, 'g_installChainTailSlot': 0,
+            '@0x406dd0': b'\x83\x0d\x8c\x20\x54\x00\x04\xc3'}),
+        ('stamps the root and chains on', {'g_framePauseFlag': 0,
+            'g_xformDirtyFlags': 0, 'g_matrixStackTop': 0x2e5000,
+            'g_installChainTailSlot': 0, 'g_walkCallback': 0,
+            '@0x406dd0': b'\x83\x25\x8c\x20\x54\x00\xfb'
+                         b'\xc7\x05\x44\x20\x54\x00\x00\x41\x2e\x00\xc3',
+            '@0x408cb0': b'\xc3', '@0x408510': b'\xc3'}),
+        ('pause inside the deref pass', {'g_framePauseFlag': 0,
+            'g_xformDirtyFlags': 0, 'g_matrixStackTop': 0x2e5000,
+            'g_installChainTailSlot': 0, 'g_walkCallback': 0,
+            '@0x406dd0': b'\x83\x25\x8c\x20\x54\x00\xfb'
+                         b'\xc7\x05\x44\x20\x54\x00\x00\x41\x2e\x00\xc3',
+            '@0x408cb0': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'}),
+    ],
+    # The five-deep bracket around the chain step and the vertex-slot walk.
+    # Chain-step and walk stubbed per case; the full path runs the chain step
+    # LIVE with its own seeds (head at 0x2e4040, self-successor).
+    'MStackBracket5_FieldClear_StateAdvance': [
+        ('pause inside the chain step: leak 5', dict(_b5(), **{
+            '@0x4ab510': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+        ('chain says not-found: pop through', dict(_b5(), **{
+            '@0x4ab510': b'\x83\x0d\x8c\x20\x54\x00\x04\xc3'})),
+        ('pause inside the walk: leak 6', dict(_b5(), **{
+            '@0x409740': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+        ('full path: clear, stamp, walk, restore', _b5()),
+    ],
+    # The chain-step is a leaf: pop the head off the free chain under the
+    # bit-2 toggle. Successor = field(+4) + head; head slot inherits the
+    # successor's forward link; the successor's two words are zeroed.
+    'MStackPushChainStepIndex': [
+        ('empty chain: not-found toggle', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90000': 0, 'g_xformDirtyFlags': 0,
+            'g_matrixStackTop': 0x2e5000}),
+        ('pops the head', {'g_currentNodeIdx': 0x2e4000, '@0xb90000': 0x10,
+            '@0xb90004': 0x2e4030, 'g_xformDirtyFlags': 0,
+            'g_xformEntityIdx': 0x55aa, 'g_matrixStackTop': 0x2e5000,
+            '@0xb90100': 0x777}),
+    ],
     'BootPhaseGateBracketedInit': [
         ('step not-found', dict(_bpg(), **{
             '@0x4ab510': b'\x83\x0d\x8c\x20\x54\x00\x04\xc3'})),

@@ -149,6 +149,10 @@ extern unsigned int g_fightAxisPosY;
 #define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
 #define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
 #define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#define g_xformLoopCounter (*(unsigned int *)MK4_VA(unsigned int, 0x53a1acu))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_eventQueueTotal (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
+#define g_eventQueueEnd (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
 #endif
 
 
@@ -163,6 +167,80 @@ extern void MStackBracket5_FieldClear_StateAdvance(void);
  */
 
 extern unsigned int g_matrixStack_arr;
+
+#ifdef NON_MATCHING
+#define g_bootChainSlot2 (*(unsigned int *)MK4_VA(unsigned int, 0x541ea8u))
+extern void MStackPushChainStepIndex(void);
+extern void VertexSlotInitFlagWalk(void);
+#endif
+
+#ifdef NON_MATCHING
+/* @addr 0x00405630 (578b) - NATIVE twin; the matching build synthesizes it.
+ *
+ * The five-deep bracket: saves loop counter, entity, pending type, queue
+ * total and queue end on the matrix stack, points the walk at boot chain
+ * slot 2 and pops a node off the free chain. On success the fresh node is
+ * field-cleared (12 words, then 7 more at +0x30), stamped as type 0x13 with
+ * entity slot 4, and handed to the vertex-slot flag walk; the node index
+ * rides the matrix stack across that call. Pause exits leak the bracket, as
+ * every bracket here does. The tail re-signals not-found only when the node
+ * index came back null. */
+void MStackBracket5_FieldClear_StateAdvance(void)
+{
+    unsigned int i;
+
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_xformLoopCounter;
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_xformEntityIdx;
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_pendingNodeType;
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_eventQueueTotal;
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_eventQueueEnd;
+
+    g_currentNodeIdx = g_bootChainSlot2;
+    MStackPushChainStepIndex();
+    if (g_framePauseFlag != 0) return;              /* bracket leaked */
+
+    if ((g_xformDirtyFlags & 4u) == 0) {
+        for (i = 0; i < 12; i++)
+            MK4_NODE_AT(unsigned int, g_currentNodeIdx, i * 4) = 0;
+        g_currentNodeIdx += 0xc;
+        for (i = 0; i < 7; i++)
+            MK4_NODE_AT(unsigned int, g_currentNodeIdx, i * 4) = 0;
+        g_xformLoopCounter = 0;
+        g_currentNodeIdx -= 0xc;
+        g_matrixStackTop++;
+        *MK4_NODE(unsigned int, g_matrixStackTop) = g_currentNodeIdx;
+        g_xformEntityIdx = 4;
+        g_pendingNodeType = 0x13;
+        g_eventQueueTotal = g_currentNodeIdx;
+        g_eventQueueEnd = 0;
+        VertexSlotInitFlagWalk();
+        if (g_framePauseFlag != 0) return;          /* bracket leaked */
+        g_currentNodeIdx = *MK4_NODE(unsigned int, g_matrixStackTop);
+        g_matrixStackTop--;
+    }
+
+    g_eventQueueEnd = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+    g_eventQueueTotal = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+    g_pendingNodeType = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+    g_xformEntityIdx = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+    g_xformLoopCounter = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+
+    g_xformDirtyFlags |= 4;
+    if (g_currentNodeIdx != 0) g_xformDirtyFlags ^= 4;
+}
+#else
+/* no matching-side C - the synthesizer provides 0x00405630. */
+#endif
 
 #ifdef NON_MATCHING
 #include "portable/mem_model.h"

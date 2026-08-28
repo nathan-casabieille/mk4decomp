@@ -160,6 +160,46 @@ extern unsigned int g_fightAxisPosY;
  *   chain[g_xformEntityIdx*4 + 4] = 0; chain[g_xformEntityIdx*4] = g_walkCallback; pop2 mstack into
  *   g_xformEntityIdx and g_walkCallback; g_currentNodeIdx = (last popped); ret.
  */
+#ifdef NON_MATCHING
+/* NATIVE twin: same body through the MK4_NODE seam so the packed
+ * node indices translate under the arena. Verified by co-exec
+ * against the original bytes (verify_frame_core MStackPushChainStepIndex). */
+void MStackPushChainStepIndex(void)
+{
+    unsigned int chain;
+    unsigned int idx;
+    unsigned int new_idx;
+    chain = *MK4_NODE(unsigned int, g_currentNodeIdx);
+    g_walkCallback = chain;
+    g_xformDirtyFlags |= 4;
+    if (chain == 0) {
+        g_currentNodeIdx = chain;
+        return;
+    }
+    g_xformDirtyFlags ^= 4;
+    if (chain == 0) {
+        g_currentNodeIdx = chain;
+        return;
+    }
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = chain;
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_xformEntityIdx;
+    idx = g_currentNodeIdx;
+    new_idx = MK4_NODE_AT(unsigned int, idx, 4) + g_walkCallback;
+    g_xformEntityIdx = new_idx;
+    *MK4_NODE(unsigned int, idx) = *MK4_NODE(unsigned int, new_idx);
+    g_walkCallback = 0;
+    MK4_NODE_AT(unsigned int, new_idx, 4) = 0;
+    *MK4_NODE(unsigned int, new_idx) = 0;
+    g_xformEntityIdx = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+    chain = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_walkCallback = chain;
+    g_matrixStackTop--;
+    g_currentNodeIdx = chain;
+}
+#else
 void MStackPushChainStepIndex(void)
 {
     unsigned int chain;
@@ -195,3 +235,5 @@ void MStackPushChainStepIndex(void)
     g_matrixStackTop--;
     g_currentNodeIdx = chain;
 }
+#endif
+

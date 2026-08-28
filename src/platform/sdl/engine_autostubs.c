@@ -277,11 +277,6 @@ __attribute__((weak)) int Menu_DirectDrawUnavailableDialog(){return 0;}
 __attribute__((weak)) int Menu_GlideUnavailableDialog(){return 0;}
 __attribute__((weak)) int Menu_HelpScreen(){return 0;}
 __attribute__((weak)) int Menu_InsertCDDialog(){return 0;}
-__attribute__((weak)) int MStackPushChainStepIndex(){return 0;}
-__attribute__((weak)) int MStackBracket5_FieldClear_StateAdvance(){return 0;}
-__attribute__((weak)) int MStackBracket1_TreeWalkRecursive2(){return 0;}
-__attribute__((weak)) int MStackPush3LinkedListWalk(){return 0;}
-__attribute__((weak)) int MStackBracket4_ListInsertZeroFill(){return 0;}
 __attribute__((weak)) int GDispatch4(){return 0;}
 __attribute__((weak)) int DispatcherComplex260_FramePauseScaledStore(){return 0;}
 __attribute__((weak)) int Loop16Init(){return 0;}
@@ -325,4 +320,10 @@ __attribute__((weak)) int BootChainBidirRecurseWalk(){return 0;}
 __attribute__((weak)) int CleanupCallTwice(){return 0;}
 __attribute__((weak)) int MStackBracket2_TreeWalkRecursive(){return 0;}
 __attribute__((weak)) int func_00405A40(){return 0;}
+__attribute__((weak)) int VertexSlotInitFlagWalk(){return 0;}
+__attribute__((weak)) int MStackPushCallCallPop_func_00405e20(){return 0;}
+__attribute__((weak)) int PushPopScaled1cDoubleCall(){return 0;}
+__attribute__((weak)) int ScaledTestPauseStore(){return 0;}
+__attribute__((weak)) int ScaledLoadCallSet1c(){return 0;}
+__attribute__((weak)) int MStackBracket2InitChainSplitInsert(){return 0;}
 #endif /* MK4_NATIVE_FULL */
