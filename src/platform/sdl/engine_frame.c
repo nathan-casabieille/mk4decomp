@@ -269,6 +269,12 @@ void MK4_GameFrame(void)
                     *MK4_VA(unsigned int, 0x00535e10u),
                     *MK4_VA(unsigned int, 0x00535e14u));
         if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
+            SDL_Log("      freeHead=%x freeSize=%x  nodesAlloc=%x",
+                    *MK4_VA(unsigned int, 0x00535e0cu),
+                    *MK4_VA(unsigned int, 0x00535e0cu) ?
+                      MK4_NODE_AT(unsigned int, *MK4_VA(unsigned int, 0x00535e0cu), 0xc) : 0,
+                    *MK4_VA(unsigned int, 0x0053a780u));
+        if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
             SDL_Log("      p1=%x p2=%x grp=%x dlEnab=%x",
                     *MK4_VA(unsigned int, 0x538158u),
                     *MK4_VA(unsigned int, 0x53815cu),

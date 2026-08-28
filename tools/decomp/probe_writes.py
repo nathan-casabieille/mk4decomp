@@ -29,6 +29,7 @@ import verify_frame_core as vfc
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     watch = []
+    fight = '--fight' in sys.argv
     for a in sys.argv[1:]:
         if a.startswith('--watch'):
             watch = [int(x, 16) for x in a.split('=', 1)[1].split(',')]
@@ -53,6 +54,25 @@ def main():
         spec = vfc.SEEDS.get(name)
         if spec:
             vfc.seed(arena, gl_va, spec[-1][1])
+        elif fight:
+            # A generic mid-fight state, so a candidate takes its real path
+            # instead of the first early exit. Everything here is what the
+            # engine itself leaves set once a match is running: a scheduled
+            # node, both players, a stocked scene-node free chain, and the
+            # pause/dirty flags clear.
+            vfc.seed(arena, gl_va, {
+                'g_framePauseFlag': 0, 'g_xformDirtyFlags': 0,
+                'g_baseSel': 0x14f94e, 'g_currentNodeIdx': 0x13542c,
+                'g_xformEntityIdx': 0x13542c, 'g_fightGroupHead': 0x13542c,
+                'g_matrixStackTop': 0x14e05a, 'g_walkCallback': 0,
+                'g_eventQueueCurrent': 0, 'g_pendingNodeType': 0,
+                '@0x538158': 0x13542c, '@0x53815c': 0x13542c,
+                '@0x537f48': 0, '@0x5380e0': 1, '@0x53a51c': 0,
+                '@0x541e70': 0x14d7a2, '@0x541e74': 0x14d782,
+                '@0x541e78': 0x14e9de,
+                '@0x535e0c': 0x14d7a2, '@0x535e88': 0,
+                '@0x535e9c': 0x7fc,
+            })
         before = bytearray(vc.BASE) + bytes(arena)   # emulator image is 0-based
         uc, full = vc.uc_new(arena)
         try:
@@ -63,6 +83,7 @@ def main():
         n = min(len(after), len(before))
         diffs = [i for i in range(0, n, 4)
                  if after[i:i+4] != before[i:i+4]]
+        del uc, after, before, arena
         hits = [d for d in diffs if any(w - 3 <= d <= w for w in watch)]
         note = 'ran out' if not terminated else 'returned'
         if hits:
