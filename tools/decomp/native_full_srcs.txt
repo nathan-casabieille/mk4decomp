@@ -269,3 +269,5 @@ src/boot/guarded_chain_push_set_call_pop.c
 src/boot/m_stack_bracket5_linked_list_unlink.c
 src/boot/m_stack_bracket2_tree_walk_recursive.c
 src/engine/linked_list_swap_head.c
+src/engine/copy_args16_to_globals.c
+src/engine/billboard_sheet_dual_emit.c

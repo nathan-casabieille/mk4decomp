@@ -65,7 +65,7 @@ TYPES = {
 # behind the same symbol). Their blobs must not be based at the function's own
 # VA or they cover those offsets - see verify_coexec.verify(offsite=).
 OFFSITE = {'PvsMergeDriver', 'PvsMerge_MatchEnd_00425f90',
-           'PvsMerge_MatchNode_00425fd0', 'MStackBracket2_TreeWalkRecursive'}
+           'PvsMerge_MatchNode_00425fd0', 'MStackBracket2_TreeWalkRecursive', 'BillboardSheetDualEmit'}
 
 BASE = 0x00400000
 
@@ -518,6 +518,45 @@ def _tree():
         '@0x4bd510': b'\xc3',               # LeaScaledCall
     }
 
+
+# BillboardSheetDualEmit: the sheet record at VA 0xb90210 (u8 fields at +1/+2,
+# extents at +4/+6, corner at +8/+a, colours at +c..f); the entity VA in
+# g_xformEntityIdx leads to the mesh base and its texture table; one chain
+# node hangs off the current node's +0x2c; the 3x3 at 0x2e4100*4 = 0xb90400.
+def _sheet():
+    return {
+        'g_inLoopStep': 0,
+        'g_currentNodeIdx': 0x2e4000,
+        'g_xformEntityIdx': 0xb93000,
+        'g_currentNodeFlags': 0,
+        'g_fightGroupHead': 0,
+        'g_dispatchSave1576': 0x20,
+        'g_dispatchSave1559': 1,
+        '@0xab4e20': 0,                      # g_tickCurMask: 0 -> MaxOfThree
+        '@0xab4398': 0x00100000, '@0xab439c': 0x00200000,
+        '@0xab43a0': 0x00014000,
+        # sheet record
+        '@0xb90210': 0x00020100, '@0xb90214': 0x00300020,
+        '@0xb90218': 0x00500040, '@0xb9021c': 0x30201008,
+        # entity -> mesh base -> texture table
+        '@0xb93004': 0xb94000, '@0xb94004': 0x30,
+        '@0xb94040': 0x0f0f0f0f, '@0xb94044': 0x0f0f0f0f,
+        '@0x4f6238': 0x03020100,
+        # the working 3x3 for the projections
+        '@0x7af990': 0x00100010, '@0x7af994': 0xfff00010,
+        '@0x7af998': 0x0010fff0, '@0x7af99c': 0x00100010,
+        '@0x7af9a0': 0x0010,
+        # chain: node +0x2c -> one member, whose own next is 0
+        '@0xb9002c': 0x2e4200, '@0xb90800': 0,
+        '@0xb90804': 0x00001000, '@0xb90808': 0x00002000,
+        '@0xb9080c': 0x00003000,
+        # the rotation 3x3 at mat*4
+        '@0xb90400': 0x00001000, '@0xb90404': 0x00000000,
+        '@0xb90408': 0x10000000, '@0xb9040c': 0x00000010,
+        '@0xb90410': 0x1000,
+        'g_drawQueueSize': 0,
+    }
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -917,6 +956,19 @@ SEEDS = {
     # The recursive teardown. Every callee LIVE: the unlink is what removes
     # each child from the parent's list, so the loop drains for real; the
     # insert lands each node in the boot list. LeaScaledCall is stubbed.
+    # The sheet emitter, all projection leaves and the submit LIVE. arg1 is
+    # the sheet VA (the caller passes a host pointer; identity under co-exec),
+    # arg2 the packed 3x3 index.
+    'BillboardSheetDualEmit': [
+        ('loop-step gate', {'g_inLoopStep': 1}, (0xb90210, 0x2e4100)),
+        ('sheet and one chain node', _sheet(), (0xb90210, 0x2e4100)),
+        ('flag 0x40: chain only', dict(_sheet(), **{
+            'g_currentNodeFlags': 0x40}), (0xb90210, 0x2e4100)),
+        ('raw offsets under 0x4000', dict(_sheet(), **{
+            'g_currentNodeFlags': 0x4000}), (0xb90210, 0x2e4100)),
+        ('degenerate pair collapses', dict(_sheet(), **{
+            '@0xb90214': 0, '@0xb90216': 0}), (0xb90210, 0x2e4100)),
+    ],
     'LinkedListSwapHead': [
         ('no chain', {'g_currentNodeIdx': 0x2e4000, '@0xb9002c': 0,
                       'g_walkCallback': 9}),
