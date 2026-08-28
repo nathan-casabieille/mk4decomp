@@ -76,6 +76,8 @@ TYPES = {
 OFFSITE = {'Screen_Loading', 'Screen_Loading_Tick_004a42e0',
            'ChainSplit_SizeFits_00425ba0',
            'ChainCall_SecondEntry_00405960',
+           'FightHandler_Player1_004233f0',
+           'FightHandler_Player2_00423470',
            'PvsMergeDriver', 'PvsMerge_MatchEnd_00425f90',
            'PvsMerge_MatchNode_00425fd0', 'MStackBracket2_TreeWalkRecursive', 'BillboardSheetDualEmit'}
 
@@ -1575,6 +1577,54 @@ SEEDS = {
         ('pause inside the setup', dict(_dpc(), **{
             '@0x48bc40': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
     ],
+    # The character-node resolver: scan the 0x4f02d0 table from char*8 in
+    # steps of eight node words, skip zeros, wrap on a negative, stop on
+    # the first positive.
+    'Helper_DownloadSetup': [
+        ('first slot is already good', {'g_walkCallback': 0,
+            'g_dispatchArg': 0x99, 'g_matrixStackTop': 0x2e5000,
+            'g_currentNodeIdx': 0, '@0x4f02d0': 0x2e4000}),
+        ('skips two empties', {'g_walkCallback': 0,
+            'g_dispatchArg': 0x99, 'g_matrixStackTop': 0x2e5000,
+            'g_currentNodeIdx': 0, '@0x4f02d0': 0, '@0x4f02f0': 0,
+            '@0x4f0310': 0x2e4000}),
+        ('starts at character 2', {'g_walkCallback': 2,
+            'g_dispatchArg': 0x99, 'g_matrixStackTop': 0x2e5000,
+            'g_currentNodeIdx': 0, '@0x4f02d0': 0x1111, '@0x4f0310': 0x2222}),
+        ('negative entry wraps to the base', {'g_walkCallback': 1,
+            'g_dispatchArg': 0x99, 'g_matrixStackTop': 0x2e5000,
+            'g_currentNodeIdx': 0, '@0x4f02d0': 0x3333,
+            '@0x4f02f0': 0x80000001}),
+    ],
+    'GuardedDualPushTailJmp': [
+        ('gate closed: straight to the tail', {'g_dispatchSave22': 0,
+            'g_eventQueueNotMask': 0, 'g_matrixStackTop': 0x2e5000,
+            '@0x48cc40': b'\xc3'}),
+        ('runs the variant download', {'g_dispatchSave22': 7,
+            'g_eventQueueNotMask': 0, 'g_matrixStackTop': 0x2e5000,
+            'g_eventQueueWorkType': 0x11, 'g_walkCallback': 0x22,
+            'g_framePauseFlag': 0, '@0x48bff0': b'\xc3', '@0x48cc40': b'\xc3'}),
+        ('pause inside it leaks the pair', {'g_dispatchSave22': 7,
+            'g_eventQueueNotMask': 0, 'g_matrixStackTop': 0x2e5000,
+            'g_eventQueueWorkType': 0x11, 'g_walkCallback': 0x22,
+            'g_framePauseFlag': 0,
+            '@0x48bff0': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'}),
+    ],
+    # The two per-player fight handlers, packed inside PvpAngleDistSeed.
+    # Each points the fight group at its own player and fills the node's
+    # four fight fields; the shared tail is stubbed.
+    'FightHandler_Player1_004233f0': [
+        ('fills p1 fields', {'g_baseSel': 0x2e4000, 'g_dlNalt1': 3,
+            'g_dlNalt2': 5, 'g_fightGroupHead': 0, 'g_walkCallback': 0,
+            'g_currentNodeIdx': 0, '@0x538158': 0x111, '@0x53815c': 0x222,
+            '@0x53803c': 0x333, '@0x538038': 0x444, '@0x4235f0': b'\xc3'}),
+    ],
+    'FightHandler_Player2_00423470': [
+        ('fills p2 fields', {'g_baseSel': 0x2e4000, 'g_dlNalt1': 3,
+            'g_dlNalt2': 5, 'g_fightGroupHead': 0, 'g_walkCallback': 0,
+            'g_currentNodeIdx': 0, '@0x538158': 0x111, '@0x53815c': 0x222,
+            '@0x53803c': 0x333, '@0x538038': 0x444, '@0x4235f0': b'\xc3'}),
+    ],
     'TableSearch': [
         ('id 100 or more: refused', {'@0x4f7d40': 0}, (100,)),
         ('first slot hit', {'@0x4f7d40': 7, '@0x4f7d44': 9}, (7,)),
@@ -2384,6 +2434,8 @@ def main():
     fn_va['Screen_Loading_Tick_004a42e0'] = 0x4a42e0
     fn_va['ChainSplit_SizeFits_00425ba0'] = 0x425ba0
     fn_va['ChainCall_SecondEntry_00405960'] = 0x405960
+    fn_va['FightHandler_Player1_004233f0'] = 0x4233f0
+    fn_va['FightHandler_Player2_00423470'] = 0x423470
     fn_va['PvsMerge_MatchEnd_00425f90'] = 0x425f90
     fn_va['PvsMerge_MatchNode_00425fd0'] = 0x425fd0
     names = sys.argv[1:] or sorted(SEEDS)

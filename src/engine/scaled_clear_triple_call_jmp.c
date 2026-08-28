@@ -41,8 +41,13 @@ extern void StateInitShuffle(void);
 extern void Screen_ArcadeEnding(void);
 void ScaledClearTripleCallJmp(void) {
     unsigned int base = g_baseSel;
+#ifdef MK4_ARENA
+    unsigned int v = ((ScenegraphNode *)MK4_NODE(unsigned char, base))->install_flag;
+    ((ScenegraphNode *)MK4_NODE(unsigned char, base))->install_flag = 0;
+#else
     unsigned int v = ((ScenegraphNode *)(base * 4))->install_flag;
     ((ScenegraphNode *)(base * 4))->install_flag = 0;
+#endif
     if (v == 0) {
         ZeroState();
     }

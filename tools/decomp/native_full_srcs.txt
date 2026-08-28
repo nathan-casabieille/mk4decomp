@@ -87,6 +87,7 @@ src/engine/blit_blend16bpp.c
 src/engine/call_dual_store_xor_bit.c
 src/engine/call_jmp.c
 src/engine/call_pause_dirty_const_jmp.c
+src/engine/call_pause_load_and_dispatch.c
 src/engine/call_pause_scaled_dec_jmp.c
 src/engine/call_pause_scaled_store_copy_jmp.c
 src/engine/call_zero2.c
@@ -149,11 +150,13 @@ src/engine/guarded_dirty_dispatch.c
 src/engine/guarded_dirty_xform_from_table.c
 src/engine/guarded_double_call_set_jmp.c
 src/engine/guarded_double_inc_cmp_jmp.c
+src/engine/guarded_dual_push_tail_jmp.c
 src/engine/guarded_loop_with_callback.c
 src/engine/guarded_scaled_chain_jmp_indirect.c
 src/engine/guarded_sequels.c
 src/engine/guarded_six_field_copy.c
 src/engine/guarded_triple_call_set_tail.c
+src/engine/helper_download_setup.c
 src/engine/helper_draw_menu_text.c
 src/engine/helper_emit_line.c
 src/engine/helper_fclose.c
@@ -216,6 +219,7 @@ src/engine/project_two.c
 src/engine/project_vertex.c
 src/engine/push2_globals_call.c
 src/engine/push_pop84_triple_call.c
+src/engine/pvp_angle_dist_seed.c
 src/engine/pvs_merge_driver.c
 src/engine/quad_call_phase2.c
 src/engine/quad_field_early_jmp_then_install.c

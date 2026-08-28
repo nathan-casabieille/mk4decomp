@@ -242,6 +242,26 @@ void MK4_GameFrame(void)
                     *MK4_VA(unsigned int, 0x0053a738u),
                     *MK4_VA(unsigned int, 0x0053a1e0u),
                     *MK4_VA(unsigned int, 0x00541e50u));
+        if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
+            SDL_Log("      p1=%x p2=%x grp=%x dlEnab=%x",
+                    *MK4_VA(unsigned int, 0x538158u),
+                    *MK4_VA(unsigned int, 0x53815cu),
+                    *MK4_VA(unsigned int, 0x54205cu),
+                    (unsigned)*MK4_VA(unsigned char, 0x54371cu));
+        /* MK4_BOOT_FIGHT=<frame> schedules the match init once the loader
+         * has the assets in. In the original this comes from
+         * Phase3InstallSelf, which the demo/title state machines drive;
+         * scheduling the handler directly is the same shape as the
+         * loading screen above and skips those two for now. */
+        if (getenv("MK4_BOOT_MATCH")) {
+            const char *at = getenv("MK4_BOOT_FIGHT");
+            if (at && frame == atoi(at)) {
+                extern void StoreTwoCall(int, int);
+                StoreTwoCall(0x4228b0, 0x11);
+                *MK4_VA(unsigned int, 0x543800u) = 0xffffffffu;
+                SDL_Log("boot-match: match init scheduled at frame %d", frame);
+            }
+        }
         /* MK4_BOOT_PRESS=<frame> answers the loading screen's press-start
          * gate, which is an EDGE detector - a held key latches it once and
          * never fires again. */

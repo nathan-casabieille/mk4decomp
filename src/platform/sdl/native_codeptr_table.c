@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 
 extern int OnceCall();
+extern int Phase3InstallSelf();
 extern int MStackPackedInit();
 extern int SaveCallRestore();
 extern int Mul10Tail();
@@ -12,6 +13,7 @@ extern int SetJmp_ZeroAndDirty4();
 extern int ZeroAndDirty4();
 extern int DirtyPushCallPop();
 extern int MStackBracket5_FieldClear_StateAdvance();
+extern int ScaledMaskOrStore();
 extern int MStackPushTwoEntryChainCall();
 extern int ChainCall_SecondEntry_00405960();
 extern int PushPopScaled18();
@@ -95,6 +97,15 @@ extern int ScaledInitOrSelfPtr_InstallSelfStackReset();
 extern int InstallSelfStackReset();
 extern int Helper_PostPlayerTick();
 extern int CountdownClampWalk();
+extern int MatchInitMonsterChain();
+extern int DownloadDualPush();
+extern int DownloadCharSetup();
+extern int DualPushCallStore();
+extern int GuardedDualPushTailJmp();
+extern int PvpAngleDistSeed();
+extern int FightHandler_Player1_004233f0();
+extern int FightHandler_Player2_00423470();
+extern int Cmp2DirtyToggle();
 extern int TestCmpZeroFour();
 extern int DualEntryInitCmp();
 extern int ChainSplit_SizeFits_00425ba0();
@@ -317,6 +328,7 @@ extern int GuardedSeq_DirtyDoubleDeref_then_ChainSlotSetupInstallSelf();
 extern int GuardedSeq_DirtyDoubleDeref_then_ScaledAndFBJmp();
 extern int ScaledAndFBJmp();
 extern int CondInstallDispatch_00477000();
+extern int DoublePushWalkInitJmp();
 extern int Wrapper_ArgSarStoreJmp_004ed440();
 extern int GuardedSeq_MStackPushSet0004_then_MoveSelectorCluster();
 extern int Wrapper_ArgSarStoreJmp_004ed660();
@@ -349,6 +361,8 @@ extern int DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThreshold
 extern int ScaledStateNegCallPauseLoad();
 extern int ScaledChainPushCall();
 extern int Push16Call();
+extern int OrDualStore_0048a190();
+extern int DualBitGateInitCall();
 extern int Wrapper_ScaledChainPushCall_004ef980();
 extern int Wrapper_ScaledChainPushCall_004ef828();
 extern int Wrapper_ScaledChainPushCall_004ef948();
@@ -367,11 +381,14 @@ extern int Wrapper_ScaledChainPushCall_004ef8b0();
 extern int Wrapper_ScaledChainPushCall_004ef888();
 extern int Wrapper_ScaledChainPushCall_004ef838();
 extern int SetJmp_Phase3InstallTableCheck();
+extern int Helper_DownloadSetup();
+extern int DownloadPlayerChar();
 extern int Helper_DownloadDebugPrint();
 extern int ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430();
 extern int ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450();
 extern int ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d470();
 extern int ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490();
+extern int OrDualStore_0048e4b0();
 extern int LeaPlus22StoreSelf();
 extern int ScaledIndexCondCopy();
 extern int IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0();
@@ -454,6 +471,7 @@ extern int StorePauseImulShr16();
 extern int AudioVolumeRescale();
 extern int AudioMixerStep();
 extern int ZeroThreeSlots_004ac010();
+extern int CopyGlobal();
 extern int Helper_AuxAudio_PostInit();
 extern int Audio_TimerTeardown();
 extern int AuxAudio_Teardown();
@@ -628,8 +646,11 @@ extern int NodeApplyTransform_C_Inverse();
 extern int NodeApplyMatrix();
 extern int NodeApplyTransform_B_Swapped();
 extern int ScaledNegThreeWords();
+extern int TwinRecordIter();
 extern int CallZero2();
+extern int SixDoublePushCall();
 extern int TaggedSceneDispatch();
+extern int TableSearch();
 extern int QuadCallPhase2();
 extern int Helper_TitleAudioCleanup();
 extern int Thunk_FlushDrawQueue();
@@ -663,6 +684,7 @@ extern int TableLookupIatCall();
 
 static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x401340u, (void*)OnceCall},
+    {0x403170u, (void*)Phase3InstallSelf},
     {0x4049c0u, (void*)MStackPackedInit},
     {0x4049d0u, (void*)SaveCallRestore},
     {0x404af0u, (void*)Mul10Tail},
@@ -672,6 +694,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x405430u, (void*)ZeroAndDirty4},
     {0x4055b0u, (void*)DirtyPushCallPop},
     {0x405630u, (void*)MStackBracket5_FieldClear_StateAdvance},
+    {0x405880u, (void*)ScaledMaskOrStore},
     {0x4058c0u, (void*)MStackPushTwoEntryChainCall},
     {0x405960u, (void*)ChainCall_SecondEntry_00405960},
     {0x4059a0u, (void*)PushPopScaled18},
@@ -755,6 +778,15 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x421f40u, (void*)InstallSelfStackReset},
     {0x4227b0u, (void*)Helper_PostPlayerTick},
     {0x422810u, (void*)CountdownClampWalk},
+    {0x4228b0u, (void*)MatchInitMonsterChain},
+    {0x422e20u, (void*)DownloadDualPush},
+    {0x422ef0u, (void*)DownloadCharSetup},
+    {0x4231b0u, (void*)DualPushCallStore},
+    {0x4231f0u, (void*)GuardedDualPushTailJmp},
+    {0x4232e0u, (void*)PvpAngleDistSeed},
+    {0x4233f0u, (void*)FightHandler_Player1_004233f0},
+    {0x423470u, (void*)FightHandler_Player2_00423470},
+    {0x423870u, (void*)Cmp2DirtyToggle},
     {0x4238b0u, (void*)TestCmpZeroFour},
     {0x425b20u, (void*)DualEntryInitCmp},
     {0x425ba0u, (void*)ChainSplit_SizeFits_00425ba0},
@@ -977,6 +1009,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x476fc0u, (void*)GuardedSeq_DirtyDoubleDeref_then_ScaledAndFBJmp},
     {0x476fe0u, (void*)ScaledAndFBJmp},
     {0x477000u, (void*)CondInstallDispatch_00477000},
+    {0x4776b0u, (void*)DoublePushWalkInitJmp},
     {0x47d6d0u, (void*)Wrapper_ArgSarStoreJmp_004ed440},
     {0x47d980u, (void*)GuardedSeq_MStackPushSet0004_then_MoveSelectorCluster},
     {0x47ed80u, (void*)Wrapper_ArgSarStoreJmp_004ed660},
@@ -1009,6 +1042,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x489e90u, (void*)ScaledStateNegCallPauseLoad},
     {0x489ee0u, (void*)ScaledChainPushCall},
     {0x489f50u, (void*)Push16Call},
+    {0x48a190u, (void*)OrDualStore_0048a190},
+    {0x48a1c0u, (void*)DualBitGateInitCall},
     {0x48a250u, (void*)Wrapper_ScaledChainPushCall_004ef980},
     {0x48a260u, (void*)Wrapper_ScaledChainPushCall_004ef828},
     {0x48a270u, (void*)Wrapper_ScaledChainPushCall_004ef948},
@@ -1027,11 +1062,14 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x48a3b0u, (void*)Wrapper_ScaledChainPushCall_004ef888},
     {0x48a3c0u, (void*)Wrapper_ScaledChainPushCall_004ef838},
     {0x48acc0u, (void*)SetJmp_Phase3InstallTableCheck},
+    {0x48bc40u, (void*)Helper_DownloadSetup},
+    {0x48bcf0u, (void*)DownloadPlayerChar},
     {0x48bfe0u, (void*)Helper_DownloadDebugPrint},
     {0x48d430u, (void*)ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430},
     {0x48d450u, (void*)ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450},
     {0x48d470u, (void*)ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d470},
     {0x48d490u, (void*)ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490},
+    {0x48e4b0u, (void*)OrDualStore_0048e4b0},
     {0x48e4d0u, (void*)LeaPlus22StoreSelf},
     {0x48e590u, (void*)ScaledIndexCondCopy},
     {0x48e680u, (void*)IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0},
@@ -1114,6 +1152,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4ab690u, (void*)AudioVolumeRescale},
     {0x4ab700u, (void*)AudioMixerStep},
     {0x4ac010u, (void*)ZeroThreeSlots_004ac010},
+    {0x4ac1f0u, (void*)CopyGlobal},
     {0x4ac320u, (void*)Helper_AuxAudio_PostInit},
     {0x4ac5f0u, (void*)Audio_TimerTeardown},
     {0x4ac9b0u, (void*)AuxAudio_Teardown},
@@ -1288,8 +1327,11 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4be050u, (void*)NodeApplyMatrix},
     {0x4be130u, (void*)NodeApplyTransform_B_Swapped},
     {0x4be210u, (void*)ScaledNegThreeWords},
+    {0x4be590u, (void*)TwinRecordIter},
     {0x4be610u, (void*)CallZero2},
+    {0x4be630u, (void*)SixDoublePushCall},
     {0x4be690u, (void*)TaggedSceneDispatch},
+    {0x4be760u, (void*)TableSearch},
     {0x4be800u, (void*)QuadCallPhase2},
     {0x4bea40u, (void*)Helper_TitleAudioCleanup},
     {0x4bf320u, (void*)Thunk_FlushDrawQueue},

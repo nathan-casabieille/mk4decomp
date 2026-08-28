@@ -34,3 +34,6 @@ entries:
   0x4a42e0: Screen_Loading_Tick_004a42e0
   0x425ba0: ChainSplit_SizeFits_00425ba0
   0x405960: ChainCall_SecondEntry_00405960
+  0x4228b0: MatchInitMonsterChain
+  0x4233f0: FightHandler_Player1_004233f0
+  0x423470: FightHandler_Player2_00423470

@@ -358,7 +358,10 @@ __attribute__((weak)) int QuadGuardedCjSet_004230b0(){return 0;}
 __attribute__((weak)) int RecordListIterMStack(){return 0;}
 __attribute__((weak)) int RoundReset(){return 0;}
 __attribute__((weak)) int StageParticleEmitterInit(){return 0;}
-__attribute__((weak)) int GuardedDualPushTailJmp(){return 0;}
-__attribute__((weak)) int Helper_DownloadSetup(){return 0;}
 __attribute__((weak)) int SpawnListBatchLoader(){return 0;}
+__attribute__((weak)) int DownloadPlayerChar_Variant(){return 0;}
+__attribute__((weak)) int TripleStateSwapCall(){return 0;}
+__attribute__((weak)) int Phase3InstallSelf(){return 0;}
+__attribute__((weak)) int ScaledLoadCmp0fJmp(){return 0;}
+__attribute__((weak)) int ZeroSlotsGatedDispatch(){return 0;}
 #endif /* MK4_NATIVE_FULL */
