@@ -284,3 +284,6 @@ src/audio/audio_volume_rescale.c
 src/boot/boot_mod6487e_clamp_and_chain_mul10.c
 src/boot/boot_dispatch_slot_init.c
 src/boot/scaled_store_three.c
+src/engine/dispatcher_complex_260.c
+src/boot/boot_phase_gate_bracketed_init.c
+src/boot/m_stack_bracket5_field_clear_state_advance.c

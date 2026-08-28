@@ -175,7 +175,8 @@ void BootPhaseGateBracketedInit(void)
   if (g_framePauseFlag == 0) {
     if ((g_xformDirtyFlags & 4) == 0) {
       iVar2 = 0x15;
-      puVar1 = (undefined4 *)((g_currentNodeIdx) << 2);
+      /* raw packed-index deref in the lift - through the seam here */
+      puVar1 = MK4_NODE(undefined4, g_currentNodeIdx);
       g_walkCallback = 0;
       iVar3 = 5;
       do {
@@ -197,7 +198,7 @@ void BootPhaseGateBracketedInit(void)
       iVar3 = 0xc;
       (g_currentNodeIdx) = (g_currentNodeIdx) + 0x15;
       g_walkCallback = 0;
-      puVar1 = (undefined4 *)((g_currentNodeIdx) * 4);
+      puVar1 = MK4_NODE(undefined4, g_currentNodeIdx);
       iVar2 = 3;
       do {
         *puVar1 = 0;

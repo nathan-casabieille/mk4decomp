@@ -635,6 +635,46 @@ def _bdsi():
         '@0x409260': b'\xc3',            # ScaledStoreThree
     }
 
+
+# BootPhaseGateBracketedInit: the chain-step callee stubbed to success (clear
+# bit 2) and leaving cur at a scratch node the fills can write.
+def _bpg():
+    clear4 = (b'\x83\x25' + (0x54208c).to_bytes(4, 'little') + b'\xfb'
+              b'\xc7\x05' + (0x542044).to_bytes(4, 'little')
+              + (0x2e4000).to_bytes(4, 'little') + b'\xc3')
+    return {
+        'g_matrixStackTop': 0x2e5000, 'g_xformLoopCounter': 0x77,
+        'g_bootChainPair0': 0x2e4800, 'g_framePauseFlag': 0,
+        'g_xformDirtyFlags': 0, 'g_baseSel': 0x99,
+        '@0x4ab510': clear4,
+    }
+
+# FramePauseScaledStore: the field-clear advance stubbed to success; the
+# entity's first word carries the value the split decomposes.
+def _fpss():
+    clear4 = b'\x83\x25' + (0x54208c).to_bytes(4, 'little') + b'\xfb\xc3'
+    return {
+        'g_currentNodeIdx': 0x2e4000, 'g_xformEntityIdx': 0x2e4040,
+        'g_matrixStackTop': 0x2e5000, 'g_framePauseFlag': 0,
+        'g_xformDirtyFlags': 0,
+        '@0xb90100': 0x12345678,
+        '@0x405630': clear4,
+    }
+
+# The DC260 driver: both callees live-stubbed with success defaults.
+def _dc260():
+    clear4 = (b'\x83\x25' + (0x54208c).to_bytes(4, 'little') + b'\xfb'
+              b'\xc7\x05' + (0x542044).to_bytes(4, 'little')
+              + (0x2e4100).to_bytes(4, 'little') + b'\xc3')
+    return {
+        'g_matrixStackTop': 0x2e5000, 'g_pendingNodeType': 0x2e4000,
+        'g_eventQueuePending': 0x55, 'g_framePauseFlag': 0,
+        'g_xformDirtyFlags': 0,
+        '@0x4060c0': clear4,                  # BootPhaseGateBracketedInit
+        '@0x406c10': b'\x83\x25' + (0x54208c).to_bytes(4, 'little') + b'\xfb\xc3',
+        '@0x406790': b'\xc3',                 # MStackPush2ChainLLInsert
+    }
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -1066,6 +1106,28 @@ SEEDS = {
     # one and by many periods, and high by one and by many.
     # The four callees are stubbed at their VAs - each with a chosen effect on
     # the dirty bit, so all four routes through the driver are taken.
+    # The gate init: MStackPushChainStepIndex stubbed both ways. The success
+    # path zero-fills 21 + 15 words of the fresh node pair and stamps three
+    # 0x10000 fields.
+    'BootPhaseGateBracketedInit': [
+        ('step not-found', dict(_bpg(), **{
+            '@0x4ab510': b'\x83\x0d\x8c\x20\x54\x00\x04\xc3'})),
+        ('fills the fresh pair', _bpg()),
+    ],
+    'FramePauseScaledStore': [
+        ('advance not-found', dict(_fpss(), **{
+            '@0x405630': b'\x83\x0d\x8c\x20\x54\x00\x04\xc3'})),
+        # the split: top 12 bits signed into +0x1c, low 20 | 0x8000000 into +0x20
+        ('splits a negative word', dict(_fpss(), **{'@0xb90100': 0xfff23456})),
+        ('splits a positive word', _fpss()),
+    ],
+    'DispatcherComplex260_FramePauseScaledStore': [
+        ('gate not-found: straight out', dict(_dc260(), **{
+            '@0x4060c0': b'\x83\x0d\x8c\x20\x54\x00\x04\xc3'})),
+        ('full path', _dc260()),
+        ('inner not-found: insert', dict(_dc260(), **{
+            '@0x406c10': b'\x83\x0d\x8c\x20\x54\x00\x04\xc3'})),
+    ],
     'ScaledStoreThree_00409260': [
         ('stores the triple', {'g_xformEntityIdx': 0x2e4000, 'g_walkCallback': 0x77,
                                '@0xb90004': 1, '@0xb90008': 2, '@0xb9000c': 3}),
