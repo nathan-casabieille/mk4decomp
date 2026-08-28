@@ -5,6 +5,7 @@
 #include "portable/ghidra_types.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -15,6 +16,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -57,6 +59,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -64,6 +67,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -98,6 +102,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -108,7 +113,9 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_fpZeroCam;
 extern unsigned int g_fpBam2PiScale;
 extern s16 g_vtxMat[];
@@ -151,127 +158,289 @@ extern unsigned int g_pointPosZ;
 extern unsigned int g_dispatchSave1575;
 extern unsigned int g_dispatchSave1576;
 extern unsigned int g_dispatchSave1577;
-extern void AltCamMatrixProject(void);
-extern void Color15BitPacker(void);
-extern void DoubleToInt64(void);
+#endif
+
+#ifndef NON_MATCHING   /* the twin declares these with their real signatures */
 extern void Mat3x3VecMul6Bit(void);
-extern void PackColor(void);
 extern void Vec3NormalizeScaleStore(void);
+extern void Color15BitPacker(void);
+extern void PackColor(void);
+extern void AltCamMatrixProject(void);
+extern void DoubleToInt64(void);
+#endif
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void CameraSetupAndCullFan(void)
+#include "portable/mem_model.h"
 
+extern void Mat3x3VecMul6Bit(int *src, int *dst);
+extern void Vec3NormalizeScaleStore(int which, int x, int y, int z);
+extern void Color15BitPacker(int r, int g, int b);
+extern void PackColor(int which, int r, int g, int b);
+extern void AltCamMatrixProject(int *rec, int at);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
+extern unsigned int g_pointColorR;   /* 0x00ab4e44 */
+extern unsigned int g_pointColorG;   /* 0x00ab4e48 */
+extern unsigned int g_pointColorB;   /* 0x00ab4e4c */
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_camRotXBam (*(unsigned int **)MK4_VA(unsigned int, 0xab47f8u))
+#define g_camRotYBam (*(unsigned int **)MK4_VA(unsigned int, 0xab47fau))
+#define g_camRotZBam (*(unsigned int **)MK4_VA(unsigned int, 0xab47fcu))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchSave1504 (*(unsigned int *)MK4_VA(unsigned int, 0xab44d8u))
+#define g_dispatchSave1505 (*(unsigned int *)MK4_VA(unsigned int, 0xab44dau))
+#define g_dispatchSave1506 (*(unsigned int *)MK4_VA(unsigned int, 0xab44dcu))
+#define g_dispatchSave1507 (*(unsigned int *)MK4_VA(unsigned int, 0xab44deu))
+#define g_dispatchSave1508 (*(unsigned int *)MK4_VA(unsigned int, 0xab44e0u))
+#define g_dispatchSave1509 (*(unsigned int *)MK4_VA(unsigned int, 0xab44e2u))
+#define g_dispatchSave1510 (*(unsigned int *)MK4_VA(unsigned int, 0xab44e4u))
+#define g_dispatchSave1511 (*(unsigned int *)MK4_VA(unsigned int, 0xab44e6u))
+#define g_dispatchSave1512 (*(unsigned int *)MK4_VA(unsigned int, 0xab44e8u))
+#define g_dispatchSave1519 (*(unsigned int *)MK4_VA(unsigned int, 0xab47feu))
+#define g_dispatchSave1520 (*(unsigned int *)MK4_VA(unsigned int, 0xab4800u))
+#define g_dispatchSave1521 (*(unsigned int *)MK4_VA(unsigned int, 0xab4802u))
+#define g_dispatchSave1522 (*(unsigned int *)MK4_VA(unsigned int, 0xab4804u))
+#define g_dispatchSave1523 (*(unsigned int *)MK4_VA(unsigned int, 0xab4806u))
+#define g_dispatchSave1524 (*(unsigned int *)MK4_VA(unsigned int, 0xab4808u))
+#define g_dispatchSave1525 (*(unsigned int *)MK4_VA(unsigned int, 0xab4838u))
+#define g_dispatchSave1526 (*(unsigned int *)MK4_VA(unsigned int, 0xab483cu))
+#define g_dispatchSave1527 (*(unsigned int *)MK4_VA(unsigned int, 0xab4840u))
+#define g_dispatchSave1550 (*(unsigned int *)MK4_VA(unsigned int, 0xab4cd8u))
+#define g_dispatchSave1554 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d58u))
+#define g_dispatchSave1555 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d5cu))
+#define g_dispatchSave1556 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d60u))
+#define g_dispatchSave1557 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d64u))
+#define g_dispatchSave1558 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d68u))
+#define g_dispatchSave1567 (*(unsigned int *)MK4_VA(unsigned int, 0xab4dc4u))
+#define g_dispatchSave1574 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e3cu))
+#define g_dispatchSave1575 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e5cu))
+#define g_dispatchSave1576 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e60u))
+#define g_dispatchSave1577 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e6cu))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightGroupHead (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_fpBam2PiScale (*(unsigned int *)MK4_VA(unsigned int, 0x4d2a28u))
+#define g_fpZeroCam (*(unsigned int *)MK4_VA(unsigned int, 0x4d2a20u))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_mat3x3_007af994 (*(short *)MK4_VA(short, 0x7af994u))
+#define g_mat3x3_007af998 (*(short *)MK4_VA(short, 0x7af998u))
+#define g_mat3x3_007af99c (*(short *)MK4_VA(short, 0x7af99cu))
+#define g_mat3x3_007af9a0 (*(short *)MK4_VA(short, 0x7af9a0u))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_pointColorB (*(unsigned int *)MK4_VA(unsigned int, 0xab4e4cu))
+#define g_pointColorG (*(unsigned int *)MK4_VA(unsigned int, 0xab4e48u))
+#define g_pointColorR (*(unsigned int *)MK4_VA(unsigned int, 0xab4e44u))
+#define g_pointPosX (*(unsigned int *)MK4_VA(unsigned int, 0xab4e50u))
+#define g_pointPosY (*(unsigned int *)MK4_VA(unsigned int, 0xab4e54u))
+#define g_pointPosZ (*(unsigned int *)MK4_VA(unsigned int, 0xab4e58u))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_tickFlagZ (*(unsigned int *)MK4_VA(unsigned int, 0xab4e40u))
+#define g_tickW1 (*(unsigned int *)MK4_VA(unsigned int, 0x543550u))
+#define g_tickX3 (*(unsigned int *)MK4_VA(unsigned int, 0xab4e68u))
+#define g_vtxMat ((short *)MK4_VA(short, 0x7af990u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
+
+/* Portable twin, written from the disassembly - the lift had every double as
+ * an `unsigned int`, bare `__ftol()` calls with no argument, and host-pointer
+ * arithmetic on `&g_dispatchSave571`-style table bases.
+ *
+ * This is the per-frame camera setup. The camera-to-target vector (the two
+ * nodes' +0x15 blocks) is rotated through the wt 3x3, its direction is turned
+ * into the three BAM rotation angles - the length as `fild/fsqrt`, then each
+ * component scaled by g_fpBam2PiScale/len and truncated the way the CRT's
+ * __ftol does - and the negated angles become g_camRot{X,Y,Z}Bam. The second
+ * half does the same dance for the point light, with an intensity of
+ * 0x180000/len2 clamped to 0x100, and folds it into the three colour words.
+ *
+ * The zero-length guards compare the SQUARE ROOT against the double at
+ * 0x004d2a20 with `fcom`; only C3 is tested, so "equal" means skip. len2 is a
+ * non-negative int, so the unordered case cannot happen.
+ *
+ * FOV clamping stores g_walkCallback at each step it takes, including the raw
+ * value first - transcribed as written, since every store is observable.
+ *
+ * All the packed camera words (1504..1524 at 0x00ab44d8/0x00ab47f8/0x00ab4800)
+ * are spelled at their real widths by explicit VA, the same discipline as
+ * MovesPanelEmit; the width tables are not involved. __builtin_sqrt is the
+ * fpu_sqrt_mul.c precedent - the harness compiles with -fno-math-errno so it
+ * lowers to fsqrt with no libm call. */
+void CameraSetupAndCullFan(void)
 {
-  int iVar1;
-  undefined4 uVar2;
-  short sVar3;
-  undefined2 uVar4;
-  short sVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  uint uVar9;
-  int iVar10;
-  
-  uVar2 = g_dualC;
-  iVar1 = (g_currentNodeIdx);
-  g_dispatchSave1575 = (uint)(g_tickX3 * 0x60) >> 8;
-  g_dispatchSave1576 = g_tickW1;
-  g_walkCallback = MK4_NODE_AT(int, g_eventQueuePending, 0x3c) >> 8;
-  if (g_walkCallback < 0x60) {
-    g_walkCallback = 0x60;
-  }
-  else if (0xa0 < g_walkCallback) {
-    g_walkCallback = 0xa0;
-  }
-  iVar7 = g_tickW1 * g_walkCallback * 8;
-  if (0x100 < g_walkCallback) {
-    g_walkCallback = 0x100;
-  }
-  g_dispatchSave1577 = g_tickW1 * g_walkCallback >> 8;
-  g_dispatchSave1504 = (undefined2)((uint)iVar7 >> 8);
-  iVar7 = iVar7 >> 9;
-  iVar6 = (g_currentNodeIdx) + 0x15;
-  g_dispatchSave1505 = -(short)iVar7;
-  g_dualC = g_eventQueuePending + 0x15;
-  g_dispatchSave1525 = MK4_NODE_AT(int, iVar6, 0) - MK4_NODE_AT(int, g_dualC, 0) >> 8;
-  g_dispatchSave1526 = MK4_NODE_AT(int, iVar6, 4) - MK4_NODE_AT(int, g_dualC, 4) >> 8;
-  g_dispatchSave1527 = MK4_NODE_AT(int, iVar6, 8) - MK4_NODE_AT(int, g_dualC, 8) >> 8;
-  g_mat3x3_007af990 = g_dispatchSave1554;
-  g_mat3x3_007af994 = g_dispatchSave1555;
-  g_mat3x3_007af998 = g_dispatchSave1556;
-  g_mat3x3_007af99c = g_dispatchSave1557;
-  g_mat3x3_007af9a0 = g_dispatchSave1558;
-  g_eventQueuePending = iVar6;
-  g_dispatchSave1507 = g_dispatchSave1504;
-  g_dispatchSave1508 = g_dispatchSave1505;
-  g_dispatchSave1510 = g_dispatchSave1504;
-  g_dispatchSave1511 = g_dispatchSave1505;
-  Mat3x3VecMul6Bit(&g_dispatchSave1525,&g_dispatchSave1525);
-  g_dispatchSave1520 = (short)g_dispatchSave1526;
-  sVar3 = (short)g_dispatchSave1525;
-  sVar5 = (short)g_dispatchSave1527;
-  g_dispatchSave1519 = sVar3;
-  if (SQRT((double)((int)sVar3 * (int)sVar3 + (int)g_dispatchSave1520 * (int)g_dispatchSave1520 +
-                   (int)sVar5 * (int)sVar5)) != g_fpZeroCam) {
-    g_dispatchSave1521 = sVar5;
-    sVar3 = __ftol();
-    g_dispatchSave1519 = sVar3;
-    uVar4 = __ftol();
-    g_dispatchSave1520 = CONCAT22(g_dispatchSave1521,uVar4);
-    sVar5 = __ftol();
-  }
-  g_camRotXBam = -sVar3;
-  g_camRotYBam = -g_dispatchSave1520;
-  g_camRotZBam = -sVar5;
-  g_dispatchSave1521 = sVar5;
-  Vec3NormalizeScaleStore(0,(int)sVar3,(int)g_dispatchSave1520,-(int)sVar5);
-  Color15BitPacker(0x50,0x50,0x50);
-  PackColor(0,iVar7,iVar7,iVar7);
-  iVar7 = g_pointPosX - MK4_NODE_AT(int, g_eventQueuePending, 0);
-  g_dispatchSave1525 = iVar7 >> 8;
-  iVar8 = g_pointPosY - MK4_NODE_AT(int, g_eventQueuePending, 4);
-  uVar9 = iVar8 >> 8;
-  iVar10 = g_pointPosZ - MK4_NODE_AT(int, g_eventQueuePending, 8);
-  g_dispatchSave1527 = iVar10 >> 8;
-  iVar6 = (g_dispatchSave1527 * g_dispatchSave1527 >> 0xc) + ((int)(uVar9 * uVar9) >> 0xc) +
-          (g_dispatchSave1525 * g_dispatchSave1525 >> 0xc);
-  g_dispatchSave1526 = uVar9;
-  if (iVar6 != 0) {
-    sVar3 = (short)((uint)iVar7 >> 8);
-    g_dispatchSave1524 = (short)((uint)iVar10 >> 8);
-    g_dispatchSave1523 = (ushort)((uint)iVar8 >> 8);
-    iVar7 = (int)(0x180000 / (longlong)iVar6) >> 8;
-    g_dispatchSave1522 = sVar3;
-    if (SQRT((double)((int)sVar3 * (int)sVar3 +
-                      (int)(short)g_dispatchSave1523 * (int)(short)g_dispatchSave1523 +
-                     (int)g_dispatchSave1524 * (int)g_dispatchSave1524)) != g_fpZeroCam) {
-      sVar3 = __ftol();
-      g_dispatchSave1522 = sVar3;
-      g_dispatchSave1523 = __ftol();
-      uVar9 = (uint)g_dispatchSave1523;
-      g_dispatchSave1524 = __ftol();
+    unsigned int saved_pnt = g_pendingNodeType;
+    unsigned int saved_cur = g_currentNodeIdx;
+    unsigned int fov, w1, halfspan, span;
+    int dx, dy, dz, x, y, z, len2;
+    double len;
+
+    g_walkCallback = ((g_tickX3 * 3u) << 5) >> 8;
+    g_dispatchSave1575 = g_walkCallback;
+    w1 = g_tickW1;
+    g_dispatchSave1576 = w1;
+
+    fov = (unsigned int)((int)MK4_NODE_AT(int, g_xformEntityIdx, 0x3c) >> 8);
+    g_walkCallback = fov;
+    if ((int)fov < 0x60) {
+        fov = 0x60;
+        g_walkCallback = fov;
+    } else if ((int)fov > 0xa0) {
+        fov = 0xa0;
+        g_walkCallback = fov;
     }
-    if (0x100 < iVar7) {
-      iVar7 = 0x100;
+    span = (unsigned int)((int)((w1 * fov) << 3) >> 8);
+    if ((int)fov > 0x100) {
+        fov = 0x100;
+        g_walkCallback = fov;
     }
-    sVar5 = (short)((uint)(iVar7 * g_tickX3) >> 8);
-    g_dispatchSave1506 = (short)((g_gtAxisX & 0xffff) - 0x8000 >> 8) * sVar5;
-    g_dispatchSave1509 = (short)((g_gtAxisY & 0xffff) - 0x8000 >> 8) * sVar5;
-    g_dispatchSave1512 = (short)((g_gtAxisZ & 0xffff) - 0x8000 >> 8) * sVar5;
-    Vec3NormalizeScaleStore(1,(int)sVar3,(int)(short)uVar9,(int)g_dispatchSave1524);
-    PackColor(1,(int)g_dispatchSave1506,(int)g_dispatchSave1509,(int)g_dispatchSave1512);
-  }
-  if (((g_cj_0054205c & 0x180000) != 0) && (g_tickFlagZ != 0)) {
-    g_dispatchSave1567 = g_dispatchSave1567 + 0x2b85;
-  }
-  if (((g_cj_0054205c & 0x1000) != 0) && (-1 < (int)g_dispatchSave1574)) {
-    AltCamMatrixProject(&g_dispatchSave1550,0);
-  }
-  (g_currentNodeIdx) = iVar1;
-  g_dualC = uVar2;
-  return;
+    g_dispatchSave1577 = (unsigned int)((int)(w1 * fov) >> 8);
+
+    *MK4_VA(short, 0xab44d8u) = (short)span;             /* 1504 */
+    *MK4_VA(short, 0xab44deu) = (short)span;             /* 1507 */
+    *MK4_VA(short, 0xab44e4u) = (short)span;             /* 1510 */
+    halfspan = (unsigned int)((int)span >> 1);
+    *MK4_VA(short, 0xab44dau) = (short)-(int)halfspan;   /* 1505 */
+    *MK4_VA(short, 0xab44e0u) = (short)-(int)halfspan;   /* 1508 */
+    *MK4_VA(short, 0xab44e6u) = (short)-(int)halfspan;   /* 1511 */
+
+    /* camera-to-target vector, then rotate it through the wt 3x3 in place */
+    g_pendingNodeType = g_xformEntityIdx + 0x15;
+    g_xformEntityIdx  = saved_cur + 0x15;
+    *MK4_VA(int, 0xab4838u) =
+        (int)(MK4_NODE_AT(unsigned int, g_xformEntityIdx, 0)
+              - MK4_NODE_AT(unsigned int, g_pendingNodeType, 0)) >> 8;
+    *MK4_VA(int, 0xab483cu) =
+        (int)(MK4_NODE_AT(unsigned int, g_xformEntityIdx, 4)
+              - MK4_NODE_AT(unsigned int, g_pendingNodeType, 4)) >> 8;
+    *MK4_VA(int, 0xab4840u) =
+        (int)(MK4_NODE_AT(unsigned int, g_xformEntityIdx, 8)
+              - MK4_NODE_AT(unsigned int, g_pendingNodeType, 8)) >> 8;
+
+    *MK4_VA(unsigned int, 0x7af990u) = *MK4_VA(unsigned int, 0xab4d58u);
+    *MK4_VA(unsigned int, 0x7af994u) = *MK4_VA(unsigned int, 0xab4d5cu);
+    *MK4_VA(unsigned int, 0x7af998u) = *MK4_VA(unsigned int, 0xab4d60u);
+    *MK4_VA(unsigned int, 0x7af99cu) = *MK4_VA(unsigned int, 0xab4d64u);
+    *MK4_VA(unsigned short, 0x7af9a0u) = *MK4_VA(unsigned short, 0xab4d68u);
+
+    Mat3x3VecMul6Bit(MK4_VA(int, 0xab4838u), MK4_VA(int, 0xab4838u));
+
+    *MK4_VA(short, 0xab4800u) = (short)*MK4_VA(int, 0xab483cu);  /* 1520 */
+    x = (int)(short)*MK4_VA(int, 0xab4838u);
+    y = (int)(short)*MK4_VA(int, 0xab483cu);
+    z = (int)(short)*MK4_VA(int, 0xab4840u);
+    len2 = x * x + y * y + z * z;
+    *MK4_VA(short, 0xab47feu) = (short)x;                        /* 1519 */
+    *MK4_VA(short, 0xab4802u) = (short)z;                        /* 1521 */
+
+    len = __builtin_sqrt((double)len2);
+    if (!(len == *MK4_VA(double, 0x4d2a20u))) {
+        double scale = *MK4_VA(double, 0x4d2a28u) / len;
+
+        x = (int)((double)x * scale);
+        *MK4_VA(short, 0xab47feu) = (short)x;
+        y = (int)((double)y * scale);
+        *MK4_VA(short, 0xab4800u) = (short)y;
+        z = (int)((double)z * scale);
+        *MK4_VA(short, 0xab4802u) = (short)z;
+    }
+
+    *MK4_VA(short, 0xab47f8u) = (short)-(int)(short)x;   /* g_camRotXBam */
+    *MK4_VA(short, 0xab47fau) =
+        (short)-(int)*MK4_VA(short, 0xab4800u);          /* g_camRotYBam */
+    *MK4_VA(short, 0xab47fcu) = (short)-(int)(short)z;   /* g_camRotZBam */
+
+    Vec3NormalizeScaleStore(0, (int)(short)x,
+                            (int)*MK4_VA(short, 0xab4800u),
+                            -(int)(short)z);
+    Color15BitPacker(0x50, 0x50, 0x50);
+    PackColor(0, (int)halfspan, (int)halfspan, (int)halfspan);
+
+    /* the point light, same shape */
+    dx = (int)(g_pointPosX - MK4_NODE_AT(unsigned int, g_xformEntityIdx, 0)) >> 8;
+    *MK4_VA(int, 0xab4838u) = dx;
+    dy = (int)(g_pointPosY - MK4_NODE_AT(unsigned int, g_xformEntityIdx, 4)) >> 8;
+    *MK4_VA(int, 0xab483cu) = dy;
+    dz = (int)(g_pointPosZ - MK4_NODE_AT(unsigned int, g_xformEntityIdx, 8)) >> 8;
+    len2 = ((dz * dz) >> 12) + ((dy * dy) >> 12) + ((dx * dx) >> 12);
+    *MK4_VA(int, 0xab4840u) = dz;
+
+    if (len2 != 0) {
+        int inten = 0x180000 / len2;
+        int r, g, b;
+
+        *MK4_VA(short, 0xab4808u) = (short)dz;           /* 1524 */
+        *MK4_VA(short, 0xab4804u) = (short)dx;           /* 1522 */
+        *MK4_VA(short, 0xab4806u) = (short)dy;           /* 1523 */
+
+        x = (int)(short)dx;
+        y = (int)(short)dy;
+        z = (int)(short)dz;
+        len2 = x * x + y * y + z * z;
+        inten >>= 8;
+
+        len = __builtin_sqrt((double)len2);
+        if (!(len == *MK4_VA(double, 0x4d2a20u))) {
+            double scale = *MK4_VA(double, 0x4d2a28u) / len;
+
+            x = (int)((double)x * scale);
+            *MK4_VA(short, 0xab4804u) = (short)x;
+            y = (int)((double)y * scale);
+            *MK4_VA(short, 0xab4806u) = (short)y;
+            z = (int)((double)z * scale);
+            *MK4_VA(short, 0xab4808u) = (short)z;
+        }
+
+        if (inten > 0x100)
+            inten = 0x100;
+        inten = (int)(((unsigned int)(inten * (int)g_tickX3)) >> 8);
+
+        r = (((int)(g_pointColorR & 0xffffu) - 0x8000) >> 8) * inten;
+        g = (((int)(g_pointColorG & 0xffffu) - 0x8000) >> 8) * inten;
+        b = (((int)(g_pointColorB & 0xffffu) - 0x8000) >> 8) * inten;
+        *MK4_VA(short, 0xab44dcu) = (short)r;            /* 1506 */
+        *MK4_VA(short, 0xab44e2u) = (short)g;            /* 1509 */
+        *MK4_VA(short, 0xab44e8u) = (short)b;            /* 1512 */
+
+        Vec3NormalizeScaleStore(1, (int)(short)x, (int)(short)y,
+                                (int)*MK4_VA(short, 0xab4808u));
+        PackColor(1, (int)*MK4_VA(short, 0xab44dcu),
+                  (int)*MK4_VA(short, 0xab44e2u),
+                  (int)*MK4_VA(short, 0xab44e8u));
+    }
+
+    if ((g_fightGroupHead & 0x180000u) && g_tickFlagZ != 0)
+        *MK4_VA(unsigned int, 0xab4dc4u) += 0x2b85;      /* 1567 */
+    if ((g_fightGroupHead & 0x100000u) && (int)g_dispatchSave1574 >= 0)
+        AltCamMatrixProject(MK4_VA(int, 0xab4cd8u), 0);
+
+    g_currentNodeIdx  = saved_cur;
+    g_pendingNodeType = saved_pnt;
 }
 #else
 __declspec(naked) void CameraSetupAndCullFan(void)

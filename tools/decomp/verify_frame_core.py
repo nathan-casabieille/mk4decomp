@@ -377,6 +377,33 @@ def _bbc():
         'g_drawQueueSize': 0,
     }
 
+
+# CameraSetupAndCullFan: g_currentNodeIdx's +0x15 block is the camera position,
+# g_xformEntityIdx's +0x15 block the target, and the entity's +0x3c the raw
+# FOV. The wt 3x3 snapshot at 0x00ab4d58 feeds the rotation.
+def _cam():
+    return {
+        'g_currentNodeIdx': 0x2e4000,
+        'g_xformEntityIdx': 0x2e4040,
+        'g_pendingNodeType': 0x99,
+        'g_tickX3': 0x40, 'g_tickW1': 0x20,
+        '@0xb9013c': 0x8000,                 # entity +0x3c: fov -> 0x80
+        # camera block: node +0x15 packed = VA 0xb90000 + 0x54
+        '@0xb90054': 0x00100000, '@0xb90058': 0x00200000, '@0xb9005c': 0x00300000,
+        # target block: entity +0x15 = VA 0xb90100 + 0x54
+        '@0xb90154': 0x00400000, '@0xb90158': 0x00600000, '@0xb9015c': 0x00900000,
+        # the wt 3x3 snapshot (dwords + word)
+        '@0xab4d58': 0x00100010, '@0xab4d5c': 0xfff00010,
+        '@0xab4d60': 0x0010fff0, '@0xab4d64': 0x00100010,
+        '@0xab4d68': 0x0010,
+        'g_pointPosX': 0x00500000, 'g_pointPosY': 0x00700000,
+        'g_pointPosZ': 0x00200000,
+        'g_pointColorR': 0x9000, 'g_pointColorG': 0x7000, 'g_pointColorB': 0xc000,
+        'g_fightGroupHead': 0, 'g_tickFlagZ': 0,
+        'g_dispatchSave1574': 0xffffffff,
+        '@0x4b9840': b'\xc3',                # AltCamMatrixProject stub
+    }
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -739,6 +766,41 @@ SEEDS = {
     # One chain link with a full texture record; Helper_DrawCursor is left
     # LIVE - it copies the entry into the queue, so the queue slot is the
     # observable output. The mins-negative case proves the skip.
+    # The camera setup. Mat3x3VecMul6Bit / Vec3NormalizeScaleStore /
+    # Color15BitPacker / PackColor run LIVE as original bytes - all four are
+    # small pure-arithmetic leaves. AltCamMatrixProject is stubbed.
+    # The three FPU/colour leaves the camera calls, verified on their own.
+    'Vec3NormalizeScaleStore': [
+        ('normalizes into row 1', {}, (1, 300, -400, 0)),
+        ('zero vector passes raw', {'@0x7af9c0': 0x11, '@0x7af9d8': 0x22,
+                                    '@0x7af9c4': 0x33, '@0x7af9dc': 0x44,
+                                    '@0x7af9c8': 0x55, '@0x7af9e0': 0x66}, (0, 0, 0, 0)),
+        # a component that overflows s16 after scaling wraps, as the original's
+        # `movsx esi, ax` does
+        ('row 0', {}, (0, 3, 4, 12)),
+    ],
+    'Color15BitPacker': [
+        ('packs and clamps', {'@0x7af9f0': 0x8013}, (300, -5, 0x7f)),
+        ('keeps bit 15 and low bits', {'@0x7af9f0': 0x0000}, (0x10, 0x20, 0x30)),
+    ],
+    'PackColor': [
+        ('lane 0', {}, (0, 300, -5, 0x7f)),
+        ('lane 1', {}, (1, 0x10, 0x20, 0x30)),
+    ],
+    'CameraSetupAndCullFan': [
+        ('camera at the target', _cam()),
+        # distinct positions: both FPU blocks run, angles land in the BAM words
+        ('full setup', dict(_cam(), **{'@0xb90054': 0x00900000,
+                                       '@0xb90058': 0x00300000,
+                                       '@0xb9005c': 0x00500000})),
+        # point light exactly on the camera: len2 == 0 skips the second half
+        ('light on the camera', dict(_cam(), **{'g_pointPosX': 0x100000,
+                                                'g_pointPosY': 0x200000,
+                                                'g_pointPosZ': 0x300000})),
+        ('fov clamped low', dict(_cam(), **{'@0xb9013c': 0x1000})),
+        ('cutscene counter', dict(_cam(), **{'g_fightGroupHead': 0x180000,
+                                             'g_tickFlagZ': 1})),
+    ],
     'BillboardChainRender': [
         ('loop step gate', {'g_inLoopStep': 1}),
         ('empty chain', dict(_bbc(), **{'@0xb9002c': 0})),

@@ -258,3 +258,7 @@ src/engine/tristrip_batch_emit2.c
 src/engine/bbox_project_and_stash.c
 src/engine/moves_panel_emit.c
 src/engine/billboard_chain_render.c
+src/engine/camera_setup_and_cull_fan.c
+src/engine/vec3_normalize_scale_store.c
+src/engine/color15_bit_packer.c
+src/engine/pack_color.c
