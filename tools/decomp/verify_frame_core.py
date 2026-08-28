@@ -61,6 +61,12 @@ TYPES = {
     },
 }
 
+# Twins whose ORIGINAL carries packed internal entry points (continuations
+# behind the same symbol). Their blobs must not be based at the function's own
+# VA or they cover those offsets - see verify_coexec.verify(offsite=).
+OFFSITE = {'PvsMergeDriver', 'PvsMerge_MatchEnd_00425f90',
+           'PvsMerge_MatchNode_00425fd0'}
+
 BASE = 0x00400000
 
 # name -> [(label, seeds)], [(label, seeds, args)] or [(label, seeds, args, allow)]
@@ -465,6 +471,28 @@ def _unlink(back, fwd):
         d['@0x%x' % ((fwd + 0x40) * 4 + 0x20)] = 0x8888
     return d
 
+
+# PvsMergeDriver: the node being freed sits at cur (idx 0x2e4044, so cur-4 =
+# 0x2e4040 is what the unlink sees), its list fields seeded as a sole element;
+# the PVS head at 0x00541e74 names a one-node sibling walk for Helper_TickAlt
+# (head node at 0x2e6000, its f0 -> the region node 0x2e4100, stride 0).
+def _pvs():
+    return {
+        'g_currentNodeIdx': 0x2e4044, 'g_xformEntityIdx': 0x99,
+        'g_pendingNodeType': 0x88, 'g_matrixStackTop': 0x2e5000,
+        'g_framePauseFlag': 0, 'g_xformDirtyFlags': 0,
+        'g_vertexInitFlag': 0x2e6000,
+        # the freed node (at cur - 4 + xe(0) = 0x2e4040): sole element
+        '@0xb90100': 0, '@0xb90104': 0x2e4200, '@0xb90108': 0,
+        '@0xb9010c': 0x10,                    # its count
+        '@0xb9080c': 5,                       # prev's element count
+        # the walk: head node f0 -> region node, stride f8 = 0
+        '@0xb98000': 0x2e4100, '@0xb98008': 0,
+        # the region node the walk visits: count so END = 0x2e4100+0x18+4
+        '@0xb9040c': 0x18,
+        '@0xb90400': 0, '@0xb90404': 0x2e4200, '@0xb90408': 0,
+    }
+
 HEAP = [
     ('@0x7b41a0', (5 << 24) | 0x20), ('@0x7b41a4', 0),
     ('@0x7b41c0', (5 << 24) | 0x20), ('@0x7b41c4', 0x7b4300),
@@ -858,6 +886,35 @@ SEEDS = {
     # A relative-linked list: node at base+xe, neighbours reached as
     # link + xe. Four link shapes: middle, head (no back-link), tail (no
     # forward link), and sole element.
+    # The full merge driver, every callee LIVE: the unlink, Helper_TickAlt
+    # walking a one-node sibling list, and the packed continuations at
+    # 0x425f90/0x425fd0 running as original bytes in both runs.
+    'PvsMergeDriver': [
+        ('paused at entry', dict(_pvs(), **{'g_framePauseFlag': 1})),
+        ('walks found nothing: no merges', dict(_pvs(), **{'@0xb98000': 0})),
+        # region1 ends exactly at the freed node and region2 sits exactly
+        # past the merged region - both walks match, both merges run, and the
+        # head is rewired twice.
+        ('both merges run', dict(_pvs(), **{
+            '@0xb98000': 0x2e4000,
+            '@0xb90000': 0x2e4054, '@0xb90004': 0x2e6000,
+            '@0xb90008': 0, '@0xb9000c': 0x3c,
+            '@0xb90150': 0, '@0xb90154': 0x2e6000,
+            '@0xb90158': 0, '@0xb9015c': 0x20,
+            '@0xb9800c': 3})),
+    ],
+    'PvsMerge_MatchEnd_00425f90': [
+        ('match', {'g_currentNodeIdx': 0x100, '@0x40c': 0x20,
+                   'g_pendingNodeType': 0x124, 'g_xformDirtyFlags': 1}),
+        ('no match', {'g_currentNodeIdx': 0x100, '@0x40c': 0x20,
+                      'g_pendingNodeType': 0x999, 'g_xformDirtyFlags': 1}),
+    ],
+    'PvsMerge_MatchNode_00425fd0': [
+        ('match', {'g_currentNodeIdx': 0x124, 'g_pendingNodeType': 0x124,
+                   'g_xformDirtyFlags': 1}),
+        ('no match', {'g_currentNodeIdx': 0x100, 'g_pendingNodeType': 0x124,
+                      'g_xformDirtyFlags': 1}),
+    ],
     'MStackBracket5_LinkedListUnlink': [
         ('middle of the list', _unlink(back=0x100, fwd=0x180)),
         ('first element',      _unlink(back=0,     fwd=0x180)),
@@ -1307,6 +1364,11 @@ def seed(arena, gl_va, spec):
 
 def main():
     fn_va, gl_va = vt.load_maps()
+    # Packed internal entry points with no symbols.yaml entry, registered in
+    # config/codeptr_extras.yaml for the native trampoline; the harness needs
+    # their VAs here to verify their C directly. Offsite, like their parent.
+    fn_va['PvsMerge_MatchEnd_00425f90'] = 0x425f90
+    fn_va['PvsMerge_MatchNode_00425fd0'] = 0x425fd0
     names = sys.argv[1:] or sorted(SEEDS)
     base = vc.ARENA.read_bytes()
     rc = 0
@@ -1319,13 +1381,16 @@ def main():
             arena = bytearray(base)
             seed(arena, gl_va, spec)
             res = vc.verify(name, fn_va, gl_va, fn_va, arena, argvals=args,
-                            types=TYPES.get(name))
+                            types=TYPES.get(name), offsite=name in OFFSITE)
             if allow and res.startswith('MISMATCH'):
                 m = re.match(r"MISMATCH orig_only=\[(.*?)\] twin_only=\[(.*?)\] "
                              r"vdiff=\[(.*?)\]", res)
                 if m and not m.group(1) and not m.group(2):
-                    diff = {int(a.strip().strip("'"), 16)
-                            for a in m.group(3).split(',') if a.strip()}
+                    # vdiff entries carry values now ('0xADDR: orig=X twin=Y');
+                    # only the address before the colon is the key.
+                    diff = {int(a.strip().strip("'").split(':')[0], 16)
+                            for a in m.group(3).split(',')
+                            if a.strip() and a.strip().strip("'")[0] == '0'}
                     if diff and diff <= allow:
                         res = 'VERIFIED (scratch ptr differs at %s - expected)' % (
                             ', '.join(hex(a) for a in sorted(diff)))

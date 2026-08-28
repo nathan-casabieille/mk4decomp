@@ -450,7 +450,7 @@ def run_at(uc, eip, full, nargs=0, argvals=None):
 
 
 def verify(name, fn_va, gl_va, name_to_va, arena, width16=None, argvals=None,
-           types=None):
+           types=None, offsite=False):
     fptypes = fp_globals_for(name)
     if types:
         fptypes = dict(fptypes, **types)
@@ -461,8 +461,18 @@ def verify(name, fn_va, gl_va, name_to_va, arena, width16=None, argvals=None,
         return 'SKIP no-twin'
     body, nargs, returns_value = t
     nxt = min((v for v in fn_va.values() if v > fn_va[name]), default=None)
+    # offsite: place the blob in the scratch code window instead of at the
+    # function's own VA. For a twin with no self-references this changes
+    # nothing about the comparison - and it is the ONLY correct placement when
+    # the original function carries PACKED INTERNAL ENTRY POINTS (continuation
+    # routines behind its own symbol, like PvsMergeDriver's 0x425f90/0x425fd0):
+    # based at its own VA, the compiled twin's bytes cover those offsets, and a
+    # callee that calls back into them executes the blob's tail as code. The
+    # existing overrun check cannot see this case - the blob stays inside its
+    # own symbol's size.
     blob, entry, load_base, err = build_twin_blob(
-        name, body, gl_va, name_to_va, fn_self_va=fn_va[name], width16=width16,
+        name, body, gl_va, name_to_va,
+        fn_self_va=None if offsite else fn_va[name], width16=width16,
         fptypes=fptypes, next_fn_va=nxt)
     if blob is None:
         return 'SKIP ' + err

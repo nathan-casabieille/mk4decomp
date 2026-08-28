@@ -182,6 +182,128 @@ extern unsigned int g_phaseChainTbl;
 #ifdef NON_MATCHING
 #include "portable/mem_model.h"
 
+extern void MStackBracket5_LinkedListUnlink(void);
+extern void Helper_TickAlt(void);
+extern void MStackPush2ChainInsert(void);
+/* the PVS list head - an ARENA alias, not a C variable: a plain extern would
+ * bind to the weak autostub global, separate storage the engine never sees */
+#define g_vertexInitFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e74u))
+
+/* The two continuations Helper_TickAlt calls back during PvsMergeDriver's
+ * walks. Both live INSIDE PvsMergeDriver's own symbol in the original
+ * (0x425f90 / 0x425fd0), so they have no symbols.yaml entry and are registered
+ * through config/codeptr_extras.yaml - NATIVE ONLY, the matching build carries
+ * them inside the blob.
+ *
+ * Each is a match predicate: clear the walk's found bit, then set it if the
+ * walked node - by its END (node + count + 4) for the first, by itself for
+ * the second - is the merge target. */
+void PvsMerge_MatchEnd_00425f90(void)
+{
+    unsigned int end;
+
+    g_walkCallback = g_currentNodeIdx;
+    end = g_currentNodeIdx + MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0xc) + 4;
+    g_xformDirtyFlags &= 0xfffffffeu;
+    g_walkCallback = end;
+    if (end == g_pendingNodeType)
+        g_xformDirtyFlags |= 1;
+}
+
+void PvsMerge_MatchNode_00425fd0(void)
+{
+    g_xformDirtyFlags &= 0xfffffffeu;
+    if (g_currentNodeIdx == g_pendingNodeType)
+        g_xformDirtyFlags |= 1;
+}
+
+/* @addr 0x00425db0 (584b) - NATIVE ONLY; the matching build synthesizes it.
+ *
+ * Merges the freed node into the PVS free list: unlink the node four slots
+ * back, walk the list for the region whose END touches it (callback
+ * 0x425f90), and if the walk found one (bit 0 - the `dirty & 4` test reads
+ * the walk's OWN not-found bit) unlink that region too and fold both counts
+ * into one (`count = a + b + 4`). Then the same again in the other direction
+ * with the by-node predicate, and the merged region is re-inserted. The
+ * bracket saves g_xformEntityIdx and g_pendingNodeType; every paused exit
+ * leaks it, as all the mstack brackets here do.
+ *
+ * The callback slots take the CONTINUATION VAs as literals, exactly as the
+ * original stores them - identity under co-exec, resolved through the
+ * trampoline by Helper_TickAlt's own MK4_ResolveCode on the native build. */
+void PvsMergeDriver(void)
+{
+    unsigned int c;
+
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_xformEntityIdx;
+    g_matrixStackTop++;
+    *MK4_NODE(unsigned int, g_matrixStackTop) = g_pendingNodeType;
+
+    g_currentNodeIdx -= 4;
+    g_xformEntityIdx = 0;
+    MStackBracket5_LinkedListUnlink();
+    if (g_framePauseFlag != 0)
+        return;
+
+    g_pendingNodeType = g_currentNodeIdx;
+    g_currentNodeIdx = g_vertexInitFlag;
+    g_walkCallback = 0x425f90u;
+    Helper_TickAlt();
+    if (g_framePauseFlag != 0)
+        return;
+
+    if ((g_xformDirtyFlags & 4u) == 0) {
+        g_xformEntityIdx = 0;
+        MStackBracket5_LinkedListUnlink();
+        if (g_framePauseFlag != 0)
+            return;
+
+        c = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0xc);
+        g_walkCallback = c;
+        c += MK4_NODE_AT(unsigned int, g_pendingNodeType, 0xc) + 4;
+        g_walkCallback = c;
+        MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0xc) = c;
+        g_pendingNodeType = g_currentNodeIdx;
+    }
+    g_xformEntityIdx = g_pendingNodeType;
+
+    c = MK4_NODE_AT(unsigned int, g_xformEntityIdx, 0xc);
+    g_walkCallback = 0x425fd0u;
+    g_pendingNodeType = g_xformEntityIdx + c + 4;
+    g_currentNodeIdx = g_vertexInitFlag;
+    Helper_TickAlt();
+    if (g_framePauseFlag != 0)
+        return;
+
+    g_pendingNodeType = g_xformEntityIdx;
+    if ((g_xformDirtyFlags & 4u) == 0) {
+        g_xformEntityIdx = 0;
+        MStackBracket5_LinkedListUnlink();
+        if (g_framePauseFlag != 0)
+            return;
+
+        c = MK4_NODE_AT(unsigned int, g_pendingNodeType, 0xc);
+        g_walkCallback = c;
+        c += MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0xc) + 4;
+        g_walkCallback = c;
+        MK4_NODE_AT(unsigned int, g_pendingNodeType, 0xc) = c;
+    }
+
+    g_currentNodeIdx = g_pendingNodeType;
+    g_xformEntityIdx = g_vertexInitFlag;
+    MStackPush2ChainInsert();
+    if (g_framePauseFlag != 0)
+        return;
+
+    g_pendingNodeType = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+    g_xformEntityIdx = *MK4_NODE(unsigned int, g_matrixStackTop);
+    g_matrixStackTop--;
+}
+
+#include "portable/mem_model.h"
+
 extern void GuardedChainPushSetCallPop(void);
 extern void ScaledLoadGuardedJmp(void);
 extern void PvsMergeDriver(void);

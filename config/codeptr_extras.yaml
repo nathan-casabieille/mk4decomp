@@ -29,3 +29,5 @@ entries:
   0x45d450: Thunk_StateInstall_0045d450
   0x45d4c0: Thunk_StateInstall_0045d4c0
   0x45d560: Thunk_StateInstall_0045d560
+  0x425f90: PvsMerge_MatchEnd_00425f90
+  0x425fd0: PvsMerge_MatchNode_00425fd0

@@ -10,6 +10,7 @@ extern int Helper_TickFrameTail();
 extern int FrameFinalize();
 extern int SetJmp_ZeroAndDirty4();
 extern int ZeroAndDirty4();
+extern int DirtyPushCallPop();
 extern int PushPopScaled18();
 extern int ScaledAndMaskInitJmp();
 extern int Thunk_MStackPush2ChainPrepend();
@@ -25,18 +26,24 @@ extern int MStackCall_MStackPush2ChainPrepend_00406390();
 extern int MStackCall_MStackPush2ChainPrepend_004063e0();
 extern int MStackCall_MStackPush2ChainInsert_004065b0();
 extern int MStackCall_MStackPush2ChainPrepend_00406600();
+extern int ScaledLoadGuardedJmp();
+extern int MStackPushZeroCallPop();
 extern int MStackCall_MStackPush2ChainLLInsert();
+extern int MStackPush2ChainLLInsert();
 extern int ScaledLoadOrSetJmp();
 extern int MStackCall_MStackPush2ChainInsert_00406b50();
 extern int CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
+extern int GuardedChainPushSetCallPop();
 extern int ScaledStoreIdx24();
 extern int PushSetXfmMaskCallPop();
 extern int BootChainPushAddSignFlag();
 extern int SetJmp_CallPauseScaledStoreAdd();
 extern int CallPauseScaledStoreAdd();
+extern int MStackPushZeroCallPop_PendingMatch();
 extern int PushPopScaled1cDoubleCall();
 extern int SetJmp_BootStateTriple();
 extern int MStackPush2ChainInsert();
+extern int MStackBracket5_LinkedListUnlink();
 extern int ScaledInit_Phase4SevenPackedDispatch_g_eventQueueTotal();
 extern int GuardedSeq_BootStateInitLongChain_then_StackPopDispatchTagged();
 extern int ZeroLargeBlock();
@@ -60,6 +67,9 @@ extern int ScaledInitOrSelfPtr_InstallSelfStackReset();
 extern int InstallSelfStackReset();
 extern int Helper_PostPlayerTick();
 extern int CountdownClampWalk();
+extern int PvsMergeDriver();
+extern int PvsMerge_MatchEnd_00425f90();
+extern int PvsMerge_MatchNode_00425fd0();
 extern int Thunk_BootMod6487eClampAndChainMul10();
 extern int ScaledArrStore_GuardedSeq_CopyJmp_then_MStackPushDualJmp();
 extern int GuardedSeq_CopyJmp_then_MStackPushDualJmp();
@@ -391,6 +401,7 @@ extern int Helper_AudioStub_4160();
 extern int DebugStub_NoOp_A();
 extern int FixedDiv16();
 extern int FpuSqrtMul();
+extern int LinkedListInsert();
 extern int DualAddSar();
 extern int StorePauseImulShr16();
 extern int AudioMixerStep();
@@ -426,7 +437,17 @@ extern int ECM_DecodeFrame_Raw();
 extern int ECM_DecodeFrameDispatch();
 extern int ECM_ParseFrameHeader();
 extern int ECM_DecodeFrame();
+extern int AppInit_PreInstall();
 extern int TestCallZero();
+extern int FSYS_fopen();
+extern int FSYS_NormalizePath();
+extern int FSYS_HashName();
+extern int FSYS_fclose();
+extern int FSYS_fread();
+extern int FSYS_fseek();
+extern int FSYS_ftell();
+extern int FSYS_fsize();
+extern int FSYS_fload();
 extern int Helper_AppStub_21C0();
 extern int Helper_DrawMenuText();
 extern int AppShutdown();
@@ -442,6 +463,9 @@ extern int ProjectTwoVertices();
 extern int Helper_EmitLine();
 extern int ProjectVertex();
 extern int AdvanceTriStripRing();
+extern int Color15BitPacker();
+extern int PackColor();
+extern int Vec3NormalizeScaleStore();
 extern int MatVec2Multiply();
 extern int TransformVertex();
 extern int Vec3ColorShiftClamp();
@@ -473,6 +497,7 @@ extern int Helper_MemMalloc_Post();
 extern int SetHi6();
 extern int StoreAtMinus8();
 extern int Mem_Free();
+extern int Mem_Malloc();
 extern int PackedListVisitor();
 extern int Helper_MenuStub_62B0();
 extern int Menu_FindPrevSelectable();
@@ -491,8 +516,11 @@ extern int Menu_ColorDepthErrorDialog();
 extern int Menu_InsertCDDialog();
 extern int Helper_MenuStub_8EB0();
 extern int Helper_TickInit();
+extern int DispatchScaledLEA();
+extern int VibrationFrameUpdate();
 extern int Helper_PreTick();
 extern int AltCamMatrixProject();
+extern int CameraSetupAndCullFan();
 extern int TickAllEntities();
 extern int VtableDispatchSetDirty();
 extern int Helper_TickInner();
@@ -502,16 +530,26 @@ extern int DirtyBitTripleWriteOrCall();
 extern int DirtyTestScaledCopy();
 extern int RenderSceneNode();
 extern int Helper_TickAlt();
+extern int BillboardChainRender();
 extern int DrawMeshBlock();
 extern int TristripBatchEmit3Cap();
+extern int TristripBatchEmit2();
 extern int TristripBatchEmit();
+extern int VertexQuadBuilder();
+extern int BboxProjectAndStash();
+extern int GamepadSeqRecord();
+extern int MovesPanelEmit();
+extern int SunbeamSpriteEmit();
 extern int ChainWalkCleanup();
 extern int LeaScaledCall();
 extern int CleanupCallTwice();
 extern int Helper_GeoLoadPre();
 extern int TestCallPush4Zero();
+extern int LoadGeoAsset_Default();
 extern int Thunk_LoadGeoAsset_Default();
+extern int Tex_DecodeRLE16();
 extern int Helper_GeoLoadPost();
+extern int LoadGeoAsset_Textures();
 extern int Thunk_Helper_GeoLoadPre();
 extern int AppInit_Misc4();
 extern int XformChainAdvance();
@@ -535,6 +573,7 @@ extern int ScaledNegThreeWords();
 extern int Helper_TitleAudioCleanup();
 extern int Thunk_FlushDrawQueue();
 extern int SetViewport();
+extern int Helper_TexUpload();
 extern int FlushDrawQueue();
 extern int ScanlineTexBlitPaletted();
 extern int BlitBlend16bpp();
@@ -567,6 +606,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x405400u, (void*)FrameFinalize},
     {0x405420u, (void*)SetJmp_ZeroAndDirty4},
     {0x405430u, (void*)ZeroAndDirty4},
+    {0x4055b0u, (void*)DirtyPushCallPop},
     {0x4059a0u, (void*)PushPopScaled18},
     {0x405a00u, (void*)ScaledAndMaskInitJmp},
     {0x405ac0u, (void*)Thunk_MStackPush2ChainPrepend},
@@ -582,18 +622,24 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4063e0u, (void*)MStackCall_MStackPush2ChainPrepend_004063e0},
     {0x4065b0u, (void*)MStackCall_MStackPush2ChainInsert_004065b0},
     {0x406600u, (void*)MStackCall_MStackPush2ChainPrepend_00406600},
+    {0x4066d0u, (void*)ScaledLoadGuardedJmp},
+    {0x4066f0u, (void*)MStackPushZeroCallPop},
     {0x406740u, (void*)MStackCall_MStackPush2ChainLLInsert},
+    {0x406790u, (void*)MStackPush2ChainLLInsert},
     {0x406b20u, (void*)ScaledLoadOrSetJmp},
     {0x406b50u, (void*)MStackCall_MStackPush2ChainInsert_00406b50},
     {0x406ba0u, (void*)CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx},
+    {0x406bb0u, (void*)GuardedChainPushSetCallPop},
     {0x406ce0u, (void*)ScaledStoreIdx24},
     {0x407140u, (void*)PushSetXfmMaskCallPop},
     {0x4077b0u, (void*)BootChainPushAddSignFlag},
     {0x4078e0u, (void*)SetJmp_CallPauseScaledStoreAdd},
     {0x4078f0u, (void*)CallPauseScaledStoreAdd},
+    {0x407d00u, (void*)MStackPushZeroCallPop_PendingMatch},
     {0x408510u, (void*)PushPopScaled1cDoubleCall},
     {0x408d20u, (void*)SetJmp_BootStateTriple},
     {0x409870u, (void*)MStackPush2ChainInsert},
+    {0x409aa0u, (void*)MStackBracket5_LinkedListUnlink},
     {0x417e20u, (void*)ScaledInit_Phase4SevenPackedDispatch_g_eventQueueTotal},
     {0x41aad0u, (void*)GuardedSeq_BootStateInitLongChain_then_StackPopDispatchTagged},
     {0x41f270u, (void*)ZeroLargeBlock},
@@ -617,6 +663,9 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x421f40u, (void*)InstallSelfStackReset},
     {0x4227b0u, (void*)Helper_PostPlayerTick},
     {0x422810u, (void*)CountdownClampWalk},
+    {0x425db0u, (void*)PvsMergeDriver},
+    {0x425f90u, (void*)PvsMerge_MatchEnd_00425f90},
+    {0x425fd0u, (void*)PvsMerge_MatchNode_00425fd0},
     {0x427460u, (void*)Thunk_BootMod6487eClampAndChainMul10},
     {0x428330u, (void*)ScaledArrStore_GuardedSeq_CopyJmp_then_MStackPushDualJmp},
     {0x428350u, (void*)GuardedSeq_CopyJmp_then_MStackPushDualJmp},
@@ -948,6 +997,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4a4170u, (void*)DebugStub_NoOp_A},
     {0x4ab2a0u, (void*)FixedDiv16},
     {0x4ab350u, (void*)FpuSqrtMul},
+    {0x4ab440u, (void*)LinkedListInsert},
     {0x4ab600u, (void*)DualAddSar},
     {0x4ab630u, (void*)StorePauseImulShr16},
     {0x4ab700u, (void*)AudioMixerStep},
@@ -983,7 +1033,17 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4b1bf0u, (void*)ECM_DecodeFrameDispatch},
     {0x4b1c30u, (void*)ECM_ParseFrameHeader},
     {0x4b1c90u, (void*)ECM_DecodeFrame},
+    {0x4b1cf0u, (void*)AppInit_PreInstall},
     {0x4b1de0u, (void*)TestCallZero},
+    {0x4b1e00u, (void*)FSYS_fopen},
+    {0x4b1ec0u, (void*)FSYS_NormalizePath},
+    {0x4b1f50u, (void*)FSYS_HashName},
+    {0x4b1f90u, (void*)FSYS_fclose},
+    {0x4b1fb0u, (void*)FSYS_fread},
+    {0x4b2070u, (void*)FSYS_fseek},
+    {0x4b2100u, (void*)FSYS_ftell},
+    {0x4b2120u, (void*)FSYS_fsize},
+    {0x4b2160u, (void*)FSYS_fload},
     {0x4b21c0u, (void*)Helper_AppStub_21C0},
     {0x4b21d0u, (void*)Helper_DrawMenuText},
     {0x4b2690u, (void*)AppShutdown},
@@ -999,6 +1059,9 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4b2d20u, (void*)Helper_EmitLine},
     {0x4b2e80u, (void*)ProjectVertex},
     {0x4b2fa0u, (void*)AdvanceTriStripRing},
+    {0x4b3030u, (void*)Color15BitPacker},
+    {0x4b30c0u, (void*)PackColor},
+    {0x4b3130u, (void*)Vec3NormalizeScaleStore},
     {0x4b31e0u, (void*)MatVec2Multiply},
     {0x4b3310u, (void*)TransformVertex},
     {0x4b3490u, (void*)Vec3ColorShiftClamp},
@@ -1030,6 +1093,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4b5ae0u, (void*)SetHi6},
     {0x4b5b00u, (void*)StoreAtMinus8},
     {0x4b5b10u, (void*)Mem_Free},
+    {0x4b5bc0u, (void*)Mem_Malloc},
     {0x4b5c90u, (void*)PackedListVisitor},
     {0x4b62b0u, (void*)Helper_MenuStub_62B0},
     {0x4b62c0u, (void*)Menu_FindPrevSelectable},
@@ -1048,8 +1112,11 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4b8d70u, (void*)Menu_InsertCDDialog},
     {0x4b8eb0u, (void*)Helper_MenuStub_8EB0},
     {0x4b8ec0u, (void*)Helper_TickInit},
+    {0x4b8f50u, (void*)DispatchScaledLEA},
+    {0x4b9640u, (void*)VibrationFrameUpdate},
     {0x4b9770u, (void*)Helper_PreTick},
     {0x4b9840u, (void*)AltCamMatrixProject},
+    {0x4b99b0u, (void*)CameraSetupAndCullFan},
     {0x4b9e50u, (void*)TickAllEntities},
     {0x4ba040u, (void*)VtableDispatchSetDirty},
     {0x4ba130u, (void*)Helper_TickInner},
@@ -1059,16 +1126,26 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4ba6c0u, (void*)DirtyTestScaledCopy},
     {0x4ba720u, (void*)RenderSceneNode},
     {0x4bae90u, (void*)Helper_TickAlt},
+    {0x4bb030u, (void*)BillboardChainRender},
     {0x4bb250u, (void*)DrawMeshBlock},
     {0x4bb680u, (void*)TristripBatchEmit3Cap},
+    {0x4bb930u, (void*)TristripBatchEmit2},
     {0x4bbb80u, (void*)TristripBatchEmit},
+    {0x4bc470u, (void*)VertexQuadBuilder},
+    {0x4bc5a0u, (void*)BboxProjectAndStash},
+    {0x4bcc70u, (void*)GamepadSeqRecord},
+    {0x4bcf60u, (void*)MovesPanelEmit},
+    {0x4bd270u, (void*)SunbeamSpriteEmit},
     {0x4bd4a0u, (void*)ChainWalkCleanup},
     {0x4bd510u, (void*)LeaScaledCall},
     {0x4bd530u, (void*)CleanupCallTwice},
     {0x4bd570u, (void*)Helper_GeoLoadPre},
     {0x4bd590u, (void*)TestCallPush4Zero},
+    {0x4bd5b0u, (void*)LoadGeoAsset_Default},
     {0x4bd5c0u, (void*)Thunk_LoadGeoAsset_Default},
+    {0x4bd5f0u, (void*)Tex_DecodeRLE16},
     {0x4bd6d0u, (void*)Helper_GeoLoadPost},
+    {0x4bd6e0u, (void*)LoadGeoAsset_Textures},
     {0x4bd8d0u, (void*)Thunk_Helper_GeoLoadPre},
     {0x4bd960u, (void*)AppInit_Misc4},
     {0x4bd990u, (void*)XformChainAdvance},
@@ -1092,6 +1169,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4bea40u, (void*)Helper_TitleAudioCleanup},
     {0x4bf320u, (void*)Thunk_FlushDrawQueue},
     {0x4bf330u, (void*)SetViewport},
+    {0x4bf370u, (void*)Helper_TexUpload},
     {0x4bf460u, (void*)FlushDrawQueue},
     {0x4c0360u, (void*)ScanlineTexBlitPaletted},
     {0x4c05e0u, (void*)BlitBlend16bpp},
