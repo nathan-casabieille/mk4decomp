@@ -351,8 +351,6 @@ __attribute__((weak)) int BitFlagEffectDispatch(){return 0;}
 __attribute__((weak)) int Cmp2DirtyToggle(){return 0;}
 __attribute__((weak)) int DispatchPair(){return 0;}
 __attribute__((weak)) int DoublePushWalkInitJmp(){return 0;}
-__attribute__((weak)) int DownloadCharSetup(){return 0;}
-__attribute__((weak)) int DownloadDualPush(){return 0;}
 __attribute__((weak)) int DualBitGateInitCall(){return 0;}
 __attribute__((weak)) int DualEntryInstallSelfScaled(){return 0;}
 __attribute__((weak)) int DualPushCallStore(){return 0;}
@@ -365,4 +363,6 @@ __attribute__((weak)) int QuadGuardedCjSet_004230b0(){return 0;}
 __attribute__((weak)) int RecordListIterMStack(){return 0;}
 __attribute__((weak)) int RoundReset(){return 0;}
 __attribute__((weak)) int StageParticleEmitterInit(){return 0;}
+__attribute__((weak)) int DownloadPlayerChar(){return 0;}
+__attribute__((weak)) int GuardedDualPushTailJmp(){return 0;}
 #endif /* MK4_NATIVE_FULL */

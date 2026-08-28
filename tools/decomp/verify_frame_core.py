@@ -858,6 +858,18 @@ def _mim():
     return d
 
 
+def _dlp():
+    return {
+        'g_dlNalt1': 3, 'g_dlNalt2': 5, 'g_fightGroupHead': 0x2e4000,
+        'g_framePauseFlag': 0, 'g_walkCallback': 0, 'g_eventQueueCurrent': 0,
+        'g_lit16_00542074': 0,
+        '@0x53a510': 0x11, '@0x52aafc': 0x22, '@0x537f78': 0x33,
+        '@0x541de0': 0x44, '@0x538158': 0, '@0x53815c': 0,
+        '@0xb90034': 0x8000000a,
+        '@0x48bcf0': b'\xc3', '@0x4231f0': b'\xc3',
+    }
+
+
 def _fpss():
     clear4 = b'\x83\x25' + (0x54208c).to_bytes(4, 'little') + b'\xfb\xc3'
     return {
@@ -1514,6 +1526,21 @@ SEEDS = {
             '@0x4223e0': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
         ('pause inside the player spawn', dict(_mim(), **{
             '@0x422e20': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+    ],
+    # The two player spawns. The download and dual-push passes are stubbed;
+    # the group they leave in g_fightGroupHead is what gets dressed, so the
+    # field values and the player-node globals are what is checked.
+    'DownloadDualPush': [
+        ('spawns player 1', _dlp()),
+        ('pause inside the download', dict(_dlp(), **{
+            '@0x48bcf0': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+        ('pause inside the dual push', dict(_dlp(), **{
+            '@0x4231f0': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
+    ],
+    'DownloadCharSetup': [
+        ('spawns player 2', _dlp()),
+        ('pause inside the download', dict(_dlp(), **{
+            '@0x48bcf0': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'})),
     ],
     'TableSearch': [
         ('id 100 or more: refused', {'@0x4f7d40': 0}, (100,)),

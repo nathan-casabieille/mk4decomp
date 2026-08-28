@@ -115,6 +115,8 @@ src/engine/distance3_d_mul10_chain.c
 src/engine/double_stack_push_and_jmp.c
 src/engine/double_stack_push_and_jmp7b.c
 src/engine/double_stack_push_and_jmp7d.c
+src/engine/download_char_setup.c
+src/engine/download_dual_push.c
 src/engine/draw_mesh_block.c
 src/engine/draw_scene.c
 src/engine/dual_call_pause_dirty_jmp.c
