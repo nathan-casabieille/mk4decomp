@@ -248,6 +248,23 @@ void MK4_GameFrame(void)
                     *MK4_VA(unsigned int, 0x53815cu),
                     *MK4_VA(unsigned int, 0x54205cu),
                     (unsigned)*MK4_VA(unsigned char, 0x54371cu));
+        /* MK4_FORCE_ROOTS=<frame> is a DIAGNOSTIC, not a port feature: it
+         * hands TickAllEntities' second walk root a list made of the two
+         * player nodes, to answer whether the render path draws once the
+         * list is non-empty. Nothing in the game writes these three heads
+         * by name, so this is how we tell "the list is the only thing
+         * missing" from "the geometry is not in the graph either". */
+        if (getenv("MK4_BOOT_MATCH")) {
+            const char *at = getenv("MK4_FORCE_ROOTS");
+            if (at && frame == atoi(at)) {
+                unsigned int p1 = *MK4_VA(unsigned int, 0x538158u);
+                unsigned int root = 0x53a1e0u >> 2;
+                MK4_NODE_AT(unsigned int, root, 0) = 1;
+                MK4_NODE_AT(unsigned int, root, 4) = p1;
+                MK4_NODE_AT(unsigned int, root, 8) = 5;   /* link at +0x1c */
+                SDL_Log("force-roots: head=%x at frame %d", p1, frame);
+            }
+        }
         /* MK4_BOOT_FIGHT=<frame> schedules the match init once the loader
          * has the assets in. In the original this comes from
          * Phase3InstallSelf, which the demo/title state machines drive;

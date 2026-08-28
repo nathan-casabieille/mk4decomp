@@ -1666,6 +1666,30 @@ SEEDS = {
             '@0xb90030': 0, '@0x538038': 0x2e4000, 'g_dlNalt1': 0x11,
             'g_walkCallback': 0, 'g_currentNodeIdx': 0, '@0x543064': 0x777}),
     ],
+    # The scene walk: header node's +4 is the list head, +8 the link
+    # offset (plus two). The callback is a stored CODE VA - stubbed here at
+    # its VA so the harness exercises the same resolve the native build does.
+    'Helper_TickInner': [
+        ('empty list', {'g_currentNodeIdx': 0x2e4000, '@0xb90004': 0,
+            '@0xb90008': 5, 'g_walkCallback': 0x4ba1c0,
+            'g_xformDirtyFlags': 0, 'g_framePauseFlag': 0,
+            '@0x4ba1c0': b'\xc3'}),
+        ('two nodes then the end', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90004': 0x2e4400, '@0xb90008': 5,
+            'g_walkCallback': 0x4ba1c0, 'g_xformDirtyFlags': 0,
+            'g_framePauseFlag': 0, '@0xb9141c': 0x2e4800, '@0xb9241c': 0,
+            '@0x4ba1c0': b'\xc3'}),
+        ('callback sets dirty bit 0: stops', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90004': 0x2e4400, '@0xb90008': 5,
+            'g_walkCallback': 0x4ba1c0, 'g_xformDirtyFlags': 0,
+            'g_framePauseFlag': 0, '@0xb9141c': 0x2e4800,
+            '@0x4ba1c0': b'\x83\x0d\x8c\x20\x54\x00\x01\xc3'}),
+        ('callback pauses', {'g_currentNodeIdx': 0x2e4000,
+            '@0xb90004': 0x2e4400, '@0xb90008': 5,
+            'g_walkCallback': 0x4ba1c0, 'g_xformDirtyFlags': 0,
+            'g_framePauseFlag': 0, '@0xb9141c': 0x2e4800,
+            '@0x4ba1c0': b'\xc7\x05\x6c\x1e\x54\x00\x01\x00\x00\x00\xc3'}),
+    ],
     'TableSearch': [
         ('id 100 or more: refused', {'@0x4f7d40': 0}, (100,)),
         ('first slot hit', {'@0x4f7d40': 7, '@0x4f7d44': 9}, (7,)),

@@ -169,7 +169,11 @@ loop_entry:
  * g_walkCallback captured at entry; the global is reused as walk scratch. */
 void Helper_TickInner(void)
 {
-    void (*cb)(void) = (void (*)(void))g_walkCallback;   /* ebx: saved callback */
+    /* ebx: the saved callback. It is a stored CODE VA, so it needs the
+     * trampoline - identity everywhere else, the native function under the
+     * arena. Calling it raw jumps to an unmapped address, which is what
+     * the walk did the first time a scene list was non-empty. */
+    void (*cb)(void) = (void (*)(void))MK4_ResolveCode(g_walkCallback);
     unsigned int idx     = g_currentNodeIdx;
     unsigned int cur     = g_siblingTable[idx + 1];      /* eax = node[idx].f4 */
     unsigned int next_off = g_siblingTable[idx + 2] + 2; /* edi = node[idx].f8 + 2 */
