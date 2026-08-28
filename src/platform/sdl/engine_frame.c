@@ -233,6 +233,14 @@ void MK4_GameFrame(void)
          * backend publishes them, once per frame, before the logic runs. */
         { extern void MK4_NativeInputPublish(void); MK4_NativeInputPublish(); }
         { extern void MK4_NativeFakeKeyTick(void); MK4_NativeFakeKeyTick(); }
+        if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
+            SDL_Log("f%-3d queue=%u tickInit=%x head738=%x head1e0=%x "
+                    "head1e50=%x",
+                    frame, *MK4_VA(unsigned int, 0x00f85b40u),
+                    *MK4_VA(unsigned int, 0x00ab4e70u),
+                    *MK4_VA(unsigned int, 0x0053a738u),
+                    *MK4_VA(unsigned int, 0x0053a1e0u),
+                    *MK4_VA(unsigned int, 0x00541e50u));
         /* MK4_BOOT_PRESS=<frame> answers the loading screen's press-start
          * gate, which is an EDGE detector - a held key latches it once and
          * never fires again. */
