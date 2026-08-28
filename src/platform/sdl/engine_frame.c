@@ -73,6 +73,11 @@ static void MK4_EngineStateInit(void)
     ResetConfigToDefaults();
     MStackPackedInit();
     Set2FiveCallPauseJmp();
+    if (getenv("MK4_TRACE_SCENE"))
+        SDL_Log("init: after Set2FiveCallPauseJmp pause=%x freeChainHdr=%x/%x",
+                *MK4_VA(unsigned int, 0x541e6cu),
+                *MK4_VA(unsigned int, 0x541e74u),
+                *MK4_VA(unsigned int, 0x535e0cu));
     AppInit_Misc7();
     AppInit_Misc8();
     /* AppInit seeds the PRNG from timeGetTime; a fixed seed keeps the native
@@ -242,6 +247,27 @@ void MK4_GameFrame(void)
                     *MK4_VA(unsigned int, 0x0053a738u),
                     *MK4_VA(unsigned int, 0x0053a1e0u),
                     *MK4_VA(unsigned int, 0x00541e50u));
+        if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
+            SDL_Log("      root8070=%x/%x  1e0head=%x  siblingTail=%x",
+                    *MK4_VA(unsigned int, 0x00538070u),
+                    *MK4_VA(unsigned int, 0x00538074u),
+                    *MK4_VA(unsigned int, 0x0053a1e4u),
+                    *MK4_VA(unsigned int, 0x0053e440u));
+        if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
+            SDL_Log("      freeChain=%x freeVar=%x  chainHead=%x size=%x",
+                    *MK4_VA(unsigned int, 0x00541e74u),
+                    *MK4_VA(unsigned int, 0x00541e78u),
+                    *MK4_VA(unsigned int, 0x00541e74u) ?
+                      *MK4_NODE(unsigned int, *MK4_VA(unsigned int, 0x00541e74u)) : 0,
+                    *MK4_VA(unsigned int, 0x00541e74u) ?
+                      MK4_NODE_AT(unsigned int, *MK4_VA(unsigned int, 0x00541e74u), 0xc) : 0);
+        if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
+            SDL_Log("      altBlock=%x  hdrWords=%x %x %x %x",
+                    *MK4_VA(unsigned int, 0x00541e70u),
+                    *MK4_VA(unsigned int, 0x00535e08u),
+                    *MK4_VA(unsigned int, 0x00535e0cu),
+                    *MK4_VA(unsigned int, 0x00535e10u),
+                    *MK4_VA(unsigned int, 0x00535e14u));
         if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
             SDL_Log("      p1=%x p2=%x grp=%x dlEnab=%x",
                     *MK4_VA(unsigned int, 0x538158u),

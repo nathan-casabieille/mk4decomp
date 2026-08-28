@@ -34,6 +34,7 @@ src/boot/call_set_pause.c
 src/boot/finalize.c
 src/boot/guarded_chain_push_set_call_pop.c
 src/boot/helper_tick_frame_tail.c
+src/boot/init6_globals.c
 src/boot/load_shl_deref_call_skip.c
 src/boot/m_stack_bracket1_tree_walk_recursive2.c
 src/boot/m_stack_bracket2_tree_walk_recursive.c
@@ -265,6 +266,7 @@ src/engine/scanline_tex_blit_alpha.c
 src/engine/scanline_tex_blit_interlaced.c
 src/engine/scanline_tex_blit_paletted.c
 src/engine/scenegraph.c
+src/engine/sentinel_init_triple_call.c
 src/engine/set_hi6.c
 src/engine/setjmp_wrappers.c
 src/engine/six_double_push_call.c

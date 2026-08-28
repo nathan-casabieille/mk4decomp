@@ -49,7 +49,7 @@ void Init6Globals(void) {
     g_logicFrameCounter = 0;
     g_dispatchSave401 = 0;
     g_dispatchSave304 = 0;
-    g_walkCallback = (void (*)(void))1;
+    g_walkCallback = 1;
     g_dispatchSave400 = 1;
     BootInitChainHeavy();
 }

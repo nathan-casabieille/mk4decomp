@@ -159,6 +159,15 @@ signed-audit:
 global-refs-audit:
 	@build/venv/bin/python tools/decomp/audit_global_refs.py
 
+# probe-writes: run a function's ORIGINAL bytes in the emulator and report
+# what it writes. A SEARCH tool, not a gate: when a global is only ever
+# written through a computed index - no instruction anywhere names its
+# address - the static search that finds every other writer comes up empty,
+# and running candidates is what is left. That is how the scene-heap
+# initializer was found. Usage:
+#   build/venv/bin/python tools/decomp/probe_writes.py <fn>... --watch=0xVA,...
+#   ... --all   sweeps every function in the map
+
 # unaliased-writes-audit: a LINKED native TU that writes an engine global
 # without an arena alias. The assignment lands in the weak native global of
 # the same name - a host variable - instead of the arena word every other TU

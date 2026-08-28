@@ -286,7 +286,6 @@ __attribute__((weak)) int Helper_DrawMenu_PostRender(){return 0;}
 __attribute__((weak)) int AppInit_Misc8(){return 0;}
 __attribute__((weak)) int GlobalsResetInit(){return 0;}
 __attribute__((weak)) int PendingMatch_004c9df0(){return 0;}
-__attribute__((weak)) int SentinelInitTripleCall(){return 0;}
 __attribute__((weak)) int Anim_LoadPackFile(){return 0;}
 __attribute__((weak)) int Init0AndMax(){return 0;}
 __attribute__((weak)) int CameraSetupAndCullFan(){return 0;}
@@ -364,4 +363,6 @@ __attribute__((weak)) int Phase3InstallSelf(){return 0;}
 __attribute__((weak)) int ScaledLoadCmp0fJmp(){return 0;}
 __attribute__((weak)) int SlotPhaseResetInstallChain(){return 0;}
 __attribute__((weak)) int ScaledAddDeref(){return 0;}
+__attribute__((weak)) int BootInitChainHeavy(){return 0;}
+__attribute__((weak)) int PendingMatch_ZeroNDwords(){return 0;}
 #endif /* MK4_NATIVE_FULL */

@@ -34,7 +34,7 @@ extern void Init6Globals(void);
 extern void PendingMatch_ZeroNDwords(void);
 void SentinelInitTripleCall(void) {
     g_phase1ModelChain = 0xfedcba98;
-    g_walkCallback = (void(*)(void))0x8a9dcbef;
+    g_walkCallback = 0x8a9dcbef;
     g_dispatchSave415 = 0x8a9dcbef;
     DualEntryInitCmp();
     if (g_framePauseFlag) return;
