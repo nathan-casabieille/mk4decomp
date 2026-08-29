@@ -240,6 +240,18 @@ void RenderSceneNode(void)
         g_vtxTransY = (unsigned int)((int)g_dispatchSave1502 >> 0x11);
     }
     g_vtxTransZ = (unsigned int)((int)g_dispatchSave1503 >> 8);
+#ifdef TARGET_SDL
+    /* MK4_TRACE_GEO: where the emitted geometry actually sits in camera
+     * space, and how far it is from the eye. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int n;
+      if (getenv("MK4_TRACE_GEO") && n < 10
+          && *MK4_VA(unsigned int, 0x537f94u) != 0) { n++;
+        SDL_Log("GEO node=%x cam=[%d %d %d] eye=[%d %d %d]",
+                node, (int)g_vtxTransX, (int)g_vtxTransY, (int)g_vtxTransZ,
+                *MK4_VA(int, 0xab4d18u) >> 8, *MK4_VA(int, 0xab4d1cu) >> 8,
+                *MK4_VA(int, 0xab4d20u) >> 8); } }
+#endif
     g_dualC = g_cj_00542054 >> 2;
 
     if (((g_currentNodeFlags | g_cj_0054205c) & 0x80) == 0) {
