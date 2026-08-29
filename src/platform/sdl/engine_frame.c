@@ -368,6 +368,16 @@ void MK4_GameFrame(void)
                 SDL_Log("boot-match: Enter pressed at frame %d", frame);
             }
         }
+        /* MK4_BOOT_ROUND=<frame>: from that frame on, hold the round-start
+         * gate 0x537f94 up (the "FIGHT!" signal the round-intro FSM would
+         * raise). The intro FSM band (StateDispatchYield's reaction tables)
+         * is still stubbed; without the gate the camera node's phase pump
+         * yields every frame and the walk never reaches the fighters. */
+        {
+            const char *rs = getenv("MK4_BOOT_ROUND");
+            if (rs && frame >= atoi(rs))
+                *MK4_VA(unsigned int, 0x537f94u) = 1;
+        }
         /* MK4_DUMP_ARENA=<frame>:<path> writes the LIVE arena to a file at
          * that frame. probe_writes --arena=<path> then runs ORIGINAL bytes
          * against the exact state the native build had - which is how a

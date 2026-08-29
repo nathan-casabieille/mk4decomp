@@ -40,3 +40,8 @@ entries:
   0x494020: AnimEventNodeCallback_00494020
   0x464560: FightCamMode1_00464560
   0x4645e0: FightCamMode2_004645e0
+  0x46a230: RoundReaction20012_0046a230
+  0x46a240: RoundCountdownEnter_0046a240
+  0x46a2e0: RoundCountdownTick_0046a2e0
+  0x46a3e0: BodyChainState_0046a3e0
+  0x46a4d0: RoundIntroSwap_0046a4d0

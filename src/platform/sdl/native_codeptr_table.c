@@ -311,6 +311,7 @@ extern int Thunk_StateInstall_0045d450();
 extern int Thunk_StateInstall_0045d4c0();
 extern int Thunk_StateInstall_0045d560();
 extern int Thunk_Thunk();
+extern int BitSavePushCallMergePop();
 extern int Thunk_Thunk_0049cbc0_0045e0f0();
 extern int SetJmp_SixSubdispatchSpan_0045ebf0();
 extern int SetJmp_SixSubdispatchSpan_0045ec00();
@@ -344,9 +345,18 @@ extern int ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket
 extern int GuardedSeq_GuardedTripleCallSetTail_then_GuardedSeq();
 extern int GuardedTripleCallSetTail();
 extern int CallJmp();
+extern int RoundReaction20012_0046a230();
+extern int RoundCountdownEnter_0046a240();
+extern int RoundCountdownTick_0046a2e0();
+extern int MStackInstallBodyChain();
+extern int BodyChainState_0046a3e0();
+extern int RoundIntroSwap_0046a4d0();
+extern int CallPauseCmpStateJmp();
+extern int PushArgClearSetCallJmp();
 extern int FiveCallGuardSetTail();
 extern int ScaledChainNegStore();
 extern int DualFieldAddSubStore();
+extern int StateDispatchYield();
 extern int Wrapper_ArgSarStoreJmp_004eba28();
 extern int GuardedSeq_MStackCall_then_CallSetPause_00471670();
 extern int GuardedSeq_DualPushCmp12Dispatch68_then_ByteWordTableTaggedDispatch();
@@ -441,6 +451,7 @@ extern int ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430();
 extern int ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450();
 extern int ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d470();
 extern int ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490();
+extern int State6Latch();
 extern int OrDualStore_0048e4b0();
 extern int LeaPlus22StoreSelf();
 extern int ScaledIndexCondCopy();
@@ -454,10 +465,14 @@ extern int CopyJmp_ScaledSubStore_g_currentNodeIdx();
 extern int ScaledSubStore();
 extern int CopyJmp_SlotCmp3way_g_currentNodeIdx();
 extern int DirtyToggleByGate();
+extern int InstallSelfIndirectJmpNeg();
+extern int InstallSelfOrCmpJmp();
 extern int GuardedDirtyXformFromTable();
 extern int ScaledInit_GuardedDirtyXformFromTable_g_scaledInit();
 extern int ScaledChainCallPauseSetJmp();
 extern int Wrapper_IterLoad_0048fd30_004f12a8();
+extern int SwapOrPassSet();
+extern int DualGatedStateYield();
 extern int IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall();
 extern int Wrapper_IterLoad_0048fd30_004f12ac();
 extern int ScaledXorStore_004900f0();
@@ -1060,6 +1075,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x45d4c0u, (void*)Thunk_StateInstall_0045d4c0},
     {0x45d560u, (void*)Thunk_StateInstall_0045d560},
     {0x45dae0u, (void*)Thunk_Thunk},
+    {0x45dc60u, (void*)BitSavePushCallMergePop},
     {0x45e0f0u, (void*)Thunk_Thunk_0049cbc0_0045e0f0},
     {0x45ebf0u, (void*)SetJmp_SixSubdispatchSpan_0045ebf0},
     {0x45ec00u, (void*)SetJmp_SixSubdispatchSpan_0045ec00},
@@ -1093,9 +1109,18 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x467c80u, (void*)GuardedSeq_GuardedTripleCallSetTail_then_GuardedSeq},
     {0x467ca0u, (void*)GuardedTripleCallSetTail},
     {0x467d30u, (void*)CallJmp},
+    {0x46a230u, (void*)RoundReaction20012_0046a230},
+    {0x46a240u, (void*)RoundCountdownEnter_0046a240},
+    {0x46a2e0u, (void*)RoundCountdownTick_0046a2e0},
+    {0x46a3a0u, (void*)MStackInstallBodyChain},
+    {0x46a3e0u, (void*)BodyChainState_0046a3e0},
+    {0x46a4d0u, (void*)RoundIntroSwap_0046a4d0},
+    {0x46a520u, (void*)CallPauseCmpStateJmp},
+    {0x46a580u, (void*)PushArgClearSetCallJmp},
     {0x46f6b0u, (void*)FiveCallGuardSetTail},
     {0x470310u, (void*)ScaledChainNegStore},
     {0x470340u, (void*)DualFieldAddSubStore},
+    {0x471190u, (void*)StateDispatchYield},
     {0x471340u, (void*)Wrapper_ArgSarStoreJmp_004eba28},
     {0x471670u, (void*)GuardedSeq_MStackCall_then_CallSetPause_00471670},
     {0x472820u, (void*)GuardedSeq_DualPushCmp12Dispatch68_then_ByteWordTableTaggedDispatch},
@@ -1190,6 +1215,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x48d450u, (void*)ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450},
     {0x48d470u, (void*)ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d470},
     {0x48d490u, (void*)ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490},
+    {0x48e240u, (void*)State6Latch},
     {0x48e4b0u, (void*)OrDualStore_0048e4b0},
     {0x48e4d0u, (void*)LeaPlus22StoreSelf},
     {0x48e590u, (void*)ScaledIndexCondCopy},
@@ -1203,10 +1229,14 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x48ee90u, (void*)ScaledSubStore},
     {0x48ef90u, (void*)CopyJmp_SlotCmp3way_g_currentNodeIdx},
     {0x48f350u, (void*)DirtyToggleByGate},
+    {0x48f4f0u, (void*)InstallSelfIndirectJmpNeg},
+    {0x48f570u, (void*)InstallSelfOrCmpJmp},
     {0x48f6d0u, (void*)GuardedDirtyXformFromTable},
     {0x48f720u, (void*)ScaledInit_GuardedDirtyXformFromTable_g_scaledInit},
     {0x48f8e0u, (void*)ScaledChainCallPauseSetJmp},
     {0x48fbc0u, (void*)Wrapper_IterLoad_0048fd30_004f12a8},
+    {0x48fbf0u, (void*)SwapOrPassSet},
+    {0x48fc80u, (void*)DualGatedStateYield},
     {0x48fd30u, (void*)IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall},
     {0x48ff30u, (void*)Wrapper_IterLoad_0048fd30_004f12ac},
     {0x4900f0u, (void*)ScaledXorStore_004900f0},

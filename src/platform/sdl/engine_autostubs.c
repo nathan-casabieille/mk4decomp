@@ -381,4 +381,7 @@ __attribute__((weak)) int PerSlotPhaseRouter_DualGatedStateYield_00460770(){retu
 __attribute__((weak)) int UnlinkChainInstall_00460dd0(){return 0;}
 __attribute__((weak)) int FiveCallGuardSetTail(){return 0;}
 __attribute__((weak)) int SoundSetupLoop(){return 0;}
+__attribute__((weak)) int CmpCondIdxArrLookup(){return 0;}
+__attribute__((weak)) int ScaledInitOrSelfPtrSetType_0046a5e0(){return 0;}
+__attribute__((weak)) int GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0046a560(){return 0;}
 #endif /* MK4_NATIVE_FULL */
