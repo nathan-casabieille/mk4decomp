@@ -128,7 +128,6 @@ __attribute__((weak)) int ByteWordTableTaggedDispatch(){return 0;}
 __attribute__((weak)) int CallPauseDirty1JmpDirty4StackPush_GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(){return 0;}
 __attribute__((weak)) int CameraAimSplineDriver(){return 0;}
 __attribute__((weak)) int Cascade5StageInit(){return 0;}
-__attribute__((weak)) int ChainDirtyBitWalker(){return 0;}
 __attribute__((weak)) int ChainNodeInit(){return 0;}
 __attribute__((weak)) int ChainSetupBitToggle(){return 0;}
 __attribute__((weak)) int ChainSlotSetupInstallSelf(){return 0;}

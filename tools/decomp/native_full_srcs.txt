@@ -387,3 +387,4 @@ src/engine/track_installer_band.c
 src/engine/fight_approach_band.c
 src/engine/round_setup_states.c
 src/engine/scaled_lit_add_jmp.c
+src/boot/chain_dirty_bit_walker.c
