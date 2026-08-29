@@ -159,6 +159,13 @@ signed-audit:
 global-refs-audit:
 	@build/venv/bin/python tools/decomp/audit_global_refs.py
 
+# template-twins-audit: linked twins whose bodies are byte-identical to each
+# other. A family written from one template and never specialised looks
+# correct until the original bytes say otherwise - seven of ten wrappers in
+# mstack_calls.c were wrong that way, including the scene-node attach.
+template-twins-audit:
+	@build/venv/bin/python tools/decomp/audit_template_twins.py
+
 # probe-writes: run a function's ORIGINAL bytes in the emulator and report
 # what it writes. A SEARCH tool, not a gate: when a global is only ever
 # written through a computed index - no instruction anywhere names its
