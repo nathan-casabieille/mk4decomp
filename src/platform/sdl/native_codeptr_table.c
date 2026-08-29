@@ -388,6 +388,7 @@ extern int PendingMatch_StackPopDispatchTagged_00466fc0();
 extern int TrackInstall_00467100();
 extern int RoundBanner_00467600();
 extern int RoundBannerTick_00467710();
+extern int ScaledOrStore_004677a0();
 extern int ScaledAddrInit_IntroComboFsmCluster_004677c0();
 extern int ScaledAddrInit_IntroComboFsmCluster_004677e0();
 extern int IntroComboFsmCluster();
@@ -412,6 +413,7 @@ extern int ScaledChainNegStore();
 extern int DualFieldAddSubStore();
 extern int StateDispatchYield();
 extern int Wrapper_ArgSarStoreJmp_004eba28();
+extern int MStackBracketedStoreTwoCall();
 extern int GuardedSeq_MStackCall_then_CallSetPause_00471670();
 extern int GuardedSeq_DualPushCmp12Dispatch68_then_ByteWordTableTaggedDispatch();
 extern int GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch();
@@ -475,6 +477,7 @@ extern int DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThreshold
 extern int ScaledStateNegCallPauseLoad();
 extern int ScaledChainPushCall();
 extern int Push16Call();
+extern int GatedWordPushCall();
 extern int OrDualStore_0048a190();
 extern int DualBitGateInitCall();
 extern int Wrapper_ScaledChainPushCall_004ef980();
@@ -1242,6 +1245,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x467100u, (void*)TrackInstall_00467100},
     {0x467600u, (void*)RoundBanner_00467600},
     {0x467710u, (void*)RoundBannerTick_00467710},
+    {0x4677a0u, (void*)ScaledOrStore_004677a0},
     {0x4677c0u, (void*)ScaledAddrInit_IntroComboFsmCluster_004677c0},
     {0x4677e0u, (void*)ScaledAddrInit_IntroComboFsmCluster_004677e0},
     {0x467800u, (void*)IntroComboFsmCluster},
@@ -1266,6 +1270,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x470340u, (void*)DualFieldAddSubStore},
     {0x471190u, (void*)StateDispatchYield},
     {0x471340u, (void*)Wrapper_ArgSarStoreJmp_004eba28},
+    {0x4714e0u, (void*)MStackBracketedStoreTwoCall},
     {0x471670u, (void*)GuardedSeq_MStackCall_then_CallSetPause_00471670},
     {0x472820u, (void*)GuardedSeq_DualPushCmp12Dispatch68_then_ByteWordTableTaggedDispatch},
     {0x472840u, (void*)GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch},
@@ -1329,6 +1334,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x489e90u, (void*)ScaledStateNegCallPauseLoad},
     {0x489ee0u, (void*)ScaledChainPushCall},
     {0x489f50u, (void*)Push16Call},
+    {0x489f90u, (void*)GatedWordPushCall},
     {0x48a190u, (void*)OrDualStore_0048a190},
     {0x48a1c0u, (void*)DualBitGateInitCall},
     {0x48a250u, (void*)Wrapper_ScaledChainPushCall_004ef980},
@@ -1721,7 +1727,9 @@ void *MK4_ResolveCode(unsigned va) {
         int mid = (lo + hi) >> 1;
         unsigned m = g_codePtrTable[mid].va;
         if (m == va) {
-            if (trace) SDL_Log("dispatch 0x%08x", va);
+            { extern int g_mk4CodePtrSelfTesting;
+              if (trace && !g_mk4CodePtrSelfTesting)
+                  SDL_Log("dispatch 0x%08x", va); }
             return g_codePtrTable[mid].fn;
         }
         if (m < va) lo = mid + 1; else hi = mid - 1;
@@ -1737,10 +1745,21 @@ void *MK4_ResolveCode(unsigned va) {
     return (void*)MK4_CodeMissing;
 }
 
+/* The self-test resolves EVERY table entry, so with MK4_TRACE_CODE on
+ * it would emit one "dispatch" line per entry before the game starts -
+ * indistinguishable from a real invocation, and read as coverage it says
+ * a function ran when it never did. The tracer honours this flag so a
+ * dispatch count means what it looks like. Keep this in the GENERATOR:
+ * hand-editing the generated file loses it on the next regeneration.
+ */
+int g_mk4CodePtrSelfTesting;
+
 void MK4_CodePtrSelfTest(void) {
     int i, ok = 0;
+    g_mk4CodePtrSelfTesting = 1;
     for (i = 0; i < MK4_CODEPTR_N; i++)
         if (MK4_ResolveCode(g_codePtrTable[i].va) == g_codePtrTable[i].fn) ok++;
+    g_mk4CodePtrSelfTesting = 0;
     SDL_Log("codeptr trampoline: %d/%d VAs resolve to native fns", ok, MK4_CODEPTR_N);
 }
 #endif /* MK4_NATIVE_FULL */
