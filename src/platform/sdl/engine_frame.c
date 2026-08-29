@@ -433,6 +433,15 @@ void MK4_GameFrame(void)
                     *MK4_VA(unsigned int, 0x5380e0u),
                     *MK4_VA(unsigned int, 0x543800u),
                     *MK4_VA(unsigned int, 0x537f94u));
+            SDL_Log("STAGE2 f=%d baseSel=%08x groupHead=%08x p1=%08x cam+8=%08x cam+84=%08x",
+                    frame,
+                    *MK4_VA(unsigned int, 0x542060u),
+                    *MK4_VA(unsigned int, 0x54205cu),
+                    *MK4_VA(unsigned int, 0x538158u),
+                    *MK4_VA(unsigned int, 0x542060u) ?
+                        *(unsigned int *)MK4_PTR(*MK4_VA(unsigned int, 0x542060u) * 4u + 8u) : 0,
+                    *MK4_VA(unsigned int, 0x542060u) ?
+                        *(unsigned int *)MK4_PTR(*MK4_VA(unsigned int, 0x542060u) * 4u + 0x84u) : 0);
         }
         if (getenv("MK4_BOOT_MATCH")) {
             const char *at = getenv("MK4_BOOT_FIGHT");
