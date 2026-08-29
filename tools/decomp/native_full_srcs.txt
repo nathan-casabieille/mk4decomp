@@ -378,3 +378,4 @@ src/engine/stage_camera_init.c
 src/engine/round_intro_fsm.c
 src/engine/move_commit_selectors.c
 src/engine/move_commit_band.c
+src/engine/walk_toward_band.c

@@ -68,3 +68,8 @@ entries:
   0x414cf0: EffectSpawner_00414cf0
   0x414fc0: Phase4Cleanup_00414fc0
   0x427230: EffectTick_00427230
+  0x430430: FightGroupInit_00430430
+  0x4304b0: FightGroupCont_004304b0
+  0x408de0: GroupAnimListPump_00408de0
+  0x46b3b0: StateRemapFsm_0046b3b0
+  0x46b490: StateRemapTail_0046b490
