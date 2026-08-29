@@ -37,6 +37,7 @@ src/boot/boot_scheduled_node_timer_walk.c
 src/boot/boot_state_triple.c
 src/boot/call_pause_scaled_store_add.c
 src/boot/call_set_pause.c
+src/boot/dirty_toggle_install.c
 src/boot/finalize.c
 src/boot/guarded_chain_push_set_call_pop.c
 src/boot/helper_tick_frame_tail.c
@@ -107,6 +108,7 @@ src/engine/call_zero2.c
 src/engine/camera_setup_and_cull_fan.c
 src/engine/chain_stream_mat_mul_vec_add.c
 src/engine/chain_walk_cleanup.c
+src/engine/clamp_two_to_max.c
 src/engine/cleanup_call_twice.c
 src/engine/cmp2_call_dirty_call.c
 src/engine/cmp2_dirty_toggle.c
@@ -125,6 +127,7 @@ src/engine/copy_jmp.c
 src/engine/countdown_clamp_walk.c
 src/engine/dirty_bit_triple_write_or_call.c
 src/engine/dirty_test_scaled_copy.c
+src/engine/dispatch_pair.c
 src/engine/dispatcher_complex_260.c
 src/engine/distance3_d_mul10_chain.c
 src/engine/double_push_walk_init_jmp.c
@@ -250,6 +253,7 @@ src/engine/rot_matrix_a.c
 src/engine/rot_matrix_b.c
 src/engine/rot_matrix_c.c
 src/engine/round_reset.c
+src/engine/scaled_add_deref.c
 src/engine/scaled_addr_init.c
 src/engine/scaled_array_store.c
 src/engine/scaled_bit_op_jmp.c
@@ -310,12 +314,14 @@ src/engine/tick_all.c
 src/engine/transform9_words.c
 src/engine/transform_accumulate.c
 src/engine/transform_vertex.c
+src/engine/tri_branch_flag_write.c
 src/engine/tristrip.c
 src/engine/tristrip_batch_emit.c
 src/engine/tristrip_batch_emit2.c
 src/engine/tristrip_batch_emit3_cap.c
 src/engine/twin_loop_slot_finder.c
 src/engine/twin_record_iter.c
+src/engine/two_state_copy_dup.c
 src/engine/vec3_color_shift_clamp.c
 src/engine/vec3_normalize_scale_store.c
 src/engine/vertex_quad_builder.c

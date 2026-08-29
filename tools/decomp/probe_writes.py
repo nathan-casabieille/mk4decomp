@@ -28,8 +28,13 @@ import verify_frame_core as vfc
 
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
+    # (see --arena below: a live dump from MK4_DUMP_ARENA)
     watch = []
     fight = '--fight' in sys.argv
+    arena_path = None
+    for a in sys.argv[1:]:
+        if a.startswith('--arena='):
+            arena_path = a.split('=', 1)[1]
     for a in sys.argv[1:]:
         if a.startswith('--watch'):
             watch = [int(x, 16) for x in a.split('=', 1)[1].split(',')]
@@ -44,7 +49,8 @@ def main():
         return 2
 
     fn_va, gl_va = vt.load_maps()
-    base_arena = vc.ARENA.read_bytes()
+    base_arena = (pathlib.Path(arena_path).read_bytes()
+                  if arena_path else vc.ARENA.read_bytes())
     vc.ARG_BASE = vc.BASE + len(base_arena) - 0x40000
     for name in args:
         if name not in fn_va:

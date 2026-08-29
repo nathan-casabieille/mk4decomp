@@ -346,7 +346,6 @@ __attribute__((weak)) int SlotInitAndChainLink(){return 0;}
 __attribute__((weak)) int SetDirty4XorScaledLoad(){return 0;}
 __attribute__((weak)) int Snd3DSourceCleanup(){return 0;}
 __attribute__((weak)) int BitFlagEffectDispatch(){return 0;}
-__attribute__((weak)) int DispatchPair(){return 0;}
 __attribute__((weak)) int DualEntryInstallSelfScaled(){return 0;}
 __attribute__((weak)) int FiveFieldChainCopyTableWalk(){return 0;}
 __attribute__((weak)) int PvpAngleDistSeed(){return 0;}
@@ -360,16 +359,12 @@ __attribute__((weak)) int TripleStateSwapCall(){return 0;}
 __attribute__((weak)) int Phase3InstallSelf(){return 0;}
 __attribute__((weak)) int ScaledLoadCmp0fJmp(){return 0;}
 __attribute__((weak)) int SlotPhaseResetInstallChain(){return 0;}
-__attribute__((weak)) int ScaledAddDeref(){return 0;}
 __attribute__((weak)) int PendingMatch_ZeroNDwords(){return 0;}
-__attribute__((weak)) int TwoStateCopyDup(){return 0;}
-__attribute__((weak)) int TriBranchFlagWrite(){return 0;}
 __attribute__((weak)) int PendingMatch_BootStateTriple(){return 0;}
 __attribute__((weak)) int ScaledChainAccumLoop(){return 0;}
 __attribute__((weak)) int BootMStackBracketedScaledStores(){return 0;}
 __attribute__((weak)) int Copy3Fields38(){return 0;}
 __attribute__((weak)) int CopyThreeFields(){return 0;}
-__attribute__((weak)) int DirtyToggleInstall(){return 0;}
 __attribute__((weak)) int ThreeChanPackClamp(){return 0;}
 __attribute__((weak)) int func_00405420_ii(){return 0;}
 #endif /* MK4_NATIVE_FULL */

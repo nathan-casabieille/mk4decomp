@@ -337,6 +337,28 @@ void MK4_GameFrame(void)
                 SDL_Log("boot-match: Enter pressed at frame %d", frame);
             }
         }
+        /* MK4_DUMP_ARENA=<frame>:<path> writes the LIVE arena to a file at
+         * that frame. probe_writes --arena=<path> then runs ORIGINAL bytes
+         * against the exact state the native build had - which is how a
+         * "who writes X, given the real mid-game state" question gets
+         * answered when synthetic seeds do not reach the writing path. */
+        {
+            const char *spec = getenv("MK4_DUMP_ARENA");
+            if (spec) {
+                int at = atoi(spec);
+                const char *path = strchr(spec, ':');
+                if (path && frame == at) {
+                    extern unsigned char *g_mk4Arena;
+                    extern unsigned int g_mk4ArenaSize;
+                    FILE *f = fopen(path + 1, "wb");
+                    if (f) {
+                        fwrite(g_mk4Arena, 1, g_mk4ArenaSize, f);
+                        fclose(f);
+                        SDL_Log("arena dumped at frame %d -> %s", at, path + 1);
+                    }
+                }
+            }
+        }
         frame++;
         MainLoopStep();      /* BeginFrame / GameLogicStep / DrawScene / Present */
     }
