@@ -174,6 +174,17 @@ void RenderSceneNode(void)
 
     g_currentNodeFlags = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x20);
     node = g_currentNodeIdx;
+#ifdef TARGET_SDL
+    /* MK4_TRACE_VISIT: every node the graph walk REACHES, before any
+     * culling. Compare against MK4_TRACE_GEO's emit list: equal counts
+     * mean the graph really holds only what you see, a larger visit set
+     * means geometry is arriving and being rejected downstream. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int n;
+      if (getenv("MK4_TRACE_VISIT") && n < 20000
+          && *MK4_VA(unsigned int, 0x537f94u) != 0) { n++;
+        SDL_Log("VISIT node=%x flags=%x", node, g_currentNodeFlags); } }
+#endif
 
     if ((g_currentNodeFlags & 0x2000) != 0) {
         ZBucketClampStore();

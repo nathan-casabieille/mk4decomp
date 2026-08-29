@@ -91,6 +91,17 @@ void LoadGeoAsset_Textures(s32 index)
                    (const char *)MK4_PTR(*(unsigned int *)MK4_PTR(entry)));
 
     size = FSYS_fsize(MK4_VA(char, 0x00ab43d8u));
+#ifdef TARGET_SDL
+    /* MK4_TRACE_GEO: every asset this loader is ASKED for, and whether the
+     * archive actually has it. A fight that renders only fighters looks the
+     * same whether the stage was never requested or was requested and
+     * missing - this separates the two. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      if (getenv("MK4_TRACE_GEO"))
+        SDL_Log("GEOLOAD \"%s\" size=%u node=%x%s",
+                (const char *)MK4_VA(char, 0x00ab43d8u),
+                size, g_currentNodeIdx, size ? "" : "  <-- ABSENT"); }
+#endif
     if (size == 0) {
         *(unsigned int *)MK4_PTR(node + 4) = 0;
         return;
