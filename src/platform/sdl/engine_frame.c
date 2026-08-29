@@ -249,6 +249,22 @@ void MK4_GameFrame(void)
                     *MK4_VA(unsigned int, 0x0053a738u),
                     *MK4_VA(unsigned int, 0x0053a1e0u),
                     *MK4_VA(unsigned int, 0x00541e50u));
+        if (getenv("MK4_TRACE_CAM") && (frame % 25) == 0) {
+            unsigned int p1 = *MK4_VA(unsigned int, 0x538158u);
+            unsigned int p2 = *MK4_VA(unsigned int, 0x53815cu);
+            unsigned int cam = *MK4_VA(unsigned int, 0x52ab10u);
+            SDL_Log("      p1=[%d %d %d] p2=[%d %d %d] cam=[%d %d %d] camrot=%d",
+                    p1 ? *(int *)MK4_PTR(p1*4+0x54) : 0,
+                    p1 ? *(int *)MK4_PTR(p1*4+0x58) : 0,
+                    p1 ? *(int *)MK4_PTR(p1*4+0x5c) : 0,
+                    p2 ? *(int *)MK4_PTR(p2*4+0x54) : 0,
+                    p2 ? *(int *)MK4_PTR(p2*4+0x58) : 0,
+                    p2 ? *(int *)MK4_PTR(p2*4+0x5c) : 0,
+                    cam ? *(int *)MK4_PTR(cam*4+0x54) : 0,
+                    cam ? *(int *)MK4_PTR(cam*4+0x58) : 0,
+                    cam ? *(int *)MK4_PTR(cam*4+0x5c) : 0,
+                    cam ? *(int *)MK4_PTR(cam*4+0x64) : 0);
+        }
         if (getenv("MK4_TRACE_CAM") && (frame % 25) == 0)
             SDL_Log("      camrec=%x pos=[%d %d %d] eye=[%d %d %d]",
                     *MK4_VA(unsigned int, 0x52ab10u),
