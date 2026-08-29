@@ -20,7 +20,12 @@
 #define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
 #define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
 #define g_xformLoopCounter (*(unsigned int *)MK4_VA(unsigned int, 0x53a1acu))
-#define g_xformTempAngles ((unsigned int *)MK4_VA(unsigned int, 0xab5208u))
+/* The original stores the three BAM angles as WORDS at 0xab5208 /
+ * 0xab520a / 0xab520c (mov word ptr), and every BuildRotMatrix_Order*
+ * reads them as short[3]. Typed as unsigned int * the stride was 4, so
+ * the yaw landed in the roll slot and the view rotation came out as an
+ * axis permutation - see [[feedback_width16_matrix_trap]], same family. */
+#define g_xformTempAngles ((short *)MK4_VA(short, 0xab5208u))
 #endif
 
 

@@ -154,6 +154,17 @@ void RenderSceneGraphIterate(void)
     } else {
         g_dualC = ((g_cj_0054205c >> 0x18) & 7u) + 0x13de22u;
         g_eventQueueCurrent = *MK4_NODE(unsigned int, g_dualC);
+#ifdef TARGET_SDL
+        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+          static int n;
+          if (getenv("MK4_TRACE_ROT") && n < 8
+              && *MK4_VA(unsigned int, 0x537f94u) != 0) { n++;
+            SDL_Log("ROT node=%x kind=%x sel=%u builder=%x ang=[%d %d %d]",
+                    idx, g_cj_0054205c, (g_cj_0054205c >> 0x18) & 7u,
+                    g_eventQueueCurrent,
+                    MK4_NODE_AT(int, idx, 0x60), MK4_NODE_AT(int, idx, 0x64),
+                    MK4_NODE_AT(int, idx, 0x68)); } }
+#endif
         ((void (*)(void))MK4_ResolveCode(g_eventQueueCurrent))();
         if (g_framePauseFlag != 0)
             return;

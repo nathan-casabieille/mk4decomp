@@ -266,6 +266,18 @@ void MK4_GameFrame(void)
                     cam ? *(int *)MK4_PTR(cam*4+0x64) : 0);
         }
         if (getenv("MK4_TRACE_CAM") && (frame % 25) == 0)
+            SDL_Log("      camang=[%d %d %d] wt=[%x %x %x %x %x]",
+                    *MK4_VA(unsigned int, 0x52ab10u) ?
+                      *(int *)MK4_PTR(*MK4_VA(unsigned int, 0x52ab10u)*4+0x60) : 0,
+                    *MK4_VA(unsigned int, 0x52ab10u) ?
+                      *(int *)MK4_PTR(*MK4_VA(unsigned int, 0x52ab10u)*4+0x64) : 0,
+                    *MK4_VA(unsigned int, 0x52ab10u) ?
+                      *(int *)MK4_PTR(*MK4_VA(unsigned int, 0x52ab10u)*4+0x68) : 0,
+                    *MK4_VA(unsigned int, 0xab4878u),
+                    *MK4_VA(unsigned int, 0xab487cu),
+                    *MK4_VA(unsigned int, 0xab4880u),
+                    *MK4_VA(unsigned int, 0xab4884u));
+        if (getenv("MK4_TRACE_CAM") && (frame % 25) == 0)
             SDL_Log("      camrec=%x pos=[%d %d %d] eye=[%d %d %d]",
                     *MK4_VA(unsigned int, 0x52ab10u),
                     *MK4_VA(unsigned int, 0x52ab10u) ?
