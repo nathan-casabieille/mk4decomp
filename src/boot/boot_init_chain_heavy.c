@@ -216,7 +216,7 @@ void BootInitChainHeavy(void)
   g_audioInitScaled = 0;
   Helper_GeoLoadPre();
   if (g_framePauseFlag == 0) {
-    thunk_Helper_GeoLoadPre();
+    Thunk_Helper_GeoLoadPre();
     if (g_framePauseFlag == 0) {
       (g_currentNodeIdx) = g_dispatchSave82;
       g_eventQueuePending = 0;

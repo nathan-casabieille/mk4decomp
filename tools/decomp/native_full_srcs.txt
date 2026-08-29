@@ -14,6 +14,7 @@ src/audio/helper_title_audio_reset.c
 src/audio/init_dispatchers_jmp.c
 src/audio/input_poll_flag_bits.c
 src/audio/input_poll_flag_bits_half.c
+src/audio/linked_list_builder.c
 src/audio/linked_list_insert.c
 src/audio/load_geo_assets_state_machine.c
 src/audio/m_stack_push_chain_step_index.c
@@ -22,9 +23,11 @@ src/audio/reset_config.c
 src/audio/store_pause_imul_shr16.c
 src/audio/test_queue_gate_state.c
 src/audio/triple_call_byte_check.c
+src/boot/and_shl_store.c
 src/boot/app_init_misc3.c
 src/boot/boot_chain_push_add_sign_flag.c
 src/boot/boot_dispatch_slot_init.c
+src/boot/boot_init_chain_heavy.c
 src/boot/boot_mod6487e_clamp_and_chain_mul10.c
 src/boot/boot_phase_gate_bracketed_init.c
 src/boot/boot_scheduled_node_timer_walk.c
@@ -44,6 +47,7 @@ src/boot/m_stack_bracket5_linked_list_unlink.c
 src/boot/m_stack_push2_chain_insert.c
 src/boot/m_stack_push2_chain_prepend.c
 src/boot/m_stack_push3_linked_list_walk.c
+src/boot/m_stack_push_dispatch_bit_gate.c
 src/boot/m_stack_push_two_entry_chain_call.c
 src/boot/main_loop.c
 src/boot/mul10_tail.c
@@ -139,6 +143,7 @@ src/engine/esi_install_dec_call_chain_variants.c
 src/engine/event_queue_drain_loop.c
 src/engine/fight_frame_step.c
 src/engine/flush_draw_queue.c
+src/engine/four_globals_equal_f_init_tail.c
 src/engine/fsys.c
 src/engine/game_state_machine_maybe_rebuild.c
 src/engine/gamepad_seq_record.c
@@ -266,6 +271,7 @@ src/engine/scanline_tex_blit_additive.c
 src/engine/scanline_tex_blit_alpha.c
 src/engine/scanline_tex_blit_interlaced.c
 src/engine/scanline_tex_blit_paletted.c
+src/engine/scene_post_init_sequencer.c
 src/engine/scenegraph.c
 src/engine/sentinel_init_triple_call.c
 src/engine/set_hi6.c

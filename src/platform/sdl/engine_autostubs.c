@@ -349,7 +349,6 @@ __attribute__((weak)) int BitFlagEffectDispatch(){return 0;}
 __attribute__((weak)) int DispatchPair(){return 0;}
 __attribute__((weak)) int DualEntryInstallSelfScaled(){return 0;}
 __attribute__((weak)) int FiveFieldChainCopyTableWalk(){return 0;}
-__attribute__((weak)) int FourGlobalsEqualFInitTail(){return 0;}
 __attribute__((weak)) int PvpAngleDistSeed(){return 0;}
 __attribute__((weak)) int QuadGuardedCjSet_00422fc0(){return 0;}
 __attribute__((weak)) int QuadGuardedCjSet_004230b0(){return 0;}
@@ -362,8 +361,14 @@ __attribute__((weak)) int Phase3InstallSelf(){return 0;}
 __attribute__((weak)) int ScaledLoadCmp0fJmp(){return 0;}
 __attribute__((weak)) int SlotPhaseResetInstallChain(){return 0;}
 __attribute__((weak)) int ScaledAddDeref(){return 0;}
-__attribute__((weak)) int BootInitChainHeavy(){return 0;}
 __attribute__((weak)) int PendingMatch_ZeroNDwords(){return 0;}
 __attribute__((weak)) int TwoStateCopyDup(){return 0;}
 __attribute__((weak)) int TriBranchFlagWrite(){return 0;}
+__attribute__((weak)) int InstallSelfDispatch(){return 0;}
+__attribute__((weak)) int MStackPop8(){return 0;}
+__attribute__((weak)) int MStackPush4LLWalkPop4(){return 0;}
+__attribute__((weak)) int MStackPush8(){return 0;}
+__attribute__((weak)) int PendingMatch_BootStateTriple(){return 0;}
+__attribute__((weak)) int TwinLoopSlotFinder(){return 0;}
+__attribute__((weak)) int ScaledChainAccumLoop(){return 0;}
 #endif /* MK4_NATIVE_FULL */

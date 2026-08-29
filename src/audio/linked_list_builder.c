@@ -171,37 +171,43 @@ extern unsigned int g_matrixStack_arr;
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
 void LinkedListBuilder(void)
-
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  
-  iVar3 = g_dualD;
-  iVar2 = g_dualC;
-  iVar1 = g_eventQueuePending;
-  MK4_NODE_AT(undefined4, g_dualD, 0) = 0;
-  MK4_NODE_AT(int, iVar3, 4) = g_eventQueuePending;
-  MK4_NODE_AT(int, iVar3, 8) = g_cj_00542054;
-  iVar4 = (g_currentNodeIdx);
-  if (g_cj_00542054 != 0) {
-    MK4_NODE_AT(int, iVar3, 0) = (g_currentNodeIdx);
-    *MK4_NODE(int, (iVar1 + 1 + iVar4)) = iVar3;
-    g_xformLoopCounter = MK4_NODE_AT(int, iVar3, 8);
-    if (1 < g_xformLoopCounter) {
-      for (g_xformLoopCounter = g_xformLoopCounter + -2; -1 < (int)g_xformLoopCounter; g_xformLoopCounter = g_xformLoopCounter + -1) {
-        iVar5 = iVar4 * 4;
-        iVar4 = iVar4 + iVar2;
-        *MK4_NODE(int, iVar5 + 4 + iVar1) = iVar3;
-        *MK4_NODE(int, iVar5 + iVar1) = iVar4;
-      }
+    unsigned int rec  = g_eventQueueTotal;      /* the list header node */
+    unsigned int ent  = g_xformEntityIdx;       /* field pair offset */
+    unsigned int step = g_pendingNodeType;      /* stride between nodes */
+    unsigned int cur, next;
+    int n;
+
+    *MK4_NODE(unsigned int, rec) = 0;
+    MK4_NODE_AT(unsigned int, rec, 4) = g_xformEntityIdx;
+    MK4_NODE_AT(unsigned int, rec, 8) = g_eventQueueEnd;
+    if (g_eventQueueEnd == 0) return;
+
+    cur = g_currentNodeIdx;
+    MK4_NODE_AT(unsigned int, rec, 0) = cur;
+    *MK4_NODE(unsigned int, ent + 1 + cur) = rec;
+
+    n = (int)MK4_NODE_AT(unsigned int, rec, 8);
+    g_xformLoopCounter = (unsigned int)n;
+    if (n > 1) {
+        n -= 2;
+        g_xformLoopCounter = (unsigned int)n;
+        next = cur + step;
+        while (n >= 0) {
+            /* the pair lives at node index (cur + ent): +4 is the header
+             * back-pointer, +0 the forward link. The Ghidra lift had this
+             * as (cur*4 + ent) fed to MK4_NODE, i.e. scaled twice and the
+             * two terms mixed - it built a chain into the wrong memory,
+             * which showed up as speckles in the character render. */
+            MK4_NODE_AT(unsigned int, cur + ent, 4) = rec;
+            MK4_NODE_AT(unsigned int, cur + ent, 0) = next;
+            cur  = next;
+            next = next + step;
+            n = (int)--g_xformLoopCounter;
+        }
     }
-    *MK4_NODE(undefined4, (iVar1 + iVar4)) = 0;
-    *MK4_NODE(int, (iVar1 + 1 + iVar4)) = iVar3;
-  }
-  return;
+    *MK4_NODE(unsigned int, ent + cur) = 0;
+    *MK4_NODE(unsigned int, ent + cur + 1) = rec;
 }
 #else
 __declspec(naked) void LinkedListBuilder(void) {

@@ -30,6 +30,6 @@ extern unsigned int g_dest_0053a6e4;
 
 void AndShlStore(void) {
     unsigned int v = ((unsigned int)g_walkCallback & 0xf) << 0x14;
-    g_walkCallback  = (void(*)(void))v;
+    g_walkCallback  = v;
     g_dest_0053a6e4 = v;
 }
