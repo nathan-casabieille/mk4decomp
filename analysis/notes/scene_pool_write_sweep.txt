@@ -1,0 +1,2914 @@
+AbsClampIATCall                        returned 0 writes, no hit
+Add0fJmp                               returned 1 writes, no hit
+AddDerefJmp                            EMU-ERROR UcError: Invalid memory fetch (UC_ERR_FETCH_UNMAPPED)
+AddOverflowCheck                       returned 0 writes, no hit
+AddStore                               returned 1 writes, no hit
+AddStoreCallPauseJmp                   returned 2 writes, no hit
+AdvanceTriStripRing                    returned 0 writes, no hit
+AerialBlockFsmCluster                  returned 23 writes, no hit
+AerialHitDispatcher                    returned 4 writes, no hit
+AerialKickComboCluster                 returned 1 writes, no hit
+AerialPunchCluster                     returned 13 writes, no hit
+AggressorModeCluster                   returned 21 writes, no hit
+AggressorRunInitCluster                returned 25 writes, no hit
+AiAngleDistComputation                 returned 11 writes, no hit
+AiComboDispatcherCluster               returned 8 writes, no hit
+AiWalkCounterDualCluster               returned 3 writes, no hit
+Alarm3EntryPhaseChain                  returned 17 writes, no hit
+Alarm3PhaseChainBody                   returned 4 writes, no hit
+Alarm3PhaseChainEntry2                 returned 24 writes, no hit
+Alarm4EntryInstallChain                returned 55 writes, no hit
+Alarm4EntryInstallCountdown            returned 22 writes, no hit
+Alarm5EntryScopedChain                 ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+AlarmCountdownInstall                  returned 27 writes, no hit
+Alldiv                                 EMU-ERROR UcError: Unhandled CPU exception (UC_ERR_EXCEPTION)
+AllocNode                              returned 7 writes, no hit
+AllocSlotPushTripleGlobals             returned 4 writes, no hit
+AllocateNode                           returned 1 writes, no hit
+AltCamMatrixProject                    returned 0 writes, no hit
+AmbientMonitorCluster                  ran out  25 writes, no hit
+AndShlStore                            returned 0 writes, no hit
+AndStoreJmp                            returned 3 writes, no hit
+AndStorePushCallZero                   returned 0 writes, no hit
+AnimEventUpdateCluster                 returned 3 writes, no hit
+AnimNodeKindDispatch                   returned 0 writes, no hit
+AnimSequence4Way                       returned 20 writes, no hit
+Anim_AcquireFrameData                  returned 0 writes, no hit
+Anim_DecodeBitstream                   returned 0 writes, no hit
+Anim_LoadPackFile                      ran out  11 writes, no hit
+AppInit                                ran out  0 writes, no hit
+AppInit_Misc1                          ran out  1 writes, no hit
+AppInit_Misc2                          ran out  1 writes, no hit
+AppInit_Misc3                          returned 0 writes, no hit
+AppInit_Misc4                          returned 0 writes, no hit
+AppInit_Misc7                          ran out  1 writes, no hit
+AppInit_Misc8                          ran out  1 writes, no hit
+AppInit_PostDSound                     returned 0 writes, no hit
+AppInit_PostJoy                        returned 4096 writes, no hit
+AppInit_PreInstall                     returned 1073 writes, no hit
+AppShutdown                            ran out  1 writes, no hit
+ArgIndexedBitmaskInit                  returned 2 writes, no hit
+ArgSarAddDerefJmp                      ran out  1 writes, no hit
+ArgSarStoreJmp                         ran out  4 writes, no hit
+ArgSar_Set0_Jmp                        returned 39 writes, no hit
+ArgSar_Set1_Jmp                        returned 41 writes, no hit
+ArgScaledChain                         returned 12 writes, no hit
+ArgScaledLoadCmpP1                     returned 1 writes, no hit
+ArgScaledTestStore                     returned 1 writes, no hit
+ArraySearch                            returned 0 writes, no hit
+Atan2QuadrantLookup                    returned 1 writes, no hit
+AtanDualDeltaThreshold                 returned 36 writes, no hit
+Audio4EntryScopeDispatch               returned 1 writes, no hit
+AudioBank2StatePickerWalk              ran out  28 writes, no hit
+AudioBindEntry                         returned 3 writes, no hit
+AudioBindEntryB                        returned 3 writes, no hit
+AudioBridgeMStackChainCopy             returned 2 writes, no hit
+AudioByteCounterChain                  ran out  25 writes, no hit
+AudioChainInit                         returned 8 writes, no hit
+AudioChainStateInitSequence            returned 19 writes, no hit
+AudioCmpCascadeDispatcher              returned 0 writes, no hit
+AudioFlagDispatchAggregator            returned 4 writes, no hit
+AudioFlagDispatchAggregatorAH          returned 4 writes, no hit
+AudioInitArgs3                         returned 3 writes, no hit
+AudioInitChainTag                      returned 17 writes, no hit
+AudioInitInstallSelfPeriodic           returned 1 writes, no hit
+AudioInitInstallerPair                 returned 14 writes, no hit
+AudioInitLoopTriple                    returned 7 writes, no hit
+AudioInitSequence                      returned 9 writes, no hit
+AudioInstall2BodyDualSetup             returned 1 writes, no hit
+AudioInstall3StateSubXform             returned 14 writes, no hit
+AudioInstallSelf3StateWithSubcall      ran out  5 writes, no hit
+AudioInstallSelfChannel8               returned 20 writes, no hit
+AudioInstallSelfShiftedChainInit       returned 20 writes, no hit
+AudioInstallSelfStateMachine2          ran out  76 writes, no hit
+AudioInstallSelfStatePush              returned 46 writes, no hit
+AudioMStackPushHandlerPair             returned 4 writes, no hit
+AudioMicroEntries                      returned 2 writes, no hit
+AudioMixerKnobUpdate                   returned 4 writes, no hit
+AudioMixerStep                         returned 2 writes, no hit
+AudioMode2BankSetup                    ran out  27 writes, no hit
+AudioModeInit                          ran out  27 writes, no hit
+AudioModeInitVariant                   ran out  28 writes, no hit
+AudioPhaseDispatch                     ran out  21 writes, no hit
+AudioPreloadStreamingTrack             returned 16 writes, no hit
+AudioShutdownSequence                  returned 0 writes, no hit
+AudioState50b4BitDispatcher            returned 4 writes, no hit
+AudioStateClearAndChainStep            returned 0 writes, no hit
+AudioStateInitMultiInstall             ran out  28 writes, no hit
+AudioStateMachineMulti                 ran out  28 writes, no hit
+AudioStateRemap                        returned 20 writes, no hit
+AudioStateRemapB                       returned 21 writes, no hit
+AudioStreamFsm5Way                     returned 44 writes, no hit
+AudioSwap2ChainBank3State              returned 0 writes, no hit
+AudioSwapNegate                        returned 4 writes, no hit
+AudioTriEntryFlagPairInit              ran out  27 writes, no hit
+AudioVoiceSequencerCluster             returned 1 writes, no hit
+AudioVolumeRescale                     returned 6 writes, no hit
+Audio_PlaySoundId                      returned 0 writes, no hit
+Audio_TimerSet                         ran out  0 writes, no hit
+Audio_TimerTeardown                    returned 0 writes, no hit
+Audio_TimerTick                        returned 0 writes, no hit
+Audio_UpdateChannels                   returned 16 writes, no hit
+AuxAudioDevCapsQuery                   ran out  0 writes, no hit
+AuxAudio_Init                          ran out  0 writes, no hit
+AuxAudio_SetVolume                     returned 0 writes, no hit
+AuxAudio_Teardown                      returned 0 writes, no hit
+BackdashSetupCluster                   returned 15 writes, no hit
+BattleEndCluster                       returned 44 writes, no hit
+BboxProjectAndStash                    returned 13 writes, no hit
+BeginFrame                             returned 0 writes, no hit
+BigDataBlob                            ran out  0 writes, no hit
+BillboardChainRender                   returned 22 writes, no hit
+BillboardSheetDualEmit                 returned 19 writes, no hit
+Bit2GatedChainInit                     returned 4 writes, no hit
+BitDispatchDualCallMStackPush          returned 5 writes, no hit
+BitFlagEffectDispatch                  returned 0 writes, no hit
+BitGateInstallChainJmp                 returned 14 writes, no hit
+BitSavePushCallMergePop                returned 17 writes, no hit
+BitSetByIndex                          returned 1 writes, no hit
+BitShiftExtract                        returned 1 writes, no hit
+BitShiftMultiPrecision                 returned 0 writes, no hit
+BitTestFreeClear                       returned 0 writes, no hit
+BitmapBlitRunLength                    returned 61 writes, no hit
+BitsetIterClear                        returned 1 writes, no hit
+BitsetReserve                          returned 0 writes, no hit
+BitsetTrailZeroCheck                   returned 0 writes, no hit
+BlitBlend16bpp                         returned 0 writes, no hit
+BlockedCounterCluster                  returned 4 writes, no hit
+BmpScreenshotWriter                    returned 0 writes, no hit
+Boot                                   ran out  2 writes, no hit
+BootCallChainDoubleMul10               returned 26 writes, no hit
+BootChainBidirRecurseWalk              returned 8 writes, no hit
+BootChainBuildAndStep                  returned 6 writes, no hit
+BootChainMaskAndDispatch               returned 3 writes, no hit
+BootChainPushAddSignFlag               returned 3 writes, no hit
+BootChainStreamWalkExtract             returned 2 writes, no hit
+BootChainTreeRecurseWalk               returned 1 writes, no hit
+BootChainTripleStoreThenDispatch       returned 13 writes, no hit
+BootCountdownPeriodicInstall           returned 9 writes, no hit
+BootDispatchSlotInit                   returned 6 writes, no hit
+BootDualStateInstallSelf               returned 4 writes, no hit
+BootFatalAbortHandler                  ran out  1 writes, no hit
+BootFlagChainAudioPause                returned 25 writes, no hit
+BootFrameSetup                         ran out  13 writes, no hit
+BootGatedInitInstallPair               returned 25 writes, no hit
+BootInitChainHeavy                     ran out  0 writes, no hit
+BootInitClearSlotSeed                  ran out  25 writes, no hit
+BootInitGuardedCallChain               ran out  25 writes, no hit
+BootInitTripleAddChain                 returned 17 writes, no hit
+BootInitVec3PhaseInstall               ran out  25 writes, no hit
+BootInstallPeriodicAudio               returned 13 writes, no hit
+BootInstallPeriodicTriple              returned 14 writes, no hit
+BootInstallerPair                      returned 13 writes, no hit
+BootMStackBracket3SubdispatchPair      returned 3 writes, no hit
+BootMStackBracketChain                 returned 11 writes, no hit
+BootMStackBracketedScaledStores        returned 13 writes, no hit
+BootMStackPopPush3Install              returned 17 writes, no hit
+BootMod6487eClampAndChainMul10         returned 1 writes, no hit
+BootMstackInit                         returned 6 writes, no hit
+BootMultiAssetLoadStateInit            ran out  1 writes, no hit
+BootOneShotMStackPush3                 returned 12 writes, no hit
+BootOneShotSetup                       returned 12 writes, no hit
+BootPackedDispatchPair_PushSetXfmMaskCallPop_00413380 returned 6 writes, no hit
+BootPackedDispatchPair_PushSetXfmMaskCallPop_00413580 returned 6 writes, no hit
+BootPhaseGateBracketedInit             returned 6 writes, no hit
+BootScheduledNodeTimerWalk             returned 0 writes, no hit
+BootSetJmpStoreThenChainTriple         returned 26 writes, no hit
+BootSetupWithMStackBody                returned 6 writes, no hit
+BootSlotInstallChainTail               returned 9 writes, no hit
+BootStateInitLongChain                 ran out  13 writes, no hit
+BootStateInitWithRecurseInstall        ran out  15 writes, no hit
+BootStateMachine4Way                   ran out  30 writes, no hit
+BootStateTriple                        returned 1 writes, no hit
+BossArrivalSequence                    returned 17 writes, no hit
+BossDashCluster                        returned 28 writes, no hit
+BossPunchCluster                       returned 8 writes, no hit
+BossRoarCluster                        returned 8 writes, no hit
+BossRoomBootstrap                      ran out  11 writes, no hit
+BossRoomInitCluster                    returned 3 writes, no hit
+BossSpinCluster                        returned 1 writes, no hit
+BucketBlockAllocSplit                  returned 0 writes, no hit
+BuildCharacterCaseTables               ran out  0 writes, no hit
+BuildMaskFromArray                     returned 0 writes, no hit
+BuildRotMatrix_OrderA                  returned 0 writes, no hit
+BuildRotMatrix_OrderB                  returned 0 writes, no hit
+BuildRotMatrix_OrderC                  returned 0 writes, no hit
+BuildSortKeyLUT                        ran out  0 writes, no hit
+BulkSlotInit                           returned 1 writes, no hit
+BulletVolleySpawner                    returned 4 writes, no hit
+ByteWordTableTaggedDispatch            returned 1 writes, no hit
+CRTHandleLookup                        ran out  0 writes, no hit
+CRTSignalDispatch                      returned 0 writes, no hit
+CallCmpDirtyTrueOrFalse_0045f570       returned 2 writes, no hit
+CallCmpDirtyTrueOrFalse_0045f5a0       returned 1 writes, no hit
+CallDirty4DualJmp                      returned 5 writes, no hit
+CallDualStoreXorBit                    returned 6 writes, no hit
+CallIATIfThenCall                      ran out  0 writes, no hit
+CallJmp                                ran out  318 writes, no hit
+CallPauseAddDualStore_0048b480         returned 0 writes, no hit
+CallPauseAddDualStore_0048b4b0         returned 0 writes, no hit
+CallPauseCallTestStackPushJmp          returned 36 writes, no hit
+CallPauseClear3CallTriple              ran out  0 writes, no hit
+CallPauseCmpDoubleJmp                  returned 26 writes, no hit
+CallPauseCmpStateJmp                   returned 28 writes, no hit
+CallPauseConstStoreJmp_BootChainMaskAndDispatch_then_MStackBitLoopTripleCall returned 6 writes, no hit
+CallPauseConstStoreJmp_MultiThunkDispatcher_then_InstallSelfPair returned 10 writes, no hit
+CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp returned 12 writes, no hit
+CallPauseDecScaled                     returned 5 writes, no hit
+CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp returned 22 writes, no hit
+CallPauseDirty1JmpDirty4StackPush_GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp returned 11 writes, no hit
+CallPauseDirty4ScaledSet_tag_0x81      returned 2 writes, no hit
+CallPauseDirty4ScaledSet_tag_0x82      returned 2 writes, no hit
+CallPauseDirty4ScaledSet_tag_0x83      returned 2 writes, no hit
+CallPauseDirty4ScaledSet_tag_0x86      returned 2 writes, no hit
+CallPauseDirty4ScaledSet_tag_0x87      returned 2 writes, no hit
+CallPauseDirty4ScaledSet_tag_0x88      returned 2 writes, no hit
+CallPauseDirty4StackPushFn             returned 10 writes, no hit
+CallPauseDirtyConstJmp                 returned 29 writes, no hit
+CallPauseDirtyLit_00433910             returned 37 writes, no hit
+CallPauseDirtyLit_00488c70             returned 21 writes, no hit
+CallPauseDirtyMStackPush484b40         returned 31 writes, no hit
+CallPauseDirtyMStackPushFn             returned 32 writes, no hit
+CallPauseDirtyPushCall                 returned 21 writes, no hit
+CallPauseDirtyScaledSet7               returned 7 writes, no hit
+CallPauseDirtyScaledStore              returned 2 writes, no hit
+CallPauseDirtyTwoSetsJmp_0046fbe0      returned 33 writes, no hit
+CallPauseDirtyTwoSetsJmp_0046fc20      returned 33 writes, no hit
+CallPauseEvtPushJmp                    returned 7 writes, no hit
+CallPauseFourSet                       returned 34 writes, no hit
+CallPauseInc                           returned 3 writes, no hit
+CallPauseJmpStateInit                  returned 46 writes, no hit
+CallPauseJmpThenSetChild               ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+CallPauseLitInitJmp                    returned 22 writes, no hit
+CallPauseLoadAndDispatch               returned 33 writes, no hit
+CallPauseMStackPushSet0Jmp             returned 34 writes, no hit
+CallPauseMStackPushSet2Jmp             returned 36 writes, no hit
+CallPauseMStackPushSet3Jmp             returned 44 writes, no hit
+CallPauseMStackPushSet4Jmp             returned 39 writes, no hit
+CallPauseMStackPushSet9Jmp             returned 36 writes, no hit
+CallPauseScaledByteSet                 returned 4 writes, no hit
+CallPauseScaledDecJmp                  returned 7 writes, no hit
+CallPauseScaledStoreAdd                returned 4 writes, no hit
+CallPauseScaledStoreCopyJmp            returned 2 writes, no hit
+CallPauseScaledStoreJmp_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_then_CallPauseDirty1JmpDirty4StackPush returned 13 writes, no hit
+CallPauseScaledStoreJmp_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_then_DualGuardPushInstallJmp returned 13 writes, no hit
+CallPauseScaledStorePushCall           returned 21 writes, no hit
+CallPauseScaledStoreXJmp               returned 4 writes, no hit
+CallPauseTestByte4ZeroCB               returned 8 writes, no hit
+CallPauseTestByteJmpCalls              returned 29 writes, no hit
+CallPauseTriCmpJmp                     returned 10 writes, no hit
+CallPauseTripleScaledJmp               ran out  2 writes, no hit
+CallSetMultiGlobalsJmp                 ran out  30 writes, no hit
+CallSetPause                           returned 1 writes, no hit
+CallTestPushSubCall                    returned 0 writes, no hit
+CallThreeSumLea                        ran out  0 writes, no hit
+CallTwoSumShl                          ran out  0 writes, no hit
+CallZero                               returned 0 writes, no hit
+CallZero2                              returned 0 writes, no hit
+Calloc                                 ran out  1 writes, no hit
+CameraAimSplineDriver                  returned 4 writes, no hit
+CameraBounceOverflow                   returned 26 writes, no hit
+CameraBounceUpdate                     returned 15 writes, no hit
+CameraProjectionInitSweep              returned 5 writes, no hit
+CameraSetupAndCullFan                  returned 37 writes, no hit
+CameraZoomFsmCluster                   returned 11 writes, no hit
+Cascade3ChainInit                      returned 23 writes, no hit
+Cascade4StepBitTest                    returned 2 writes, no hit
+Cascade5StageInit                      returned 19 writes, no hit
+CdeclArgScaledLookupAndStore           returned 2 writes, no hit
+CfltcvtFormat                          returned 2 writes, no hit
+Chain2AxisDiffStoreTailJmp             returned 3 writes, no hit
+Chain2CallMul10Accum                   returned 1 writes, no hit
+Chain3CallGuarded                      returned 35 writes, no hit
+ChainAccumMul10Pair                    returned 2 writes, no hit
+ChainDecCondStoreCallJmp               returned 39 writes, no hit
+ChainDiff3Mul10Install                 returned 6 writes, no hit
+ChainDirtyBitWalker                    returned 2 writes, no hit
+ChainDispatcher4Call                   ran out  10 writes, no hit
+ChainFieldCopyTailJmp                  returned 4 writes, no hit
+ChainFieldTest2Branch                  returned 16 writes, no hit
+ChainGatedNegAccum                     returned 4 writes, no hit
+ChainGetterStateInstaller              returned 2 writes, no hit
+ChainInit3CallTailJmp                  ran out  25 writes, no hit
+ChainInitDoublePushCall                returned 15 writes, no hit
+ChainInitMul10BulkStore                returned 5 writes, no hit
+ChainListVecAdd                        returned 1 writes, no hit
+ChainMul10DotProd                      returned 2 writes, no hit
+ChainNodeAdvanceCallback               returned 14 writes, no hit
+ChainNodeInit                          returned 8 writes, no hit
+ChainPathMul25                         returned 41 writes, no hit
+ChainPickArgScaledInit                 returned 4 writes, no hit
+ChainSearch                            returned 3 writes, no hit
+ChainSetCallPauseDispatch              ran out  23 writes, no hit
+ChainSetupBitToggle                    returned 5 writes, no hit
+ChainShiftRight8                       returned 0 writes, no hit
+ChainSlotSetupInstallSelf              returned 6 writes, no hit
+ChainStoreCmpJmp                       returned 3 writes, no hit
+ChainStreamMatMulVecAdd                returned 11 writes, no hit
+ChainTableWalkStore                    returned 5 writes, no hit
+ChainUnlinkPushFree                    returned 0 writes, no hit
+ChainWalkCallCmp                       ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+ChainWalkCleanup                       returned 1 writes, no hit
+ChainWalkInstall                       returned 6 writes, no hit
+ChainWalkPushPop                       returned 2 writes, no hit
+ChainWalkSelfRecursive                 returned 16 writes, no hit
+ChainedEvent3                          returned 27 writes, no hit
+CharSelectFsmCluster                   returned 16 writes, no hit
+CharSelectSetupCluster                 returned 3 writes, no hit
+CharSelect_1v1                         returned 53 writes, no hit
+CharSelect_CpuBattlesToggle            returned 46 writes, no hit
+CharSelect_HelpPrompts                 returned 41 writes, no hit
+CharSelect_Team                        returned 53 writes, no hit
+CharSelect_TeamSize                    returned 51 writes, no hit
+CheckInstallPath                       ran out  0 writes, no hit
+CinematicCFsmCluster                   returned 22 writes, no hit
+CinematicFsmCluster                    returned 1 writes, no hit
+CinematicStageCluster                  returned 16 writes, no hit
+CjChainResetThreshold                  ran out  3 writes, no hit
+CjDispatchCommit                       returned 14 writes, no hit
+CjFieldCopyCascade                     returned 17 writes, no hit
+CjInstallSelfRouter                    returned 46 writes, no hit
+CjMaskedFlagProbe                      returned 1 writes, no hit
+CjPairCallCmp                          returned 1 writes, no hit
+CjTableThresholdDispatch               returned 3 writes, no hit
+ClampMulShiftStore                     returned 0 writes, no hit
+ClampNegPair                           returned 17 writes, no hit
+ClampTwoToMax_004226a0                 returned 0 writes, no hit
+ClampTwoToMax_004226e0                 returned 0 writes, no hit
+CleanupCallTwice                       returned 0 writes, no hit
+ClearBit2x34                           returned 1 writes, no hit
+ClearTwoCallSetStore                   ran out  25 writes, no hit
+CloseAndThunksBundle                   ran out  0 writes, no hit
+CloseFd                                ran out  0 writes, no hit
+CloseImpl                              ran out  0 writes, no hit
+Cmp13333_IdCascadeBitSet_00439fa0      returned 0 writes, no hit
+Cmp200Jmp                              returned 40 writes, no hit
+Cmp2CallDirtyCall                      ran out  6 writes, no hit
+Cmp2DirtySetOrClear_0049fb10           returned 0 writes, no hit
+Cmp2DirtySetOrClear_0049fb40           returned 0 writes, no hit
+Cmp2DirtyToggle                        returned 0 writes, no hit
+Cmp2OrSet0b                            returned 2 writes, no hit
+Cmp2OrSet0b_then_SetWalkPhaseFff_004468a0 returned 3 writes, no hit
+Cmp30000And18000                       ran out  6 writes, no hit
+Cmp3DirtyToggle                        returned 0 writes, no hit
+Cmp3JmpOrPushCall                      returned 38 writes, no hit
+Cmp7CondStateUpdate                    returned 1 writes, no hit
+Cmp7DirtyToggle                        returned 0 writes, no hit
+Cmp9DirtyToggle                        returned 0 writes, no hit
+CmpByteJmp                             returned 0 writes, no hit
+CmpCallPushIATCall                     ran out  0 writes, no hit
+CmpCallPushIATCall2                    ran out  1 writes, no hit
+CmpCondIdxArrLookup                    returned 1 writes, no hit
+CmpDirectOrIndirectChain               returned 0 writes, no hit
+CmpDispatchPushCallPop                 returned 11 writes, no hit
+CmpDivJmp                              returned 3 writes, no hit
+CmpDualPatchCallJmp                    returned 3 writes, no hit
+CmpDualPatchScaledRangeJmp             returned 34 writes, no hit
+CmpDualStateMatch                      returned 0 writes, no hit
+CmpEax1OrSetDirty                      returned 0 writes, no hit
+CmpEqInitCallElseJmp                   returned 36 writes, no hit
+CmpEqWalkSetCallToggleDirty            returned 4 writes, no hit
+CmpJmpConstStoreJmp                    returned 21 writes, no hit
+CmpJmpTwoBranch                        returned 8 writes, no hit
+CmpP1DualInitStore_00433d30            returned 2 writes, no hit
+CmpP1DualInitStore_00482ab0            returned 2 writes, no hit
+CmpP1GTSetup                           returned 1 writes, no hit
+CmpP1ScaledInit                        returned 0 writes, no hit
+CmpP1ScaledInitB                       returned 0 writes, no hit
+CmpP1ScaledLoad74                      returned 1 writes, no hit
+CmpP1ScaledLoad7c                      returned 1 writes, no hit
+CmpP2P1ScaledJmp                       returned 2 writes, no hit
+CmpRangeJmpStateInit                   returned 40 writes, no hit
+CmpccccCallPauseDirtyJmp               returned 30 writes, no hit
+ColdLoopTail                           ran out  1 writes, no hit
+Color15BitPacker                       returned 0 writes, no hit
+ComReleaseCapture_004aeee0             returned 0 writes, no hit
+ComReleaseCapture_004afb50             returned 0 writes, no hit
+ComReleaseCapture_004b0380             returned 0 writes, no hit
+ComReleasePair_004af440                returned 0 writes, no hit
+ComReleasePair_004afcd0                returned 0 writes, no hit
+ComReleasePair_004b0500                returned 0 writes, no hit
+ComRelease_g_comptr_0058c7b8           returned 0 writes, no hit
+ComRelease_g_comptr_0058c7bc           returned 0 writes, no hit
+ComRelease_g_comptr_0058c7c0           returned 0 writes, no hit
+ComRelease_g_comptr_0058c870           returned 0 writes, no hit
+ComRelease_g_comptr_0058c8f0           returned 0 writes, no hit
+ComSoundSetup_004af6c0                 returned 0 writes, no hit
+ComSoundSetup_004afef0                 returned 0 writes, no hit
+CombatChainWalkExpand                  returned 3 writes, no hit
+ComboFinisherEventCluster              returned 17 writes, no hit
+ComboLoopCluster                       returned 44 writes, no hit
+ComboMenuFsmCluster                    returned 26 writes, no hit
+ComboMoveSelectFsmCluster              returned 11 writes, no hit
+ComboScriptDispatchCluster             ran out  2 writes, no hit
+ComboSpecialEventCluster               returned 1 writes, no hit
+ComputeConfigHash                      returned 0 writes, no hit
+CondInstallDispatch_00476e20           returned 3 writes, no hit
+CondInstallDispatch_00476ed0           returned 3 writes, no hit
+CondInstallDispatch_00477000           returned 2 writes, no hit
+CondPickDualStore                      returned 0 writes, no hit
+CondPlayerLookup_0048f270              returned 0 writes, no hit
+CondPlayerLookup_0048f950              returned 0 writes, no hit
+CondPlayerLookup_004ac120              returned 1 writes, no hit
+ConditionalAcc3or4                     returned 1 writes, no hit
+ConditionalAcc4or3                     returned 1 writes, no hit
+Config_RestoreGlobals                  returned 20 writes, no hit
+Config_SaveToRegistry                  returned 0 writes, no hit
+Config_SnapshotGlobals                 returned 0 writes, no hit
+Const0303InitJmp                       returned 38 writes, no hit
+Const0x2005Store                       returned 2 writes, no hit
+Const111ScaledStoreJmp                 returned 17 writes, no hit
+Const20cFae2Jmp                        returned 18 writes, no hit
+Const4ec8f8DirtyScaledStore            returned 4 writes, no hit
+Const5Call_PauseDirty4_Jmp             returned 4 writes, no hit
+Const6Call_PauseDirty4_Jmp             returned 4 writes, no hit
+Const7cCallJmp                         returned 30 writes, no hit
+ConstStoreCallJmp_ByteWordTableTaggedDispatch_then_Phase3PackedInstallSelf returned 22 writes, no hit
+ConstStoreCallJmp_ChainDirtyBitWalker_then_DualScaledLoadStoreJmp returned 7 writes, no hit
+ContinueScreenFsm                      ran out  25 writes, no hit
+Copy3Dwords                            returned 0 writes, no hit
+Copy3Fields38                          returned 3 writes, no hit
+Copy3Fields3c4044                      returned 3 writes, no hit
+Copy3FieldsNeg                         returned 4 writes, no hit
+CopyArgs16ToGlobals                    returned 0 writes, no hit
+CopyByteUntilNull                      returned 7 writes, no hit
+CopyCallPauseJmp_MStackPush2ChainLLInsert_then_StackPopDispatchTagged ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+CopyCallPauseJmp_TierBranchChain_then_MStackPush3TripleMul10WithAbs returned 0 writes, no hit
+CopyGlobal                             returned 0 writes, no hit
+CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx returned 6 writes, no hit
+CopyJmp_GuardedSixFieldCopy_g_cj_0054205c_00445ec0 returned 3 writes, no hit
+CopyJmp_GuardedSixFieldCopy_g_cj_0054205c_00446180 returned 3 writes, no hit
+CopyJmp_QuadFieldEarlyJmpThenInstall_g_currentNodeIdx returned 2 writes, no hit
+CopyJmp_ScaledSubStore_g_currentNodeIdx returned 2 writes, no hit
+CopyJmp_SlotCmp3way_g_currentNodeIdx   returned 3 writes, no hit
+CopyLoadInstallJmp_00445ed0            returned 4 writes, no hit
+CopyLoadInstallJmp_00446210            returned 4 writes, no hit
+CopyScaledTriple_00446120              returned 4 writes, no hit
+CopyScaledTriple_00446350              returned 4 writes, no hit
+CopyThreeFields                        returned 0 writes, no hit
+CountdownClampWalk                     returned 3 writes, no hit
+CountdownInstallSelfMultiTail          returned 4 writes, no hit
+CountdownStoreCallChain                returned 18 writes, no hit
+CountedLoopMStack                      returned 7 writes, no hit
+CritSecLazyEnter                       ran out  1 writes, no hit
+CritSecWrap350                         ran out  0 writes, no hit
+CrouchAttackFsmCluster                 returned 5 writes, no hit
+CrouchCounterCluster                   returned 27 writes, no hit
+CrouchFsmCluster                       returned 31 writes, no hit
+Crt80BitFloatMul                       returned 0 writes, no hit
+CrtCodepageDispatcher                  ran out  0 writes, no hit
+CrtDoubleToStringImpl                  returned 2 writes, no hit
+CrtFdClose                             ran out  0 writes, no hit
+CrtFileOpenImpl                        ran out  0 writes, no hit
+CrtFloatConvert                        returned 2 writes, no hit
+CrtFpieeeFlt                           ran out  6 writes, no hit
+CrtFpuExceptionFilter                  returned 0 writes, no hit
+CrtFreeLocaleInfo                      returned 0 writes, no hit
+CrtFtolMatherrCluster                  ran out  1 writes, no hit
+CrtGetLocaleInfo                       ran out  0 writes, no hit
+CrtHeapCommitFreeCluster               returned 1 writes, no hit
+CrtInitLocaleInfo                      returned 0 writes, no hit
+CrtInitPerThreadData                   ran out  0 writes, no hit
+CrtIoInitFdTable                       ran out  1 writes, no hit
+CrtLocaleInfoFreeAll                   returned 0 writes, no hit
+CrtMemMove                             returned 0 writes, no hit
+CrtParseCommandLine                    returned 1 writes, no hit
+CrtPowCluster                          returned 0 writes, no hit
+CrtPowSpecialCases                     returned 0 writes, no hit
+CrtReadCrlfDecode                      returned 0 writes, no hit
+CrtSetlocaleInstaller                  ran out  1 writes, no hit
+CrtTimeFmtPrefsCluster                 ran out  0 writes, no hit
+CrtWoutputFormatInteger                ran out  0 writes, no hit
+Crt_doserrno                           ran out  0 writes, no hit
+Crt_errno                              ran out  0 writes, no hit
+Crt_fpieee_flt                         returned 0 writes, no hit
+Crt_rand                               ran out  0 writes, no hit
+Crt_srand                              ran out  0 writes, no hit
+DDraw3_Cleanup                         returned 0 writes, no hit
+DDraw3_Create                          ran out  0 writes, no hit
+DDraw3_CreateSurface                   returned 0 writes, no hit
+DDraw3_GetSurface                      returned 0 writes, no hit
+DDraw3_PostCreate                      ran out  2 writes, no hit
+DDraw3_SetCooperativeLevel             returned 0 writes, no hit
+DDraw5_Cleanup                         returned 0 writes, no hit
+DDraw5_Create                          ran out  0 writes, no hit
+DDraw5_CreateSurface                   returned 0 writes, no hit
+DDraw5_GetSurface                      returned 0 writes, no hit
+DDraw5_PostCreate                      ran out  2 writes, no hit
+DDraw5_SetCooperativeLevel             returned 0 writes, no hit
+DSoundBufferInit146_a40                returned 0 writes, no hit
+DSoundBufferInit146_a60                returned 0 writes, no hit
+DSoundBufferInit146_b290               returned 0 writes, no hit
+DSoundBufferInit146_b519               returned 0 writes, no hit
+DSoundCaptureSetupGate                 returned 0 writes, no hit
+DSoundDualEntryRelease                 returned 0 writes, no hit
+DSoundInstallerPair                    ran out  0 writes, no hit
+DSoundQueryProperty                    ran out  0 writes, no hit
+DSoundSetAxisPan123_004aec10           returned 0 writes, no hit
+DSoundSetAxisPan123_004b50a0           returned 0 writes, no hit
+DSound_GetContext                      returned 0 writes, no hit
+DSound_Init                            ran out  3731 writes, no hit
+DeadThunk                              ran out  0 writes, no hit
+DeathAnimCluster                       ran out  6 writes, no hit
+DebugMenu_DrawMatchOptions             returned 50 writes, no hit
+DebugMenu_DrawUnlockToggles            returned 51 writes, no hit
+DebugStub_NoOp_A                       returned 0 writes, no hit
+DebugStub_NoOp_B                       returned 0 writes, no hit
+DecBoundCheckCallJmp                   returned 45 writes, no hit
+DecCallPushCall                        returned 33 writes, no hit
+DecJneSetCallSetJmp                    returned 1 writes, no hit
+DecOrDirty_004a7d90                    returned 1 writes, no hit
+DecOrDirty_004a7de0                    returned 1 writes, no hit
+DecOrZeroDirty4                        returned 1 writes, no hit
+DecodeModeFlags                        returned 0 writes, no hit
+DecodeTableAllocaCall                  returned 0 writes, no hit
+DeltaAbsCompareBitToggle               returned 2 writes, no hit
+DeobfuscateConfig                      returned 147 writes, no hit
+DialogProbeDispatch                    returned 0 writes, no hit
+DialogProbeDispatch640                 returned 0 writes, no hit
+DiffMul10Loop                          returned 4 writes, no hit
+Dirty4Branch_MStackPushDual_StackPop_00428390 returned 10 writes, no hit
+DirtyBitToggleDispatch                 returned 3 writes, no hit
+DirtyBitTripleWriteOrCall              returned 6 writes, no hit
+DirtyDoubleDeref                       returned 2 writes, no hit
+DirtyFlagsManip                        returned 1 writes, no hit
+DirtyFlagsManipB                       returned 1 writes, no hit
+DirtyGuardLitOrJmp_0047ef40            returned 26 writes, no hit
+DirtyGuardLitOrJmp_00496940            returned 16 writes, no hit
+DirtyKeyedStateCopy                    returned 3 writes, no hit
+DirtyOrFlagDispatch                    returned 3 writes, no hit
+DirtyOrJmp                             ran out  3 writes, no hit
+DirtyPushCallPop                       returned 4 writes, no hit
+DirtyTestScaledCmpJmp                  returned 0 writes, no hit
+DirtyTestScaledCopy                    returned 6 writes, no hit
+DirtyToggleByBaseSel                   returned 2 writes, no hit
+DirtyToggleByGate                      returned 1 writes, no hit
+DirtyToggleInstall                     returned 4 writes, no hit
+DirtyToggleScaledTest                  returned 2 writes, no hit
+DispatchCopyFields                     returned 3 writes, no hit
+DispatchDoubleScaledCluster            returned 18 writes, no hit
+DispatchEventQueue                     returned 2 writes, no hit
+DispatchEventQueue_Commit              returned 1 writes, no hit
+DispatchGuardedDirtyTest               returned 11 writes, no hit
+DispatchOrInitFightGroup               returned 9 writes, no hit
+DispatchPair                           ran out  7 writes, no hit
+DispatchProbeOrTransformB              returned 8 writes, no hit
+DispatchProbeOrTransformC              returned 8 writes, no hit
+DispatchScaledLEA                      returned 1 writes, no hit
+DispatchSetDirtyToggle                 returned 1 writes, no hit
+DispatchSetWalk2                       returned 11 writes, no hit
+DispatchSetWalk3                       returned 11 writes, no hit
+DispatchSetWalk4                       returned 11 writes, no hit
+DispatchSetWalk5                       returned 11 writes, no hit
+DispatchSetWalk6                       returned 12 writes, no hit
+DispatchSwitchWalkCmp                  returned 29 writes, no hit
+DispatchThroughBaseSel6c               returned 2 writes, no hit
+DispatchWcSwitch                       returned 40 writes, no hit
+DispatcherChainRampClamp               returned 3 writes, no hit
+DispatcherComplex115_Cmp3DirtyToggle_0049f900 returned 0 writes, no hit
+DispatcherComplex115_Cmp3DirtyToggle_0049f980 returned 0 writes, no hit
+DispatcherComplex131_00431530          returned 6 writes, no hit
+DispatcherComplex131_004315c0          returned 6 writes, no hit
+DispatcherComplex138_00476060          returned 1 writes, no hit
+DispatcherComplex138_004760f0          returned 1 writes, no hit
+DispatcherComplex181_Push70CallScaleArith returned 4 writes, no hit
+DispatcherComplex181_Push70CallScaleArith2 returned 4 writes, no hit
+DispatcherComplex181_StreamChainStringInstall returned 4 writes, no hit
+DispatcherComplex197_0045be40          returned 8 writes, no hit
+DispatcherComplex197_0045bf10          returned 6 writes, no hit
+DispatcherComplex249_00447890          returned 13 writes, no hit
+DispatcherComplex249_00447990          returned 13 writes, no hit
+DispatcherComplex260_FramePauseScaledStore returned 3 writes, no hit
+DispatcherComplex260_MStackBracket1_TreeWalkRecursive2 returned 2 writes, no hit
+Distance2DSaturationClamp              returned 5 writes, no hit
+Distance3DMul10Chain                   returned 7 writes, no hit
+DivBy                                  returned 0 writes, no hit
+DivLongPushCall                        returned 0 writes, no hit
+DivMod32IAT                            ran out  0 writes, no hit
+DosMapErr                              ran out  0 writes, no hit
+DoubleCallChainInit                    returned 6 writes, no hit
+DoubleIndirectFourWaySelect            returned 2 writes, no hit
+DoublePackedPtrInstall                 returned 3 writes, no hit
+DoublePushAddCallDoublePop             returned 6 writes, no hit
+DoublePushCallDoublePop                returned 3 writes, no hit
+DoublePushCallDualPopJmp               ran out  4 writes, no hit
+DoublePushScaledInitJmp                returned 6 writes, no hit
+DoublePushWalkInitJmp                  returned 67 writes, no hit
+DoubleScaledCrossStore                 returned 0 writes, no hit
+DoubleStackPushAndJmp                  returned 9 writes, no hit
+DoubleStackPushAndJmp7b                returned 9 writes, no hit
+DoubleStackPushAndJmp7d                returned 9 writes, no hit
+DoubleToInt64                          returned 0 writes, no hit
+DoubleToLongDouble                     returned 0 writes, no hit
+DownloadCharSetup                      returned 3 writes, no hit
+DownloadDualPush                       returned 3 writes, no hit
+DownloadPlayerChar                     returned 5 writes, no hit
+DownloadPlayerChar_Variant             ran out  4 writes, no hit
+DrainQueueCallEach                     returned 2 writes, no hit
+DrawMenu                               returned 0 writes, no hit
+DrawMeshBlock                          returned 0 writes, no hit
+DrawScene                              ran out  0 writes, no hit
+DualAddSar                             returned 3 writes, no hit
+DualAxisScalePair                      returned 9 writes, no hit
+DualBitFlagAudioChain                  returned 3 writes, no hit
+DualBitGateInitCall                    returned 0 writes, no hit
+DualBlockChainCallInstall              returned 27 writes, no hit
+DualBlockChainInitBody                 returned 24 writes, no hit
+DualBlockInstallMul10Tail              returned 18 writes, no hit
+DualBlockInstallSelfWithSibling        returned 4 writes, no hit
+DualBlockPauseAbsDirty                 returned 0 writes, no hit
+DualBlockThunkPlus3State               returned 29 writes, no hit
+DualBranchWordLookup                   returned 1 writes, no hit
+DualCallPauseAddrSetRecurse_func_004196c0_jj returned 11 writes, no hit
+DualCallPauseAddrSetRecurse_func_00419780_jj returned 11 writes, no hit
+DualCallPauseAddrSetRecurse_func_00419840_jj returned 11 writes, no hit
+DualCallPauseAddrSetRecurse_func_00419980_jj returned 11 writes, no hit
+DualCallPauseAddrSetRecurse_func_00419a40_jj returned 11 writes, no hit
+DualCallPauseAddrSetRecurse_func_00419b00_jj returned 11 writes, no hit
+DualCallPauseDirtyDoubleJmp            returned 46 writes, no hit
+DualCallPauseDirtyJmp_00435f20         ran out  6 writes, no hit
+DualCallPauseDirtyJmp_00490c30         returned 8 writes, no hit
+DualCallPauseJmpDual                   returned 46 writes, no hit
+DualCallSetByte                        returned 1 writes, no hit
+DualCallTestPauseRange                 ran out  6 writes, no hit
+DualChainSubCallSubLoad                returned 5 writes, no hit
+DualCmpSetFlagBitToggle                returned 2 writes, no hit
+DualCmpSwapStore                       returned 1 writes, no hit
+DualCondCleanupCall                    returned 0 writes, no hit
+DualCondMatchSet                       returned 0 writes, no hit
+DualConstJmpBig                        returned 3 writes, no hit
+DualConstJmpNeg1                       returned 2 writes, no hit
+DualConstJmp_00453480                  returned 11 writes, no hit
+DualConstJmp_004534a0                  returned 11 writes, no hit
+DualConstJmp_004534c0                  returned 11 writes, no hit
+DualConstMaskFlagToggle4               returned 3 writes, no hit
+DualConstMaskFlagToggle8               returned 3 writes, no hit
+DualCounterPhaseGateInstall            returned 10 writes, no hit
+DualEntry4002Chain                     returned 2 writes, no hit
+DualEntry5WayThreshold                 returned 36 writes, no hit
+DualEntryBitFlagDispatch               returned 1 writes, no hit
+DualEntryBitGated                      returned 2 writes, no hit
+DualEntryDecLoop                       returned 3 writes, no hit
+DualEntryInitCmp                       returned 11 writes, no hit
+DualEntryInitDispatch                  returned 6 writes, no hit
+DualEntryInstall00471920               returned 5 writes, no hit
+DualEntryInstallScaledChain_ArgSarStoreJmp_0047ef60 returned 16 writes, no hit
+DualEntryInstallScaledChain_ArgSarStoreJmp_00486580 returned 12 writes, no hit
+DualEntryInstallSelf                   returned 42 writes, no hit
+DualEntryInstallSelfChain              returned 21 writes, no hit
+DualEntryInstallSelfScaled             returned 0 writes, no hit
+DualEntryPushCall                      returned 25 writes, no hit
+DualEntryRecursiveInstall              returned 5 writes, no hit
+DualEntryStateGated                    returned 39 writes, no hit
+DualEntryStateLoadCascade              returned 5 writes, no hit
+DualEntryStateMachine                  returned 11 writes, no hit
+DualEntryStub                          returned 17 writes, no hit
+DualFieldAddSubStore                   returned 2 writes, no hit
+DualGatedStateYield                    returned 1 writes, no hit
+DualGuardPushInstallJmp                returned 11 writes, no hit
+DualGuardStateMachine                  returned 4 writes, no hit
+DualGuardStateMachine_SaveCallRestore  returned 4 writes, no hit
+DualGuardedChainJmp                    returned 11 writes, no hit
+DualGuardedTableSearch                 returned 23 writes, no hit
+DualHelperCallStoreCjFields            returned 6 writes, no hit
+DualHelperMul10TailPair                returned 4 writes, no hit
+DualInstallCallSwap_CjChainResetThreshold_then_CjChainResetThreshold ran out  4 writes, no hit
+DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThresholdRevertAdvance returned 8 writes, no hit
+DualLinkedBlockCopyBracketed           ran out  4 writes, no hit
+DualListInit                           returned 2 writes, no hit
+DualLoadDualStoreJmp                   returned 2 writes, no hit
+DualMaskCmpJmp                         returned 2 writes, no hit
+DualMul10AccCj                         returned 1 writes, no hit
+DualMul10AccumState88                  returned 5 writes, no hit
+DualMul10AndDispatchChain              returned 5 writes, no hit
+DualMul10ChainAcc                      returned 2 writes, no hit
+DualMul10ChainAcc7C                    returned 2 writes, no hit
+DualMul10Tail                          returned 1 writes, no hit
+DualMulScaleStore                      returned 8 writes, no hit
+DualPackedStoreCallSubBack             returned 9 writes, no hit
+DualPathCallSetup                      returned 3 writes, no hit
+DualPathDownloadChar                   returned 3 writes, no hit
+DualPickDecJmp                         returned 4 writes, no hit
+DualPlayerSetupCall_ChainPickArgScaledInit_0045dcd0 returned 8 writes, no hit
+DualPlayerSetupCall_ChainPickArgScaledInit_0045dd30 returned 8 writes, no hit
+DualPushAddCallDualPopJmp              returned 2 writes, no hit
+DualPushCallBitDispatch                returned 3 writes, no hit
+DualPushCallCjPop                      returned 3 writes, no hit
+DualPushCallPause                      returned 18 writes, no hit
+DualPushCallStore                      returned 23 writes, no hit
+DualPushCmp12Dispatch                  returned 1 writes, no hit
+DualPushCmp12Dispatch68                returned 1 writes, no hit
+DualPushSet7bCallPop                   returned 9 writes, no hit
+DualPushSet7dCallPop                   returned 9 writes, no hit
+DualPushSetCallDualPop                 returned 0 writes, no hit
+DualSave                               returned 0 writes, no hit
+DualScaledChainPush                    returned 13 writes, no hit
+DualScaledInitClear                    returned 2 writes, no hit
+DualScaledInitCmp_0046dbd0             returned 3 writes, no hit
+DualScaledInitCmp_0046df50             returned 3 writes, no hit
+DualScaledInit_g_table_0052ab18_g_table_0053a2a0 returned 4 writes, no hit
+DualScaledInit_g_table_0053a330_g_table_0053a258 returned 4 writes, no hit
+DualScaledInit_g_table_0053a750_g_table_00538048 returned 4 writes, no hit
+DualScaledInit_g_table_00541e00_g_table_0053a2f8 returned 4 writes, no hit
+DualScaledLitInitJmp                   ran out  1 writes, no hit
+DualScaledLoadStoreJmp                 returned 10 writes, no hit
+DualScaledStore                        returned 0 writes, no hit
+DualScaledStoreConst                   returned 2 writes, no hit
+DualScaledStoreZero                    returned 3 writes, no hit
+DualSectionInit                        returned 3 writes, no hit
+DualSeqBranchInit                      returned 4 writes, no hit
+DualSeqLoopDispatch                    returned 7 writes, no hit
+DualSetCallPair                        returned 16 writes, no hit
+DualSetShiftCall                       returned 4 writes, no hit
+DualSlotCopyChain                      returned 0 writes, no hit
+DualSlotInitAndMatchFsm                returned 18 writes, no hit
+DualSlotPropagateCall                  returned 8 writes, no hit
+DualStreamSqDistThresh                 returned 1 writes, no hit
+DualSubFromField                       returned 0 writes, no hit
+DualSubInstallChain                    returned 23 writes, no hit
+DualSwapTwoCallsJmp                    returned 4 writes, no hit
+DualTableMappedDispatch                ran out  25 writes, no hit
+DualTestDirtyToggle_00427ea0           returned 0 writes, no hit
+DualTestDirtyToggle_004282c0           returned 0 writes, no hit
+DualVtable8Call                        returned 0 writes, no hit
+DualWalkRange                          returned 8 writes, no hit
+ECM_Cleanup                            returned 0 writes, no hit
+ECM_DecodeFrame                        returned 0 writes, no hit
+ECM_DecodeFrameDispatch                returned 1 writes, no hit
+ECM_DecodeFrame_Huffman                ran out  0 writes, no hit
+ECM_DecodeFrame_Raw                    returned 0 writes, no hit
+ECM_Open                               ran out  1 writes, no hit
+ECM_OpenTrack                          ran out  2 writes, no hit
+ECM_ParseFrameHeader                   returned 1 writes, no hit
+ECM_PlayThread                         ran out  1 writes, no hit
+ESF_Close                              returned 0 writes, no hit
+ESF_DecodeADPCM                        returned 0 writes, no hit
+ESF_Open                               ran out  2 writes, no hit
+ESF_ReadData                           returned 0 writes, no hit
+EarlyOutDualPushIATStore               returned 0 writes, no hit
+EcmFrameDecode                         returned 0 writes, no hit
+EcmStreamTickAdvance                   returned 0 writes, no hit
+EffectTableWalker                      ran out  11 writes, no hit
+EightEntryAlarmDispatch                returned 67 writes, no hit
+EightPackedSubInstallSelfWalk          returned 45 writes, no hit
+Eleven404b90_404c00                    returned 3 writes, no hit
+EmptyRetStub_004bd5e0                  returned 0 writes, no hit
+EncodeModeFlags                        returned 0 writes, no hit
+EndingScreenFsmCluster                 returned 12 writes, no hit
+EnduranceFsmCluster                    ran out  25 writes, no hit
+EnduranceMode_Handler                  ran out  26 writes, no hit
+EnduranceRoundMsgCluster               returned 31 writes, no hit
+EnduranceStateInitWalk                 returned 26 writes, no hit
+EntitySetupCountdownFsm                returned 16 writes, no hit
+EntryBodyInstallSelfMidRef             returned 28 writes, no hit
+EntryThenDispatcherPair                returned 40 writes, no hit
+EntryThunkBodyStateMachine             returned 14 writes, no hit
+EnvSpawnRehydratePass                  returned 5 writes, no hit
+EsiAliasInstallChainCall               returned 10 writes, no hit
+EsiAliasInstallSelf                    returned 6 writes, no hit
+EsiEdiAliasDualMul10                   returned 2 writes, no hit
+EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429530 returned 16 writes, no hit
+EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_004295a0 returned 16 writes, no hit
+EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429610 returned 16 writes, no hit
+EsiInstallChainCallCmpThreshold        returned 12 writes, no hit
+EsiInstallChainCallIndirect            returned 10 writes, no hit
+EsiInstallChainCmpDualCall             returned 16 writes, no hit
+EsiInstallClampAddCall                 returned 12 writes, no hit
+EsiInstallClearTripleFields            returned 4 writes, no hit
+EsiInstallCounterDispatch              returned 16 writes, no hit
+EsiInstallDecCallChain_StackPopDispatchTagged_004293d0 returned 11 writes, no hit
+EsiInstallDecCallChain_StackPopDispatchTagged_004294a0 returned 16 writes, no hit
+EsiInstallDecGlobalJmp                 returned 7 writes, no hit
+EsiInstallPushDecPopJmp                returned 4 writes, no hit
+EsiInstallQuadCallBitDispatch          ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+EsiInstallSetCallChain                 returned 23 writes, no hit
+EsiInstallSetCbChainExtend_0048a810    returned 23 writes, no hit
+EsiInstallSetCbChainExtend_0048a8c0    returned 23 writes, no hit
+EsiInstallSetCbChainExtend_0048a970    returned 22 writes, no hit
+EsiInstallTwoCallCmpInstall            ran out  18 writes, no hit
+EsiTripleMul10Vec                      returned 3 writes, no hit
+Event112Cluster                        returned 30 writes, no hit
+Event23bMusicCluster                   returned 43 writes, no hit
+EventGateCluster                       returned 4 writes, no hit
+EventPacketDecoder                     returned 4 writes, no hit
+EventQueueDrainLoop                    ran out  775 writes, no hit
+Event_InvokeHandler                    ran out  3 writes, no hit
+ExitGame                               ran out  1 writes, no hit
+ExtractBitsToVec3                      returned 0 writes, no hit
+FCloseImpl                             returned 0 writes, no hit
+FFlushImpl                             returned 0 writes, no hit
+FPIntegerTest                          returned 0 writes, no hit
+FPUPrecisionCheck                      returned 0 writes, no hit
+FSYS_HashName                          returned 0 writes, no hit
+FSYS_NormalizePath                     returned 0 writes, no hit
+FSYS_fclose                            returned 1 writes, no hit
+FSYS_fload                             ran out  2 writes, no hit
+FSYS_fopen                             ran out  2 writes, no hit
+FSYS_fread                             returned 0 writes, no hit
+FSYS_fseek                             returned 0 writes, no hit
+FSYS_fsize                             ran out  1 writes, no hit
+FSYS_ftell                             returned 0 writes, no hit
+FSeekImpl                              ran out  0 writes, no hit
+FWriteNoLock                           returned 0 writes, no hit
+FcvtFormatDecimal                      returned 1 writes, no hit
+FgetsImpl                              returned 0 writes, no hit
+FightFrameStep                         returned 15 writes, no hit
+FightFrameStep_Inner                   returned 14 writes, no hit
+Filbuf                                 returned 0 writes, no hit
+FileTableClose                         ran out  0 writes, no hit
+FileTableExtendOrFind                  ran out  1 writes, no hit
+FileTellAdjusted                       ran out  0 writes, no hit
+FileWriteWithLfToCrlf                  returned 0 writes, no hit
+FiveBlockDispatchChain_ScaledAndAl7f   returned 38 writes, no hit
+FiveBlockDispatchChain_ScaledAndAlfe   returned 38 writes, no hit
+FiveBlockDispatch_JumpTableDispatch    returned 34 writes, no hit
+FiveBlockDispatch_ScaledCmp200eCallBool ran out  2 writes, no hit
+FiveCallGuardSetTail                   returned 29 writes, no hit
+FiveCallScaledChainTailJmp             returned 15 writes, no hit
+FiveEntryAlarmInstallChain             returned 11 writes, no hit
+FiveFieldChainCopyTableWalk            returned 4 writes, no hit
+FivePackedSubChainBigEntry             returned 19 writes, no hit
+FivePackedSubdispatchInstallSelf       returned 20 writes, no hit
+FiveSetWalkJmp                         returned 3 writes, no hit
+FiveStageSetupChain                    returned 32 writes, no hit
+FiveTableInitChainBracketed            returned 4 writes, no hit
+FiveTableWalkInit                      ran out  25 writes, no hit
+FiveThunkMStackDispatcher              returned 38 writes, no hit
+FixedDiv16                             returned 0 writes, no hit
+FlagCascadeStateSet                    returned 2 writes, no hit
+FlagInitTableSelector                  returned 22 writes, no hit
+FlagThunk4EntryDispatcher              returned 21 writes, no hit
+FloatToStringBundle                    returned 1 writes, no hit
+FloatTransientHelpers                  returned 0 writes, no hit
+Flsbuf                                 returned 1 writes, no hit
+FlushDrawQueue                         returned 0 writes, no hit
+FopenMode                              returned 0 writes, no hit
+FormatHelper                           returned 1 writes, no hit
+FormatMenuItemsAndDraw                 ran out  429 writes, no hit
+ForwardWithLiteral_004ccce0            returned 0 writes, no hit
+ForwardWithLiteral_004ccd00            returned 0 writes, no hit
+FourCallBitGateChain                   returned 3 writes, no hit
+FourConstCallLitCallJmp_Wrapper_IterLoad_0048fd30_then_TripleScaledChainStore_then_StageEventStartCluster_0047fec0 returned 27 writes, no hit
+FourConstCallLitCallJmp_Wrapper_IterLoad_0048fd30_then_TripleScaledChainStore_then_StageEventStartCluster_0047ff20 returned 27 writes, no hit
+FourEntryAlarmInstall                  returned 23 writes, no hit
+FourFieldCopyCallSet                   returned 3 writes, no hit
+FourGlobalsEqualFInitTail              ran out  11 writes, no hit
+FourIndirectCalls                      ran out  1 writes, no hit
+FourPackedSubInitCmpDispatch           returned 26 writes, no hit
+FourSegmentPoseWalk                    returned 8 writes, no hit
+FourStageChainedDispatch               returned 3 writes, no hit
+FourVecFillMStackBracket               returned 6 writes, no hit
+FpClassify                             returned 0 writes, no hit
+FpExceptionFilter                      ran out  1 writes, no hit
+FpExtendedToFloat                      returned 0 writes, no hit
+FpFormatRound                          returned 0 writes, no hit
+Fpclass                                returned 0 writes, no hit
+FpuCwTxn                               returned 0 writes, no hit
+FpuFlagBundle                          returned 0 writes, no hit
+FpuMaskMerge                           returned 0 writes, no hit
+FpuSqrtMul                             returned 1 writes, no hit
+FrameFinalize                          returned 13 writes, no hit
+FramePauseScaledStore                  returned 5 writes, no hit
+Fread                                  returned 0 writes, no hit
+FreeImpl                               returned 0 writes, no hit
+FreeSlotFinder                         returned 0 writes, no hit
+Frexp                                  returned 0 writes, no hit
+FsmPoseDualEntry                       returned 5 writes, no hit
+GDispatch1_CmpEqWalkSetCallToggleDirty_then_ScaledAddrInit_InstallSelfMStackPushDispatch returned 4 writes, no hit
+GDispatch1_DualCondMatchSet_then_ScaledInitWithCounterAndType returned 0 writes, no hit
+GDispatch4                             returned HIT ['0x535e0c']
+GameDispatchValidateState              ran out  3 writes, no hit
+GameInstall2BodyMul10ScaledInit        returned 5 writes, no hit
+GameLoaderHandlerCluster               returned 2 writes, no hit
+GameLogicStep                          ran out  6 writes, no hit
+GameModeAdvanceCluster                 returned 19 writes, no hit
+GameModeHandlerCluster                 ran out  3 writes, no hit
+GameMode_EnterScene                    ran out  27 writes, no hit
+GameMusicState4Way                     returned 6 writes, no hit
+GameNetSyncState                       returned 0 writes, no hit
+GameSectionSwitcher                    returned 3 writes, no hit
+GameStateDispatch4Way                  returned 19 writes, no hit
+GameStateLinearAdvance4Way             returned 43 writes, no hit
+GameStateMachine                       returned 292 writes, no hit
+GameStateProgressCluster               returned 27 writes, no hit
+GameStateTick                          ran out  2 writes, no hit
+GameTick                               EMU-ERROR UcError: Unhandled CPU exception (UC_ERR_EXCEPTION)
+GamepadSeqRecord                       returned 0 writes, no hit
+GateDispatch6c                         returned 0 writes, no hit
+GatedChainClamp                        returned 18 writes, no hit
+GatedChainInit                         returned 6 writes, no hit
+GatedDoubleSetupJmp                    returned 7 writes, no hit
+GatedScaledChainSetup                  returned 8 writes, no hit
+GatedScaledSubSat                      returned 2 writes, no hit
+GatedWordPushCall                      returned 1 writes, no hit
+GeoLoadFixupLoop                       returned 1 writes, no hit
+GeoTransformDispatchAndApply           returned 1 writes, no hit
+GetExeDirectory                        ran out  0 writes, no hit
+GetFpuSw                               returned 0 writes, no hit
+GetFpuSwClex                           returned 0 writes, no hit
+Gfx_Init                               returned 0 writes, no hit
+GlidePolyClip                          returned 3 writes, no hit
+GlideTriBatchEmit                      returned 0 writes, no hit
+GlideTriColorFlush                     returned 0 writes, no hit
+GlobalsResetInit                       returned 16 writes, no hit
+GuardedArithDualCallChain              returned 5 writes, no hit
+GuardedBitChainCmpJmp                  returned 4 writes, no hit
+GuardedBitMaskFlagOrClear              returned 3 writes, no hit
+GuardedCallDirtyJmpInit                ran out  4 writes, no hit
+GuardedCallStoreSlotsCmp               returned 3 writes, no hit
+GuardedCascadeBaseSelBit               returned 6 writes, no hit
+GuardedCascadeCjCopyFieldsBitOr        returned 9 writes, no hit
+GuardedCascadeCjLink70Mul10            returned 4 writes, no hit
+GuardedCascadeCjSetMul10               returned 4 writes, no hit
+GuardedChainClearFlagToggle            returned 4 writes, no hit
+GuardedChainCmpDualBitXor              returned 5 writes, no hit
+GuardedChainCopyJmp                    ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+GuardedChainCopySetFlag                returned 4 writes, no hit
+GuardedChainDispatch                   returned 0 writes, no hit
+GuardedChainDispatch2c                 returned 10 writes, no hit
+GuardedChainDualAdd                    returned 4 writes, no hit
+GuardedChainMaskOr                     returned 3 writes, no hit
+GuardedChainPushSetCallPop             returned 4 writes, no hit
+GuardedClampStoreJmp                   returned 10 writes, no hit
+GuardedCmpDualToggle                   returned 0 writes, no hit
+GuardedDirty4ScaledJmp                 returned 12 writes, no hit
+GuardedDirtyDispatch                   returned 29 writes, no hit
+GuardedDirtyXformFromTable             returned 1 writes, no hit
+GuardedDispatch4_00484b40              returned 31 writes, no hit
+GuardedDispatch4_00489080              returned 11 writes, no hit
+GuardedDispatch_CallPauseMStackPushSet3Jmp returned 39 writes, no hit
+GuardedDispatch_CallPauseMStackPushSet4Jmp returned 44 writes, no hit
+GuardedDispatch_EsiAliasInstallChainCall returned 41 writes, no hit
+GuardedDispatch_InstallSelfDualEsi     returned 45 writes, no hit
+GuardedDoubleCallSetJmp                ran out  45 writes, no hit
+GuardedDoubleIncCmpJmp                 returned 7 writes, no hit
+GuardedDualAndFlagToggle               returned 7 writes, no hit
+GuardedDualConst1AndToggle             returned 1 writes, no hit
+GuardedDualConst2AndToggle             returned 1 writes, no hit
+GuardedDualMaskFlagToggle              returned 2 writes, no hit
+GuardedDualPushTailJmp                 returned 5 writes, no hit
+GuardedDualScaledChainCopy             returned 4 writes, no hit
+GuardedFourCallChain                   returned 9 writes, no hit
+GuardedLoopWithCallback                returned 10 writes, no hit
+GuardedLoopWithCallback_Callback_004284c0 returned 11 writes, no hit
+GuardedPackedSlotInit                  returned 10 writes, no hit
+GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0043b980 returned 44 writes, no hit
+GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0046a560 returned 18 writes, no hit
+GuardedPushCall_DualMul10AndDispatchChain_then_ArgSar_Set0_Jmp returned 49 writes, no hit
+GuardedPushCall_ScaledLoadInstallOrCall_then_PackedAdvanceCallTailJmp returned 47 writes, no hit
+GuardedPushCall_Thunk_ScaledLoadInstallOrCall_then_PackedAdvanceCallTailJmp returned 49 writes, no hit
+GuardedPushCall_Wrapper_ScaledChainPushCall_then_ArgSarStoreJmp returned 28 writes, no hit
+GuardedRangeCmpFpuJmp                  returned 0 writes, no hit
+GuardedRangeCmpToggle                  returned 2 writes, no hit
+GuardedScaledCall                      returned 1 writes, no hit
+GuardedScaledChainJmpIndirect          returned 1 writes, no hit
+GuardedScaledLookupCallJmp             ran out  5 writes, no hit
+GuardedScaled_MStackPush8_then_PendingMatch returned 13 writes, no hit
+GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00474fd0 returned 5 writes, no hit
+GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475000 returned 5 writes, no hit
+GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475030 returned 5 writes, no hit
+GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475060 returned 5 writes, no hit
+GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_00475090 returned 5 writes, no hit
+GuardedScaled_TestP1ReplaceCurrent_then_LinkedListSearch_004750c0 returned 5 writes, no hit
+GuardedSelfRefSet                      ran out  2 writes, no hit
+GuardedSeq_BitmapBlitRunLength_then_FiveTableInitChainBracketed returned 65 writes, no hit
+GuardedSeq_BootStateInitLongChain_then_StackPopDispatchTagged ran out  12 writes, no hit
+GuardedSeq_ChainDirtyBitWalker_then_DualScaledLoadStoreJmp returned 7 writes, no hit
+GuardedSeq_CjTableThresholdDispatch_then_RoundTextMenuEventCluster returned 21 writes, no hit
+GuardedSeq_CmpJmpTwoBranch_then_Wrapper_ScaledChainPushCall returned 8 writes, no hit
+GuardedSeq_CmpP1DualInitStore_then_ScaledIndirectJmp ran out  2 writes, no hit
+GuardedSeq_CopyJmp_then_GuardedLoopWithCallback returned 15 writes, no hit
+GuardedSeq_CopyJmp_then_MStackPushDualJmp returned 15 writes, no hit
+GuardedSeq_DirtyDoubleDeref_then_ChainSlotSetupInstallSelf returned 3 writes, no hit
+GuardedSeq_DirtyDoubleDeref_then_ScaledAndFBJmp returned 2 writes, no hit
+GuardedSeq_DirtyDoubleDeref_then_ScaledOr4Jmp returned 3 writes, no hit
+GuardedSeq_DualCallPauseDirtyJmp_then_ScaledXorStore returned 10 writes, no hit
+GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fb80 returned 12 writes, no hit
+GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0 returned 12 writes, no hit
+GuardedSeq_DualPushCmp12Dispatch68_then_ByteWordTableTaggedDispatch returned 2 writes, no hit
+GuardedSeq_DualPushCmp12Dispatch_then_ByteWordTableTaggedDispatch returned 2 writes, no hit
+GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp returned 10 writes, no hit
+GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b returned 10 writes, no hit
+GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d returned 10 writes, no hit
+GuardedSeq_DualSetShiftCall_then_DualPushSet7dCallPop returned 10 writes, no hit
+GuardedSeq_DualSetShiftCall_then_MStackPush2CjMul10Triple returned 10 writes, no hit
+GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp returned 7 writes, no hit
+GuardedSeq_GuardedTripleCallSetTail_then_GuardedSeq returned 15 writes, no hit
+GuardedSeq_MStackCall_then_CallSetPause_00471670 ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+GuardedSeq_MStackCall_then_CallSetPause_00497450 ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+GuardedSeq_MStackCall_then_CallSetPause_0049a650 ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+GuardedSeq_MStackCall_then_CallSetPause_0049c340 ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+GuardedSeq_MStackNegAwareMul10Pair_then_ChainTableWalkStore returned 5 writes, no hit
+GuardedSeq_MStackPushSet0004_then_MoveSelectorCluster returned 27 writes, no hit
+GuardedSeq_MStackPushTwoEntryChainCall_then_PoseCopyIdleCluster returned 17 writes, no hit
+GuardedSeq_PackedSelectLoad6_then_GuardedSeq ran out  2 writes, no hit
+GuardedSeq_PendingMatch_then_GuardedSeq returned 15 writes, no hit
+GuardedSeq_ScaledLoadTwoCallDualConst_then_GuardedSeq_0044ba10 returned 14 writes, no hit
+GuardedSeq_ScaledLoadTwoCallDualConst_then_GuardedSeq_00467c10 returned 14 writes, no hit
+GuardedSeq_ScaledXorStore_then_LiteralPushCallEntZero returned 21 writes, no hit
+GuardedSeq_ScaledZeroFour_then_GuardedSeq returned 21 writes, no hit
+GuardedSeq_ScaledZeroFour_then_StackPopDispatchTagged ran out  9 writes, no hit
+GuardedSeq_ZeroTriple_then_PendingMatch returned 5 writes, no hit
+GuardedSetCallOrJmp                    returned 10 writes, no hit
+GuardedSetCallSetCall                  returned 15 writes, no hit
+GuardedSetInitInstallChain             returned 1 writes, no hit
+GuardedSetupCallTailJmp                returned 36 writes, no hit
+GuardedSetupCallTailJmp3               returned 35 writes, no hit
+GuardedSetupTailMStackJmp              returned 3 writes, no hit
+GuardedSixFieldCopy                    returned 2 writes, no hit
+GuardedStateChangePair                 returned 20 writes, no hit
+GuardedThenCjCascade                   returned 31 writes, no hit
+GuardedTimeBudgetDualMul10             returned 1 writes, no hit
+GuardedTripleCallSetTail               returned 10 writes, no hit
+GuardedTripleCallSwapJmp               returned 22 writes, no hit
+GuardedTripleSetTailJmp7               returned 15 writes, no hit
+GuardedTripleSetTailJmp8               returned 15 writes, no hit
+GuardedTwiceLoopback                   returned 11 writes, no hit
+GuardedTwiceLoopback_Body_00459fe0     returned 12 writes, no hit
+GuardedWalkSwitchDirty                 returned 1 writes, no hit
+HalveChainTriplePop2                   returned 10 writes, no hit
+HandWalkCluster                        returned 21 writes, no hit
+HealthBarTickDriver                    returned 0 writes, no hit
+HeapRegionLookup                       returned 0 writes, no hit
+HeapRegionTeardown                     ran out  0 writes, no hit
+HeapScanInit                           ran out  1 writes, no hit
+HeapShrinkDecommit                     returned 0 writes, no hit
+HelperCallTripleMul10                  returned 19 writes, no hit
+Helper_AppStub_21C0                    returned 0 writes, no hit
+Helper_AppStub_2890                    returned 0 writes, no hit
+Helper_AppStub_2AE0                    returned 0 writes, no hit
+Helper_AudioRelease                    ran out  11 writes, no hit
+Helper_AudioStart                      returned 0 writes, no hit
+Helper_AudioStartFresh                 returned 18 writes, no hit
+Helper_AudioStop                       returned 0 writes, no hit
+Helper_AudioStub_2960                  returned 0 writes, no hit
+Helper_AudioStub_4140                  returned 0 writes, no hit
+Helper_AudioStub_4160                  returned 0 writes, no hit
+Helper_AuxAudio_PostInit               ran out  0 writes, no hit
+Helper_ChkStk                          returned 0 writes, no hit
+Helper_ComputeExeHash                  ran out  1 writes, no hit
+Helper_DSI_post1                       returned 0 writes, no hit
+Helper_DSI_post2                       returned 0 writes, no hit
+Helper_DownloadDebugPrint              returned 0 writes, no hit
+Helper_DownloadSetup                   returned 3 writes, no hit
+Helper_DrawCursor                      returned 1 writes, no hit
+Helper_DrawMenuText                    returned 0 writes, no hit
+Helper_DrawMenu_PostRender             returned 11 writes, no hit
+Helper_ECM_PostCleanup                 returned 0 writes, no hit
+Helper_EmitLine                        returned 2 writes, no hit
+Helper_FClose                          ran out  1 writes, no hit
+Helper_FOpen                           ran out  1 writes, no hit
+Helper_FOpenPostInit                   ran out  1 writes, no hit
+Helper_FRead                           ran out  1 writes, no hit
+Helper_FSeek                           ran out  1 writes, no hit
+Helper_FTell                           ran out  1 writes, no hit
+Helper_GSM_Config                      returned 291 writes, no hit
+Helper_GSM_HandleEvent                 returned 387 writes, no hit
+Helper_GSM_Options                     returned 861 writes, no hit
+Helper_GSM_PlayMusic                   returned 0 writes, no hit
+Helper_GSM_Practice                    ran out  4 writes, no hit
+Helper_GSM_Tournament                  returned 935 writes, no hit
+Helper_GSM_VS                          returned 1099 writes, no hit
+Helper_GeoLoadPost                     returned 0 writes, no hit
+Helper_GeoLoadPre                      ran out  0 writes, no hit
+Helper_GeoStub_5370                    returned 0 writes, no hit
+Helper_GeoStub_5A70                    returned 0 writes, no hit
+Helper_GetMenuExtents                  returned 0 writes, no hit
+Helper_GfxCleanup                      returned 1 writes, no hit
+Helper_GfxInit2                        returned 0 writes, no hit
+Helper_GlideError                      returned 0 writes, no hit
+Helper_GlideMode                       ran out  2 writes, no hit
+Helper_GlideOpen                       ran out  0 writes, no hit
+Helper_GlidePostInit                   returned 0 writes, no hit
+Helper_MemMalloc_Post                  returned 0 writes, no hit
+Helper_MenuStub_62B0                   returned 0 writes, no hit
+Helper_MenuStub_8EB0                   returned 0 writes, no hit
+Helper_PaletteInit                     ran out  4 writes, no hit
+Helper_PerPlayerTick                   EMU-ERROR UcError: Unhandled CPU exception (UC_ERR_EXCEPTION)
+Helper_PostCreateWindow                ran out  0 writes, no hit
+Helper_PostPlayerTick                  returned 7 writes, no hit
+Helper_PreTick                         returned 9 writes, no hit
+Helper_RendererPostInit                returned 0 writes, no hit
+Helper_SetState_02                     returned 2 writes, no hit
+Helper_SetState_03                     returned 2 writes, no hit
+Helper_SetState_04                     returned 2 writes, no hit
+Helper_SetState_05                     returned 2 writes, no hit
+Helper_SetState_06                     returned 2 writes, no hit
+Helper_SetState_07                     returned 2 writes, no hit
+Helper_SetState_09                     returned 2 writes, no hit
+Helper_SetState_0B                     returned 2 writes, no hit
+Helper_SetState_0C                     returned 2 writes, no hit
+Helper_SetState_0E                     returned 2 writes, no hit
+Helper_SetState_0F                     returned 2 writes, no hit
+Helper_SetState_10                     returned 2 writes, no hit
+Helper_SetState_1A                     returned 2 writes, no hit
+Helper_Sprintf                         returned 0 writes, no hit
+Helper_TexUpload                       returned 1 writes, no hit
+Helper_TickAlt                         ran out  1 writes, no hit
+Helper_TickFrameTail                   returned 2 writes, no hit
+Helper_TickFrame_Misc                  returned 16 writes, no hit
+Helper_TickFrame_PostFight             returned 0 writes, no hit
+Helper_TickInit                        returned 7 writes, no hit
+Helper_TickInner                       returned 3 writes, no hit
+Helper_TickReinit                      returned 25 writes, no hit
+Helper_TitleAudioCleanup               returned 1 writes, no hit
+Helper_TitleAudioReset                 returned 0 writes, no hit
+Helper_TitleAudioStop                  returned 17 writes, no hit
+Helper_TitleEnterStateA                returned 0 writes, no hit
+Helper_TitleEnterStateB                returned 1 writes, no hit
+Helper_TitleEnterStateC                ran out  0 writes, no hit
+Helper_TitleSetMaxVolume               returned 0 writes, no hit
+HitContactDispatcherCluster            returned 11 writes, no hit
+HitFsmCluster                          returned 44 writes, no hit
+HitReactionCluster                     returned 0 writes, no hit
+HitReactionDispatcher                  returned 15 writes, no hit
+HitReactionStateCluster                returned 44 writes, no hit
+HitStateCluster                        returned 3 writes, no hit
+HopBackFsmCluster                      returned 20 writes, no hit
+IK_ChainPoseUpdate                     returned 14 writes, no hit
+IOWrapper_CritSecLazyEnter_004c8dd0    ran out  0 writes, no hit
+IOWrapper_CritSecLazyEnter_004c8fc0    ran out  0 writes, no hit
+IOWrapper_CritSecLazyEnter_004c9ae0    ran out  0 writes, no hit
+IdCascadeBitSet                        returned 1 writes, no hit
+IdentityMatrix                         returned 9 writes, no hit
+IdleFsm4CaseDispatch                   returned 6 writes, no hit
+IncBoundedDirty                        returned 1 writes, no hit
+IncCallVtablePushCall                  returned 1 writes, no hit
+IncCapped3e7                           returned 2 writes, no hit
+IncCmp28StoreOrJmp                     returned 20 writes, no hit
+IncJmp                                 returned 4 writes, no hit
+IncOrZero9                             returned 2 writes, no hit
+IncStoreCallIATDec                     ran out  2 writes, no hit
+IncThunkPlusCjDispatch                 returned 2 writes, no hit
+IncWrap0fJmp                           ran out  23 writes, no hit
+IndexedBitTest                         returned 0 writes, no hit
+IndirectCall                           returned 0 writes, no hit
+IndirectDispatch3Entry                 ran out  2 writes, no hit
+IndirectDispatchCjStore                ran out  3 writes, no hit
+IndirectJmp                            ran out  0 writes, no hit
+IndirectOpcodeDispatch3Entry           ran out  2 writes, no hit
+IndirectStateDispatcher                ran out  2 writes, no hit
+Init0AndMax                            returned 12 writes, no hit
+Init16BitFields                        returned 2 writes, no hit
+Init28fDecLoad                         returned 5 writes, no hit
+Init3333Jmp                            returned 25 writes, no hit
+Init4Globals                           returned 5 writes, no hit
+Init6Globals                           ran out  2 writes, no hit
+Init6Struct                            returned 3 writes, no hit
+InitDispatchersJmp                     returned 14 writes, no hit
+InitFields50and14                      returned 2 writes, no hit
+InitGlobalsAndZero                     returned 0 writes, no hit
+InitOrAllZeroLoopback                  returned 5 writes, no hit
+InitSlotsWithTag                       returned 4 writes, no hit
+InitStateDualCall48ac70                ran out  7 writes, no hit
+InitThreeFields                        returned 4 writes, no hit
+InitZeroChainLookupJmp                 returned 14 writes, no hit
+InitZeroSixFields                      returned 1 writes, no hit
+InputPollFlagBits                      returned 0 writes, no hit
+InputPollFlagBitsHalf                  returned 0 writes, no hit
+Input_AnyConfirmPressed                returned 0 writes, no hit
+Input_GetAsyncKey                      ran out  0 writes, no hit
+Input_PollJoystick                     returned 0 writes, no hit
+Input_PollPlayerJoystick               returned 0 writes, no hit
+Input_PollPlayerKeyboard               returned 0 writes, no hit
+Input_RebindButtonToAction             returned 0 writes, no hit
+Input_RebindKeyToAction                returned 0 writes, no hit
+Input_TickPlayers                      returned 13 writes, no hit
+Install3StateAudioChain                returned 12 writes, no hit
+Install3StateDualArmQuad               returned 20 writes, no hit
+Install3StateLongSeq                   returned 28 writes, no hit
+Install3StateMStackCounterDispatch     returned 35 writes, no hit
+Install3StateMStackPopDispatch         returned 19 writes, no hit
+Install3StateRouterTail                returned 17 writes, no hit
+Install3StateSiblingTail               returned 17 writes, no hit
+Install3WayChainCounter                returned 17 writes, no hit
+Install3WayChainStateAdvance           returned 9 writes, no hit
+Install3WayCountdownGame               returned 8 writes, no hit
+Install4StateMerge                     returned 24 writes, no hit
+InstallChainInitTailJmp                returned 8 writes, no hit
+InstallSelf3StateDualBody              returned 26 writes, no hit
+InstallSelf3StateDualChain             returned 18 writes, no hit
+InstallSelf3StateDualEntry             returned 18 writes, no hit
+InstallSelf3StateFieldSet              returned 25 writes, no hit
+InstallSelf3WayChainCmp                returned 11 writes, no hit
+InstallSelf3WayState                   returned 22 writes, no hit
+InstallSelf3WaySubDec                  returned 4 writes, no hit
+InstallSelf4Cascade                    returned 36 writes, no hit
+InstallSelf5CallVecChain               returned 5 writes, no hit
+InstallSelfAbsDiff                     returned 17 writes, no hit
+InstallSelfAccumCheck                  returned 17 writes, no hit
+InstallSelfAccumOverflow               returned 17 writes, no hit
+InstallSelfBit2LoopIndirect            returned 39 writes, no hit
+InstallSelfBit4Gate                    returned 4 writes, no hit
+InstallSelfBitGate                     returned 20 writes, no hit
+InstallSelfBitGated                    returned 11 writes, no hit
+InstallSelfBootInit                    ran out  40 writes, no hit
+InstallSelfBranchCascade               returned 5 writes, no hit
+InstallSelfBranchIndirect              ran out  7 writes, no hit
+InstallSelfCallBitGate                 returned 4 writes, no hit
+InstallSelfCascadeSequence             ran out  6 writes, no hit
+InstallSelfCascadingCalls              returned 27 writes, no hit
+InstallSelfChain494d60                 returned 18 writes, no hit
+InstallSelfChain4Call                  returned 39 writes, no hit
+InstallSelfChainAccumPath              ran out  26 writes, no hit
+InstallSelfChainAddSigned              returned 4 writes, no hit
+InstallSelfChainCallStateInits         returned 35 writes, no hit
+InstallSelfChainCascade                returned 20 writes, no hit
+InstallSelfChainCmpDispatch            returned 4 writes, no hit
+InstallSelfChainEsi                    returned 30 writes, no hit
+InstallSelfChainExtendCall_GameModeAdvanceCluster returned 22 writes, no hit
+InstallSelfChainExtendCall_InitZeroChainLookupJmp returned 16 writes, no hit
+InstallSelfChainExtendCall_MStackPushSet0Jmp returned 35 writes, no hit
+InstallSelfChainExtendCall_MStackPushSet6Jmp returned 40 writes, no hit
+InstallSelfChainExtendCall_ScaledChainJmp returned 18 writes, no hit
+InstallSelfChainPlusGuardedTail        returned 25 writes, no hit
+InstallSelfChainSet13333               returned 34 writes, no hit
+InstallSelfChainSet13333Alt            returned 48 writes, no hit
+InstallSelfChainSet2011                returned 37 writes, no hit
+InstallSelfChainSet80Call              returned 22 writes, no hit
+InstallSelfChainSet84_80Call           returned 40 writes, no hit
+InstallSelfChainSet84_80CallW          returned 50 writes, no hit
+InstallSelfChainSetB333                returned 34 writes, no hit
+InstallSelfChainSetB333v2              returned 34 writes, no hit
+InstallSelfChainSetB333v3              returned 34 writes, no hit
+InstallSelfChainStateInit              returned 35 writes, no hit
+InstallSelfChainedDispatch             returned 17 writes, no hit
+InstallSelfCmdStreamInterp             returned 17 writes, no hit
+InstallSelfCmpJgJmp                    returned 4 writes, no hit
+InstallSelfCmpJlJmp                    returned 4 writes, no hit
+InstallSelfCmpJmpIndirect              returned 5 writes, no hit
+InstallSelfCountdown2Stage_Phase1ChainSetupCallScale6 returned 5 writes, no hit
+InstallSelfCountdown2Stage_PopCallBitCmpPushCall returned 4 writes, no hit
+InstallSelfCountdownBit                returned 4 writes, no hit
+InstallSelfCountdownCascade            returned 0 writes, no hit
+InstallSelfCountdownChain              returned 27 writes, no hit
+InstallSelfCountdownDispatch           returned 4 writes, no hit
+InstallSelfCountdownLong               returned 13 writes, no hit
+InstallSelfCountdownStr                returned 15 writes, no hit
+InstallSelfCountedAccum                returned 10 writes, no hit
+InstallSelfCounter                     ran out  4 writes, no hit
+InstallSelfDecBitCheck                 ran out  2 writes, no hit
+InstallSelfDecCmpGate                  returned 14 writes, no hit
+InstallSelfDecrement                   returned 40 writes, no hit
+InstallSelfDispatch                    returned 10 writes, no hit
+InstallSelfDoubleMStack                returned 39 writes, no hit
+InstallSelfDualBranch                  returned 12 writes, no hit
+InstallSelfDualBranchInit              ran out  28 writes, no hit
+InstallSelfDualChain                   ran out  2 writes, no hit
+InstallSelfDualCountdown               returned 11 writes, no hit
+InstallSelfDualEntry                   returned 11 writes, no hit
+InstallSelfDualEsi                     returned 10 writes, no hit
+InstallSelfDualPath                    returned 26 writes, no hit
+InstallSelfDualPathInit                returned 19 writes, no hit
+InstallSelfDualStateDispatch           returned 26 writes, no hit
+InstallSelfFiveStoreCalls              returned 47 writes, no hit
+InstallSelfFlagCountdown               returned 5 writes, no hit
+InstallSelfFourStatePauseChain         returned 19 writes, no hit
+InstallSelfFullChainInit               returned 26 writes, no hit
+InstallSelfFullPath                    returned 18 writes, no hit
+InstallSelfHelper2                     returned 16 writes, no hit
+InstallSelfHelperGate                  returned 16 writes, no hit
+InstallSelfIndexWalk                   ran out  5 writes, no hit
+InstallSelfIndirectJmp                 returned 6 writes, no hit
+InstallSelfIndirectJmpNeg              returned 5 writes, no hit
+InstallSelfMStackBranchIndirect        ran out  7 writes, no hit
+InstallSelfMStackCountdown             returned 4 writes, no hit
+InstallSelfMStackIndirect              returned 4 writes, no hit
+InstallSelfMStackOverwrite             returned 8 writes, no hit
+InstallSelfMStackPackedFlow            returned 22 writes, no hit
+InstallSelfMStackPushDispatch          ran out  5 writes, no hit
+InstallSelfMStackPush_CjInstallSelfRouter returned 25 writes, no hit
+InstallSelfMStackPush_FiveCallGuardSetTail_00496630 returned 18 writes, no hit
+InstallSelfMStackPush_FiveCallGuardSetTail_004968a0 returned 18 writes, no hit
+InstallSelfMStackPush_StackPopDispatchTagged ran out  12 writes, no hit
+InstallSelfMagicShift                  returned 1 writes, no hit
+InstallSelfMidPush                     ran out  26 writes, no hit
+InstallSelfMul10                       returned 15 writes, no hit
+InstallSelfMultiCascade                returned 4 writes, no hit
+InstallSelfMultiCascadeChainCopy       returned 19 writes, no hit
+InstallSelfMultiThunkDispatch          returned 17 writes, no hit
+InstallSelfNegOrSet                    returned 7 writes, no hit
+InstallSelfNoCheck                     ran out  4 writes, no hit
+InstallSelfOrChainCmpJmp               returned 4 writes, no hit
+InstallSelfOrChainJmp                  returned 4 writes, no hit
+InstallSelfOrCmpJmp                    returned 4 writes, no hit
+InstallSelfPacked0x2005                returned 34 writes, no hit
+InstallSelfPackedF190                  returned 5 writes, no hit
+InstallSelfPackedF80                   ran out  4 writes, no hit
+InstallSelfPackedTailJmp               ran out  23 writes, no hit
+InstallSelfPair                        returned 4 writes, no hit
+InstallSelfPair3Branch                 returned 11 writes, no hit
+InstallSelfPairedGate                  returned 6 writes, no hit
+InstallSelfPathSelfLoop                returned 4 writes, no hit
+InstallSelfPause2                      returned 18 writes, no hit
+InstallSelfPauseGate                   returned 4 writes, no hit
+InstallSelfPauseTwoCall                returned 14 writes, no hit
+InstallSelfPlusTailThunk               ran out  5 writes, no hit
+InstallSelfPlusThresholdJmpChain       ran out  6 writes, no hit
+InstallSelfPlusTrampoline              returned 1 writes, no hit
+InstallSelfPushArg                     returned 20 writes, no hit
+InstallSelfPushDualCallCmpGt           returned 4 writes, no hit
+InstallSelfPushDualCallCmpLt           returned 4 writes, no hit
+InstallSelfReenterSelfJmp              returned 29 writes, no hit
+InstallSelfReentry                     returned 11 writes, no hit
+InstallSelfScaledAdv3d7Cmp             returned 4 writes, no hit
+InstallSelfScaledChain                 returned 18 writes, no hit
+InstallSelfSearchAccum                 returned 10 writes, no hit
+InstallSelfSetTagJmp                   returned 13 writes, no hit
+InstallSelfSnapshot64                  returned 19 writes, no hit
+InstallSelfStackReset                  ran out  2 writes, no hit
+InstallSelfState88                     returned 10 writes, no hit
+InstallSelfStateCascade                returned 4 writes, no hit
+InstallSelfStateCountdown              returned 35 writes, no hit
+InstallSelfStateCounter                returned 25 writes, no hit
+InstallSelfStateMachine6               ran out  27 writes, no hit
+InstallSelfStateMachine_ScaledArrStore_GuardedChainCmpDualBitXor returned 20 writes, no hit
+InstallSelfStateMachine_SwapOrPassSet  ran out  25 writes, no hit
+InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435b00 returned 17 writes, no hit
+InstallSelfStatePush_CallPauseConstStoreJmp_Push80SetWalkNegDualCallPop_then_InstallSelfWaitCmp_00435d40 returned 17 writes, no hit
+InstallSelfStatePush_InstallSelf3StateDualBody_004348f0 returned 28 writes, no hit
+InstallSelfStatePush_InstallSelf3StateDualBody_00434990 returned 28 writes, no hit
+InstallSelfStdChain                    returned 39 writes, no hit
+InstallSelfStoreTwoCall                returned 13 writes, no hit
+InstallSelfStride5                     returned 6 writes, no hit
+InstallSelfTableDispatch               returned 5 writes, no hit
+InstallSelfTableWalk                   ran out  9 writes, no hit
+InstallSelfThreeStateBranch            returned 42 writes, no hit
+InstallSelfThreeStateDispatch          returned 35 writes, no hit
+InstallSelfThreeStateLeaPlus22         returned 36 writes, no hit
+InstallSelfThreeStateScaledLoad        returned 13 writes, no hit
+InstallSelfThreeStateSiblingPair       returned 13 writes, no hit
+InstallSelfThresholdDispatch           returned 4 writes, no hit
+InstallSelfTri                         returned 4 writes, no hit
+InstallSelfTwoTailJmp                  returned 18 writes, no hit
+InstallSelfWaitCmp                     returned 4 writes, no hit
+InstallSelfWithBody                    returned 4 writes, no hit
+InstallSelfWithDispatch                returned 11 writes, no hit
+InstallSelfWithSibling                 returned 29 writes, no hit
+InstallSelfWithStateInit               returned 38 writes, no hit
+IntToBufBase8                          returned 0 writes, no hit
+IntroComboFsmCluster                   returned 4 writes, no hit
+IntroFsmCluster                        returned 21 writes, no hit
+IntroInitCluster                       returned 6 writes, no hit
+IntroSequencePipeline                  returned 3 writes, no hit
+IntroSettingsFsmCluster                returned 16 writes, no hit
+IsCType                                returned 0 writes, no hit
+IsNonzeroBoolFlagged                   returned 0 writes, no hit
+IterFnPtrs                             returned 0 writes, no hit
+IterLoad_g_scaledInit_00542044_then_MStackPush4IndirectCall ran out  8 writes, no hit
+IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero returned 5 writes, no hit
+IterLoad_g_scaledInit_00542048_then_Thunk_Thunk_0049cbc0 returned 9 writes, no hit
+IterStepDualStore                      returned 2 writes, no hit
+IterStepNegStore                       returned 4 writes, no hit
+IterStepNoSecond                       returned 1 writes, no hit
+IterStepScaledStore                    returned 1 writes, no hit
+IterStepScaledStore24                  returned 4 writes, no hit
+IterateCallSkip                        returned 0 writes, no hit
+Joystick_Init                          ran out  0 writes, no hit
+JuggleFsmCluster                       returned 11 writes, no hit
+JuggleSetupCluster                     ran out  23 writes, no hit
+JumpTable5Way                          returned 0 writes, no hit
+JumpTableDispatch                      ran out  1 writes, no hit
+KnockbackPositionReset                 returned 8 writes, no hit
+LazyAllocOrPush                        returned 12 writes, no hit
+LazyLoadInvoke                         ran out  0 writes, no hit
+LeaPlus22StoreSelf                     returned 2 writes, no hit
+LeaScaledCall                          returned 4 writes, no hit
+LinearSearchArray                      returned 0 writes, no hit
+LinearSearchByEsi                      returned 3 writes, no hit
+LinkSiblingsAndInstallSelf             returned 2 writes, no hit
+LinkedListBitMaskSearch                returned 2 writes, no hit
+LinkedListBuilder                      returned 1 writes, no hit
+LinkedListDistanceWalker               returned 2 writes, no hit
+LinkedListFieldAdd                     returned 8 writes, no hit
+LinkedListFieldAdd_StoreDoubleNegPauseSubStore returned 10 writes, no hit
+LinkedListIndirectDirtyToggle          returned 4 writes, no hit
+LinkedListInsert                       returned 7 writes, no hit
+LinkedListSearch                       returned 2 writes, no hit
+LinkedListSwapHead                     returned 4 writes, no hit
+ListInitLoop                           returned 0 writes, no hit
+LiteralPushCallEntZero                 returned 20 writes, no hit
+LoadArgPushCall                        ran out  1 writes, no hit
+LoadCmpAddrJmp                         returned 1 writes, no hit
+LoadCmpStateOrDirtyToggle              returned 0 writes, no hit
+LoadGeoAsset_Default                   returned 0 writes, no hit
+LoadGeoAsset_Textures                  returned 18 writes, no hit
+LoadGeoAssetsStateMachine              returned 4 writes, no hit
+LoadSetCallPauseStoreJmp               returned 8 writes, no hit
+LoadSetFpJmp_g_bootChainPair1          returned 2 writes, no hit
+LoadSetFpJmp_g_bootChainScaled1        returned 2 writes, no hit
+LoadSetFpJmp_g_bootChainScaled2        returned 2 writes, no hit
+LoadSetFpJmp_g_bootChainState3         returned 2 writes, no hit
+LoadSetFpJmp_g_tickFrameNodeA          returned 2 writes, no hit
+LoadShlDerefCallSkip                   returned 0 writes, no hit
+LoadStoreDoubleCallSet                 returned 14 writes, no hit
+LoadStoreRetNopJmp                     returned 0 writes, no hit
+LoadStoreScaled58                      returned 3 writes, no hit
+LocaleInfoFill                         returned 0 writes, no hit
+LocaleNumericHelpers                   ran out  0 writes, no hit
+Lock                                   ran out  1 writes, no hit
+LockIterTwoPath                        ran out  1 writes, no hit
+Loop16Init                             returned 0 writes, no hit
+Loop1cBitMask                          returned 3 writes, no hit
+LoopGuardedDecJmp                      returned 34 writes, no hit
+LoopGuardedDecJmp_Body_0042c7c0        returned 35 writes, no hit
+LoopMStackBitTest                      returned 3 writes, no hit
+LoopUnrolledTripleMul10                returned 5 writes, no hit
+LseekImpl                              ran out  0 writes, no hit
+MBToWCharCachedDispatch                ran out  0 writes, no hit
+MStackAngleRatioSubchain               returned 7 writes, no hit
+MStackAngleWrapDispatch                returned 3 writes, no hit
+MStackBitFlagDispatch                  returned 2 writes, no hit
+MStackBitLoopTripleCall                returned 3 writes, no hit
+MStackBitmaskIncMod                    returned 0 writes, no hit
+MStackBitmaskUpdate                    returned 2 writes, no hit
+MStackBootPush4Init                    returned 8 writes, no hit
+MStackBracket1_TreeWalkRecursive2      returned 12 writes, no hit
+MStackBracket2InitChainSplitInsert     returned 7 writes, no hit
+MStackBracket2_StateAdvance6           returned 19 writes, no hit
+MStackBracket2_TreeWalkRecursive       returned 13 writes, no hit
+MStackBracket3Init4bd5e0Tail           returned 3 writes, no hit
+MStackBracket3PackedSlotInit           returned 6 writes, no hit
+MStackBracket3SubChain                 returned 6 writes, no hit
+MStackBracket3_ChainSwapAdvance        returned 5 writes, no hit
+MStackBracket3_FieldSequentialCopy     returned 11 writes, no hit
+MStackBracket4_ListInsertZeroFill      returned 11 writes, no hit
+MStackBracket5_FieldClear_StateAdvance returned 11 writes, no hit
+MStackBracket5_LinkedListUnlink        returned 7 writes, no hit
+MStackBracket6_DualGate                returned 2 writes, no hit
+MStackBracket7_DispatchAndChain        returned 7 writes, no hit
+MStackBracketed3StoreCall              returned 6 writes, no hit
+MStackBracketedScaledStores            returned 6 writes, no hit
+MStackBracketedStoreTwoCall            returned 17 writes, no hit
+MStackBranchSelect                     returned 28 writes, no hit
+MStackCall_MStackPush2ChainInsert_00406250 returned 8 writes, no hit
+MStackCall_MStackPush2ChainInsert_004062a0 returned 7 writes, no hit
+MStackCall_MStackPush2ChainInsert_004065b0 returned 7 writes, no hit
+MStackCall_MStackPush2ChainInsert_00406b50 returned 7 writes, no hit
+MStackCall_MStackPush2ChainLLInsert    ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+MStackCall_MStackPush2ChainPrepend_004062f0 returned 8 writes, no hit
+MStackCall_MStackPush2ChainPrepend_00406340 returned 7 writes, no hit
+MStackCall_MStackPush2ChainPrepend_00406390 returned 7 writes, no hit
+MStackCall_MStackPush2ChainPrepend_004063e0 returned 7 writes, no hit
+MStackCall_MStackPush2ChainPrepend_00406600 returned 7 writes, no hit
+MStackCall_PushPopScaled1cDoubleCall   returned 7 writes, no hit
+MStackChainBit2Cascade                 returned 2 writes, no hit
+MStackChainCountdown                   returned 13 writes, no hit
+MStackChainCountdownLoop               returned 3 writes, no hit
+MStackChainDecodeCall                  returned 11 writes, no hit
+MStackChainExtractCall                 returned 25 writes, no hit
+MStackChainInstallDispatch             returned 36 writes, no hit
+MStackChainOrBitLoop                   returned 4 writes, no hit
+MStackChainPackedDispatch              returned 4 writes, no hit
+MStackChainSwapTraversal               returned 2 writes, no hit
+MStackCjChainSwapDualCall              returned 15 writes, no hit
+MStackClampMul10                       returned 0 writes, no hit
+MStackCleanupFrom_StackPopDispatchTagged_004384a0 ran out  2 writes, no hit
+MStackCleanupFrom_StackPopDispatchTagged_004384e0 ran out  2 writes, no hit
+MStackCleanupFrom_StackPopDispatchTagged_00438520 ran out  2 writes, no hit
+MStackDirtyArgsBit0                    returned 2 writes, no hit
+MStackDualDiffSequencer                returned 6 writes, no hit
+MStackDualPushSaveRestore              returned 3 writes, no hit
+MStackFrameCdeclDouble                 returned 3 writes, no hit
+MStackIndirectCallBit                  ran out  3 writes, no hit
+MStackInitCallToggle                   returned 3 writes, no hit
+MStackInitTriAlarm                     returned 22 writes, no hit
+MStackInstallBodyChain                 returned 8 writes, no hit
+MStackInstallBodyEqCheck               returned 2 writes, no hit
+MStackInstallCountdown                 returned 10 writes, no hit
+MStackJmpInstallSelf                   returned 7 writes, no hit
+MStackLoopFieldInit                    returned 7 writes, no hit
+MStackMagicModMul10                    returned 1 writes, no hit
+MStackNegAwareMul10Pair                returned 3 writes, no hit
+MStackPackedInit                       returned 0 writes, no hit
+MStackPop4Rewrite                      returned 6 writes, no hit
+MStackPop7                             returned 3 writes, no hit
+MStackPop8                             returned 7 writes, no hit
+MStackPush1ChainPair                   returned 7 writes, no hit
+MStackPush1MagicMod2                   returned 1 writes, no hit
+MStackPush2BiasResolveChain            ran out  6 writes, no hit
+MStackPush2BitLoop                     returned 3 writes, no hit
+MStackPush2Burst6Init                  returned 3 writes, no hit
+MStackPush2ChainInsert                 returned 5 writes, no hit
+MStackPush2ChainLLInsert               returned 5 writes, no hit
+MStackPush2ChainPrepend                returned 8 writes, no hit
+MStackPush2ChainSwap                   returned 3 writes, no hit
+MStackPush2CjMul10Triple               returned 9 writes, no hit
+MStackPush2ClampLookup                 returned 2 writes, no hit
+MStackPush2DirtyCall                   returned 3 writes, no hit
+MStackPush2DispatchChain               returned 7 writes, no hit
+MStackPush2DualModMul10Pop2            returned 2 writes, no hit
+MStackPush2GatedTail                   returned 8 writes, no hit
+MStackPush2GlobalSwap                  returned 2 writes, no hit
+MStackPush2GuardedFieldClear           returned 3 writes, no hit
+MStackPush2LLWalkCompare               returned 3 writes, no hit
+MStackPush2RunCountdown                returned 3 writes, no hit
+MStackPush2ScaledChainLoop             returned 4 writes, no hit
+MStackPush2TableNot                    returned 1 writes, no hit
+MStackPush2TripleCallChain             ran out  6 writes, no hit
+MStackPush2VolumeCascade               returned 10 writes, no hit
+MStackPush3CallCascade                 returned 23 writes, no hit
+MStackPush3CallChain                   returned 9 writes, no hit
+MStackPush3CallChainBit2               returned 4 writes, no hit
+MStackPush3CmpCall                     returned 2 writes, no hit
+MStackPush3DualCallHalve               returned 0 writes, no hit
+MStackPush3HelperCondToggle            returned 3 writes, no hit
+MStackPush3InitCallChain               returned 7 writes, no hit
+MStackPush3LinkedListWalk              returned 9 writes, no hit
+MStackPush3LinkedListZeroWalk          returned 2 writes, no hit
+MStackPush3MaskBit                     returned 1 writes, no hit
+MStackPush3MaskBit0                    returned 1 writes, no hit
+MStackPush3SideStore                   returned 1 writes, no hit
+MStackPush3TripleMul10WithAbs          returned 0 writes, no hit
+MStackPush4ChainCopyPop4               returned 19 writes, no hit
+MStackPush4DualCallAbsPop4             returned 3 writes, no hit
+MStackPush4IndirectCall                ran out  6 writes, no hit
+MStackPush4LLWalkPop4                  returned 5 writes, no hit
+MStackPush4VecInitPop4                 returned 17 writes, no hit
+MStackPush5Func                        returned 41 writes, no hit
+MStackPush6OpPop6                      returned 0 writes, no hit
+MStackPush7                            returned 1 writes, no hit
+MStackPush8                            returned 5 writes, no hit
+MStackPush8CallbackInit                returned 15 writes, no hit
+MStackPush8SlotInitPop8                returned 8 writes, no hit
+MStackPushCallCallPop_func_00405b30    returned 9 writes, no hit
+MStackPushCallCallPop_func_00405dd0    returned 3 writes, no hit
+MStackPushCallCallPop_func_00405e20    ran out  19 writes, no hit
+MStackPushCallPop                      returned 3 writes, no hit
+MStackPushCallPopDirtyJmp_GuardedRangeCmpToggle returned 15 writes, no hit
+MStackPushCallPopDirtyJmp_State208cBit0Flag returned 15 writes, no hit
+MStackPushChainDispatchInit5           returned 3 writes, no hit
+MStackPushChainStepIndex               returned 6 writes, no hit
+MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430 returned 4 writes, no hit
+MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0 returned 7 writes, no hit
+MStackPushDirtyTail                    ran out  18 writes, no hit
+MStackPushDispatchBitGate              returned 4 writes, no hit
+MStackPushDualJmp                      returned 10 writes, no hit
+MStackPushInstall                      returned 2 writes, no hit
+MStackPushMul10TailSqrt                returned 1 writes, no hit
+MStackPushNegMul10                     returned 1 writes, no hit
+MStackPushNegMul10Var                  returned 1 writes, no hit
+MStackPushPairTriCall                  ran out  5 writes, no hit
+MStackPushPtr1Jmp_00438e70             returned 46 writes, no hit
+MStackPushPtr1Jmp_00438ef0             returned 33 writes, no hit
+MStackPushSearchLoop                   returned 1 writes, no hit
+MStackPushSet0001                      returned 1 writes, no hit
+MStackPushSet0004                      returned 1 writes, no hit
+MStackPushSet0008                      returned 1 writes, no hit
+MStackPushSet0020                      returned 1 writes, no hit
+MStackPushSet0040                      returned 1 writes, no hit
+MStackPushSet0080                      returned 1 writes, no hit
+MStackPushSet0200                      returned 1 writes, no hit
+MStackPushSet0Jmp                      returned 35 writes, no hit
+MStackPushSet4Jmp                      returned 41 writes, no hit
+MStackPushSet6Jmp                      returned 40 writes, no hit
+MStackPushSet9Jmp                      returned 4 writes, no hit
+MStackPushSwapEqJmp_00474e80           returned 1 writes, no hit
+MStackPushSwapEqJmp_00474ed0           returned 1 writes, no hit
+MStackPushTableMatch                   returned 2 writes, no hit
+MStackPushTableWalk                    returned 2 writes, no hit
+MStackPushTripleFields                 returned 7 writes, no hit
+MStackPushTwoEntryChainCall            returned 5 writes, no hit
+MStackPushTyped_0044cf50               returned 2 writes, no hit
+MStackPushTyped_0044cf80               returned 2 writes, no hit
+MStackPushTyped_0044cfb0               returned 2 writes, no hit
+MStackPushVec3Mul10                    returned 3 writes, no hit
+MStackPushWaitChain                    returned 10 writes, no hit
+MStackPushZeroCallPop                  returned 3 writes, no hit
+MStackPushZeroCallPop_PendingMatch     returned 7 writes, no hit
+MStackRestore27                        returned 5 writes, no hit
+MStackScopedSlotSetupPair              returned 6 writes, no hit
+MStackSignedMod                        returned 4 writes, no hit
+MStackVecSetupScopedRun                returned 3 writes, no hit
+MainLoopStep                           ran out  1 writes, no hit
+MainTickChain                          returned 16 writes, no hit
+MarkSlot                               returned 1 writes, no hit
+MaskCall                               returned 0 writes, no hit
+Mat3x3VecMul                           returned 0 writes, no hit
+Mat3x3VecMul6Bit                       returned 0 writes, no hit
+MatVec2Multiply                        returned 0 writes, no hit
+MatchEndFadeFsmCluster                 returned 15 writes, no hit
+MatchInitMonsterChain                  returned 5 writes, no hit
+MatchOverCluster                       returned 17 writes, no hit
+MatchPredicateCluster                  returned 1 writes, no hit
+MatchStartCluster                      ran out  28 writes, no hit
+MatchStartFsmCluster                   returned 4 writes, no hit
+Match_ChampionScreen                   ran out  27 writes, no hit
+Match_OutcomeScreen                    returned 45 writes, no hit
+Match_TeamOutcomeScreen                ran out  25 writes, no hit
+MatrixTransform3x3Q12                  returned 0 writes, no hit
+MaxOfThree                             returned 0 writes, no hit
+MbToWcsDispatcher                      ran out  0 writes, no hit
+Mem_Free                               returned 0 writes, no hit
+Mem_Malloc                             returned 4 writes, no hit
+MemcpyByteN                            returned 0 writes, no hit
+Memset18Step                           returned 0 writes, no hit
+Menu_ColorDepthErrorDialog             returned 1029 writes, no hit
+Menu_Direct3DUnavailableDialog         returned 273 writes, no hit
+Menu_DirectDrawUnavailableDialog       returned 291 writes, no hit
+Menu_FillColonField                    returned 0 writes, no hit
+Menu_FillOptionValues                  ran out  858 writes, no hit
+Menu_FindNextSelectable                returned 0 writes, no hit
+Menu_FindPrevSelectable                returned 0 writes, no hit
+Menu_GlideUnavailableDialog            returned 471 writes, no hit
+Menu_HelpScreen                        returned 1279 writes, no hit
+Menu_InsertCDDialog                    returned 612 writes, no hit
+Menu_PauseMenu                         returned 255 writes, no hit
+Menu_PollNavInput                      returned 0 writes, no hit
+MeshReplicateDriver                    returned 22 writes, no hit
+MinOfThree                             returned 0 writes, no hit
+MkIntroFsm                             returned 13 writes, no hit
+MkTowerScreenFsmCluster                returned 1 writes, no hit
+ModMagicMul10Index                     returned 1 writes, no hit
+ModelRenderDispatch                    returned 7 writes, no hit
+ModuloMagic                            returned 0 writes, no hit
+MovAndStoreRetJmp                      returned 1 writes, no hit
+MoveCommitPackedDispatcher             returned 6 writes, no hit
+MoveDispatch4StateFsm                  returned 12 writes, no hit
+MoveFsmCluster                         ran out  45 writes, no hit
+MoveListCursorCluster                  ran out  4 writes, no hit
+MoveSelectorCluster                    returned 27 writes, no hit
+MoveStackPipeline                      returned 1 writes, no hit
+MovesPanelEmit                         returned 24 writes, no hit
+MovsxAnd20Shr5                         returned 0 writes, no hit
+MovsxAnd4Shr                           returned 0 writes, no hit
+MstackPopScaledChainPlusThunks         returned 35 writes, no hit
+MstackPushPackChainInit                returned 7 writes, no hit
+Mul10HeavyTransform                    returned 12 writes, no hit
+Mul10SumSqrt                           returned 3 writes, no hit
+Mul10SumStoreNegCommit                 returned 9 writes, no hit
+Mul10Tail                              returned 0 writes, no hit
+Mul10Tail5xInterp                      returned 2 writes, no hit
+Mul10TailPairChain                     returned 8 writes, no hit
+Mul10TailPairMidChain                  returned 3 writes, no hit
+Mul10ThresholdQuad                     returned 40 writes, no hit
+Mul10Triple0xd999Interp                returned 11 writes, no hit
+MultiBranchStateFilter                 returned 4 writes, no hit
+MultiGateDispatchCallJmp               returned 4 writes, no hit
+MultiPlayerWinStringFormat             returned 44 writes, no hit
+MultiThunkDispatcher9                  returned 39 writes, no hit
+MultiThunkDispatcher_ArgScaledTestStore returned 5 writes, no hit
+MultiThunkDispatcher_MStackCall        ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+NegInstallNegSelfTrigPair              returned 7 writes, no hit
+NegateThree                            returned 3 writes, no hit
+NestedLoopDispatch                     returned 65 writes, no hit
+NetEntityScanAndPunish                 returned 6 writes, no hit
+NineEntryFlagDispatch                  returned 9 writes, no hit
+NineFieldCopy                          returned 10 writes, no hit
+NodeApplyMatrix                        returned 11 writes, no hit
+NodeApplyTransform_A                   returned 8 writes, no hit
+NodeApplyTransform_A_Direct            returned 8 writes, no hit
+NodeApplyTransform_B                   returned 8 writes, no hit
+NodeApplyTransform_B_Direct            returned 8 writes, no hit
+NodeApplyTransform_B_Swapped           returned 2 writes, no hit
+NodeApplyTransform_C                   returned 8 writes, no hit
+NodeApplyTransform_C_Direct            returned 8 writes, no hit
+NodeApplyTransform_C_Inverse           returned 8 writes, no hit
+NodeChainMaskMatch                     returned 0 writes, no hit
+NodeUnlink                             returned 1 writes, no hit
+NodeWalkPoseUpdate                     returned 3 writes, no hit
+NotMaskCallStore70                     returned 3 writes, no hit
+NotMaskStorePair                       returned 0 writes, no hit
+NotShrCmp1Store                        returned 1 writes, no hit
+OnceCall                               ran out  12 writes, no hit
+OneSetCmpJmpLoadCall                   returned 23 writes, no hit
+OpcodeStreamDispatch                   ran out  1 writes, no hit
+OrDualStore_0048a190                   returned 0 writes, no hit
+OrDualStore_0048e4b0                   returned 0 writes, no hit
+OrListLoop                             returned 0 writes, no hit
+OrStoreDecStackPop                     returned 2 writes, no hit
+OutroEventForwarderCluster             returned 2 writes, no hit
+PackColor                              returned 0 writes, no hit
+PackDoubleFromInts                     returned 0 writes, no hit
+PackedAdvanceCallContinue              returned 5 writes, no hit
+PackedAdvanceCallTailJmp               ran out  3 writes, no hit
+PackedListVisitor                      returned 0 writes, no hit
+PackedLoadAdvanceJmp                   ran out  7 writes, no hit
+PackedSelectLoad6                      returned 2 writes, no hit
+PackedTableWalkChainStore              returned 8 writes, no hit
+PadEnumDeviceRebind                    returned 0 writes, no hit
+PaddedLoopByteFunc                     returned 0 writes, no hit
+PaddedLoopFunc                         returned 0 writes, no hit
+PainStateCluster                       returned 17 writes, no hit
+PairedSubInstallSelfBigChain           returned 15 writes, no hit
+PairedTickGated                        returned 326 writes, no hit
+PaletteFillLineHybrid                  returned 0 writes, no hit
+PaletteRampInit                        returned 0 writes, no hit
+PauseGuardChainTriple                  returned 16 writes, no hit
+PauseTestCmp2CallStore                 returned 0 writes, no hit
+PendingMatch_00416e20                  returned 13 writes, no hit
+PendingMatch_0041dc00                  returned 7 writes, no hit
+PendingMatch_0042d240                  ran out  26 writes, no hit
+PendingMatch_0044a7f0                  returned 3 writes, no hit
+PendingMatch_00459510                  ran out  4 writes, no hit
+PendingMatch_0046cd30                  returned 15 writes, no hit
+PendingMatch_004a2a80                  ran out  52 writes, no hit
+PendingMatch_004bfc00                  ran out  0 writes, no hit
+PendingMatch_004c7920                  returned 0 writes, no hit
+PendingMatch_004ca970                  returned 0 writes, no hit
+PendingMatch_004ce3f0                  returned 0 writes, no hit
+PendingMatch_ArgSarStoreJmp_004411d0   returned 23 writes, no hit
+PendingMatch_ArgSarStoreJmp_0044d7a0   returned 23 writes, no hit
+PendingMatch_ArgSarStoreJmp_00452770   returned 0 writes, no hit
+PendingMatch_ArgSarStoreJmp_00455bd0   returned 16 writes, no hit
+PendingMatch_ArgSarStoreJmp_0046a6e0   ran out  5 writes, no hit
+PendingMatch_ArgSarStoreJmp_00484da0   returned 46 writes, no hit
+PendingMatch_ArgScaledTestStore        returned 18 writes, no hit
+PendingMatch_AudioInitArgs3            returned 79 writes, no hit
+PendingMatch_AudioMixerStep_0040b020   returned 5 writes, no hit
+PendingMatch_AudioMixerStep_00473640   returned 7 writes, no hit
+PendingMatch_BootStateTriple           returned 3 writes, no hit
+PendingMatch_CallPauseScaledByteSet    returned 3 writes, no hit
+PendingMatch_CallPauseScaledStoreCopyJmp ran out  17 writes, no hit
+PendingMatch_ChainDirtyBitWalker       returned 12 writes, no hit
+PendingMatch_ChainWalkPushPop_0040dbb0 returned 1 writes, no hit
+PendingMatch_ChainWalkPushPop_00411890 returned 4 writes, no hit
+PendingMatch_CmpCondIdxArrLookup       ran out  23 writes, no hit
+PendingMatch_CondPlayerLookup          ran out  11 writes, no hit
+PendingMatch_DirtyDoubleDeref_0041afd0 ran out  11 writes, no hit
+PendingMatch_DirtyDoubleDeref_00443d20 returned 0 writes, no hit
+PendingMatch_DirtyFlagsManip           returned 36 writes, no hit
+PendingMatch_DispatcherComplex138      returned 3 writes, no hit
+PendingMatch_DispatcherComplex260_MStackBracket1_TreeWalkRecursive2_004685d0 returned 8 writes, no hit
+PendingMatch_DispatcherComplex260_MStackBracket1_TreeWalkRecursive2_00478da0 returned 6 writes, no hit
+PendingMatch_DoubleScaledCrossStore    returned 32 writes, no hit
+PendingMatch_DownloadPlayerChar        ran out  12 writes, no hit
+PendingMatch_DualCmpSwapStore          returned 6 writes, no hit
+PendingMatch_FiveCallGuardSetTail      returned 24 writes, no hit
+PendingMatch_FiveTableWalkInit         returned 8 writes, no hit
+PendingMatch_GatedWordPushCall         returned 7 writes, no hit
+PendingMatch_LeaPlus22StoreSelf        returned 5 writes, no hit
+PendingMatch_MStackBracket1_TreeWalkRecursive2_00447000 returned 5 writes, no hit
+PendingMatch_MStackBracket1_TreeWalkRecursive2_00453e70 returned 4 writes, no hit
+PendingMatch_MStackBracket1_TreeWalkRecursive2_00454510 returned 4 writes, no hit
+PendingMatch_MStackBracket3_ChainSwapAdvance returned 5 writes, no hit
+PendingMatch_MStackCall                ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+PendingMatch_MStackPush2BitLoop        returned 17 writes, no hit
+PendingMatch_MStackPush2ChainLLInsert_00418170 ran out  6 writes, no hit
+PendingMatch_MStackPush2ChainLLInsert_004a56c0 returned 2 writes, no hit
+PendingMatch_MStackPush2LLWalkCompare  returned 4 writes, no hit
+PendingMatch_MStackPush2RunCountdown_0040cd50 returned 15 writes, no hit
+PendingMatch_MStackPush2RunCountdown_0044baa0 returned 10 writes, no hit
+PendingMatch_MStackPush2RunCountdown_0044c530 returned 7 writes, no hit
+PendingMatch_MStackPush2RunCountdown_004568b0 returned 9 writes, no hit
+PendingMatch_MStackPush8_0040a8d0      returned 37 writes, no hit
+PendingMatch_MStackPush8_0041bca0      returned 14 writes, no hit
+PendingMatch_Mul10Tail_00419c90        returned 1 writes, no hit
+PendingMatch_Mul10Tail_0044dd80        returned 2 writes, no hit
+PendingMatch_Push16Call_00402540       ran out  25 writes, no hit
+PendingMatch_Push16Call_004a3400       ran out  3 writes, no hit
+PendingMatch_PushSarCallBitToggle      returned 4 writes, no hit
+PendingMatch_PushSetXfmMaskCallPop_00413f40 returned 6 writes, no hit
+PendingMatch_PushSetXfmMaskCallPop_00444ef0 returned 5 writes, no hit
+PendingMatch_QuadCallPhase2            returned 5 writes, no hit
+PendingMatch_SaveCallRestore           returned 5 writes, no hit
+PendingMatch_ScaledArrStore_CallDualStoreXorBit ran out  9 writes, no hit
+PendingMatch_ScaledIterStep            ran out  4 writes, no hit
+PendingMatch_SetWalkCurCallPauseDirty  returned 15 writes, no hit
+PendingMatch_SlotEvent3EntryChain      returned 32 writes, no hit
+PendingMatch_StackPopDispatchTagged_004492f0 returned 15 writes, no hit
+PendingMatch_StackPopDispatchTagged_00466fc0 returned 10 writes, no hit
+PendingMatch_StoreDoubleNegPauseSubStore returned 24 writes, no hit
+PendingMatch_StoreTailJmpSigned        returned 0 writes, no hit
+PendingMatch_StoreTwoCall_004108a0     returned 18 writes, no hit
+PendingMatch_StoreTwoCall_00411210     returned 17 writes, no hit
+PendingMatch_StoreTwoCall_004155c0     returned 15 writes, no hit
+PendingMatch_StoreTwoCall_004163c0     returned 13 writes, no hit
+PendingMatch_StoreTwoCall_0042b930     returned 13 writes, no hit
+PendingMatch_SwapOrPassSet             returned 0 writes, no hit
+PendingMatch_TaggedSceneDispatch       returned 16 writes, no hit
+PendingMatch_Ten404c40_404bd0          returned 0 writes, no hit
+PendingMatch_Test4StatesAny            ran out  3 writes, no hit
+PendingMatch_ThreeMul10Stores          returned 34 writes, no hit
+PendingMatch_Thunk_ScaledNeg1SetPause  returned 13 writes, no hit
+PendingMatch_TripleSubVec3             returned 14 writes, no hit
+PendingMatch_ZeroAndDirty4_0040d1d0    returned 8 writes, no hit
+PendingMatch_ZeroAndDirty4_00471e00    returned 17 writes, no hit
+PendingMatch_ZeroNDwords               returned 10 writes, no hit
+PendingMatch_ZeroThreeFields6c_then_ZeroThreeSlots returned 12 writes, no hit
+PerSlotPhaseRouter_DualGatedStateYield_004605d0 returned 10 writes, no hit
+PerSlotPhaseRouter_DualGatedStateYield_00460770 returned 10 writes, no hit
+Phase1ChainAdvanceCallScale            returned 4 writes, no hit
+Phase1ChainExtendedInitLoop            returned 8 writes, no hit
+Phase1ChainExtendedInitLoop2           returned 13 writes, no hit
+Phase1ChainSetupCallScale6             returned 8 writes, no hit
+Phase1ContextSetup3Helpers             returned 23 writes, no hit
+Phase1ContextSetupHelper               returned 14 writes, no hit
+Phase1InitModelAdjustChain             returned 6 writes, no hit
+Phase1SlotLinkAndInit                  ran out  16 writes, no hit
+Phase2InitDispatchInstallSelf          returned 26 writes, no hit
+Phase2InitSlotTreeWalk                 ran out  35 writes, no hit
+Phase3DispatchScaleInstallSelf         returned 10 writes, no hit
+Phase3IndirectInstallChain             returned 11 writes, no hit
+Phase3InstallPackedSelf                returned 21 writes, no hit
+Phase3InstallSelf                      ran out  25 writes, no hit
+Phase3InstallSelfChain                 returned 19 writes, no hit
+Phase3InstallTableCheck                ran out  0 writes, no hit
+Phase3InstallVolToggle                 returned 6 writes, no hit
+Phase3Packed3EntryDispatch             returned 4 writes, no hit
+Phase3PackedInstallSelf                returned 22 writes, no hit
+Phase4DispatchMultiInit                returned 81 writes, no hit
+Phase4DualHelperTrampoline             returned 13 writes, no hit
+Phase4EntryInstallChain                returned 4 writes, no hit
+Phase4FivePackedDispatch               returned 33 writes, no hit
+Phase4FivePackedHelpers                returned 13 writes, no hit
+Phase4FourHelperChain                  returned 12 writes, no hit
+Phase4FourPackedDispatch               returned 17 writes, no hit
+Phase4InitWithChainCallback            returned 22 writes, no hit
+Phase4MultiHelperInit                  returned 8 writes, no hit
+Phase4SevenPackedDispatch              returned 25 writes, no hit
+Phase4SlotInitPackedHelper             returned 7 writes, no hit
+Phase4StateInit4Helpers                returned 4 writes, no hit
+Phase4StateInitWithHelpers             returned 6 writes, no hit
+Phase4ThreePackedInstallSelf           returned 3 writes, no hit
+Phase4TrampolineMainHelper             returned 15 writes, no hit
+Phase4TrampolineMainHelpers            returned 13 writes, no hit
+Phase4TrampolineThreePacked            returned 12 writes, no hit
+PhaseClampInstallSlot                  returned 7 writes, no hit
+PhaseDispatchListAdvance               returned 14 writes, no hit
+PhaseDispatchPair                      returned 4 writes, no hit
+PhaseInstall2DInterpDispatch           returned 4 writes, no hit
+PhaseInstallSelf3Step                  ran out  25 writes, no hit
+PlayerCharSelector                     returned 2 writes, no hit
+PollThenInit                           returned 42 writes, no hit
+PopCallBitCmpPushCall                  returned 37 writes, no hit
+PoseBlendDriver                        returned 11 writes, no hit
+PoseChainAdvanceCluster                returned 7 writes, no hit
+PoseChainInstallCluster                returned 13 writes, no hit
+PoseCopyIdleCluster                    returned 16 writes, no hit
+PoseFnInstallDualCluster               returned 29 writes, no hit
+PoseFsm4StateInstall                   returned 35 writes, no hit
+PoseFsmCluster_PendingMatch_00416e50   returned 14 writes, no hit
+PoseFsmTriHelpers                      returned 6 writes, no hit
+PoseGridGenerator                      ran out  5 writes, no hit
+PoseStateInitNode                      returned 10 writes, no hit
+PoseTreeBlendWalker                    returned 12 writes, no hit
+PositionClampCluster                   returned 6 writes, no hit
+PostStepDispatcher                     returned 16 writes, no hit
+PreFight4StageSequencer                returned 3 writes, no hit
+PreFightInstallCluster                 returned 7 writes, no hit
+PrefixThunkInstallSelf3State           returned 40 writes, no hit
+PresentFrame                           returned 0 writes, no hit
+PrintfStubSigned                       returned 2 writes, no hit
+ProjectTwoVertices                     returned 4 writes, no hit
+ProjectVertex                          returned 2 writes, no hit
+ProneAnimFsmCluster                    returned 19 writes, no hit
+ProneFsmCluster                        returned 50 writes, no hit
+PumpMessages                           ran out  0 writes, no hit
+PunchAnimCluster                       returned 5 writes, no hit
+PunchDispatcherCluster                 returned 23 writes, no hit
+Push0_Push41d7d0                       returned 10 writes, no hit
+Push0_Push463220_Jmp                   returned 36 writes, no hit
+Push15PushDataCallWordCallJmp          returned 15 writes, no hit
+Push16Call                             returned 0 writes, no hit
+Push1eCallTestDirtyLoop                returned 4 writes, no hit
+Push267_Push44eb60_Jmp                 returned 55 writes, no hit
+Push2GlobalsCall                       returned 0 writes, no hit
+Push3000010000Call                     returned 0 writes, no hit
+Push48PreSetTwoStores                  returned 2 writes, no hit
+Push70CallScaleArith                   returned 2 writes, no hit
+Push70CallScaleArith2                  returned 2 writes, no hit
+Push71_Push48caa0                      returned 13 writes, no hit
+Push80SetWalkDualCallPop               returned 7 writes, no hit
+Push80SetWalkNegDualCallPop            returned 7 writes, no hit
+Push80TripleCallTailJmp                returned 21 writes, no hit
+Push84CallTestInstallJmp               returned 10 writes, no hit
+Push8d_Push413490                      returned 13 writes, no hit
+Push8e_Push413690                      returned 13 writes, no hit
+PushArgClearSetCallJmp                 returned 10 writes, no hit
+PushArgPushNeg1Call                    returned 0 writes, no hit
+PushBitFieldMergePop                   returned 2 writes, no hit
+PushCallPauseDirtyClear                ran out  14 writes, no hit
+PushCallPauseIncStoreSelfRecurse       returned 10 writes, no hit
+PushCallPauseScaledJmpInd              returned 3 writes, no hit
+PushCallPauseSet1Jmp                   returned 37 writes, no hit
+PushCallPauseSetMaxThenCallPauseJmp    returned 9 writes, no hit
+PushCallPauseStorePushDispatch         returned 19 writes, no hit
+PushCallPopScaledJmpIndirect           ran out  4 writes, no hit
+PushCallRetNopJmp                      returned 16 writes, no hit
+PushCallScaledClearJmp                 returned 13 writes, no hit
+PushCallScaledStore                    returned 14 writes, no hit
+PushCallSet2147Jmp                     returned 9 writes, no hit
+PushCallSignClampDualStore             returned 32 writes, no hit
+PushCallStoreClearJmp                  returned 5 writes, no hit
+PushCallTestByte4Jmp                   ran out  4 writes, no hit
+PushChainAddCallPop                    returned 3 writes, no hit
+PushCjWalkDispatchPop                  returned 2 writes, no hit
+PushClampZeroOneCallPop                returned 1 writes, no hit
+PushConstCall_LockIterTwoPath_1        ran out  1 writes, no hit
+PushConstCall_Lock_0xd                 ran out  1 writes, no hit
+PushConstCall_MStackAngleWrapDispatch_1 returned 3 writes, no hit
+PushConstCall_TableLookupIatCall_0xd   ran out  1 writes, no hit
+PushDualDerefClearPop                  returned 2 writes, no hit
+PushFourCallPopBitJmp                  returned 46 writes, no hit
+PushImmCallSetCallAdjustCall           returned 5 writes, no hit
+PushNeg3CallRet                        ran out  1 writes, no hit
+PushPlayerSwapCallClamp                returned 10 writes, no hit
+PushPop84TripleCall                    returned 17 writes, no hit
+PushPopCurrentSetFFFFFFFF              returned 0 writes, no hit
+PushPopNotMaskSetWalk0xc               returned 2 writes, no hit
+PushPopPendingTwoCalls                 returned 4 writes, no hit
+PushPopScaled14                        returned 5 writes, no hit
+PushPopScaled18                        returned 2 writes, no hit
+PushPopScaled1cDoubleCall              ran out  9 writes, no hit
+PushPopScaledInit343c                  returned 2 writes, no hit
+PushPopState70Mask                     returned 0 writes, no hit
+PushPopWalkDecMod                      returned 1 writes, no hit
+PushPopWalkSet1006                     returned 1 writes, no hit
+PushPopXformEntityCall                 returned 4 writes, no hit
+PushSarCallBitToggle                   returned 2 writes, no hit
+PushScaledIdxBitToggle                 returned 2 writes, no hit
+PushScaledIdxStoreCallPop              returned 1 writes, no hit
+PushSearchToggleBit                    returned 1 writes, no hit
+PushSearchToggleBit0                   returned 1 writes, no hit
+PushSetAddCallPop                      returned 6 writes, no hit
+PushSetCallCleanup                     returned 4 writes, no hit
+PushSetCallPop                         returned 8 writes, no hit
+PushSetCallPopCj                       returned 1 writes, no hit
+PushSetCallTailJmp                     ran out  7 writes, no hit
+PushSetCj58CallPopWalk                 returned 1 writes, no hit
+PushSetDualDeref                       returned 3 writes, no hit
+PushSetEventQueueCallStore             returned 14 writes, no hit
+PushSetXfmCallStoreCopy                returned 3 writes, no hit
+PushSetXfmMaskCallPop                  returned 4 writes, no hit
+PushStackAllocCall                     returned 5 writes, no hit
+PushStackCallPauseSet0xa               returned 11 writes, no hit
+PushZ2ArgCall                          ran out  1 writes, no hit
+PushZeroCallRet                        returned 3 writes, no hit
+PvpAngleDistSeed                       returned 1 writes, no hit
+PvsMergeDriver                         returned 13 writes, no hit
+Quad4EntryPushArg                      ran out  22 writes, no hit
+Quad4SequencerInstall                  returned 11 writes, no hit
+QuadBlockArgInstallChain               returned 2 writes, no hit
+QuadBlockDispatch                      returned 44 writes, no hit
+QuadBlockInstallChainThunks            returned 17 writes, no hit
+QuadBlockSoundInit                     ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+QuadCallPauseJmp                       returned 12 writes, no hit
+QuadCallPauseSetCallSeq                returned 12 writes, no hit
+QuadCallPhase2                         ran out  11 writes, no hit
+QuadCmpBitGateJmp                      returned 1 writes, no hit
+QuadEntryChainPush                     returned 29 writes, no hit
+QuadEntryGateChain                     returned 4 writes, no hit
+QuadFieldEarlyJmpThenInstall           returned 2 writes, no hit
+QuadGuardBitGateJmp                    returned 29 writes, no hit
+QuadGuardedCjSet_00422fc0              ran out  6 writes, no hit
+QuadGuardedCjSet_004230b0              ran out  6 writes, no hit
+QuadInstallSelfChainStr                returned 15 writes, no hit
+QuadInterpolator                       returned 4 writes, no hit
+QuadInterpolatorV2                     returned 4 writes, no hit
+QuadMul10TailFpuChain                  returned 3 writes, no hit
+QuadPackedInstallSelfChain             returned 16 writes, no hit
+QuadStageStateDispatch                 returned 2 writes, no hit
+QuadStateHandler                       returned 37 writes, no hit
+QuadStringStateGate                    returned 31 writes, no hit
+QuadSubVec2GateInstallSelfPair         returned 43 writes, no hit
+QueryMicroTimer                        ran out  0 writes, no hit
+R2_Cleanup                             returned 0 writes, no hit
+R2_Init10                              returned 0 writes, no hit
+R2_Init11                              returned 0 writes, no hit
+R2_Init2                               returned 0 writes, no hit
+R2_Init3                               ran out  2 writes, no hit
+R2_Init4                               returned 0 writes, no hit
+R2_Init6                               returned 0 writes, no hit
+R2_Init7                               returned 0 writes, no hit
+R2_Init8                               returned 0 writes, no hit
+R2_Init9                               returned 0 writes, no hit
+RaiseAbortLocalized                    returned 0 writes, no hit
+RandPushTrigPair                       returned 5 writes, no hit
+RandSarMod0xFFF                        returned 0 writes, no hit
+RandSarMod0xFFFSub400                  returned 1 writes, no hit
+RangeCheckJmp                          returned 0 writes, no hit
+RangeClampThree                        returned 0 writes, no hit
+RangeDispatch4                         returned 30 writes, no hit
+RangePathIATDispatch_Lock              ran out  1 writes, no hit
+RangePathIATDispatch_TableLookupIatCall ran out  1 writes, no hit
+RecordIter170                          returned 71 writes, no hit
+RecordListIterMStack                   ran out  7 writes, no hit
+RecursiveMStackByteStream              returned 7 writes, no hit
+RegionFlushChain                       returned 5 writes, no hit
+RegistryPushBindPop                    returned 4 writes, no hit
+ReleaseVtableSlots                     returned 0 writes, no hit
+RemapWalkAndJmp_00491e70               returned 7 writes, no hit
+RemapWalkAndJmp_00491ec0               returned 6 writes, no hit
+RenderSceneGraphIterate                returned 11 writes, no hit
+RenderSceneNode                        returned 8 writes, no hit
+Renderer1_BeginFrame_Glide             returned 0 writes, no hit
+Renderer1_EndScene_Glide               returned 0 writes, no hit
+Renderer1_Init_Glide                   ran out  288 writes, no hit
+Renderer1_PresentFrame                 returned 0 writes, no hit
+Renderer2_BeginFrame_D3D               returned 0 writes, no hit
+Renderer2_EndScene_D3D                 returned 0 writes, no hit
+Renderer2_FlushBatch_D3D               returned 0 writes, no hit
+Renderer2_Init_D3D                     returned 0 writes, no hit
+Renderer2_PresentFrame                 returned 0 writes, no hit
+Renderer3_BeginFrame_SW_FS             returned 0 writes, no hit
+Renderer3_EndScene_SW_FS               returned 0 writes, no hit
+Renderer3_Init_SW_FS                   returned 0 writes, no hit
+Renderer3_PresentFrame                 returned 0 writes, no hit
+Renderer4_BeginFrame_SW_Win            returned 0 writes, no hit
+Renderer4_EndScene_SW_Win              returned 0 writes, no hit
+Renderer4_PresentFrame                 returned 0 writes, no hit
+Renderer5_BeginFrame_SW_FS_Hi          returned 0 writes, no hit
+Renderer5_EndScene_SW_FS_Hi            returned 0 writes, no hit
+Renderer5_Init_SW_FS_Hi                returned 0 writes, no hit
+Renderer5_PresentFrame                 returned 0 writes, no hit
+RendererTeardownSW                     returned 0 writes, no hit
+Renderer_GetMode                       returned 0 writes, no hit
+ResetConfigToDefaults                  returned 59 writes, no hit
+ResetSceneCallbacks                    returned 0 writes, no hit
+RetZero_004a1c40                       returned 0 writes, no hit
+RetZero_004cf700                       returned 0 writes, no hit
+RosterSetupFsmCluster                  returned 3 writes, no hit
+RoundCleanupCluster_ArgSarStoreJmp     returned 16 writes, no hit
+RoundCleanupCluster_TableLookupCall_g_table returned 4 writes, no hit
+RoundCleanupCluster_Ten404c40_404bd0   returned 6 writes, no hit
+RoundCutsceneCluster                   returned 17 writes, no hit
+RoundDisplayInitCluster                ran out  5 writes, no hit
+RoundDouble                            returned 0 writes, no hit
+RoundEndAudioCluster                   returned 3 writes, no hit
+RoundEndCelebrationCluster             returned 21 writes, no hit
+RoundEndDifferenceFsmCluster           returned 1 writes, no hit
+RoundEndFsm                            returned 12 writes, no hit
+RoundEndFsmCluster                     ran out  39 writes, no hit
+RoundEndHandlerCluster                 ran out  12 writes, no hit
+RoundFinalizeCluster                   returned 1 writes, no hit
+RoundFinishEventGroup                  returned 38 writes, no hit
+RoundFsmCluster_Atan2QuadrantLookup    returned 6 writes, no hit
+RoundFsmCluster_EsiEdiAliasDualMul10   returned 10 writes, no hit
+RoundOverFsmCluster                    returned 28 writes, no hit
+RoundReadyFsmCluster                   returned 44 writes, no hit
+RoundReset                             returned 6 writes, no hit
+RoundResultSlotInitTable               returned 26 writes, no hit
+RoundStartCluster_CjInstallSelfRouter  returned 18 writes, no hit
+RoundStartCluster_RemapWalkAndJmp      ran out  25 writes, no hit
+RoundTextMenuEventCluster              returned 20 writes, no hit
+RoundWinTransition                     returned 2 writes, no hit
+RunBlockFsmCluster                     returned 2 writes, no hit
+RunCluster                             returned 21 writes, no hit
+RunFsmCluster                          returned 45 writes, no hit
+Sar64                                  returned 0 writes, no hit
+SaveCallRestore                        returned 3 writes, no hit
+SaveCallRestoreOrXor                   returned 3 writes, no hit
+SaveRestore7CameraTransform            returned 2 writes, no hit
+SaveStateSnapshot                      returned 5 writes, no hit
+SaveSwapCallRestore                    returned 4 writes, no hit
+Scaled3StorePushCallJmp                returned 13 writes, no hit
+ScaledAddDeref                         returned 1 writes, no hit
+ScaledAddStore                         returned 3 writes, no hit
+ScaledAddrInit_InstallSelfMStackPushDispatch returned 49 writes, no hit
+ScaledAddrInit_IntroComboFsmCluster_004677c0 returned 6 writes, no hit
+ScaledAddrInit_IntroComboFsmCluster_004677e0 returned 6 writes, no hit
+ScaledAnd4InvDirtyClear                returned 1 writes, no hit
+ScaledAndAh                            returned 2 writes, no hit
+ScaledAndAh_Phase200d_SevenThunks_0047c580 returned 26 writes, no hit
+ScaledAndAl7f                          returned 2 writes, no hit
+ScaledAndAlbf                          returned 2 writes, no hit
+ScaledAndAldf                          returned 2 writes, no hit
+ScaledAndAlf7                          returned 2 writes, no hit
+ScaledAndAlfb                          returned 2 writes, no hit
+ScaledAndAlfe                          returned 2 writes, no hit
+ScaledAndCheckJmp                      returned 4 writes, no hit
+ScaledAndFBJmp                         returned 3 writes, no hit
+ScaledAndMaskInitJmp                   returned 3 writes, no hit
+ScaledArgChainCmpCopy                  returned 1 writes, no hit
+ScaledArrStore_CallDualStoreXorBit     returned 5 writes, no hit
+ScaledArrStore_EsiInstallBitCallChain_00428e70 returned 13 writes, no hit
+ScaledArrStore_EsiInstallBitCallChain_004293b0 returned 13 writes, no hit
+ScaledArrStore_GuardedChainCmpDualBitXor_00429960 returned 3 writes, no hit
+ScaledArrStore_GuardedChainCmpDualBitXor_00429980 returned 3 writes, no hit
+ScaledArrStore_GuardedSeq_CopyJmp_then_MStackPushDualJmp returned 15 writes, no hit
+ScaledArrStore_ScaledArrStore          returned 3 writes, no hit
+ScaledArrStore_ScaledChainJmp_00429450 ran out  19 writes, no hit
+ScaledArrStore_ScaledChainJmp_004298c0 ran out  14 writes, no hit
+ScaledArrStore_SetJmp_ScaledArrStore   returned 3 writes, no hit
+ScaledAudioDualShuffle                 returned 2 writes, no hit
+ScaledByteIdxDualCopy                  returned 2 writes, no hit
+ScaledChain3c74                        returned 1 writes, no hit
+ScaledChain3c74Jmp                     returned 1 writes, no hit
+ScaledChain3c7c                        returned 1 writes, no hit
+ScaledChainAccumLoop                   returned 406 writes, no hit
+ScaledChainAccumThreshold              returned 2 writes, no hit
+ScaledChainAndF000DirtyToggle          returned 1 writes, no hit
+ScaledChainCallPauseSetJmp             returned 5 writes, no hit
+ScaledChainCmp61                       returned 9 writes, no hit
+ScaledChainCmpDispatch                 ran out  1 writes, no hit
+ScaledChainCopyTriple                  returned 1 writes, no hit
+ScaledChainDouble                      returned 1 writes, no hit
+ScaledChainInit2Phase                  returned 15 writes, no hit
+ScaledChainJmp_00429470                returned 16 writes, no hit
+ScaledChainJmp_004298e0                returned 5 writes, no hit
+ScaledChainNegStore                    returned 1 writes, no hit
+ScaledChainOr8                         returned 4 writes, no hit
+ScaledChainOrAh1                       returned 3 writes, no hit
+ScaledChainPushCall                    returned 3 writes, no hit
+ScaledChainSignDirtyToggle             returned 1 writes, no hit
+ScaledChainStore                       returned 1 writes, no hit
+ScaledChainStore24                     returned 3 writes, no hit
+ScaledChainTripleStore                 returned 2 writes, no hit
+ScaledChainTwoStores                   returned 1 writes, no hit
+ScaledClear1cTestWalkCall              returned 3 writes, no hit
+ScaledClearJmp_EsiInstallBitCallChain  returned 13 writes, no hit
+ScaledClearJmp_InstallSelf3WayChainCmp returned 7 writes, no hit
+ScaledClearJmp_InstallSelfBitGated     returned 11 writes, no hit
+ScaledClearTripleCallJmp               ran out  7 writes, no hit
+ScaledCmp200eCallBool                  returned 0 writes, no hit
+ScaledCmpJlJmp                         returned 3 writes, no hit
+ScaledDecBranch_00466460               returned 24 writes, no hit
+ScaledDecBranch_00466770               returned 27 writes, no hit
+ScaledDecOrZero                        returned 0 writes, no hit
+ScaledDecPop_00404bd0                  returned 2 writes, no hit
+ScaledDecPop_00404c40                  returned 2 writes, no hit
+ScaledDerefStore                       returned 0 writes, no hit
+ScaledDualPropagateJmp                 returned 17 writes, no hit
+ScaledFromArgDualSibStore              returned 3 writes, no hit
+ScaledIdxLoadCallTailThunk             returned 5 writes, no hit
+ScaledIncCmpDualJmp                    returned 5 writes, no hit
+ScaledIncCmpJmp                        returned 3 writes, no hit
+ScaledIncLoopState3                    returned 2 writes, no hit
+ScaledIndexCondCopy                    returned 1 writes, no hit
+ScaledIndexConditionalAdd              returned 1 writes, no hit
+ScaledIndirectJmp_00433bf0             ran out  1 writes, no hit
+ScaledIndirectJmp_0049c850             ran out  1 writes, no hit
+ScaledInitOrSelfPtrSetType14           returned 5 writes, no hit
+ScaledInitOrSelfPtrSetType_00434d60    returned 4 writes, no hit
+ScaledInitOrSelfPtrSetType_0046a5e0    returned 4 writes, no hit
+ScaledInitOrSelfPtrSetType_0047a620    returned 4 writes, no hit
+ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush returned 4 writes, no hit
+ScaledInitOrSelfPtr_DualSeqLoopDispatch returned 4 writes, no hit
+ScaledInitOrSelfPtr_InstallSelfStackReset returned 4 writes, no hit
+ScaledInitOrSelfPtr_NetEntityScanAndPunish returned 4 writes, no hit
+ScaledInitOrSelfPtr_PoseChainAdvanceCluster returned 4 writes, no hit
+ScaledInitOrSelfPtr_StackPopDispatchTagged returned 4 writes, no hit
+ScaledInitOrSelfPtr_func_0041f780_z    returned 4 writes, no hit
+ScaledInitOrSet13b6                    returned 5 writes, no hit
+ScaledInitPauseDirtyStore_00445f00     returned 4 writes, no hit
+ScaledInitPauseDirtyStore_00446240     returned 4 writes, no hit
+ScaledInitWithCounterAndType_0041f1b0  returned 4 writes, no hit
+ScaledInitWithCounterAndType_004314f0  returned 4 writes, no hit
+ScaledInitWithCounterAndType_00446940  returned 4 writes, no hit
+ScaledInit_GameModeHandlerCluster_g_scaledInit_00495590 ran out  3 writes, no hit
+ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0 EMU-ERROR UcError: Invalid memory fetch (UC_ERR_FETCH_UNMAPPED)
+ScaledInit_GuardedDirtyXformFromTable_g_scaledInit returned 2 writes, no hit
+ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430 returned 36 writes, no hit
+ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450 returned 36 writes, no hit
+ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d470 returned 36 writes, no hit
+ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d490 returned 36 writes, no hit
+ScaledInit_Phase4SevenPackedDispatch_g_eventQueueTotal returned 28 writes, no hit
+ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ed0 returned 6 writes, no hit
+ScaledInit_TripleBlockChainScaledInits_g_walkCallback_00450ef0 returned 6 writes, no hit
+ScaledInit_TwoStageSetupTripleCopy_g_walkCallback_00441e10 returned 6 writes, no hit
+ScaledInit_TwoStageSetupTripleCopy_g_walkCallback_00441e30 returned 6 writes, no hit
+ScaledIterStep_0045c020                returned 2 writes, no hit
+ScaledIterStep_0045c050                returned 2 writes, no hit
+ScaledLitAddJmp                        returned 6 writes, no hit
+ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0 returned 12 writes, no hit
+ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00481020 returned 12 writes, no hit
+ScaledLoad1cZeroAndFE                  returned 1 writes, no hit
+ScaledLoadCallSet1c                    returned 3 writes, no hit
+ScaledLoadCmp0fJmp                     returned 3 writes, no hit
+ScaledLoadCmp1003JmpDispatch           returned 0 writes, no hit
+ScaledLoadCmpStoreXfm                  returned 0 writes, no hit
+ScaledLoadDecJmp                       returned 3 writes, no hit
+ScaledLoadDirtyOrSetJmp                returned 10 writes, no hit
+ScaledLoadGuardedJmp                   returned 6 writes, no hit
+ScaledLoadIncJmp_set_g_eventQueueCurrent_then_ScaledArrStore_EsiInstallBitCallChain returned 13 writes, no hit
+ScaledLoadIncJmp_set_g_walkCallback_then_ScaledArrStore_GuardedChainCmpDualBitXor returned 3 writes, no hit
+ScaledLoadInstallOrCall_00433960       returned 0 writes, no hit
+ScaledLoadInstallOrCall_00433990       returned 0 writes, no hit
+ScaledLoadJmp30_set_g_scaledInit_00542044_then_InstallSelfMagicShift returned 1 writes, no hit
+ScaledLoadJmp30_set_g_walkCallback_then_LoadCmpAddrJmp returned 1 writes, no hit
+ScaledLoadJmpIfNonzero                 ran out  3 writes, no hit
+ScaledLoadJmpPauseSetMax               returned 3 writes, no hit
+ScaledLoadJmp_00428d20                 returned 16 writes, no hit
+ScaledLoadJmp_00429210                 returned 16 writes, no hit
+ScaledLoadJmp_00429390                 returned 16 writes, no hit
+ScaledLoadJmp_24                       returned 3 writes, no hit
+ScaledLoadJmp_38                       returned 4 writes, no hit
+ScaledLoadJmp_74                       returned 0 writes, no hit
+ScaledLoadOrSetJmp                     returned 1 writes, no hit
+ScaledLoadStore                        returned 1 writes, no hit
+ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_0044ba30 returned 8 writes, no hit
+ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_00467c30 returned 8 writes, no hit
+ScaledLoadTwoCallLit_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_then_StunDownCluster_00451f20 returned 19 writes, no hit
+ScaledLoadTwoCallLit_MStackPush2RunCountdown_then_MStackBracket7_DispatchAndChain_then_StunDownCluster_00451f70 returned 19 writes, no hit
+ScaledLoadZeroStore                    returned 1 writes, no hit
+ScaledLookupGuardJmpIndirect           returned 12 writes, no hit
+ScaledMaskByte                         returned 0 writes, no hit
+ScaledMaskOrStore                      returned 2 writes, no hit
+ScaledMove48to58                       returned 8 writes, no hit
+ScaledMove74to70                       returned 0 writes, no hit
+ScaledNeg1SetPause                     returned 0 writes, no hit
+ScaledNegThreeWords                    returned 2 writes, no hit
+ScaledOr4DirtyClear                    returned 1 writes, no hit
+ScaledOr4Jmp                           returned 3 writes, no hit
+ScaledOr4Store                         returned 1 writes, no hit
+ScaledOrAh8CallPauseJmp                returned 6 writes, no hit
+ScaledOrStore_00441df0                 returned 1 writes, no hit
+ScaledOrStore_004677a0                 returned 1 writes, no hit
+ScaledOrStore_004903d0                 returned 1 writes, no hit
+ScaledPopSaveJmp_00438440              returned 38 writes, no hit
+ScaledPopSaveJmp_0043bb20              returned 42 writes, no hit
+ScaledPushArg_00404b90                 returned 2 writes, no hit
+ScaledPushArg_00404c00                 returned 2 writes, no hit
+ScaledRunCountdownCluster              returned 14 writes, no hit
+ScaledSaveCallRestoreJmp_InstallSelfMagicShift_then_MStackPush2ChainLLInsert_00472f40 returned 2 writes, no hit
+ScaledSaveCallRestoreJmp_InstallSelfMagicShift_then_MStackPush2ChainLLInsert_00472f80 returned 2 writes, no hit
+ScaledSearchSum                        returned 1 writes, no hit
+ScaledSet1OnNonZero                    returned 0 writes, no hit
+ScaledShrAnd                           returned 1 writes, no hit
+ScaledStackCallPause                   returned 5 writes, no hit
+ScaledStateNegCallPauseLoad            returned 1 writes, no hit
+ScaledStore501Set8Jmp                  returned 13 writes, no hit
+ScaledStoreCSet58Jmp                   returned 3 writes, no hit
+ScaledStoreCallEpilogue                ran out  43 writes, no hit
+ScaledStoreConst2                      returned 3 writes, no hit
+ScaledStoreCurDirtyClear               returned 1 writes, no hit
+ScaledStoreCurDirtyOr1                 returned 2 writes, no hit
+ScaledStoreE0                          returned 0 writes, no hit
+ScaledStoreEntZeroJmp                  returned 15 writes, no hit
+ScaledStoreIdx24                       returned 1 writes, no hit
+ScaledStoreIdxZeroJmp                  returned 15 writes, no hit
+ScaledStoreOrFlagXor                   returned 3 writes, no hit
+ScaledStoreThree_00409260              returned 4 writes, no hit
+ScaledStoreThree_0049d310              returned 3 writes, no hit
+ScaledSubStore                         returned 2 writes, no hit
+ScaledTestCallPauseJmp                 returned 8 writes, no hit
+ScaledTestCallPauseJmpFar              returned 8 writes, no hit
+ScaledTestChainDispatch                returned 12 writes, no hit
+ScaledTestPauseStore                   returned 1 writes, no hit
+ScaledThreeChanPack                    returned 0 writes, no hit
+ScaledTripleCopy10                     returned 1 writes, no hit
+ScaledTripleCopy4                      returned 1 writes, no hit
+ScaledTripleCopy54                     returned 3 writes, no hit
+ScaledXorStore_004900f0                returned 2 writes, no hit
+ScaledXorStore_004903b0                returned 2 writes, no hit
+ScaledZero44                           returned 1 writes, no hit
+ScaledZeroFour                         returned 7 writes, no hit
+ScaledZeroIfNonzero                    returned 3 writes, no hit
+ScanlineTexBlit                        returned 0 writes, no hit
+ScanlineTexBlitAdditive                returned 0 writes, no hit
+ScanlineTexBlitAlpha                   returned 0 writes, no hit
+ScanlineTexBlitInterlaced              returned 0 writes, no hit
+ScanlineTexBlitPaletted                returned 0 writes, no hit
+SceneEvalFsm                           ran out  12 writes, no hit
+SceneFrameStepWithInputs               ran out  0 writes, no hit
+ScenePostInitSequencer                 ran out  7 writes, no hit
+SceneRecordLookupRandInit              ran out  2 writes, no hit
+ScenegraphWalk                         returned 0 writes, no hit
+ScoreAiStatusFsmCluster                returned 0 writes, no hit
+Screen_ArcadeEnding                    ran out  1 writes, no hit
+Screen_BestKombatants                  ran out  25 writes, no hit
+Screen_EnterInitials                   returned 6 writes, no hit
+Screen_GreatestWarrior                 ran out  26 writes, no hit
+Screen_Loading                         returned 1 writes, no hit
+SehFpuExceptionDispatch                ran out  0 writes, no hit
+SehUnwindCluster                       ran out  0 writes, no hit
+SelfInstallPhaseDispatch_DualGatedStateYield_0045fd30 returned 13 writes, no hit
+SelfInstallPhaseDispatch_DualGatedStateYield_00460000 returned 21 writes, no hit
+SelfInstallPhaseDispatch_ScaledZeroFour returned 13 writes, no hit
+SelfInstallPhaseDispatch_StackPopDispatchTagged returned 20 writes, no hit
+SentinelInitTripleCall                 ran out  14 writes, no hit
+SequenceLoopFalloutCalls               returned 5 writes, no hit
+SequencedInit3Call                     ran out  25 writes, no hit
+SequencedInit3CallB                    ran out  25 writes, no hit
+Set0xaCmpEqSet0x26Jmp                  returned HIT ['0x535e0c']
+Set1017CallPausePush                   returned 16 writes, no hit
+Set14CallAddJmp                        returned 9 writes, no hit
+Set1JmpSet2Jmp                         returned 3 writes, no hit
+Set1dCallSet16Jmp                      returned 37 writes, no hit
+Set1f4CallDirtyJmp                     returned 15 writes, no hit
+Set200dCallPauseJmp                    returned 24 writes, no hit
+Set258Call_PauseDirtyJmp               returned 44 writes, no hit
+Set2CallDirtyCallPauseJmp              returned 4 writes, no hit
+Set2CallIncJmp                         returned 6 writes, no hit
+Set2FiveCallPauseJmp                   ran out  2815 writes, no hit
+Set43DualCallJmp                       ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+Set4CallAddJmp                         returned 6 writes, no hit
+Set5CallPauseTestByteJmpCall           ran out  3 writes, no hit
+SetCallSetJmp                          returned 6 writes, no hit
+SetDirty4XorScaledLoad                 returned 3 writes, no hit
+SetFdMode                              ran out  0 writes, no hit
+SetHi6                                 returned 0 writes, no hit
+SetJmp_AlarmCountdownInstall_004609c0  returned 27 writes, no hit
+SetJmp_AlarmCountdownInstall_004609d0  returned 28 writes, no hit
+SetJmp_AudioBridgeMStackChainCopy_00440710 returned 4 writes, no hit
+SetJmp_AudioBridgeMStackChainCopy_00440720 returned 4 writes, no hit
+SetJmp_BootStateTriple                 returned 3 writes, no hit
+SetJmp_CallPauseScaledStoreAdd         returned 4 writes, no hit
+SetJmp_CharSelectFsmCluster_004561c0   returned 16 writes, no hit
+SetJmp_CharSelectFsmCluster_004561d0   returned 16 writes, no hit
+SetJmp_CharSelectFsmCluster_004561e0   returned 16 writes, no hit
+SetJmp_Distance3DMul10Chain_0042d070   returned 8 writes, no hit
+SetJmp_Distance3DMul10Chain_0042d080   returned 8 writes, no hit
+SetJmp_DualLoadDualStoreJmp            returned 3 writes, no hit
+SetJmp_EsiInstallBitCallChain          returned 16 writes, no hit
+SetJmp_EsiInstallDecCallChain          returned 17 writes, no hit
+SetJmp_GuardedSeq_00473f10_00451ad0    returned 11 writes, no hit
+SetJmp_GuardedSeq_00473f10_00451b10    returned 11 writes, no hit
+SetJmp_GuardedSeq_00473f10_00451b50    returned 11 writes, no hit
+SetJmp_HitReactionDispatcher           returned 40 writes, no hit
+SetJmp_InstallSelfChainEsi             returned 33 writes, no hit
+SetJmp_InstallSelfMStackIndirect       returned 4 writes, no hit
+SetJmp_InstallSelfTwoTailJmp           returned 19 writes, no hit
+SetJmp_JuggleFsmCluster_00451b60       returned 11 writes, no hit
+SetJmp_JuggleFsmCluster_00451b70       returned 11 writes, no hit
+SetJmp_JuggleFsmCluster_00451b80       returned 11 writes, no hit
+SetJmp_MStackPush4IndirectCall         returned 3 writes, no hit
+SetJmp_Phase3InstallTableCheck         ran out  1 writes, no hit
+SetJmp_Push16Call_004a1ac0             returned 2 writes, no hit
+SetJmp_Push16Call_004a1ad0             returned 2 writes, no hit
+SetJmp_ScaledArrStore                  returned 3 writes, no hit
+SetJmp_ScaledLitLoadCall               returned 12 writes, no hit
+SetJmp_SetJmp_00451ad0_00451aa0        returned 11 writes, no hit
+SetJmp_SetJmp_00451ad0_00451ab0        returned 11 writes, no hit
+SetJmp_SetJmp_00451ad0_00451ac0        returned 11 writes, no hit
+SetJmp_SetJmp_00451b10_00451ae0        returned 11 writes, no hit
+SetJmp_SetJmp_00451b10_00451af0        returned 11 writes, no hit
+SetJmp_SetJmp_00451b10_00451b00        returned 11 writes, no hit
+SetJmp_SetJmp_00451b50_00451b20        returned 11 writes, no hit
+SetJmp_SetJmp_00451b50_00451b30        returned 11 writes, no hit
+SetJmp_SetJmp_00451b50_00451b40        returned 11 writes, no hit
+SetJmp_SixSubdispatchSpan_0045ebf0     returned 3 writes, no hit
+SetJmp_SixSubdispatchSpan_0045ec00     returned 3 writes, no hit
+SetJmp_StateDispatchYield_00438f50     returned 46 writes, no hit
+SetJmp_StateDispatchYield_00438f60     returned 29 writes, no hit
+SetJmp_StateDispatchYield_00438f70     returned 38 writes, no hit
+SetJmp_Thunk_LinkedListBitMaskSearch   returned 3 writes, no hit
+SetJmp_ZeroAndDirty4                   returned 1 writes, no hit
+SetOnePairJmp_004a0110                 returned 21 writes, no hit
+SetOnePairJmp_004a0420                 returned 22 writes, no hit
+SetTagsCallCmpToggleDirty              returned 2 writes, no hit
+SetViewport                            returned 2 writes, no hit
+SetVtable5Slots                        returned 6 writes, no hit
+SetWalk0xaCrossStore                   returned 5 writes, no hit
+SetWalkCurCallPauseDirty               returned 8 writes, no hit
+SetWorkType02CountFFB                  returned 17 writes, no hit
+SetWorkTypeScaledCallStoreCcc          returned 4 writes, no hit
+Setmode                                ran out  0 writes, no hit
+SetupArgv                              ran out  0 writes, no hit
+SetupBoneAnimFsm                       returned 33 writes, no hit
+SetupHelperCluster                     returned 6 writes, no hit
+SetupVecFsmCluster                     returned 4 writes, no hit
+SevenArgThenTwoArg_PendingMatch_004ccd20 returned 0 writes, no hit
+SevenArgThenTwoArg_PendingMatch_004ccd60 returned 0 writes, no hit
+SevenEntrySelfCallTable                returned 9 writes, no hit
+SevenThunkDispatcher                   returned 15 writes, no hit
+SevenThunks                            returned 21 writes, no hit
+SfxAttenuateAndApply                   returned 7 writes, no hit
+SfxBlockCluster                        returned 24 writes, no hit
+ShiftDownThreeAndAppend                returned 0 writes, no hit
+Shl96By1                               returned 0 writes, no hit
+ShowErrorMessage                       ran out  6 writes, no hit
+Shr96By1                               returned 0 writes, no hit
+ShrShrStoreJmp                         ran out  1 writes, no hit
+SixBlockCjCascade                      returned 0 writes, no hit
+SixCallSeqPushImm                      returned 1 writes, no hit
+SixCrossStores                         returned 6 writes, no hit
+SixDoublePushCall                      returned 0 writes, no hit
+SixEntryYieldThunks                    returned 29 writes, no hit
+SixSubdispatchSpan                     returned 2 writes, no hit
+SixTagCallsTailJmp                     returned 5 writes, no hit
+SizeGateInstallSelfThenSubMul10        returned 11 writes, no hit
+SkelAnimUpdaterCluster                 returned 7 writes, no hit
+SkelAnimUpdaterClusterV2               returned 7 writes, no hit
+SlideAttackEventCluster                returned 0 writes, no hit
+SlotCmp3way                            returned 3 writes, no hit
+SlotEvent3EntryChain                   returned 30 writes, no hit
+SlotFieldSwap3c                        returned 1 writes, no hit
+SlotInitAndChainLink                   returned 2 writes, no hit
+SlotPhaseDispatcherBigSwitch           returned 5 writes, no hit
+SlotPhaseResetInstallChain             returned 12 writes, no hit
+SmallMalloc                            ran out  0 writes, no hit
+SmoothShiftBlit                        returned 0 writes, no hit
+SnapshotDirtyMark                      returned HIT ['0x535e0c']
+SnapshotDispatchAccum                  returned 6 writes, no hit
+SnapshotDispatchMStack                 returned 16 writes, no hit
+Snd3DSourceCleanup                     returned 0 writes, no hit
+Snd3DSourceCleanupFiltered             returned 0 writes, no hit
+Snd3DVolumePanSet                      returned 0 writes, no hit
+SoundSetupLoop                         returned 13 writes, no hit
+SpawnEffectCluster                     returned 3 writes, no hit
+SpawnFreezeProjectileChain             returned 5 writes, no hit
+SpawnImpactExplosion                   returned 24 writes, no hit
+SpawnLeftRightAudioCrew                returned 12 writes, no hit
+SpawnLeftRightProps                    returned 3 writes, no hit
+SpawnListBatchLoader                   returned 9 writes, no hit
+SpawnListGlyphRender                   returned 2 writes, no hit
+SpawnPhaseAdvanceVoices                returned 2 writes, no hit
+SpawnTrioInitCluster                   returned 8 writes, no hit
+SpecialAnimBuilder                     returned HIT ['0x535e0c']
+SpecialInitDirtyJmp                    returned 4 writes, no hit
+SpecialMoveChainCluster                returned 10 writes, no hit
+SplitHi8Lo24                           returned 1 writes, no hit
+SplitInt32                             returned 0 writes, no hit
+SplitPath                              returned 0 writes, no hit
+Sprintf2WaySelect                      returned 2 writes, no hit
+SqDistThresholdRevertAdvance           returned 0 writes, no hit
+StackPeekDispatchIndirect              ran out  3 writes, no hit
+StackPopDispatchTagged                 ran out  2 writes, no hit
+StackPushAdd15CallPop                  returned 3 writes, no hit
+StackPushCallPopChain                  returned 7 writes, no hit
+StageEntityInitCluster                 returned 65 writes, no hit
+StageEventCluster                      returned 3 writes, no hit
+StageEventComplexFsm                   returned 22 writes, no hit
+StageEventDamageCluster                returned 41 writes, no hit
+StageEventExitCluster                  returned 22 writes, no hit
+StageEventStartCluster                 returned 20 writes, no hit
+StageEventState4Way                    returned 19 writes, no hit
+StageGameProgressCluster               returned 2 writes, no hit
+StageGateFsmCluster                    returned 35 writes, no hit
+StageParticleEmitterInit               returned 9 writes, no hit
+StageRoundFlowCluster                  ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+StageTransitionCluster_ArgSarStoreJmp  ran out  5 writes, no hit
+StageTransitionCluster_PendingMatch    returned 23 writes, no hit
+StanceEntryCluster                     ran out  6 writes, no hit
+StanceFsmCluster                       returned 15 writes, no hit
+State208cBit0Flag                      returned 2 writes, no hit
+State6CycleFsm                         returned 20 writes, no hit
+State6Latch                            returned 0 writes, no hit
+StateAdd5Capped                        returned 2 writes, no hit
+StateCascadeDualThunkContin            ran out  10 writes, no hit
+StateChainIndirect                     returned 16 writes, no hit
+StateCmpAndStoreByte                   returned 0 writes, no hit
+StateDispatchTable                     returned 2 writes, no hit
+StateDispatchYield                     returned 28 writes, no hit
+StateGateMStackOverlap                 returned 18 writes, no hit
+StateInitShuffle                       returned 3 writes, no hit
+StateInstallOrForward_0048e6b0         returned 1 writes, no hit
+StateInstallOrForward_0048e6e0         returned 1 writes, no hit
+StateMachine4ArmCascade                returned 7 writes, no hit
+StateMachineDualModuloInstall          returned 5 writes, no hit
+StateMachineInit                       returned 4 writes, no hit
+StateMachineSharedTail                 returned 23 writes, no hit
+StateRemapPackedInstall                returned 2 writes, no hit
+StateSnapshotDispatch                  returned 17 writes, no hit
+StateSwitchMStackPop                   returned 2 writes, no hit
+StoreAtMinus8                          returned 0 writes, no hit
+StoreByteJmp                           returned 3 writes, no hit
+StoreCallPauseCallPauseJmp             returned 13 writes, no hit
+StoreCallPauseCmpDirty                 returned 1 writes, no hit
+StoreCallPauseDirtyStoreJmp            returned 0 writes, no hit
+StoreCallPauseStore                    returned 0 writes, no hit
+StoreCallPauseTestByte_DualCmpStoreClear returned 33 writes, no hit
+StoreDoubleNegPauseSubStore            returned 2 writes, no hit
+StoreFightFieldCallTailJmp             returned 22 writes, no hit
+StoreGuardedBitInstallJmp              returned 8 writes, no hit
+StoreIncrMStackPush6                   returned 4 writes, no hit
+StoreLitRetSet2                        returned 2 writes, no hit
+StoreLitRetSet2_EntryB_SetWalk2Phase2_0042c3d0 returned 2 writes, no hit
+StoreLoadJmp                           returned 7 writes, no hit
+StorePauseImulShr16                    returned 2 writes, no hit
+StoreTailJmpSigned                     returned 17 writes, no hit
+StoreThreeStatesPushCall               returned 13 writes, no hit
+StoreTwoCall                           returned 6 writes, no hit
+StoreTwoCallSubMain                    returned 13 writes, no hit
+StoryCharIntroFsmCluster               returned 19 writes, no hit
+StrLen                                 returned 0 writes, no hit
+StrNLen                                returned 0 writes, no hit
+StrSearchCall                          returned 0 writes, no hit
+StrToLongDouble                        ran out  0 writes, no hit
+StreamAllocInit                        ran out  1 writes, no hit
+StreamChainStringInstall               returned 2 writes, no hit
+StreamCleanupLoop                      ran out  1 writes, no hit
+StreamFlagPackedSelectChain            returned 26 writes, no hit
+StreamInitCountdownBody                returned 2 writes, no hit
+StreamReadDword                        returned 1 writes, no hit
+StreamReadQword                        returned 1 writes, no hit
+StreamReadWord                         returned 1 writes, no hit
+StrikeAnim4Picker                      returned 3 writes, no hit
+StringDigitConvert                     returned 0 writes, no hit
+StringStripSlotReplace                 returned 0 writes, no hit
+Strncpy                                returned 0 writes, no hit
+StructArrayWalkCondCall                returned 0 writes, no hit
+StunDownChainCluster                   returned 5 writes, no hit
+StunDownCluster                        ran out  17 writes, no hit
+SubCmpCallPauseJmp                     returned 12 writes, no hit
+SunbeamSpriteEmit                      returned 15 writes, no hit
+SwapCallRestore                        returned 4 writes, no hit
+SwapOrPassSet                          returned 3 writes, no hit
+SwapSidePoseAdd51e_0047c530            returned 2 writes, no hit
+SwapTwoGlobals                         returned 1 writes, no hit
+SweepCluster                           returned 12 writes, no hit
+SweepKickDispatcher                    returned 24 writes, no hit
+SwitchErrorCode                        returned 0 writes, no hit
+TableHitOrSchedule                     returned 0 writes, no hit
+TableLookupCallJmp_DispatcherComplex260_then_MStackPushComplexCallPop_004aa990 returned 7 writes, no hit
+TableLookupCallJmp_DispatcherComplex260_then_MStackPushComplexCallPop_004aa9c0 returned 7 writes, no hit
+TableLookupCall_g_eventTbl_112         returned 1 writes, no hit
+TableLookupCall_g_eventTbl_19          returned 1 writes, no hit
+TableLookupCall_g_eventTbl_50          returned 1 writes, no hit
+TableLookupCall_g_eventTbl_65          returned 1 writes, no hit
+TableLookupIatCall                     ran out  0 writes, no hit
+TablePushAccumTailJmp                  ran out  7 writes, no hit
+TableSearch                            returned 0 writes, no hit
+TableSetBit                            returned 1 writes, no hit
+TableWalk3StrideCall                   returned 103 writes, no hit
+TableWalkBoundedCmp                    returned 2 writes, no hit
+TableWalkChainCall                     returned 2 writes, no hit
+TableWalkMatchInsert                   returned 2 writes, no hit
+TableWalkPause                         returned 1 writes, no hit
+TagDispatchPairedPacked                returned 3 writes, no hit
+TagTeamHandlerCluster                  returned 23 writes, no hit
+TaggedSceneDispatch                    returned 0 writes, no hit
+TailJmpInstallSelfPair                 returned 3 writes, no hit
+TailJmpRetNops                         returned 0 writes, no hit
+TailJmpTo_CallThreeSumLea              ran out  0 writes, no hit
+TailJmpTo_CountdownStoreCallChain      returned 18 writes, no hit
+TeamMode_JoinScreen                    returned 46 writes, no hit
+Ten404c40_404bd0                       returned 3 writes, no hit
+TenThunkDualSave                       returned 0 writes, no hit
+Test4StatesAny                         returned 0 writes, no hit
+TestByteOrAndCheck                     returned 0 writes, no hit
+TestByteSelectInit                     returned 19 writes, no hit
+TestCallIat                            returned 0 writes, no hit
+TestCallPush4Zero                      returned 0 writes, no hit
+TestCallZero                           returned 0 writes, no hit
+TestCmpZeroFour                        returned 0 writes, no hit
+TestEqJmpInitFightGroup                returned 17 writes, no hit
+TestHandleBit                          returned 0 writes, no hit
+TestP1ReplaceCurrent                   returned 2 writes, no hit
+TestPushPushCall                       returned 0 writes, no hit
+TestQueueGateState                     ran out  1 writes, no hit
+TestStoreConstJmp                      returned 4 writes, no hit
+TestZeroJmp                            returned 0 writes, no hit
+Tex_DecodeRLE16                        returned 0 writes, no hit
+TextModeReadStream                     ran out  0 writes, no hit
+TexturedTriRasterize                   returned 0 writes, no hit
+TexturedTriRasterizeAlpha              returned 0 writes, no hit
+TexturedTriRasterizeAlphaPal           returned 0 writes, no hit
+TexturedTriRasterizeDithered           returned 0 writes, no hit
+TexturedTriRasterizeShaded             returned 0 writes, no hit
+ThreeCallChainCopy                     ran out  9 writes, no hit
+ThreeChan11BitPack                     returned 0 writes, no hit
+ThreeChanPackClamp                     returned 0 writes, no hit
+ThreeCharNormalize                     returned 8 writes, no hit
+ThreeClampLoop                         returned 4 writes, no hit
+ThreeMul10Stores                       returned 3 writes, no hit
+ThreeStageDirtyToggle                  returned 0 writes, no hit
+ThreeStageGateCascade                  ran out  3 writes, no hit
+ThresholdInitInstallSelfChain          returned 37 writes, no hit
+ThresholdPauseDispatch                 returned 0 writes, no hit
+ThresholdSetMatchDispatch              returned 2 writes, no hit
+ThresholdedTailJmps                    ran out  6 writes, no hit
+ThrowAnimSetupCluster                  returned 24 writes, no hit
+ThrowAnimTriggerCluster                returned 4 writes, no hit
+ThrowChargeCluster                     returned 13 writes, no hit
+ThrowEventCluster                      returned 5 writes, no hit
+ThrowFlowSetupCluster                  returned 8 writes, no hit
+ThrowFsmCluster_InstallSelfIndirectJmpNeg returned 19 writes, no hit
+ThrowFsmCluster_MStackPush2RunCountdown returned 19 writes, no hit
+ThrowGrabInitCluster                   returned 35 writes, no hit
+ThrowGrabPoseCopyCluster               returned 24 writes, no hit
+ThrowInitLinkCluster                   returned 12 writes, no hit
+ThrowPairPoseCluster                   returned 3 writes, no hit
+ThrowPoseCallbackSetup                 returned 5 writes, no hit
+ThrowTakedownCluster                   returned 2 writes, no hit
+ThrowTakedownStepCluster               returned 15 writes, no hit
+ThunkPlus4FieldCjCopy                  returned 21 writes, no hit
+ThunkPlusCjMul10Accum                  returned 3 writes, no hit
+Thunk_AppInit_Misc2                    ran out  0 writes, no hit
+Thunk_BootMod6487eClampAndChainMul10   returned 0 writes, no hit
+Thunk_ChainNodeInit                    returned 8 writes, no hit
+Thunk_ExitGame                         ran out  1 writes, no hit
+Thunk_FlushDrawQueue                   returned 0 writes, no hit
+Thunk_GuardedDoubleCallSetJmp          ran out  45 writes, no hit
+Thunk_GuardedSeq                       ran out  2 writes, no hit
+Thunk_Helper_GeoLoadPre                ran out  0 writes, no hit
+Thunk_InstallSelfChainSet2011          returned 37 writes, no hit
+Thunk_InstallSelfChainSetB333          returned 34 writes, no hit
+Thunk_InstallSelfChainSetB333v2        returned 34 writes, no hit
+Thunk_InstallSelfPacked0x2005          returned 34 writes, no hit
+Thunk_InstallSelfThreeStateDispatch    returned 35 writes, no hit
+Thunk_LinkedListBitMaskSearch          returned 2 writes, no hit
+Thunk_LoadGeoAsset_Default             returned 0 writes, no hit
+Thunk_LoadShlDerefCallSkip             returned 0 writes, no hit
+Thunk_MStackPush2ChainPrepend          returned 5 writes, no hit
+Thunk_NodeChainMaskMatch               returned 0 writes, no hit
+Thunk_PrefixThunkInstallSelf3State     returned 40 writes, no hit
+Thunk_ScaledAddrInit                   returned 49 writes, no hit
+Thunk_ScaledLoadInstallOrCall          returned 0 writes, no hit
+Thunk_ScaledNeg1SetPause               returned 0 writes, no hit
+Thunk_SetJmp                           returned 40 writes, no hit
+Thunk_StackPopDispatchTagged_004296e0  ran out  2 writes, no hit
+Thunk_StackPopDispatchTagged_004647f0  ran out  2 writes, no hit
+Thunk_StructArrayWalkCondCall          returned 0 writes, no hit
+Thunk_Thunk                            returned 8 writes, no hit
+Thunk_Thunk_0049cbc0_0045e0f0          returned 0 writes, no hit
+Thunk_Thunk_0049cbc0_0049cbb0          returned 0 writes, no hit
+Thunk_Wrapper_00438ee0_00435de0        returned 29 writes, no hit
+Thunk_Wrapper_00438ee0_004368d0        returned 29 writes, no hit
+Thunk_ZeroLargeBlock                   returned 0 writes, no hit
+TickAllEntities                        returned 12 writes, no hit
+TierBranchChain                        returned 0 writes, no hit
+TieredCmpDispatch                      returned 1 writes, no hit
+TimeValAdd3                            returned 0 writes, no hit
+TimerWindowThreshDispatch              returned 16 writes, no hit
+TimerWindowWrap                        returned 3 writes, no hit
+Timer_Init                             ran out  0 writes, no hit
+TitleDemoStateMachine                  ran out  28 writes, no hit
+Title_PressStartScreen                 returned 0 writes, no hit
+TlsSlotInit                            ran out  1 writes, no hit
+Tolower                                returned 0 writes, no hit
+TolowerLocale                          returned 0 writes, no hit
+TournamentMenuFsmCluster               returned 10 writes, no hit
+TowerStageInitCluster                  returned 12 writes, no hit
+TradePlaceChain                        returned 1 writes, no hit
+Transform9Words                        returned 0 writes, no hit
+TransformAccumulate                    returned 6 writes, no hit
+TransformVertex                        returned 0 writes, no hit
+TranslateMsgId                         returned 0 writes, no hit
+TriBranchFlagWrite                     returned 5 writes, no hit
+TriBranchJmp                           returned 28 writes, no hit
+TriCmpOrFinal                          returned 4 writes, no hit
+TriCounterReinitChain                  returned 35 writes, no hit
+TriDispatchSetupChain                  returned 27 writes, no hit
+TriEntryGateMain                       returned 40 writes, no hit
+TriPhaseDecCounterListAdvance          returned 23 writes, no hit
+TriPhaseDualPathInstallChain           returned 15 writes, no hit
+TriPhaseGateInstallSelfBig             returned 19 writes, no hit
+TriStageChainGate                      returned 35 writes, no hit
+TriStageDispatchTailJmp                returned 5 writes, no hit
+Triple3PathDispatch                    ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+Triple3VecMul10Tail                    returned 3 writes, no hit
+TripleAddVec3                          returned 0 writes, no hit
+TripleArgScaledShiftCall               returned 8 writes, no hit
+TripleArrayDiffClamp                   returned 4 writes, no hit
+TripleBlockChainDiffMStackThunks       returned 5 writes, no hit
+TripleBlockChainScaledInits            returned 4 writes, no hit
+TripleBlockCjCopy                      returned 16 writes, no hit
+TripleBlockInstallSelf                 returned 32 writes, no hit
+TripleBlockInstallSelfMidBody          returned 49 writes, no hit
+TripleBlockInstallSelfThunk            returned 14 writes, no hit
+TripleBlockInstallThresholdMasked      returned 17 writes, no hit
+TripleBranchInstall                    returned 14 writes, no hit
+TripleByteCheck                        returned 0 writes, no hit
+TripleByteCheck20                      returned 0 writes, no hit
+TripleCallBitJmp                       ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+TripleCallByteCheck                    ran out  1 writes, no hit
+TripleCallCountdown                    returned 6 writes, no hit
+TripleCallPauseJmp                     returned 14 writes, no hit
+TripleCallPauseTestPush                returned 44 writes, no hit
+TripleCallSetCopy                      ran out  1 writes, no hit
+TripleChainSetupDualCall               returned 4 writes, no hit
+TripleChainTailJmp                     returned 11 writes, no hit
+TripleEntry03ChainArg                  returned 37 writes, no hit
+TripleEntry3Block                      returned 2 writes, no hit
+TripleEntryBitsetMStack                returned 8 writes, no hit
+TripleEntryChainGate                   returned 3 writes, no hit
+TripleEntryCountdownInstall            returned 38 writes, no hit
+TripleEntryDispatch                    returned 20 writes, no hit
+TripleEntryGate                        returned 0 writes, no hit
+TripleEntryStateCascade                returned 38 writes, no hit
+TripleEntryTblPushJmp                  returned 2 writes, no hit
+TripleEntryWordChainInc5               returned 11 writes, no hit
+TripleEntryWordPushChain               returned 2 writes, no hit
+TripleFieldChainSub                    returned 2 writes, no hit
+TripleFieldCopyBitMerge                returned 1 writes, no hit
+TripleFieldCopyHi                      returned 3 writes, no hit
+TripleFieldCopyJmpHi                   returned 10 writes, no hit
+TripleFieldCopyJmpLo                   returned 10 writes, no hit
+TripleFieldCopyLo                      returned 3 writes, no hit
+TripleGuardSetTailJmp                  returned 47 writes, no hit
+TripleInstallJmp_0045da80              returned 4 writes, no hit
+TripleInstallJmp_0045dab0              returned 4 writes, no hit
+TripleMStackPushChainStores            returned 5 writes, no hit
+TripleMod411262                        returned 4 writes, no hit
+TripleMul10TailIndexed                 returned 5 writes, no hit
+TripleMul10VecJmpFpu                   returned 0 writes, no hit
+TripleScaledChainStore                 returned 6 writes, no hit
+TripleScaledChainStore54               returned 2 writes, no hit
+TripleScaledChainStore60               returned 2 writes, no hit
+TripleSetCallPauseDirtyJmp             returned 4 writes, no hit
+TripleStageRollback                    returned 0 writes, no hit
+TripleStateSwapCall                    ran out  5 writes, no hit
+TripleStringCascade                    returned 22 writes, no hit
+TripleStringPauseChain                 returned 8 writes, no hit
+TripleStubPushCall                     returned 39 writes, no hit
+TripleSubInstallSelfPair               returned 17 writes, no hit
+TripleSubVec3                          returned 0 writes, no hit
+TripleTestInstallJmp_004a0130          returned 20 writes, no hit
+TripleTestInstallJmp_004a0440          returned 21 writes, no hit
+TripleThresholdDispatch                returned 13 writes, no hit
+TripleThunkInstallBody                 returned 20 writes, no hit
+TripleVecAccCallStore                  returned 3 writes, no hit
+TripleVecModClamp                      returned 0 writes, no hit
+TristripBatchEmit                      returned 0 writes, no hit
+TristripBatchEmit2                     returned 0 writes, no hit
+TristripBatchEmit3Cap                  returned 0 writes, no hit
+TryAllocWithHandler                    ran out  1 writes, no hit
+TryInitRenderer                        returned 0 writes, no hit
+TwinEntryFpHelper                      returned 0 writes, no hit
+TwinLoopSlotFinder                     ran out  3 writes, no hit
+TwinMStackPushScaledChain              returned 4 writes, no hit
+TwinRecordIter                         returned 1 writes, no hit
+TwinTagClear                           returned 3 writes, no hit
+TwoCallJmp                             returned 3 writes, no hit
+TwoCallPauseSetJmp                     returned 16 writes, no hit
+TwoCallPauseSetJmp2                    returned 16 writes, no hit
+TwoCallScaledOr1600                    returned 6 writes, no hit
+TwoCallStatePauseJmp                   ran out  8 writes, no hit
+TwoCallTail_GateDispatch6c_then_CjTableThresholdDispatch_then_AggressorRunInitCluster returned 25 writes, no hit
+TwoCallTail_ScaledStore501Set8Jmp_then_Cascade3ChainInit_then_StoreLitRetSet2 returned 31 writes, no hit
+TwoCallsPushCall                       returned 43 writes, no hit
+TwoCallsTwoBranchTail                  returned 3 writes, no hit
+TwoConditionalJmp                      returned 2 writes, no hit
+TwoEntryPhasePair                      returned 17 writes, no hit
+TwoEntryStateScalar                    returned 38 writes, no hit
+TwoEntryWrapperGuarded                 returned 41 writes, no hit
+TwoPathIATDispatch_004c7030            ran out  1 writes, no hit
+TwoPathIATDispatch_004c70a0            ran out  0 writes, no hit
+TwoPhaseInstallScaledPackedPtr         returned 18 writes, no hit
+TwoPhasePackInstall                    returned 13 writes, no hit
+TwoPushCallSetDirty                    returned 22 writes, no hit
+TwoStageAudioInit                      ran out  7 writes, no hit
+TwoStageSelectorInit                   ran out  13 writes, no hit
+TwoStageSetupTripleCopy                returned 4 writes, no hit
+TwoStageWalkGate                       returned 1 writes, no hit
+TwoStateCopyDup                        returned 1 writes, no hit
+TwoStateLookupDirty                    returned 6 writes, no hit
+ULongLongDivRem                        EMU-ERROR UcError: Unhandled CPU exception (UC_ERR_EXCEPTION)
+ULongLongMod                           EMU-ERROR UcError: Unhandled CPU exception (UC_ERR_EXCEPTION)
+UllShlAndInit                          returned 0 writes, no hit
+UnlinkChainInstall_0043d040            returned 4 writes, no hit
+UnlinkChainInstall_00460dd0            returned 4 writes, no hit
+UpdateWindowTitle                      returned 0 writes, no hit
+UpperBodyComboFsmCluster               returned 1 writes, no hit
+ValidateInstall                        ran out  0 writes, no hit
+Vec2ChainComputeStores                 returned 4 writes, no hit
+Vec2SumMul10ChainCompute               returned 3 writes, no hit
+Vec3AccMul10ChainBlend                 returned 16 writes, no hit
+Vec3AddViaHelper                       returned 4 writes, no hit
+Vec3ColorShiftClamp                    returned 2 writes, no hit
+Vec3DeltaDualMul10                     returned 1 writes, no hit
+Vec3NormalizeScaleStore                returned 0 writes, no hit
+Vec3PackedTripleCallBracket            returned 2 writes, no hit
+Vec3SetupQuadrupleMul10Sub             returned 23 writes, no hit
+VecScaleMStackTripleCall               returned 5 writes, no hit
+VersusScreenEventPoseCluster           returned 44 writes, no hit
+VersusScreenFsmCluster                 returned 20 writes, no hit
+VersusSwapCluster                      returned 13 writes, no hit
+VertexQuadBuilder                      returned 13 writes, no hit
+VertexSlotInitFlagWalk                 returned 18 writes, no hit
+VibrationFrameUpdate                   returned 0 writes, no hit
+VirtualHeapAlloc                       ran out  0 writes, no hit
+VoiceMixerTickDispatch                 returned 29 writes, no hit
+VoiceTableInit                         returned 2 writes, no hit
+VoiceTrioBindAndKick                   returned 7 writes, no hit
+VtRelease_Modal                        returned 0 writes, no hit
+VtableDispatchSetDirty                 returned 6 writes, no hit
+WalkCallbackSetClearDirty              returned 0 writes, no hit
+WalkCbSubMul10                         returned 1 writes, no hit
+WalkCj58Loop43Toggle                   returned 0 writes, no hit
+WalkTowardTargetFsm                    returned 10 writes, no hit
+WcToMbDispatcher                       ran out  0 writes, no hit
+Wctomb                                 returned 0 writes, no hit
+WeightedSumClampHelper                 returned 4 writes, no hit
+Win32_GetHInstance                     returned 0 writes, no hit
+WinMain                                ran out  1 writes, no hit
+WinMainExceptHandler                   returned 0 writes, no hit
+WindowsMsgProbe                        returned 0 writes, no hit
+WndProc                                ran out  0 writes, no hit
+Word9Reorder                           returned 0 writes, no hit
+WorldCellSetupCluster                  returned 0 writes, no hit
+WrapThreeDispatch                      ran out  0 writes, no hit
+WrapperCallSelf                        ran out  1 writes, no hit
+Wrapper_ArgSarStoreJmp_004eba28        ran out  4 writes, no hit
+Wrapper_ArgSarStoreJmp_004ed440        returned 13 writes, no hit
+Wrapper_ArgSarStoreJmp_004ed660        returned 15 writes, no hit
+Wrapper_ArgSarStoreJmp_004ee850        returned 21 writes, no hit
+Wrapper_ArgSarStoreJmp_004ee958        returned 9 writes, no hit
+Wrapper_ArgSarStoreJmp_004eeeb0        returned 20 writes, no hit
+Wrapper_Cascade5StageInit_004ef1e8     returned 21 writes, no hit
+Wrapper_Cascade5StageInit_004ef208     returned 21 writes, no hit
+Wrapper_CmpDualPatchScaledRangeJmp_004e4810 returned 38 writes, no hit
+Wrapper_CmpDualPatchScaledRangeJmp_004e4850 returned 29 writes, no hit
+Wrapper_CmpDualPatchScaledRangeJmp_004e4950 returned 38 writes, no hit
+Wrapper_CmpDualPatchScaledRangeJmp_004e4990 returned 29 writes, no hit
+Wrapper_IterLoad_0048fd30_004ed980     returned 12 writes, no hit
+Wrapper_IterLoad_0048fd30_004f12a0     returned 8 writes, no hit
+Wrapper_IterLoad_0048fd30_004f12a8     returned 5 writes, no hit
+Wrapper_IterLoad_0048fd30_004f12ac     returned 5 writes, no hit
+Wrapper_OrListLoop_004d8e80            returned 2728 writes, no hit
+Wrapper_OrListLoop_004de3f8            returned 301 writes, no hit
+Wrapper_PackedAdvanceCallTailJmp_004e44f0 returned 18 writes, no hit
+Wrapper_PackedAdvanceCallTailJmp_004e46d0 returned 41 writes, no hit
+Wrapper_PackedAdvanceCallTailJmp_004e4708 returned 47 writes, no hit
+Wrapper_PackedAdvanceCallTailJmp_004e4718 returned 42 writes, no hit
+Wrapper_PackedAdvanceCallTailJmp_004e4a58 returned 24 writes, no hit
+Wrapper_PackedAdvanceCallTailJmp_004e4a70 returned 24 writes, no hit
+Wrapper_SaveCallRestore                returned 4 writes, no hit
+Wrapper_ScaledChainPushCall_004ef810   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef828   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef838   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef858   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef868   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef878   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef888   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef898   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef8b0   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef8c8   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef8e0   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef8f0   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef900   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef910   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef920   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef948   returned 8 writes, no hit
+Wrapper_ScaledChainPushCall_004ef980   returned 8 writes, no hit
+Wrapper_ScaledIndexCondCopy            returned 2 writes, no hit
+WriteCharBuffered                      returned 3 writes, no hit
+WtSnapshotPushCall                     returned 5 writes, no hit
+XformChainAdvance                      returned 0 writes, no hit
+YRiseSpawnerCluster                    returned 4 writes, no hit
+ZBucketClampStore                      returned 3 writes, no hit
+ZMaskMergePop2                         returned 3 writes, no hit
+ZeroAndDirty4                          returned 1 writes, no hit
+ZeroEightFields                        returned 0 writes, no hit
+ZeroLargeBlock                         returned 0 writes, no hit
+ZeroMultiGlobalsCmp                    returned 0 writes, no hit
+ZeroNDwords                            returned 0 writes, no hit
+ZeroScaledZeroCallPauseJmp             returned 7 writes, no hit
+ZeroSixStores6080                      returned 6 writes, no hit
+ZeroSixStores6c80                      returned 6 writes, no hit
+ZeroSlotsGatedDispatch                 returned 2 writes, no hit
+ZeroState                              returned 0 writes, no hit
+ZeroThreeFields6c                      returned 3 writes, no hit
+ZeroThreeFields_00404ed0               returned 3 writes, no hit
+ZeroThreeFields_0040a8b0               returned 3 writes, no hit
+ZeroThreeFromArg                       returned 0 writes, no hit
+ZeroThreeSlots_00490780                returned 3 writes, no hit
+ZeroThreeSlots_004ac010                returned 3 writes, no hit
+ZeroTriple                             returned 0 writes, no hit
+ZeroTripleJmp                          ran out  25 writes, no hit
+_exit_post                             ran out  0 writes, no hit
+_init_main                             ran out  1 writes, no hit
+_init_premain                          ran out  7 writes, no hit
+_isspace_crt                           returned 0 writes, no hit
+entry                                  ran out  1 writes, no hit
+func_AddStore                          returned 1 writes, no hit
+func_CallSetPause                      returned 1 writes, no hit
+func_Chain3CallGuarded                 returned 35 writes, no hit
+func_CjTableThresholdDispatch_then_GateDispatch6c_then_Wrapper_Cascade5StageInit returned 43 writes, no hit
+func_CjTableThresholdDispatch_then_GateDispatch6c_then_call_ArgSarStoreJmp_00482290 returned 57 writes, no hit
+func_CjTableThresholdDispatch_then_GateDispatch6c_then_call_ArgSarStoreJmp_004823b0 returned 36 writes, no hit
+func_CjTableThresholdDispatch_then_GateDispatch6c_then_call_ArgSarStoreJmp_00482480 returned 55 writes, no hit
+func_CjTableThresholdDispatch_then_GateDispatch6c_then_call_ArgSarStoreJmp_004824b0 returned 45 writes, no hit
+func_Cmp2CallDirtyCall_then_MstackPopScaledChainPlusThunks ran out  6 writes, no hit
+func_Cmp30000And18000                  ran out  6 writes, no hit
+func_CmpDualPatchScaledRangeJmp_with_g_dispatchSave1234 returned 39 writes, no hit
+func_CmpDualPatchScaledRangeJmp_with_g_dispatchSave1235 returned 38 writes, no hit
+func_CmpP1DualInitStore_then_CjTableThresholdDispatch_then_GateDispatch6c returned 56 writes, no hit
+func_CmpP1DualInitStore_then_CjTableThresholdDispatch_then_GateDispatch6c_then_Wrapper_Cascade5StageInit returned 45 writes, no hit
+func_DualCmpSwapStore_then_MstackPushPackChainInit_then_call_ArgSar_Set0_Jmp returned 8 writes, no hit
+func_DualEntryInitDispatch_then_ScaledInitWithCounterAndType returned 10 writes, no hit
+func_DualScaledInitClear_then_FiveCallGuardSetTail returned 29 writes, no hit
+func_DualSubInstallChain_g_dispatchSave935 returned 26 writes, no hit
+func_DualSubInstallChain_g_dispatchSave936 returned 26 writes, no hit
+func_DualSubInstallChain_g_dispatchSave937 returned 26 writes, no hit
+func_DualSubInstallChain_g_dispatchSave938 returned 26 writes, no hit
+func_DualSubInstallChain_g_dispatchSave939 returned 26 writes, no hit
+func_DualSubInstallChain_g_dispatchSave940 returned 26 writes, no hit
+func_DualSubInstallChain_g_dispatchSave941 returned 26 writes, no hit
+func_EntryThunkBodyStateMachine_then_EightEntryAlarmDispatch ran out  65 writes, no hit
+func_GateDispatch6c_then_ScaledChainCmp61_then_ArgSarStoreJmp_then_LiteralPushCallEntZero returned 61 writes, no hit
+func_GateDispatch6c_then_Wrapper_IterLoad_0048fd30_then_ScaledMove48to58 returned 57 writes, no hit
+func_GatedPushAndArgSar_004e62c8       returned 19 writes, no hit
+func_GatedPushAndArgSar_004e62d8       returned 19 writes, no hit
+func_GatedPushAndArgSar_004e62e8       returned 19 writes, no hit
+func_GatedPushAndArgSar_004e62f8       returned 19 writes, no hit
+func_GatedPushAndArgSar_004e6308       returned 19 writes, no hit
+func_GatedPushAndArgSar_004e6318       returned 19 writes, no hit
+func_GuardedDispatch4                  returned 12 writes, no hit
+func_GuardedTripleCallSwapJmp_then_CjInstallSelfRouter returned 50 writes, no hit
+func_GuardedTripleCallSwapJmp_then_SetJmp_Distance3DMul10Chain_then_CjInstallSelfRouter returned 54 writes, no hit
+func_InstallSelfState88                returned 10 writes, no hit
+func_LeaPlus22StoreSelf_then_MstackPopScaledChainPlusThunks returned 44 writes, no hit
+func_LoadStoreRetNopJmp                returned 0 writes, no hit
+func_MStackCall_then_CallSetPause_00498770 ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+func_MStackCall_then_CallSetPause_00498bb0 ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+func_MStackChainSwapTraversal          returned 23 writes, no hit
+func_PendingMatch                      returned 1 writes, no hit
+func_PushChainAddCallPop_then_Vec2SumMul10ChainCompute_then_ScaledIndirectJmp returned 5 writes, no hit
+func_ScaledAndAlfe_then_PendingMatch   returned 21 writes, no hit
+func_ScaledIndexConditionalAdd_then_CondPickDualStore returned 22 writes, no hit
+func_ScaledZero44                      returned 8 writes, no hit
+func_Set2CallIncJmp                    returned 23 writes, no hit
+func_SfxAttenuateAndApply_then_PendingMatch returned 30 writes, no hit
+func_TableLookupCall_g_table_00498980  returned 53 writes, no hit
+func_TableLookupCall_g_table_00498b20  ran out  HIT ['0x535e0c', '0x53a1e4', '0x53a73c']
+func_Vec2SumMul10ChainCompute_then_ScaledIndirectJmp returned 3 writes, no hit
+func_call_ArgSarStoreJmp_with_g_dispatchSave747 ran out  26 writes, no hit
+func_call_ArgSarStoreJmp_with_g_dispatchSave748 returned 54 writes, no hit
+func_call_ArgSarStoreJmp_with_g_dispatchSave751 returned 41 writes, no hit
+func_call_ArgSarStoreJmp_with_g_dispatchSave752 returned 40 writes, no hit
+func_call_ArgSarStoreJmp_with_g_dispatchSave757 returned 41 writes, no hit
+func_call_ArgSarStoreJmp_with_g_dispatchSave797 returned 21 writes, no hit
+func_call_IterStepDualStore_with_g_dispatchSave715 returned 18 writes, no hit
+func_set_g_eventQueueChild_then_PunchDispatcherCluster_00497b30 returned 24 writes, no hit
+func_set_g_eventQueueChild_then_PunchDispatcherCluster_00497b40 returned 23 writes, no hit
+func_set_g_eventQueueIdx_then_PendingMatch returned 19 writes, no hit
+func_set_g_walkCallback_then_OrDualStore_00461350 returned 3 writes, no hit
+func_set_g_walkCallback_then_OrDualStore_00461370 returned 3 writes, no hit
+func_set_g_walkCallback_then_OrDualStore_00461380 returned 3 writes, no hit
+func_set_g_walkCallback_then_OrDualStore_00461390 returned 3 writes, no hit
+func_set_g_walkCallback_then_OrDualStore_004613a0 returned 3 writes, no hit
+g_imaIndexTable_matched                EMU-ERROR UcError: Invalid instruction (UC_ERR_INSN_INVALID)
