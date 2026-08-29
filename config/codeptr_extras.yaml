@@ -87,3 +87,7 @@ entries:
   0x467100: TrackInstall_00467100
   0x467600: RoundBanner_00467600
   0x467710: RoundBannerTick_00467710
+  0x42f8a0: PhaseInstall2DInterpDispatch
+  0x42fad0: EsiInstallChainCallCmpThreshold
+  0x42fa10: Mul10Triple0xd999Interp
+  0x42fc40: SubCmpCallPauseJmp

@@ -210,12 +210,18 @@ extern int SetJmp_Distance3DMul10Chain_0042d080();
 extern int Distance3DMul10Chain();
 extern int StoreByteJmp();
 extern int DispatchOrInitFightGroup();
+extern int PhaseInstall2DInterpDispatch();
+extern int Mul10Triple0xd999Interp();
+extern int EsiInstallChainCallCmpThreshold();
 extern int GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fb80();
 extern int GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0();
+extern int ChainFieldTest2Branch();
+extern int SubCmpCallPauseJmp();
 extern int PoseBlendDriver();
 extern int LoadSetCallPauseStoreJmp();
 extern int MStackSignedMod();
 extern int DualMulScaleStore();
+extern int DualMul10ChainAcc7C();
 extern int Distance2DSaturationClamp();
 extern int WalkTowardTargetFsm();
 extern int FightGroupInit_00430430();
@@ -1067,12 +1073,18 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x42d090u, (void*)Distance3DMul10Chain},
     {0x42f840u, (void*)StoreByteJmp},
     {0x42f850u, (void*)DispatchOrInitFightGroup},
+    {0x42f8a0u, (void*)PhaseInstall2DInterpDispatch},
+    {0x42fa10u, (void*)Mul10Triple0xd999Interp},
+    {0x42fad0u, (void*)EsiInstallChainCallCmpThreshold},
     {0x42fb80u, (void*)GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fb80},
     {0x42fba0u, (void*)GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0},
+    {0x42fbc0u, (void*)ChainFieldTest2Branch},
+    {0x42fc40u, (void*)SubCmpCallPauseJmp},
     {0x42fc80u, (void*)PoseBlendDriver},
     {0x42fea0u, (void*)LoadSetCallPauseStoreJmp},
     {0x42fee0u, (void*)MStackSignedMod},
     {0x42ffa0u, (void*)DualMulScaleStore},
+    {0x430020u, (void*)DualMul10ChainAcc7C},
     {0x4300a0u, (void*)Distance2DSaturationClamp},
     {0x4301e0u, (void*)WalkTowardTargetFsm},
     {0x430430u, (void*)FightGroupInit_00430430},
