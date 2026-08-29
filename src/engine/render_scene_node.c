@@ -199,10 +199,10 @@ void RenderSceneNode(void)
     if (MK4_NODE_AT(int, node, 0x3c) == 0 && MK4_NODE_AT(int, node, 0x40) == 0 &&
         MK4_NODE_AT(int, node, 0x44) == 0) {
         g_cj_00542054 = g_eventQueuePending * 4;
-        g_mat3x3_007af990 = *(unsigned int *)MK4_PTR(g_cj_00542054);
-        g_mat3x3_007af994 = *(unsigned int *)MK4_PTR(g_cj_00542054 + 4);
-        g_mat3x3_007af998 = *(unsigned int *)MK4_PTR(g_cj_00542054 + 8);
-        g_mat3x3_007af99c = *(unsigned int *)MK4_PTR(g_cj_00542054 + 12);
+        *(unsigned int *)MK4_VA(unsigned int, 0x7af990u) = *(unsigned int *)MK4_PTR(g_cj_00542054);
+        *(unsigned int *)MK4_VA(unsigned int, 0x7af994u) = *(unsigned int *)MK4_PTR(g_cj_00542054 + 4);
+        *(unsigned int *)MK4_VA(unsigned int, 0x7af998u) = *(unsigned int *)MK4_PTR(g_cj_00542054 + 8);
+        *(unsigned int *)MK4_VA(unsigned int, 0x7af99cu) = *(unsigned int *)MK4_PTR(g_cj_00542054 + 12);
         g_mat3x3_007af9a0 = *(unsigned short *)MK4_PTR(g_cj_00542054 + 16);
         g_xformDirtyFlags &= 0xffffffefu;
     } else {
@@ -229,14 +229,17 @@ void RenderSceneNode(void)
     if ((g_currentNodeFlags & 0xf00004) != 0)
         goto cull;
 
+    /* sar in the original - the transformed position is SIGNED (camera
+     * space); a logical shift turns a negative coordinate into a huge
+     * positive one and the scene collapses to a few pixels. */
     if ((g_cj_0054205c & 0x60) == 0) {
-        g_vtxTransX = g_dispatchSave1501 >> 8;
-        g_vtxTransY = g_dispatchSave1502 >> 8;
+        g_vtxTransX = (unsigned int)((int)g_dispatchSave1501 >> 8);
+        g_vtxTransY = (unsigned int)((int)g_dispatchSave1502 >> 8);
     } else {
-        g_vtxTransX = g_dispatchSave1501 >> 0x11;
-        g_vtxTransY = g_dispatchSave1502 >> 0x11;
+        g_vtxTransX = (unsigned int)((int)g_dispatchSave1501 >> 0x11);
+        g_vtxTransY = (unsigned int)((int)g_dispatchSave1502 >> 0x11);
     }
-    g_vtxTransZ = g_dispatchSave1503 >> 8;
+    g_vtxTransZ = (unsigned int)((int)g_dispatchSave1503 >> 8);
     g_dualC = g_cj_00542054 >> 2;
 
     if (((g_currentNodeFlags | g_cj_0054205c) & 0x80) == 0) {
@@ -264,10 +267,10 @@ void RenderSceneNode(void)
                 g_dispatchSave1528 = 0;
                 g_dispatchSave1529 = 0x1000;
             } else {
-                g_mat3x3_007af994 = g_dispatchSave1555;
-                g_mat3x3_007af990 = g_dispatchSave1554;
-                g_mat3x3_007af99c = g_dispatchSave1557;
-                g_mat3x3_007af998 = g_dispatchSave1556;
+                *(unsigned int *)MK4_VA(unsigned int, 0x7af994u) = g_dispatchSave1555;
+                *(unsigned int *)MK4_VA(unsigned int, 0x7af990u) = g_dispatchSave1554;
+                *(unsigned int *)MK4_VA(unsigned int, 0x7af99cu) = g_dispatchSave1557;
+                *(unsigned int *)MK4_VA(unsigned int, 0x7af998u) = g_dispatchSave1556;
                 g_mat3x3_007af9a0 = g_dispatchSave1558;
                 MatrixTransform3x3Q12(MK4_NODE(short, g_dualC),
                                       (short *)&g_dispatchSave1525);
@@ -318,10 +321,10 @@ emit:
     if ((g_xformDirtyFlags & 0x10) != 0) {
         unsigned int m = g_dualC * 4;
 
-        g_mat3x3_007af990 = *(unsigned int *)MK4_PTR(m);
-        g_mat3x3_007af994 = *(unsigned int *)MK4_PTR(m + 4);
-        g_mat3x3_007af998 = *(unsigned int *)MK4_PTR(m + 8);
-        g_mat3x3_007af99c = *(unsigned int *)MK4_PTR(m + 12);
+        *(unsigned int *)MK4_VA(unsigned int, 0x7af990u) = *(unsigned int *)MK4_PTR(m);
+        *(unsigned int *)MK4_VA(unsigned int, 0x7af994u) = *(unsigned int *)MK4_PTR(m + 4);
+        *(unsigned int *)MK4_VA(unsigned int, 0x7af998u) = *(unsigned int *)MK4_PTR(m + 8);
+        *(unsigned int *)MK4_VA(unsigned int, 0x7af99cu) = *(unsigned int *)MK4_PTR(m + 12);
         g_mat3x3_007af9a0 = *(unsigned short *)MK4_PTR(m + 16);
     }
 

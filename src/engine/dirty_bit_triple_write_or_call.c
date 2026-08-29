@@ -183,6 +183,7 @@ void DirtyBitTripleWriteOrCall(void)
 {
     int v = (int)MK4_NODE_AT(unsigned int, g_xformEntityIdx, 0x48) >> 4;
 
+
     if (g_xformDirtyFlags & 0x30) {
         int scratch[3];
 

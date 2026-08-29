@@ -107,6 +107,7 @@ void Helper_EmitLine(int param_1)
 
     g_vtxValid = 1;
 
+
     acc = (unsigned)((int)m[0] * (int)inX[i]) + (unsigned)((int)m[1] * (int)inY[i])
         + (unsigned)((int)m[2] * (int)inZ[i]);
     outX[i] = (short)(((int)acc >> 0xc) + (int)g_vtxTransX);

@@ -1,299 +1,298 @@
 /**
- * Auto-split from misc_matchesQQ.c
+ * The animation-track band: the per-node frame advancer and its wrappers.
+ * LoadCmpAddrJmp tail-jumps into AnimEventUpdateCluster every anim tick;
+ * with this band stubbed no pose ever advanced and both fighters rendered
+ * as ~10px blobs (every vertex collapsed onto the node origin).
+ *
+ * DirtyDoubleDeref - 0x00408cb0 (105b): node = group-head[+0x1c]; when
+ *   set, node = [node + 0x54206c]; state-bit 2 toggles around each deref
+ *   (set before, cleared when the deref survives).
+ *
+ * TripleAddVec3 - 0x00425130 (61b): [node] = [pending] + [entity],
+ *   three words, straight adds.
+ *
+ * Vec3AddViaHelper - 0x00425170 (120b): the same sum but each component
+ *   goes through BootMod6487eClampAndChainMul10 (the angle-wrap clamp).
+ *
+ * ChainNodeAdvanceCallback - 0x00408e70 (609b): the track advancer.
+ *   entity[+4] track base, [+8] cursor, [+0xc] frames-remaining. When the
+ *   flags word allows, integrates velocity (+6/+0xc raw, +9/+0xf clamped)
+ *   first. Then counts down; at zero reads the next track word: low 24
+ *   bits an optional pose-record packed pointer (ScaledStoreIdx24 stores
+ *   it), bit 31 arms an event, bits 24..30 the next frame count. An armed
+ *   event pulls one more word: low 24 bits a code VA to call, high byte
+ *   its argument in 0x54206c.
+ *
+ * AnimEventUpdateCluster - 0x00493ef0 (578b, two packed entries): the
+ *   bracketed wrapper that re-arms a node's track record (flags |= 2,
+ *   period 0x5999) and installs the second entry - the anim-tick callback
+ *   at 0x494020 - into the anim record's +0x10 slot; the callback
+ *   brackets five staging globals and runs the advancer unless the
+ *   game-mode word at 0x543800 is set.
+ *
+ * NATIVE-ONLY twins: the matching build synthesizes the original bytes.
  */
-#include "engine/scenegraph.h"
-#include "portable/ghidra_types.h"
-#include "game/tick.h"
-
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_baseSel;
-extern unsigned int g_chainAccumCur;
-extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown;
-extern unsigned int g_xformScratch94;
-extern unsigned int g_fightStateProgress;
-extern unsigned int g_active_00537e88;
-extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel;
-
-extern void StoreTwoCall(int, int);
-extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
-extern void Thunk_ChainNodeInit(void);
-extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10(void);
-extern void Mul10Tail(unsigned int a, unsigned int b);
-extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader(void);
-extern void MStackPush2TableNot(void);
-extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp(void);
-extern void ScaledStoreCurDirtyClear(void);
-extern void MStackBitmaskIncMod(void);
-extern void MStackBitmaskUpdate(void);
-extern void Push1eCallTestDirtyLoop(void);
-extern void MStackLoopFieldInit(void);
-extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
-extern void Cmp2CallDirtyCall(void);
-extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW(void);
-extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
-extern void MoveFsmCluster(void);
-extern void CallPauseTestByteJmpCalls(void);
-extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
-extern void DualTestDirtyToggle_004282c0(void);
-extern void TripleVecAccCallStore(void);
-extern void Thunk_LoadGeoAsset_Default(void);
-extern void AllocSlotPushTripleGlobals(void);
-extern void MStackPop4Rewrite(void);
-extern void Push70CallScaleArith(void);
-extern void StreamChainStringInstall(void);
-extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore(void);
-extern void Push16Call(void);
-extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
-extern void ScaledLoadCmpStoreXfm(void);
-extern void StackPopDispatchTagged(void);
-extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit;
-extern unsigned int g_armedReloadA;
-extern unsigned int g_armedReloadB;
-extern unsigned int g_dualBitGate;
-extern unsigned int g_eventArmReload;
-extern unsigned int g_rangeBase;
-
-extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
-extern void DualFieldAddSubStore(void);
-extern void IterStepDualStore(int);
-extern void ScaledXorStore_004900f0(void);
-extern void ChainWalkInstall(void);
-extern void FpuSqrtMul(void);
-extern void PendingMatch_StoreTwoCall_0042b930(void);
-extern void MStackPush2RunCountdown(void);
-extern void MStackBracket7_DispatchAndChain(void);
-extern void MStackBracketed3StoreCall(void);
-extern void ChainDirtyBitWalker(void);
-extern void Wrapper_ScaledChainPushCall_004ef858(void);
-extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
-extern void Helper_DownloadSetup(void);
-extern void MStackPush3CmpCall(void);
-extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
-extern void FiveCallScaledChainTailJmp(void);
-extern void SetJmp_StateDispatchYield_00438f50(void);
-extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_PendingMatch(void);
-extern void DirtyToggleByGate(void);
-extern void GameDispatchValidateState(void);
-extern void CrouchAttackFsmCluster(void);
-extern void MStackPushVec3Mul10(void);
-extern void LiteralPushCallEntZero(void);
-extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
-extern void GuardedDualConst2AndToggle(void);
-extern void CallPauseScaledStorePushCall(void);
-extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_FramePauseScaledStore(void);
-extern void PushSetCallPop(void);
-extern unsigned int g_stateCountdown;
-extern unsigned int g_installOwnerNode;
-extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode;
-extern unsigned int g_lastGatedValue;
-extern unsigned int g_lastGatedTick;
-extern unsigned int g_fightAxisNegX;
-extern unsigned int g_fightAxisNegY;
-extern unsigned int g_fightAxisPosX;
-extern unsigned int g_fightAxisPosY;
-
-extern void ChainNodeAdvanceCallback(void);
-extern void DirtyDoubleDeref(void);
-extern void DualBitGateInitCall(void);
-extern void OrDualStore_0048a190(void);
-extern void ScaledTestPauseStore(void);
-
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void AnimEventUpdateCluster(void)
 
+#include "portable/mem_model.h"
+
+extern void ScaledTestPauseStore(void);
+extern void OrDualStore_0048a190(void);
+extern void DualBitGateInitCall(void);
+extern void ScaledStoreIdx24(void);
+extern void BootMod6487eClampAndChainMul10(void);
+
+#define g_currentNodeIdx  (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_xformEntityIdx  (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_slot50          (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
+#define g_slot54          (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_walkSlot6c      (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_slot70          (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_slot74          (*(unsigned int *)MK4_VA(unsigned int, 0x542074u))
+#define g_slot78          (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_scratch94       (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#define g_scratch98       (*(unsigned int *)MK4_VA(unsigned int, 0x542098u))
+#define g_groupHead       (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_framePauseFlag  (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_matrixStackTop  (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
+#define g_stateBits8c     (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
+#define g_dualBitGateByte (*(unsigned char *)MK4_VA(unsigned char, 0x53a7b0u))
+#define g_gameMode3800    (*(unsigned int *)MK4_VA(unsigned int, 0x543800u))
+
+void DirtyDoubleDeref(void)
 {
-  g_matrixStackTop = g_matrixStackTop + 1;
-  *MK4_NODE(int, (int)g_matrixStackTop) = (g_currentNodeIdx);
-  g_matrixStackTop = g_matrixStackTop + 1;
-  *MK4_NODE(int, (int)g_matrixStackTop) = g_eventQueuePending;
-  g_walkCallback = 1;
-  DirtyDoubleDeref();
-  if (g_framePauseFlag == 0) {
-    (g_currentNodeIdx) = *MK4_NODE(int, (g_currentNodeIdx));
-    ScaledTestPauseStore();
-    if (g_framePauseFlag == 0) {
-      if (((byte)g_xformDirtyFlags & 4) == 0) {
-        MK4_NODE_AT(uint, g_eventQueuePending, 0) = MK4_NODE_AT(uint, g_eventQueuePending, 0) | 2;
-        MK4_NODE_AT(undefined4, g_eventQueuePending, 0x2c) = 0x5999;
-        g_walkCallback = 1;
-        DirtyDoubleDeref();
-        if (g_framePauseFlag != 0) {
-          return;
+    unsigned int n;
+
+    n = MK4_NODE_AT(unsigned int, g_groupHead, 0x1c);
+    g_stateBits8c |= 4u;
+    g_currentNodeIdx = n;
+    if (n == 0)
+        return;
+    g_stateBits8c ^= 4u;
+    n = g_currentNodeIdx + g_walkSlot6c;
+    g_currentNodeIdx = n;
+    g_stateBits8c |= 4u;
+    n = *(unsigned int *)MK4_PTR(n * 4);
+    g_currentNodeIdx = n;
+    if (n != 0)
+        g_stateBits8c ^= 4u;
+}
+
+void TripleAddVec3(void)
+{
+    unsigned int dst = g_currentNodeIdx;
+    unsigned int a = g_xformEntityIdx, b = g_pendingNodeType;
+
+    MK4_NODE_AT(unsigned int, dst, 0) =
+        MK4_NODE_AT(unsigned int, a, 0) + MK4_NODE_AT(unsigned int, b, 0);
+    MK4_NODE_AT(unsigned int, dst, 4) =
+        MK4_NODE_AT(unsigned int, a, 4) + MK4_NODE_AT(unsigned int, b, 4);
+    MK4_NODE_AT(unsigned int, dst, 8) =
+        MK4_NODE_AT(unsigned int, a, 8) + MK4_NODE_AT(unsigned int, b, 8);
+}
+
+void Vec3AddViaHelper(void)
+{
+    unsigned int dst = g_currentNodeIdx;
+    unsigned int a = g_xformEntityIdx, b = g_pendingNodeType;
+    int i;
+
+    for (i = 0; i < 3; i++) {
+        g_walkSlot6c = MK4_NODE_AT(unsigned int, a, i * 4)
+                     + MK4_NODE_AT(unsigned int, b, i * 4);
+        BootMod6487eClampAndChainMul10();
+        MK4_NODE_AT(unsigned int, dst, i * 4) = g_walkSlot6c;
+    }
+}
+
+void ChainNodeAdvanceCallback(void)
+{
+    unsigned int ent = g_xformEntityIdx;
+    unsigned int node = g_currentNodeIdx;
+    unsigned int rec, trk, cursor, word, w, frames, cnt;
+
+
+    rec = *(unsigned int *)MK4_PTR(ent * 4);
+    g_walkSlot6c = rec;
+    g_slot54 = ent;
+    g_scratch98 = ((rec & 3) == 0);
+    g_slot50 = node;
+    g_scratch94 = rec & 1;
+
+    if ((rec & 3) != 0) {
+        g_scratch98 = ((rec & 1) == 0);
+        g_xformEntityIdx = ent + 6;
+        g_currentNodeIdx = node + 0xc;
+        g_pendingNodeType = node + 0xc;
+        if ((rec & 1) != 0) {
+            TripleAddVec3();
+            if (g_framePauseFlag != 0)
+                return;
+            ent = g_slot54;
         }
-        g_eventQueuePending = MK4_NODE_AT(int, (g_currentNodeIdx), 0x28);
-        g_walkCallback = 0x494020;
-        MK4_NODE_AT(undefined4, g_eventQueuePending, 0x10) = 0x494020;
-        if (((byte)g_dualBitGate & 1) == 0) {
-          g_walkCallback = 1;
-          OrDualStore_0048a190();
-          if (g_framePauseFlag != 0) {
+        rec = *(unsigned int *)MK4_PTR(ent * 4);
+        g_walkSlot6c = rec;
+        g_scratch94 = rec & 2;
+        g_scratch98 = ((rec & 2) == 0);
+        g_xformEntityIdx = ent + 9;
+        if ((rec & 2) != 0) {
+            g_currentNodeIdx = g_slot50 + 0xf;
+            g_pendingNodeType = g_slot50 + 0xf;
+            Vec3AddViaHelper();
+            if (g_framePauseFlag != 0)
+                return;
+            ent = g_slot54;
+        }
+        g_currentNodeIdx = g_slot50;
+        g_xformEntityIdx = ent;
+    }
+
+    trk = MK4_NODE_AT(unsigned int, ent, 4);
+    g_slot78 = trk;
+    if (trk == 0)
+        return;
+
+    cnt = MK4_NODE_AT(unsigned int, ent, 0xc);
+    g_scratch98 = ((int)cnt > 0);
+    cnt--;
+    g_slot70 = cnt;
+    MK4_NODE_AT(unsigned int, ent, 0xc) = cnt;
+    ent = g_xformEntityIdx;
+    cursor = MK4_NODE_AT(unsigned int, ent, 8);
+    g_walkSlot6c = cursor;
+    if (g_scratch98 != 0)
+        return;                          /* still counting down */
+
+    if (cursor == 0) {
+        cursor = trk;
+        g_walkSlot6c = cursor;
+    }
+    g_pendingNodeType = cursor;
+    word = *(unsigned int *)MK4_PTR(cursor * 4);
+    g_slot74 = word;
+    if (word == 0) {                     /* wrap: restart the track */
+        cursor = trk;
+        g_pendingNodeType = cursor;
+        word = *(unsigned int *)MK4_PTR(trk * 4);
+        g_slot74 = word;
+    }
+    cursor++;
+    g_pendingNodeType = cursor;
+    MK4_NODE_AT(unsigned int, ent, 8) = cursor;
+
+    w = word;
+    word &= 0xffffffu;
+    g_slot70 = w;
+    g_slot74 = word;
+    if (word != 0) {                     /* pose record for this span */
+        g_walkSlot6c = (unsigned int)((int)word >> 2);
+        ScaledStoreIdx24();
+        if (g_framePauseFlag != 0)
             return;
-          }
-          DualBitGateInitCall();
-        }
-      }
-      g_eventQueuePending = *MK4_NODE(int, (int)g_matrixStackTop);
-      (g_currentNodeIdx) = *MK4_NODE(int, (int)(g_matrixStackTop + -1));
-      g_matrixStackTop = g_matrixStackTop + -2;
+        w = g_slot70;
     }
-  }
-  return;
+
+    if ((w & 0x80000000u) != 0)
+        g_stateBits8c |= 1u;
+    else
+        g_stateBits8c &= ~1u;
+    g_scratch98 = (~g_stateBits8c) & 1u;
+    frames = ((w >> 24) & 0x7f) - 1;
+    g_slot70 = frames;
+    MK4_NODE_AT(unsigned int, g_xformEntityIdx, 0xc) = frames;
+    if (g_scratch98 != 0)
+        return;
+
+    /* bit 31 was set: the next word is (arg << 24) | code VA */
+    cursor = g_pendingNodeType;
+    word = *(unsigned int *)MK4_PTR(cursor * 4);
+    cursor++;
+    g_slot70 = word;
+    g_pendingNodeType = cursor;
+    MK4_NODE_AT(unsigned int, g_xformEntityIdx, 8) = cursor;
+    g_walkSlot6c = (unsigned int)((int)word >> 24);
+    word &= 0xffffffu;
+    g_slot70 = word;
+    ((void (*)(void))MK4_ResolveCode(word))();
 }
-#else
-__declspec(naked) void AnimEventUpdateCluster(void)
+
+/* the second packed entry at 0x00494020, installed into anim[+0x10] */
+void AnimEventNodeCallback_00494020(void)
 {
-    __asm {
-        /* === Helper 1 (0x493ef0): event update + 0x494020 callback === */
-        mov      eax, dword ptr [g_matrixStackTop]
-        mov      ecx, dword ptr [g_currentNodeIdx]
-        inc      eax
-        push     ebx
-        mov      dword ptr [g_matrixStackTop], eax
-        mov      ebx, 1
-        mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_matrixStackTop]
-        mov      edx, dword ptr [g_xformEntityIdx]
-        inc      eax
-        mov      dword ptr [g_matrixStackTop], eax
-        mov      dword ptr [eax*4], edx
-        mov      dword ptr [g_walkCallback], ebx
-        call     DirtyDoubleDeref
-        mov      eax, dword ptr [g_framePauseFlag]
-        test     eax, eax
-        jne      L_401a
-        mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, dword ptr [eax*4]
-        mov      dword ptr [g_currentNodeIdx], ecx
-        call     ScaledTestPauseStore
-        mov      eax, dword ptr [g_framePauseFlag]
-        test     eax, eax
-        jne      short L_401a
-        test     byte ptr [g_xformDirtyFlags], 4
-        jne      short L_3fef
-        mov      eax, dword ptr [g_xformEntityIdx]
-        mov      ecx, dword ptr [eax*4]
-        or       ecx, 2
-        mov      dword ptr [eax*4], ecx
-        mov      edx, dword ptr [g_xformEntityIdx]
-        mov      dword ptr [edx*4 + 0x2c], 0x5999
-        mov      dword ptr [g_walkCallback], ebx
-        call     DirtyDoubleDeref
-        mov      eax, dword ptr [g_framePauseFlag]
-        test     eax, eax
-        jne      short L_401a
-        mov      eax, dword ptr [g_currentNodeIdx]
-        mov      ecx, OFFSET L_4020
-        mov      eax, dword ptr [eax*4 + 0x28]
-        mov      dword ptr [g_walkCallback], ecx
-        mov      dword ptr [g_xformEntityIdx], eax
-        mov      dword ptr [eax*4 + 0x10], ecx
-        mov      al, byte ptr [g_dualBitGate]
-        test     al, bl
-        jne      short L_3fef
-        mov      dword ptr [g_walkCallback], ebx
-        call     OrDualStore_0048a190
-        mov      eax, dword ptr [g_framePauseFlag]
-        test     eax, eax
-        jne      short L_401a
-        call     DualBitGateInitCall
-    L_3fef:
-        mov      eax, dword ptr [g_matrixStackTop]
-        mov      ecx, dword ptr [eax*4]
-        dec      eax
-        mov      dword ptr [g_xformEntityIdx], ecx
-        mov      dword ptr [g_matrixStackTop], eax
-        mov      edx, dword ptr [eax*4]
-        dec      eax
-        mov      dword ptr [g_currentNodeIdx], edx
-        mov      dword ptr [g_matrixStackTop], eax
-    L_401a:
-        pop      ebx
-        ret
-        nop
-        nop
-        nop
-        nop
-        /* === Helper 2 (0x494020): mstack save 5 + conditional update === */
-    L_4020:
-        mov      eax, dword ptr [g_matrixStackTop]
-        mov      ecx, dword ptr [g_currentNodeIdx]
-        inc      eax
-        mov      dword ptr [g_matrixStackTop], eax
-        mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_matrixStackTop]
-        mov      edx, dword ptr [g_xformEntityIdx]
-        inc      eax
-        mov      dword ptr [g_matrixStackTop], eax
-        mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_matrixStackTop]
-        mov      ecx, dword ptr [g_pendingNodeType]
-        inc      eax
-        mov      dword ptr [g_matrixStackTop], eax
-        mov      dword ptr [eax*4], ecx
-        mov      eax, dword ptr [g_matrixStackTop]
-        mov      edx, dword ptr [g_eventQueueTotal]
-        inc      eax
-        mov      dword ptr [g_matrixStackTop], eax
-        mov      dword ptr [eax*4], edx
-        mov      eax, dword ptr [g_matrixStackTop]
-        mov      ecx, dword ptr [g_eventQueueEnd]
-        inc      eax
-        mov      dword ptr [g_matrixStackTop], eax
-        mov      dword ptr [eax*4], ecx
-        mov      edx, dword ptr [g_currentNodeIdx]
-        mov      eax, dword ptr [edx*4]
-        mov      dword ptr [g_currentNodeIdx], eax
-        mov      eax, dword ptr [eax*4 + 0x28]
-        mov      dword ptr [g_xformEntityIdx], eax
-        mov      eax, dword ptr [g_gameMode]
-        test     eax, eax
-        jne      short L_40cd
-        call     ChainNodeAdvanceCallback
-        mov      eax, dword ptr [g_framePauseFlag]
-        test     eax, eax
-        jne      short L_4131
-    L_40cd:
-        mov      eax, dword ptr [g_matrixStackTop]
-        mov      ecx, dword ptr [eax*4]
-        dec      eax
-        mov      dword ptr [g_eventQueueEnd], ecx
-        mov      dword ptr [g_matrixStackTop], eax
-        mov      edx, dword ptr [eax*4]
-        dec      eax
-        mov      dword ptr [g_eventQueueTotal], edx
-        mov      dword ptr [g_matrixStackTop], eax
-        mov      ecx, dword ptr [eax*4]
-        dec      eax
-        mov      dword ptr [g_pendingNodeType], ecx
-        mov      dword ptr [g_matrixStackTop], eax
-        mov      edx, dword ptr [eax*4]
-        dec      eax
-        mov      dword ptr [g_xformEntityIdx], edx
-        mov      dword ptr [g_matrixStackTop], eax
-        mov      ecx, dword ptr [eax*4]
-        dec      eax
-        mov      dword ptr [g_currentNodeIdx], ecx
-        mov      dword ptr [g_matrixStackTop], eax
-    L_4131:
-        ret
+    unsigned int top, node;
+
+    top = g_matrixStackTop;
+    *(unsigned int *)MK4_PTR(++top * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR(++top * 4) = g_xformEntityIdx;
+    *(unsigned int *)MK4_PTR(++top * 4) = g_pendingNodeType;
+    *(unsigned int *)MK4_PTR(++top * 4) = g_slot50;
+    *(unsigned int *)MK4_PTR(++top * 4) = g_slot54;
+    g_matrixStackTop = top;
+
+    node = *(unsigned int *)MK4_PTR(g_currentNodeIdx * 4);
+    g_currentNodeIdx = node;
+    g_xformEntityIdx = MK4_NODE_AT(unsigned int, node, 0x28);
+    if (g_gameMode3800 == 0) {
+        ChainNodeAdvanceCallback();
+        if (g_framePauseFlag != 0)
+            return;                  /* abort: the five pushes leak */
     }
+    top = g_matrixStackTop;
+    g_slot54 = *(unsigned int *)MK4_PTR(top-- * 4);
+    g_slot50 = *(unsigned int *)MK4_PTR(top-- * 4);
+    g_pendingNodeType = *(unsigned int *)MK4_PTR(top-- * 4);
+    g_xformEntityIdx = *(unsigned int *)MK4_PTR(top-- * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR(top-- * 4);
+    g_matrixStackTop = top;
 }
-#endif
+
+void AnimEventUpdateCluster(void)
+{
+    unsigned int top, rec, anim;
+
+
+    top = g_matrixStackTop;
+    *(unsigned int *)MK4_PTR(++top * 4) = g_currentNodeIdx;
+    *(unsigned int *)MK4_PTR(++top * 4) = g_xformEntityIdx;
+    g_matrixStackTop = top;
+
+    g_walkSlot6c = 1;
+    DirtyDoubleDeref();
+    if (g_framePauseFlag != 0)
+        return;                      /* abort: the two pushes leak */
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR(g_currentNodeIdx * 4);
+    ScaledTestPauseStore();
+    if (g_framePauseFlag != 0)
+        return;
+
+    if ((g_stateBits8c & 4) == 0) {
+        rec = *(unsigned int *)MK4_PTR(g_xformEntityIdx * 4) | 2u;
+        *(unsigned int *)MK4_PTR(g_xformEntityIdx * 4) = rec;
+        MK4_NODE_AT(unsigned int, g_xformEntityIdx, 0x2c) = 0x5999u;
+        g_walkSlot6c = 1;
+        DirtyDoubleDeref();
+        if (g_framePauseFlag != 0)
+            return;
+        anim = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x28);
+        g_walkSlot6c = 0x494020u;
+        g_xformEntityIdx = anim;
+        MK4_NODE_AT(unsigned int, anim, 0x10) = 0x494020u;
+        if ((g_dualBitGateByte & 1) == 0) {
+            g_walkSlot6c = 1;
+            OrDualStore_0048a190();
+            if (g_framePauseFlag != 0)
+                return;
+            DualBitGateInitCall();
+            if (g_framePauseFlag != 0)
+                return;
+        }
+    }
+
+    top = g_matrixStackTop;
+    g_xformEntityIdx = *(unsigned int *)MK4_PTR(top-- * 4);
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR(top-- * 4);
+    g_matrixStackTop = top;
+}
+
+#endif /* NON_MATCHING */

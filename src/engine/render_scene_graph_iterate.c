@@ -184,9 +184,9 @@ void RenderSceneGraphIterate(void)
     if ((g_cj_0054205c & 2) == 0) {
         g_mat3x3_007af9a0 = g_dispatchSave1533;
         *(unsigned int *)MK4_VA(unsigned int, 0x7af990u) = g_vtxMatBase;
-        g_mat3x3_007af994 = g_dispatchSave1530;
-        g_mat3x3_007af998 = g_dispatchSave1531;
-        g_mat3x3_007af99c = g_dispatchSave1532;
+        *(unsigned int *)MK4_VA(unsigned int, 0x7af994u) = g_dispatchSave1530;
+        *(unsigned int *)MK4_VA(unsigned int, 0x7af998u) = g_dispatchSave1531;
+        *(unsigned int *)MK4_VA(unsigned int, 0x7af99cu) = g_dispatchSave1532;
         if (g_eventQueueNotMask == 0) {
             g_dualC = MK4_UNPTR(&g_dispatchSave1525);
             g_currentNodeIdx = MK4_UNPTR(&g_dispatchSave1549);

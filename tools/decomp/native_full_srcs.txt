@@ -373,3 +373,5 @@ src/engine/m_stack_push2_bias_resolve.c
 src/engine/hit_reaction_dispatcher.c
 src/engine/fight_cam_chain_leaves.c
 src/engine/slot_phase_dispatcher_big_switch.c
+src/engine/anim_event_update_cluster.c
+src/engine/stage_camera_init.c

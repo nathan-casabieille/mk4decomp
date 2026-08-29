@@ -7,6 +7,8 @@ extern int Phase3InstallSelf();
 extern int MStackPackedInit();
 extern int SaveCallRestore();
 extern int Mul10Tail();
+extern int BootInitChainHeavy();
+extern int Init6Globals();
 extern int Helper_TickFrameTail();
 extern int FrameFinalize();
 extern int SetJmp_ZeroAndDirty4();
@@ -50,11 +52,15 @@ extern int MStackBracket1_TreeWalkRecursive2();
 extern int DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
 extern int PushSetXfmMaskCallPop();
 extern int BootDispatchSlotInit();
+extern int MStackPushDispatchBitGate();
 extern int DispatcherComplex260_FramePauseScaledStore();
 extern int BootMod6487eClampAndChainMul10();
+extern int InstallSelfDispatch();
 extern int BootChainPushAddSignFlag();
 extern int SetJmp_CallPauseScaledStoreAdd();
 extern int CallPauseScaledStoreAdd();
+extern int ExtractBitsToVec3();
+extern int ThreeChan11BitPack();
 extern int MStackPushZeroCallPop_PendingMatch();
 extern int ScaledLoadCallSet1c();
 extern int PushPopScaled1cDoubleCall();
@@ -62,14 +68,24 @@ extern int PushSetCallCleanup();
 extern int MStackBracket4_ListInsertZeroFill();
 extern int ScaledTestPauseStore();
 extern int MStackPush3LinkedListWalk();
+extern int MStackInitCallToggle();
+extern int DirtyToggleInstall();
+extern int DirtyDoubleDeref();
 extern int SetJmp_BootStateTriple();
 extern int BootStateTriple();
+extern int ChainNodeAdvanceCallback();
+extern int MStackPush4LLWalkPop4();
 extern int ScaledStoreThree_00409260();
+extern int AndShlStore();
+extern int PushDualDerefClearPop();
 extern int MStackPush2DispatchChain();
 extern int VertexSlotInitFlagWalk();
 extern int MStackPush2ChainInsert();
 extern int MStackPush2ChainPrepend();
 extern int MStackBracket5_LinkedListUnlink();
+extern int StackPushAdd15CallPop();
+extern int PushCallScaledClearJmp();
+extern int SoundSetupLoop();
 extern int SetDirty4XorScaledLoad();
 extern int ScaledInit_Phase4SevenPackedDispatch_g_eventQueueTotal();
 extern int CallPauseDirty4ScaledSet_tag_0x81();
@@ -95,9 +111,15 @@ extern int ZeroTriple();
 extern int Push71_Push48caa0();
 extern int ScaledInitOrSelfPtr_InstallSelfStackReset();
 extern int InstallSelfStackReset();
+extern int RoundReset();
+extern int TwoStateCopyDup();
+extern int ClampTwoToMax_004226a0();
+extern int ClampTwoToMax_004226e0();
+extern int TriBranchFlagWrite();
 extern int Helper_PostPlayerTick();
 extern int CountdownClampWalk();
 extern int MatchInitMonsterChain();
+extern int RecordListIterMStack();
 extern int DownloadDualPush();
 extern int DownloadCharSetup();
 extern int DualPushCallStore();
@@ -105,8 +127,17 @@ extern int GuardedDualPushTailJmp();
 extern int PvpAngleDistSeed();
 extern int FightHandler_Player1_004233f0();
 extern int FightHandler_Player2_00423470();
+extern int CallPauseLoadAndDispatch();
+extern int FourGlobalsEqualFInitTail();
+extern int ZeroSlotsGatedDispatch();
 extern int Cmp2DirtyToggle();
 extern int TestCmpZeroFour();
+extern int TripleSubVec3();
+extern int TripleAddVec3();
+extern int Vec3AddViaHelper();
+extern int ThreeMul10Stores();
+extern int QuadInterpolatorV2();
+extern int ThreeClampLoop();
 extern int DualEntryInitCmp();
 extern int ChainSplit_SizeFits_00425ba0();
 extern int MStackBracket2InitChainSplitInsert();
@@ -151,12 +182,16 @@ extern int ScaledArrStore_SetJmp_ScaledArrStore();
 extern int SetJmp_ScaledArrStore();
 extern int ScaledArrStore_GuardedChainCmpDualBitXor_00429960();
 extern int ScaledArrStore_GuardedChainCmpDualBitXor_00429980();
+extern int TwinLoopSlotFinder();
+extern int DispatchPair();
+extern int ScenePostInitSequencer();
 extern int SetJmp_Distance3DMul10Chain_0042d070();
 extern int SetJmp_Distance3DMul10Chain_0042d080();
 extern int Distance3DMul10Chain();
 extern int GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fb80();
 extern int GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0();
 extern int DualMulScaleStore();
+extern int FiveFieldChainCopyTableWalk();
 extern int GuardedSeq_BitmapBlitRunLength_then_FiveTableInitChainBracketed();
 extern int Wrapper_PackedAdvanceCallTailJmp_004e44f0();
 extern int Thunk_ScaledLoadInstallOrCall();
@@ -279,6 +314,10 @@ extern int Thunk_Thunk();
 extern int Thunk_Thunk_0049cbc0_0045e0f0();
 extern int SetJmp_SixSubdispatchSpan_0045ebf0();
 extern int SetJmp_SixSubdispatchSpan_0045ec00();
+extern int HitReactionDispatcher();
+extern int FiveCallScaledChainTailJmp();
+extern int ZeroScaledZeroCallPauseJmp();
+extern int SlotPhaseDispatcherBigSwitch();
 extern int Thunk_GuardedDoubleCallSetJmp();
 extern int GuardedDoubleCallSetJmp();
 extern int GuardedSeq_MStackNegAwareMul10Pair_then_ChainTableWalkStore();
@@ -290,6 +329,10 @@ extern int NotShrCmp1Store();
 extern int GuardedScaledChainJmpIndirect();
 extern int CallPauseScaledStoreCopyJmp();
 extern int NineEntryFlagDispatch();
+extern int StageParticleEmitterInit();
+extern int FightCamMode1_00464560();
+extern int FightCamMode2_004645e0();
+extern int InstallSelf5CallVecChain();
 extern int Thunk_StackPopDispatchTagged_004647f0();
 extern int DualScaledLitInitJmp();
 extern int AppInit_Misc7();
@@ -301,6 +344,9 @@ extern int ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket
 extern int GuardedSeq_GuardedTripleCallSetTail_then_GuardedSeq();
 extern int GuardedTripleCallSetTail();
 extern int CallJmp();
+extern int FiveCallGuardSetTail();
+extern int ScaledChainNegStore();
+extern int DualFieldAddSubStore();
 extern int Wrapper_ArgSarStoreJmp_004eba28();
 extern int GuardedSeq_MStackCall_then_CallSetPause_00471670();
 extern int GuardedSeq_DualPushCmp12Dispatch68_then_ByteWordTableTaggedDispatch();
@@ -381,9 +427,16 @@ extern int Wrapper_ScaledChainPushCall_004ef8b0();
 extern int Wrapper_ScaledChainPushCall_004ef888();
 extern int Wrapper_ScaledChainPushCall_004ef838();
 extern int SetJmp_Phase3InstallTableCheck();
+extern int PushBitFieldMergePop();
+extern int SentinelInitTripleCall();
 extern int Helper_DownloadSetup();
 extern int DownloadPlayerChar();
 extern int Helper_DownloadDebugPrint();
+extern int DownloadPlayerChar_Variant();
+extern int GuardedChainCopySetFlag();
+extern int TripleStateSwapCall();
+extern int MStackPush2BiasResolveChain();
+extern int PushCallPopScaledJmpIndirect();
 extern int ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430();
 extern int ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450();
 extern int ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d470();
@@ -400,6 +453,7 @@ extern int Wrapper_IterLoad_0048fd30_004f12a0();
 extern int CopyJmp_ScaledSubStore_g_currentNodeIdx();
 extern int ScaledSubStore();
 extern int CopyJmp_SlotCmp3way_g_currentNodeIdx();
+extern int DirtyToggleByGate();
 extern int GuardedDirtyXformFromTable();
 extern int ScaledInit_GuardedDirtyXformFromTable_g_scaledInit();
 extern int ScaledChainCallPauseSetJmp();
@@ -417,13 +471,23 @@ extern int MStackPushSet0004();
 extern int MStackPushSet0001();
 extern int OrStoreDecStackPop();
 extern int ScaledXorStore_004903b0();
+extern int ScaledMove48to58();
 extern int ScaledZeroFour();
 extern int ZeroThreeSlots_00490780();
 extern int DualCallPauseDirtyJmp_00490c30();
 extern int GuardedSeq_DualCallPauseDirtyJmp_then_ScaledXorStore();
 extern int DualInstallCallSwap_CjChainResetThreshold_then_CjChainResetThreshold();
+extern int StateDispatchTable();
 extern int IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero();
 extern int DualScaledStoreZero();
+extern int ScaledZero44();
+extern int StateMachineInit();
+extern int MStackPushTableWalk();
+extern int PushSetCallTailJmp();
+extern int LoadCmpAddrJmp();
+extern int AnimEventUpdateCluster();
+extern int AnimEventNodeCallback_00494020();
+extern int ScaledAddDeref();
 extern int ScaledInit_GameModeHandlerCluster_g_scaledInit_00495590();
 extern int ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0();
 extern int GuardedSeq_MStackCall_then_CallSetPause_00497450();
@@ -464,12 +528,16 @@ extern int Screen_Loading_Tick_004a42e0();
 extern int InstallChainInitTailJmp();
 extern int FixedDiv16();
 extern int FpuSqrtMul();
+extern int LinkedListBuilder();
 extern int LinkedListInsert();
 extern int MStackPushChainStepIndex();
 extern int DualAddSar();
 extern int StorePauseImulShr16();
 extern int AudioVolumeRescale();
 extern int AudioMixerStep();
+extern int MStackPush8();
+extern int MStackPop8();
+extern int SplitHi8Lo24();
 extern int ZeroThreeSlots_004ac010();
 extern int CopyGlobal();
 extern int Helper_AuxAudio_PostInit();
@@ -688,6 +756,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4049c0u, (void*)MStackPackedInit},
     {0x4049d0u, (void*)SaveCallRestore},
     {0x404af0u, (void*)Mul10Tail},
+    {0x404f20u, (void*)BootInitChainHeavy},
+    {0x4051b0u, (void*)Init6Globals},
     {0x4051e0u, (void*)Helper_TickFrameTail},
     {0x405400u, (void*)FrameFinalize},
     {0x405420u, (void*)SetJmp_ZeroAndDirty4},
@@ -731,11 +801,15 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x407030u, (void*)DispatcherComplex260_MStackBracket1_TreeWalkRecursive2},
     {0x407140u, (void*)PushSetXfmMaskCallPop},
     {0x4071a0u, (void*)BootDispatchSlotInit},
+    {0x407330u, (void*)MStackPushDispatchBitGate},
     {0x407400u, (void*)DispatcherComplex260_FramePauseScaledStore},
     {0x407510u, (void*)BootMod6487eClampAndChainMul10},
+    {0x407620u, (void*)InstallSelfDispatch},
     {0x4077b0u, (void*)BootChainPushAddSignFlag},
     {0x4078e0u, (void*)SetJmp_CallPauseScaledStoreAdd},
     {0x4078f0u, (void*)CallPauseScaledStoreAdd},
+    {0x407c00u, (void*)ExtractBitsToVec3},
+    {0x407c60u, (void*)ThreeChan11BitPack},
     {0x407d00u, (void*)MStackPushZeroCallPop_PendingMatch},
     {0x4084b0u, (void*)ScaledLoadCallSet1c},
     {0x408510u, (void*)PushPopScaled1cDoubleCall},
@@ -743,14 +817,24 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x408600u, (void*)MStackBracket4_ListInsertZeroFill},
     {0x408860u, (void*)ScaledTestPauseStore},
     {0x4088b0u, (void*)MStackPush3LinkedListWalk},
+    {0x408ad0u, (void*)MStackInitCallToggle},
+    {0x408b90u, (void*)DirtyToggleInstall},
+    {0x408cb0u, (void*)DirtyDoubleDeref},
     {0x408d20u, (void*)SetJmp_BootStateTriple},
     {0x408d30u, (void*)BootStateTriple},
+    {0x408e70u, (void*)ChainNodeAdvanceCallback},
+    {0x4090e0u, (void*)MStackPush4LLWalkPop4},
     {0x409260u, (void*)ScaledStoreThree_00409260},
+    {0x409280u, (void*)AndShlStore},
+    {0x4092a0u, (void*)PushDualDerefClearPop},
     {0x4096b0u, (void*)MStackPush2DispatchChain},
     {0x409740u, (void*)VertexSlotInitFlagWalk},
     {0x409870u, (void*)MStackPush2ChainInsert},
     {0x409970u, (void*)MStackPush2ChainPrepend},
     {0x409aa0u, (void*)MStackBracket5_LinkedListUnlink},
+    {0x40a7e0u, (void*)StackPushAdd15CallPop},
+    {0x40bf20u, (void*)PushCallScaledClearJmp},
+    {0x413ea0u, (void*)SoundSetupLoop},
     {0x4147b0u, (void*)SetDirty4XorScaledLoad},
     {0x417e20u, (void*)ScaledInit_Phase4SevenPackedDispatch_g_eventQueueTotal},
     {0x4196c0u, (void*)CallPauseDirty4ScaledSet_tag_0x81},
@@ -776,9 +860,15 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x421c40u, (void*)Push71_Push48caa0},
     {0x421f00u, (void*)ScaledInitOrSelfPtr_InstallSelfStackReset},
     {0x421f40u, (void*)InstallSelfStackReset},
+    {0x4223e0u, (void*)RoundReset},
+    {0x4225f0u, (void*)TwoStateCopyDup},
+    {0x4226a0u, (void*)ClampTwoToMax_004226a0},
+    {0x4226e0u, (void*)ClampTwoToMax_004226e0},
+    {0x422720u, (void*)TriBranchFlagWrite},
     {0x4227b0u, (void*)Helper_PostPlayerTick},
     {0x422810u, (void*)CountdownClampWalk},
     {0x4228b0u, (void*)MatchInitMonsterChain},
+    {0x422ce0u, (void*)RecordListIterMStack},
     {0x422e20u, (void*)DownloadDualPush},
     {0x422ef0u, (void*)DownloadCharSetup},
     {0x4231b0u, (void*)DualPushCallStore},
@@ -786,8 +876,17 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4232e0u, (void*)PvpAngleDistSeed},
     {0x4233f0u, (void*)FightHandler_Player1_004233f0},
     {0x423470u, (void*)FightHandler_Player2_00423470},
+    {0x4235f0u, (void*)CallPauseLoadAndDispatch},
+    {0x4236a0u, (void*)FourGlobalsEqualFInitTail},
+    {0x423720u, (void*)ZeroSlotsGatedDispatch},
     {0x423870u, (void*)Cmp2DirtyToggle},
     {0x4238b0u, (void*)TestCmpZeroFour},
+    {0x4250f0u, (void*)TripleSubVec3},
+    {0x425130u, (void*)TripleAddVec3},
+    {0x425170u, (void*)Vec3AddViaHelper},
+    {0x4252c0u, (void*)ThreeMul10Stores},
+    {0x4255b0u, (void*)QuadInterpolatorV2},
+    {0x425a80u, (void*)ThreeClampLoop},
     {0x425b20u, (void*)DualEntryInitCmp},
     {0x425ba0u, (void*)ChainSplit_SizeFits_00425ba0},
     {0x425be0u, (void*)MStackBracket2InitChainSplitInsert},
@@ -832,12 +931,16 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x429950u, (void*)SetJmp_ScaledArrStore},
     {0x429960u, (void*)ScaledArrStore_GuardedChainCmpDualBitXor_00429960},
     {0x429980u, (void*)ScaledArrStore_GuardedChainCmpDualBitXor_00429980},
+    {0x429a40u, (void*)TwinLoopSlotFinder},
+    {0x429ac0u, (void*)DispatchPair},
+    {0x429b70u, (void*)ScenePostInitSequencer},
     {0x42d070u, (void*)SetJmp_Distance3DMul10Chain_0042d070},
     {0x42d080u, (void*)SetJmp_Distance3DMul10Chain_0042d080},
     {0x42d090u, (void*)Distance3DMul10Chain},
     {0x42fb80u, (void*)GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fb80},
     {0x42fba0u, (void*)GuardedSeq_DualMulScaleStore_then_PhaseInstall2DInterpDispatch_0042fba0},
     {0x42ffa0u, (void*)DualMulScaleStore},
+    {0x431260u, (void*)FiveFieldChainCopyTableWalk},
     {0x4335d0u, (void*)GuardedSeq_BitmapBlitRunLength_then_FiveTableInitChainBracketed},
     {0x433940u, (void*)Wrapper_PackedAdvanceCallTailJmp_004e44f0},
     {0x433950u, (void*)Thunk_ScaledLoadInstallOrCall},
@@ -960,6 +1063,10 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x45e0f0u, (void*)Thunk_Thunk_0049cbc0_0045e0f0},
     {0x45ebf0u, (void*)SetJmp_SixSubdispatchSpan_0045ebf0},
     {0x45ec00u, (void*)SetJmp_SixSubdispatchSpan_0045ec00},
+    {0x45f650u, (void*)HitReactionDispatcher},
+    {0x45f8d0u, (void*)FiveCallScaledChainTailJmp},
+    {0x45fa90u, (void*)ZeroScaledZeroCallPauseJmp},
+    {0x45fac0u, (void*)SlotPhaseDispatcherBigSwitch},
     {0x460250u, (void*)Thunk_GuardedDoubleCallSetJmp},
     {0x460260u, (void*)GuardedDoubleCallSetJmp},
     {0x4605b0u, (void*)GuardedSeq_MStackNegAwareMul10Pair_then_ChainTableWalkStore},
@@ -971,6 +1078,10 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x460e40u, (void*)GuardedScaledChainJmpIndirect},
     {0x461220u, (void*)CallPauseScaledStoreCopyJmp},
     {0x461260u, (void*)NineEntryFlagDispatch},
+    {0x464350u, (void*)StageParticleEmitterInit},
+    {0x464560u, (void*)FightCamMode1_00464560},
+    {0x4645e0u, (void*)FightCamMode2_004645e0},
+    {0x464660u, (void*)InstallSelf5CallVecChain},
     {0x4647f0u, (void*)Thunk_StackPopDispatchTagged_004647f0},
     {0x464800u, (void*)DualScaledLitInitJmp},
     {0x464830u, (void*)AppInit_Misc7},
@@ -982,6 +1093,9 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x467c80u, (void*)GuardedSeq_GuardedTripleCallSetTail_then_GuardedSeq},
     {0x467ca0u, (void*)GuardedTripleCallSetTail},
     {0x467d30u, (void*)CallJmp},
+    {0x46f6b0u, (void*)FiveCallGuardSetTail},
+    {0x470310u, (void*)ScaledChainNegStore},
+    {0x470340u, (void*)DualFieldAddSubStore},
     {0x471340u, (void*)Wrapper_ArgSarStoreJmp_004eba28},
     {0x471670u, (void*)GuardedSeq_MStackCall_then_CallSetPause_00471670},
     {0x472820u, (void*)GuardedSeq_DualPushCmp12Dispatch68_then_ByteWordTableTaggedDispatch},
@@ -1062,9 +1176,16 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x48a3b0u, (void*)Wrapper_ScaledChainPushCall_004ef888},
     {0x48a3c0u, (void*)Wrapper_ScaledChainPushCall_004ef838},
     {0x48acc0u, (void*)SetJmp_Phase3InstallTableCheck},
+    {0x48bae0u, (void*)PushBitFieldMergePop},
+    {0x48bbf0u, (void*)SentinelInitTripleCall},
     {0x48bc40u, (void*)Helper_DownloadSetup},
     {0x48bcf0u, (void*)DownloadPlayerChar},
     {0x48bfe0u, (void*)Helper_DownloadDebugPrint},
+    {0x48bff0u, (void*)DownloadPlayerChar_Variant},
+    {0x48c480u, (void*)GuardedChainCopySetFlag},
+    {0x48cc40u, (void*)TripleStateSwapCall},
+    {0x48cca0u, (void*)MStackPush2BiasResolveChain},
+    {0x48ce00u, (void*)PushCallPopScaledJmpIndirect},
     {0x48d430u, (void*)ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d430},
     {0x48d450u, (void*)ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d450},
     {0x48d470u, (void*)ScaledInit_MStackChainInstallDispatch_g_scaledInit_0048d470},
@@ -1081,6 +1202,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x48ee80u, (void*)CopyJmp_ScaledSubStore_g_currentNodeIdx},
     {0x48ee90u, (void*)ScaledSubStore},
     {0x48ef90u, (void*)CopyJmp_SlotCmp3way_g_currentNodeIdx},
+    {0x48f350u, (void*)DirtyToggleByGate},
     {0x48f6d0u, (void*)GuardedDirtyXformFromTable},
     {0x48f720u, (void*)ScaledInit_GuardedDirtyXformFromTable_g_scaledInit},
     {0x48f8e0u, (void*)ScaledChainCallPauseSetJmp},
@@ -1098,13 +1220,23 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x490260u, (void*)MStackPushSet0001},
     {0x490290u, (void*)OrStoreDecStackPop},
     {0x4903b0u, (void*)ScaledXorStore_004903b0},
+    {0x490720u, (void*)ScaledMove48to58},
     {0x490740u, (void*)ScaledZeroFour},
     {0x490780u, (void*)ZeroThreeSlots_00490780},
     {0x490c30u, (void*)DualCallPauseDirtyJmp_00490c30},
     {0x490c60u, (void*)GuardedSeq_DualCallPauseDirtyJmp_then_ScaledXorStore},
     {0x490c80u, (void*)DualInstallCallSwap_CjChainResetThreshold_then_CjChainResetThreshold},
+    {0x490fc0u, (void*)StateDispatchTable},
     {0x491050u, (void*)IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero},
     {0x491080u, (void*)DualScaledStoreZero},
+    {0x491500u, (void*)ScaledZero44},
+    {0x493000u, (void*)StateMachineInit},
+    {0x493a20u, (void*)MStackPushTableWalk},
+    {0x493e40u, (void*)PushSetCallTailJmp},
+    {0x493ed0u, (void*)LoadCmpAddrJmp},
+    {0x493ef0u, (void*)AnimEventUpdateCluster},
+    {0x494020u, (void*)AnimEventNodeCallback_00494020},
+    {0x494800u, (void*)ScaledAddDeref},
     {0x495590u, (void*)ScaledInit_GameModeHandlerCluster_g_scaledInit_00495590},
     {0x4955b0u, (void*)ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0},
     {0x497450u, (void*)GuardedSeq_MStackCall_then_CallSetPause_00497450},
@@ -1145,12 +1277,16 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4a7030u, (void*)InstallChainInitTailJmp},
     {0x4ab2a0u, (void*)FixedDiv16},
     {0x4ab350u, (void*)FpuSqrtMul},
+    {0x4ab380u, (void*)LinkedListBuilder},
     {0x4ab440u, (void*)LinkedListInsert},
     {0x4ab510u, (void*)MStackPushChainStepIndex},
     {0x4ab600u, (void*)DualAddSar},
     {0x4ab630u, (void*)StorePauseImulShr16},
     {0x4ab690u, (void*)AudioVolumeRescale},
     {0x4ab700u, (void*)AudioMixerStep},
+    {0x4ab790u, (void*)MStackPush8},
+    {0x4ab860u, (void*)MStackPop8},
+    {0x4abfc0u, (void*)SplitHi8Lo24},
     {0x4ac010u, (void*)ZeroThreeSlots_004ac010},
     {0x4ac1f0u, (void*)CopyGlobal},
     {0x4ac320u, (void*)Helper_AuxAudio_PostInit},

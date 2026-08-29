@@ -250,6 +250,17 @@ void MK4_GameFrame(void)
                     *MK4_VA(unsigned int, 0x0053a1e0u),
                     *MK4_VA(unsigned int, 0x00541e50u));
         if (getenv("MK4_TRACE_CAM") && (frame % 25) == 0)
+            SDL_Log("      camrec=%x pos=[%d %d %d] eye=[%d %d %d]",
+                    *MK4_VA(unsigned int, 0x52ab10u),
+                    *MK4_VA(unsigned int, 0x52ab10u) ?
+                      *(int *)MK4_PTR(*MK4_VA(unsigned int, 0x52ab10u) * 4 + 0x54) : -1,
+                    *MK4_VA(unsigned int, 0x52ab10u) ?
+                      *(int *)MK4_PTR(*MK4_VA(unsigned int, 0x52ab10u) * 4 + 0x58) : -1,
+                    *MK4_VA(unsigned int, 0x52ab10u) ?
+                      *(int *)MK4_PTR(*MK4_VA(unsigned int, 0x52ab10u) * 4 + 0x5c) : -1,
+                    *MK4_VA(int, 0xab4d18u), *MK4_VA(int, 0xab4d1cu),
+                    *MK4_VA(int, 0xab4d20u));
+        if (getenv("MK4_TRACE_CAM") && (frame % 25) == 0)
             SDL_Log("      trans=[%d %d %d] camNodePos=[%d %d]",
                     *MK4_VA(int, 0x7af9a4u), *MK4_VA(int, 0x7af9a8u),
                     *MK4_VA(int, 0x7af9acu),
@@ -393,4 +404,5 @@ void MK4_NativeDumpArenaNow(const char *path)
     if (f) { fwrite(g_mk4Arena, 1, g_mk4ArenaSize, f); fclose(f);
              SDL_Log("arena dumped (on demand) -> %s", path); }
 }
+
 

@@ -37,3 +37,6 @@ entries:
   0x4228b0: MatchInitMonsterChain
   0x4233f0: FightHandler_Player1_004233f0
   0x423470: FightHandler_Player2_00423470
+  0x494020: AnimEventNodeCallback_00494020
+  0x464560: FightCamMode1_00464560
+  0x4645e0: FightCamMode2_004645e0
