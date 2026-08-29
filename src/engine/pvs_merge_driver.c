@@ -176,6 +176,9 @@ extern unsigned int g_phaseChainTbl;
 #define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
 #define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
 #define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_fightGroupHead (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
 #endif
 
 
