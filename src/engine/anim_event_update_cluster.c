@@ -214,6 +214,14 @@ void ChainNodeAdvanceCallback(void)
     g_walkSlot6c = (unsigned int)((int)word >> 24);
     word &= 0xffffffu;
     g_slot70 = word;
+#ifdef TARGET_SDL
+    /* guard: a mis-installed track (see the fight-scene status memory)
+     * feeds sample data here; a code VA outside the image would reach
+     * the trampoline as a per-frame miss. Skip it - the miss log is the
+     * work-list, not a crash. */
+    if (word < 0x401000u || word > 0x4d0000u)
+        return;
+#endif
     ((void (*)(void))MK4_ResolveCode(word))();
 }
 
