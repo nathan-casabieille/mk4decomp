@@ -130,7 +130,6 @@ __attribute__((weak)) int CallPauseDirty1JmpDirty4StackPush_GuardedSeq_GuardedCh
 __attribute__((weak)) int CameraAimSplineDriver(){MK4_StubHit("CameraAimSplineDriver");return 0;}
 __attribute__((weak)) int Cascade5StageInit(){MK4_StubHit("Cascade5StageInit");return 0;}
 __attribute__((weak)) int ChainNodeInit(){MK4_StubHit("ChainNodeInit");return 0;}
-__attribute__((weak)) int ChainSetupBitToggle(){MK4_StubHit("ChainSetupBitToggle");return 0;}
 __attribute__((weak)) int ChainSlotSetupInstallSelf(){MK4_StubHit("ChainSlotSetupInstallSelf");return 0;}
 __attribute__((weak)) int ChainTableWalkStore(){MK4_StubHit("ChainTableWalkStore");return 0;}
 __attribute__((weak)) int CharSelectFsmCluster(){MK4_StubHit("CharSelectFsmCluster");return 0;}
@@ -161,7 +160,6 @@ __attribute__((weak)) int GameModeHandlerCluster(){MK4_StubHit("GameModeHandlerC
 __attribute__((weak)) int GameStateMachine(){MK4_StubHit("GameStateMachine");return 0;}
 __attribute__((weak)) int GuardedChainCmpDualBitXor(){MK4_StubHit("GuardedChainCmpDualBitXor");return 0;}
 __attribute__((weak)) int GuardedChainPushSetCallPop(){MK4_StubHit("GuardedChainPushSetCallPop");return 0;}
-__attribute__((weak)) int GuardedDualAndFlagToggle(){MK4_StubHit("GuardedDualAndFlagToggle");return 0;}
 __attribute__((weak)) int GuardedLoopWithCallback_Callback_004284c0(){MK4_StubHit("GuardedLoopWithCallback_Callback_004284c0");return 0;}
 __attribute__((weak)) int HalveChainTriplePop2(){MK4_StubHit("HalveChainTriplePop2");return 0;}
 __attribute__((weak)) int HeapRegionLookup(){MK4_StubHit("HeapRegionLookup");return 0;}
@@ -325,7 +323,6 @@ __attribute__((weak)) int IterFnPtrs(){MK4_StubHit("IterFnPtrs");return 0;}
 __attribute__((weak)) int PushPopScaledInit343c(){MK4_StubHit("PushPopScaledInit343c");return 0;}
 __attribute__((weak)) int RecordIter170(){MK4_StubHit("RecordIter170");return 0;}
 __attribute__((weak)) int TableLookupCall_g_eventTbl_65(){MK4_StubHit("TableLookupCall_g_eventTbl_65");return 0;}
-__attribute__((weak)) int TestZeroJmp(){MK4_StubHit("TestZeroJmp");return 0;}
 __attribute__((weak)) unsigned int g_dispatchSave547;
 __attribute__((weak)) unsigned int g_dispatchSave548;
 __attribute__((weak)) unsigned int g_dispatchSave549;
@@ -333,10 +330,7 @@ __attribute__((weak)) unsigned int g_dispatchSave550;
 __attribute__((weak)) unsigned int g_fnptr_0051ffd8;
 __attribute__((weak)) unsigned int g_texAssetIds_ee;
 __attribute__((weak)) int PushSetCallPop(){MK4_StubHit("PushSetCallPop");return 0;}
-__attribute__((weak)) int Init6Struct(){MK4_StubHit("Init6Struct");return 0;}
 __attribute__((weak)) int Screen_ArcadeEnding(){MK4_StubHit("Screen_ArcadeEnding");return 0;}
-__attribute__((weak)) int StateInitShuffle(){MK4_StubHit("StateInitShuffle");return 0;}
-__attribute__((weak)) int ZeroState(){MK4_StubHit("ZeroState");return 0;}
 __attribute__((weak)) int TablePushAccumTailJmp(){MK4_StubHit("TablePushAccumTailJmp");return 0;}
 __attribute__((weak)) int Input_PollPlayerJoystick(){MK4_StubHit("Input_PollPlayerJoystick");return 0;}
 __attribute__((weak)) int BootGatedInitInstallPair(){MK4_StubHit("BootGatedInitInstallPair");return 0;}
@@ -370,7 +364,6 @@ __attribute__((weak)) int CallPauseMStackPushSet0Jmp(){MK4_StubHit("CallPauseMSt
 __attribute__((weak)) int CallPauseTriCmpJmp(){MK4_StubHit("CallPauseTriCmpJmp");return 0;}
 __attribute__((weak)) int CjInstallSelfRouter(){MK4_StubHit("CjInstallSelfRouter");return 0;}
 __attribute__((weak)) int CjMaskedFlagProbe(){MK4_StubHit("CjMaskedFlagProbe");return 0;}
-__attribute__((weak)) int DirtyFlagsManipB(){MK4_StubHit("DirtyFlagsManipB");return 0;}
 __attribute__((weak)) int DualGatedStateYield(){MK4_StubHit("DualGatedStateYield");return 0;}
 __attribute__((weak)) int GuardedDispatch_CallPauseMStackPushSet3Jmp(){MK4_StubHit("GuardedDispatch_CallPauseMStackPushSet3Jmp");return 0;}
 __attribute__((weak)) int GuardedDispatch_CallPauseMStackPushSet4Jmp(){MK4_StubHit("GuardedDispatch_CallPauseMStackPushSet4Jmp");return 0;}
@@ -385,7 +378,6 @@ __attribute__((weak)) int GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0046a560()
 __attribute__((weak)) int Install3StateRouterTail(){MK4_StubHit("Install3StateRouterTail");return 0;}
 __attribute__((weak)) int Phase4ThreePackedInstallSelf(){MK4_StubHit("Phase4ThreePackedInstallSelf");return 0;}
 __attribute__((weak)) int SetupVecFsmCluster(){MK4_StubHit("SetupVecFsmCluster");return 0;}
-__attribute__((weak)) int ScaledOrStore_004903d0(){MK4_StubHit("ScaledOrStore_004903d0");return 0;}
 __attribute__((weak)) int PollThenInit(){MK4_StubHit("PollThenInit");return 0;}
 __attribute__((weak)) int MultiGateDispatchCallJmp(){MK4_StubHit("MultiGateDispatchCallJmp");return 0;}
 __attribute__((weak)) int EnduranceStateInitWalk(){MK4_StubHit("EnduranceStateInitWalk");return 0;}

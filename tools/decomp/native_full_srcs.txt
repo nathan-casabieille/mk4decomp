@@ -389,3 +389,4 @@ src/engine/round_setup_states.c
 src/engine/scaled_lit_add_jmp.c
 src/boot/chain_dirty_bit_walker.c
 src/engine/spawn_list_batch_band.c
+src/engine/fight_facing_band.c

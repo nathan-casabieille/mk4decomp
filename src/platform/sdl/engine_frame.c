@@ -376,6 +376,57 @@ void MK4_GameFrame(void)
          * Phase3InstallSelf, which the demo/title state machines drive;
          * scheduling the handler directly is the same shape as the
          * loading screen above and skips those two for now. */
+        /* MK4_ARENA_STAGE=<n>: load arena n through the engine's own geo
+         * loader. The arena catalogue is 15 twelve-byte records at
+         * 0x503260 (lair, elder, forest, cliff, well, tomb, cage_end,
+         * wind, snake, shaolin, prison, ice_pit, ped, skull, opt), and a
+         * slot whose word0 points at it selects one of them by the
+         * variant index - the same mechanism a character uses to pick a
+         * costume. The pre-initialised slots live at 0x503318 + N*0x1c.
+         *
+         * Nothing in the reachable native build ever asks for a stage:
+         * LoadGeoAssetsStateMachine's case 1 loads the two FIGHTERS
+         * (g_dlNalt1/g_dlNalt2 are character indices, which is why sc_geo
+         * and ra_geo arrive and no arena does). This hook supplies the
+         * request the missing screen would have made. */
+        if (getenv("MK4_ARENA_STAGE")) {
+            const char *at = getenv("MK4_ARENA_STAGE_FRAME");
+            int when = at ? atoi(at) : 150;
+            if (frame == when) {
+                extern void LoadGeoAsset_Textures(int index);
+                extern void TableWalkBoundedCmp(int arg);
+                int stage = atoi(getenv("MK4_ARENA_STAGE"));
+                /* 0x503260 holds POINTERS to name records, one per arena,
+                 * twelve bytes apart. LoadGeoAsset_Textures wants the name
+                 * record itself in slot word0 - it derefs exactly once to
+                 * reach the string - so the arena table needs one more
+                 * deref than a character's slot table does. */
+                unsigned int nameRec =
+                    *MK4_VA(unsigned int, 0x503260u + (unsigned)stage * 12u);
+                unsigned int slotVA = 0x503318u;
+                *MK4_VA(unsigned int, slotVA)      = nameRec;
+                *MK4_VA(unsigned int, slotVA + 4u) = 0;   /* not loaded yet */
+                *MK4_VA(unsigned int, 0x542044u)   = slotVA >> 2;
+                SDL_Log("arena-stage: stage %d -> name record 0x%08x",
+                        stage, nameRec);
+                LoadGeoAsset_Textures(0);
+                TableWalkBoundedCmp(7);
+                SDL_Log("arena-stage: loader returned, block=%08x",
+                        *MK4_VA(unsigned int, slotVA + 4u));
+            }
+        }
+        /* MK4_TRACE_STAGE: the stage descriptors the arena code reads.
+         * SpawnLeftRightProps bounds its table index at 0x11, i.e. 18
+         * stages, so these two are stage ids and not flags. */
+        if (getenv("MK4_TRACE_STAGE") && (frame % 40) == 0) {
+            SDL_Log("STAGE f=%d dlNalt1=%u dlNalt2=%u sel543800=%08x "
+                    "phase537f94=%u",
+                    frame,
+                    *MK4_VA(unsigned int, 0x537f48u),
+                    *MK4_VA(unsigned int, 0x5380e0u),
+                    *MK4_VA(unsigned int, 0x543800u),
+                    *MK4_VA(unsigned int, 0x537f94u));
+        }
         if (getenv("MK4_BOOT_MATCH")) {
             const char *at = getenv("MK4_BOOT_FIGHT");
             if (at && frame == atoi(at)) {
