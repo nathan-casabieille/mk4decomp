@@ -73,3 +73,7 @@ entries:
   0x408de0: GroupAnimListPump_00408de0
   0x46b3b0: StateRemapFsm_0046b3b0
   0x46b490: StateRemapTail_0046b490
+  0x4898b0: Applier0_004898b0
+  0x4899f0: Applier1_004899f0
+  0x489a30: PositionClampCluster
+  0x489ba0: Applier3_00489ba0

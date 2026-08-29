@@ -381,3 +381,4 @@ src/engine/move_commit_band.c
 src/engine/walk_toward_band.c
 src/boot/anim_load_pack_file.c
 src/engine/camera_follow_interp.c
+src/engine/position_appliers.c

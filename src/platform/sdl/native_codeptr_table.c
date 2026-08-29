@@ -2,7 +2,10 @@
 #ifdef MK4_NATIVE_FULL
 #include <SDL2/SDL.h>
 
+extern int Anim_LoadPackFile();
+extern int ListInitLoop();
 extern int OnceCall();
+extern int Init0AndMax();
 extern int Phase3InstallSelf();
 extern int MStackPackedInit();
 extern int SaveCallRestore();
@@ -169,6 +172,7 @@ extern int ScaledArrStore_CallDualStoreXorBit();
 extern int CallDualStoreXorBit();
 extern int ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush();
 extern int SetJmp_EsiInstallDecCallChain();
+extern int ScaledClearJmp_EsiInstallBitCallChain();
 extern int ScaledArrStore_EsiInstallBitCallChain_00428e70();
 extern int SetJmp_EsiInstallBitCallChain();
 extern int ScaledArrStore_EsiInstallBitCallChain_004293b0();
@@ -222,6 +226,7 @@ extern int FiveFieldChainCopyTableWalk();
 extern int LoadStoreScaled58();
 extern int DualChainSubCallSubLoad();
 extern int DiffMul10Loop();
+extern int PendingMatch_ThreeMul10Stores();
 extern int PendingMatch_ZeroThreeFields6c_then_ZeroThreeSlots();
 extern int GuardedSeq_BitmapBlitRunLength_then_FiveTableInitChainBracketed();
 extern int Wrapper_PackedAdvanceCallTailJmp_004e44f0();
@@ -447,6 +452,10 @@ extern int SetJmp_ScaledLitLoadCall();
 extern int ScaledInitOrSelfPtr_func_0041f780_z();
 extern int Helper_PerPlayerTick();
 extern int GeoTransformDispatchAndApply();
+extern int Applier0_004898b0();
+extern int Applier1_004899f0();
+extern int PositionClampCluster();
+extern int Applier3_00489ba0();
 extern int DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThresholdRevertAdvance();
 extern int ScaledStateNegCallPauseLoad();
 extern int ScaledChainPushCall();
@@ -540,6 +549,7 @@ extern int MStackPushSet0040();
 extern int MStackPushSet0004();
 extern int MStackPushSet0001();
 extern int OrStoreDecStackPop();
+extern int ScaledAndAlfe();
 extern int ScaledXorStore_004903b0();
 extern int ScaledMove48to58();
 extern int ScaledZeroFour();
@@ -557,6 +567,7 @@ extern int PushSetCallTailJmp();
 extern int LoadCmpAddrJmp();
 extern int AnimEventUpdateCluster();
 extern int AnimEventNodeCallback_00494020();
+extern int ArgScaledTestStore();
 extern int ScaledAddDeref();
 extern int ScaledInit_GameModeHandlerCluster_g_scaledInit_00495590();
 extern int ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0();
@@ -599,6 +610,7 @@ extern int Screen_Loading();
 extern int Screen_Loading_Tick_004a42e0();
 extern int InstallChainInitTailJmp();
 extern int FixedDiv16();
+extern int DivLongPushCall();
 extern int FpuSqrtMul();
 extern int LinkedListBuilder();
 extern int LinkedListInsert();
@@ -612,6 +624,7 @@ extern int StoreDoubleNegPauseSubStore();
 extern int MStackPush8();
 extern int MStackPop8();
 extern int SplitHi8Lo24();
+extern int ZeroThreeFields6c();
 extern int ZeroThreeSlots_004ac010();
 extern int CopyGlobal();
 extern int Helper_AuxAudio_PostInit();
@@ -826,7 +839,10 @@ extern int _init_premain();
 extern int TableLookupIatCall();
 
 static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
+    {0x401120u, (void*)Anim_LoadPackFile},
+    {0x401310u, (void*)ListInitLoop},
     {0x401340u, (void*)OnceCall},
+    {0x401370u, (void*)Init0AndMax},
     {0x403170u, (void*)Phase3InstallSelf},
     {0x4049c0u, (void*)MStackPackedInit},
     {0x4049d0u, (void*)SaveCallRestore},
@@ -993,6 +1009,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4285e0u, (void*)CallDualStoreXorBit},
     {0x428950u, (void*)ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush},
     {0x428cf0u, (void*)SetJmp_EsiInstallDecCallChain},
+    {0x428d60u, (void*)ScaledClearJmp_EsiInstallBitCallChain},
     {0x428e70u, (void*)ScaledArrStore_EsiInstallBitCallChain_00428e70},
     {0x429230u, (void*)SetJmp_EsiInstallBitCallChain},
     {0x4293b0u, (void*)ScaledArrStore_EsiInstallBitCallChain_004293b0},
@@ -1046,6 +1063,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4314d0u, (void*)LoadStoreScaled58},
     {0x431c80u, (void*)DualChainSubCallSubLoad},
     {0x432000u, (void*)DiffMul10Loop},
+    {0x432110u, (void*)PendingMatch_ThreeMul10Stores},
     {0x4326a0u, (void*)PendingMatch_ZeroThreeFields6c_then_ZeroThreeSlots},
     {0x4335d0u, (void*)GuardedSeq_BitmapBlitRunLength_then_FiveTableInitChainBracketed},
     {0x433940u, (void*)Wrapper_PackedAdvanceCallTailJmp_004e44f0},
@@ -1271,6 +1289,10 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x489130u, (void*)ScaledInitOrSelfPtr_func_0041f780_z},
     {0x489240u, (void*)Helper_PerPlayerTick},
     {0x489840u, (void*)GeoTransformDispatchAndApply},
+    {0x4898b0u, (void*)Applier0_004898b0},
+    {0x4899f0u, (void*)Applier1_004899f0},
+    {0x489a30u, (void*)PositionClampCluster},
+    {0x489ba0u, (void*)Applier3_00489ba0},
     {0x489cd0u, (void*)DualInstallCallSwap_SqDistThresholdRevertAdvance_then_SqDistThresholdRevertAdvance},
     {0x489e90u, (void*)ScaledStateNegCallPauseLoad},
     {0x489ee0u, (void*)ScaledChainPushCall},
@@ -1364,6 +1386,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x490230u, (void*)MStackPushSet0004},
     {0x490260u, (void*)MStackPushSet0001},
     {0x490290u, (void*)OrStoreDecStackPop},
+    {0x490390u, (void*)ScaledAndAlfe},
     {0x4903b0u, (void*)ScaledXorStore_004903b0},
     {0x490720u, (void*)ScaledMove48to58},
     {0x490740u, (void*)ScaledZeroFour},
@@ -1381,6 +1404,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x493ed0u, (void*)LoadCmpAddrJmp},
     {0x493ef0u, (void*)AnimEventUpdateCluster},
     {0x494020u, (void*)AnimEventNodeCallback_00494020},
+    {0x494140u, (void*)ArgScaledTestStore},
     {0x494800u, (void*)ScaledAddDeref},
     {0x495590u, (void*)ScaledInit_GameModeHandlerCluster_g_scaledInit_00495590},
     {0x4955b0u, (void*)ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0},
@@ -1423,6 +1447,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4a42e0u, (void*)Screen_Loading_Tick_004a42e0},
     {0x4a7030u, (void*)InstallChainInitTailJmp},
     {0x4ab2a0u, (void*)FixedDiv16},
+    {0x4ab320u, (void*)DivLongPushCall},
     {0x4ab350u, (void*)FpuSqrtMul},
     {0x4ab380u, (void*)LinkedListBuilder},
     {0x4ab440u, (void*)LinkedListInsert},
@@ -1436,6 +1461,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4ab790u, (void*)MStackPush8},
     {0x4ab860u, (void*)MStackPop8},
     {0x4abfc0u, (void*)SplitHi8Lo24},
+    {0x4abfe0u, (void*)ZeroThreeFields6c},
     {0x4ac010u, (void*)ZeroThreeSlots_004ac010},
     {0x4ac1f0u, (void*)CopyGlobal},
     {0x4ac320u, (void*)Helper_AuxAudio_PostInit},
@@ -1661,7 +1687,9 @@ void *MK4_ResolveCode(unsigned va) {
         int mid = (lo + hi) >> 1;
         unsigned m = g_codePtrTable[mid].va;
         if (m == va) {
-            if (trace) SDL_Log("dispatch 0x%08x", va);
+            { extern int g_mk4CodePtrSelfTesting;
+              if (trace && !g_mk4CodePtrSelfTesting)
+                  SDL_Log("dispatch 0x%08x", va); }
             return g_codePtrTable[mid].fn;
         }
         if (m < va) lo = mid + 1; else hi = mid - 1;
@@ -1677,10 +1705,19 @@ void *MK4_ResolveCode(unsigned va) {
     return (void*)MK4_CodeMissing;
 }
 
+/* The self-test resolves EVERY table entry, so with MK4_TRACE_CODE on it
+ * emits one "dispatch" line per entry before the game starts. Those look
+ * exactly like real invocations and made a whole session's worth of
+ * counts read wrong: in a trace, count == 1 usually means SELF-TEST
+ * ONLY, i.e. never actually invoked. Suppress them at the source. */
+int g_mk4CodePtrSelfTesting;
+
 void MK4_CodePtrSelfTest(void) {
+    g_mk4CodePtrSelfTesting = 1;
     int i, ok = 0;
     for (i = 0; i < MK4_CODEPTR_N; i++)
         if (MK4_ResolveCode(g_codePtrTable[i].va) == g_codePtrTable[i].fn) ok++;
+    g_mk4CodePtrSelfTesting = 0;
     SDL_Log("codeptr trampoline: %d/%d VAs resolve to native fns", ok, MK4_CODEPTR_N);
 }
 #endif /* MK4_NATIVE_FULL */
