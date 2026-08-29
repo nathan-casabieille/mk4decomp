@@ -115,6 +115,8 @@ int MK4_GameInit(int argc, char **argv)
     (void)argc; (void)argv;
     /* Point the renderer's BeginFrame hook at an arena framebuffer and fill
      * the tables the boot path would have built. See engine_video.c. */
+    { extern void MK4_NativeInstallFaultHandler(void);
+      MK4_NativeInstallFaultHandler(); }
     MK4_NativeVideoInit();
     MK4_EngineStateInit();
     return 0;

@@ -131,3 +131,44 @@ void MK4_NativeTraceOpen(const char *path)
                     *MK4_VA(unsigned int, 0x542044u),
                     *MK4_VA(unsigned int, 0x542048u));
 }
+
+/* ---------------------------------------------------------------------------
+ * MK4_CRASH_TRACE=1: report a fault with the faulting address AND the
+ * function it happened in, resolved through dladdr.
+ *
+ * The macOS crash reporter de-duplicates identical faults, so after the
+ * first one a re-run with a fix applied still shows the OLD report - which
+ * is a good way to waste an hour. It also symbolicates to the nearest
+ * preceding exported symbol, so a fault inside a static or inlined helper
+ * is attributed to whatever came before it. This prints what actually
+ * faulted, every time.
+ */
+#include <signal.h>
+#include <dlfcn.h>
+
+static void mk4_fault(int sig, siginfo_t *si, void *uctx)
+{
+    Dl_info info;
+    void *pc = NULL;
+#if defined(__aarch64__)
+    ucontext_t *uc = (ucontext_t *)uctx;
+    if (uc && uc->uc_mcontext) pc = (void *)uc->uc_mcontext->__ss.__pc;
+#endif
+    SDL_Log("FAULT sig=%d at %p  pc=%p", sig, si ? si->si_addr : NULL, pc);
+    if (pc && dladdr(pc, &info) && info.dli_sname)
+        SDL_Log("  in %s + 0x%lx", info.dli_sname,
+                (unsigned long)((char *)pc - (char *)info.dli_saddr));
+    _exit(139);
+}
+
+void MK4_NativeInstallFaultHandler(void)
+{
+    struct sigaction sa;
+
+    if (!SDL_getenv("MK4_CRASH_TRACE")) return;
+    SDL_memset(&sa, 0, sizeof sa);
+    sa.sa_sigaction = mk4_fault;
+    sa.sa_flags = SA_SIGINFO;
+    sigaction(SIGSEGV, &sa, NULL);
+    sigaction(SIGBUS, &sa, NULL);
+}

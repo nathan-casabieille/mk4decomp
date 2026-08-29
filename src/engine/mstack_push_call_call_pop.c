@@ -51,13 +51,21 @@ extern void MStackBracket2_TreeWalkRecursive(void);
 void MStackPushCallCallPop_func_00405b30(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
+#ifdef MK4_ARENA
+    *MK4_NODE(unsigned int, top) = g_fightGroupHead;
+#else
     *(unsigned int *)(top * 4) = g_fightGroupHead;
+#endif
     func_00405A40();
     if (g_framePauseFlag != 0) return;
     BootChainBidirRecurseWalk();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
+#ifdef MK4_ARENA
+    g_fightGroupHead = *MK4_NODE(unsigned int, top);
+#else
     g_fightGroupHead = *(unsigned int *)(top * 4);
+#endif
     g_matrixStackTop = top - 1;
 }
 
@@ -65,13 +73,21 @@ void MStackPushCallCallPop_func_00405b30(void) {
 void MStackPushCallCallPop_func_00405dd0(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
+#ifdef MK4_ARENA
+    *MK4_NODE(unsigned int, top) = g_fightGroupHead;
+#else
     *(unsigned int *)(top * 4) = g_fightGroupHead;
+#endif
     func_00405A40();
     if (g_framePauseFlag != 0) return;
     MStackCall_MStackPush2ChainLLInsert();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
+#ifdef MK4_ARENA
+    g_fightGroupHead = *MK4_NODE(unsigned int, top);
+#else
     g_fightGroupHead = *(unsigned int *)(top * 4);
+#endif
     g_matrixStackTop = top - 1;
 }
 
@@ -79,12 +95,20 @@ void MStackPushCallCallPop_func_00405dd0(void) {
 void MStackPushCallCallPop_func_00405e20(void) {
     unsigned int top = g_matrixStackTop + 1;
     g_matrixStackTop = top;
+#ifdef MK4_ARENA
+    *MK4_NODE(unsigned int, top) = g_fightGroupHead;
+#else
     *(unsigned int *)(top * 4) = g_fightGroupHead;
+#endif
     func_00405A40();
     if (g_framePauseFlag != 0) return;
     MStackBracket2_TreeWalkRecursive();
     if (g_framePauseFlag != 0) return;
     top = g_matrixStackTop;
+#ifdef MK4_ARENA
+    g_fightGroupHead = *MK4_NODE(unsigned int, top);
+#else
     g_fightGroupHead = *(unsigned int *)(top * 4);
+#endif
     g_matrixStackTop = top - 1;
 }
