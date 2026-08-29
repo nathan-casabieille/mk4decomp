@@ -560,6 +560,15 @@ void FightGroupInit_00430430(void)
     slot = (0x4e3a30u >> 2) + g_stage53a51c;
     g_xformEntityIdx = slot;
     g_xformEntityIdx = *(unsigned int *)MK4_PTR(slot * 4);
+#ifdef TARGET_SDL
+    /* MK4_ARENA_INTRO=1 arms the per-stage camera intro (arena_intro_band.c).
+     * It animates the camera correctly - a radius-7 arc with a decaying
+     * spin - but the scene ends up out of frame, so the default keeps the
+     * previous static viewpoint rather than regressing to a black screen.
+     * See the fight-scene status note. */
+    { extern char *getenv(const char *);
+      if (!getenv("MK4_ARENA_INTRO")) g_xformEntityIdx = 0; }
+#endif
     mstack_push(0x4304b0u);
     StackPeekDispatchIndirect();     /* jmp in the original */
 }

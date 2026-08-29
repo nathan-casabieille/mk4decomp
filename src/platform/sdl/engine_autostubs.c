@@ -386,5 +386,4 @@ __attribute__((weak)) int ScaledInitOrSelfPtrSetType_0046a5e0(){return 0;}
 __attribute__((weak)) int GuardedPushCall_CopyJmp_then_ArgSarStoreJmp_0046a560(){return 0;}
 __attribute__((weak)) int Install3StateRouterTail(){return 0;}
 __attribute__((weak)) int Phase4ThreePackedInstallSelf(){return 0;}
-__attribute__((weak)) int TowerStageInitCluster(){return 0;}
 #endif /* MK4_NATIVE_FULL */

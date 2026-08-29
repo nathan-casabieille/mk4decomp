@@ -77,3 +77,9 @@ entries:
   0x4899f0: Applier1_004899f0
   0x489a30: PositionClampCluster
   0x489ba0: Applier3_00489ba0
+  0x430580: ArenaIntro_Tower_00430580
+  0x430750: ArenaIntro_Sky_00430750
+  0x4308a0: CameraAimAtP1
+  0x4309a0: ArenaIntro_Approach_004309a0
+  0x430bd0: ArenaIntro_Spin_00430bd0
+  0x48a970: EsiInstallSetCbChainExtend_0048a970

@@ -142,6 +142,8 @@ extern int FourGlobalsEqualFInitTail();
 extern int ZeroSlotsGatedDispatch();
 extern int Cmp2DirtyToggle();
 extern int TestCmpZeroFour();
+extern int ModMagicMul10Index();
+extern int MStackMagicModMul10();
 extern int Atan2QuadrantLookup();
 extern int TripleMod411262();
 extern int TripleSubVec3();
@@ -219,12 +221,21 @@ extern int WalkTowardTargetFsm();
 extern int FightGroupInit_00430430();
 extern int FightGroupCont_004304b0();
 extern int StackPeekDispatchIndirect();
+extern int TowerStageInitCluster();
+extern int ArenaIntro_Tower_00430580();
+extern int ArenaIntro_Sky_00430750();
+extern int CameraAimAtP1();
+extern int ArenaIntro_Approach_004309a0();
+extern int ArenaIntro_Spin_00430bd0();
 extern int MStackPush4DualCallAbsPop4();
 extern int CameraAimSplineDriver();
 extern int BulkSlotInit();
 extern int FiveFieldChainCopyTableWalk();
+extern int TripleScaledChainStore54();
+extern int TripleScaledChainStore60();
 extern int LoadStoreScaled58();
 extern int DualChainSubCallSubLoad();
+extern int GuardedArithDualCallChain();
 extern int DiffMul10Loop();
 extern int PendingMatch_ThreeMul10Stores();
 extern int PendingMatch_ZeroThreeFields6c_then_ZeroThreeSlots();
@@ -479,6 +490,8 @@ extern int Wrapper_ScaledChainPushCall_004ef8f0();
 extern int Wrapper_ScaledChainPushCall_004ef8b0();
 extern int Wrapper_ScaledChainPushCall_004ef888();
 extern int Wrapper_ScaledChainPushCall_004ef838();
+extern int ZeroSixStores6c80();
+extern int EsiInstallSetCbChainExtend_0048a970();
 extern int SetJmp_Phase3InstallTableCheck();
 extern int PushBitFieldMergePop();
 extern int SentinelInitTripleCall();
@@ -979,6 +992,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x423720u, (void*)ZeroSlotsGatedDispatch},
     {0x423870u, (void*)Cmp2DirtyToggle},
     {0x4238b0u, (void*)TestCmpZeroFour},
+    {0x424350u, (void*)ModMagicMul10Index},
+    {0x424410u, (void*)MStackMagicModMul10},
     {0x4245b0u, (void*)Atan2QuadrantLookup},
     {0x424740u, (void*)TripleMod411262},
     {0x4250f0u, (void*)TripleSubVec3},
@@ -1056,12 +1071,21 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x430430u, (void*)FightGroupInit_00430430},
     {0x4304b0u, (void*)FightGroupCont_004304b0},
     {0x4304e0u, (void*)StackPeekDispatchIndirect},
+    {0x430560u, (void*)TowerStageInitCluster},
+    {0x430580u, (void*)ArenaIntro_Tower_00430580},
+    {0x430750u, (void*)ArenaIntro_Sky_00430750},
+    {0x4308a0u, (void*)CameraAimAtP1},
+    {0x4309a0u, (void*)ArenaIntro_Approach_004309a0},
+    {0x430bd0u, (void*)ArenaIntro_Spin_00430bd0},
     {0x430d30u, (void*)MStackPush4DualCallAbsPop4},
     {0x430e60u, (void*)CameraAimSplineDriver},
     {0x4311e0u, (void*)BulkSlotInit},
     {0x431260u, (void*)FiveFieldChainCopyTableWalk},
+    {0x4313d0u, (void*)TripleScaledChainStore54},
+    {0x431450u, (void*)TripleScaledChainStore60},
     {0x4314d0u, (void*)LoadStoreScaled58},
     {0x431c80u, (void*)DualChainSubCallSubLoad},
+    {0x431e90u, (void*)GuardedArithDualCallChain},
     {0x432000u, (void*)DiffMul10Loop},
     {0x432110u, (void*)PendingMatch_ThreeMul10Stores},
     {0x4326a0u, (void*)PendingMatch_ZeroThreeFields6c_then_ZeroThreeSlots},
@@ -1316,6 +1340,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x48a3a0u, (void*)Wrapper_ScaledChainPushCall_004ef8b0},
     {0x48a3b0u, (void*)Wrapper_ScaledChainPushCall_004ef888},
     {0x48a3c0u, (void*)Wrapper_ScaledChainPushCall_004ef838},
+    {0x48a7c0u, (void*)ZeroSixStores6c80},
+    {0x48a970u, (void*)EsiInstallSetCbChainExtend_0048a970},
     {0x48acc0u, (void*)SetJmp_Phase3InstallTableCheck},
     {0x48bae0u, (void*)PushBitFieldMergePop},
     {0x48bbf0u, (void*)SentinelInitTripleCall},
@@ -1687,9 +1713,7 @@ void *MK4_ResolveCode(unsigned va) {
         int mid = (lo + hi) >> 1;
         unsigned m = g_codePtrTable[mid].va;
         if (m == va) {
-            { extern int g_mk4CodePtrSelfTesting;
-              if (trace && !g_mk4CodePtrSelfTesting)
-                  SDL_Log("dispatch 0x%08x", va); }
+            if (trace) SDL_Log("dispatch 0x%08x", va);
             return g_codePtrTable[mid].fn;
         }
         if (m < va) lo = mid + 1; else hi = mid - 1;
@@ -1705,19 +1729,10 @@ void *MK4_ResolveCode(unsigned va) {
     return (void*)MK4_CodeMissing;
 }
 
-/* The self-test resolves EVERY table entry, so with MK4_TRACE_CODE on it
- * emits one "dispatch" line per entry before the game starts. Those look
- * exactly like real invocations and made a whole session's worth of
- * counts read wrong: in a trace, count == 1 usually means SELF-TEST
- * ONLY, i.e. never actually invoked. Suppress them at the source. */
-int g_mk4CodePtrSelfTesting;
-
 void MK4_CodePtrSelfTest(void) {
-    g_mk4CodePtrSelfTesting = 1;
     int i, ok = 0;
     for (i = 0; i < MK4_CODEPTR_N; i++)
         if (MK4_ResolveCode(g_codePtrTable[i].va) == g_codePtrTable[i].fn) ok++;
-    g_mk4CodePtrSelfTesting = 0;
     SDL_Log("codeptr trampoline: %d/%d VAs resolve to native fns", ok, MK4_CODEPTR_N);
 }
 #endif /* MK4_NATIVE_FULL */
