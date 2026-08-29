@@ -518,5 +518,7 @@ unsigned MK4_NativeVideoArenaReserve(void)
     /* Through the shading table, room for a loaded .geo above it, and then
      * the arena-resident scratch stack (mem_model.h) that carries packed
      * pointers to what were stack locals in the original. */
-    return (MK4_SCRATCH_END - 0x00400000u);
+    /* ... and the CRT-heap window above it (engine_crtheap.c), which the
+     * animation pack's single 1.1 MB allocation lives in. */
+    return (0x01800000u - 0x00400000u);
 }

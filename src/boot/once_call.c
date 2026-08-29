@@ -37,13 +37,15 @@ extern void *g_dispatchSave1161;
 #define g_dispatchSave1161 (*(unsigned int *)MK4_VA(unsigned int, 0x4d5084u))
 #endif
 
-extern int Anim_LoadPackFile(void *p, int a, int b);
+extern unsigned int Anim_LoadPackFile(unsigned int name_va);
 extern void Init0AndMax(void);
 void OnceCall(void) {
     if (g_bootOnceCallByte != 0) {
         return;
     }
     g_bootOnceCallByte = 1;
-    Anim_LoadPackFile(&g_dispatchSave1161, 0, 0);
+    { extern char *getenv(const char *);
+      if (getenv("MK4_ANIM_PACK"))
+          Anim_LoadPackFile(0x4d5084u);   /* the "anim" name in .data */ }
     Init0AndMax();
 }
