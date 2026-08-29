@@ -383,3 +383,4 @@ src/boot/anim_load_pack_file.c
 src/engine/camera_follow_interp.c
 src/engine/position_appliers.c
 src/engine/arena_intro_band.c
+src/engine/track_installer_band.c

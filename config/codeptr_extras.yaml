@@ -83,3 +83,7 @@ entries:
   0x4309a0: ArenaIntro_Approach_004309a0
   0x430bd0: ArenaIntro_Spin_00430bd0
   0x48a970: EsiInstallSetCbChainExtend_0048a970
+  0x466fc0: PendingMatch_StackPopDispatchTagged_00466fc0
+  0x467100: TrackInstall_00467100
+  0x467600: RoundBanner_00467600
+  0x467710: RoundBannerTick_00467710

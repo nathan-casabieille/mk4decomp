@@ -384,6 +384,10 @@ extern int InstallSelf5CallVecChain();
 extern int Thunk_StackPopDispatchTagged_004647f0();
 extern int DualScaledLitInitJmp();
 extern int AppInit_Misc7();
+extern int PendingMatch_StackPopDispatchTagged_00466fc0();
+extern int TrackInstall_00467100();
+extern int RoundBanner_00467600();
+extern int RoundBannerTick_00467710();
 extern int ScaledAddrInit_IntroComboFsmCluster_004677c0();
 extern int ScaledAddrInit_IntroComboFsmCluster_004677e0();
 extern int IntroComboFsmCluster();
@@ -1234,6 +1238,10 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4647f0u, (void*)Thunk_StackPopDispatchTagged_004647f0},
     {0x464800u, (void*)DualScaledLitInitJmp},
     {0x464830u, (void*)AppInit_Misc7},
+    {0x466fc0u, (void*)PendingMatch_StackPopDispatchTagged_00466fc0},
+    {0x467100u, (void*)TrackInstall_00467100},
+    {0x467600u, (void*)RoundBanner_00467600},
+    {0x467710u, (void*)RoundBannerTick_00467710},
     {0x4677c0u, (void*)ScaledAddrInit_IntroComboFsmCluster_004677c0},
     {0x4677e0u, (void*)ScaledAddrInit_IntroComboFsmCluster_004677e0},
     {0x467800u, (void*)IntroComboFsmCluster},
