@@ -45,3 +45,26 @@ entries:
   0x46a2e0: RoundCountdownTick_0046a2e0
   0x46a3e0: BodyChainState_0046a3e0
   0x46a4d0: RoundIntroSwap_0046a4d0
+  0x48d110: MoveSel_0048d110
+  0x48d140: MoveSel_0048d140
+  0x48d180: MoveSel_0048d180
+  0x48d1b0: MoveSel_0048d1b0
+  0x48d1d0: MoveSel_0048d1d0
+  0x48d210: MoveSel_0048d210
+  0x48d240: MoveSel_0048d240
+  0x48d260: MoveSel_0048d260
+  0x48d290: MoveSel_0048d290
+  0x48d2b0: MoveSel_0048d2b0
+  0x48d2e0: MoveSel_0048d2e0
+  0x48d310: MoveSel_0048d310
+  0x48d340: MoveSel_0048d340
+  0x48d370: MoveSel_0048d370
+  0x48d3a0: MoveSel_0048d3a0
+  0x48d3d0: MoveSel_0048d3d0
+  0x48d3f0: MoveSel_0048d3f0
+  0x48d410: MoveSel_0048d410
+  0x426da0: GameMusicFsm_00426da0
+  0x414bb0: Phase4Fsm_00414bb0
+  0x414cf0: EffectSpawner_00414cf0
+  0x414fc0: Phase4Cleanup_00414fc0
+  0x427230: EffectTick_00427230

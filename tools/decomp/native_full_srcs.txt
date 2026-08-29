@@ -376,3 +376,5 @@ src/engine/slot_phase_dispatcher_big_switch.c
 src/engine/anim_event_update_cluster.c
 src/engine/stage_camera_init.c
 src/engine/round_intro_fsm.c
+src/engine/move_commit_selectors.c
+src/engine/move_commit_band.c
