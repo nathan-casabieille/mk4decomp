@@ -91,3 +91,8 @@ entries:
   0x42fad0: EsiInstallChainCallCmpThreshold
   0x42fa10: Mul10Triple0xd999Interp
   0x42fc40: SubCmpCallPauseJmp
+  0x465ae0: RoundSetupSpawn_00465ae0
+  0x465c00: RoundSetupPose_00465c00
+  0x40a4d0: FlagThunkTail_0040a4d0
+  0x40a4f0: FlagThunkClear4_0040a4f0
+  0x40a510: FlagThunkClearBit2_0040a510

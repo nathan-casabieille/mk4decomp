@@ -88,6 +88,10 @@ extern int VertexSlotInitFlagWalk();
 extern int MStackPush2ChainInsert();
 extern int MStackPush2ChainPrepend();
 extern int MStackBracket5_LinkedListUnlink();
+extern int FlagThunk4EntryDispatcher();
+extern int FlagThunkTail_0040a4d0();
+extern int FlagThunkClear4_0040a4f0();
+extern int FlagThunkClearBit2_0040a510();
 extern int StackPushAdd15CallPop();
 extern int PushCallScaledClearJmp();
 extern int SoundSetupLoop();
@@ -390,6 +394,9 @@ extern int InstallSelf5CallVecChain();
 extern int Thunk_StackPopDispatchTagged_004647f0();
 extern int DualScaledLitInitJmp();
 extern int AppInit_Misc7();
+extern int RoundSetupSpawn_00465ae0();
+extern int RoundSetupPose_00465c00();
+extern int ChainFieldCopyTailJmp();
 extern int PendingMatch_StackPopDispatchTagged_00466fc0();
 extern int TrackInstall_00467100();
 extern int RoundBanner_00467600();
@@ -951,6 +958,10 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x409870u, (void*)MStackPush2ChainInsert},
     {0x409970u, (void*)MStackPush2ChainPrepend},
     {0x409aa0u, (void*)MStackBracket5_LinkedListUnlink},
+    {0x40a470u, (void*)FlagThunk4EntryDispatcher},
+    {0x40a4d0u, (void*)FlagThunkTail_0040a4d0},
+    {0x40a4f0u, (void*)FlagThunkClear4_0040a4f0},
+    {0x40a510u, (void*)FlagThunkClearBit2_0040a510},
     {0x40a7e0u, (void*)StackPushAdd15CallPop},
     {0x40bf20u, (void*)PushCallScaledClearJmp},
     {0x413ea0u, (void*)SoundSetupLoop},
@@ -1253,6 +1264,9 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4647f0u, (void*)Thunk_StackPopDispatchTagged_004647f0},
     {0x464800u, (void*)DualScaledLitInitJmp},
     {0x464830u, (void*)AppInit_Misc7},
+    {0x465ae0u, (void*)RoundSetupSpawn_00465ae0},
+    {0x465c00u, (void*)RoundSetupPose_00465c00},
+    {0x466e70u, (void*)ChainFieldCopyTailJmp},
     {0x466fc0u, (void*)PendingMatch_StackPopDispatchTagged_00466fc0},
     {0x467100u, (void*)TrackInstall_00467100},
     {0x467600u, (void*)RoundBanner_00467600},
