@@ -365,10 +365,7 @@ __attribute__((weak)) int PendingMatch_ZeroNDwords(){return 0;}
 __attribute__((weak)) int TwoStateCopyDup(){return 0;}
 __attribute__((weak)) int TriBranchFlagWrite(){return 0;}
 __attribute__((weak)) int InstallSelfDispatch(){return 0;}
-__attribute__((weak)) int MStackPop8(){return 0;}
 __attribute__((weak)) int MStackPush4LLWalkPop4(){return 0;}
-__attribute__((weak)) int MStackPush8(){return 0;}
 __attribute__((weak)) int PendingMatch_BootStateTriple(){return 0;}
-__attribute__((weak)) int TwinLoopSlotFinder(){return 0;}
 __attribute__((weak)) int ScaledChainAccumLoop(){return 0;}
 #endif /* MK4_NATIVE_FULL */

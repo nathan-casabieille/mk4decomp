@@ -17,6 +17,8 @@ src/audio/input_poll_flag_bits_half.c
 src/audio/linked_list_builder.c
 src/audio/linked_list_insert.c
 src/audio/load_geo_assets_state_machine.c
+src/audio/m_stack_pop8.c
+src/audio/m_stack_push8.c
 src/audio/m_stack_push_chain_step_index.c
 src/audio/range_mul_mod.c
 src/audio/reset_config.c
@@ -306,6 +308,7 @@ src/engine/tristrip.c
 src/engine/tristrip_batch_emit.c
 src/engine/tristrip_batch_emit2.c
 src/engine/tristrip_batch_emit3_cap.c
+src/engine/twin_loop_slot_finder.c
 src/engine/twin_record_iter.c
 src/engine/vec3_color_shift_clamp.c
 src/engine/vec3_normalize_scale_store.c
