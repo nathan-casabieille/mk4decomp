@@ -245,7 +245,7 @@ void RenderSceneNode(void)
      * space, and how far it is from the eye. */
     { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
       static int n;
-      if (getenv("MK4_TRACE_GEO") && n < 10
+      if (getenv("MK4_TRACE_GEO") && n < 24
           && *MK4_VA(unsigned int, 0x537f94u) != 0) { n++;
         SDL_Log("GEO node=%x cam=[%d %d %d] eye=[%d %d %d]",
                 node, (int)g_vtxTransX, (int)g_vtxTransY, (int)g_vtxTransZ,
