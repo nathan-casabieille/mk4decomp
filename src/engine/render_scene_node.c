@@ -241,12 +241,19 @@ void RenderSceneNode(void)
     }
     g_vtxTransZ = (unsigned int)((int)g_dispatchSave1503 >> 8);
 #ifdef TARGET_SDL
-    /* MK4_TRACE_GEO: where the emitted geometry actually sits in camera
-     * space, and how far it is from the eye. */
+    /* MK4_TRACE_GEO=N: where the emitted geometry actually sits in camera
+     * space, and how far it is from the eye. N caps the sample count; a
+     * bare "1" keeps the old 24. The cap used to be hardcoded at 24, and
+     * that truncation nearly bought a wrong conclusion - 24 samples all
+     * landed inside one fighter, which reads as "the stage is missing"
+     * whether or not it is. Raise it before concluding anything about
+     * what is NOT in the graph. */
     { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
-      static int n;
-      if (getenv("MK4_TRACE_GEO") && n < 24
-          && *MK4_VA(unsigned int, 0x537f94u) != 0) { n++;
+      extern int atoi(const char *);
+      static int n, lim = -1;
+      if (lim < 0) { char *e = getenv("MK4_TRACE_GEO");
+                     lim = e ? (atoi(e) > 1 ? atoi(e) : 24) : 0; }
+      if (n < lim && *MK4_VA(unsigned int, 0x537f94u) != 0) { n++;
         SDL_Log("GEO node=%x cam=[%d %d %d] eye=[%d %d %d]",
                 node, (int)g_vtxTransX, (int)g_vtxTransY, (int)g_vtxTransZ,
                 *MK4_VA(int, 0xab4d18u) >> 8, *MK4_VA(int, 0xab4d1cu) >> 8,
