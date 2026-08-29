@@ -13,6 +13,9 @@
 #include "platform/pal.h"
 
 #include <stdlib.h>
+
+/* VA of the slot MK4_ARENA_STAGE allocated, for MK4_ARENA_NODE to aim at. */
+static unsigned int g_mk4ArenaSlotVA;
 #include <string.h>
 #include "portable/mem_model.h"
 
@@ -401,12 +404,23 @@ void MK4_GameFrame(void)
                  * record itself in slot word0 - it derefs exactly once to
                  * reach the string - so the arena table needs one more
                  * deref than a character's slot table does. */
+                extern int Mem_Malloc(void **out_ptr, int size, int tag);
                 unsigned int nameRec =
                     *MK4_VA(unsigned int, 0x503260u + (unsigned)stage * 12u);
-                unsigned int slotVA = 0x503318u;
+                void *slotOut = 0;
+                /* Allocate the slot instead of borrowing 0x503318. That
+                 * template is LIVE - a rendered node already points its
+                 * +0x24 at 0x503330, inside it - so writing there corrupts
+                 * a descriptor the scene is using. */
+                unsigned int slotVA = (unsigned int)Mem_Malloc(&slotOut, 0x10, 1);
+                if (slotVA == 0) { SDL_Log("arena-stage: slot alloc failed"); }
+                else {
                 *MK4_VA(unsigned int, slotVA)      = nameRec;
                 *MK4_VA(unsigned int, slotVA + 4u) = 0;   /* not loaded yet */
+                *MK4_VA(unsigned int, slotVA + 8u) = 0;
+                *MK4_VA(unsigned int, slotVA + 0xcu) = 0;
                 *MK4_VA(unsigned int, 0x542044u)   = slotVA >> 2;
+                g_mk4ArenaSlotVA = slotVA;
                 SDL_Log("arena-stage: stage %d -> name record 0x%08x",
                         stage, nameRec);
                 LoadGeoAsset_Textures(0);
@@ -418,8 +432,9 @@ void MK4_GameFrame(void)
                  * freed the arena on the same frame it was loaded, which
                  * is why the first version of this hook reported a live
                  * block and still rendered nothing. */
-                SDL_Log("arena-stage: loader returned, block=%08x",
-                        *MK4_VA(unsigned int, slotVA + 4u));
+                SDL_Log("arena-stage: slot VA 0x%08x, loader returned block=%08x",
+                        slotVA, *MK4_VA(unsigned int, slotVA + 4u));
+                }
             }
         }
         /* MK4_TRACE_STAGE: the stage descriptors the arena code reads.
