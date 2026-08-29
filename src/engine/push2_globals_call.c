@@ -26,7 +26,10 @@ extern unsigned int g_currentNodeIdx;
  *   add     esp, 8
  *   ret
  */
-extern int __cdecl MatrixTransform3x3Q12(unsigned int, unsigned int);
+/* The two globals hold RAW VAs here (the original pushes them straight
+ * into the cdecl); the twin takes host pointers, so translate. */
+extern void MatrixTransform3x3Q12(short *, short *);
 void Push2GlobalsCall(void) {
-    MatrixTransform3x3Q12(g_pendingNodeType, g_currentNodeIdx);
+    MatrixTransform3x3Q12((short *)MK4_PTR(g_pendingNodeType),
+                          (short *)MK4_PTR(g_currentNodeIdx));
 }

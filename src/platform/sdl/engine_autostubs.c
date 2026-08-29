@@ -347,11 +347,9 @@ __attribute__((weak)) int SetDirty4XorScaledLoad(){return 0;}
 __attribute__((weak)) int Snd3DSourceCleanup(){return 0;}
 __attribute__((weak)) int BitFlagEffectDispatch(){return 0;}
 __attribute__((weak)) int DualEntryInstallSelfScaled(){return 0;}
-__attribute__((weak)) int FiveFieldChainCopyTableWalk(){return 0;}
 __attribute__((weak)) int PvpAngleDistSeed(){return 0;}
 __attribute__((weak)) int QuadGuardedCjSet_00422fc0(){return 0;}
 __attribute__((weak)) int QuadGuardedCjSet_004230b0(){return 0;}
-__attribute__((weak)) int RecordListIterMStack(){return 0;}
 __attribute__((weak)) int StageParticleEmitterInit(){return 0;}
 __attribute__((weak)) int SpawnListBatchLoader(){return 0;}
 __attribute__((weak)) int DownloadPlayerChar_Variant(){return 0;}
@@ -367,4 +365,18 @@ __attribute__((weak)) int Copy3Fields38(){return 0;}
 __attribute__((weak)) int CopyThreeFields(){return 0;}
 __attribute__((weak)) int ThreeChanPackClamp(){return 0;}
 __attribute__((weak)) int func_00405420_ii(){return 0;}
+__attribute__((weak)) int AnimEventUpdateCluster(){return 0;}
+/* camera-phase band (SlotPhaseDispatcherBigSwitch callees) - work-list */
+__attribute__((weak)) int CallPauseCallTestStackPushJmp(){return 0;}
+__attribute__((weak)) int CallPauseMStackPushSet0Jmp(){return 0;}
+__attribute__((weak)) int CallPauseTriCmpJmp(){return 0;}
+__attribute__((weak)) int CjInstallSelfRouter(){return 0;}
+__attribute__((weak)) int CjMaskedFlagProbe(){return 0;}
+__attribute__((weak)) int DirtyFlagsManipB(){return 0;}
+__attribute__((weak)) int DualGatedStateYield(){return 0;}
+__attribute__((weak)) int GuardedDispatch_CallPauseMStackPushSet3Jmp(){return 0;}
+__attribute__((weak)) int GuardedDispatch_CallPauseMStackPushSet4Jmp(){return 0;}
+__attribute__((weak)) int PerSlotPhaseRouter_DualGatedStateYield_004605d0(){return 0;}
+__attribute__((weak)) int PerSlotPhaseRouter_DualGatedStateYield_00460770(){return 0;}
+__attribute__((weak)) int UnlinkChainInstall_00460dd0(){return 0;}
 #endif /* MK4_NATIVE_FULL */

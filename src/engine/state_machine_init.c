@@ -4,6 +4,7 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
 extern unsigned int g_chainAccumCur;
@@ -14,6 +15,7 @@ extern unsigned int g_fightStateProgress;
 extern unsigned int g_active_00537e88;
 extern unsigned int g_active_0053a408;
 extern unsigned int g_audioBankSel;
+#endif
 
 extern void StoreTwoCall(int, int);
 extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
@@ -56,6 +58,7 @@ extern void Push16Call(void);
 extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void ScaledLoadCmpStoreXfm(void);
 extern void StackPopDispatchTagged(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_cj_00542058;
 extern unsigned int g_rangeSqLimit;
 extern unsigned int g_armedReloadA;
@@ -63,6 +66,7 @@ extern unsigned int g_armedReloadB;
 extern unsigned int g_dualBitGate;
 extern unsigned int g_eventArmReload;
 extern unsigned int g_rangeBase;
+#endif
 
 extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
 extern void DualFieldAddSubStore(void);
@@ -97,6 +101,7 @@ extern void CallPauseScaledStorePushCall(void);
 extern void LoadGeoAsset_Default(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void PushSetCallPop(void);
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_stateCountdown;
 extern unsigned int g_installOwnerNode;
 extern unsigned int g_cj_00542054;
@@ -107,14 +112,104 @@ extern unsigned int g_fightAxisNegX;
 extern unsigned int g_fightAxisNegY;
 extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
+#endif
 
 /* @addr 0x00493000 (216b game) - state-machine init with cascading calls. */
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_particleEmitterNode;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_currentNodeFlags (*(unsigned int *)MK4_VA(unsigned int, 0x542084u))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightGroupHead (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_framePauseFlag (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_lit16_00542074 (*(unsigned int *)MK4_VA(unsigned int, 0x542074u))
+#define g_particleEmitterNode (*(unsigned int *)MK4_VA(unsigned int, 0x535e6cu))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_xformScratch2088 (*(unsigned int *)MK4_VA(unsigned int, 0x542088u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
 extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
 extern void MStackPushDispatchBitGate(void);
 extern void MStackPushTableWalk(void);
 extern void PushSetCallTailJmp(void);
 
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+extern void MStackPushDispatchBitGate(void);
+extern void MStackPushTableWalk(void);
+extern void PushSetCallTailJmp(void);
+extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
+
+/* @addr 0x00493000 (216b) - NATIVE twin; the matching build keeps the
+ * body below.
+ *
+ * Creates ONE renderable scene node from a record: the walk value becomes
+ * the type literal, the bit-gate dispatcher builds the node (leaving it in
+ * the fight group slot), the type is stamped at +0x30, the table walk
+ * runs, the record's flags and scratch land at +0x54 and +0x5c, the
+ * set-call pass runs, the particle emitter is linked at +0x3c, and the
+ * node is PREPENDED under the fight group's parent. The tail re-signals
+ * not-found only when nothing was built. */
+void StateMachineInit(void)
+{
+    g_lit16_00542074 = g_walkCallback;
+    MStackPushDispatchBitGate();
+    if (g_framePauseFlag != 0) return;
+    if (g_xformDirtyFlags & 4u) return;
+
+    g_walkCallback = g_lit16_00542074;
+    MK4_NODE_AT(unsigned int, g_fightGroupHead, 0x30) = g_lit16_00542074;
+    MStackPushTableWalk();
+    if (g_framePauseFlag != 0) return;
+
+    g_pendingNodeType = g_xformEntityIdx;
+    MK4_NODE_AT(unsigned int, g_fightGroupHead, 0x54) = g_currentNodeFlags;
+    MK4_NODE_AT(unsigned int, g_fightGroupHead, 0x5c) = g_xformScratch2088;
+    PushSetCallTailJmp();
+    if (g_framePauseFlag != 0) return;
+
+    g_walkCallback = *MK4_VA(unsigned int, 0x535e6cu);
+    MK4_NODE_AT(unsigned int, g_fightGroupHead, 0x3c) = g_walkCallback;
+    MStackCall_MStackPush2ChainPrepend_004062f0();
+    if (g_framePauseFlag != 0) return;
+
+    g_xformDirtyFlags |= 4;
+    if (g_fightGroupHead != 0) g_xformDirtyFlags ^= 4;
+}
+#else
 void StateMachineInit(void) {
     __asm {
         mov     eax, dword ptr [g_walkCallback]
@@ -182,4 +277,5 @@ void StateMachineInit(void) {
         mov     dword ptr [g_xformDirtyFlags], eax
         }
 }
+#endif
 

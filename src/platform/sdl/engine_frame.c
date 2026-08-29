@@ -249,6 +249,26 @@ void MK4_GameFrame(void)
                     *MK4_VA(unsigned int, 0x0053a738u),
                     *MK4_VA(unsigned int, 0x0053a1e0u),
                     *MK4_VA(unsigned int, 0x00541e50u));
+        if (getenv("MK4_TRACE_CAM") && (frame % 25) == 0)
+            SDL_Log("      trans=[%d %d %d] camNodePos=[%d %d]",
+                    *MK4_VA(int, 0x7af9a4u), *MK4_VA(int, 0x7af9a8u),
+                    *MK4_VA(int, 0x7af9acu),
+                    *MK4_VA(unsigned int, 0x542060u) ?
+                      *(int *)MK4_PTR(*MK4_VA(unsigned int, 0x542060u) * 4 + 0x54) : -1,
+                    *MK4_VA(unsigned int, 0x542060u) ?
+                      *(int *)MK4_PTR(*MK4_VA(unsigned int, 0x542060u) * 4 + 0x5c) : -1);
+        if (getenv("MK4_TRACE_CAM") && (frame % 25) == 0)
+            SDL_Log("      cam m=[%x %x %x %x %x] axis=[%x %x %x %x] dist=%x",
+                    *MK4_VA(unsigned int, 0x7af990u),
+                    *MK4_VA(unsigned int, 0x7af994u),
+                    *MK4_VA(unsigned int, 0x7af998u),
+                    *MK4_VA(unsigned int, 0x7af99cu),
+                    *MK4_VA(unsigned int, 0x7af9a0u),
+                    *MK4_VA(unsigned int, 0x535e70u),
+                    *MK4_VA(unsigned int, 0x535e74u),
+                    *MK4_VA(unsigned int, 0x535e78u),
+                    *MK4_VA(unsigned int, 0x535e7cu),
+                    *MK4_VA(unsigned int, 0x542084u));
         if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
             SDL_Log("      root8070=%x/%x  1e0head=%x  siblingTail=%x",
                     *MK4_VA(unsigned int, 0x00538070u),
@@ -364,3 +384,13 @@ void MK4_GameFrame(void)
     }
     MK4_NativeVideoPresent();/* arena framebuffer -> the SDL window */
 }
+
+void MK4_NativeDumpArenaNow(const char *path)
+{
+    extern unsigned char *g_mk4Arena;
+    extern unsigned int g_mk4ArenaSize;
+    FILE *f = fopen(path, "wb");
+    if (f) { fwrite(g_mk4Arena, 1, g_mk4ArenaSize, f); fclose(f);
+             SDL_Log("arena dumped (on demand) -> %s", path); }
+}
+

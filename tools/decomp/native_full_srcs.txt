@@ -153,6 +153,7 @@ src/engine/esi_install_bit_call_chain_variants.c
 src/engine/esi_install_dec_call_chain_variants.c
 src/engine/event_queue_drain_loop.c
 src/engine/fight_frame_step.c
+src/engine/five_field_chain_copy_table_walk.c
 src/engine/flush_draw_queue.c
 src/engine/four_globals_equal_f_init_tail.c
 src/engine/fsys.c
@@ -203,9 +204,11 @@ src/engine/lea_plus22_store_self.c
 src/engine/lea_scaled_call.c
 src/engine/linked_list_swap_head.c
 src/engine/literal_push_call_ent_zero.c
+src/engine/load_cmp_addr_jmp.c
 src/engine/m_stack_bracket2_init_chain_split_insert.c
 src/engine/m_stack_bracket3_packed_slot_init.c
 src/engine/m_stack_push_dual_jmp.c
+src/engine/m_stack_push_table_walk.c
 src/engine/mat3x3_vec_mul.c
 src/engine/mat3x3_vec_mul6_bit.c
 src/engine/mat_vec2_multiply.c
@@ -236,11 +239,13 @@ src/engine/project_two.c
 src/engine/project_vertex.c
 src/engine/push2_globals_call.c
 src/engine/push_pop84_triple_call.c
+src/engine/push_set_call_tail_jmp.c
 src/engine/pvp_angle_dist_seed.c
 src/engine/pvs_merge_driver.c
 src/engine/quad_call_phase2.c
 src/engine/quad_field_early_jmp_then_install.c
 src/engine/quad_mul10_tail_fpu_chain.c
+src/engine/record_list_iter_m_stack.c
 src/engine/render.c
 src/engine/render_scene_graph_iterate.c
 src/engine/render_scene_node.c
@@ -293,6 +298,7 @@ src/engine/small_helpers.c
 src/engine/state_dispatch_table.c
 src/engine/state_install_or_forward.c
 src/engine/state_install_thunks.c
+src/engine/state_machine_init.c
 src/engine/state_snapshot_dispatch.c
 src/engine/store_at_minus8.c
 src/engine/store_two_call.c
@@ -359,3 +365,11 @@ src/platform/win32/app_shutdown.c
 src/platform/win32/iterate_call_skip.c
 src/platform/win32/loop1c_bit_mask.c
 src/platform/win32/test_call_iat.c
+src/game/download_player_char_variant.c
+src/engine/triple_state_swap_call.c
+src/engine/push_bit_field_merge_pop.c
+src/engine/push_call_pop_scaled_jmp_indirect.c
+src/engine/m_stack_push2_bias_resolve.c
+src/engine/hit_reaction_dispatcher.c
+src/engine/fight_cam_chain_leaves.c
+src/engine/slot_phase_dispatcher_big_switch.c

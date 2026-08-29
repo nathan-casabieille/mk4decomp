@@ -1,367 +1,125 @@
 /**
- * Auto-split from misc_matchesQQ.c
+ * SlotPhaseDispatcherBigSwitch - 0x0045fac0 (473b game.fight) and its gate.
+ *
+ * The per-frame camera/pose phase pump. Drains the command word at
+ * camera-node[+0x84] in a loop: each pass runs DirtyToggleByGate,
+ * CjMaskedFlagProbe and NotShrCmp1Store (state bits at 0x54208c divert to
+ * CjInstallSelfRouter / GuardedDoubleCallSetJmp), then the mode mask from
+ * 0x54206c picks one of six phase routers - (m&9)==9, (m&5)==5, m&1, m&8,
+ * m&4, m&2 in that priority - each of which ends the frame. With no mode
+ * bits it clears group-head[+0x6c/0x70/0x74], runs CallPauseTriCmpJmp and
+ * loops if a new command arrived. The idle tail runs DualGatedStateYield;
+ * a zero yield with 0x538094 clear re-installs THIS function's VA in the
+ * camera node's +8 callback slot, re-arms +0x84 = 1, and raises the pause
+ * flag - the yield that hands the frame back.
+ *
+ * DirtyToggleByGate - 0x0048f350 (97b): set state-bit 2; when the group
+ * head is P1's node keep it set and run DirtyFlagsManipB; otherwise clear
+ * it, re-set it, and clear it again only when 0x537e88 is armed.
+ *
+ * NATIVE-ONLY twins: the matching build synthesizes the original bytes.
  */
-#include "engine/scenegraph.h"
-#include "portable/ghidra_types.h"
-#include "game/tick.h"
+#ifdef NON_MATCHING
 
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_baseSel;
-extern unsigned int g_chainAccumCur;
-extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown;
-extern unsigned int g_xformScratch94;
-extern unsigned int g_fightStateProgress;
-extern unsigned int g_active_00537e88;
-extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel;
+#include "portable/mem_model.h"
 
-extern void StoreTwoCall(int, int);
-extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
-extern void Thunk_ChainNodeInit(void);
-extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10(void);
-extern void Mul10Tail(unsigned int a, unsigned int b);
-extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader(void);
-extern void MStackPush2TableNot(void);
-extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp(void);
-extern void ScaledStoreCurDirtyClear(void);
-extern void MStackBitmaskIncMod(void);
-extern void MStackBitmaskUpdate(void);
-extern void Push1eCallTestDirtyLoop(void);
-extern void MStackLoopFieldInit(void);
-extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
-extern void Cmp2CallDirtyCall(void);
-extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW(void);
-extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
-extern void MoveFsmCluster(void);
-extern void CallPauseTestByteJmpCalls(void);
-extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
-extern void DualTestDirtyToggle_004282c0(void);
-extern void TripleVecAccCallStore(void);
-extern void Thunk_LoadGeoAsset_Default(void);
-extern void AllocSlotPushTripleGlobals(void);
-extern void MStackPop4Rewrite(void);
-extern void Push70CallScaleArith(void);
-extern void StreamChainStringInstall(void);
-extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore(void);
-extern void Push16Call(void);
-extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
-extern void ScaledLoadCmpStoreXfm(void);
-extern void StackPopDispatchTagged(void);
-extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit;
-extern unsigned int g_armedReloadA;
-extern unsigned int g_armedReloadB;
-extern unsigned int g_dualBitGate;
-extern unsigned int g_eventArmReload;
-extern unsigned int g_rangeBase;
-
-extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
-extern void DualFieldAddSubStore(void);
-extern void IterStepDualStore(int);
-extern void ScaledXorStore_004900f0(void);
-extern void ChainWalkInstall(void);
-extern void FpuSqrtMul(void);
-extern void PendingMatch_StoreTwoCall_0042b930(void);
-extern void MStackPush2RunCountdown(void);
-extern void MStackBracket7_DispatchAndChain(void);
-extern void MStackBracketed3StoreCall(void);
-extern void ChainDirtyBitWalker(void);
-extern void Wrapper_ScaledChainPushCall_004ef858(void);
-extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
-extern void Helper_DownloadSetup(void);
-extern void MStackPush3CmpCall(void);
-extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
-extern void FiveCallScaledChainTailJmp(void);
-extern void SetJmp_StateDispatchYield_00438f50(void);
-extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_PendingMatch(void);
-extern void DirtyToggleByGate(void);
-extern void GameDispatchValidateState(void);
-extern void CrouchAttackFsmCluster(void);
-extern void MStackPushVec3Mul10(void);
-extern void LiteralPushCallEntZero(void);
-extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
-extern void GuardedDualConst2AndToggle(void);
-extern void CallPauseScaledStorePushCall(void);
-extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_FramePauseScaledStore(void);
-extern void PushSetCallPop(void);
-extern unsigned int g_stateCountdown;
-extern unsigned int g_installOwnerNode;
-extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode;
-extern unsigned int g_lastGatedValue;
-extern unsigned int g_lastGatedTick;
-extern unsigned int g_fightAxisNegX;
-extern unsigned int g_fightAxisNegY;
-extern unsigned int g_fightAxisPosX;
-extern unsigned int g_fightAxisPosY;
-
-extern unsigned int g_phaseThunkState2;
-extern void CallPauseCallTestStackPushJmp(void);
-extern void CallPauseMStackPushSet0Jmp(void);
-extern void CallPauseTriCmpJmp(void);
-extern void CjInstallSelfRouter(void);
 extern void CjMaskedFlagProbe(void);
-extern void DualGatedStateYield(void);
+extern void NotShrCmp1Store(void);
+extern void CjInstallSelfRouter(void);
+extern void GuardedDoubleCallSetJmp(void);
 extern void GuardedDispatch_CallPauseMStackPushSet3Jmp(void);
 extern void GuardedDispatch_CallPauseMStackPushSet4Jmp(void);
-extern void GuardedDoubleCallSetJmp(void);
-extern void NotShrCmp1Store(void);
+extern void CallPauseCallTestStackPushJmp(void);
 extern void PerSlotPhaseRouter_DualGatedStateYield_004605d0(void);
 extern void PerSlotPhaseRouter_DualGatedStateYield_00460770(void);
+extern void CallPauseMStackPushSet0Jmp(void);
+extern void CallPauseTriCmpJmp(void);
+extern int  DualGatedStateYield(void);
 extern void UnlinkChainInstall_00460dd0(void);
+extern void DirtyFlagsManipB(void);
 
-#ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+#define g_currentNodeIdx  (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_walkSlot6c      (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_slot70          (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_scratch94       (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#define g_baseSel         (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_groupHead       (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_framePauseFlag  (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_stateBits8c     (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
+#define g_p1NodeIdx       (*(unsigned int *)MK4_VA(unsigned int, 0x538158u))
+#define g_armed537e88     (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_gate538094      (*(unsigned int *)MK4_VA(unsigned int, 0x538094u))
+
+void DirtyToggleByGate(void)
+{
+    g_stateBits8c |= 4u;
+    if (g_groupHead == g_p1NodeIdx) {
+        DirtyFlagsManipB();
+        return;
+    }
+    g_stateBits8c ^= 4u;
+    if (g_groupHead == g_p1NodeIdx) {   /* unreachable second look, kept */
+        DirtyFlagsManipB();
+        return;
+    }
+    g_stateBits8c |= 4u;
+    g_walkSlot6c = g_armed537e88;
+    if (g_armed537e88 != 0)
+        g_stateBits8c ^= 4u;
+}
+
 void SlotPhaseDispatcherBigSwitch(void)
+{
+    unsigned int node, cmd, m;
 
-{
-  int iVar1;
-  int iVar2;
-  
-  iVar1 = g_baseSel * 4;
-  iVar2 = *(int *)(iVar1 + 0x84);
-  *(undefined4 *)(iVar1 + 0x84) = 0;
-  while( true ) {
-    if (iVar2 == 0) {
-      iVar2 = DualGatedStateYield();
-      if (iVar2 == 0) {
-        g_eventQueueCurrent = g_phaseThunkState2;
-        if (g_phaseThunkState2 != 0) {
-          UnlinkChainInstall_00460dd0();
-          return;
-        }
-        *(code **)(iVar1 + 8) = SlotPhaseDispatcherBigSwitch;
-        *(undefined4 *)(iVar1 + 0x84) = 1;
-        g_dualC = 1;
-        g_framePauseFlag = 1;
-      }
-      return;
+    node = g_baseSel;
+    cmd = MK4_NODE_AT(unsigned int, node, 0x84);
+    MK4_NODE_AT(unsigned int, node, 0x84) = 0;
+
+    while (cmd != 0) {
+        DirtyToggleByGate();
+        if (g_framePauseFlag != 0) return;
+        if ((g_stateBits8c & 4) != 0) { CjInstallSelfRouter(); return; }
+        CjMaskedFlagProbe();
+        if (g_framePauseFlag != 0) return;
+        if ((g_stateBits8c & 1) != 0) { GuardedDoubleCallSetJmp(); return; }
+        NotShrCmp1Store();
+        if (g_framePauseFlag != 0) return;
+
+        m = g_walkSlot6c;
+        if ((m & 9) == 9) { g_slot70 = m & 9; GuardedDispatch_CallPauseMStackPushSet3Jmp(); return; }
+        if ((m & 5) == 5) { g_slot70 = m & 5; GuardedDispatch_CallPauseMStackPushSet4Jmp(); return; }
+        if ((m & 1) != 0) { g_slot70 = m & 1; CallPauseCallTestStackPushJmp(); return; }
+        if ((m & 8) != 0) { g_slot70 = m & 8; PerSlotPhaseRouter_DualGatedStateYield_004605d0(); return; }
+        if ((m & 4) != 0) { g_slot70 = m & 4; PerSlotPhaseRouter_DualGatedStateYield_00460770(); return; }
+        if ((m & 2) != 0) { g_scratch94 = m & 2; CallPauseMStackPushSet0Jmp(); return; }
+        g_scratch94 = 0;
+
+        g_walkSlot6c = 0;
+        MK4_NODE_AT(unsigned int, g_groupHead, 0x6c) = 0;
+        MK4_NODE_AT(unsigned int, g_groupHead, 0x70) = 0;
+        MK4_NODE_AT(unsigned int, g_groupHead, 0x74) = 0;
+        CallPauseTriCmpJmp();
+        if (g_framePauseFlag != 0) return;
+
+        node = g_baseSel;
+        cmd = MK4_NODE_AT(unsigned int, node, 0x84);
+        MK4_NODE_AT(unsigned int, node, 0x84) = 0;
     }
-    DirtyToggleByGate();
-    if (g_framePauseFlag != 0) {
-      return;
+
+    if (DualGatedStateYield() != 0)
+        return;
+    g_slot70 = g_gate538094;
+    if (g_gate538094 != 0) {
+        UnlinkChainInstall_00460dd0();
+        return;
     }
-    if (((byte)g_xformDirtyFlags & 4) != 0) {
-      CjInstallSelfRouter();
-      return;
-    }
-    CjMaskedFlagProbe();
-    if (g_framePauseFlag != 0) {
-      return;
-    }
-    if (((byte)g_xformDirtyFlags & 1) != 0) {
-      GuardedDoubleCallSetJmp();
-      return;
-    }
-    NotShrCmp1Store();
-    if (g_framePauseFlag != 0) {
-      return;
-    }
-    g_eventQueueCurrent = g_walkCallback & 9;
-    if (g_eventQueueCurrent == 9) break;
-    g_eventQueueCurrent = g_walkCallback & 5;
-    if (g_eventQueueCurrent == 5) {
-      GuardedDispatch_CallPauseMStackPushSet4Jmp();
-      return;
-    }
-    g_eventQueueCurrent = g_walkCallback & 1;
-    if (g_eventQueueCurrent == 1) {
-      CallPauseCallTestStackPushJmp();
-      return;
-    }
-    g_eventQueueCurrent = g_walkCallback & 8;
-    if (g_eventQueueCurrent == 8) {
-      PerSlotPhaseRouter_DualGatedStateYield_004605d0();
-      return;
-    }
-    g_eventQueueCurrent = g_walkCallback & 4;
-    if (g_eventQueueCurrent == 4) {
-      PerSlotPhaseRouter_DualGatedStateYield_00460770();
-      return;
-    }
-    g_xformScratch94 = g_walkCallback & 2;
-    if (g_xformScratch94 != 0) {
-      CallPauseMStackPushSet0Jmp();
-      return;
-    }
-    g_walkCallback = 0;
-    MK4_NODE_AT(undefined4, g_cj_0054205c, 0x6c) = 0;
-    MK4_NODE_AT(uint, g_cj_0054205c, 0x70) = g_walkCallback;
-    MK4_NODE_AT(uint, g_cj_0054205c, 0x74) = g_walkCallback;
-    CallPauseTriCmpJmp();
-    if (g_framePauseFlag != 0) {
-      return;
-    }
-    iVar1 = g_baseSel * 4;
-    iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
-    *(undefined4 *)(iVar1 + 0x84) = 0;
-  }
-  GuardedDispatch_CallPauseMStackPushSet3Jmp();
-  return;
+    /* re-install self as the camera node's callback and yield the frame */
+    MK4_NODE_AT(unsigned int, node, 8) = 0x45fac0u;
+    MK4_NODE_AT(unsigned int, node, 0x84) = 1;
+    g_pendingNodeType = 1;
+    g_framePauseFlag = 1;
 }
-#else
-__declspec(naked) void SlotPhaseDispatcherBigSwitch(void)
-{
-    __asm
-    {
-        mov     eax, dword ptr [g_baseSel]
-        push    ebx
-        push    esi
-        push    edi
-        lea     esi, [eax*4]
-        xor     edi, edi
-        mov     eax, dword ptr [esi + 0x84]
-        mov     dword ptr [esi + 0x84], edi
-        cmp     eax, edi
-        je      L_spdbs_phase0
-        mov     ebx, 4
-    L_spdbs_loop:
-        call    DirtyToggleByGate
-        cmp     dword ptr [g_framePauseFlag], edi
-        jne     L_spdbs_ret
-        test    byte ptr [g_xformDirtyFlags], bl
-        jne     L_spdbs_b4
-        call    CjMaskedFlagProbe
-        cmp     dword ptr [g_framePauseFlag], edi
-        jne     L_spdbs_ret
-        test    byte ptr [g_xformDirtyFlags], 1
-        jne     L_spdbs_b1
-        call    NotShrCmp1Store
-        cmp     dword ptr [g_framePauseFlag], edi
-        jne     L_spdbs_ret
-        mov     eax, dword ptr [g_walkCallback]
-        mov     ecx, eax
-        and     ecx, 9
-        cmp     ecx, 9
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        je      L_spdbs_b9
-        mov     ecx, eax
-        and     ecx, 5
-        cmp     ecx, 5
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        je      L_spdbs_b5
-        mov     ecx, eax
-        and     ecx, 1
-        cmp     ecx, 1
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        je      L_spdbs_b1a
-        mov     ecx, eax
-        and     ecx, 8
-        cmp     ecx, 8
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        je      L_spdbs_b8
-        mov     ecx, eax
-        and     ecx, ebx
-        cmp     ecx, ebx
-        mov     dword ptr [g_eventQueueCurrent], ecx
-        je      L_spdbs_b4a
-        and     eax, 2
-        mov     dword ptr [g_xformScratch94], eax
-        jne     L_spdbs_b2
-        mov     ecx, dword ptr [g_fightGroupHead]
-        mov     dword ptr [g_walkCallback], edi
-        mov     dword ptr [ecx*4 + 0x6c], edi
-        mov     eax, dword ptr [g_fightGroupHead]
-        mov     edx, dword ptr [g_walkCallback]
-        mov     dword ptr [eax*4 + 0x70], edx
-        mov     edx, dword ptr [g_fightGroupHead]
-        mov     ecx, dword ptr [g_walkCallback]
-        mov     dword ptr [edx*4 + 0x74], ecx
-        call    CallPauseTriCmpJmp
-        cmp     dword ptr [g_framePauseFlag], edi
-        jne     short L_spdbs_ret
-        mov     eax, dword ptr [g_baseSel]
-        lea     esi, [eax*4]
-        mov     eax, dword ptr [eax*4 + 0x84]
-        mov     dword ptr [esi + 0x84], edi
-        cmp     eax, edi
-        jne     L_spdbs_loop
-    L_spdbs_phase0:
-        call    DualGatedStateYield
-        test    eax, eax
-        jne     short L_spdbs_ret
-        mov     eax, dword ptr [g_phaseThunkState2]
-        cmp     eax, edi
-        mov     dword ptr [g_eventQueueCurrent], eax
-        je      short L_spdbs_install
-        call    UnlinkChainInstall_00460dd0
-        pop     edi
-        pop     esi
-        pop     ebx
-        ret
-    L_spdbs_install:
-        mov     eax, 1
-        mov     dword ptr [esi + 8], offset SlotPhaseDispatcherBigSwitch
-        mov     dword ptr [esi + 0x84], eax
-        mov     dword ptr [g_pendingNodeType], eax
-        mov     dword ptr [g_framePauseFlag], eax
-    L_spdbs_ret:
-        pop     edi
-        pop     esi
-        pop     ebx
-        ret
-    L_spdbs_b4:
-        call    CjInstallSelfRouter
-        pop     edi
-        pop     esi
-        pop     ebx
-        ret
-    L_spdbs_b1:
-        call    GuardedDoubleCallSetJmp
-        pop     edi
-        pop     esi
-        pop     ebx
-        ret
-    L_spdbs_b9:
-        call    GuardedDispatch_CallPauseMStackPushSet3Jmp
-        pop     edi
-        pop     esi
-        pop     ebx
-        ret
-    L_spdbs_b5:
-        call    GuardedDispatch_CallPauseMStackPushSet4Jmp
-        pop     edi
-        pop     esi
-        pop     ebx
-        ret
-    L_spdbs_b1a:
-        call    CallPauseCallTestStackPushJmp
-        pop     edi
-        pop     esi
-        pop     ebx
-        ret
-    L_spdbs_b8:
-        call    PerSlotPhaseRouter_DualGatedStateYield_004605d0
-        pop     edi
-        pop     esi
-        pop     ebx
-        ret
-    L_spdbs_b4a:
-        call    PerSlotPhaseRouter_DualGatedStateYield_00460770
-        pop     edi
-        pop     esi
-        pop     ebx
-        ret
-    L_spdbs_b2:
-        call    CallPauseMStackPushSet0Jmp
-        pop     edi
-        pop     esi
-        pop     ebx
-        ret
-    }
-}
-#endif
+
+#endif /* NON_MATCHING */

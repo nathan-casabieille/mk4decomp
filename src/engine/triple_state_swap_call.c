@@ -1,269 +1,53 @@
 /**
- * Auto-split from misc_matchesQQ.c
+ * TripleStateSwapCall - 0x0048cc40 (95b engine.download)
+ *
+ * The tail GuardedDualPushTailJmp jumps to after a spawn. Snapshots the
+ * three staging globals (0x542074/0x542070/0x54206c) in callee-saved
+ * registers, runs MStackPush2BiasResolveChain, and - unless paused or
+ * bit 2 of 0x54208c came up - replays the saved 0x542070 into 0x54206c
+ * for PushBitFieldMergePop, then re-roots g_currentNodeIdx at the group
+ * head 0x54205c and restores the other two saves for
+ * PushCallPopScaledJmpIndirect.
+ *
+ * NATIVE-ONLY twin: the matching build synthesizes the original bytes.
  */
-#include "engine/scenegraph.h"
-#include "game/tick.h"
+#ifdef NON_MATCHING
 
-extern unsigned int g_currentNodeIdx;
-extern unsigned int g_baseSel;
-extern unsigned int g_chainAccumCur;
-extern unsigned int g_cj_0054205c;
-extern unsigned int g_gameCountdown;
-extern unsigned int g_xformScratch94;
-extern unsigned int g_fightStateProgress;
-extern unsigned int g_active_00537e88;
-extern unsigned int g_active_0053a408;
-extern unsigned int g_audioBankSel;
+#include "portable/mem_model.h"
 
-extern void StoreTwoCall(int, int);
-extern void SetJmp_Thunk_LinkedListBitMaskSearch(void);
-extern void Thunk_ChainNodeInit(void);
-extern void ScaledZeroFour(void);
-extern void WalkCbSubMul10(void);
-extern void Mul10Tail(unsigned int a, unsigned int b);
-extern void BootMod6487eClampAndChainMul10(void);
-extern void SpawnListBatchLoader(void);
-extern void MStackPush2TableNot(void);
-extern void GuardedChainCmpDualBitXor(void);
-extern void ScaledLoadDecJmp(void);
-extern void ScaledStoreCurDirtyClear(void);
-extern void MStackBitmaskIncMod(void);
-extern void MStackBitmaskUpdate(void);
-extern void Push1eCallTestDirtyLoop(void);
-extern void MStackLoopFieldInit(void);
-extern void TaggedSceneDispatch(void);
-extern void CallPauseDirty4StackPushFn(void);
-extern void CallPauseDirty1JmpDirty4StackPush_GuardedDoubleIncCmpJmp(void);
-extern void Cmp2CallDirtyCall(void);
-extern void QuadBlockArgInstallChain(void);
-extern void InstallSelfChainSet84_80CallW(void);
-extern void Wrapper_PackedAdvanceCallTailJmp_004e46d0(void);
-extern void MoveFsmCluster(void);
-extern void CallPauseTestByteJmpCalls(void);
-extern void InstallSelfFullPath(void);
-extern void InstallSelfCountdownChain(void);
-extern void CopyJmp_SlotCmp3way_g_currentNodeIdx(void);
-extern void DualTestDirtyToggle_004282c0(void);
-extern void TripleVecAccCallStore(void);
-extern void Thunk_LoadGeoAsset_Default(void);
-extern void AllocSlotPushTripleGlobals(void);
-extern void MStackPop4Rewrite(void);
-extern void Push70CallScaleArith(void);
-extern void StreamChainStringInstall(void);
-extern void MStackFrameCdeclDouble(void);
-extern void ChainTableWalkStore(void);
-extern void Push16Call(void);
-extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
-extern void ScaledLoadCmpStoreXfm(void);
-extern void StackPopDispatchTagged(void);
-extern unsigned int g_cj_00542058;
-extern unsigned int g_rangeSqLimit;
-extern unsigned int g_armedReloadA;
-extern unsigned int g_armedReloadB;
-extern unsigned int g_dualBitGate;
-extern unsigned int g_eventArmReload;
-extern unsigned int g_rangeBase;
+extern void MStackPush2BiasResolveChain(void);
+extern void PushBitFieldMergePop(void);
+extern void PushCallPopScaledJmpIndirect(void);
 
-extern void ScaledArrStore_ScaledChainJmp_004298c0(void);
-extern void DualFieldAddSubStore(void);
-extern void IterStepDualStore(int);
-extern void ScaledXorStore_004900f0(void);
-extern void ChainWalkInstall(void);
-extern void FpuSqrtMul(void);
-extern void PendingMatch_StoreTwoCall_0042b930(void);
-extern void MStackPush2RunCountdown(void);
-extern void MStackBracket7_DispatchAndChain(void);
-extern void MStackBracketed3StoreCall(void);
-extern void ChainDirtyBitWalker(void);
-extern void Wrapper_ScaledChainPushCall_004ef858(void);
-extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
-extern void Helper_DownloadSetup(void);
-extern void MStackPush3CmpCall(void);
-extern void Wrapper_IterLoad_0048fd30_004f12a0(void);
-extern void FiveCallScaledChainTailJmp(void);
-extern void SetJmp_StateDispatchYield_00438f50(void);
-extern void SetJmp_StateDispatchYield_00438f60(void);
-extern void GuardedDispatch_InstallSelfDualEsi(void);
-extern void MStackPushZeroCallPop_PendingMatch(void);
-extern void DirtyToggleByGate(void);
-extern void GameDispatchValidateState(void);
-extern void CrouchAttackFsmCluster(void);
-extern void MStackPushVec3Mul10(void);
-extern void LiteralPushCallEntZero(void);
-extern void LeaPlus22StoreSelf(void);
-extern void IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero(void);
-extern void GuardedDualConst2AndToggle(void);
-extern void CallPauseScaledStorePushCall(void);
-extern void LoadGeoAsset_Default(void);
-extern void DispatcherComplex260_FramePauseScaledStore(void);
-extern void PushSetCallPop(void);
-extern unsigned int g_stateCountdown;
-extern unsigned int g_installOwnerNode;
-extern unsigned int g_cj_00542054;
-extern unsigned int g_audioBoundNode;
-extern unsigned int g_lastGatedValue;
-extern unsigned int g_lastGatedTick;
-extern unsigned int g_fightAxisNegX;
-extern unsigned int g_fightAxisNegY;
-extern unsigned int g_fightAxisPosX;
-extern unsigned int g_fightAxisPosY;
+#define g_save74          (*(unsigned int *)MK4_VA(unsigned int, 0x542074u))
+#define g_save70          (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_save6c          (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_currentNodeIdx  (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_groupHead       (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_framePauseFlag  (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
+#define g_dirtyBits8c     (*(unsigned char *)MK4_VA(unsigned char, 0x54208cu))
 
-/* @addr 0x004b8ec0 (92b)
- *   eax = arg0; g_dispatchSave1559 = eax;
- *   ecx = eax + 0x200; edx = eax + 0x400;
- *   g_dispatchSave1560 = ecx; g_dispatchSave1561 = edx;
- *   ecx = eax + 0x580; edx = eax + 0x680;
- *   g_dispatchSave1562 = ecx; g_dispatchSave1563 = edx;
- *   ecx = eax + 0x720; edx = eax + 0x780;
- *   eax += 0x7c0; g_dispatchSave1564=ecx; g_dispatchSave1565=edx;
- *   g_dispatchSave1566=eax; ret.
- */
-extern unsigned int g_dispatchSave1559;
-extern unsigned int g_dispatchSave1560;
-extern unsigned int g_dispatchSave1561;
-extern unsigned int g_dispatchSave1562;
-extern unsigned int g_dispatchSave1563;
-extern unsigned int g_dispatchSave1564;
-extern unsigned int g_dispatchSave1565;
-extern unsigned int g_dispatchSave1566;
-extern void MStackBracket5_LinkedListUnlink(void);
-extern void CountdownClampWalk(void);
-extern void DownloadPlayerChar(void);
-extern void DualWalkRange(void);
-extern void BootDispatchSlotInit(void);
-extern void CjInstallSelfRouter(void);
-extern void ScaledChainCallPauseSetJmp(void);
-extern void MStackBracket2_TreeWalkRecursive(void);
-extern void DualCallPauseDirtyJmp_00490c30(void);
-extern void CallPauseScaledStoreCopyJmp(void);
-extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
-extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_00406430(void);
-extern unsigned int g_counter_0053a51c;
-extern unsigned int g_tickFlagF;
-extern unsigned int g_hitPhase;
-extern void StreamChainStringInstall(void);
-extern void StorePauseImulShr16(void);
-extern void Mul10TailPairMidChain(void);
-extern void NotShrCmp1Store(void);
-extern void Wrapper_ScaledChainPushCall_004ef8b0(void);
-extern void Wrapper_ScaledChainPushCall_004ef858(void);
-extern void PendingMatch_StoreTwoCall_0042b930(void);
-extern void FpuSqrtMul(void);
-extern unsigned int g_dualB_00538038;
-extern unsigned int g_dualB_0053803c;
-extern unsigned int g_bootInitSaveSlot;
-extern void TripleSubVec3(void);
-extern void Mul10SumSqrt(void);
-extern void MStackPushTableWalk(void);
-extern void LoadCmpAddrJmp(void);
-extern void ScaledInitOrSelfPtrSetType_0046a5e0(void);
-extern void ScaledStoreCSet58Jmp(void);
-extern void CjTableThresholdDispatch(void);
-extern void GateDispatch6c(void);
-extern void TwoEntryWrapperGuarded(void);
-extern void DualGatedStateYield(void);
-extern void DualScaledInitCmp_0046dbd0(void);
-extern void FlagCascadeStateSet(void);
-extern void MoveDispatch4StateFsm(void);
-extern void IdCascadeBitSet(void);
-extern void Scaled3StorePushCallJmp(void);
-extern void Thunk_InstallSelfChainSet2011(void);
-extern void StateDispatchYield(void);
-extern unsigned int g_dispatchState;
-extern unsigned int g_stateFlag;
-extern void PushPopState70Mask(void);
-extern void Thunk_LinkedListBitMaskSearch(void);
-extern void CopyJmp_ScaledSubStore_g_currentNodeIdx(void);
-extern void ScaledChain3c74(void);
-extern void ScaledChain3c7c(void);
-extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
-extern void PendingMatch_0046cd30(void);
-extern void Phase3InstallPackedSelf(void);
-extern void ZeroSlotsGatedDispatch(void);
-extern void GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp(void);
-extern void ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush(void);
-extern void MStackPush2ChainSwap(void);
-extern void CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx(void);
-extern void DivLongPushCall(void);
-extern void ScaledDecPop_00404c40(void);
-extern void ScaledDecPop_00404bd0(void);
-extern void TripleMul10VecJmpFpu(void);
-extern void DownloadPlayerChar_Variant(void);
-extern void TripleStateSwapCall(void);
-extern void Atan2QuadrantLookup(void);
-extern void InstallSelfChainSet2011(void);
-extern void GuardedChainPushSetCallPop(void);
-extern void MStackPushSet0001(void);
-extern void ScaledInit_GuardedDirtyXformFromTable_g_scaledInit(void);
-extern void ScaledZero44(void);
-extern void ScaledChainNegStore(void);
-extern void DualCallPauseDirtyJmp_00490c30(void);
-extern void CallPauseScaledDecJmp(void);
-extern void PushPop84TripleCall(void);
-extern void Vec3DeltaDualMul10(void);
-extern void FiveCallGuardSetTail(void);
-extern void ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(void);
-extern void Thunk_InstallSelfChainSetB333v2(void);
-extern void HitReactionDispatcher(void);
-extern void Cmp2DirtyToggle(void);
-extern void ScaledClear1cTestWalkCall(void);
-extern void MStackBracket4_ListInsertZeroFill(void);
-extern void MStackPush3LinkedListWalk(void);
-extern void MStackScopedSlotSetupPair(void);
-extern void ChainSetupBitToggle(void);
-extern void MstackPopScaledChainPlusThunks(void);
-extern void InstallSelfCmdStreamInterp(void);
-extern void DirtyDoubleDeref(void);
-extern void DispatchSwitchWalkCmp(void);
-extern void Wrapper_CmpDualPatchScaledRangeJmp_004e4850(void);
-extern void ScaledAndCheckJmp(void);
-extern void AudioVolumeRescale(void);
-extern void CallPauseConstStoreJmp_MultiThunkDispatcher_then_InstallSelfPair(void);
-extern void InstallSelfPair(void);
-extern void MStackPushSet6Jmp(void);
-extern void MStackPushSet0Jmp(void);
-extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7b(void);
-extern void GuardedSeq_DualSetShiftCall_then_DoubleStackPushAndJmp7d(void);
-extern void Push70CallScaleArith(void);
-extern void StateGateMStackOverlap(void);
-extern void ChainDecCondStoreCallJmp(void);
-extern void ScaledAddDeref(void);
-extern void MStackPush2ChainLLInsert(void);
-extern void ScaledLitAddJmp(void);
-extern void MStackPushDispatchBitGate(void);
-extern void PushDualDerefClearPop(void);
-extern void MStackPushTwoEntryChainCall(void);
-extern void PushPopScaled18(void);
-extern void PushCallSet2147Jmp(void);
-extern void TableLookupCall_g_eventTbl_112(void);
-extern void CmpEqInitCallElseJmp(void);
-extern void MStackAngleRatioSubchain(void);
-extern void PushStackAllocCall(void);
-extern void DualScaledInitClear(void);
-extern void ScaledShrAnd(void);
-extern void DualEntryBitFlagDispatch(void);
-extern void SlotPhaseResetInstallChain(void);
-extern void RoundEndDifferenceFsmCluster(void);
-extern void ClampNegPair(void);
-extern void Vec2SumMul10ChainCompute(void);
-extern void GuardedSeq_MStackCall_then_CallSetPause_0049a650(void);
-extern void AtanDualDeltaThreshold(void);
-extern void Set43DualCallJmp(void);
-extern unsigned int g_scaledArgChain;
-extern unsigned int g_distRefX;
-extern unsigned int g_distRefZ;
-extern unsigned int g_eventQueueSeed;
-extern s32 g_dlNalt1;
-extern s32 g_dlNalt2;
-extern unsigned int g_dataArr_00535cfc;
-extern unsigned int g_dataArr_0053a1d0;
-void Helper_TickInit(unsigned int base) {
-    g_dispatchSave1559 = base;
-    g_dispatchSave1560 = base + 0x200;
-    g_dispatchSave1561 = base + 0x400;
-    g_dispatchSave1562 = base + 0x580;
-    g_dispatchSave1563 = base + 0x680;
-    g_dispatchSave1564 = base + 0x720;
-    g_dispatchSave1565 = base + 0x780;
-    g_dispatchSave1566 = base + 0x7c0;
+void TripleStateSwapCall(void)
+{
+    unsigned int s74 = g_save74;
+    unsigned int s70 = g_save70;
+    unsigned int s6c = g_save6c;
+
+    MStackPush2BiasResolveChain();
+    if (g_framePauseFlag != 0)
+        return;
+    if ((g_dirtyBits8c & 4) != 0)
+        return;
+
+    g_save6c = s70;
+    PushBitFieldMergePop();
+    if (g_framePauseFlag != 0)
+        return;
+
+    g_currentNodeIdx = g_groupHead;
+    g_save6c = s6c;
+    g_save74 = s74;
+    PushCallPopScaledJmpIndirect();
 }
+
+#endif /* NON_MATCHING */

@@ -38,25 +38,25 @@ extern void func_004c5740_mm(void);
 extern int Alldiv(int, int, int, int);
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
+/* 16.16 fixed divide through the global convention: num in g_walkCallback,
+ * denominator in g_eventQueueCurrent, quotient back in g_walkCallback.
+ * The original splits on |num| < 0x8000 (32-bit idiv of num << 16) vs the
+ * UllShlAndInit + Alldiv 64-bit path; one signed 64-bit division computes
+ * both exactly wherever the original does not fault. The old Ghidra lift
+ * called __allshl()/__alldiv() with NO arguments - implicit-int garbage -
+ * so every divide with |num| >= 0x8000 (all the camera-axis divides)
+ * returned junk. */
 void FixedDiv16(void)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  
-  iVar1 = g_eventQueueCurrent;
-  if (g_eventQueueCurrent == 0) {
-    g_walkCallback = g_eventQueueCurrent;
+  int den = (int)g_eventQueueCurrent;
+
+  if (den == 0) {
+    g_walkCallback = 0;
     return;
   }
-  if ((-0x8001 < g_walkCallback) && (g_walkCallback < 0x8000)) {
-    g_walkCallback = (g_walkCallback << 0x10) / g_eventQueueCurrent;
-    return;
-  }
-  uVar2 = __allshl();
-  g_walkCallback = __alldiv(uVar2,iVar1,iVar1 >> 0x1f);
-  return;
+  g_walkCallback = (unsigned int)(int)
+      (((long long)(int)g_walkCallback << 16) / den);
 }
 #else
 __declspec(naked) void FixedDiv16(void) {

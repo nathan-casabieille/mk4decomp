@@ -30,6 +30,7 @@ extern unsigned int g_bootChainScaled1;
 extern unsigned int g_bootChainScaled2;
 extern unsigned int g_bootChainScaled3;
 extern unsigned int g_bootChainScaled4;
+extern unsigned int g_xformEntityIdx;
 #endif
 
 /* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
@@ -44,6 +45,7 @@ extern unsigned int g_bootChainScaled4;
 #define g_bootChainScaled2 (*(unsigned int *)MK4_VA(unsigned int, 0x541e8cu))
 #define g_bootChainScaled3 (*(unsigned int *)MK4_VA(unsigned int, 0x541ea0u))
 #define g_bootChainScaled4 (*(unsigned int *)MK4_VA(unsigned int, 0x541e9cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
 #endif
 
 

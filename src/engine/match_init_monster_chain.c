@@ -218,6 +218,7 @@ extern void QuadGuardedCjSet_00422fc0(void);
 extern void QuadGuardedCjSet_004230b0(void);
 extern void FourGlobalsEqualFInitTail(void);
 extern void PvpAngleDistSeed(void);
+
 extern void DualPushCallStore(void);
 extern void OrDualStore_0048a190(void);
 extern void DualBitGateInitCall(void);

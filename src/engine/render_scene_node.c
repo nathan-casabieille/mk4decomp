@@ -42,15 +42,15 @@ extern void BillboardChainRender(void);
 extern void BillboardSheetDualEmit(void *rec, int q);
 extern void DirtyBitTripleWriteOrCall(void);
 extern int  DirtyTestScaledCopy(void);
-extern void DrawMeshBlock(void *p, unsigned int f, unsigned short w);
+extern void DrawMeshBlock(unsigned int recVA, unsigned int f, unsigned short w);
 extern void LeaScaledCall(int a);
 extern void MStackPushCallCallPop_func_00405dd0(void);
 extern void MatrixTransform3x3Q12(short *src, short *dst);
 extern void MovesPanelEmit(void);
 extern void TransformAccumulate(void);
-extern void TristripBatchEmit2(void *p, unsigned int f, unsigned short w);
-extern void TristripBatchEmit3Cap(void *p, unsigned int f, unsigned short w);
-extern void TristripBatchEmit(void *p, unsigned int f, unsigned short w);
+extern void TristripBatchEmit2(unsigned int recVA, unsigned int f, unsigned short w);
+extern void TristripBatchEmit3Cap(unsigned int recVA, unsigned int f, unsigned short w);
+extern void TristripBatchEmit(unsigned int recVA, unsigned int f, unsigned short w);
 extern void VertexQuadBuilder(int a, unsigned int b);
 extern void VibrationFrameUpdate(int node);
 extern void VtableDispatchSetDirty(int node);
@@ -340,8 +340,9 @@ emit:
         } else {
             blk = MK4_NODE_AT(int, g_dualD, 0x18);
             if (*(int *)MK4_PTR(sub + 4) > 0) {
-                unsigned char *rec = (unsigned char *)MK4_PTR(
-                    (unsigned int)(blk * 0x10 + 0xc + *(int *)MK4_PTR(sub + 4)));
+                unsigned int recVA =
+                    (unsigned int)(blk * 0x10 + 0xc + *(int *)MK4_PTR(sub + 4));
+                unsigned char *rec = (unsigned char *)MK4_PTR(recVA);
                 unsigned char tag = rec[0];
                 unsigned short width = *(unsigned short *)MK4_PTR(
                     *(unsigned int *)MK4_PTR(sub) + 8);
@@ -355,8 +356,8 @@ emit:
                         g_dualC = MK4_NODE_AT(unsigned int, node, 0x48);
                         if (g_dualC != 0) {
                             g_currentNodeIdx = node;
-                            if (*(unsigned int *)MK4_PTR(g_dualC * 4) !=
-                                (MK4_UNPTR(rec) * 0x20 |
+                            if (*(unsigned int *)MK4_PTR(g_dualC) !=
+                                (recVA * 0x20 |
                                  (((int)g_cj_0054205c >> 0x10) & 8) |
                                  g_dispatchSave1572)) {
                                 rebuild = 1;
@@ -375,20 +376,20 @@ emit:
                         g_walkCallback = g_cj_0054205c & 1;
                         g_eventQueuePending = MK4_UNPTR(&g_dispatchSave1559);
                         if ((g_dispatchSave1572 & 0x40) != 0) {
-                            TristripBatchEmit2(rec, g_walkCallback, width);
+                            TristripBatchEmit2(recVA, g_walkCallback, width);
                         } else if ((g_cj_0054205c & 0x80000) != 0 &&
                                    (g_dispatchSave1572 & 1) != 0) {
                             g_dispatchSave1570 = g_cj_0054205c & 0x1000;
-                            DrawMeshBlock(rec, g_walkCallback, width);
+                            DrawMeshBlock(recVA, g_walkCallback, width);
                             g_dispatchSave1570 = 0;
                             if ((kind & 0x40000) != 0) {
                                 g_eventQueuePending = node;
                                 BboxProjectAndStash();
                             }
                         } else if ((g_dispatchSave1572 & 2) != 0) {
-                            TristripBatchEmit(rec, g_walkCallback, width);
+                            TristripBatchEmit(recVA, g_walkCallback, width);
                         } else {
-                            TristripBatchEmit3Cap(rec, g_walkCallback, width);
+                            TristripBatchEmit3Cap(recVA, g_walkCallback, width);
                         }
                     }
                 } else {

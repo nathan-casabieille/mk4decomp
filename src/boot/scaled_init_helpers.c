@@ -133,7 +133,7 @@ void CallPauseDirty4ScaledSet_tag_0x81(void) {
     if (g_framePauseFlag) return;
     if (g_xformDirtyFlags & 4) return;
 #ifdef MK4_ARENA
-    MK4_NODE_AT(unsigned int, g_eventQueueEnd, 0) = 0x81;
+    MK4_NODE_AT(unsigned int, g_eventQueueEnd, 0x30) = 0x81;   /* ->tag */
 #else
     ((FightGroupNode *)(g_eventQueueEnd * 4))->tag = 0x81;
 #endif
