@@ -269,6 +269,19 @@ void MK4_GameFrame(void)
                     *MK4_VA(unsigned int, 0x00535e10u),
                     *MK4_VA(unsigned int, 0x00535e14u));
         if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
+            SDL_Log("      pair1cnt=%x  pair0cnt=%x  base82=%x pair0=%x head=%x  slot2=%x head=%x",
+                    *MK4_VA(unsigned int, 0x541e84u) ?
+                      MK4_NODE_AT(unsigned int, *MK4_VA(unsigned int, 0x541e84u), 8) : 0xdead,
+                    *MK4_VA(unsigned int, 0x541e80u) ?
+                      MK4_NODE_AT(unsigned int, *MK4_VA(unsigned int, 0x541e80u), 8) : 0xdead,
+                    *MK4_VA(unsigned int, 0x541e7cu),
+                    *MK4_VA(unsigned int, 0x541e80u),
+                    *MK4_VA(unsigned int, 0x541e80u) ?
+                      *MK4_NODE(unsigned int, *MK4_VA(unsigned int, 0x541e80u)) : 0xdead,
+                    *MK4_VA(unsigned int, 0x541ea8u),
+                    *MK4_VA(unsigned int, 0x541ea8u) ?
+                      *MK4_NODE(unsigned int, *MK4_VA(unsigned int, 0x541ea8u)) : 0xdead);
+        if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
             SDL_Log("      freeHead=%x freeSize=%x  nodesAlloc=%x",
                     *MK4_VA(unsigned int, 0x00535e0cu),
                     *MK4_VA(unsigned int, 0x00535e0cu) ?

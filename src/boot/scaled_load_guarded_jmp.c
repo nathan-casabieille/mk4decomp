@@ -27,7 +27,11 @@ extern unsigned int g_currentNodeIdx;
  */
 extern void MStackPushZeroCallPop(void);
 void ScaledLoadGuardedJmp(void) {
+#ifdef MK4_ARENA
+    unsigned int v = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 4);
+#else
     unsigned int v = *(unsigned int*)(g_currentNodeIdx * 4 + 4);
+#endif
     g_walkCallback = (void(*)(void))v;
     if (v) {
         MStackPushZeroCallPop();

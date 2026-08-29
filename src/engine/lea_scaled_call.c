@@ -27,5 +27,11 @@ extern unsigned int g_currentNodeIdx;
  */
 extern int CleanupCallTwice(void *);
 void LeaScaledCall(void) {
+#ifdef MK4_ARENA
+    /* the argument is the ADDRESS of the node's +0x48 slot, so it has to be
+     * a host pointer into the arena, not the packed form */
+    CleanupCallTwice((void *)&MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x48));
+#else
     CleanupCallTwice((void *)(g_currentNodeIdx * 4 + 0x48));
+#endif
 }

@@ -148,6 +148,13 @@ extern unsigned int g_fightAxisPosY;
 #define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
 #define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
 #define g_xformLoopCounter (*(unsigned int *)MK4_VA(unsigned int, 0x53a1acu))
+/* The four the builder READS. They are set by its caller through the arena,
+ * so reading the native globals of the same name here gets zero and the list
+ * is never built - the read side of the alias split. */
+#define g_eventQueueTotal (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
+#define g_eventQueueEnd (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
 #define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
 #endif
 
