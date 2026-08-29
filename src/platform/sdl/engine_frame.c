@@ -410,7 +410,14 @@ void MK4_GameFrame(void)
                 SDL_Log("arena-stage: stage %d -> name record 0x%08x",
                         stage, nameRec);
                 LoadGeoAsset_Textures(0);
-                TableWalkBoundedCmp(7);
+                /* NOT TableWalkBoundedCmp here. Despite the name,
+                 * GeoLoadFixupLoop - what that walk runs on every entry
+                 * whose kind matches - is an UNLOAD: it releases the
+                 * texture slots, clears the 0xab4e78 / 0xab5038 registry
+                 * words and Mem_Frees the block. Calling it with kind 7
+                 * freed the arena on the same frame it was loaded, which
+                 * is why the first version of this hook reported a live
+                 * block and still rendered nothing. */
                 SDL_Log("arena-stage: loader returned, block=%08x",
                         *MK4_VA(unsigned int, slotVA + 4u));
             }
