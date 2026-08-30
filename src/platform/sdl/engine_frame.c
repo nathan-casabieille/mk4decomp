@@ -397,6 +397,36 @@ void MK4_GameFrame(void)
          * intro anims, steps the walk-in through code-table states 0x25 /
          * 0x26 with a ten-step budget, and STOPS it. One spawn per
          * fighter, group staged before each (the controller captures it). */
+        /* MK4_FIGHTER_SEL=<n>: EXPERIMENT ONLY - force the matrix-builder
+         * selector in the fighters' kind word (bits 24..26), which picks
+         * from the 8-entry table at 0x4f7888. */
+        { const char *se = getenv("MK4_FIGHTER_SEL");
+          if (se) { unsigned int n = (unsigned int)atoi(se) & 7u; int i;
+            unsigned int ns[2] = { *MK4_VA(unsigned int, 0x538158u),
+                                   *MK4_VA(unsigned int, 0x53815cu) };
+            for (i = 0; i < 2; i++) if (ns[i])
+                MK4_NODE_AT(unsigned int, ns[i], 0x34) =
+                    (MK4_NODE_AT(unsigned int, ns[i], 0x34) & ~0x7000000u)
+                    | (n << 24); } }
+
+        /* MK4_FIGHTER_ROT=<slot>: EXPERIMENT ONLY - move each fighter's
+         * facing angle into a different one of the three angle slots, to
+         * find which one the model's own axes expect. 0/1/2 = +0x60 /
+         * +0x64 / +0x68. */
+        { const char *sl = getenv("MK4_FIGHTER_ROT");
+          if (sl) { int k = atoi(sl); int i;
+            unsigned int ns[2] = { *MK4_VA(unsigned int, 0x538158u),
+                                   *MK4_VA(unsigned int, 0x53815cu) };
+            for (i = 0; i < 2; i++) if (ns[i]) {
+                int a = MK4_NODE_AT(int, ns[i], 0x60)
+                      | MK4_NODE_AT(int, ns[i], 0x64)
+                      | MK4_NODE_AT(int, ns[i], 0x68);
+                MK4_NODE_AT(int, ns[i], 0x60) = 0;
+                MK4_NODE_AT(int, ns[i], 0x64) = 0;
+                MK4_NODE_AT(int, ns[i], 0x68) = 0;
+                MK4_NODE_AT(int, ns[i], 0x60 + 4 * k) = a;
+            } } }
+
         /* MK4_CAM_YAW=<bam>: EXPERIMENT ONLY - force the camera's yaw each
          * frame to test whether the framing gap is a constant offset. */
         { const char *y = getenv("MK4_CAM_YAW");
