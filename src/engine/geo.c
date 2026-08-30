@@ -73,6 +73,10 @@ extern void Tex_DecodeRLE16(s32 slot, s32 width, s32 height, const u8 *src);
  * Every pointer that lives in a 32-bit slot here - the node's block, the name,
  * the table base - is a VA, so it goes through the seam; the buffers handed to
  * the file layer and the decoder are host pointers. */
+#ifdef TARGET_SDL
+static int g_texGot, g_texLost, g_texSeen;
+#endif
+
 void LoadGeoAsset_Textures(s32 index)
 {
     unsigned int node = g_currentNodeIdx * 4u;
@@ -158,6 +162,19 @@ void LoadGeoAsset_Textures(s32 index)
         /* the cursor advances on BOTH exits - giving up still moves it on */
         *(unsigned int *)MK4_PTR(0x00ab4e74u) = slot;
 
+#ifdef TARGET_SDL
+        /* MK4_TRACE_TEX: how many textures actually get a page slot. There
+         * are only fifteen (0xab4e00, 15 entries), and the claim loop gives
+         * up silently when they are all taken - the record then keeps
+         * whatever slot it had, which reads on screen as scrambled texels
+         * rather than as a missing texture. */
+        { extern char *getenv(const char *); extern void SDL_Log(const char *, ...);
+          if (getenv("MK4_TRACE_TEX")) {
+              if (found) g_texGot++; else g_texLost++;
+              SDL_Log("TEXSLOT %s slot=%u %ux%u %s",
+                      (const char *)MK4_VA(char, 0x00ab43d8u) + 24,
+                      slot, w, h, found ? "" : "DENIED"); } }
+#endif
         if (found) {
             Tex_DecodeRLE16((s32)slot, (s32)w, (s32)h, (const u8 *)MK4_PTR(chunk));
             slot = *(unsigned int *)MK4_PTR(0x00ab4e74u);
@@ -171,6 +188,14 @@ void LoadGeoAsset_Textures(s32 index)
         count--;
     }
 
+#ifdef TARGET_SDL
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      if (getenv("MK4_TRACE_TEX"))
+          SDL_Log("TEX \"%s\": %d textures, claimed=%d denied=%d",
+                  (const char *)MK4_VA(char, 0x00ab43d8u),
+                  g_texGot + g_texLost - g_texSeen, g_texGot, g_texLost);
+      g_texSeen = g_texGot + g_texLost; }
+#endif
     Helper_GeoLoadPost();
 }
 #else

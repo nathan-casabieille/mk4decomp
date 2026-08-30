@@ -198,8 +198,14 @@ void GeoLoadFixupLoop(void)
     p += 4;
     for (; (int)n > 0; n--) {
         id = *MK4_VA(short, p);
-        if (id != -1)
+        if (id != -1) {
+#ifdef TARGET_SDL
+            { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+              if (getenv("MK4_TRACE_TEX"))
+                  SDL_Log("TEXFREE slot=%d (node %x)", (int)id, node); }
+#endif
             *MK4_VA(unsigned short, 0xab4e00u + (unsigned int)id * 2u) = 0;
+        }
         p += 4;
     }
 
