@@ -326,6 +326,11 @@ __attribute__((weak)) unsigned int g_texAssetIds_ee;
 __attribute__((weak)) int PushSetCallPop(){MK4_StubHit("PushSetCallPop");return 0;}
 __attribute__((weak)) int Screen_ArcadeEnding(){MK4_StubHit("Screen_ArcadeEnding");return 0;}
 __attribute__((weak)) int Input_PollPlayerJoystick(){MK4_StubHit("Input_PollPlayerJoystick");return 0;}
+/* 0x4b3e20: dispatches to a PER-BACKEND gamma ramp (Glide / Direct3D /
+ * DirectDraw / software). All four are Win32 renderer paths with no SDL
+ * equivalent, so the native build has nothing to call - the GRAPHICS
+ * screen still edits and displays the value. */
+__attribute__((weak)) int Helper_RendererPostInit(){MK4_StubHit("Helper_RendererPostInit");return 0;}
 __attribute__((weak)) int BootGatedInitInstallPair(){MK4_StubHit("BootGatedInitInstallPair");return 0;}
 __attribute__((weak)) int SlotInitAndChainLink(){MK4_StubHit("SlotInitAndChainLink");return 0;}
 __attribute__((weak)) int SetDirty4XorScaledLoad(){MK4_StubHit("SetDirty4XorScaledLoad");return 0;}
