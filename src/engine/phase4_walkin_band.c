@@ -420,23 +420,38 @@ void Phase4WalkIn_00412ad0(void)
         ctr = g_slot58cur - 1u;
         g_slot58cur = ctr;
         if ((int)ctr < 0) {
+            /* countdown done: destroy the effect node (the captured
+             * group) and TERMINATE - the original never reinstalls
+             * after the kill (jne ret / je CallSetPause+ret at
+             * 0x412b63). The first transcription re-armed here, so the
+             * dead walk-in killed its slot again every cycle - that
+             * repeated free is what cycled the bootChainPair0 pool. */
             MStackCall_MStackPush2ChainLLInsert();
             if (g_framePauseFlag != 0) return;
-            goto reinstall;
+            CallSetPause();
+            return;
         }
-        goto reinstall;
+        goto reinstall2;
     }
     /* cmd 1: forward only */
     NODE_W(a, 0x48) += 0xcccu;
     g_walkCallback = NODE_W(g_slot54, 0x48);
     ctr = g_slot58cur - 1u;
     g_slot58cur = ctr;
-    if ((int)ctr < 0)
-        g_slot58cur = 7u;
+    if ((int)ctr >= 0)
+        goto reinstall1;                  /* jns 0x412c8f: STAY in cmd 1 */
+    g_slot58cur = 7u;                     /* expired: advance to cmd 2 */
 
-reinstall:
+reinstall2:
     NODE_W(cam, 8) = 0x412ad0u;
     NODE_W(cam, 0x84) = 2;
+    g_pendingNodeType = 1u;
+    g_framePauseFlag = 1;
+    return;
+
+reinstall1:
+    NODE_W(cam, 8) = 0x412ad0u;
+    NODE_W(cam, 0x84) = 1;
     g_pendingNodeType = 1u;
     g_framePauseFlag = 1;
     return;
