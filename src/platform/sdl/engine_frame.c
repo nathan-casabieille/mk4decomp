@@ -397,6 +397,20 @@ void MK4_GameFrame(void)
          * intro anims, steps the walk-in through code-table states 0x25 /
          * 0x26 with a ten-step budget, and STOPS it. One spawn per
          * fighter, group staged before each (the controller captures it). */
+        /* MK4_FIGHTER_PITCH=<bam>: EXPERIMENT ONLY - set the fighters'
+         * first angle slot (+0x60). Under BuildRotMatrix_OrderA a zero
+         * first angle always sources world height from the model's LOCAL
+         * Z; a quarter turn here should bring local Y up instead. */
+        { const char *pt = getenv("MK4_FIGHTER_PITCH");
+          if (pt) { int a = atoi(pt); int i;
+            unsigned int ns[2] = { *MK4_VA(unsigned int, 0x538158u),
+                                   *MK4_VA(unsigned int, 0x53815cu) };
+            const char *rl = getenv("MK4_FIGHTER_ROLL");
+            for (i = 0; i < 2; i++) if (ns[i]) {
+                MK4_NODE_AT(int, ns[i], 0x60) = a;
+                if (rl) MK4_NODE_AT(int, ns[i], 0x68) = atoi(rl);
+            } } }
+
         /* MK4_FIGHTER_SEL=<n>: EXPERIMENT ONLY - force the matrix-builder
          * selector in the fighters' kind word (bits 24..26), which picks
          * from the 8-entry table at 0x4f7888. */

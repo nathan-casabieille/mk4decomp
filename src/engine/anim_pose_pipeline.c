@@ -166,6 +166,17 @@ next:
         SDL_Log("XTRACT bone=%06x flags=%08x entity=%06x word=%08x",
                 bone, flags, g_xformEntityIdx, g_walkCallback); } }
 #endif
+#ifdef TARGET_SDL
+    /* MK4_TRACE_ANIM=N: the pose decoder writing a bone's rotation. If the
+     * fighters' bones never appear here they stay in bind pose, which is
+     * what "the characters are lying down" looks like. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      extern int atoi(const char *);
+      static int lim = -1; static int n;
+      if (lim < 0) { char *e = getenv("MK4_TRACE_ANIM"); lim = e ? atoi(e) : 0; }
+      if (n < lim) { n++;
+          SDL_Log("ANIM bone=%x", *MK4_VA(unsigned int, 0x542044u)); } }
+#endif
     ExtractBitsToVec3();
     if (g_framePauseFlag != 0)
         return;                            /* pop skipped - abort leak */
