@@ -179,6 +179,19 @@ extern unsigned int g_matrixStack_arr;
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
 void LinkedListBuilder(void)
 {
+#ifdef TARGET_SDL
+    /* MK4_TRACE_FREEPOP: a builder run re-threads the free links over the
+     * whole region - if round state already lives there, every later pop
+     * hands out live nodes. Log each (re)build. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int f = -1; static int n;
+      if (f < 0) f = getenv("MK4_TRACE_FREEPOP") != 0;
+      if (f && n < 40) { n++;
+          SDL_Log("FREEBUILD owner=%x base=%x stride=%x count=%x",
+                  *MK4_VA(unsigned int, 0x542050u), *MK4_VA(unsigned int, 0x542044u),
+                  *MK4_VA(unsigned int, 0x54204cu), *MK4_VA(unsigned int, 0x542054u)); } }
+#endif
+
     unsigned int rec  = g_eventQueueTotal;      /* the list header node */
     unsigned int ent  = g_xformEntityIdx;       /* field pair offset */
     unsigned int step = g_pendingNodeType;      /* stride between nodes */
