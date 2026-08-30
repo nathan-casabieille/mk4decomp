@@ -19,6 +19,13 @@ This reads every TU in native_full_srcs.txt and reports a global that
   - the file spells 32 bits wide (or does not spell at all, so the generic
     alias pass gives it the 32-bit form).
 
+It also reports the opposite mistake: an alias whose lvalue is a POINTER
+type (`T **`), which on a 64-bit host is EIGHT bytes over an engine slot of
+four - so a single write lands on the neighbouring global as well.
+transform_accumulate.c had exactly that on 0x542048: writing it also wrote
+0x54204c, the packed pointer the very next call reads, so an entire skeleton
+transformed the same stale vector and rendered on one point (fd3a4eaf4).
+
 Usage:  build/venv/bin/python tools/decomp/audit_linked_widths.py
 """
 import re
@@ -157,3 +164,33 @@ def main():
 
 
 main()
+
+
+# --- pointer-typed aliases: 8 bytes of lvalue over a 4-byte engine slot ----
+PTR_ALIAS = re.compile(
+    r'#define\s+(\w+)\s+\(\*\(\s*\w[\w ]*?\*\*\s*\)\s*MK4_VA\(\s*\w[\w ]*,\s*(0x[0-9a-fA-F]+)')
+
+
+def audit_pointer_aliases():
+    srcs = [l.strip() for l in (ROOT / 'tools/decomp/native_full_srcs.txt')
+            .read_text().splitlines() if l.strip() and not l.lstrip().startswith('#')]
+    hits = []
+    for rel in srcs:
+        p = ROOT / rel
+        if not p.exists():
+            continue
+        for m in PTR_ALIAS.finditer(p.read_text(errors='ignore')):
+            hits.append((rel, m.group(1), m.group(2)))
+    if hits:
+        print(f'\naudit-linked-widths: {len(hits)} POINTER-typed alias(es) - '
+              f'an 8-byte lvalue over a 4-byte slot clobbers the next global:')
+        for rel, sym, va in hits:
+            print(f'   {rel}: {sym} at {va}')
+    else:
+        print('audit-linked-widths: no pointer-typed aliases '
+              '(no 8-byte lvalue over an engine slot)')
+    return len(hits)
+
+
+audit_pointer_aliases()
+

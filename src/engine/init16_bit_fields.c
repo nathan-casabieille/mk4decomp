@@ -25,9 +25,9 @@ extern unsigned short g_camRotYBam;
 #ifdef MK4_ARENA
 #include "portable/mem_model.h"
 #define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
-#define g_camRotXBam (*(unsigned short **)MK4_VA(unsigned short, 0xab47f8u))
-#define g_camRotYBam (*(unsigned short **)MK4_VA(unsigned short, 0xab47fau))
-#define g_camRotZBam (*(unsigned short **)MK4_VA(unsigned short, 0xab47fcu))
+#define g_camRotXBam (*(unsigned short *)MK4_VA(unsigned short, 0xab47f8u))
+#define g_camRotYBam (*(unsigned short *)MK4_VA(unsigned short, 0xab47fau))
+#define g_camRotZBam (*(unsigned short *)MK4_VA(unsigned short, 0xab47fcu))
 #define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #endif
 

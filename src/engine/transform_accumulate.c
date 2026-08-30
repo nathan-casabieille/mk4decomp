@@ -153,7 +153,7 @@ extern unsigned int g_arr_4bddf0_src;
 #define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
 #define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
-#define g_eventQueueCurrent (*(unsigned int **)MK4_VA(unsigned int, 0x542070u))
+#define g_eventQueueCurrent (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
 #define g_eventQueueCurrent_mm (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
 #define g_eventQueueTotal (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
 #define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))

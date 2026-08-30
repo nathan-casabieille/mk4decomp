@@ -227,7 +227,7 @@ extern void SunbeamSpriteEmit(void);
 #define g_vtxScreenP2Y (*(short *)MK4_VA(short, 0x7af9bau))
 #define g_vtxScreenX (*(unsigned int *)MK4_VA(unsigned int, 0x7af9bcu))
 #define g_vtxScreenY (*(short *)MK4_VA(short, 0x7af9beu))
-#define g_vtxValid (*(int **)MK4_VA(int, 0x7af9b0u))
+#define g_vtxValid (*(int *)MK4_VA(int, 0x7af9b0u))
 #define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
 #define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
 #endif

@@ -158,7 +158,7 @@ extern unsigned int g_particleInitState;
 #define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
 #define g_lit16_00542074 (*(unsigned int *)MK4_VA(unsigned int, 0x542074u))
 #define g_particleInitState (*(unsigned int *)MK4_VA(unsigned int, 0x541de0u))
-#define g_player2NodeIdx (*(unsigned int **)MK4_VA(unsigned int, 0x53815cu))
+#define g_player2NodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x53815cu))
 #define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
 #define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
 #define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))

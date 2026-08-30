@@ -73,8 +73,8 @@ extern void ProjectVertex(void);
 /* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
 #ifdef MK4_ARENA
 #include "portable/mem_model.h"
-#define g_camRotXBam (*(unsigned int **)MK4_VA(unsigned int, 0xab47f8u))
-#define g_camRotZBam (*(unsigned int **)MK4_VA(unsigned int, 0xab47fcu))
+#define g_camRotXBam (*(unsigned int *)MK4_VA(unsigned int, 0xab47f8u))
+#define g_camRotZBam (*(unsigned int *)MK4_VA(unsigned int, 0xab47fcu))
 #define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_dispatchSave1513 (*(unsigned int *)MK4_VA(unsigned int, 0xab44f8u))
 #define g_dispatchSave1530 (*(unsigned int *)MK4_VA(unsigned int, 0xab487cu))

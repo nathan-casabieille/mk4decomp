@@ -201,7 +201,7 @@ extern void ProjectVertex(void);
 #define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
 #define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
 #define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
-#define g_tickCurMask (*(unsigned int **)MK4_VA(unsigned int, 0xab4e20u))
+#define g_tickCurMask (*(unsigned int *)MK4_VA(unsigned int, 0xab4e20u))
 #define g_triStripRingA (*(unsigned int *)MK4_VA(unsigned int, 0x7af9b4u))
 #define g_triStripRingB (*(unsigned int *)MK4_VA(unsigned int, 0x7af984u))
 #define g_triStripX0 (*(short *)MK4_VA(short, 0x7af95cu))
