@@ -568,6 +568,13 @@ void FightGroupInit_00430430(void)
      * See the fight-scene status note. */
     { extern char *getenv(const char *);
       if (!getenv("MK4_ARENA_INTRO")) g_xformEntityIdx = 0; }
+    /* MK4_TRACE_INTRO: which stage index the fight picked and which intro
+     * entry the table at 0x4e3a30 hands it. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int f = -1; static int n;
+      if (f < 0) f = getenv("MK4_TRACE_INTRO") != 0;
+      if (f && n < 4) { n++;
+          SDL_Log("INTRO stage=%u entry=%x", g_stage53a51c, g_xformEntityIdx); } }
 #endif
     mstack_push(0x4304b0u);
     StackPeekDispatchIndirect();     /* jmp in the original */

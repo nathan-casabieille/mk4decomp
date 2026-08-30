@@ -491,7 +491,27 @@ void ArenaIntro_Spin_00430bd0(void)
 
     if (cmd == 0) {
         g_slot88 = 0x1921fu;              /* pi/2 sweep */
+#ifdef TARGET_SDL
+        /* MK4_TRACE_SWEEP: the arc's seed and the pose it produces. The
+         * spin must END framed on the fighters, so the first placement
+         * should be the FAR pose, not the framed one. */
+        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+          static int f = -1; static int n;
+          if (f < 0) f = getenv("MK4_TRACE_SWEEP") != 0;
+          if (f && n < 6) { n++;
+              SDL_Log("SWEEP seed=%x group=%x", g_slot88, g_groupHead); } }
+#endif
         GuardedArithDualCallChain();
+#ifdef TARGET_SDL
+        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+          static int f2 = -1; static int n2;
+          if (f2 < 0) f2 = getenv("MK4_TRACE_SWEEP") != 0;
+          if (f2 && n2 < 6) { n2++;
+              SDL_Log("SWEEP after: slot88=%x cam=[%d %d %d]", g_slot88,
+                      MK4_NODE_AT(int, g_groupHead, 0x54),
+                      MK4_NODE_AT(int, g_groupHead, 0x58),
+                      MK4_NODE_AT(int, g_groupHead, 0x5c)); } }
+#endif
         if (g_framePauseFlag != 0) return;
         ai_yield(cam, 0x430bd0u, 1, 0x16);
         return;
