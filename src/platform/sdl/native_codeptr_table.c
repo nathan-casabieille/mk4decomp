@@ -11,6 +11,8 @@ extern int Phase3InstallSelf();
 extern int MStackPackedInit();
 extern int SaveCallRestore();
 extern int Mul10Tail();
+extern int ThreeChanPackClamp();
+extern int CopyThreeFields();
 extern int Init6Struct();
 extern int ScaledChainOr8();
 extern int BootInitChainHeavy();
@@ -64,6 +66,7 @@ extern int BootDispatchSlotInit();
 extern int MStackPushDispatchBitGate();
 extern int DispatcherComplex260_FramePauseScaledStore();
 extern int BootMod6487eClampAndChainMul10();
+extern int MotionIntegrate_00407560();
 extern int InstallSelfDispatch();
 extern int BootChainPushAddSignFlag();
 extern int SetJmp_CallPauseScaledStoreAdd();
@@ -102,13 +105,20 @@ extern int FlagThunk4EntryDispatcher();
 extern int FlagThunkTail_0040a4d0();
 extern int FlagThunkClear4_0040a4f0();
 extern int FlagThunkClearBit2_0040a510();
+extern int MStackPushNegMul10();
 extern int StackPushAdd15CallPop();
 extern int ZeroThreeFields_0040a8b0();
 extern int PushCallScaledClearJmp();
 extern int Phase4DualHelperTrampoline();
 extern int Phase4Fsm_00412920();
 extern int Phase4WalkIn_00412ad0();
+extern int Phase4FivePackedHelpers();
+extern int Phase4BoneDecay_00412ff0();
+extern int MStackPushSet9Jmp();
+extern int PushStackCallPauseSet0xa();
 extern int Phase4StateInit4Helpers();
+extern int Phase4BoneFade_004131f0();
+extern int Phase4BoneGravity_00413310();
 extern int SoundSetupLoop();
 extern int SetDirty4XorScaledLoad();
 extern int Phase4TrampolineMainHelpers();
@@ -164,6 +174,7 @@ extern int Cmp2DirtyToggle();
 extern int TestCmpZeroFour();
 extern int ModMagicMul10Index();
 extern int MStackMagicModMul10();
+extern int MStackPush1MagicMod2();
 extern int Atan2QuadrantLookup();
 extern int TripleMod411262();
 extern int Mul10HeavyTransform();
@@ -681,6 +692,7 @@ extern int AndStoreJmp();
 extern int MStackBitLoopTripleCall();
 extern int CmpDivJmp();
 extern int LinkedListSwapHead();
+extern int ChainListVecAdd();
 extern int LinkedListFieldAdd_StoreDoubleNegPauseSubStore();
 extern int PoseTreeBlendWalker();
 extern int SixCrossStores();
@@ -948,6 +960,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4049c0u, (void*)MStackPackedInit},
     {0x4049d0u, (void*)SaveCallRestore},
     {0x404af0u, (void*)Mul10Tail},
+    {0x404cc0u, (void*)ThreeChanPackClamp},
+    {0x404df0u, (void*)CopyThreeFields},
     {0x404e20u, (void*)Init6Struct},
     {0x404e50u, (void*)ScaledChainOr8},
     {0x404f20u, (void*)BootInitChainHeavy},
@@ -1001,6 +1015,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x407330u, (void*)MStackPushDispatchBitGate},
     {0x407400u, (void*)DispatcherComplex260_FramePauseScaledStore},
     {0x407510u, (void*)BootMod6487eClampAndChainMul10},
+    {0x407560u, (void*)MotionIntegrate_00407560},
     {0x407620u, (void*)InstallSelfDispatch},
     {0x4077b0u, (void*)BootChainPushAddSignFlag},
     {0x4078e0u, (void*)SetJmp_CallPauseScaledStoreAdd},
@@ -1039,13 +1054,20 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x40a4d0u, (void*)FlagThunkTail_0040a4d0},
     {0x40a4f0u, (void*)FlagThunkClear4_0040a4f0},
     {0x40a510u, (void*)FlagThunkClearBit2_0040a510},
+    {0x40a690u, (void*)MStackPushNegMul10},
     {0x40a7e0u, (void*)StackPushAdd15CallPop},
     {0x40a8b0u, (void*)ZeroThreeFields_0040a8b0},
     {0x40bf20u, (void*)PushCallScaledClearJmp},
     {0x412900u, (void*)Phase4DualHelperTrampoline},
     {0x412920u, (void*)Phase4Fsm_00412920},
     {0x412ad0u, (void*)Phase4WalkIn_00412ad0},
+    {0x412cb0u, (void*)Phase4FivePackedHelpers},
+    {0x412ff0u, (void*)Phase4BoneDecay_00412ff0},
+    {0x413040u, (void*)MStackPushSet9Jmp},
+    {0x413070u, (void*)PushStackCallPauseSet0xa},
     {0x4130c0u, (void*)Phase4StateInit4Helpers},
+    {0x4131f0u, (void*)Phase4BoneFade_004131f0},
+    {0x413310u, (void*)Phase4BoneGravity_00413310},
     {0x413ea0u, (void*)SoundSetupLoop},
     {0x4147b0u, (void*)SetDirty4XorScaledLoad},
     {0x414b90u, (void*)Phase4TrampolineMainHelpers},
@@ -1101,6 +1123,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4238b0u, (void*)TestCmpZeroFour},
     {0x424350u, (void*)ModMagicMul10Index},
     {0x424410u, (void*)MStackMagicModMul10},
+    {0x4244d0u, (void*)MStackPush1MagicMod2},
     {0x4245b0u, (void*)Atan2QuadrantLookup},
     {0x424740u, (void*)TripleMod411262},
     {0x424bf0u, (void*)Mul10HeavyTransform},
@@ -1618,6 +1641,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x49cc30u, (void*)MStackBitLoopTripleCall},
     {0x49d080u, (void*)CmpDivJmp},
     {0x49d0a0u, (void*)LinkedListSwapHead},
+    {0x49d200u, (void*)ChainListVecAdd},
     {0x49d380u, (void*)LinkedListFieldAdd_StoreDoubleNegPauseSubStore},
     {0x49d680u, (void*)PoseTreeBlendWalker},
     {0x49d8e0u, (void*)SixCrossStores},

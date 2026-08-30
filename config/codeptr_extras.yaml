@@ -120,11 +120,38 @@ entries:
   0x468f60: MatchStartFsm_00468f60
   0x428d80: InstallSelf3WayChainCmp
   0x429240: InstallSelfPair3Branch
-  # Phase4 bone ticks (0x4130c0/0x4131f0/0x413230/0x413310) are CONVERTED
-  # in phase4_bone_ticks.c but deliberately NOT registered yet: their +0x10
-  # dispatch protocol stages g_fightGroupHead in a way the pump-side reader
-  # has not been transcribed for, and registering them let 0x413230 run in
-  # the wrong context - its group prepend then cycled a chain list and the
-  # tree walk crashed. Read ChainNodeAdvanceCallback's rec+0x10 dispatch
-  # protocol first, then register these four.
+  # Phase4 bone-init band, dispatch protocol measured against the binary:
+  # 0x412ff0/0x4131f0/0x413310 are record +0x10 ticks (record staged in
+  # 0x542048; dispatched by RenderSceneNode's emit path) and 0x407560 is
+  # the motion integrator - these four are registered and run clean.
+  #
+  # 0x412cd0/0x412d80/0x412ec0 (the idle/stage/arm controller FSMs) and
+  # 0x413230 (bone launch) are converted in phase4_bone_ticks.c but
+  # deliberately NOT registered: the head block they drive allocates its
+  # effect nodes by POPPING the bootChainPair0 freelist
+  # (BootPhaseGateBracketedInit -> MStackPushChainStepIndex), and under
+  # the MK4_BOOT_MATCHSTART harness the round sequencer node is still ON
+  # that freelist - measured double-alloc: the pop returned 0x1492e8 (the
+  # live sequencer), the fresh-node zero-init overwrote its entry array,
+  # the array COUNT became a pose value (1 -> 0x144d99 = 0x513664>>2 from
+  # the 0x4d6748 pose track), and the anim pump walked 1.3M fake entries
+  # into a fault. This is a boot-harness SEQUENCING problem, not a
+  # transcription bug: the hooks create the round state in a different
+  # order than the original script, leaving live nodes on the freelist.
+  # NEXT: either replay the sequencer creation through the authentic
+  # MatchStart states or find the freelist reset the original runs before
+  # this band, then register these four.
+  0x407560: MotionIntegrate_00407560   # packed 2nd entry of BootMod6487e's symbol
+  0x4131f0: Phase4BoneFade_004131f0
+  0x412ff0: Phase4BoneDecay_00412ff0
+  # 0x413230 (bone launch) stays UNREGISTERED for now: it is dispatched
+  # as a track event from a pre-existing stream whose record staging
+  # (e48 = template words at 0x4d6948) is not transcribed yet, and with
+  # the real body running in that context a stale n44 pointed into the
+  # sequencer's entry ARRAY - ScaledStoreIdx24 then wrote a pose over the
+  # array's COUNT word (measured: count 1 -> 0x144d99 = pose 0x513664>>2)
+  # and the pump walked 1.3M fake entries into a fault. Map the arming
+  # path (who sets that record's track to the 0x4d67xx pose stream and
+  # what node it advances) before registering.
+  0x413310: Phase4BoneGravity_00413310
 
