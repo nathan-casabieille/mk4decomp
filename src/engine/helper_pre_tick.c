@@ -68,8 +68,34 @@ void Helper_PreTick(void)
     if (g_framePauseFlag != 0)
         return;
 
+#ifdef TARGET_SDL
+    /* MK4_TRACE_CAMMAT: the camera matrix as built from the camera node's
+     * own Euler angles, before and after the 9-word reorder. Zero angles
+     * must give identity; anything else is a spurious rotation in the
+     * view. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      extern int atoi(const char *);
+      static int lim = -1; static int n;
+      short *M = MK4_VA(short, 0xab4878u);
+      if (lim < 0) { char *e = getenv("MK4_TRACE_CAMMAT"); lim = e ? atoi(e) : 0; }
+      if (n < lim) { n++;
+          SDL_Log("CAMMAT ang=[%d %d %d] pre=[%d %d %d|%d %d %d]",
+                  MK4_NODE_AT(int, seed, 0x60), MK4_NODE_AT(int, seed, 0x64),
+                  MK4_NODE_AT(int, seed, 0x68),
+                  M[0],M[1],M[2],M[3],M[4],M[5],M[6],M[7],M[8]); } }
+#endif
     Word9Reorder(MK4_VA(unsigned short, 0xab4878u),
                  MK4_VA(unsigned short, 0xab4d58u));
+#ifdef TARGET_SDL
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      extern int atoi(const char *);
+      static int lim2 = -1; static int n2;
+      short *M = MK4_VA(short, 0xab4878u);
+      if (lim2 < 0) { char *e = getenv("MK4_TRACE_CAMMAT"); lim2 = e ? atoi(e) : 0; }
+      if (n2 < lim2) { n2++;
+          SDL_Log("CAMMAT post=[%d %d %d|%d %d %d|%d %d %d]",
+                  M[0],M[1],M[2],M[3],M[4],M[5],M[6],M[7],M[8]); } }
+#endif
 
     for (i = 0; i < 9; i++)
         MK4_VA(int, 0x52aa90u)[i] = (int)MK4_VA(short, 0xab4878u)[i] << 4;

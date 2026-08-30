@@ -397,6 +397,12 @@ void MK4_GameFrame(void)
          * intro anims, steps the walk-in through code-table states 0x25 /
          * 0x26 with a ten-step budget, and STOPS it. One spawn per
          * fighter, group staged before each (the controller captures it). */
+        /* MK4_CAM_YAW=<bam>: EXPERIMENT ONLY - force the camera's yaw each
+         * frame to test whether the framing gap is a constant offset. */
+        { const char *y = getenv("MK4_CAM_YAW");
+          if (y) { unsigned int cam = *MK4_VA(unsigned int, 0x52ab10u);
+                   if (cam) MK4_NODE_AT(int, cam, 0x64) = atoi(y); } }
+
         /* MK4_TRACE_POS=<frame>: where the two fighter groups and the
          * camera actually are in world space. The arena renders at the
          * right depth, so a fighter sitting far closer to the eye than the

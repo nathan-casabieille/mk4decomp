@@ -76,6 +76,22 @@ void MotionIntegrate_00407560(void)
 {
     unsigned int node = g_currentNodeIdx;
     int i;
+#ifdef TARGET_SDL
+    /* MK4_TRACE_MOTION: which nodes actually get their velocity folded
+     * into their position. The fight camera writes velocities onto the
+     * camera group; if the camera never appears here, they are never
+     * applied. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      extern int atoi(const char *);
+      static int lim = -1; static int n;
+      if (lim < 0) { char *e = getenv("MK4_TRACE_MOTION"); lim = e ? atoi(e) : 0; }
+      if (n < lim) { n++;
+          SDL_Log("MOTION node=%x pos=[%d %d %d] vel=[%d %d %d]", node,
+                  MK4_NODE_AT(int, node, 0x54), MK4_NODE_AT(int, node, 0x58),
+                  MK4_NODE_AT(int, node, 0x5c),
+                  MK4_NODE_AT(int, node, 0x6c), MK4_NODE_AT(int, node, 0x70),
+                  MK4_NODE_AT(int, node, 0x74)); } }
+#endif
 
     for (i = 0; i < 3; i++)
         MK4_NODE_AT(unsigned int, node, 0x54 + i * 4) +=

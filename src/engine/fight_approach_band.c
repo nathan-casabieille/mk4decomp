@@ -235,6 +235,18 @@ void PhaseInstall2DInterpDispatch(void)
     MStackPush4DualCallAbsPop4();
     if (g_framePauseFlag != 0) return;
 
+#ifdef TARGET_SDL
+    /* MK4_TRACE_HANDOFF: which way the fight camera routes, and on what
+     * numbers. The camera's velocity stays zero, so one of these arms is
+     * either never taken or never writes one. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int f3 = -1; static int n3;
+      if (f3 < 0) f3 = getenv("MK4_TRACE_HANDOFF") != 0;
+      if (f3 && n3 < 10) { n3++;
+          SDL_Log("CAMROUTE sep=%d (>%d ? walk) group=%x vel6c=%d",
+                  (int)g_slot78, 0xa3d, g_groupHead,
+                  MK4_NODE_AT(int, g_groupHead, 0x6c)); } }
+#endif
     if ((int)g_slot78 > 0xa3d) {
         WalkTowardTargetFsm();           /* the walk-in takes over */
         return;
@@ -243,6 +255,13 @@ void PhaseInstall2DInterpDispatch(void)
     if (g_framePauseFlag != 0) return;
 
     d = (int)g_slot7c;
+#ifdef TARGET_SDL
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int f4 = -1; static int n4;
+      if (f4 < 0) f4 = getenv("MK4_TRACE_HANDOFF") != 0;
+      if (f4 && n4 < 10) { n4++;
+          SDL_Log("CAMROUTE dist=%d thresholds 0x300000/0x370000", d); } }
+#endif
     if (d < 0x300000) {
         EsiInstallChainCallCmpThreshold();
         return;
