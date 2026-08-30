@@ -203,6 +203,16 @@ void PhaseInstall2DInterpDispatch(void)
     int d, lim, a, b, c;
 
     cmd = MK4_NODE_AT(unsigned int, cam, 0x84);
+#ifdef TARGET_SDL
+    /* MK4_TRACE_HANDOFF: the fight camera taking over from the arena
+     * intro. Silence here means the intro never handed off and the
+     * camera keeps its terminal intro pose. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int f = -1; static int n;
+      if (f < 0) f = getenv("MK4_TRACE_HANDOFF") != 0;
+      if (f && n < 6) { n++;
+          SDL_Log("HANDOFF fight camera, cmd=%u cam=%x", cmd, cam); } }
+#endif
     MK4_NODE_AT(unsigned int, cam, 0x84) = 0;
     if (cmd == 0) {
         MK4_NODE_AT(unsigned int, cam, 8) = 0x42f8a0u;
