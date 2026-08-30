@@ -426,6 +426,20 @@ emit:
                                   SDL_Log("EMIT emit2=%u drawMeshBlock=%u emit=%u emit3Cap=%u",
                                           n2, dmb, n1, cap); } }
 #endif
+                        /* MK4_EMIT_SKIP=<n>: drop one emitter to see what it
+                         * was contributing. 1=emit2 2=drawMeshBlock 3=emit
+                         * 4=emit3Cap. Diagnostic only. */
+                        { extern char *getenv(const char *); extern int atoi(const char *);
+                          static int skip = -1;
+                          if (skip < 0) { char *e = getenv("MK4_EMIT_SKIP");
+                                          skip = e ? atoi(e) : 0; }
+                          if (skip) {
+                              int which = ((g_dispatchSave1572 & 0x40) != 0) ? 1
+                                        : (((g_cj_0054205c & 0x80000) != 0 &&
+                                            (g_dispatchSave1572 & 1) != 0) ? 2
+                                        : (((g_dispatchSave1572 & 2) != 0) ? 3 : 4));
+                              if (which == skip) goto descend;
+                          } }
                         if ((g_dispatchSave1572 & 0x40) != 0) {
                             TristripBatchEmit2(recVA, g_walkCallback, width);
                         } else if ((g_cj_0054205c & 0x80000) != 0 &&
