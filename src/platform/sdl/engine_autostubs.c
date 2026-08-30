@@ -330,7 +330,6 @@ __attribute__((weak)) unsigned int g_fnptr_0051ffd8;
 __attribute__((weak)) unsigned int g_texAssetIds_ee;
 __attribute__((weak)) int PushSetCallPop(){MK4_StubHit("PushSetCallPop");return 0;}
 __attribute__((weak)) int Screen_ArcadeEnding(){MK4_StubHit("Screen_ArcadeEnding");return 0;}
-__attribute__((weak)) int TablePushAccumTailJmp(){MK4_StubHit("TablePushAccumTailJmp");return 0;}
 __attribute__((weak)) int Input_PollPlayerJoystick(){MK4_StubHit("Input_PollPlayerJoystick");return 0;}
 __attribute__((weak)) int BootGatedInitInstallPair(){MK4_StubHit("BootGatedInitInstallPair");return 0;}
 __attribute__((weak)) int SlotInitAndChainLink(){MK4_StubHit("SlotInitAndChainLink");return 0;}

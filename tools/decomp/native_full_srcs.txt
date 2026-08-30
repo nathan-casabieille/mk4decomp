@@ -392,3 +392,4 @@ src/engine/spawn_list_batch_band.c
 src/engine/fight_facing_band.c
 src/engine/mstack_burst_walk_band.c
 src/engine/slot_phase_reset_band.c
+src/engine/stage_load_band.c
