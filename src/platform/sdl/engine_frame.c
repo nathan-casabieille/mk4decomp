@@ -183,6 +183,27 @@ void MK4_GameFrame(void)
          * whatever the game does next is its own attract / title / select
          * chain running under its own steam.
          */
+        /* MK4_KEYS="frame:vk,frame:vk,...": a scripted key SEQUENCE, in
+         * frame order. MK4_FAKE_KEY holds one key forever, which the
+         * game's own repeat suppression turns into a single move - fine
+         * for one action, useless for walking a menu. This arms a real
+         * two-frame press at each listed frame, so a headless run can
+         * navigate and select like a player. */
+        { static const char *seq; static int parsed;
+          if (!parsed) { parsed = 1; seq = getenv("MK4_KEYS"); }
+          if (seq) { const char *p = seq;
+            while (*p) { int f = 0, vk = 0;
+                while (*p >= '0' && *p <= '9') f = f * 10 + (*p++ - '0');
+                if (*p == ':') p++;
+                while (*p >= '0' && *p <= '9') vk = vk * 10 + (*p++ - '0');
+                if (f == frame && vk) {
+                    extern void MK4_NativeFakeKeyPress(int, int);
+                    MK4_NativeFakeKeyPress(vk, 2);
+                    SDL_Log("keys: frame %d press vk %d", f, vk);
+                }
+                if (*p == ',') p++; else break;
+            } } }
+
         { const char *at = getenv("MK4_START");
           if (at && frame == atoi(at)) {
               extern int GameStateMachine(int);

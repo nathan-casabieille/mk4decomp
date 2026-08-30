@@ -343,6 +343,7 @@ src/engine/zero_three_slots.c
 src/game/dispatch_scaled_lea.c
 src/game/download_player.c
 src/game/draw_menu.c
+src/game/menu_sound_screen.c
 src/game/event_queue.c
 src/game/fight.c
 src/game/game_tick.c
