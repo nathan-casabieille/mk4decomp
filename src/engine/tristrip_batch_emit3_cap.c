@@ -218,6 +218,12 @@ extern void ProjectVertex(void);
 
 #ifdef NON_MATCHING
 /* Ghidra-decompiled twin - behavior not yet runtime-verified */
+/* The winding cross-product below sign-extends every component. The Ghidra
+ * lift read the three Y reads (+2) as unsigned short, which turns any
+ * off-screen negative Y into a large positive and flips the sign of the
+ * product - the original is movsx on all six (0x4bb7b5..0x4bb7e8). This
+ * emitter is the one STAGE geometry takes (mesh tag 0 falls through to it),
+ * while fighters go through DrawMeshBlock, so no gate exercised it. */
 void TristripBatchEmit3Cap(int param_1,int param_2,int param_3)
 
 {
@@ -271,9 +277,9 @@ void TristripBatchEmit3Cap(int param_1,int param_2,int param_3)
         AdvanceTriStripRing(*puVar8,puVar8[1],puVar8[2]);
         ProjectVertex();
         g_vtxValid =
-             (uint)(((int)(*(unsigned short *)((char *)&g_vtxScreenX + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+             (uint)(((int)(*(short *)((char *)&g_vtxScreenX + 2)) - (int)(*(short *)((char *)&g_triStripRingA + 2))) *
                     ((int)(short)g_vtxScreenP2X - (int)(short)g_triStripRingA) -
-                    ((int)(*(unsigned short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(unsigned short *)((char *)&g_triStripRingA + 2))) *
+                    ((int)(*(short *)((char *)&g_vtxScreenP2X + 2)) - (int)(*(short *)((char *)&g_triStripRingA + 2))) *
                     ((int)(short)g_vtxScreenX - (int)(short)g_triStripRingA) < 1);
         if ((((uVar3 != (g_vtxValid == 0)) && (0 < (int)g_min_007af984)) && (0 < (int)g_min_007af988)) &&
            (0 < (int)g_min_007af98c)) {

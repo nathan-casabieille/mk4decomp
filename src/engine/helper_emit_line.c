@@ -118,6 +118,25 @@ void Helper_EmitLine(int param_1)
 
     acc = (unsigned)((int)m[6] * (int)inX[i]) + (unsigned)((int)m[7] * (int)inY[i])
         + (unsigned)((int)m[8] * (int)inZ[i]);
+#ifdef TARGET_SDL
+    /* MK4_TRACE_CLIP: the original truncates each transformed component to
+     * 16 bits (movsx eax, ax). Fighters fit; a stage might not, and a
+     * wrapped vertex lands on the far side of the world, which draws as a
+     * long thin sliver. Count how often the value does not survive. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int seen, over;
+      if (getenv("MK4_TRACE_CLIP")) {
+          int px = ((int)((unsigned)((int)m[0] * (int)inX[i])
+                        + (unsigned)((int)m[1] * (int)inY[i])
+                        + (unsigned)((int)m[2] * (int)inZ[i])) >> 0xc)
+                   + (int)g_vtxTransX;
+          int pz = ((int)acc >> 0xc) + (int)g_vtxTransZ;
+          seen++;
+          if (px != (int)(short)px || pz != (int)(short)pz) over++;
+          if ((seen % 4000) == 0)
+              SDL_Log("CLIP %d/%d vertices overflow 16 bits (last x=%d z=%d)",
+                      over, seen, px, pz); } }
+#endif
     z = (short)(((int)acc >> 0xc) + (int)g_vtxTransZ);
     outZ[i] = z;
 

@@ -408,6 +408,24 @@ emit:
                         g_baseSel = 0x1fff;
                         g_walkCallback = g_cj_0054205c & 1;
                         g_eventQueuePending = MK4_UNPTR(&g_dispatchSave1559);
+#ifdef TARGET_SDL
+                        /* MK4_TRACE_EMIT: which of the four mesh emitters the
+                         * frame actually uses. The mesh tag picks it, and a
+                         * fighter (tag 1) and a stage (tag 0) do not take the
+                         * same one - so a gate that renders a character
+                         * exercises only one of the four. */
+                        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+                          static unsigned n2, dmb, n1, cap, ticks;
+                          if (getenv("MK4_TRACE_EMIT")) {
+                              if ((g_dispatchSave1572 & 0x40) != 0) n2++;
+                              else if ((g_cj_0054205c & 0x80000) != 0 &&
+                                       (g_dispatchSave1572 & 1) != 0) dmb++;
+                              else if ((g_dispatchSave1572 & 2) != 0) n1++;
+                              else cap++;
+                              if ((++ticks % 2000) == 0)
+                                  SDL_Log("EMIT emit2=%u drawMeshBlock=%u emit=%u emit3Cap=%u",
+                                          n2, dmb, n1, cap); } }
+#endif
                         if ((g_dispatchSave1572 & 0x40) != 0) {
                             TristripBatchEmit2(recVA, g_walkCallback, width);
                         } else if ((g_cj_0054205c & 0x80000) != 0 &&

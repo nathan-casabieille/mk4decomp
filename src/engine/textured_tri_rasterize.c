@@ -87,6 +87,20 @@ void TexturedTriRasterize(void)
     ecx = (unsigned int)((int)ecx * (int)edi);
     ecx = ecx - edx;                                    /* area */
     g_clipMinScratch = ecx;
+#ifdef TARGET_SDL
+    /* MK4_TRACE_UV: the triangle's own inputs. u,v should sit in 0..255 for
+     * a 256x256 page; a gradient that samples several texels per pixel is
+     * either a tiny area or texture coords that are not in texel units. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int tris;
+      if (getenv("MK4_TRACE_UV") && tris < 8 && (int)ecx > 4000) {
+          tris++;
+          SDL_Log("TRI area=%d x=[%d %d %d] y=[%d %d %d] u=[%d %d %d] v=[%d %d %d]",
+                  (int)ecx, (int)X[0], (int)X[1], (int)X[2],
+                  (int)Y[0], (int)Y[1], (int)Y[2],
+                  (int)U[0], (int)U[1], (int)U[2],
+                  (int)V[0], (int)V[1], (int)V[2]); } }
+#endif
     if ((int)ecx <= 0) return;
 
     edx = U[2] - U[0];                                  /* --- du/dx (1342) --- */
@@ -311,6 +325,16 @@ L_17f1:
         uacc = g_dispatchSave1387 << 16;
         edi = g_dispatchSave1345;
         esi = g_dispatchSave1404;
+#ifdef TARGET_SDL
+        /* MK4_TRACE_UV: the (u,v) walk along one span. Streaky texturing
+         * means one component is not advancing; this says which. */
+        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+          static int spans;
+          if (getenv("MK4_TRACE_UV") && spans < 6 && span > 24) {
+              spans++;
+              SDL_Log("UV span=%u tex0=%04x ustep=%08x vspan=%08x u0=%08x v0=%08x",
+                      span, tex, ustep, vspan, uacc, vacc); } }
+#endif
         for (;;) {
             unsigned short t = *(unsigned short *)MK4_PTR(esi + tex * 2);
             if (t != 0) *(unsigned short *)MK4_PTR(edi) = t;
@@ -330,6 +354,13 @@ L_17f1:
                 tex = (tex & 0xff00) | (dl & 0xff);
             }
             edi = edi + 2;
+#ifdef TARGET_SDL
+            { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+              static int steps;
+              if (getenv("MK4_TRACE_UV") && steps < 24 && vspan > 24) {
+                  steps++;
+                  SDL_Log("UV   step u=%3u v=%3u", tex & 0xff, (tex >> 8) & 0xff); } }
+#endif
             vspan = (vspan & 0xffff0000u) | ((vspan - 1) & 0xffff);
             if (!((int)(short)(vspan & 0xffff) > 0)) break;
         }
