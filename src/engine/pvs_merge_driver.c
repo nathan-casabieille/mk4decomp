@@ -337,10 +337,16 @@ void MStackPush2ChainLLInsert(void)
     static int f = -1; static int n;
     if (f < 0) f = getenv("MK4_TRACE_FREEPOP") != 0;
     if (f && n < 220) { n++;
-      SDL_Log("FREEKILL node=%x n18=%x n1c=%x",
-              *MK4_VA(unsigned int, 0x542044u),
-              *MK4_VA(unsigned int, 0x542044u) ? MK4_NODE_AT(unsigned int, *MK4_VA(unsigned int, 0x542044u), 0x18) : 0u,
-              *MK4_VA(unsigned int, 0x542044u) ? MK4_NODE_AT(unsigned int, *MK4_VA(unsigned int, 0x542044u), 0x1c) : 0u); } }
+      { unsigned int v_ = *MK4_VA(unsigned int, 0x542044u);
+        SDL_Log("FREEKILL node=%x n18=%x n1c=%x l0=%x l4=%x l8=%x l10=%x l14=%x",
+              v_,
+              v_ ? MK4_NODE_AT(unsigned int, v_, 0x18) : 0u,
+              v_ ? MK4_NODE_AT(unsigned int, v_, 0x1c) : 0u,
+              v_ ? MK4_NODE_AT(unsigned int, v_, 0) : 0u,
+              v_ ? MK4_NODE_AT(unsigned int, v_, 4) : 0u,
+              v_ ? MK4_NODE_AT(unsigned int, v_, 8) : 0u,
+              v_ ? MK4_NODE_AT(unsigned int, v_, 0x10) : 0u,
+              v_ ? MK4_NODE_AT(unsigned int, v_, 0x14) : 0u); } } }
 #endif
 
     unsigned int node = g_currentNodeIdx;
