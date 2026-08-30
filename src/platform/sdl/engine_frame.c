@@ -17,6 +17,7 @@
 /* VA of the slot MK4_ARENA_STAGE allocated, for MK4_ARENA_NODE to aim at. */
 static unsigned int g_mk4ArenaSlotVA;
 #include <string.h>
+#include <stdio.h>
 #include "portable/mem_model.h"
 
 extern void MainLoopStep(void);
@@ -397,6 +398,18 @@ void MK4_GameFrame(void)
          * intro anims, steps the walk-in through code-table states 0x25 /
          * 0x26 with a ten-step budget, and STOPS it. One spawn per
          * fighter, group staged before each (the controller captures it). */
+        /* MK4_CAM_POS="x,y,z": EXPERIMENT ONLY - park the camera at a
+         * fixed world pose each frame (16.16 units). The view looks along
+         * world +X, so x=-7 z=0 frames the origin where the fighters
+         * stand. */
+        { const char *cp = getenv("MK4_CAM_POS");
+          if (cp) { int cx = 0, cy = 0, cz = 0;
+            if (sscanf(cp, "%d,%d,%d", &cx, &cy, &cz) == 3) {
+                unsigned int cam = *MK4_VA(unsigned int, 0x52ab10u);
+                if (cam) { MK4_NODE_AT(int, cam, 0x54) = cx;
+                           MK4_NODE_AT(int, cam, 0x58) = cy;
+                           MK4_NODE_AT(int, cam, 0x5c) = cz; } } } }
+
         /* MK4_FIGHTER_PITCH=<bam>: EXPERIMENT ONLY - set the fighters'
          * first angle slot (+0x60). Under BuildRotMatrix_OrderA a zero
          * first angle always sources world height from the model's LOCAL
