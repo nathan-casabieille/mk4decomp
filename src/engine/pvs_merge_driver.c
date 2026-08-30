@@ -328,6 +328,21 @@ extern void LinkedListInsert(void);
  * and the tail `and al, 0xfe` unrun. */
 void MStackPush2ChainLLInsert(void)
 {
+#ifdef TARGET_SDL
+  /* MK4_TRACE_FREEPOP family: one line per node DESTRUCTION - detach +
+   * merge + push back on the [0x541e80] pool. A live node here is the
+   * bad free the pop probe measures. NOTE: this file is the LINKED copy
+   * (five_block_dispatch_variants.c holds a dead twin of this symbol). */
+  { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+    static int f = -1; static int n;
+    if (f < 0) f = getenv("MK4_TRACE_FREEPOP") != 0;
+    if (f && n < 220) { n++;
+      SDL_Log("FREEKILL node=%x n18=%x n1c=%x",
+              *MK4_VA(unsigned int, 0x542044u),
+              *MK4_VA(unsigned int, 0x542044u) ? MK4_NODE_AT(unsigned int, *MK4_VA(unsigned int, 0x542044u), 0x18) : 0u,
+              *MK4_VA(unsigned int, 0x542044u) ? MK4_NODE_AT(unsigned int, *MK4_VA(unsigned int, 0x542044u), 0x1c) : 0u); } }
+#endif
+
     unsigned int node = g_currentNodeIdx;
     unsigned int next;
 

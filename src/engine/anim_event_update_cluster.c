@@ -222,6 +222,21 @@ void ChainNodeAdvanceCallback(void)
     if (word < 0x401000u || word > 0x4d0000u)
         return;
 #endif
+#ifdef TARGET_SDL
+    /* MK4_TRACE_FREEPOP family: every 0x405dd0 event is a node
+     * DESTRUCTION request - log which track fired it and on which node,
+     * to find who arms self-destruct streams on live nodes. */
+    if (word == 0x405dd0u) {
+        extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+        static int f = -1; static int n;
+        if (f < 0) f = getenv("MK4_TRACE_FREEPOP") != 0;
+        if (f && n < 60) { n++;
+            SDL_Log("FREEEVT node=%x rec=%x trk=%x cur=%x",
+                    *MK4_VA(unsigned int, 0x542044u), g_xformEntityIdx,
+                    MK4_NODE_AT(unsigned int, g_xformEntityIdx, 4),
+                    MK4_NODE_AT(unsigned int, g_xformEntityIdx, 8)); }
+    }
+#endif
     ((void (*)(void))MK4_ResolveCode(word))();
 }
 
