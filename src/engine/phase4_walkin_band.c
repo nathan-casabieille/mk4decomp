@@ -50,6 +50,8 @@
 
 #include "portable/mem_model.h"
 
+extern void SDL_Log(const char *, ...);
+extern char *getenv(const char *);
 extern void *MK4_ResolveCode(unsigned va);
 extern void StoreTwoCall(int cb, int type);
 extern void CallSetPause(void);
@@ -142,6 +144,12 @@ void MStackPush2RunCountdown(void)
 void MStackBracket7_DispatchAndChain(void)
 {
     unsigned int top, group, kind, vecVA, target;
+
+#ifdef TARGET_SDL
+    { static unsigned n;
+      if (getenv("MK4_TRACE_B7") && (++n % 200u) == 1u)
+          SDL_Log("B7 call #%u group=%06x", n, g_fightGroupHead); }
+#endif
 
     top = g_matrixStackTop + 1; g_matrixStackTop = top; MSTACK_AT(top) = g_currentNodeIdx;
     top = g_matrixStackTop + 1; g_matrixStackTop = top; MSTACK_AT(top) = g_xformEntityIdx;
@@ -312,9 +320,6 @@ void RegionFlushChain(void)
 }
 
 /* ---- the FSM pair ---- */
-
-extern void SDL_Log(const char *, ...);
-extern char *getenv(const char *);
 
 void Phase4Fsm_00412920(void)
 {
