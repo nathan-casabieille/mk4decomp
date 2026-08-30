@@ -417,6 +417,8 @@ void MK4_GameFrame(void)
          * bind pose because no decoded animation reaches their bones.
          * Setting any of the individual knobs overrides the matching part.
          */
+        { extern unsigned int g_mk4FrameNo; g_mk4FrameNo = (unsigned int)frame; }
+
         if (getenv("MK4_DEBUG_VIEW")) {
             unsigned int cam = *MK4_VA(unsigned int, 0x52ab10u);
             unsigned int ns[2] = { *MK4_VA(unsigned int, 0x538158u),

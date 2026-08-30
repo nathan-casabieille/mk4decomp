@@ -396,6 +396,7 @@ src/engine/stage_load_band.c
 src/engine/fight_script_vm.c
 src/engine/anim_frame_advance.c
 src/engine/anim_pose_pipeline.c
+src/engine/anim_decode_bitstream.c
 src/engine/pose_tree_blend_walker.c
 src/engine/skel_builder_band.c
 src/engine/bone_alloc_band.c

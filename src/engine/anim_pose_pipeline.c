@@ -178,6 +178,16 @@ next:
           SDL_Log("ANIM bone=%x", *MK4_VA(unsigned int, 0x542044u)); } }
 #endif
     ExtractBitsToVec3();
+#ifdef TARGET_SDL
+    /* did the write land? log the bone's rotation triple right after */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      extern unsigned int g_mk4FrameNo;
+      static int n2;
+      if (getenv("MK4_TRACE_ANIM") && n2 < 200000) { n2++;
+          SDL_Log("f%u XWROTE bone=%06x rot=[%d %d %d]", g_mk4FrameNo, bone,
+                  MK4_NODE_AT(int, bone, 0x3c), MK4_NODE_AT(int, bone, 0x40),
+                  MK4_NODE_AT(int, bone, 0x44)); } }
+#endif
     if (g_framePauseFlag != 0)
         return;                            /* pop skipped - abort leak */
     end = g_lit16_542074;

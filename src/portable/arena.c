@@ -16,6 +16,8 @@
 
 unsigned char *g_mk4Arena     = 0;
 unsigned int   g_mk4ArenaSize = 0;
+/* frame counter, published for diagnostics that must correlate across TUs */
+unsigned int   g_mk4FrameNo = 0;
 
 int MK4_ArenaInitFromMemory(const void *image, unsigned size)
 {

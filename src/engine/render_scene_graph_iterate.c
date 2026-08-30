@@ -105,6 +105,19 @@ void RenderSceneGraphIterate(void)
     unsigned int idx, base;
     int scale;
 
+#ifdef TARGET_SDL
+    /* MK4_TRACE_ANIM: bone 0x14b5fe's rotation as the ENTITY render begins.
+     * The anim pass writes it non-zero every frame and the node walk reads
+     * zero; this brackets which side of the entity entry loses it. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      extern unsigned int g_mk4FrameNo;
+      static int n;
+      if (getenv("MK4_TRACE_ANIM") && g_mk4FrameNo >= 300 && n < 8) { n++;
+          SDL_Log("f%u ENTRY entity=%x bone14b5fe rot=[%d %d %d]", g_mk4FrameNo, g_currentNodeIdx,
+                  MK4_NODE_AT(int, 0x14b5feu, 0x3c),
+                  MK4_NODE_AT(int, 0x14b5feu, 0x40),
+                  MK4_NODE_AT(int, 0x14b5feu, 0x44)); } }
+#endif
     g_walkCallback = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x18);
     if (g_walkCallback == 0) {
         g_xformDirtyFlags &= 0xfffffffeu;
