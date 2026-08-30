@@ -429,6 +429,12 @@ void MK4_GameFrame(void)
                     c = MK4_NODE_AT(unsigned int, c, 0);   /* next sibling */
                     k++;
                 } }
+              if (cam) SDL_Log("POS cam rot=[%d %d %d] loc30=[%d %d %d] flags=%x",
+                      MK4_NODE_AT(int, cam, 0x60), MK4_NODE_AT(int, cam, 0x64),
+                      MK4_NODE_AT(int, cam, 0x68),
+                      MK4_NODE_AT(int, cam, 0x30), MK4_NODE_AT(int, cam, 0x34),
+                      MK4_NODE_AT(int, cam, 0x38),
+                      MK4_NODE_AT(unsigned int, cam, 0x20));
               SDL_Log("POS cam=%x at [%d %d %d] aim=[%d %d]", cam,
                       cam ? MK4_NODE_AT(int, cam, 0x54) : 0,
                       cam ? MK4_NODE_AT(int, cam, 0x58) : 0,
