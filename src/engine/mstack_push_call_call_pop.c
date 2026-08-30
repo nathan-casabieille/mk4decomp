@@ -42,7 +42,12 @@
 #endif
 
 
-extern void func_00405A40(void);
+/* 0x405a40 is ChainWalkPushPop, the owner resolver (walk +0x14 up to the
+ * root, publish root+0x18 as g_fightGroupHead). It used to be called here
+ * under the auto-split placeholder name for that same address, which
+ * resolves to a WEAK NO-OP - so every destroy in this file ran against the
+ * ambient g_fightGroupHead instead of the resolved owner. */
+extern void ChainWalkPushPop(void);
 extern void BootChainBidirRecurseWalk(void);
 extern void MStackCall_MStackPush2ChainLLInsert(void);
 extern void MStackBracket2_TreeWalkRecursive(void);
@@ -56,7 +61,7 @@ void MStackPushCallCallPop_func_00405b30(void) {
 #else
     *(unsigned int *)(top * 4) = g_fightGroupHead;
 #endif
-    func_00405A40();
+    ChainWalkPushPop();
     if (g_framePauseFlag != 0) return;
     BootChainBidirRecurseWalk();
     if (g_framePauseFlag != 0) return;
@@ -78,7 +83,7 @@ void MStackPushCallCallPop_func_00405dd0(void) {
 #else
     *(unsigned int *)(top * 4) = g_fightGroupHead;
 #endif
-    func_00405A40();
+    ChainWalkPushPop();
     if (g_framePauseFlag != 0) return;
     MStackCall_MStackPush2ChainLLInsert();
     if (g_framePauseFlag != 0) return;
@@ -100,7 +105,7 @@ void MStackPushCallCallPop_func_00405e20(void) {
 #else
     *(unsigned int *)(top * 4) = g_fightGroupHead;
 #endif
-    func_00405A40();
+    ChainWalkPushPop();
     if (g_framePauseFlag != 0) return;
     MStackBracket2_TreeWalkRecursive();
     if (g_framePauseFlag != 0) return;

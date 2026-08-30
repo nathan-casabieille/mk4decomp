@@ -202,21 +202,6 @@ LAB_0041f6ef:
        * contains into the native function. */
       ((void (*)(void))MK4_ResolveCode(*(unsigned int *)MK4_PTR(iVar2 + 0xd8)))();
       if ((*(int *)MK4_PTR((iVar2 + 0xd8)) != -1) && (*(int *)MK4_PTR((iVar2 + 0xd8)) != 0)) {
-#ifdef TARGET_SDL
-        /* MK4_TRACE_FREEPOP family: the write-back - the controller's
-         * exit staging becomes its next capture. Log only when the
-         * GROUP slot (+0x2c) actually changes. */
-        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
-          static int f = -1; static int n;
-          if (f < 0) f = getenv("MK4_TRACE_FREEPOP") != 0;
-          if (f && n < 60 &&
-              MK4_NODE_AT(unsigned int, g_baseSel, 0x2c) != g_cj_0054205c) { n++;
-              SDL_Log("WBACK node=%x cb=%x g2c %x -> %x",
-                      (unsigned)g_baseSel,
-                      MK4_NODE_AT(unsigned int, g_baseSel, 8),
-                      MK4_NODE_AT(unsigned int, g_baseSel, 0x2c),
-                      (unsigned)g_cj_0054205c); } }
-#endif
         *(undefined4 *)MK4_PTR((iVar2 + 0xd8)) = MK4_NODE_AT(undefined4, g_baseSel, 8);
         iVar1 = g_baseSel * 4;
         *(undefined4 *)MK4_PTR((iVar1 + 0x14)) = g_eventQueueNotMask;

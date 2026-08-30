@@ -358,28 +358,10 @@ void MStackPushDispatchBitGate(void)
     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
     if (g_framePauseFlag != 0) return;          /* bracket leaked */
 
-#ifdef TARGET_SDL
-    /* MK4_TRACE_FREEPOP family: what the scene build RETURNS as the
-     * built node - the value the caller's write-back will adopt. */
-    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
-      static int f = -1; static int n;
-      if (f < 0) f = getenv("MK4_TRACE_FREEPOP") != 0;
-      if (f && n < 40) { n++;
-          SDL_Log("BUILT n44=%x dirty=%x tmpl=%x", g_currentNodeIdx,
-                  g_xformDirtyFlags, *MK4_VA(unsigned int, 0x542048u)); } }
-#endif
     g_fightGroupHead = g_currentNodeIdx;
     if ((g_xformDirtyFlags & 4u) == 0) {
         MStackBracket4_ListInsertZeroFill();
         if (g_framePauseFlag != 0) return;
-#ifdef TARGET_SDL
-    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
-      static int f2 = -1; static int n2;
-      if (f2 < 0) f2 = getenv("MK4_TRACE_FREEPOP") != 0;
-      if (f2 && n2 < 40) { n2++;
-          SDL_Log("BUILT2 n44=%x g5c=%x dirty=%x", g_currentNodeIdx,
-                  g_fightGroupHead, g_xformDirtyFlags); } }
-#endif
         if ((g_xformDirtyFlags & 4u) == 0) {
             MStackPush3LinkedListWalk();
             if (g_framePauseFlag != 0) return;

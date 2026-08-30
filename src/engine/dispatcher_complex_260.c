@@ -191,21 +191,6 @@ void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void)
         return;
       }
       if ((g_xformDirtyFlags & 4) == 0) {
-#ifdef TARGET_SDL
-        /* MK4_TRACE_FREEPOP family: the parent<->child double-link of the
-         * scene build. A child off the effect grid here is the poison the
-         * teardown later "destroys". */
-        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
-          static int f = -1; static int n;
-          if (f < 0) f = getenv("MK4_TRACE_FREEPOP") != 0;
-          if (f && n < 40) { n++;
-            unsigned int c_ = (g_currentNodeIdx);
-            unsigned int off_ = c_ - 0x1490d8u / 4u;
-            SDL_Log("DLINK parent=%x child=%x%s", (unsigned)g_dualC, c_,
-                    (c_ >= 0x1490d8u/4u && c_ < 0x1490d8u/4u + 200u*0x21u &&
-                     ((c_ - 0x1490d8u/4u) % 0x21u) == 0u) ? "" : "  <- HORS GRILLE");
-            (void)off_; } }
-#endif
         MK4_NODE_AT(int, g_dualC, 0x18) = (g_currentNodeIdx);
         MK4_NODE_AT(int, (g_currentNodeIdx), 0x18) = g_dualC;
         (g_currentNodeIdx) = g_dualC;
@@ -250,21 +235,6 @@ void DispatcherComplex260_FramePauseScaledStore(void)
         return;
       }
       if ((g_xformDirtyFlags & 4) == 0) {
-#ifdef TARGET_SDL
-        /* MK4_TRACE_FREEPOP family: the parent<->child double-link of the
-         * scene build. A child off the effect grid here is the poison the
-         * teardown later "destroys". */
-        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
-          static int f = -1; static int n;
-          if (f < 0) f = getenv("MK4_TRACE_FREEPOP") != 0;
-          if (f && n < 40) { n++;
-            unsigned int c_ = (g_currentNodeIdx);
-            unsigned int off_ = c_ - 0x1490d8u / 4u;
-            SDL_Log("DLINK parent=%x child=%x%s", (unsigned)g_dualC, c_,
-                    (c_ >= 0x1490d8u/4u && c_ < 0x1490d8u/4u + 200u*0x21u &&
-                     ((c_ - 0x1490d8u/4u) % 0x21u) == 0u) ? "" : "  <- HORS GRILLE");
-            (void)off_; } }
-#endif
         MK4_NODE_AT(int, g_dualC, 0x18) = (g_currentNodeIdx);
         MK4_NODE_AT(int, (g_currentNodeIdx), 0x18) = g_dualC;
         (g_currentNodeIdx) = g_dualC;
