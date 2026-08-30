@@ -380,60 +380,66 @@ void MK4_GameFrame(void)
          * scheduling the handler directly is the same shape as the
          * loading screen above and skips those two for now. */
         /* MK4_ARENA_STAGE=<n>: load arena n through the engine's own geo
-         * loader. The arena catalogue is 15 twelve-byte records at
-         * 0x503260 (lair, elder, forest, cliff, well, tomb, cage_end,
-         * wind, snake, shaolin, prison, ice_pit, ped, skull, opt), and a
-         * slot whose word0 points at it selects one of them by the
-         * variant index - the same mechanism a character uses to pick a
-         * costume. The pre-initialised slots live at 0x503318 + N*0x1c.
+         * loader, using the engine's OWN static slot.
          *
-         * Nothing in the reachable native build ever asks for a stage:
-         * LoadGeoAssetsStateMachine's case 1 loads the two FIGHTERS
-         * (g_dlNalt1/g_dlNalt2 are character indices, which is why sc_geo
-         * and ra_geo arrive and no arena does). This hook supplies the
-         * request the missing screen would have made. */
+         * The 15 twelve-byte records at 0x503260 are not a table of
+         * pointers to slots - they ARE the arena slots, one per stage, in
+         * the same [name-record, block, ...] shape a character slot has.
+         * prison is 0x5032d8. An earlier version of this hook fabricated a
+         * slot and got the indirection wrong; there was never anything to
+         * fabricate.
+         *
+         * Nothing reachable asks for a stage: LoadGeoAssetsStateMachine's
+         * case 1 loads the slots at 0x4d52b8 indexed by g_dlNalt1 and
+         * g_dlNalt2, and those two are CHARACTER indices - which is why
+         * sc_geo and ra_geo arrive and no arena does.
+         *
+         * MK4_ARENA_NODE=<bone> additionally points that bone's +0x24 at
+         * one of the stage's own static MESH DESCRIPTORS. Those live at
+         * 0x5058ec + N*0x1c for prison, laid out exactly like a fighter's
+         * (+0x04 the slot VA, +0x18 the sub-mesh number), so no descriptor
+         * needs fabricating either. It has to be re-applied every frame:
+         * the scene walk rewrites +0x24 from the model binding. */
         if (getenv("MK4_ARENA_STAGE")) {
             const char *at = getenv("MK4_ARENA_STAGE_FRAME");
             int when = at ? atoi(at) : 150;
+            int stage = atoi(getenv("MK4_ARENA_STAGE"));
+            unsigned int slotVA = 0x503260u + (unsigned)stage * 12u;
+
             if (frame == when) {
-                extern void LoadGeoAsset_Textures(int index);
-                extern void TableWalkBoundedCmp(int arg);
-                int stage = atoi(getenv("MK4_ARENA_STAGE"));
-                /* 0x503260 holds POINTERS to name records, one per arena,
-                 * twelve bytes apart. LoadGeoAsset_Textures wants the name
-                 * record itself in slot word0 - it derefs exactly once to
-                 * reach the string - so the arena table needs one more
-                 * deref than a character's slot table does. */
-                extern int Mem_Malloc(void **out_ptr, int size, int tag);
-                unsigned int nameRec =
-                    *MK4_VA(unsigned int, 0x503260u + (unsigned)stage * 12u);
-                void *slotOut = 0;
-                /* Allocate the slot instead of borrowing 0x503318. That
-                 * template is LIVE - a rendered node already points its
-                 * +0x24 at 0x503330, inside it - so writing there corrupts
-                 * a descriptor the scene is using. */
-                unsigned int slotVA = (unsigned int)Mem_Malloc(&slotOut, 0x10, 1);
-                if (slotVA == 0) { SDL_Log("arena-stage: slot alloc failed"); }
-                else {
-                *MK4_VA(unsigned int, slotVA)      = nameRec;
-                *MK4_VA(unsigned int, slotVA + 4u) = 0;   /* not loaded yet */
-                *MK4_VA(unsigned int, slotVA + 8u) = 0;
-                *MK4_VA(unsigned int, slotVA + 0xcu) = 0;
-                *MK4_VA(unsigned int, 0x542044u)   = slotVA >> 2;
-                g_mk4ArenaSlotVA = slotVA;
-                SDL_Log("arena-stage: stage %d -> name record 0x%08x",
-                        stage, nameRec);
-                LoadGeoAsset_Textures(0);
-                /* NOT TableWalkBoundedCmp here. Despite the name,
-                 * GeoLoadFixupLoop - what that walk runs on every entry
-                 * whose kind matches - is an UNLOAD: it releases the
-                 * texture slots, clears the 0xab4e78 / 0xab5038 registry
-                 * words and Mem_Frees the block. Calling it with kind 7
-                 * freed the arena on the same frame it was loaded, which
-                 * is why the first version of this hook reported a live
-                 * block and still rendered nothing. */
-                SDL_Log("arena-stage: slot VA 0x%08x, loader returned block=%08x",
-                        slotVA, *MK4_VA(unsigned int, slotVA + 4u));
+                extern void LoadGeoAsset_Default(void);
+                *MK4_VA(unsigned int, 0x542044u) = slotVA >> 2;
+                SDL_Log("arena-stage: stage %d, engine slot 0x%08x", stage, slotVA);
+                LoadGeoAsset_Default();
+                SDL_Log("arena-stage: block=%08x",
+                        *MK4_VA(unsigned int, slotVA + 4u));
+            }
+            if (frame > when && getenv("MK4_ARENA_NODE")) {
+                unsigned int bone =
+                    (unsigned int)strtoul(getenv("MK4_ARENA_NODE"), 0, 16);
+                const char *ds = getenv("MK4_ARENA_DESC");
+                const char *cs = getenv("MK4_ARENA_COUNT");
+                unsigned int descVA = ds ? (unsigned int)strtoul(ds, 0, 16)
+                                         : 0x505908u;
+                int count = cs ? atoi(cs) : 1;
+                static int logged;
+                int i;
+
+                /* Scene nodes step 0x13 packed, stage descriptors 0x1c
+                 * bytes, so consecutive nodes take consecutive sub-meshes
+                 * and more of the arena draws with each one. */
+                for (i = 0; i < count; i++)
+                    *MK4_VA(unsigned int,
+                            (bone + (unsigned)i * 0x13u) * 4u + 0x24u) =
+                        (descVA + (unsigned)i * 0x1cu) >> 2;
+
+                if (!logged) {
+                    logged = 1;
+                    SDL_Log("arena-node: %d nodes from 0x%x -> descs from "
+                            "0x%08x (slot %08x) block %08x",
+                            count, bone, descVA,
+                            *MK4_VA(unsigned int, descVA + 4u),
+                            *MK4_VA(unsigned int, slotVA + 4u));
                 }
             }
         }
