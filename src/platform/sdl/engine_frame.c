@@ -397,6 +397,45 @@ void MK4_GameFrame(void)
          * intro anims, steps the walk-in through code-table states 0x25 /
          * 0x26 with a ten-step budget, and STOPS it. One spawn per
          * fighter, group staged before each (the controller captures it). */
+        /* MK4_TRACE_POS=<frame>: where the two fighter groups and the
+         * camera actually are in world space. The arena renders at the
+         * right depth, so a fighter sitting far closer to the eye than the
+         * floor means its GROUP position is wrong, not its bones. */
+        { const char *at = getenv("MK4_TRACE_POS");
+          if (at && frame == atoi(at)) {
+              unsigned int p1 = *MK4_VA(unsigned int, 0x538158u);
+              unsigned int p2 = *MK4_VA(unsigned int, 0x53815cu);
+              unsigned int cam = *MK4_VA(unsigned int, 0x52ab10u);
+              SDL_Log("POS p1=%x at [%d %d %d]", p1,
+                      p1 ? MK4_NODE_AT(int, p1, 0x54) : 0,
+                      p1 ? MK4_NODE_AT(int, p1, 0x58) : 0,
+                      p1 ? MK4_NODE_AT(int, p1, 0x5c) : 0);
+              SDL_Log("POS p2=%x at [%d %d %d]", p2,
+                      p2 ? MK4_NODE_AT(int, p2, 0x54) : 0,
+                      p2 ? MK4_NODE_AT(int, p2, 0x58) : 0,
+                      p2 ? MK4_NODE_AT(int, p2, 0x5c) : 0);
+              { unsigned int c = p1 ? MK4_NODE_AT(unsigned int, p1, 0x18) : 0;
+                int k = 0;
+                SDL_Log("POS p1 child chain:");
+                while (c && k < 10) {
+                    SDL_Log("   bone %x loc=[%d %d %d] rot=[%x %x %x] mesh=%x kid=%x",
+                            c, MK4_NODE_AT(int, c, 0x30), MK4_NODE_AT(int, c, 0x34),
+                            MK4_NODE_AT(int, c, 0x38),
+                            MK4_NODE_AT(unsigned int, c, 0x3c),
+                            MK4_NODE_AT(unsigned int, c, 0x40),
+                            MK4_NODE_AT(unsigned int, c, 0x44),
+                            MK4_NODE_AT(unsigned int, c, 0x24),
+                            MK4_NODE_AT(unsigned int, c, 0x18));
+                    c = MK4_NODE_AT(unsigned int, c, 0);   /* next sibling */
+                    k++;
+                } }
+              SDL_Log("POS cam=%x at [%d %d %d] aim=[%d %d]", cam,
+                      cam ? MK4_NODE_AT(int, cam, 0x54) : 0,
+                      cam ? MK4_NODE_AT(int, cam, 0x58) : 0,
+                      cam ? MK4_NODE_AT(int, cam, 0x5c) : 0,
+                      *MK4_VA(int, 0x52ab04u), *MK4_VA(int, 0x52ab08u));
+          } }
+
         if (getenv("MK4_BOOT_MATCHSTART")) {
             const char *at = getenv("MK4_BOOT_MATCHSTART");
             if (frame == atoi(at)) {

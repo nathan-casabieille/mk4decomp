@@ -170,7 +170,13 @@ extern unsigned int g_arr_4bddf0_src;
 #define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
 #define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
 #define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
-#define g_xformEntityIdx (*(unsigned int **)MK4_VA(unsigned int, 0x542048u))
+/* 0x542048 is a 4-byte engine slot. Typed `unsigned int **` (as the
+ * auto-aliaser left it) the lvalue is an 8-byte host pointer, so
+ * writing it clobbers 0x54204c as well - and 0x54204c is the packed
+ * pointer to the vector Mat3x3VecMul6Bit is about to read. Every node
+ * after the first then transformed the SAME stale input, which is why
+ * a whole skeleton rendered on one point. */
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
 #define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
 #endif
 

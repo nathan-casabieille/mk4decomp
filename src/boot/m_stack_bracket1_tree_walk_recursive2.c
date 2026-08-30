@@ -199,6 +199,22 @@ void MStackBracket1_TreeWalkRecursive2(void)
         w = MK4_NODE_AT(unsigned int, g_xformEntityIdx, 0x14);
         g_walkCallback = w;
         MK4_NODE_AT(unsigned int, g_pendingNodeType, 0x38) = w;
+#ifdef TARGET_SDL
+        /* MK4_TRACE_BIND=N: the bind-offset install - the asset record the
+         * scene build reads (+0xc/+0x10/+0x14) and the node it writes them
+         * into (+0x30/+0x34/+0x38). An all-zero source means the asset
+         * carries no local translation for that node. */
+        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+          extern int atoi(const char *);
+          static int nb, limb = -1;
+          if (limb < 0) { char *e = getenv("MK4_TRACE_BIND"); limb = e ? atoi(e) : 0; }
+          if (nb < limb) { nb++;
+            SDL_Log("BIND node=%x src=%x v=[%d %d %d]",
+                    g_pendingNodeType, g_xformEntityIdx,
+                    MK4_NODE_AT(int, g_xformEntityIdx, 0xc),
+                    MK4_NODE_AT(int, g_xformEntityIdx, 0x10),
+                    MK4_NODE_AT(int, g_xformEntityIdx, 0x14)); } }
+#endif
 
         g_matrixStackTop++;
         w = *MK4_NODE(unsigned int, g_xformEntityIdx);
