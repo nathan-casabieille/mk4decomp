@@ -398,6 +398,7 @@ src/engine/anim_frame_advance.c
 src/engine/anim_pose_pipeline.c
 src/engine/pose_tree_blend_walker.c
 src/engine/skel_builder_band.c
+src/engine/bone_alloc_band.c
 src/engine/phase4_walkin_band.c
 src/boot/scaled_chain_or8.c
 src/engine/matchstart_band.c

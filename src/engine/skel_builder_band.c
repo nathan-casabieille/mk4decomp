@@ -181,6 +181,21 @@ void SkelAnimUpdaterCluster(void)
     NODE_W(child, 0x20) = v;
 
     count = *(unsigned int *)MK4_PTR(g_eventQueueTotal * 4u + 8u);
+#ifdef TARGET_SDL
+    /* MK4_TRACE_SKEL: one line per skeleton build - the group it builds
+     * onto, the template stream, its payload count, and the first bone.
+     * Two fighters must produce two builds with the same shape; a build
+     * that comes back with a short or empty payload is a skeleton whose
+     * bind offsets (bone +0x30) will stay zero. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int f = -1; static int n;
+      if (f < 0) f = getenv("MK4_TRACE_SKEL") != 0;
+      if (f && n < 24) { n++;
+          SDL_Log("SKEL group=%x tmpl=%x rec=%x count=%x child=%x",
+                  g_fightGroupHead, g_eventQueueTotal,
+                  *(unsigned int *)MK4_PTR(g_eventQueueTotal * 4u),
+                  count, child); } }
+#endif
     g_eventQueueCur = count;
     if ((int)count >= 3)
         g_eventQueueCur = count = (unsigned int)((int)count / 3);
