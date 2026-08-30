@@ -410,6 +410,13 @@ void MK4_GameFrame(void)
                       p1 ? MK4_NODE_AT(int, p1, 0x54) : 0,
                       p1 ? MK4_NODE_AT(int, p1, 0x58) : 0,
                       p1 ? MK4_NODE_AT(int, p1, 0x5c) : 0);
+              if (p1) SDL_Log("POS p1 links: parent14=%x next10=%x child18=%x list1c=%x flags20=%x kind34=%x",
+                      MK4_NODE_AT(unsigned int, p1, 0x14),
+                      MK4_NODE_AT(unsigned int, p1, 0x10),
+                      MK4_NODE_AT(unsigned int, p1, 0x18),
+                      MK4_NODE_AT(unsigned int, p1, 0x1c),
+                      MK4_NODE_AT(unsigned int, p1, 0x20),
+                      MK4_NODE_AT(unsigned int, p1, 0x34));
               SDL_Log("POS p2=%x at [%d %d %d]", p2,
                       p2 ? MK4_NODE_AT(int, p2, 0x54) : 0,
                       p2 ? MK4_NODE_AT(int, p2, 0x58) : 0,
