@@ -39,6 +39,19 @@ extern void *g_dispatchSave1150;
  * and calls. Parks the work type alongside and allocates. */
 void StoreTwoCall(unsigned int handler_va, unsigned int worktype)
 {
+#ifdef TARGET_SDL
+    /* MK4_TRACE_FREEPOP family: every controller spawn with the ambient
+     * group it will capture (+0x2c). A cursor-looking group here is a
+     * spawn firing in array-pump context. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int f = -1; static int n;
+      if (f < 0) f = getenv("MK4_TRACE_FREEPOP") != 0;
+      if (f && n < 120) { n++;
+          SDL_Log("SPAWN cb=%x type=%x amb5c=%x amb44=%x",
+                  handler_va, worktype,
+                  *MK4_VA(unsigned int, 0x54205cu),
+                  *MK4_VA(unsigned int, 0x542044u)); } }
+#endif
     g_eventQueueWorkType = worktype;
     g_pendingNodeType = handler_va;
     AllocateNode(handler_va);
