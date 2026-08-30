@@ -392,39 +392,20 @@ void MK4_GameFrame(void)
          * match-start band the MK4_BOOT_* shortcuts skip. Converting that
          * band is the remaining route to bind offsets; this hook stays as
          * the harness that will prove it the moment the list is real. */
-        if (getenv("MK4_SKEL_BUILD")) {
-            const char *at = getenv("MK4_SKEL_BUILD");
-            if (frame == atoi(at)) {
-                extern void SkelAnimUpdaterCluster(void);
-                unsigned int saveSel = *MK4_VA(unsigned int, 0x542060u);
-                unsigned int saveGrp = *MK4_VA(unsigned int, 0x54205cu);
-                unsigned int cur = *MK4_VA(unsigned int, 0x542058u);
-                unsigned int p[2];
-                int i = 0, n = 0;
-
-                p[0] = *MK4_VA(unsigned int, 0x538158u);   /* p1 */
-                p[1] = *MK4_VA(unsigned int, 0x53815cu);   /* p2 */
-                *MK4_VA(unsigned int, 0x542060u) = 0x14fae4u; /* live sequencer */
-                for (; n < 8; n++) {
-                    unsigned int w = *(unsigned int *)MK4_PTR(cur * 4u);
-                    cur++;
-                    if (w == 0) break;
-                    if ((w & 0xffffffu) == 0) continue;
-                    *MK4_VA(unsigned int, 0x54205cu) = p[i & 1];
-                    *MK4_VA(unsigned int, 0x542048u) = w & 0xffffffu;
-                    SDL_Log("skel-build: template %06x -> group %06x",
-                            w & 0xffffffu, p[i & 1]);
-                    SkelAnimUpdaterCluster();
-                    SDL_Log("skel-build: pause=%u dirty=%x",
-                            *MK4_VA(unsigned int, 0x541e6cu),
-                            *MK4_VA(unsigned int, 0x54208cu));
-                    *MK4_VA(unsigned int, 0x541e6cu) = 0;
-                    i++;
-                }
-                *MK4_VA(unsigned int, 0x542060u) = saveSel;
-                *MK4_VA(unsigned int, 0x54205cu) = saveGrp;
-            }
-        }
+        /* MK4_SKEL_BUILD: RETIRED as a direct bridge, kept as the record of
+         * two measured dead ends. (1) The 0x542058 words are not templates
+         * (generic walk scratch - the record lookup aborts dirty-2,
+         * correctly). (2) Replicating the Phase4 FSM's own call site
+         * (template 0x4d6948, node type 0x99 in 0x54207c, cam +0x38..+0x40
+         * seeded) still aborts on template[0] = 0 - the record resolution
+         * belongs to the FSM states that run BEFORE it (0x4089e0 /
+         * 0x408c10) - and writing the position seed onto the LIVE intro
+         * sequencer corrupts the running scene and crashes downstream.
+         * Conclusion, twice measured: the skeleton build cannot be entered
+         * sideways; Phase4's FSM (0x412920/0x412ad0, spawned with node
+         * type 0x8a by Phase4DualHelperTrampoline) and MatchStartFsmCluster
+         * (0x468eb0) must be converted and dispatched as the FSMs they
+         * are, through the engine's own pump. */
         /* MK4_ARENA_STAGE=<n>: load arena n through the engine's own geo
          * loader, using the engine's OWN static slot.
          *
