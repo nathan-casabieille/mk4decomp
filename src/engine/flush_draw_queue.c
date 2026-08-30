@@ -111,6 +111,34 @@ void FlushDrawQueue(void)
     for (i = 0; i < 0x400 * 2; i++) buckets[i] = 0;     /* rep stosd 0x400 dwords */
     if ((int)esi > 0) {
         unsigned char *kp = (unsigned char *)&g_dispatchSave1398;   /* key field (rec+0x12) */
+#ifdef TARGET_SDL
+        /* MK4_TRACE_KEYS: the sort keys. The bucket table is 2048 words
+         * (0xf6d050..0xf6e050); any key >= 0x800 makes both the count and
+         * the scatter write PAST it - over the texture-slot dirty flags at
+         * 0xf6e058 and the sorted[] array itself at 0xf6e068. One bad key
+         * corrupts the paint order of the whole frame. */
+        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+          static int frames;
+          /* gate on the round phase - the first dozens of calls belong to
+           * the boot screens (3 sprites each) and sampling them instead of
+           * the fight is the geo-probe cap trap all over again */
+          if (getenv("MK4_TRACE_KEYS") && frames < 40
+              && *MK4_VA(unsigned int, 0x537f94u) != 0) {
+              unsigned int n = 0, bad = 0, kmin = 0xffff, kmax = 0;
+              unsigned char *q = kp;
+              unsigned int m;
+              frames++;
+              for (m = esi; m != 0; m--) {
+                  unsigned int k = *(unsigned short *)q;
+                  n++;
+                  if (k >= 0x800u) bad++;
+                  if (k < kmin) kmin = k;
+                  if (k > kmax) kmax = k;
+                  q += 0x1c;
+              }
+              if (n)
+                  SDL_Log("KEYS n=%u bad=%u min=%u max=%u", n, bad, kmin, kmax); } }
+#endif
         for (edx = esi; edx != 0; edx--) {
             eax = *(unsigned short *)kp;
             buckets[eax]++;

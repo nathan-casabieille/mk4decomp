@@ -592,16 +592,17 @@ static void mesh_init(void) {
        buckets, so every entry MUST land in 0..0x3ff. The static image has the
        table all-zero (the game fills it at runtime), which would collapse every
        primitive into bucket 0 - a ramp makes the sort actually order by depth. */
-    /* The key fed in is a projected Z (a few hundred for a character at this
-       camera distance), and there are exactly 0x400 buckets, so `k >> 6` would
-       crush the whole model into a handful of them and depth would be decided
-       by emission order instead. Bias and clamp so the useful range spreads
-       across the full histogram. */
+    /* The ORIGINAL's formula, from BuildSortKeyLUT (0x4bf290):
+       LUT[k] = k / (k*31/65536 + 1), truncated. Hyperbolic, monotonic,
+       resolution biased near, spread over the full bucket range. Constants
+       read from the image at 0x4d2a50/58/60 (31.0, 1/65536, -1.0). Keep this
+       IDENTICAL to the seed in src/platform/sdl/engine_video.c - the
+       char-check compares the two renders byte-for-byte, so a divergent
+       depth LUT shows up as paint-order edge pixels. */
     for (k = 0; k < 0x10000u; k++) {
-        int v = (int)k - 0x100;
-        if (v < 0) v = 0;
-        if (v > 0x3ff) v = 0x3ff;
-        *(unsigned short *)MK4_VA(unsigned short, LUT_VA + k * 2) = (unsigned short)v;
+        double v = (double)k / ((double)k * 31.0 / 65536.0 + 1.0);
+        *(unsigned short *)MK4_VA(unsigned short, LUT_VA + k * 2) =
+            (unsigned short)(int)v;
     }
     mesh_build();
 }

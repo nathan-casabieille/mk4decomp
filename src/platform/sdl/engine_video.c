@@ -182,13 +182,24 @@ void MK4_NativeVideoInit(void)
     /* channel-average table: three 5-bit channels sum to at most 93 */
     for (k = 0; k < 256u; k++)
         *(unsigned char *)MK4_VA(unsigned char, MK4_DIV3_VA + k) = (unsigned char)(k / 3);
-    /* depth key -> bucket, biased so a scene's projected-Z range spreads over
-     * the histogram instead of crushing into a handful of buckets */
+    /* depth key -> bucket: the ORIGINAL's formula, from BuildSortKeyLUT
+     * (0x4bf290): LUT[k] = k / (k*31/65536 + 1), truncated - hyperbolic
+     * compression of the 16-bit key into ~0..2047 buckets, monotonic, with
+     * resolution biased near.
+     *
+     * The previous seed here was clamp(k - 0x100, 0, 0x3ff). Same ORDER, but
+     * it crushed every depth beyond 1279 into bucket 1023 - and a fight
+     * arena's measured z runs 256..3072 with median 1789, so MOST of a
+     * stage's triangles shared one bucket. A counting sort is stable, so
+     * those all painted in EMISSION order, not depth order: chaotic overdraw
+     * on every far surface, which reads on screen as streaky noise. The
+     * fighters (z < ~1000) sorted fine, which is why the character gate
+     * never caught it. Exact constants read from the image at 0x4d2a50/58/60:
+     * 31.0, 1/65536, -1.0. */
     for (k = 0; k < 0x10000u; k++) {
-        int v = (int)k - 0x100;
-        if (v < 0) v = 0;
-        if (v > 0x3ff) v = 0x3ff;
-        *(unsigned short *)MK4_VA(unsigned short, MK4_ZSORT_VA + k * 2) = (unsigned short)v;
+        double v = (double)k / ((double)k * 31.0 / 65536.0 + 1.0);
+        *(unsigned short *)MK4_VA(unsigned short, MK4_ZSORT_VA + k * 2) =
+            (unsigned short)(int)v;
     }
     /* 16 shading pages of 64K entries: TexturedTriRasterizeShaded looks up
      * LUT[(shade & 0xffff0000) | texel], the page selected by shade >> 20. */
