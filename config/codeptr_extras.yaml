@@ -114,4 +114,6 @@ entries:
   0x45b9c0: VMWaitOp_0045b9c0
   0x45baa0: VMWaitOp_0045baa0
   0x49db40: SkelPump_0049db40
+  0x412920: Phase4Fsm_00412920
+  0x412ad0: Phase4WalkIn_00412ad0
 

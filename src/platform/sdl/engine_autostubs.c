@@ -175,7 +175,6 @@ __attribute__((weak)) int InstallSelfTwoTailJmp(){MK4_StubHit("InstallSelfTwoTai
 __attribute__((weak)) int LinkedListBitMaskSearch(){MK4_StubHit("LinkedListBitMaskSearch");return 0;}
 __attribute__((weak)) int LoadGeoAsset_Default(){MK4_StubHit("LoadGeoAsset_Default");return 0;}
 __attribute__((weak)) int Lock(){MK4_StubHit("Lock");return 0;}
-__attribute__((weak)) int MStackBracket7_DispatchAndChain(){MK4_StubHit("MStackBracket7_DispatchAndChain");return 0;}
 __attribute__((weak)) int MStackPushZeroCallPop(){MK4_StubHit("MStackPushZeroCallPop");return 0;}
 __attribute__((weak)) int PendingMatch_00407d50(){MK4_StubHit("PendingMatch_00407d50");return 0;}
 __attribute__((weak)) int MStackBracket5_LinkedListUnlink(){MK4_StubHit("MStackBracket5_LinkedListUnlink");return 0;}
@@ -185,7 +184,6 @@ __attribute__((weak)) int MStackNegAwareMul10Pair(){MK4_StubHit("MStackNegAwareM
 __attribute__((weak)) int MStackPush2ChainLLInsert(){MK4_StubHit("MStackPush2ChainLLInsert");return 0;}
 __attribute__((weak)) int MStackPush2ChainPrepend(){MK4_StubHit("MStackPush2ChainPrepend");return 0;}
 __attribute__((weak)) int MStackPush2CjMul10Triple(){MK4_StubHit("MStackPush2CjMul10Triple");return 0;}
-__attribute__((weak)) int MStackPush2RunCountdown(){MK4_StubHit("MStackPush2RunCountdown");return 0;}
 __attribute__((weak)) int MStackPush3CmpCall(){MK4_StubHit("MStackPush3CmpCall");return 0;}
 __attribute__((weak)) int MStackPush4IndirectCall(){MK4_StubHit("MStackPush4IndirectCall");return 0;}
 __attribute__((weak)) int MStackPushVec3Mul10(){MK4_StubHit("MStackPushVec3Mul10");return 0;}

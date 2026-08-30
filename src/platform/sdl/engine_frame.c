@@ -392,6 +392,35 @@ void MK4_GameFrame(void)
          * match-start band the MK4_BOOT_* shortcuts skip. Converting that
          * band is the remaining route to bind offsets; this hook stays as
          * the harness that will prove it the moment the list is real. */
+        /* MK4_BOOT_WALKIN=<frame>: schedule the Phase4 build/walk-in FSM
+         * through the engine's own scheduler - Phase4DualHelperTrampoline
+         * is nothing but StoreTwoCall(0x412920, 0x8a), the exact mechanism
+         * MK4_BOOT_FIGHT already uses for MatchInitMonsterChain. The
+         * spawned type-0x8a controller gets dispatched by the pump with
+         * real walk context; no globals are forged here. */
+        if (getenv("MK4_BOOT_WALKIN")) {
+            const char *at = getenv("MK4_BOOT_WALKIN");
+            if (frame == atoi(at)) {
+                extern void Phase4DualHelperTrampoline(void);
+                unsigned int save = *MK4_VA(unsigned int, 0x54205cu);
+                unsigned int p1 = *MK4_VA(unsigned int, 0x538158u);
+                unsigned int p2 = *MK4_VA(unsigned int, 0x53815cu);
+
+                /* the spawned controller CAPTURES the ambient group at
+                 * creation, so each fighter needs its own spawn with the
+                 * group staged - MatchStartFsm does the same per fighter */
+                if (p1) {
+                    *MK4_VA(unsigned int, 0x54205cu) = p1;
+                    Phase4DualHelperTrampoline();
+                }
+                if (p2) {
+                    *MK4_VA(unsigned int, 0x54205cu) = p2;
+                    Phase4DualHelperTrampoline();
+                }
+                *MK4_VA(unsigned int, 0x54205cu) = save;
+                SDL_Log("boot-walkin: Phase4 FSM scheduled for %06x and %06x", p1, p2);
+            }
+        }
         /* MK4_SKEL_BUILD: RETIRED as a direct bridge, kept as the record of
          * two measured dead ends. (1) The 0x542058 words are not templates
          * (generic walk scratch - the record lookup aborts dirty-2,

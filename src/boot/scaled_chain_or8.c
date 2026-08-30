@@ -19,6 +19,23 @@ extern unsigned int g_currentNodeIdx;
  *   mov     [ecx*4 + 0], eax
  *   ret
  */
+#ifdef NON_MATCHING
+#include "portable/mem_model.h"
+/* arena-safe: the auto-split lift dereferenced raw VAs as host pointers -
+ * the (code **) family - and was first LINKED (and first EXERCISED, by the
+ * Phase4 walk-in) in 2026-08-30's build. */
+void ScaledChainOr8(void) {
+    unsigned int s, e, v;
+
+    s = MK4_NODE_AT(unsigned int, (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu)), 0x18);
+    *(unsigned int *)MK4_VA(unsigned int, 0x542044u) = s;
+    e = MK4_NODE_AT(unsigned int, s, 0x28);
+    *(unsigned int *)MK4_VA(unsigned int, 0x542048u) = e;
+    v = *(unsigned int *)MK4_PTR(e * 4u) | 8u;
+    *(unsigned int *)MK4_VA(unsigned int, 0x54206cu) = v;
+    *(unsigned int *)MK4_PTR(e * 4u) = v;
+}
+#else
 void ScaledChainOr8(void) {
     unsigned int s;
     unsigned int e;
@@ -31,3 +48,4 @@ void ScaledChainOr8(void) {
     g_walkCallback = (void (*)(void))v;
     *(unsigned int *)(e * 4) = v;
 }
+#endif

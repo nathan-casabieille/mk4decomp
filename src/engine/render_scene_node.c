@@ -372,6 +372,24 @@ emit:
             MovesPanelEmit();
         } else {
             blk = MK4_NODE_AT(int, g_dualD, 0x18);
+#ifdef TARGET_SDL
+            /* Skeleton-builder bones (type 0x99) carry their tick CALLBACK
+             * VA in +0x24, not a mesh descriptor - dereferencing it as one
+             * reads a code address as a slot pointer and walks off the
+             * arena. The original never emits them (their class takes a
+             * different path); until that gate is understood, skip any
+             * descriptor whose slot or block lies outside the arena.
+             * MK4_TRACE_EMITBAD logs each skip. */
+            { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+              extern unsigned int g_mk4ArenaSize;
+              if (sub >= g_mk4ArenaSize
+                  || *(unsigned int *)MK4_PTR(sub + 4) >= g_mk4ArenaSize) {
+                  static int n;
+                  if (getenv("MK4_TRACE_EMITBAD") && n < 8) { n++;
+                      SDL_Log("EMITBAD node=%x desc=%x sub=%08x blk=%08x",
+                              node, g_dualD, sub, (unsigned)blk); }
+                  goto descend; } }
+#endif
             if (*(int *)MK4_PTR(sub + 4) > 0) {
                 unsigned int recVA =
                     (unsigned int)(blk * 0x10 + 0xc + *(int *)MK4_PTR(sub + 4));

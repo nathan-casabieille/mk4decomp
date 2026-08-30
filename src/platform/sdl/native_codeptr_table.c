@@ -79,6 +79,7 @@ extern int PushSetCallCleanup();
 extern int MStackBracket4_ListInsertZeroFill();
 extern int ScaledTestPauseStore();
 extern int MStackPush3LinkedListWalk();
+extern int MStackPush2RunCountdown();
 extern int MStackInitCallToggle();
 extern int DirtyToggleInstall();
 extern int ChainDirtyBitWalker();
@@ -101,7 +102,11 @@ extern int FlagThunkTail_0040a4d0();
 extern int FlagThunkClear4_0040a4f0();
 extern int FlagThunkClearBit2_0040a510();
 extern int StackPushAdd15CallPop();
+extern int ZeroThreeFields_0040a8b0();
 extern int PushCallScaledClearJmp();
+extern int Phase4DualHelperTrampoline();
+extern int Phase4Fsm_00412920();
+extern int Phase4WalkIn_00412ad0();
 extern int SoundSetupLoop();
 extern int SetDirty4XorScaledLoad();
 extern int Phase4TrampolineMainHelpers();
@@ -826,6 +831,8 @@ extern int Menu_InsertCDDialog();
 extern int Helper_MenuStub_8EB0();
 extern int Helper_TickInit();
 extern int DispatchScaledLEA();
+extern int MStackBracket7_DispatchAndChain();
+extern int RegionFlushChain();
 extern int VibrationFrameUpdate();
 extern int Helper_PreTick();
 extern int AltCamMatrixProject();
@@ -1000,6 +1007,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x408600u, (void*)MStackBracket4_ListInsertZeroFill},
     {0x408860u, (void*)ScaledTestPauseStore},
     {0x4088b0u, (void*)MStackPush3LinkedListWalk},
+    {0x4089e0u, (void*)MStackPush2RunCountdown},
     {0x408ad0u, (void*)MStackInitCallToggle},
     {0x408b90u, (void*)DirtyToggleInstall},
     {0x408c10u, (void*)ChainDirtyBitWalker},
@@ -1022,7 +1030,11 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x40a4f0u, (void*)FlagThunkClear4_0040a4f0},
     {0x40a510u, (void*)FlagThunkClearBit2_0040a510},
     {0x40a7e0u, (void*)StackPushAdd15CallPop},
+    {0x40a8b0u, (void*)ZeroThreeFields_0040a8b0},
     {0x40bf20u, (void*)PushCallScaledClearJmp},
+    {0x412900u, (void*)Phase4DualHelperTrampoline},
+    {0x412920u, (void*)Phase4Fsm_00412920},
+    {0x412ad0u, (void*)Phase4WalkIn_00412ad0},
     {0x413ea0u, (void*)SoundSetupLoop},
     {0x4147b0u, (void*)SetDirty4XorScaledLoad},
     {0x414b90u, (void*)Phase4TrampolineMainHelpers},
@@ -1747,6 +1759,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4b8eb0u, (void*)Helper_MenuStub_8EB0},
     {0x4b8ec0u, (void*)Helper_TickInit},
     {0x4b8f50u, (void*)DispatchScaledLEA},
+    {0x4b8fa0u, (void*)MStackBracket7_DispatchAndChain},
+    {0x4b9250u, (void*)RegionFlushChain},
     {0x4b9640u, (void*)VibrationFrameUpdate},
     {0x4b9770u, (void*)Helper_PreTick},
     {0x4b9840u, (void*)AltCamMatrixProject},
