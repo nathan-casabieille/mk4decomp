@@ -174,6 +174,26 @@ void MK4_GameFrame(void)
          * g_drawQueueSize, which would throw the frame away. */
         { extern void MK4_NativeVideoRearmFB(void); MK4_NativeVideoRearmFB(); }
 
+        /* MK4_START=<frame>: the port's replacement for the ORIGINAL's Win32
+         * MENU BAR. MK4.EXE is a windowed Win32 game whose game-state
+         * machine sits in state 0 until the menu bar sends it command 2;
+         * that menu is window chrome, not game content, so a native port
+         * has to supply the command itself. This is the whole of it - no
+         * character, arena or loader staging, unlike MK4_BOOT_MATCH - so
+         * whatever the game does next is its own attract / title / select
+         * chain running under its own steam.
+         */
+        { const char *at = getenv("MK4_START");
+          if (at && frame == atoi(at)) {
+              extern int GameStateMachine(int);
+              /* command 2 is gated on g_gsmFlag, which the Win32 side
+               * raises once the app is ready to run a game; nothing in the
+               * game code sets it. */
+              *MK4_VA(unsigned int, 0x543930u) = 1;
+              SDL_Log("start: menu-bar equivalent, FSM command 2 -> state %d",
+                      GameStateMachine(2));
+          } }
+
         /* MK4_BOOT_MATCH=1: the native command source the port needs - the
          * original moves the FSM off state 0 only from the Win32 menu bar.
          * One FSM command 2 (start game, gated on g_gsmFlag) a few frames in,
