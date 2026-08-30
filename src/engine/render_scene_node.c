@@ -245,8 +245,9 @@ void RenderSceneNode(void)
       if (limm < 0) { char *e = getenv("MK4_TRACE_MAT"); limm = e ? atoi(e) : 0; }
       if (nm2 < limm && *MK4_VA(unsigned int, 0x537f94u) != 0) { nm2++;
         short *M = (short *)MK4_VA(short, 0x7af990u);
-        SDL_Log("MAT node=%x m=[%d %d %d|%d %d %d|%d %d %d] loc=[%d %d %d] par=%x out=[%d %d %d]",
-                node, M[0], M[1], M[2], M[3], M[4], M[5], M[6], M[7], M[8],
+        SDL_Log("MAT node=%x f=%x k=%x m=[%d %d %d|%d %d %d|%d %d %d] loc=[%d %d %d] par=%x out=[%d %d %d]",
+                node, g_currentNodeFlags, MK4_NODE_AT(unsigned int, node, 0x24),
+                M[0], M[1], M[2], M[3], M[4], M[5], M[6], M[7], M[8],
                 MK4_NODE_AT(int, node, 0x30), MK4_NODE_AT(int, node, 0x34),
                 MK4_NODE_AT(int, node, 0x38), g_dualD,
                 (int)g_dispatchSave1501, (int)g_dispatchSave1502,
