@@ -170,6 +170,19 @@ void MStackPushChainStepIndex(void)
     unsigned int idx;
     unsigned int new_idx;
     chain = *MK4_NODE(unsigned int, g_currentNodeIdx);
+#ifdef TARGET_SDL
+    /* MK4_TRACE_FREEPOP: one line per freelist pop - owner, its head
+     * (the node about to be handed out), link offset and count. The
+     * double-alloc hunt instrument. Diagnostic only. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int f = -1; static int n;
+      if (f < 0) f = getenv("MK4_TRACE_FREEPOP") != 0;
+      if (f && n < 400) { n++;
+          SDL_Log("FREEPOP owner=%x head=%x off=%x cnt=%x",
+                  g_currentNodeIdx, chain,
+                  MK4_NODE_AT(unsigned int, g_currentNodeIdx, 4),
+                  MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0xc)); } }
+#endif
     g_walkCallback = chain;
     g_xformDirtyFlags |= 4;
     if (chain == 0) {
