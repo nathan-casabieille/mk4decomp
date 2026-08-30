@@ -398,6 +398,47 @@ void MK4_GameFrame(void)
          * intro anims, steps the walk-in through code-table states 0x25 /
          * 0x26 with a ten-step budget, and STOPS it. One spawn per
          * fighter, group staged before each (the controller captures it). */
+        /* MK4_DEBUG_VIEW=1: the fight-scene debug view - the one knob that
+         * puts both fighters on screen, one either side, facing each
+         * other, the way the game frames a round.
+         *
+         * It applies the three corrections this port has MEASURED but not
+         * yet sourced from the engine's own state:
+         *   - a quarter turn in the first and third angle slots of each
+         *     fighter, which is what makes their matrix builder behave as
+         *     a yaw about the vertical instead of tipping the model flat;
+         *   - the same quarter turns on the camera, for the same reason;
+         *   - a camera pose on the world Z axis looking at the origin,
+         *     perpendicular to the fighters' separation axis (they stand
+         *     at world x = -1.30 and +1.30).
+         *
+         * This is a HARNESS, not the engine's path: the engine still has
+         * to supply those angles itself, and the fighters still stand in
+         * bind pose because no decoded animation reaches their bones.
+         * Setting any of the individual knobs overrides the matching part.
+         */
+        if (getenv("MK4_DEBUG_VIEW")) {
+            unsigned int cam = *MK4_VA(unsigned int, 0x52ab10u);
+            unsigned int ns[2] = { *MK4_VA(unsigned int, 0x538158u),
+                                   *MK4_VA(unsigned int, 0x53815cu) };
+            const int Q = 102943;              /* a quarter turn in BAM */
+            int i;
+            if (cam && !getenv("MK4_CAM_POS")) {
+                MK4_NODE_AT(int, cam, 0x54) = 0;
+                MK4_NODE_AT(int, cam, 0x58) = -110000;
+                MK4_NODE_AT(int, cam, 0x5c) = -524288;
+            }
+            if (cam) {
+                if (!getenv("MK4_CAM_PITCH")) MK4_NODE_AT(int, cam, 0x60) = Q;
+                if (!getenv("MK4_CAM_YAW"))   MK4_NODE_AT(int, cam, 0x64) = Q;
+                if (!getenv("MK4_CAM_ROLL"))  MK4_NODE_AT(int, cam, 0x68) = Q;
+            }
+            for (i = 0; i < 2; i++) if (ns[i]) {
+                if (!getenv("MK4_FIGHTER_PITCH")) MK4_NODE_AT(int, ns[i], 0x60) = Q;
+                if (!getenv("MK4_FIGHTER_ROLL"))  MK4_NODE_AT(int, ns[i], 0x68) = Q;
+            }
+        }
+
         /* MK4_CAM_POS="x,y,z": EXPERIMENT ONLY - park the camera at a
          * fixed world pose each frame (16.16 units). The view looks along
          * world +X, so x=-7 z=0 frames the origin where the fighters
@@ -457,8 +498,14 @@ void MK4_GameFrame(void)
         /* MK4_CAM_YAW=<bam>: EXPERIMENT ONLY - force the camera's yaw each
          * frame to test whether the framing gap is a constant offset. */
         { const char *y = getenv("MK4_CAM_YAW");
-          if (y) { unsigned int cam = *MK4_VA(unsigned int, 0x52ab10u);
-                   if (cam) MK4_NODE_AT(int, cam, 0x64) = atoi(y); } }
+          const char *cpi = getenv("MK4_CAM_PITCH");
+          const char *cro = getenv("MK4_CAM_ROLL");
+          unsigned int cam = *MK4_VA(unsigned int, 0x52ab10u);
+          if (cam) {
+              if (y)   MK4_NODE_AT(int, cam, 0x64) = atoi(y);
+              if (cpi) MK4_NODE_AT(int, cam, 0x60) = atoi(cpi);
+              if (cro) MK4_NODE_AT(int, cam, 0x68) = atoi(cro);
+          } }
 
         /* MK4_TRACE_POS=<frame>: where the two fighter groups and the
          * camera actually are in world space. The arena renders at the
