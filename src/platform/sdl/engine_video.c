@@ -179,8 +179,9 @@ void MK4_NativeVideoInit(void)
         double a = (double)k * 6.283185307179586 / 4096.0;
         *(int *)MK4_VA(int, MK4_SIN_VA + k * 4) = (int)(sin(a) * 268435456.0);
     }
-    /* channel-average table: three 5-bit channels sum to at most 93 */
-    for (k = 0; k < 256u; k++)
+    /* channel-average table: the original (BuildSortKeyLUT tail) fills
+     * 0x300 entries even though three 5-bit channels sum to at most 93 */
+    for (k = 0; k < 0x300u; k++)
         *(unsigned char *)MK4_VA(unsigned char, MK4_DIV3_VA + k) = (unsigned char)(k / 3);
     /* depth key -> bucket: the ORIGINAL's formula, from BuildSortKeyLUT
      * (0x4bf290): LUT[k] = k / (k*31/65536 + 1), truncated - hyperbolic
@@ -201,20 +202,28 @@ void MK4_NativeVideoInit(void)
         *(unsigned short *)MK4_VA(unsigned short, MK4_ZSORT_VA + k * 2) =
             (unsigned short)(int)v;
     }
-    /* 16 shading pages of 64K entries: TexturedTriRasterizeShaded looks up
-     * LUT[(shade & 0xffff0000) | texel], the page selected by shade >> 20. */
+    /* 16 shading pages: the ORIGINAL's builder, from Helper_PaletteInit
+     * (0x4bf0c0), 1555 mode - the direction BuildSortKeyLUT(0) picks at
+     * boot. Page p scales each 5-bit channel by (p+1)/16 through
+     * ramp[v] = (v*(p+1)) >> 4, entries 0..0x7fff only; the top half of
+     * every page stays ZERO (the original rep-stosd-clears the whole
+     * region first), so a texel with bit 15 set looks up black. The
+     * previous seed here scaled by p/15 and preserved bit 15 - close, but
+     * an invention; see feedback_synthetic_seeds_are_suspects. */
     for (k = 0; k < 16u; k++) {
         unsigned int t;
         unsigned short *page = (unsigned short *)MK4_VA(unsigned short,
                                    MK4_LUT_VA + k * 0x20000u);
         unsigned int L;
         for (L = 0; L < 32u; L++)
-            scale[k][L] = (unsigned char)((L * k) / 15);
-        for (t = 0; t < 0x10000u; t++)
-            page[t] = (unsigned short)((t & 0x8000u)
-                      | ((unsigned)scale[k][(t >> 10) & 0x1f] << 10)
+            scale[k][L] = (unsigned char)((L * (k + 1)) >> 4);
+        for (t = 0; t < 0x8000u; t++)
+            page[t] = (unsigned short)(
+                        ((unsigned)scale[k][(t >> 10) & 0x1f] << 10)
                       | ((unsigned)scale[k][(t >> 5) & 0x1f] << 5)
                       | (unsigned)scale[k][t & 0x1f]);
+        for (t = 0x8000u; t < 0x10000u; t++)
+            page[t] = 0;
     }
     /* Texture + shading-LUT bases. These are ARENA-ALIASED globals in the
      * render TUs (see alias_globals.py), so they must be written at their VA

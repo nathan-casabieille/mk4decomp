@@ -330,19 +330,26 @@ static int arena_init(const char *img) {
        Left at 0 the lookup would deref VA 0, 4 MB BELOW the arena base -
        invisible on wasm32, an instant fault natively. */
     {
+        /* The ORIGINAL's builder (Helper_PaletteInit 0x4bf0c0, 1555 mode):
+           page p scales by (p+1)/16 via ramp[v] = (v*(p+1)) >> 4, entries
+           0..0x7fff only, top half zero. Keep IDENTICAL to the seed in
+           src/platform/sdl/engine_video.c - the char-check compares the
+           two renders byte-for-byte. */
         unsigned char scale[16][32];
         unsigned int L, T;
         for (L = 0; L < 16; L++)
             for (T = 0; T < 32; T++)
-                scale[L][T] = (unsigned char)((T * L) / 15);
+                scale[L][T] = (unsigned char)((T * (L + 1)) >> 4);
         for (L = 0; L < 16; L++) {
             unsigned short *page =
                 (unsigned short *)MK4_VA(unsigned short, PAL_VA + L * 0x20000u);
-            for (T = 0; T < 0x10000u; T++)
-                page[T] = (unsigned short)((T & 0x8000u)
-                          | ((unsigned)scale[L][(T >> 10) & 0x1f] << 10)
+            for (T = 0; T < 0x8000u; T++)
+                page[T] = (unsigned short)(
+                            ((unsigned)scale[L][(T >> 10) & 0x1f] << 10)
                           | ((unsigned)scale[L][(T >> 5) & 0x1f] << 5)
                           | (unsigned)scale[L][T & 0x1f]);
+            for (T = 0x8000u; T < 0x10000u; T++)
+                page[T] = 0;
         }
     }
     return 1;
@@ -585,7 +592,7 @@ static void mesh_init(void) {
            shade = (g_div3Table[r + g + b] << 3) & 0xff
        so an empty table makes EVERY shade 0, which selects lighting-LUT page 0
        - solid black. Three 5-bit channels sum to at most 93. */
-    for (k = 0; k < 0x100u; k++)
+    for (k = 0; k < 0x300u; k++)
         *(unsigned char *)MK4_VA(unsigned char, DIV3_VA + k) = (unsigned char)(k / 3);
     /* Depth -> bucket table. FlushDrawQueue buckets on the +0x12 field that
        Helper_DrawCursor rewrites through this LUT, and there are exactly 0x400

@@ -242,6 +242,21 @@ have:
 
         /* signed byte index into the shade table */
         shade = (int)*(signed char *)MK4_PTR(src);
+#ifdef TARGET_SDL
+        /* MK4_TRACE_SLOT: what the material byte actually resolves to. The
+         * measured symptom is every cache record carrying page slot 0, so
+         * either this byte, the table base, or the patched word is wrong. */
+        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+          static int n;
+          if (getenv("MK4_TRACE_SLOT") && n < 24
+              && *MK4_VA(unsigned int, 0x537f94u) != 0) { n++;
+            SDL_Log("SLOT texidx=%d tbl=%08x rec0=%04x rec1=%04x byte2=%02x -> nibble=%x",
+                    shade, (unsigned)tbl,
+                    *(unsigned short *)MK4_PTR(tbl + (unsigned)(shade * 4)),
+                    *(unsigned short *)MK4_PTR(tbl + (unsigned)(shade * 4) + 2),
+                    *(unsigned char *)MK4_PTR(tbl + (unsigned)(shade * 4) + 2),
+                    *(unsigned char *)MK4_PTR(tbl + (unsigned)(shade * 4) + 2) & 0xf); } }
+#endif
         *(unsigned short *)MK4_PTR(dst + 0x1a) = (unsigned short)
             ((*(unsigned char *)MK4_PTR(tbl + (unsigned)(shade * 4) + 2) & 0xf)
              | (*(unsigned short *)MK4_PTR(dst + 0x1a) & 0xfff0));

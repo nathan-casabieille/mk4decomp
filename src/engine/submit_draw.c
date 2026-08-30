@@ -97,6 +97,18 @@ void Helper_DrawCursor(short *pe)
     if (edx < -100) { if (eax > 0x2e4) return; }    /* 740 */
 
     /* ---- enqueue: copy 7 dwords into the queue slot, patch sort key ---- */
+#ifdef TARGET_SDL
+    /* MK4_TRACE_SLOT: nibble histogram AT THE ENQUEUE CHOKE POINT. The
+     * cache records carry the right page slot (0xb, 3...) but the decode
+     * sees 0 - this says whether the loss is before or after the queue. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static unsigned h[16], n;
+      if (getenv("MK4_TRACE_SLOT") && *MK4_VA(unsigned int, 0x537f94u) != 0) {
+          h[((unsigned char *)esi)[0x1a] & 0xf]++;
+          if (++n % 2000 == 0)
+              SDL_Log("ENQ [0]=%u [1]=%u [2]=%u [3]=%u [4]=%u [5]=%u [b]=%u [c]=%u [f]=%u",
+                      h[0],h[1],h[2],h[3],h[4],h[5],h[11],h[12],h[15]); } }
+#endif
     dst = (unsigned char *)&g_drawQueue + qsize * 0x1c;
     for (i = 0; i < 7; i++)
         ((unsigned int *)dst)[i] = ((unsigned int *)esi)[i];

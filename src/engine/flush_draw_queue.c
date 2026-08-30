@@ -246,6 +246,28 @@ void FlushDrawQueue(void)
             }
         } else {
             /* TRIANGLE */
+#ifdef TARGET_SDL
+            /* MK4_TRACE_RAST: which rasterizer the fight's triangles take,
+             * and the color words steering the choice. rec+0x14 < 0x7fff
+             * routes into the SHADED path, whose lookup pages are a
+             * synthetic native seed - so the split matters. */
+            { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+              static unsigned plain, dith, shad, logs;
+              if (getenv("MK4_TRACE_RAST")
+                  && *MK4_VA(unsigned int, 0x537f94u) != 0) {
+                  if (*(unsigned short *)(rec + 0x14) >= 0x7fff && !(typ & 0x10)) {
+                      unsigned int m = typ & 0x180;
+                      if (m) dith++; else plain++;
+                  } else shad++;
+                  { static unsigned slots[16];
+                    slots[typ & 0xf]++;
+                    if (++logs % 2000 == 0)
+                      SDL_Log("RAST plain=%u dith=%u shaded=%u slots "
+                              "[0]=%u [1]=%u [2]=%u [3]=%u [4]=%u [5]=%u [11]=%u [12]=%u [15]=%u",
+                              plain, dith, shad,
+                              slots[0], slots[1], slots[2], slots[3], slots[4],
+                              slots[5], slots[11], slots[12], slots[15]); } } }
+#endif
             if (*(unsigned short *)(rec + 0x14) >= 0x7fff && !(typ & 0x10)) {
                 unsigned int m = typ & 0x180;
                 if (m == 0x80 || m == 0x100 || m == 0x180) TexturedTriRasterizeDithered();

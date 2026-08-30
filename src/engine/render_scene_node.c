@@ -397,6 +397,16 @@ emit:
                                 g_walkCallback = 1;
                             }
                         }
+                        /* MK4_FORCE_CACHE_REBUILD: diagnostic - rebuild the
+                         * vertex cache every visit. The validity header is
+                         * entry<<5|kind-bits and encodes NOTHING about the
+                         * texture page slots baked into the records, so a
+                         * cache built before LoadGeoAsset_Textures patched
+                         * the slots keeps nibble 0 forever. */
+                        { extern char *getenv(const char *);
+                          static int f = -1;
+                          if (f < 0) f = getenv("MK4_FORCE_CACHE_REBUILD") != 0;
+                          if (f && g_dualC != 0) { rebuild = 1; g_walkCallback = 1; } }
                         if (g_dualC == 0 || rebuild) {
                             g_currentNodeIdx = node;
                             VertexQuadBuilder(blk, rebuild);
@@ -404,7 +414,17 @@ emit:
                                 goto descend;
                         }
                         kind = g_cj_0054205c;
-                        g_dualC += 1;
+                        /* += 4, not += 1: g_dualC is a raw VA here and the
+                         * original does `add eax, 4` (0x4bacfd). The emitters
+                         * then take records at g_dualC + 4, i.e. cache + 8 -
+                         * exactly where VertexQuadBuilder writes them. With
+                         * += 1 every record was read 3 BYTES EARLY: x,y still
+                         * looked right (the emitter writes and the queue
+                         * decode reads the same shifted offsets), but u,v,
+                         * the sort key, the colors and the page-slot nibble
+                         * all came from the wrong bytes - streaky textures
+                         * sampling the font atlas at slot 0. */
+                        g_dualC += 4;
                         g_baseSel = 0x1fff;
                         g_walkCallback = g_cj_0054205c & 1;
                         g_eventQueuePending = MK4_UNPTR(&g_dispatchSave1559);
