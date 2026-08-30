@@ -396,3 +396,4 @@ src/engine/stage_load_band.c
 src/engine/fight_script_vm.c
 src/engine/anim_frame_advance.c
 src/engine/anim_pose_pipeline.c
+src/engine/pose_tree_blend_walker.c
