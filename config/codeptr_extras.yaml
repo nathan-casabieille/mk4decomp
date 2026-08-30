@@ -120,4 +120,11 @@ entries:
   0x468f60: MatchStartFsm_00468f60
   0x428d80: InstallSelf3WayChainCmp
   0x429240: InstallSelfPair3Branch
+  # Phase4 bone ticks (0x4130c0/0x4131f0/0x413230/0x413310) are CONVERTED
+  # in phase4_bone_ticks.c but deliberately NOT registered yet: their +0x10
+  # dispatch protocol stages g_fightGroupHead in a way the pump-side reader
+  # has not been transcribed for, and registering them let 0x413230 run in
+  # the wrong context - its group prepend then cycled a chain list and the
+  # tree walk crashed. Read ChainNodeAdvanceCallback's rec+0x10 dispatch
+  # protocol first, then register these four.
 

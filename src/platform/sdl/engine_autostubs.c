@@ -407,4 +407,8 @@ __attribute__((weak)) int Phase4FivePackedHelpers(){MK4_StubHit("Phase4FivePacke
 
 __attribute__((weak)) int ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(){MK4_StubHit("ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0");return 0;}
 
+__attribute__((weak)) int MStackPushNegMul10(){MK4_StubHit("MStackPushNegMul10");return 0;}
+
+__attribute__((weak)) int ChainListVecAdd(){MK4_StubHit("ChainListVecAdd");return 0;}
+
 #endif /* MK4_NATIVE_FULL */

@@ -108,6 +108,7 @@ extern int PushCallScaledClearJmp();
 extern int Phase4DualHelperTrampoline();
 extern int Phase4Fsm_00412920();
 extern int Phase4WalkIn_00412ad0();
+extern int Phase4StateInit4Helpers();
 extern int SoundSetupLoop();
 extern int SetDirty4XorScaledLoad();
 extern int Phase4TrampolineMainHelpers();
@@ -1044,6 +1045,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x412900u, (void*)Phase4DualHelperTrampoline},
     {0x412920u, (void*)Phase4Fsm_00412920},
     {0x412ad0u, (void*)Phase4WalkIn_00412ad0},
+    {0x4130c0u, (void*)Phase4StateInit4Helpers},
     {0x413ea0u, (void*)SoundSetupLoop},
     {0x4147b0u, (void*)SetDirty4XorScaledLoad},
     {0x414b90u, (void*)Phase4TrampolineMainHelpers},
