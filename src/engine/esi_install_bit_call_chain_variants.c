@@ -188,7 +188,10 @@ void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_
       ScaledInitOrSelfPtr_StackPopDispatchTagged();
       return;
     }
-    *(code **)(iVar1 + 8) = EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429530;
+    /* the original stores the VA for the pump to resolve; the lift wrote a
+     * HOST function pointer through an UNTRANSLATED address - first exercised
+     * when the fight-script VM started reaching this state. */
+    *(unsigned int *)MK4_PTR((unsigned int)(iVar1 + 8)) = 0x429530u;
     *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 1;
     g_dualC = 1;
     g_framePauseFlag = 1;
@@ -256,7 +259,10 @@ void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_
       ScaledInitOrSelfPtr_StackPopDispatchTagged();
       return;
     }
-    *(code **)(iVar1 + 8) = EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_004295a0;
+    /* the original stores the VA for the pump to resolve; the lift wrote a
+     * HOST function pointer through an UNTRANSLATED address - first exercised
+     * when the fight-script VM started reaching this state. */
+    *(unsigned int *)MK4_PTR((unsigned int)(iVar1 + 8)) = 0x4295a0u;
     *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 1;
     g_dualC = 1;
     g_framePauseFlag = 1;
@@ -324,7 +330,10 @@ void EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_
       ScaledInitOrSelfPtr_StackPopDispatchTagged();
       return;
     }
-    *(code **)(iVar1 + 8) = EsiInstallBitCallChain_CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx_00429610;
+    /* the original stores the VA for the pump to resolve; the lift wrote a
+     * HOST function pointer through an UNTRANSLATED address - first exercised
+     * when the fight-script VM started reaching this state. */
+    *(unsigned int *)MK4_PTR((unsigned int)(iVar1 + 8)) = 0x429610u;
     *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 1;
     g_dualC = 1;
     g_framePauseFlag = 1;

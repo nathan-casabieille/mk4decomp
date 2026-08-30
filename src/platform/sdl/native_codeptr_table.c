@@ -356,6 +356,7 @@ extern int VMOp_Resume_00459bd0();
 extern int VMOp_Resume_00459c80();
 extern int VMOp_Resume_00459d30();
 extern int VMOp_Resume_00459ea0();
+extern int VMWait3c_0045b590();
 extern int ScaledIterStep_0045c020();
 extern int FightFrameStep();
 extern int FightFrameStep_Inner();
@@ -1257,6 +1258,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x459c80u, (void*)VMOp_Resume_00459c80},
     {0x459d30u, (void*)VMOp_Resume_00459d30},
     {0x459ea0u, (void*)VMOp_Resume_00459ea0},
+    {0x45b590u, (void*)VMWait3c_0045b590},
     {0x45c020u, (void*)ScaledIterStep_0045c020},
     {0x45c5c0u, (void*)FightFrameStep},
     {0x45c6c0u, (void*)FightFrameStep_Inner},

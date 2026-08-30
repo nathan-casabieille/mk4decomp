@@ -380,16 +380,23 @@ __attribute__((weak)) int BulletVolleySpawner(){MK4_StubHit("BulletVolleySpawner
 
 __attribute__((weak)) int PushCallPauseScaledJmpInd(){MK4_StubHit("PushCallPauseScaledJmpInd");return 0;}
 
-__attribute__((weak)) int ScaledLoadJmp_00428d20(){return 0;}
-__attribute__((weak)) int ScaledLoadJmp_00429390(){return 0;}
-__attribute__((weak)) int EsiInstallDecGlobalJmp(){return 0;}
-__attribute__((weak)) int EntryThunkBodyStateMachine(){return 0;}
-__attribute__((weak)) int DualBranchWordLookup(){return 0;}
-__attribute__((weak)) int TableLookupCall_g_eventTbl_112(){return 0;}
-__attribute__((weak)) int TableLookupCall_g_eventTbl_19(){return 0;}
-__attribute__((weak)) int State208cBit0Flag(){return 0;}
-__attribute__((weak)) int CallDirty4DualJmp(){return 0;}
-__attribute__((weak)) int HitReactionCluster(){return 0;}
-__attribute__((weak)) int MoveListCursorCluster(){return 0;}
+__attribute__((weak)) int ScaledLoadJmp_00428d20(){MK4_StubHit("ScaledLoadJmp_00428d20");return 0;}
+__attribute__((weak)) int ScaledLoadJmp_00429390(){MK4_StubHit("ScaledLoadJmp_00429390");return 0;}
+__attribute__((weak)) int EsiInstallDecGlobalJmp(){MK4_StubHit("EsiInstallDecGlobalJmp");return 0;}
+__attribute__((weak)) int EntryThunkBodyStateMachine(){MK4_StubHit("EntryThunkBodyStateMachine");return 0;}
+__attribute__((weak)) int DualBranchWordLookup(){MK4_StubHit("DualBranchWordLookup");return 0;}
+__attribute__((weak)) int TableLookupCall_g_eventTbl_112(){MK4_StubHit("TableLookupCall_g_eventTbl_112");return 0;}
+__attribute__((weak)) int TableLookupCall_g_eventTbl_19(){MK4_StubHit("TableLookupCall_g_eventTbl_19");return 0;}
+__attribute__((weak)) int State208cBit0Flag(){MK4_StubHit("State208cBit0Flag");return 0;}
+__attribute__((weak)) int CallDirty4DualJmp(){MK4_StubHit("CallDirty4DualJmp");return 0;}
+__attribute__((weak)) int HitReactionCluster(){MK4_StubHit("HitReactionCluster");return 0;}
+
+__attribute__((weak)) int InstallSelfBitGated(){MK4_StubHit("InstallSelfBitGated");return 0;}
+__attribute__((weak)) int ScaledClearJmp_InstallSelfBitGated(){MK4_StubHit("ScaledClearJmp_InstallSelfBitGated");return 0;}
+__attribute__((weak)) int InstallSelfDualCountdown(){MK4_StubHit("InstallSelfDualCountdown");return 0;}
+__attribute__((weak)) int ScaledClearJmp_InstallSelf3WayChainCmp(){MK4_StubHit("ScaledClearJmp_InstallSelf3WayChainCmp");return 0;}
+__attribute__((weak)) int EsiInstallChainCmpDualCall(){MK4_StubHit("EsiInstallChainCmpDualCall");return 0;}
+
+__attribute__((weak)) int GuardedDualConst2AndToggle(){MK4_StubHit("GuardedDualConst2AndToggle");return 0;}
 
 #endif /* MK4_NATIVE_FULL */

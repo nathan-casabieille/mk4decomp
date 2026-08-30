@@ -106,4 +106,11 @@ entries:
   0x459c80: VMOp_Resume_00459c80
   0x459d30: VMOp_Resume_00459d30
   0x459ea0: VMOp_Resume_00459ea0
+  0x45b590: VMWait3c_0045b590
+  0x45b730: VMWait_0045b730
+  0x45b7b0: VMWaitOp_0045b7b0
+  0x45b860: VMWaitOp_0045b860
+  0x45b910: VMWaitOp_0045b910
+  0x45b9c0: VMWaitOp_0045b9c0
+  0x45baa0: VMWaitOp_0045baa0
 

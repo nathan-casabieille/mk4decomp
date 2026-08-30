@@ -66,9 +66,24 @@ extern void MStackPush4IndirectCall(void);
 extern void State208cBit0Flag(void);
 extern void CallDirty4DualJmp(void);
 extern void HitReactionCluster(void);
-extern void MoveListCursorCluster(void);
+extern void GuardedDualConst2AndToggle(void);
+extern void MStackPush3CmpCall(void);
+extern void InstallSelfBitGated(void);
+extern void ScaledClearJmp_InstallSelfBitGated(void);
+extern void InstallSelfDualCountdown(void);
+extern void ScaledClearJmp_InstallSelf3WayChainCmp(void);
+extern void ScaledClearJmp_EsiInstallBitCallChain(void);
+extern void ScaledArrStore_GuardedChainCmpDualBitXor_00429980(void);
+extern void EsiInstallChainCmpDualCall(void);
 
 void PendingMatch_00459510(void);
+void VMWait3c_0045b590(void);
+void VMWait_0045b730(void);
+void VMWaitOp_0045b7b0(void);
+void VMWaitOp_0045b860(void);
+void VMWaitOp_0045b910(void);
+void VMWaitOp_0045b9c0(void);
+void VMWaitOp_0045baa0(void);
 
 #define g_currentNodeIdx  (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
@@ -83,6 +98,7 @@ void PendingMatch_00459510(void);
 #define g_xformDirtyFlags (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
 #define g_framePauseFlag  (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
 #define g_matrixStackTop  (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
+#define g_xformScratch94vm (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
 
 #define MSTACK_AT(i)      (*(unsigned int *)MK4_PTR((i) * 4u))
 #define NODE_W(n,off)     MK4_NODE_AT(unsigned int, (n), (off))
@@ -351,6 +367,120 @@ void VMResumeHit_00459910(void)
     }
 }
 
+
+/* ---- MoveListCursorCluster (0x45b420..0x45b620): the script FLOW ops.
+ * The stream cursor tricks live here - absolute jump, loop counter,
+ * repeat-until (scan back to the op-0x3a marker), a per-character jump
+ * table indexed by cam+0x34 (0x10 -> slot 2, 0x11 -> slot 7), a
+ * conditional jump on 0x542088, one more wait, and call-VA-then-branch.
+ * All were foreign to the first VM commit; op 60 is where the very first
+ * fight script parked. ---- */
+
+#define g_slot88 (*(unsigned int *)MK4_VA(unsigned int, 0x542088u))
+
+/* 0x45b420 (op 51): absolute jump - PC = fetched word */
+static int vmop_jump_abs(void)
+{
+    ScaledIterStep_0045c020();
+    if (g_framePauseFlag != 0) return 0;
+    NODE_W(g_baseSel, 0x48) = g_walkCallback;
+    return 1;
+}
+
+/* 0x45b590: wait with pendingNodeType 0x3c */
+void VMWait3c_0045b590(void)
+{
+    unsigned int cam = g_baseSel;
+
+    NODE_W(cam, 0x84) = 0;
+    NODE_W(cam, 8) = 0x45b590u;
+    NODE_W(cam, 0x84) = 1;
+    g_pendingNodeType = 0x3cu;
+    g_framePauseFlag = 1;
+}
+
+
+/* ---- PendingMatch_ScaledIterStep cluster (0x45b620..0x45bd80): the
+ * conditional-branch and long-wait opcodes. The uniform prefix
+ * PauseTestCmp2CallStore (0x45bfe0) reads the command word's SECOND byte
+ * (0x542071); when it is 2 an anim id follows in the stream and goes to
+ * group+0x24. ---- */
+
+#define VM_OPBYTE2 (*(unsigned char *)MK4_VA(unsigned char, 0x542071u))
+#define g_roundFlag537f04 (*(unsigned int *)MK4_VA(unsigned int, 0x537f04u))
+
+static void vm_pause_test_prefix(void)      /* 0x45bfe0 */
+{
+    unsigned int b2 = VM_OPBYTE2;
+
+    g_walkCallback = b2;
+    if (g_framePauseFlag != 0) return;
+    if (b2 != 2u) return;
+    ScaledIterStep_0045c020();
+    if (g_framePauseFlag != 0) return;
+    NODE_W(g_groupHead, 0x24) = g_walkCallback;
+}
+
+/* the shared "cmd resumes the VM" gate; returns 1 when the caller should
+ * just return (the VM was re-entered or a pause is up) */
+static int vm_cmd_gate(void)
+{
+    unsigned int cmd = NODE_W(g_baseSel, 0x84);
+
+    NODE_W(g_baseSel, 0x84) = 0;
+    if (cmd != 0) {
+        PendingMatch_00459510();
+        return 1;
+    }
+    return 0;
+}
+
+void VMWait_0045b730(void)                  /* op 70: bare wait */
+{
+    if (vm_cmd_gate()) return;
+    vm_install_wait(0x45b730u, 0x1000000u);
+    InstallSelfBitGated();
+    g_framePauseFlag = 1;
+}
+
+/* the four operand-wait variants share one body */
+static void vm_wait_operand(unsigned int selfVA, void (*callee)(void))
+{
+    if (vm_cmd_gate()) return;
+    vm_pause_test_prefix();
+    if (g_framePauseFlag != 0) return;
+    g_eventQueueCur &= 0xffu;
+    g_slot80 = g_eventQueueCur;
+    vm_install_wait(selfVA, 0x1000000u);
+    callee();
+    g_framePauseFlag = 1;
+}
+
+void VMWaitOp_0045b7b0(void) { vm_wait_operand(0x45b7b0u, ScaledClearJmp_InstallSelfBitGated); }
+void VMWaitOp_0045b860(void) { vm_wait_operand(0x45b860u, InstallSelfDualCountdown); }
+void VMWaitOp_0045b910(void) { vm_wait_operand(0x45b910u, ScaledClearJmp_InstallSelf3WayChainCmp); }
+
+void VMWaitOp_0045b9c0(void)                /* op 72: prefix, NO operand */
+{
+    if (vm_cmd_gate()) return;
+    vm_pause_test_prefix();
+    if (g_framePauseFlag != 0) return;
+    vm_install_wait(0x45b9c0u, 0x1000000u);
+    ScaledClearJmp_EsiInstallBitCallChain();
+    g_framePauseFlag = 1;
+}
+
+void VMWaitOp_0045baa0(void)                /* operand wait, no prefix */
+{
+    if (vm_cmd_gate()) return;
+    g_eventQueueCur &= 0xffu;
+    if (g_framePauseFlag != 0) return;
+    g_slot80 = g_eventQueueCur;
+    vm_install_wait(0x45baa0u, 0x1000000u);
+    EsiInstallChainCmpDualCall();
+    g_framePauseFlag = 1;
+}
+
 /* ---- the core loop. The dispatch table at 0x4e8970 is DATA in the
  * image (about 200 entries; 61 of them point at Thunk_ScaledNeg1SetPause,
  * the engine's own invalid-opcode behavior), so the twin reads the LIVE
@@ -376,6 +506,16 @@ void PendingMatch_00459510(void)
         w = g_walkCallback;
         g_eventQueueCur = w;
         op = w >> 24;
+#ifdef TARGET_SDL
+        { static int t = -1; static unsigned int hist[32][3]; static unsigned int hn;
+          if (t < 0) t = getenv("MK4_TRACE_VM") != 0;
+          if (t) {
+              (void)hist;
+              if (hn < 400u)
+                  SDL_Log("VM[%u] op=%u w=%08x pc=%06x cam=%06x", hn,
+                          op, w, NODE_W(g_baseSel, 0x48) - 1u, g_baseSel);
+              hn++; } }
+#endif
         g_walkCallback = op;
         g_currentNodeIdx = (0x4e8970u >> 2) + op;
         target = *(unsigned int *)MK4_PTR(0x4e8970u + op * 4u);
@@ -477,13 +617,15 @@ void PendingMatch_00459510(void)
             break;
 
         case 0x459800u:
+            /* the dirty-1 branch tail-jumps to 0x45b420, which IS the
+             * absolute-jump op: take the branch target from the stream */
             CopyJmp_SlotCmp3way_g_currentNodeIdx();
             if (g_framePauseFlag != 0) return;
             if ((g_xformDirtyFlags & 1u) != 0) {
-                MoveListCursorCluster();     /* jmp in the original */
-                return;
+                if (!vmop_jump_abs()) return;
+                continue;
             }
-            ScaledIterStep_0045c020();       /* fetch-and-discard */
+            ScaledIterStep_0045c020();       /* skip the branch target */
             if (g_framePauseFlag != 0) return;
             continue;
 
@@ -491,8 +633,8 @@ void PendingMatch_00459510(void)
             State208cBit0Flag();
             if (g_framePauseFlag != 0) return;
             if ((g_xformDirtyFlags & 1u) != 0) {
-                MoveListCursorCluster();     /* jmp in the original */
-                return;
+                if (!vmop_jump_abs()) return;
+                continue;
             }
             ScaledIterStep_0045c020();
             if (g_framePauseFlag != 0) return;
@@ -537,6 +679,160 @@ void PendingMatch_00459510(void)
             AllocNode();
             break;
 
+        case 0x45b620u:                      /* dirty-1 conditional jump */
+            if ((g_xformDirtyFlags & 1u) != 0) {
+                if (!vmop_jump_abs()) return;
+                continue;
+            }
+            ScaledIterStep_0045c020();       /* skip the target word */
+            if (g_framePauseFlag != 0) return;
+            continue;
+
+        case 0x45b650u:                      /* call VA, then dirty-1 jump */
+            ScaledIterStep_0045c020();
+            if (g_framePauseFlag != 0) return;
+            g_currentNodeIdx = g_walkCallback;
+            ((void (*)(void))MK4_ResolveCode(g_walkCallback))();
+            if (g_framePauseFlag != 0) return;
+            goto vm_dirty1_branch;
+
+        case 0x45b680u:
+            GuardedDualConst2AndToggle();
+            if (g_framePauseFlag != 0) return;
+            goto vm_dirty1_branch;
+
+        case 0x45b6b0u: {                    /* branch on a node flag */
+            unsigned int bit;
+
+            MStackPush3CmpCall();
+            if (g_framePauseFlag != 0) return;
+            if ((g_xformDirtyFlags & 1u) == 0) {
+                v = NODE_W(g_groupHead, 0x40);
+                g_walkCallback = v;
+                bit = v & 0x200u;
+            } else {
+                unsigned int node = NODE_W(g_baseSel, 0x38);
+                g_currentNodeIdx = node;
+                v = NODE_W(node, 0x40);
+                g_eventQueueCur = v;
+                bit = v & 4u;
+            }
+            g_xformScratch94vm = bit;
+            if (bit != 0) {
+                if (!vmop_jump_abs()) return;
+                continue;
+            }
+            ScaledIterStep_0045c020();
+            if (g_framePauseFlag != 0) return;
+            continue;
+        }
+
+        case 0x45b730u: VMWait_0045b730();   break;
+        case 0x45b7b0u: VMWaitOp_0045b7b0(); break;
+        case 0x45b860u: VMWaitOp_0045b860(); break;
+        case 0x45b910u: VMWaitOp_0045b910(); break;
+        case 0x45b9c0u: VMWaitOp_0045b9c0(); break;
+        case 0x45baa0u: VMWaitOp_0045baa0(); break;
+
+        case 0x45ba60u:                      /* op 73: prefix + operand + call */
+            vm_pause_test_prefix();
+            if (g_framePauseFlag != 0) return;
+            g_eventQueueCur &= 0xffu;
+            g_slot80 = g_eventQueueCur;
+            ScaledArrStore_GuardedChainCmpDualBitXor_00429980();
+            break;
+
+        case 0x45bb50u:                      /* op 22: raise the round flag */
+            g_walkCallback = 1u;
+            g_roundFlag537f04 = 1u;
+            continue;
+
+        case 0x45b420u:                      /* absolute jump */
+            if (!vmop_jump_abs()) return;
+            continue;
+
+        case 0x45b450u:                      /* set loop counter cam+0x78 */
+            v = g_eventQueueCur & 0xffu;
+            g_eventQueueCur = v;
+            if (g_framePauseFlag != 0) return;
+            NODE_W(g_baseSel, 0x78) = v;
+            continue;
+
+        case 0x45b480u: {                    /* repeat-until: dec counter,
+                                              * scan back to the 0x3a marker */
+            unsigned int cam = g_baseSel;
+            unsigned int ctr = NODE_W(cam, 0x78) - 1u;
+            unsigned int pc;
+
+            g_eventQueueCur = ctr;
+            NODE_W(cam, 0x78) = ctr;
+            if (ctr == 0)
+                continue;
+            pc = NODE_W(cam, 0x48) - 1u;
+            g_currentNodeIdx = pc;
+            g_walkCallback = *(unsigned int *)MK4_PTR(pc * 4u) >> 24;
+            while (g_walkCallback != 0x3au) {
+                pc--;
+                g_currentNodeIdx = pc;
+                g_walkCallback = *(unsigned int *)MK4_PTR(pc * 4u) >> 24;
+            }
+            pc++;
+            g_currentNodeIdx = pc;
+            NODE_W(cam, 0x48) = pc;
+            continue;
+        }
+
+        case 0x45b500u: {                    /* per-character jump table */
+            unsigned int cam = g_baseSel;
+            unsigned int pc = NODE_W(cam, 0x48);
+            unsigned int kind;
+
+            g_eventQueueTotal = pc;
+            kind = NODE_W(cam, 0x34);
+            g_walkCallback = kind;
+            if (kind == 0x10u) { kind = 2u; g_walkCallback = 2u; }
+            if (kind == 0x11u) { kind = 7u; g_walkCallback = 7u; }
+            pc += kind;
+            g_eventQueueTotal = pc;
+            v = *(unsigned int *)MK4_PTR(pc * 4u);
+            g_walkCallback = v;
+            NODE_W(cam, 0x48) = v;
+#ifdef TARGET_SDL
+            { extern char *getenv(const char *);
+              if (getenv("MK4_TRACE_VM"))
+                  SDL_Log("VM jt: kind=%x(+0x34=%x) slot=%06x -> pc=%06x",
+                          kind, NODE_W(cam, 0x34), pc, v); }
+#endif
+            continue;
+        }
+
+        case 0x45b560u:                      /* conditional jump on 0x542088 */
+            if (g_slot88 == 1u) {
+                if (!vmop_jump_abs()) return;
+                continue;
+            }
+            ScaledIterStep_0045c020();       /* skip the target word */
+            if (g_framePauseFlag != 0) return;
+            continue;
+
+        case 0x45b590u:
+            VMWait3c_0045b590();
+            break;
+
+        case 0x45b5d0u:                      /* call VA, then dirty-4 branch */
+            ScaledIterStep_0045c020();
+            if (g_framePauseFlag != 0) return;
+            g_currentNodeIdx = g_walkCallback;
+            ((void (*)(void))MK4_ResolveCode(g_walkCallback))();
+            if (g_framePauseFlag != 0) return;
+            if ((g_xformDirtyFlags & 4u) != 0) {
+                if (!vmop_jump_abs()) return;
+                continue;
+            }
+            ScaledIterStep_0045c020();       /* skip the branch target */
+            if (g_framePauseFlag != 0) return;
+            continue;
+
         case 0x49cbc0u:                      /* invalid opcode: pause thunk */
             Thunk_ScaledNeg1SetPause();
             break;
@@ -547,6 +843,16 @@ void PendingMatch_00459510(void)
         }
         if (g_framePauseFlag != 0)
             return;
+        continue;
+
+vm_dirty1_branch:
+        if ((g_xformDirtyFlags & 1u) != 0) {
+            if (!vmop_jump_abs()) return;
+            continue;
+        }
+        ScaledIterStep_0045c020();
+        if (g_framePauseFlag != 0) return;
+        continue;
     }
 }
 

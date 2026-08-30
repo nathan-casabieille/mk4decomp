@@ -191,7 +191,10 @@ void EsiInstallDecCallChain_StackPopDispatchTagged_004293d0(void)
       ScaledInitOrSelfPtr_StackPopDispatchTagged();
       return;
     }
-    *(code **)(iVar1 + 8) = EsiInstallDecCallChain_StackPopDispatchTagged_004293d0;
+    /* the original stores the VA for the pump to resolve; the lift wrote a
+     * HOST function pointer through an UNTRANSLATED address - first exercised
+     * when the fight-script VM started reaching this state. */
+    *(unsigned int *)MK4_PTR((unsigned int)(iVar1 + 8)) = 0x4293d0u;
     *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 1;
     g_dualC = 1;
     g_framePauseFlag = 1;
@@ -272,7 +275,10 @@ void EsiInstallDecCallChain_StackPopDispatchTagged_004294a0(void)
       ScaledInitOrSelfPtr_StackPopDispatchTagged();
       return;
     }
-    *(code **)(iVar1 + 8) = EsiInstallDecCallChain_StackPopDispatchTagged_004294a0;
+    /* the original stores the VA for the pump to resolve; the lift wrote a
+     * HOST function pointer through an UNTRANSLATED address - first exercised
+     * when the fight-script VM started reaching this state. */
+    *(unsigned int *)MK4_PTR((unsigned int)(iVar1 + 8)) = 0x4294a0u;
     *(undefined4 *)MK4_PTR((iVar1 + 0x84)) = 1;
     g_dualC = 1;
     g_framePauseFlag = 1;
