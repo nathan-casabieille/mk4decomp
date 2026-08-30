@@ -113,4 +113,5 @@ entries:
   0x45b910: VMWaitOp_0045b910
   0x45b9c0: VMWaitOp_0045b9c0
   0x45baa0: VMWaitOp_0045baa0
+  0x49db40: SkelPump_0049db40
 

@@ -16,7 +16,12 @@ ROOT = Path(__file__).resolve().parents[2]
 sy = yaml.safe_load((ROOT/'config'/'symbols.yaml').read_text())
 addr = {f['name']: f['addr'] for f in sy['functions'] if isinstance(f.get('addr'), int)}
 defpat = re.compile(r'^(?:__declspec\(naked\)\s*)?(?:static\s+)?(?:unsigned |signed )?'
-                    r'[A-Za-z_][\w \*]*?\b([A-Za-z_]\w*)\s*\([^;{]*\)\s*\{', re.M)
+                    # a trailing /* comment */ between ')' and '{' is legal in the
+                    # twins (e.g. `void VMWait_0045b730(void)   /* op 70 */`); the
+                    # old pattern silently skipped such definitions and the extras
+                    # check then aborted the regeneration, leaving a STALE table.
+                    r'[A-Za-z_][\w \*]*?\b([A-Za-z_]\w*)\s*\([^;{]*\)\s*'
+                    r'(?:/\*[^*]*(?:\*+[^/*][^*]*)*\*+/\s*)?\{', re.M)
 fns = {}
 for line in (ROOT/'tools'/'decomp'/'native_full_srcs.txt').read_text().split():
     s = (ROOT/line).read_text(errors='ignore')

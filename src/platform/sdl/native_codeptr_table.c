@@ -2,6 +2,7 @@
 #ifdef MK4_NATIVE_FULL
 #include <SDL2/SDL.h>
 
+extern int Anim_AcquireFrameData();
 extern int Anim_LoadPackFile();
 extern int ListInitLoop();
 extern int OnceCall();
@@ -66,9 +67,12 @@ extern int InstallSelfDispatch();
 extern int BootChainPushAddSignFlag();
 extern int SetJmp_CallPauseScaledStoreAdd();
 extern int CallPauseScaledStoreAdd();
+extern int BootMStackBracket3SubdispatchPair();
+extern int BootChainStreamWalkExtract();
 extern int ExtractBitsToVec3();
 extern int ThreeChan11BitPack();
 extern int MStackPushZeroCallPop_PendingMatch();
+extern int GuardedChainDispatch2c();
 extern int ScaledLoadCallSet1c();
 extern int PushPopScaled1cDoubleCall();
 extern int PushSetCallCleanup();
@@ -155,11 +159,13 @@ extern int ModMagicMul10Index();
 extern int MStackMagicModMul10();
 extern int Atan2QuadrantLookup();
 extern int TripleMod411262();
+extern int Mul10HeavyTransform();
 extern int TripleSubVec3();
 extern int TripleAddVec3();
 extern int Vec3AddViaHelper();
 extern int TripleArrayDiffClamp();
 extern int ThreeMul10Stores();
+extern int QuadInterpolator();
 extern int QuadInterpolatorV2();
 extern int ThreeClampLoop();
 extern int DualEntryInitCmp();
@@ -212,6 +218,7 @@ extern int ScaledArrStore_SetJmp_ScaledArrStore();
 extern int SetJmp_ScaledArrStore();
 extern int ScaledArrStore_GuardedChainCmpDualBitXor_00429960();
 extern int ScaledArrStore_GuardedChainCmpDualBitXor_00429980();
+extern int GuardedChainCmpDualBitXor();
 extern int TwinLoopSlotFinder();
 extern int DispatchPair();
 extern int ScenePostInitSequencer();
@@ -357,6 +364,12 @@ extern int VMOp_Resume_00459c80();
 extern int VMOp_Resume_00459d30();
 extern int VMOp_Resume_00459ea0();
 extern int VMWait3c_0045b590();
+extern int VMWait_0045b730();
+extern int VMWaitOp_0045b7b0();
+extern int VMWaitOp_0045b860();
+extern int VMWaitOp_0045b910();
+extern int VMWaitOp_0045b9c0();
+extern int VMWaitOp_0045baa0();
 extern int ScaledIterStep_0045c020();
 extern int FightFrameStep();
 extern int FightFrameStep_Inner();
@@ -652,7 +665,13 @@ extern int Thunk_ZeroLargeBlock();
 extern int Thunk_StructArrayWalkCondCall();
 extern int AndStoreJmp();
 extern int MStackBitLoopTripleCall();
+extern int CmpDivJmp();
 extern int LinkedListSwapHead();
+extern int LinkedListFieldAdd_StoreDoubleNegPauseSubStore();
+extern int PoseTreeBlendWalker();
+extern int SixCrossStores();
+extern int SkelAnimUpdaterCluster();
+extern int SkelPump_0049db40();
 extern int Wrapper_SaveCallRestore();
 extern int SetJmp_Push16Call_004a1ac0();
 extern int SetJmp_Push16Call_004a1ad0();
@@ -904,6 +923,7 @@ extern int _init_premain();
 extern int TableLookupIatCall();
 
 static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
+    {0x401000u, (void*)Anim_AcquireFrameData},
     {0x401120u, (void*)Anim_LoadPackFile},
     {0x401310u, (void*)ListInitLoop},
     {0x401340u, (void*)OnceCall},
@@ -968,9 +988,12 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4077b0u, (void*)BootChainPushAddSignFlag},
     {0x4078e0u, (void*)SetJmp_CallPauseScaledStoreAdd},
     {0x4078f0u, (void*)CallPauseScaledStoreAdd},
+    {0x407920u, (void*)BootMStackBracket3SubdispatchPair},
+    {0x407ae0u, (void*)BootChainStreamWalkExtract},
     {0x407c00u, (void*)ExtractBitsToVec3},
     {0x407c60u, (void*)ThreeChan11BitPack},
     {0x407d00u, (void*)MStackPushZeroCallPop_PendingMatch},
+    {0x4082d0u, (void*)GuardedChainDispatch2c},
     {0x4084b0u, (void*)ScaledLoadCallSet1c},
     {0x408510u, (void*)PushPopScaled1cDoubleCall},
     {0x408580u, (void*)PushSetCallCleanup},
@@ -1057,11 +1080,13 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x424410u, (void*)MStackMagicModMul10},
     {0x4245b0u, (void*)Atan2QuadrantLookup},
     {0x424740u, (void*)TripleMod411262},
+    {0x424bf0u, (void*)Mul10HeavyTransform},
     {0x4250f0u, (void*)TripleSubVec3},
     {0x425130u, (void*)TripleAddVec3},
     {0x425170u, (void*)Vec3AddViaHelper},
     {0x4251f0u, (void*)TripleArrayDiffClamp},
     {0x4252c0u, (void*)ThreeMul10Stores},
+    {0x425380u, (void*)QuadInterpolator},
     {0x4255b0u, (void*)QuadInterpolatorV2},
     {0x425a80u, (void*)ThreeClampLoop},
     {0x425b20u, (void*)DualEntryInitCmp},
@@ -1114,6 +1139,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x429950u, (void*)SetJmp_ScaledArrStore},
     {0x429960u, (void*)ScaledArrStore_GuardedChainCmpDualBitXor_00429960},
     {0x429980u, (void*)ScaledArrStore_GuardedChainCmpDualBitXor_00429980},
+    {0x4299a0u, (void*)GuardedChainCmpDualBitXor},
     {0x429a40u, (void*)TwinLoopSlotFinder},
     {0x429ac0u, (void*)DispatchPair},
     {0x429b70u, (void*)ScenePostInitSequencer},
@@ -1259,6 +1285,12 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x459d30u, (void*)VMOp_Resume_00459d30},
     {0x459ea0u, (void*)VMOp_Resume_00459ea0},
     {0x45b590u, (void*)VMWait3c_0045b590},
+    {0x45b730u, (void*)VMWait_0045b730},
+    {0x45b7b0u, (void*)VMWaitOp_0045b7b0},
+    {0x45b860u, (void*)VMWaitOp_0045b860},
+    {0x45b910u, (void*)VMWaitOp_0045b910},
+    {0x45b9c0u, (void*)VMWaitOp_0045b9c0},
+    {0x45baa0u, (void*)VMWaitOp_0045baa0},
     {0x45c020u, (void*)ScaledIterStep_0045c020},
     {0x45c5c0u, (void*)FightFrameStep},
     {0x45c6c0u, (void*)FightFrameStep_Inner},
@@ -1554,7 +1586,13 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x49cc00u, (void*)Thunk_StructArrayWalkCondCall},
     {0x49cc10u, (void*)AndStoreJmp},
     {0x49cc30u, (void*)MStackBitLoopTripleCall},
+    {0x49d080u, (void*)CmpDivJmp},
     {0x49d0a0u, (void*)LinkedListSwapHead},
+    {0x49d380u, (void*)LinkedListFieldAdd_StoreDoubleNegPauseSubStore},
+    {0x49d680u, (void*)PoseTreeBlendWalker},
+    {0x49d8e0u, (void*)SixCrossStores},
+    {0x49d940u, (void*)SkelAnimUpdaterCluster},
+    {0x49db40u, (void*)SkelPump_0049db40},
     {0x49eb10u, (void*)Wrapper_SaveCallRestore},
     {0x4a1ac0u, (void*)SetJmp_Push16Call_004a1ac0},
     {0x4a1ad0u, (void*)SetJmp_Push16Call_004a1ad0},

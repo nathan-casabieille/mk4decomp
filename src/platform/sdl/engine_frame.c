@@ -379,6 +379,52 @@ void MK4_GameFrame(void)
          * Phase3InstallSelf, which the demo/title state machines drive;
          * scheduling the handler directly is the same shape as the
          * loading screen above and skips those two for now. */
+        /* MK4_SKEL_BUILD=<frame>: DIAGNOSTIC ONLY - dispatch the skeleton
+         * builder directly over whatever the 0x542058 cursor points at.
+         *
+         * Measured result: the words there are NOT skeleton templates.
+         * 0x542058 is a generic walk scratch (TwinLoopSlotFinder and the
+         * fight-script VM both use it), and at fight time it holds node
+         * links (template[0] = 0 -> the record lookup aborts with dirty
+         * bit 2, correctly). The REAL template list is built by the
+         * Phase4 FSM that Phase4DualHelperTrampoline spawns (node type
+         * 0x8a, callback 0x412920) from MatchStartFsmCluster - the
+         * match-start band the MK4_BOOT_* shortcuts skip. Converting that
+         * band is the remaining route to bind offsets; this hook stays as
+         * the harness that will prove it the moment the list is real. */
+        if (getenv("MK4_SKEL_BUILD")) {
+            const char *at = getenv("MK4_SKEL_BUILD");
+            if (frame == atoi(at)) {
+                extern void SkelAnimUpdaterCluster(void);
+                unsigned int saveSel = *MK4_VA(unsigned int, 0x542060u);
+                unsigned int saveGrp = *MK4_VA(unsigned int, 0x54205cu);
+                unsigned int cur = *MK4_VA(unsigned int, 0x542058u);
+                unsigned int p[2];
+                int i = 0, n = 0;
+
+                p[0] = *MK4_VA(unsigned int, 0x538158u);   /* p1 */
+                p[1] = *MK4_VA(unsigned int, 0x53815cu);   /* p2 */
+                *MK4_VA(unsigned int, 0x542060u) = 0x14fae4u; /* live sequencer */
+                for (; n < 8; n++) {
+                    unsigned int w = *(unsigned int *)MK4_PTR(cur * 4u);
+                    cur++;
+                    if (w == 0) break;
+                    if ((w & 0xffffffu) == 0) continue;
+                    *MK4_VA(unsigned int, 0x54205cu) = p[i & 1];
+                    *MK4_VA(unsigned int, 0x542048u) = w & 0xffffffu;
+                    SDL_Log("skel-build: template %06x -> group %06x",
+                            w & 0xffffffu, p[i & 1]);
+                    SkelAnimUpdaterCluster();
+                    SDL_Log("skel-build: pause=%u dirty=%x",
+                            *MK4_VA(unsigned int, 0x541e6cu),
+                            *MK4_VA(unsigned int, 0x54208cu));
+                    *MK4_VA(unsigned int, 0x541e6cu) = 0;
+                    i++;
+                }
+                *MK4_VA(unsigned int, 0x542060u) = saveSel;
+                *MK4_VA(unsigned int, 0x54205cu) = saveGrp;
+            }
+        }
         /* MK4_ARENA_STAGE=<n>: load arena n through the engine's own geo
          * loader, using the engine's OWN static slot.
          *

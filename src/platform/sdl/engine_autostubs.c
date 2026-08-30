@@ -401,4 +401,8 @@ __attribute__((weak)) int Anim_DecodeBitstream(){MK4_StubHit("Anim_DecodeBitstre
 
 __attribute__((weak)) int MStackBootPush4Init(){MK4_StubHit("MStackBootPush4Init");return 0;}
 
+__attribute__((weak)) int MStackPush3HelperCondToggle(){MK4_StubHit("MStackPush3HelperCondToggle");return 0;}
+
+__attribute__((weak)) int SkelAnimUpdaterClusterV2(){MK4_StubHit("SkelAnimUpdaterClusterV2");return 0;}
+
 #endif /* MK4_NATIVE_FULL */
