@@ -196,7 +196,6 @@ __attribute__((weak)) int MstackPopScaledChainPlusThunks(){MK4_StubHit("MstackPo
 __attribute__((weak)) int Mul10ThresholdQuad(){MK4_StubHit("Mul10ThresholdQuad");return 0;}
 __attribute__((weak)) int NodeUnlink(){MK4_StubHit("NodeUnlink");return 0;}
 __attribute__((weak)) int PackedListVisitor(){MK4_StubHit("PackedListVisitor");return 0;}
-__attribute__((weak)) int PendingMatch_00459510(){MK4_StubHit("PendingMatch_00459510");return 0;}
 __attribute__((weak)) int PendingMatch_CallPauseScaledStoreCopyJmp(){MK4_StubHit("PendingMatch_CallPauseScaledStoreCopyJmp");return 0;}
 __attribute__((weak)) int PendingMatch_LeaPlus22StoreSelf(){MK4_StubHit("PendingMatch_LeaPlus22StoreSelf");return 0;}
 __attribute__((weak)) int PendingMatch_MStackPush2RunCountdown_0044baa0(){MK4_StubHit("PendingMatch_MStackPush2RunCountdown_0044baa0");return 0;}
@@ -380,5 +379,17 @@ __attribute__((weak)) int EnduranceStateInitWalk(){MK4_StubHit("EnduranceStateIn
 __attribute__((weak)) int BulletVolleySpawner(){MK4_StubHit("BulletVolleySpawner");return 0;}
 
 __attribute__((weak)) int PushCallPauseScaledJmpInd(){MK4_StubHit("PushCallPauseScaledJmpInd");return 0;}
+
+__attribute__((weak)) int ScaledLoadJmp_00428d20(){return 0;}
+__attribute__((weak)) int ScaledLoadJmp_00429390(){return 0;}
+__attribute__((weak)) int EsiInstallDecGlobalJmp(){return 0;}
+__attribute__((weak)) int EntryThunkBodyStateMachine(){return 0;}
+__attribute__((weak)) int DualBranchWordLookup(){return 0;}
+__attribute__((weak)) int TableLookupCall_g_eventTbl_112(){return 0;}
+__attribute__((weak)) int TableLookupCall_g_eventTbl_19(){return 0;}
+__attribute__((weak)) int State208cBit0Flag(){return 0;}
+__attribute__((weak)) int CallDirty4DualJmp(){return 0;}
+__attribute__((weak)) int HitReactionCluster(){return 0;}
+__attribute__((weak)) int MoveListCursorCluster(){return 0;}
 
 #endif /* MK4_NATIVE_FULL */

@@ -261,6 +261,17 @@ void FlushDrawQueue(void)
                   } else shad++;
                   { static unsigned slots[16];
                     slots[typ & 0xf]++;
+                    /* where do the residual slot-0 TRIANGLES draw? (rects are
+                     * legit HUD glyphs; triangles sampling the font atlas are
+                     * the leftover wall junk) */
+                    { static int t0;
+                      if ((typ & 0xf) == 0 && !((typ >> 5) & 1) && t0 < 12) {
+                          t0++;
+                          SDL_Log("T0 x=[%d %d %d] y=[%d %d %d] c14=%04x c16=%04x typ=%04x",
+                                  *(short *)(rec + 0), *(short *)(rec + 4), *(short *)(rec + 8),
+                                  *(short *)(rec + 2), *(short *)(rec + 6), *(short *)(rec + 0xa),
+                                  *(unsigned short *)(rec + 0x14),
+                                  *(unsigned short *)(rec + 0x16), typ); } }
                     if (++logs % 2000 == 0)
                       SDL_Log("RAST plain=%u dith=%u shaded=%u slots "
                               "[0]=%u [1]=%u [2]=%u [3]=%u [4]=%u [5]=%u [11]=%u [12]=%u [15]=%u",

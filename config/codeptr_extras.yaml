@@ -96,3 +96,14 @@ entries:
   0x40a4d0: FlagThunkTail_0040a4d0
   0x40a4f0: FlagThunkClear4_0040a4f0
   0x40a510: FlagThunkClearBit2_0040a510
+  # fight-script VM (PendingMatch_00459510): the wait opcodes install these
+  # VAs as the controller's per-frame callback; the pump must resolve them.
+  0x459890: VMWait_00459890
+  0x459910: VMResumeHit_00459910
+  0x459a40: VMOp_Resume_00459a40
+  0x459b20: VMOp_Resume_00459b20
+  0x459bd0: VMOp_Resume_00459bd0
+  0x459c80: VMOp_Resume_00459c80
+  0x459d30: VMOp_Resume_00459d30
+  0x459ea0: VMOp_Resume_00459ea0
+
