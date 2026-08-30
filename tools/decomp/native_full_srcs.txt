@@ -394,3 +394,5 @@ src/engine/mstack_burst_walk_band.c
 src/engine/slot_phase_reset_band.c
 src/engine/stage_load_band.c
 src/engine/fight_script_vm.c
+src/engine/anim_frame_advance.c
+src/engine/anim_pose_pipeline.c

@@ -120,7 +120,6 @@ __attribute__((weak)) int Audio_TimerTick(){MK4_StubHit("Audio_TimerTick");retur
 __attribute__((weak)) int Audio_UpdateChannels(){MK4_StubHit("Audio_UpdateChannels");return 0;}
 __attribute__((weak)) int BitmapBlitRunLength(){MK4_StubHit("BitmapBlitRunLength");return 0;}
 __attribute__((weak)) int BootDispatchSlotInit(){MK4_StubHit("BootDispatchSlotInit");return 0;}
-__attribute__((weak)) int BootMStackBracket3SubdispatchPair(){MK4_StubHit("BootMStackBracket3SubdispatchPair");return 0;}
 __attribute__((weak)) int BootMod6487eClampAndChainMul10(){MK4_StubHit("BootMod6487eClampAndChainMul10");return 0;}
 __attribute__((weak)) int BootScheduledNodeTimerWalk(){MK4_StubHit("BootScheduledNodeTimerWalk");return 0;}
 __attribute__((weak)) int BootStateInitLongChain(){MK4_StubHit("BootStateInitLongChain");return 0;}
@@ -158,7 +157,6 @@ __attribute__((weak)) int FiveTableInitChainBracketed(){MK4_StubHit("FiveTableIn
 __attribute__((weak)) int FlushDrawQueue(){MK4_StubHit("FlushDrawQueue");return 0;}
 __attribute__((weak)) int GameModeHandlerCluster(){MK4_StubHit("GameModeHandlerCluster");return 0;}
 __attribute__((weak)) int GameStateMachine(){MK4_StubHit("GameStateMachine");return 0;}
-__attribute__((weak)) int GuardedChainCmpDualBitXor(){MK4_StubHit("GuardedChainCmpDualBitXor");return 0;}
 __attribute__((weak)) int GuardedChainPushSetCallPop(){MK4_StubHit("GuardedChainPushSetCallPop");return 0;}
 __attribute__((weak)) int GuardedLoopWithCallback_Callback_004284c0(){MK4_StubHit("GuardedLoopWithCallback_Callback_004284c0");return 0;}
 __attribute__((weak)) int HalveChainTriplePop2(){MK4_StubHit("HalveChainTriplePop2");return 0;}
@@ -398,5 +396,9 @@ __attribute__((weak)) int ScaledClearJmp_InstallSelf3WayChainCmp(){MK4_StubHit("
 __attribute__((weak)) int EsiInstallChainCmpDualCall(){MK4_StubHit("EsiInstallChainCmpDualCall");return 0;}
 
 __attribute__((weak)) int GuardedDualConst2AndToggle(){MK4_StubHit("GuardedDualConst2AndToggle");return 0;}
+
+__attribute__((weak)) int Anim_DecodeBitstream(){MK4_StubHit("Anim_DecodeBitstream");return 0;}
+
+__attribute__((weak)) int MStackBootPush4Init(){MK4_StubHit("MStackBootPush4Init");return 0;}
 
 #endif /* MK4_NATIVE_FULL */
