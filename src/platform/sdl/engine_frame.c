@@ -39,6 +39,7 @@ extern void MK4_NativeVideoClaimTexSlots(void);
 extern int Input_GetAsyncKey(int);
 extern void ResetConfigToDefaults(void);
 extern void AppInit_PreInstall(void);   /* FILESYS: open the archive, read its directory */
+extern void AppInit_Misc1(void);        /* key labels; menu.tga -> slot 15; the cursor bars */
 extern void AppInit_Misc2(void);        /* heap: clear 3 MB, seed the free head */
 extern void AppInit_Misc3(void);        /* zero the 42-dword scratch block */
 extern void AppInit_Misc4(void);
@@ -62,6 +63,17 @@ static void MK4_EngineStateInit(void)
     AppInit_PreInstall();
     SDL_Log("filesys: %u entries from the archive directory",
             *(unsigned int *)MK4_VA(unsigned int, 0x007af4e4u));
+    /* Loads menu.tga into texture slot 15 and then PAINTS the 32 gradient
+     * bars DrawMenu's selection cursor samples - rows 0x50..0x5b of that
+     * slot, which are black in the art because they are not art. It needs
+     * the archive open, hence its place right after PreInstall, which is
+     * also where AppInit runs it.
+     *
+     * Skipped for the smoke scenes: they stage their own content into the
+     * same page (a flat fill, or a row-encoded ramp) and this would paint
+     * menu.tga over it, which is what `make native-frame-check` measures. */
+    if (!getenv("MK4_SCENE") && !getenv("MK4_TEX_SOLID") && !getenv("MK4_TEX_ROWS"))
+        AppInit_Misc1();
     AppInit_Misc2();
     AppInit_Misc3();
     AppInit_Misc4();

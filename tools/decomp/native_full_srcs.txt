@@ -342,6 +342,7 @@ src/engine/zero_slots_gated_dispatch.c
 src/engine/zero_three_slots.c
 src/game/dispatch_scaled_lea.c
 src/game/download_player.c
+src/game/app_init_misc1.c
 src/game/draw_menu.c
 src/game/menu_sound_screen.c
 src/game/menu_gameplay_screen.c

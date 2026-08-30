@@ -232,6 +232,13 @@ void MK4_NativeVideoInit(void)
      * exactly what crashed ScanlineTexBlit on the first attempt. */
     *(unsigned int *)MK4_VA(unsigned int, 0x00f85b34u) = MK4_TEX_VA;  /* 1400 */
     *(unsigned int *)MK4_VA(unsigned int, 0x00f4d028u) = MK4_LUT_VA;  /* 1340 */
+    /* Pixel format, which is TryInitRenderer's to publish and therefore this
+     * backend's: non-zero means 5-6-5, zero means 5-5-5. Everything here is
+     * 5-5-5 - the framebuffer, MK4_PalBlit555, the .tga texels - but the flag
+     * ships as 0xffffffff in .data, and left that way Helper_TexUpload folds
+     * every uploaded page to 5-6-5 on the way in. The blitters then read those
+     * texels back as 5-5-5, which reads as a green cast over the whole page. */
+    *(unsigned int *)MK4_VA(unsigned int, 0x004ffd4cu) = 0;           /* 5-5-5 */
     /* The real menu art if it has been extracted, else a placeholder page.
      *
      * `c:\source\mk4\win\menu.tga` in FILESYS.DAT is a 256x256 16-bit TGA -
@@ -243,7 +250,13 @@ void MK4_NativeVideoInit(void)
      * Note this is the SHARED texture page: 0xf85b34 is the one base every
      * blit reads, and the game refills it per screen. Loading the menu art
      * here is right for the menu and will need to become per-screen once
-     * more of the asset path is converted. */
+     * more of the asset path is converted.
+     *
+     * SUPERSEDED on the real frame path: AppInit_Misc1 is converted now, and
+     * it does this load itself through FILESYS and Helper_TexUpload - and
+     * then paints the cursor bars this copy knows nothing about. What is left
+     * here is the placeholder page for the smoke scenes and the s_texMenuLoaded
+     * flag that decides whether slot 15 is reserved against the first .geo. */
     {
         /* Only on the real frame path. The MK4_SCENE smoke scenes (rect, .geo)
          * stage their own content and the rect one in particular reads this

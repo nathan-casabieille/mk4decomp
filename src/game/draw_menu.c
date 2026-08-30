@@ -17,8 +17,14 @@
 #define g_menuCounter (*(unsigned int *)MK4_VA(unsigned int, 0xab4344u))
 #define g_menuCurrent (*(unsigned int *)MK4_VA(unsigned int, 0xab433cu))
 #define g_menuCursorBuf ((unsigned int *)MK4_VA(unsigned int, 0xab41a8u))
-#define g_menuExtraDelta (*(unsigned int *)MK4_VA(unsigned int, 0xab4348u))
-#define g_menuExtraSign (*(unsigned int *)MK4_VA(unsigned int, 0x4f579cu))
+/* SIGNED, both of them: the original compares the counter with `jl` after
+ * `cmp eax, 0x20` and with `jge` after `test eax, eax`, and the sign slot
+ * holds -1 for half of every cycle. Left unsigned - as the auto-aliaser
+ * writes them - the `< 0` arm below is dead code, the counter never turns
+ * around at the bottom, and the cursor sweeps as a sawtooth instead of a
+ * triangle. */
+#define g_menuExtraDelta (*(int *)MK4_VA(int, 0xab4348u))
+#define g_menuExtraSign (*(int *)MK4_VA(int, 0x4f579cu))
 #define g_menuPrev (*(unsigned int *)MK4_VA(unsigned int, 0xab4340u))
 #endif
 

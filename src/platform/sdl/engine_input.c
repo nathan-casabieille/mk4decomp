@@ -69,6 +69,41 @@ void MK4_NativeFakeKeyTick(void)
     if (g_mk4FakePressLeft > 0) g_mk4FakePressLeft--;
 }
 
+/* MapVirtualKeyA(vk, MAPVK_VK_TO_CHAR), the one USER32 call in AppInit_Misc1.
+ * Windows returns the UPPERCASE character a virtual key types on the current
+ * layout, or 0 for keys with no character. The engine calls it once per key at
+ * boot to fill in the labels the KEYBOARD screen shows, so a US layout - which
+ * is the VK numbering the rest of this file already assumes - is the answer. */
+int MK4_MapVirtualKeyChar(int vk)
+{
+    if (vk >= 0x30 && vk <= 0x39)          /* '0'..'9'      */
+        return vk;
+    if (vk >= 0x41 && vk <= 0x5a)          /* 'A'..'Z'      */
+        return vk;
+    if (vk >= 0x60 && vk <= 0x69)          /* numpad 0..9   */
+        return vk - 0x60 + '0';
+    switch (vk) {
+    case 0x20: return ' ';
+    case 0x6a: return '*';
+    case 0x6b: return '+';
+    case 0x6d: return '-';
+    case 0x6e: return '.';
+    case 0x6f: return '/';
+    case 0xba: return ';';
+    case 0xbb: return '=';
+    case 0xbc: return ',';
+    case 0xbd: return '-';
+    case 0xbe: return '.';
+    case 0xbf: return '/';
+    case 0xc0: return '`';
+    case 0xdb: return '[';
+    case 0xdc: return '\\';
+    case 0xdd: return ']';
+    case 0xde: return '\'';
+    default:   return 0;
+    }
+}
+
 int Input_GetAsyncKey(int vk)
 {
     const Uint8 *keys;
