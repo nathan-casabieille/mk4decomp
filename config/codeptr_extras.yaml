@@ -116,4 +116,8 @@ entries:
   0x49db40: SkelPump_0049db40
   0x412920: Phase4Fsm_00412920
   0x412ad0: Phase4WalkIn_00412ad0
+  0x468eb0: MatchStartEntry_00468eb0
+  0x468f60: MatchStartFsm_00468f60
+  0x428d80: InstallSelf3WayChainCmp
+  0x429240: InstallSelfPair3Branch
 

@@ -400,3 +400,4 @@ src/engine/pose_tree_blend_walker.c
 src/engine/skel_builder_band.c
 src/engine/phase4_walkin_band.c
 src/boot/scaled_chain_or8.c
+src/engine/matchstart_band.c

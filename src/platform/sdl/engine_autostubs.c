@@ -376,8 +376,6 @@ __attribute__((weak)) int BulletVolleySpawner(){MK4_StubHit("BulletVolleySpawner
 
 __attribute__((weak)) int PushCallPauseScaledJmpInd(){MK4_StubHit("PushCallPauseScaledJmpInd");return 0;}
 
-__attribute__((weak)) int ScaledLoadJmp_00428d20(){MK4_StubHit("ScaledLoadJmp_00428d20");return 0;}
-__attribute__((weak)) int ScaledLoadJmp_00429390(){MK4_StubHit("ScaledLoadJmp_00429390");return 0;}
 __attribute__((weak)) int EsiInstallDecGlobalJmp(){MK4_StubHit("EsiInstallDecGlobalJmp");return 0;}
 __attribute__((weak)) int EntryThunkBodyStateMachine(){MK4_StubHit("EntryThunkBodyStateMachine");return 0;}
 __attribute__((weak)) int DualBranchWordLookup(){MK4_StubHit("DualBranchWordLookup");return 0;}
@@ -402,5 +400,11 @@ __attribute__((weak)) int MStackBootPush4Init(){MK4_StubHit("MStackBootPush4Init
 __attribute__((weak)) int MStackPush3HelperCondToggle(){MK4_StubHit("MStackPush3HelperCondToggle");return 0;}
 
 __attribute__((weak)) int SkelAnimUpdaterClusterV2(){MK4_StubHit("SkelAnimUpdaterClusterV2");return 0;}
+
+__attribute__((weak)) int SfxAttenuateAndApply(){MK4_StubHit("SfxAttenuateAndApply");return 0;}
+
+__attribute__((weak)) int Phase4FivePackedHelpers(){MK4_StubHit("Phase4FivePackedHelpers");return 0;}
+
+__attribute__((weak)) int ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0(){MK4_StubHit("ScaledLitLoadCall_ScaledChainCallPauseSetJmp_then_Wrapper_IterLoad_0048fd30_00480fe0");return 0;}
 
 #endif /* MK4_NATIVE_FULL */

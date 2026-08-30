@@ -392,6 +392,27 @@ void MK4_GameFrame(void)
          * match-start band the MK4_BOOT_* shortcuts skip. Converting that
          * band is the remaining route to bind offsets; this hook stays as
          * the harness that will prove it the moment the list is real. */
+        /* MK4_BOOT_MATCHSTART=<frame>: schedule the FULL match-start FSM -
+         * the keystone that spawns the skeleton build, drives the round
+         * intro anims, steps the walk-in through code-table states 0x25 /
+         * 0x26 with a ten-step budget, and STOPS it. One spawn per
+         * fighter, group staged before each (the controller captures it). */
+        if (getenv("MK4_BOOT_MATCHSTART")) {
+            const char *at = getenv("MK4_BOOT_MATCHSTART");
+            if (frame == atoi(at)) {
+                unsigned int save = *MK4_VA(unsigned int, 0x54205cu);
+                unsigned int p1 = *MK4_VA(unsigned int, 0x538158u);
+                unsigned int p2 = *MK4_VA(unsigned int, 0x53815cu);
+                extern void StoreTwoCall(int cb, int type);
+
+                if (p1) { *MK4_VA(unsigned int, 0x54205cu) = p1;
+                          StoreTwoCall(0x468f60, 0x8a); }
+                if (p2) { *MK4_VA(unsigned int, 0x54205cu) = p2;
+                          StoreTwoCall(0x468f60, 0x8a); }
+                *MK4_VA(unsigned int, 0x54205cu) = save;
+                SDL_Log("boot-matchstart: FSM scheduled for %06x / %06x", p1, p2);
+            }
+        }
         /* MK4_BOOT_WALKIN=<frame>: schedule the Phase4 build/walk-in FSM
          * through the engine's own scheduler - Phase4DualHelperTrampoline
          * is nothing but StoreTwoCall(0x412920, 0x8a), the exact mechanism

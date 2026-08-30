@@ -12,6 +12,7 @@ extern int MStackPackedInit();
 extern int SaveCallRestore();
 extern int Mul10Tail();
 extern int Init6Struct();
+extern int ScaledChainOr8();
 extern int BootInitChainHeavy();
 extern int Init6Globals();
 extern int Helper_TickFrameTail();
@@ -193,11 +194,16 @@ extern int GuardedSeq_CopyJmp_then_GuardedLoopWithCallback();
 extern int GuardedLoopWithCallback();
 extern int ScaledArrStore_CallDualStoreXorBit();
 extern int CallDualStoreXorBit();
+extern int GuardedPackedSlotInit();
 extern int ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush();
 extern int SetJmp_EsiInstallDecCallChain();
+extern int ScaledLoadJmp_00428d20();
 extern int ScaledClearJmp_EsiInstallBitCallChain();
+extern int InstallSelf3WayChainCmp();
 extern int ScaledArrStore_EsiInstallBitCallChain_00428e70();
 extern int SetJmp_EsiInstallBitCallChain();
+extern int InstallSelfPair3Branch();
+extern int ScaledLoadJmp_00429390();
 extern int ScaledArrStore_EsiInstallBitCallChain_004293b0();
 extern int EsiInstallDecCallChain_StackPopDispatchTagged_004293d0();
 extern int ScaledArrStore_ScaledChainJmp_00429450();
@@ -446,6 +452,8 @@ extern int ScaledLoadTwoCallDualConst_MStackPush2RunCountdown_then_MStackBracket
 extern int GuardedSeq_GuardedTripleCallSetTail_then_GuardedSeq();
 extern int GuardedTripleCallSetTail();
 extern int CallJmp();
+extern int MatchStartEntry_00468eb0();
+extern int MatchStartFsm_00468f60();
 extern int RoundReaction20012_0046a230();
 extern int RoundCountdownEnter_0046a240();
 extern int RoundCountdownTick_0046a2e0();
@@ -940,6 +948,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4049d0u, (void*)SaveCallRestore},
     {0x404af0u, (void*)Mul10Tail},
     {0x404e20u, (void*)Init6Struct},
+    {0x404e50u, (void*)ScaledChainOr8},
     {0x404f20u, (void*)BootInitChainHeavy},
     {0x4051b0u, (void*)Init6Globals},
     {0x4051e0u, (void*)Helper_TickFrameTail},
@@ -1121,11 +1130,16 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4284a0u, (void*)GuardedLoopWithCallback},
     {0x4285c0u, (void*)ScaledArrStore_CallDualStoreXorBit},
     {0x4285e0u, (void*)CallDualStoreXorBit},
+    {0x428760u, (void*)GuardedPackedSlotInit},
     {0x428950u, (void*)ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush},
     {0x428cf0u, (void*)SetJmp_EsiInstallDecCallChain},
+    {0x428d20u, (void*)ScaledLoadJmp_00428d20},
     {0x428d60u, (void*)ScaledClearJmp_EsiInstallBitCallChain},
+    {0x428d80u, (void*)InstallSelf3WayChainCmp},
     {0x428e70u, (void*)ScaledArrStore_EsiInstallBitCallChain_00428e70},
     {0x429230u, (void*)SetJmp_EsiInstallBitCallChain},
+    {0x429240u, (void*)InstallSelfPair3Branch},
+    {0x429390u, (void*)ScaledLoadJmp_00429390},
     {0x4293b0u, (void*)ScaledArrStore_EsiInstallBitCallChain_004293b0},
     {0x4293d0u, (void*)EsiInstallDecCallChain_StackPopDispatchTagged_004293d0},
     {0x429450u, (void*)ScaledArrStore_ScaledChainJmp_00429450},
@@ -1374,6 +1388,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x467c80u, (void*)GuardedSeq_GuardedTripleCallSetTail_then_GuardedSeq},
     {0x467ca0u, (void*)GuardedTripleCallSetTail},
     {0x467d30u, (void*)CallJmp},
+    {0x468eb0u, (void*)MatchStartEntry_00468eb0},
+    {0x468f60u, (void*)MatchStartFsm_00468f60},
     {0x46a230u, (void*)RoundReaction20012_0046a230},
     {0x46a240u, (void*)RoundCountdownEnter_0046a240},
     {0x46a2e0u, (void*)RoundCountdownTick_0046a2e0},
