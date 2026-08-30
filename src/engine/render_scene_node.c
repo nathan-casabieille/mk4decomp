@@ -236,6 +236,21 @@ void RenderSceneNode(void)
     g_currentNodeIdx = 0x2ad0e6;
     TransformAccumulate();
     if (g_framePauseFlag != 0) { MK4_ALLOCA_FREE(12); return; }
+    /* MK4_TRACE_MAT=N: the 3x3 the accumulate just applied, the node's
+     * local translation, the parent position it added to, and the result.
+     * An all-zero matrix collapses every child onto its parent. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      extern int atoi(const char *);
+      static int nm2, limm = -1;
+      if (limm < 0) { char *e = getenv("MK4_TRACE_MAT"); limm = e ? atoi(e) : 0; }
+      if (nm2 < limm && *MK4_VA(unsigned int, 0x537f94u) != 0) { nm2++;
+        short *M = (short *)MK4_VA(short, 0x7af990u);
+        SDL_Log("MAT node=%x m=[%d %d %d|%d %d %d|%d %d %d] loc=[%d %d %d] par=%x out=[%d %d %d]",
+                node, M[0], M[1], M[2], M[3], M[4], M[5], M[6], M[7], M[8],
+                MK4_NODE_AT(int, node, 0x30), MK4_NODE_AT(int, node, 0x34),
+                MK4_NODE_AT(int, node, 0x38), g_dualD,
+                (int)g_dispatchSave1501, (int)g_dispatchSave1502,
+                (int)g_dispatchSave1503); } }
 
     if ((g_currentNodeFlags & 0xf00004) != 0)
         goto cull;
