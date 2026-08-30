@@ -113,11 +113,15 @@ extern int Phase4DualHelperTrampoline();
 extern int Phase4Fsm_00412920();
 extern int Phase4WalkIn_00412ad0();
 extern int Phase4FivePackedHelpers();
+extern int Phase4IdleFsm_00412cd0();
+extern int Phase4StageFsm_00412d80();
+extern int Phase4ArmFsm_00412ec0();
 extern int Phase4BoneDecay_00412ff0();
 extern int MStackPushSet9Jmp();
 extern int PushStackCallPauseSet0xa();
 extern int Phase4StateInit4Helpers();
 extern int Phase4BoneFade_004131f0();
+extern int Phase4BoneLaunch_00413230();
 extern int Phase4BoneGravity_00413310();
 extern int SoundSetupLoop();
 extern int SetDirty4XorScaledLoad();
@@ -1062,11 +1066,15 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x412920u, (void*)Phase4Fsm_00412920},
     {0x412ad0u, (void*)Phase4WalkIn_00412ad0},
     {0x412cb0u, (void*)Phase4FivePackedHelpers},
+    {0x412cd0u, (void*)Phase4IdleFsm_00412cd0},
+    {0x412d80u, (void*)Phase4StageFsm_00412d80},
+    {0x412ec0u, (void*)Phase4ArmFsm_00412ec0},
     {0x412ff0u, (void*)Phase4BoneDecay_00412ff0},
     {0x413040u, (void*)MStackPushSet9Jmp},
     {0x413070u, (void*)PushStackCallPauseSet0xa},
     {0x4130c0u, (void*)Phase4StateInit4Helpers},
     {0x4131f0u, (void*)Phase4BoneFade_004131f0},
+    {0x413230u, (void*)Phase4BoneLaunch_00413230},
     {0x413310u, (void*)Phase4BoneGravity_00413310},
     {0x413ea0u, (void*)SoundSetupLoop},
     {0x4147b0u, (void*)SetDirty4XorScaledLoad},

@@ -122,36 +122,26 @@ entries:
   0x429240: InstallSelfPair3Branch
   # Phase4 bone-init band, dispatch protocol measured against the binary:
   # 0x412ff0/0x4131f0/0x413310 are record +0x10 ticks (record staged in
-  # 0x542048; dispatched by RenderSceneNode's emit path) and 0x407560 is
-  # the motion integrator - these four are registered and run clean.
+  # 0x542048; dispatched by RenderSceneNode's emit path), 0x407560 is the
+  # motion integrator, 0x412cd0/0x412d80/0x412ec0 are controller FSMs
+  # (g_baseSel = the controller node, captured group at +0x2c), and
+  # 0x413230 is the AllocNode callback carried by skeleton template
+  # 0x4d6948.
   #
-  # 0x412cd0/0x412d80/0x412ec0 (the idle/stage/arm controller FSMs) and
-  # 0x413230 (bone launch) are converted in phase4_bone_ticks.c but
-  # deliberately NOT registered: the head block they drive allocates its
-  # effect nodes by POPPING the bootChainPair0 freelist
-  # (BootPhaseGateBracketedInit -> MStackPushChainStepIndex), and under
-  # the MK4_BOOT_MATCHSTART harness the round sequencer node is still ON
-  # that freelist - measured double-alloc: the pop returned 0x1492e8 (the
-  # live sequencer), the fresh-node zero-init overwrote its entry array,
-  # the array COUNT became a pose value (1 -> 0x144d99 = 0x513664>>2 from
-  # the 0x4d6748 pose track), and the anim pump walked 1.3M fake entries
-  # into a fault. This is a boot-harness SEQUENCING problem, not a
-  # transcription bug: the hooks create the round state in a different
-  # order than the original script, leaving live nodes on the freelist.
-  # NEXT: either replay the sequencer creation through the authentic
-  # MatchStart states or find the freelist reset the original runs before
-  # this band, then register these four.
-  0x407560: MotionIntegrate_00407560   # packed 2nd entry of BootMod6487e's symbol
-  0x4131f0: Phase4BoneFade_004131f0
+  # The FSMs and the launch tick were parked for a while behind what
+  # looked like a pool-sequencing defect; it was really a placeholder
+  # name shadowing ChainWalkPushPop in the destroy path (commit
+  # 20ae3c44b). With the owner resolver restored they are registered.
+  #
+  # NEVER register 0x4130c0 (the head block) or its two entry thunks
+  # 0x413040/0x413070: the head block POPS the group its thunks PUSH, so
+  # a table dispatch of it corrupts the mstack (measured, exit=139).
+  0x412cd0: Phase4IdleFsm_00412cd0
+  0x412d80: Phase4StageFsm_00412d80
+  0x412ec0: Phase4ArmFsm_00412ec0
+  0x413230: Phase4BoneLaunch_00413230
   0x412ff0: Phase4BoneDecay_00412ff0
-  # 0x413230 (bone launch) stays UNREGISTERED for now: it is dispatched
-  # as a track event from a pre-existing stream whose record staging
-  # (e48 = template words at 0x4d6948) is not transcribed yet, and with
-  # the real body running in that context a stale n44 pointed into the
-  # sequencer's entry ARRAY - ScaledStoreIdx24 then wrote a pose over the
-  # array's COUNT word (measured: count 1 -> 0x144d99 = pose 0x513664>>2)
-  # and the pump walked 1.3M fake entries into a fault. Map the arming
-  # path (who sets that record's track to the 0x4d67xx pose stream and
-  # what node it advances) before registering.
+  0x4131f0: Phase4BoneFade_004131f0
+  0x407560: MotionIntegrate_00407560   # packed 2nd entry of BootMod6487e's symbol
   0x413310: Phase4BoneGravity_00413310
 
