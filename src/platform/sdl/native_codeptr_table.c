@@ -7,6 +7,7 @@ extern int Anim_LoadPackFile();
 extern int ListInitLoop();
 extern int OnceCall();
 extern int Init0AndMax();
+extern int Anim_DecodeBitstream();
 extern int Phase3InstallSelf();
 extern int MStackPackedInit();
 extern int SaveCallRestore();
@@ -15,6 +16,7 @@ extern int ThreeChanPackClamp();
 extern int CopyThreeFields();
 extern int Init6Struct();
 extern int ScaledChainOr8();
+extern int StoreLoadJmp();
 extern int BootInitChainHeavy();
 extern int Init6Globals();
 extern int Helper_TickFrameTail();
@@ -377,6 +379,8 @@ extern int SetJmp_JuggleFsmCluster_00451b80();
 extern int JuggleFsmCluster();
 extern int DualScaledStore();
 extern int GuardedSeq_MStackPushTwoEntryChainCall_then_PoseCopyIdleCluster();
+extern int CharSelectController_00455f00();
+extern int TwoCallPauseSetJmp2();
 extern int SetJmp_CharSelectFsmCluster_004561c0();
 extern int SetJmp_CharSelectFsmCluster_004561d0();
 extern int SetJmp_CharSelectFsmCluster_004561e0();
@@ -694,6 +698,8 @@ extern int Thunk_ZeroLargeBlock();
 extern int Thunk_StructArrayWalkCondCall();
 extern int AndStoreJmp();
 extern int MStackBitLoopTripleCall();
+extern int MStackPush3LinkedListZeroWalk();
+extern int MStackPush3HelperCondToggle();
 extern int CmpDivJmp();
 extern int LinkedListSwapHead();
 extern int ChainListVecAdd();
@@ -960,6 +966,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x401310u, (void*)ListInitLoop},
     {0x401340u, (void*)OnceCall},
     {0x401370u, (void*)Init0AndMax},
+    {0x4013a0u, (void*)Anim_DecodeBitstream},
     {0x403170u, (void*)Phase3InstallSelf},
     {0x4049c0u, (void*)MStackPackedInit},
     {0x4049d0u, (void*)SaveCallRestore},
@@ -968,6 +975,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x404df0u, (void*)CopyThreeFields},
     {0x404e20u, (void*)Init6Struct},
     {0x404e50u, (void*)ScaledChainOr8},
+    {0x404ef0u, (void*)StoreLoadJmp},
     {0x404f20u, (void*)BootInitChainHeavy},
     {0x4051b0u, (void*)Init6Globals},
     {0x4051e0u, (void*)Helper_TickFrameTail},
@@ -1330,6 +1338,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x451b90u, (void*)JuggleFsmCluster},
     {0x452740u, (void*)DualScaledStore},
     {0x453780u, (void*)GuardedSeq_MStackPushTwoEntryChainCall_then_PoseCopyIdleCluster},
+    {0x455f00u, (void*)CharSelectController_00455f00},
+    {0x456180u, (void*)TwoCallPauseSetJmp2},
     {0x4561c0u, (void*)SetJmp_CharSelectFsmCluster_004561c0},
     {0x4561d0u, (void*)SetJmp_CharSelectFsmCluster_004561d0},
     {0x4561e0u, (void*)SetJmp_CharSelectFsmCluster_004561e0},
@@ -1647,6 +1657,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x49cc00u, (void*)Thunk_StructArrayWalkCondCall},
     {0x49cc10u, (void*)AndStoreJmp},
     {0x49cc30u, (void*)MStackBitLoopTripleCall},
+    {0x49ce00u, (void*)MStackPush3LinkedListZeroWalk},
+    {0x49cf70u, (void*)MStackPush3HelperCondToggle},
     {0x49d080u, (void*)CmpDivJmp},
     {0x49d0a0u, (void*)LinkedListSwapHead},
     {0x49d200u, (void*)ChainListVecAdd},

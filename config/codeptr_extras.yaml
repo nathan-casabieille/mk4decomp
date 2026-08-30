@@ -136,6 +136,8 @@ entries:
   # NEVER register 0x4130c0 (the head block) or its two entry thunks
   # 0x413040/0x413070: the head block POPS the group its thunks PUSH, so
   # a table dispatch of it corrupts the mstack (measured, exit=139).
+  # the character-select controller RoundSetupSpawn allocates
+  0x455f00: CharSelectController_00455f00
   0x412cd0: Phase4IdleFsm_00412cd0
   0x412d80: Phase4StageFsm_00412d80
   0x412ec0: Phase4ArmFsm_00412ec0

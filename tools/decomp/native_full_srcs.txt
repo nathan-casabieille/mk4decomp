@@ -357,6 +357,7 @@ src/game/helper_gsm_sub_other1.c
 src/game/helper_gsm_sub_other2.c
 src/game/menu_nav_poll.c
 src/game/statemachine.c
+src/engine/char_select_fsm.c
 src/game/table_search_asc.c
 src/game/table_search_desc.c
 src/game/tick.c

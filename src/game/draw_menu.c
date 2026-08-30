@@ -67,7 +67,11 @@
  */
 s32 DrawMenu(void *menu_items, s32 selection)
 {
-    unsigned int  table = MK4_UNPTR(menu_items);
+    /* The original takes a VA here and treats 0 as "no table" - the title
+     * state calls DrawMenu(0, -1) exactly so. Under the arena the argument
+     * arrives as a HOST pointer, and MK4_UNPTR of a null one is not 0 but
+     * a bogus VA that pass 1 then walks. Map null to null explicitly. */
+    unsigned int  table = menu_items ? MK4_UNPTR(menu_items) : 0u;
     unsigned int  cur   = g_menuCurrent;
     unsigned char *e;
     const char *txt;
