@@ -410,6 +410,20 @@ void MK4_GameFrame(void)
                       p1 ? MK4_NODE_AT(int, p1, 0x54) : 0,
                       p1 ? MK4_NODE_AT(int, p1, 0x58) : 0,
                       p1 ? MK4_NODE_AT(int, p1, 0x5c) : 0);
+              { unsigned int r84 = *MK4_VA(unsigned int, 0x541e84u);
+                unsigned int r8c = *MK4_VA(unsigned int, 0x541e8cu);
+                SDL_Log("POS roots: e84=%x (+4=%x +8=%x +c=%x)  e8c=%x (+4=%x +8=%x +c=%x)",
+                        r84, r84?MK4_NODE_AT(unsigned int,r84,4):0,
+                        r84?MK4_NODE_AT(unsigned int,r84,8):0,
+                        r84?MK4_NODE_AT(unsigned int,r84,0xc):0,
+                        r8c, r8c?MK4_NODE_AT(unsigned int,r8c,4):0,
+                        r8c?MK4_NODE_AT(unsigned int,r8c,8):0,
+                        r8c?MK4_NODE_AT(unsigned int,r8c,0xc):0); }
+              if (p1) SDL_Log("POS p1 list: l0=%x owner4=%x prev8=%x cnt_c=%x",
+                      MK4_NODE_AT(unsigned int, p1, 0),
+                      MK4_NODE_AT(unsigned int, p1, 4),
+                      MK4_NODE_AT(unsigned int, p1, 8),
+                      MK4_NODE_AT(unsigned int, p1, 0xc));
               if (p1) SDL_Log("POS p1 links: parent14=%x next10=%x child18=%x list1c=%x flags20=%x kind34=%x",
                       MK4_NODE_AT(unsigned int, p1, 0x14),
                       MK4_NODE_AT(unsigned int, p1, 0x10),
