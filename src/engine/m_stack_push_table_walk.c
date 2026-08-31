@@ -201,6 +201,12 @@ void MStackPushTableWalk(void)
               SDL_Log("tblwalk want=0x%x from %s", want, info.sname);
           else
               SDL_Log("tblwalk want=0x%x from %p", want, ra);
+          { unsigned int c0 = 0x543200u >> 2, k; char buf[256]; int n = 0;
+            for (k = 0; k < 8; k++) {
+                unsigned int r = *MK4_NODE(unsigned int, c0 + k);
+                n += SDL_snprintf(buf + n, 256 - n, "%x ", r);
+            }
+            SDL_Log("  registry head: %s", buf); }
       } }
 #endif
     rec = *MK4_NODE(unsigned int, cur);

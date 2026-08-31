@@ -81,10 +81,25 @@ def twin_body(path, name):
     """The NON_MATCHING body of `name` in `path`, or None."""
     s = strip_comments(path.read_text(errors='ignore'))
     for m in re.finditer(r'#ifdef NON_MATCHING\b', s):
-        j = s.find('\n#else', m.end())
-        if j < 0:
-            # a NATIVE-ONLY twin has no #else arm - take up to its #endif
-            j = s.find('\n#endif', m.end())
+        # walk to this block's own #else or #endif, NESTING-AWARE: a twin
+        # may carry #ifdef TARGET_SDL probes whose #endif would otherwise
+        # truncate the block at the first match
+        depth = 0
+        j = -1
+        for d in re.finditer(r'^\s*#\s*(if|ifdef|ifndef|else|endif)\b',
+                             s[m.end():], re.M):
+            k = d.group(1)
+            if k in ('if', 'ifdef', 'ifndef'):
+                depth += 1
+            elif k == 'else':
+                if depth == 0:
+                    j = m.end() + d.start()
+                    break
+            else:                       # endif
+                if depth == 0:
+                    j = m.end() + d.start()
+                    break
+                depth -= 1
         if j < 0:
             continue
         block = s[m.end():j]

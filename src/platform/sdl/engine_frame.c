@@ -347,7 +347,15 @@ void MK4_GameFrame(void)
                 }
             }
         }
-        if (getenv("MK4_TRACE_MSTACK") && (frame % 4) == 0)
+        if (getenv("MK4_TRACE_REG") ) {
+        static unsigned last0 = 0xdeadbeefu;
+        unsigned v0 = *MK4_VA(unsigned int, 0x543200u);
+        if (v0 != last0) {
+            SDL_Log("REG 0x543200[0]: 0x%x -> 0x%x at frame %d", last0, v0, frame);
+            last0 = v0;
+        }
+    }
+    if (getenv("MK4_TRACE_MSTACK") && (frame % 4) == 0)
             SDL_Log("f%-3d mstackTop=%08x nodeIdx=%08x", frame,
                     *MK4_VA(unsigned int, 0x4d57acu),
                     *MK4_VA(unsigned int, 0x542044u));

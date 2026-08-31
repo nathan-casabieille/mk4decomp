@@ -136,6 +136,7 @@ extern int CallPauseDirty4ScaledSet_tag_0x81();
 extern int GuardedSeq_BootStateInitLongChain_then_StackPopDispatchTagged();
 extern int ZeroLargeBlock();
 extern int AllocateNode();
+extern int ScaledStoreE0();
 extern int BootScheduledNodeTimerWalk();
 extern int NodeUnlink();
 extern int StackPopDispatchTagged();
@@ -153,6 +154,9 @@ extern int GameTick();
 extern int GuardedSeq_ZeroTriple_then_PendingMatch();
 extern int ScaledClearTripleCallJmp();
 extern int Screen_ArcadeEnding();
+extern int MkIntroFsm();
+extern int Install3WayCountdownGame();
+extern int DecBoundCheckCallJmp();
 extern int ZeroTriple();
 extern int Push71_Push48caa0();
 extern int ScaledInitOrSelfPtr_InstallSelfStackReset();
@@ -560,6 +564,8 @@ extern int ScaledChainPushCall();
 extern int Push16Call();
 extern int TableLookupCall_g_eventTbl_50();
 extern int GatedWordPushCall();
+extern int TableLookupCall_g_eventTbl_112();
+extern int TableLookupCall_g_eventTbl_65();
 extern int OrDualStore_0048a190();
 extern int ZeroState();
 extern int DualBitGateInitCall();
@@ -1107,6 +1113,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x41aad0u, (void*)GuardedSeq_BootStateInitLongChain_then_StackPopDispatchTagged},
     {0x41f270u, (void*)ZeroLargeBlock},
     {0x41f290u, (void*)AllocateNode},
+    {0x41f550u, (void*)ScaledStoreE0},
     {0x41f570u, (void*)BootScheduledNodeTimerWalk},
     {0x41f710u, (void*)NodeUnlink},
     {0x41f780u, (void*)StackPopDispatchTagged},
@@ -1124,6 +1131,9 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4200b0u, (void*)GuardedSeq_ZeroTriple_then_PendingMatch},
     {0x4202c0u, (void*)ScaledClearTripleCallJmp},
     {0x420300u, (void*)Screen_ArcadeEnding},
+    {0x4218b0u, (void*)MkIntroFsm},
+    {0x421b00u, (void*)Install3WayCountdownGame},
+    {0x421be0u, (void*)DecBoundCheckCallJmp},
     {0x421c20u, (void*)ZeroTriple},
     {0x421c40u, (void*)Push71_Push48caa0},
     {0x421f00u, (void*)ScaledInitOrSelfPtr_InstallSelfStackReset},
@@ -1531,6 +1541,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x489f50u, (void*)Push16Call},
     {0x489f60u, (void*)TableLookupCall_g_eventTbl_50},
     {0x489f90u, (void*)GatedWordPushCall},
+    {0x489ff0u, (void*)TableLookupCall_g_eventTbl_112},
+    {0x48a130u, (void*)TableLookupCall_g_eventTbl_65},
     {0x48a190u, (void*)OrDualStore_0048a190},
     {0x48a1b0u, (void*)ZeroState},
     {0x48a1c0u, (void*)DualBitGateInitCall},
