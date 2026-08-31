@@ -65,7 +65,9 @@ FRONTIER_STUB(Set5CallPauseTestByteJmpCall)
 
 /* the select screen's own content, above SceneEvalFsm */
 FRONTIER_STUB(GameStateTick)
-FRONTIER_STUB(GameNetSyncState)
+FRONTIER_STUB(MStackDualPushSaveRestore)
+FRONTIER_STUB(BitSetByIndex)
+FRONTIER_STUB(AudioMStackPushHandlerPair)
 FRONTIER_STUB(AudioCmpCascadeDispatcher)
 FRONTIER_STUB(PendingMatch_DownloadPlayerChar)
 
