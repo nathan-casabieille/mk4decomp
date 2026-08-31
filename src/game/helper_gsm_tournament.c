@@ -1,6 +1,212 @@
 /**
- * Auto-extracted from misc_matchesQQ.c during reorganization.
+ * The JOYSTICK options screen - 0x4b7260 (2004b). Last of the five mode
+ * screens. Helper_GSM_Tournament is the auto-namer's positional guess;
+ * GameStateMachine reaches it as state 25.
+ *
+ * Its table at 0x4f5258 is PLAYER, CONTROLLER, nine bindable buttons and
+ * GO BACK:
+ *
+ *   46 PLAYER      which of the two columns is being edited
+ *   45 CONTROLLER  cycles this player's device, shown as "JOY n, m BUTS"
+ *   47..55         HIGH/LOW PUNCH, HIGH/LOW KICK, BLOCK, STEP IN, STEP OUT,
+ *                  RUN, START
+ *   3  GO BACK
+ *
+ * Unlike KEYBOARD this has no capture state. On a bindable row it polls the
+ * player's pad every frame and binds the lowest button that is down, there
+ * and then; Enter with nothing down binds button 0, which clears the row.
+ * Two details fall out of that:
+ *
+ *   - Menu_PollNavInput is called with joystick-select DISABLED while a
+ *     bindable row is selected, or the pad press being captured would also
+ *     work the menu.
+ *   - a row is only editable while the player HAS a device: with the
+ *     assignment at -1 the Enter path bails before the rebind.
+ *
+ * Button numbers are one-based, taken from the lowest set bit of the low 28
+ * bits Input_PollJoystick returns - the top nibble is the four directions,
+ * which are not bindable.
+ *
+ * The CONTROLLER cycle steps to the next device that is present and not
+ * already claimed by the other player. It wraps to zero once, when stepping
+ * off the end, and then scans FORWARD only - so from a high device index it
+ * cannot reach a lower free one. That is the original's behaviour.
+ *
+ * The button map is nine actions by two players of dwords at 0x543b20
+ * (action stride 8, player stride 4). The per-device button counts at
+ * 0x7b0188 and the per-player device at 0x543b68 are Joystick_Init's to
+ * publish; the SDL backend does it - see MK4_NativeJoystickPublish.
+ *
+ * NATIVE-ONLY twin: the matching build keeps the naked transcription below.
  */
+#ifdef NON_MATCHING
+
+#include "portable/mem_model.h"
+
+extern int  Menu_FindNextSelectable(int cur, void *table);
+extern int  Menu_FindPrevSelectable(int cur, void *table);
+extern unsigned int Menu_PollNavInput(int joy_selects);
+extern int  DrawMenu(void *menu_items, int selection);
+extern int  Helper_Sprintf(char *buf, const char *fmt, ...);
+extern void Menu_FillColonField(unsigned int *slot, const char *value);
+extern void Input_RebindButtonToAction(unsigned int *p, unsigned int val, unsigned int idx);
+extern unsigned int Input_PollJoystick(int which);
+
+#define g_joyFlags    (*(unsigned char *)MK4_VA(unsigned char, 0xab42f0u))
+#define g_joySel      (*(unsigned int *)MK4_VA(unsigned int, 0xab430cu))
+#define g_joyPlayer   (*(unsigned int *)MK4_VA(unsigned int, 0xab4330u))
+#define g_joyState    (*(unsigned int *)MK4_VA(unsigned int, 0xab4350u))
+#define g_menuScratch ((char *)MK4_VA(char, 0xab41c8u))
+
+#define JOY_MENU      MK4_VA(void, 0x4f5258u)
+#define g_joyButtons  ((unsigned int *)MK4_VA(unsigned int, 0x543b20u))
+#define g_joyDevice   ((unsigned int *)MK4_VA(unsigned int, 0x543b68u))
+#define g_joyBtnCount ((unsigned char *)MK4_VA(unsigned char, 0x7b0188u))
+#define TXT_NONE      ((const char *)MK4_VA(char, 0x4f5928u))   /* NONE!             */
+#define FMT_LD        ((const char *)MK4_VA(char, 0x4f6164u))   /* %ld               */
+#define FMT_BUTTON    ((const char *)MK4_VA(char, 0x4f6168u))   /* BUTTON %ld        */
+#define FMT_JOY       ((const char *)MK4_VA(char, 0x4f6174u))   /* JOY %ld, %ld BUTS */
+
+#define JOY_DEVICES   16
+#define JOY_NO_DEVICE 0xffffffffu
+
+typedef struct { unsigned int text; short action; short pad; } MenuRow;
+
+/* row action 47..55 -> index into the 9-action button map */
+static const unsigned char joy_action_slot[9] = { 2, 3, 0, 1, 4, 5, 6, 7, 8 };
+
+static int joy_slot_of(int action)
+{
+    return (action >= 47 && action <= 55) ? (int)joy_action_slot[action - 47] : -1;
+}
+
+/* the lowest pad button that is down, one-based, or 0 for none */
+static unsigned int joy_pressed_button(unsigned int player)
+{
+    unsigned int bits = Input_PollJoystick((int)g_joyDevice[player]) & 0x0fffffffu;
+    unsigned int n;
+
+    if (bits == 0)
+        return 0;
+    for (n = 0; n < 0x1c && !(bits & 1); n++)
+        bits >>= 1;
+    return n + 1;
+}
+
+/* CONTROLLER: next present device this player may claim, else no device */
+static void joy_cycle_device(unsigned int player)
+{
+    unsigned int other = (player == 0) ? 1u : 0u;
+    unsigned int d = g_joyDevice[player] + 1;
+
+    g_joyDevice[player] = JOY_NO_DEVICE;
+    if (d >= JOY_DEVICES)
+        d = 0;
+    for (; d < JOY_DEVICES; d++)
+        if (g_joyBtnCount[d] != 0 && g_joyDevice[other] != d) {
+            g_joyDevice[player] = d;
+            return;
+        }
+}
+
+int Helper_GSM_Tournament(void)
+{
+    MenuRow *table = (MenuRow *)JOY_MENU;
+    MenuRow *r;
+    unsigned int nav, held, button = 0;
+    int bindable, slot;
+
+    if ((g_joyFlags & 1) == 0) {
+        g_joyFlags |= 1;
+        g_joySel = (unsigned int)Menu_FindNextSelectable(0, JOY_MENU);
+    }
+
+    if (g_joyState == 2) {
+        bindable = joy_slot_of(table[g_joySel].action) >= 0;
+
+        /* the pad must not work the menu while its buttons are being bound */
+        nav  = Menu_PollNavInput(!bindable);
+        held = nav & 0x8000u;
+
+        if (!held && (nav & 1))
+            g_joySel = (unsigned int)Menu_FindPrevSelectable((int)g_joySel, JOY_MENU);
+        if (!held && (nav & 2))
+            g_joySel = (unsigned int)Menu_FindNextSelectable((int)g_joySel, JOY_MENU);
+        if (!held && (nav & 0x20))
+            g_joyState = 3;
+
+        if (bindable)
+            button = joy_pressed_button(g_joyPlayer);
+
+        switch (table[g_joySel].action) {
+        case 46:                                  /* PLAYER */
+            if (!held && (nav & 0x1c))
+                g_joyPlayer = (g_joyPlayer == 0);
+            break;
+        case 45:                                  /* CONTROLLER */
+            if (!held && (nav & 0x1c))
+                joy_cycle_device(g_joyPlayer);
+            break;
+        case 3:                                   /* GO BACK */
+            if (!held && (nav & 0x10))
+                g_joyState = 3;
+            break;
+        default:
+            slot = joy_slot_of(table[g_joySel].action);
+            if (slot >= 0) {
+                /* a pad press binds straight away; Enter with nothing down
+                 * clears the row, but only while the player has a device */
+                if (button != 0 ||
+                    (!held && (nav & 0x10) &&
+                     g_joyDevice[g_joyPlayer] != JOY_NO_DEVICE))
+                    Input_RebindButtonToAction(
+                        &g_joyButtons[slot * 2 + g_joyPlayer], button, g_joyPlayer);
+            }
+            break;
+        }
+    } else if (g_joyState == 0) {
+        g_joyState = 2;
+    } else if (g_joyState == 3) {
+        g_joyState = 0;
+    }
+
+    for (r = table; r->text != 0; r++) {
+        if (r->action == 46) {                    /* PLAYER */
+            Helper_Sprintf(g_menuScratch, FMT_LD, (long)(g_joyPlayer + 1));
+            Menu_FillColonField(&r->text, g_menuScratch);
+        } else if (r->action == 45) {             /* CONTROLLER */
+            unsigned int d = g_joyDevice[g_joyPlayer];
+
+            if (d == JOY_NO_DEVICE) {
+                Helper_Sprintf(g_menuScratch, TXT_NONE);
+                Menu_FillColonField(&r->text, g_menuScratch);
+            } else {
+                Helper_Sprintf(g_menuScratch, FMT_JOY, (long)(d + 1),
+                               (long)(signed char)g_joyBtnCount[d]);
+                Menu_FillColonField(&r->text, g_menuScratch);
+            }
+        } else {
+            slot = joy_slot_of(r->action);
+            if (slot >= 0) {
+                unsigned int b = g_joyButtons[slot * 2 + g_joyPlayer];
+
+                Helper_Sprintf(g_menuScratch, FMT_BUTTON, (long)b);
+                /* an unbound row, and every row while the player has no
+                 * device, reads NONE! whatever the map happens to hold */
+                Menu_FillColonField(
+                    &r->text,
+                    (b != 0 && g_joyDevice[g_joyPlayer] != JOY_NO_DEVICE)
+                        ? (const char *)g_menuScratch : TXT_NONE);
+            }
+        }
+    }
+
+    DrawMenu(JOY_MENU, (int)g_joySel);
+    return (int)g_joyState;
+}
+
+#else   /* matching build: the original naked transcription */
+
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
@@ -2014,3 +2220,4 @@ __declspec(naked) void Helper_GSM_Tournament(void)
     }
 }
 
+#endif  /* NON_MATCHING */

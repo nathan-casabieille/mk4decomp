@@ -87,6 +87,10 @@ static void MK4_EngineStateInit(void)
      * stays zero and Input_PollPlayerKeyboard asks for key 0 all frame, so
      * no input ever reaches the game. */
     ResetConfigToDefaults();
+    /* After ResetConfigToDefaults, which owns the config half of this block:
+     * the pad table is hardware state, and publishing it first would let the
+     * config reset stamp over the device assignment. */
+    { extern void MK4_NativeJoystickPublish(void); MK4_NativeJoystickPublish(); }
     MStackPackedInit();
     Set2FiveCallPauseJmp();
     if (getenv("MK4_TRACE_SCENE"))

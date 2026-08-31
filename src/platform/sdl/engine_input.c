@@ -19,7 +19,10 @@
  * engine_autostubs.c at link time.
  */
 #include <SDL2/SDL.h>
+#include <stdlib.h>
 #include "portable/mem_model.h"
+
+#define JOY_FAKE_MAX 16
 
 /* Win32 virtual-key -> SDL scancode. Only the keys the engine actually polls;
  * anything else reads as up, which is the correct answer for a key the port
@@ -64,9 +67,13 @@ void MK4_NativeFakeKeyPress(int vk, int frames)
     g_mk4FakePressLeft = frames;
 }
 
+/* frames since boot, for the scripted-input knobs below */
+static unsigned s_inputFrame;
+
 void MK4_NativeFakeKeyTick(void)
 {
     if (g_mk4FakePressLeft > 0) g_mk4FakePressLeft--;
+    s_inputFrame++;
 }
 
 /* MapVirtualKeyA(vk, MAPVK_VK_TO_CHAR), the one USER32 call in AppInit_Misc1.
@@ -141,26 +148,89 @@ int Input_GetAsyncKey(int vk)
  * held direction the way a digital pad would not. */
 #define STICK_ON  12000
 
+/* The two pads the backend owns, opened once on first use. */
+static SDL_GameController *s_pads[2];
+
+static void joy_open_once(void)
+{
+    static int tried;
+    int i;
+
+    if (tried)
+        return;
+    tried = 1;
+    if (SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER) == 0) {
+        int slot = 0;
+
+        for (i = 0; i < SDL_NumJoysticks() && slot < 2; i++)
+            if (SDL_IsGameController(i))
+                s_pads[slot++] = SDL_GameControllerOpen(i);
+    }
+}
+
+/* What Joystick_Init publishes, which this backend replaces rather than
+ * converts: the per-device BUTTON COUNT table at 0x7b0188 - sixteen bytes,
+ * zero meaning no such device - and the per-player device assignment at
+ * 0x543b68, where -1 means "no pad". The JOYSTICK options screen reads both:
+ * it prints "JOY n, m BUTS" from them, refuses to bind a button while the
+ * player has no device, and its CONTROLLER row cycles through the devices
+ * that are present and not already claimed by the other player.
+ *
+ * The count is the ten face and shoulder buttons Input_PollJoystick reports
+ * in the low 28 bits; the four directions live in the high nibble and are not
+ * bindable, so they are not counted. */
+void MK4_NativeJoystickPublish(void)
+{
+    unsigned char *counts = (unsigned char *)MK4_VA(unsigned char, 0x007b0188u);
+    unsigned int *sel = (unsigned int *)MK4_VA(unsigned int, 0x00543b68u);
+    int i;
+
+    joy_open_once();
+    for (i = 0; i < 16; i++)
+        counts[i] = 0;
+    for (i = 0; i < 2; i++)
+        if (s_pads[i] != 0 && SDL_GameControllerGetAttached(s_pads[i]))
+            counts[i] = 10;
+    /* MK4_FAKE_PAD=n reports n devices with ten buttons each and no hardware
+     * behind them, so the JOYSTICK screen's device cycling and its bind and
+     * clear paths can be exercised on a machine with no pad plugged in.
+     * MK4_FAKE_PAD_BTN=b then makes Input_PollJoystick report button b down. */
+    { const char *fake = getenv("MK4_FAKE_PAD");
+      if (fake) {
+          int n = atoi(fake);
+          if (n > JOY_FAKE_MAX) n = JOY_FAKE_MAX;
+          for (i = 0; i < n; i++)
+              counts[i] = 10;
+      } }
+    /* player n takes device n when there is one */
+    for (i = 0; i < 2; i++)
+        sel[i] = counts[i] ? (unsigned int)i : 0xffffffffu;
+}
+
 unsigned int Input_PollJoystick(int which)
 {
-    static SDL_GameController *pads[2];
-    static int tried;
     SDL_GameController *c;
     unsigned int bits = 0;
     int i;
 
-    if (!tried) {
-        tried = 1;
-        if (SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER) == 0) {
-            int slot = 0;
-            for (i = 0; i < SDL_NumJoysticks() && slot < 2; i++)
-                if (SDL_IsGameController(i))
-                    pads[slot++] = SDL_GameControllerOpen(i);
-        }
-    }
+    joy_open_once();
+    { const char *fake = getenv("MK4_FAKE_PAD");
+      if (fake) {
+          const char *b = getenv("MK4_FAKE_PAD_BTN");
+          const char *at;
+          if (which < 0 || which >= atoi(fake) || b == 0)
+              return 0;
+          /* "n:frame" holds the button down only from that frame on, so a
+             scripted run can walk the menu before the press lands */
+          at = b;
+          while (*at && *at != ':') at++;
+          if (*at == ':' && s_inputFrame < (unsigned)atoi(at + 1))
+              return 0;
+          return 1u << (atoi(b) - 1);            /* the screen numbers from 1 */
+      } }
     if (which < 0 || which > 1)
         return 0;
-    c = pads[which];
+    c = s_pads[which];
     if (c == 0 || !SDL_GameControllerGetAttached(c))
         return 0;
 

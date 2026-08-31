@@ -124,6 +124,49 @@ extern unsigned int g_btnBind6;
 extern unsigned int g_btnBind7;
 extern unsigned int g_btnBind8;
 
+/*
+ * Input_RebindButtonToAction(slot, button, player) - 0x4b7a40 (193b).
+ *
+ * The joystick twin of Input_RebindKeyToAction, over ONE player's column of
+ * the nine-action button map at 0x543b20 (action stride 8, player stride 4).
+ * Clear the target cell, hand the first cell already holding `button` the
+ * target's previous value and clear any further duplicate, then write
+ * `button`. A `button` of zero just clears, which is what Enter does on a
+ * bound row when no pad button is down.
+ *
+ * The matching body below indexes through nine separate C globals that .data
+ * happens to lay out eight bytes apart; under the arena those are detached
+ * copies, so the native twin indexes the map itself.
+ */
+#ifdef NON_MATCHING
+
+#include "portable/mem_model.h"
+
+#define JOYMAP_ACTIONS 9
+#define g_joyButtonMap ((unsigned int *)MK4_VA(unsigned int, 0x00543b20u))
+
+void Input_RebindButtonToAction(unsigned int *p, unsigned int val, unsigned int idx)
+{
+    unsigned int *map = g_joyButtonMap;
+    unsigned int carried = *p;
+    int i;
+
+    *p = 0;
+    if (val == 0)
+        return;
+    for (i = 0; i < JOYMAP_ACTIONS; i++) {
+        unsigned int *cell = &map[i * 2 + idx];
+
+        if (*cell == val) {
+            *cell = carried;
+            carried = 0;
+        }
+    }
+    *p = val;
+}
+
+#else
+
 void Input_RebindButtonToAction(unsigned int *p, unsigned int val, unsigned int idx)
 {
     unsigned int saved = *p;
@@ -140,3 +183,5 @@ void Input_RebindButtonToAction(unsigned int *p, unsigned int val, unsigned int 
     if ((&g_btnBind8)[idx] == val) { (&g_btnBind8)[idx] = saved; }
     *p = val;
 }
+
+#endif  /* NON_MATCHING */
