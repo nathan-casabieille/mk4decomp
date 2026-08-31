@@ -162,14 +162,6 @@ void StreamChainStringInstall(void)
         MStackPush3HelperCondToggle();           /* the glyph chain */
 
         glyph = g_currentNodeIdx;
-#ifdef TARGET_SDL
-        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
-          static int n;
-          if (getenv("MK4_TRACE_TEXT") && n < 8) {
-              n++;
-              SDL_Log("TEXT alloc: str=%.10s len=%u chain=0x%x container=0x%x bits=%x",
-                      (const char *)s, len, glyph, container, g_stateBits8c); } }
-#endif
         g_slot70 = 0;                            /* running x */
         for (i = 0; glyph != 0; i++) {
             unsigned int rec, w;
@@ -181,20 +173,6 @@ void StreamChainStringInstall(void)
             g_currentNodeIdx = glyph;
             ScaledSearchSum();
             rec = g_xformEntityIdx;
-#ifdef TARGET_SDL
-            { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
-              static int n;
-              if (getenv("MK4_TRACE_TEXT") && n < 6) {
-                  n++;
-                  SDL_Log("TEXT '%c' font=%u tbl=0x%x rec=0x%x tbl[0..5]=%x %x %x %x %x %x",
-                          s[i], font, g_pendingNodeType, rec,
-                          *(unsigned int *)MK4_PTR(g_pendingNodeType * 4),
-                          *(unsigned int *)MK4_PTR(g_pendingNodeType * 4 + 4),
-                          *(unsigned int *)MK4_PTR(g_pendingNodeType * 4 + 8),
-                          *(unsigned int *)MK4_PTR(g_pendingNodeType * 4 + 12),
-                          *(unsigned int *)MK4_PTR(g_pendingNodeType * 4 + 16),
-                          *(unsigned int *)MK4_PTR(g_pendingNodeType * 4 + 20)); } }
-#endif
             MK4_NODE_AT(unsigned int, glyph, 0xc) = rec;
             w = MK4_NODE_AT(unsigned int, rec, 0xc);
             if (g_propFontByte != 0) {

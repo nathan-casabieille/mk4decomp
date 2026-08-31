@@ -380,6 +380,23 @@ void MK4_GameFrame(void)
             last0 = v0;
         }
     }
+    /* MK4_TRACE_LIGHT: the render path's lighting scratch - light matrix,
+     * vertex colour, the packed RGB scales, attenuation. All zero on a path
+     * means no lit geometry reached the walker that frame; it is per-node
+     * scratch, so seeding it from outside the walker does nothing. */
+    if (getenv("MK4_TRACE_LIGHT") && (frame % 60) == 0)
+        SDL_Log("LIGHT f%-4d mat=[%x %x %x | %x %x %x] col=%04x prev=%04x "
+                "scales=%02x %02x %02x %02x %02x %02x  atten=%x bias=%x",
+                frame,
+                *MK4_VA(unsigned int, 0x7af9c0u), *MK4_VA(unsigned int, 0x7af9c4u),
+                *MK4_VA(unsigned int, 0x7af9c8u), *MK4_VA(unsigned int, 0x7af9ccu),
+                *MK4_VA(unsigned int, 0x7af9d0u), *MK4_VA(unsigned int, 0x7af9d4u),
+                *MK4_VA(unsigned short, 0x7af9fcu),
+                *MK4_VA(unsigned short, 0x7af9f0u),
+                *MK4_VA(unsigned char, 0x7af9f2u), *MK4_VA(unsigned char, 0x7af9f3u),
+                *MK4_VA(unsigned char, 0x7af9f4u), *MK4_VA(unsigned char, 0x7af9f5u),
+                *MK4_VA(unsigned char, 0x7af9f6u), *MK4_VA(unsigned char, 0x7af9f7u),
+                *MK4_VA(unsigned int, 0xab4e60u), *MK4_VA(unsigned int, 0xab4d9cu));
     if (getenv("MK4_TRACE_MSTACK") && (frame % 4) == 0)
             SDL_Log("f%-3d mstackTop=%08x nodeIdx=%08x", frame,
                     *MK4_VA(unsigned int, 0x4d57acu),
