@@ -42,9 +42,11 @@ md.detail = True
 # Everything below the end of the last function is CODE. Call targets and
 # jump-table entries land there and are not globals; counting them made every
 # twin that calls anything look suspicious.
-DATA_LO = max((f['addr'] if isinstance(f['addr'], int) else int(str(f['addr']), 16))
-              + f.get('size', 0) for f in syms)
-DATA_LO = (DATA_LO + 0xfff) & ~0xfff
+# .text ends at 0x4d2000; symbols.yaml also carries entries for DATA blobs
+# past that (the largest reaches 0x4f44e1), and deriving the boundary from
+# max(addr+size) swallowed the whole 0x4d2xxx..0x4f4xxx global band - the
+# matrix stack top at 0x4d57ac included - out of every original ref set.
+DATA_LO = 0x4d2000
 
 
 def orig_global_refs(addr, size):
@@ -75,6 +77,18 @@ def strip_comments(s):
     lifted twins document their own addresses, which made every one of them
     look like it named a global it never touches."""
     return re.sub(r'/\*.*?\*/', ' ', re.sub(r'//[^\n]*', ' ', s), flags=re.S)
+
+
+def local_defines(path):
+    """name -> VA for the file's own `#define g_x ... MK4_VA(T, 0x...u)`
+    aliases - twins written after the alias_globals convention carry their
+    global names as file-local macros, invisible to extras_map."""
+    out = {}
+    for m in re.finditer(
+            r'#define\s+(g_\w+)\s*\(?[^\n]*?0x0{0,2}([0-9a-f]{5,6})u',
+            path.read_text(errors='ignore')):
+        out[m.group(1)] = int(m.group(2), 16)
+    return out
 
 
 def twin_body(path, name):
@@ -144,11 +158,16 @@ def main():
             # VA 0 is a BASE-0 packed table (g_siblingTable and friends): the
             # original addresses it as `[ecx*4]` with no displacement at all,
             # so it can never appear in `ref` and is not evidence of anything.
-            named = {name_to_va[g] for g in set(re.findall(r'\bg_\w+', body))
-                     if g in name_to_va and name_to_va[g] != 0}
+            loc = local_defines(path)
+            named = set()
+            for g in set(re.findall(r'\bg_\w+', body)):
+                if g in loc:
+                    named.add(loc[g])
+                elif g in name_to_va and name_to_va[g] != 0:
+                    named.add(name_to_va[g])
             # also count VAs the twin writes as literals (MK4_VA(T, 0x...))
             named |= {v for v in (int(h, 16) for h in
-                                  re.findall(r'0x00([0-9a-f]{6})u?', body))
+                                  re.findall(r'0x0{0,2}([0-9a-f]{5,6})u\b', body))
                       if DATA_LO <= v < DATA_HI}
             extra = {v for v in named if v not in ref}
             missing = {v for v in ref if v not in named}

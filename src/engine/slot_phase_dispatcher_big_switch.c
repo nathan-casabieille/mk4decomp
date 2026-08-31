@@ -44,6 +44,7 @@ extern void DirtyFlagsManipB(void);
 #define g_currentNodeIdx  (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
 #define g_walkSlot6c      (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_slot50          (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
 #define g_slot70          (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
 #define g_scratch94       (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
 #define g_baseSel         (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
@@ -78,13 +79,16 @@ void SwapOrPassSet(void)
     unsigned int ent = g_p1SetEnt, node = g_p1SetNode;
 
     g_pendingNodeType = g_p1NodeIdxG;
-    g_slot70 = g_p1Other;   /* 0x542050 */
+    /* the GROUP slot is 0x542050 - the round body's winner/loser picks read
+     * it back; a 0x542070 spelling here starved every one of them (caught
+     * by audit-global-refs once it could see file-local defines) */
+    g_slot50 = g_p1Other;
     g_walkSlot6c = phase;
     g_xformEntityIdx = ent;
     g_currentNodeIdx = node;
     if (phase != 1) {
         g_pendingNodeType = g_p2NodeIdxG;
-        g_slot70 = g_p2Other;
+        g_slot50 = g_p2Other;
         g_xformEntityIdx = node;   /* eax = ecx: entity takes the node cell */
         ent = node;
     }

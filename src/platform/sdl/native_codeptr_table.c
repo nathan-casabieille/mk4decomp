@@ -162,8 +162,12 @@ extern int Install3WayCountdownGame();
 extern int DecBoundCheckCallJmp();
 extern int ZeroTriple();
 extern int Push71_Push48caa0();
+extern int CmpDualStateMatch();
+extern int DirtyKeyedStateCopy();
 extern int ScaledInitOrSelfPtr_InstallSelfStackReset();
 extern int InstallSelfStackReset();
+extern int GuardedChainDispatch();
+extern int TwoPushCallSetDirty();
 extern int TwinMStackPushScaledChain();
 extern int StageEventRearm_00422200();
 extern int StateInitShuffle();
@@ -174,6 +178,7 @@ extern int ClampTwoToMax_004226e0();
 extern int TriBranchFlagWrite();
 extern int Helper_PostPlayerTick();
 extern int CountdownClampWalk();
+extern int CallPauseEvtPushJmp();
 extern int MatchInitMonsterChain();
 extern int RecordListIterMStack();
 extern int DownloadDualPush();
@@ -216,6 +221,7 @@ extern int EffectTick_00427230();
 extern int Thunk_BootMod6487eClampAndChainMul10();
 extern int MStackPush2DirtyCall();
 extern int CallPauseClear3CallTriple();
+extern int DualTestDirtyToggle_004282c0();
 extern int ScaledArrStore_GuardedSeq_CopyJmp_then_MStackPushDualJmp();
 extern int GuardedSeq_CopyJmp_then_MStackPushDualJmp();
 extern int MStackPushDualJmp();
@@ -461,6 +467,7 @@ extern int NotShrCmp1Store();
 extern int GuardedScaledChainJmpIndirect();
 extern int CallPauseScaledStoreCopyJmp();
 extern int NineEntryFlagDispatch();
+extern int MStackPushSearchLoop();
 extern int StageParticleEmitterInit();
 extern int FightCamMode1_00464560();
 extern int FightCamMode2_004645e0();
@@ -531,6 +538,7 @@ extern int ScaledAndFBJmp();
 extern int CondInstallDispatch_00477000();
 extern int DoublePushWalkInitJmp();
 extern int SpawnListBatchLoader();
+extern int AiWalkCounterDualCluster();
 extern int SpawnLeftRightProps();
 extern int Wrapper_ArgSarStoreJmp_004ed440();
 extern int GuardedSeq_MStackPushSet0004_then_MoveSelectorCluster();
@@ -1149,8 +1157,12 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x421be0u, (void*)DecBoundCheckCallJmp},
     {0x421c20u, (void*)ZeroTriple},
     {0x421c40u, (void*)Push71_Push48caa0},
+    {0x421c50u, (void*)CmpDualStateMatch},
+    {0x421ca0u, (void*)DirtyKeyedStateCopy},
     {0x421f00u, (void*)ScaledInitOrSelfPtr_InstallSelfStackReset},
     {0x421f40u, (void*)InstallSelfStackReset},
+    {0x421fe0u, (void*)GuardedChainDispatch},
+    {0x422050u, (void*)TwoPushCallSetDirty},
     {0x422110u, (void*)TwinMStackPushScaledChain},
     {0x422200u, (void*)StageEventRearm_00422200},
     {0x422380u, (void*)StateInitShuffle},
@@ -1161,6 +1173,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x422720u, (void*)TriBranchFlagWrite},
     {0x4227b0u, (void*)Helper_PostPlayerTick},
     {0x422810u, (void*)CountdownClampWalk},
+    {0x422880u, (void*)CallPauseEvtPushJmp},
     {0x4228b0u, (void*)MatchInitMonsterChain},
     {0x422ce0u, (void*)RecordListIterMStack},
     {0x422e20u, (void*)DownloadDualPush},
@@ -1203,6 +1216,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x427460u, (void*)Thunk_BootMod6487eClampAndChainMul10},
     {0x427f90u, (void*)MStackPush2DirtyCall},
     {0x428030u, (void*)CallPauseClear3CallTriple},
+    {0x4282c0u, (void*)DualTestDirtyToggle_004282c0},
     {0x428330u, (void*)ScaledArrStore_GuardedSeq_CopyJmp_then_MStackPushDualJmp},
     {0x428350u, (void*)GuardedSeq_CopyJmp_then_MStackPushDualJmp},
     {0x428370u, (void*)MStackPushDualJmp},
@@ -1448,6 +1462,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x460e40u, (void*)GuardedScaledChainJmpIndirect},
     {0x461220u, (void*)CallPauseScaledStoreCopyJmp},
     {0x461260u, (void*)NineEntryFlagDispatch},
+    {0x463ed0u, (void*)MStackPushSearchLoop},
     {0x464350u, (void*)StageParticleEmitterInit},
     {0x464560u, (void*)FightCamMode1_00464560},
     {0x4645e0u, (void*)FightCamMode2_004645e0},
@@ -1518,6 +1533,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x477000u, (void*)CondInstallDispatch_00477000},
     {0x4776b0u, (void*)DoublePushWalkInitJmp},
     {0x477710u, (void*)SpawnListBatchLoader},
+    {0x477e20u, (void*)AiWalkCounterDualCluster},
     {0x478140u, (void*)SpawnLeftRightProps},
     {0x47d6d0u, (void*)Wrapper_ArgSarStoreJmp_004ed440},
     {0x47d980u, (void*)GuardedSeq_MStackPushSet0004_then_MoveSelectorCluster},

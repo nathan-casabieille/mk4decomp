@@ -54,6 +54,7 @@ extern void ScaledTestPauseStore(void);
 #define g_xformEntityIdx  (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
 #define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
 #define g_slot50          (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
+#define g_slot70          (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
 #define g_slot54          (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
 #define g_slot58          (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
 #define g_baseSel         (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
@@ -89,7 +90,9 @@ void MStackBitLoopTripleCall(void)
             g_stateBits8c ^= 4u;
             if (g_currentNodeIdx == 0)
                 goto pop;
-            g_slot50 = (unsigned int)-1;
+            /* 0x542070, not 0x542050 - the original's `or esi, -1` lands in
+             * the 70 slot (caught by the sharpened audit-global-refs) */
+            g_slot70 = (unsigned int)-1;
             g_walkSlot6c = g_slot74;
             AndStoreJmp();
             if (g_framePauseFlag != 0)
