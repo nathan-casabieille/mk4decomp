@@ -64,8 +64,9 @@ FRONTIER_STUB(MatchStartCluster)
 FRONTIER_STUB(Set5CallPauseTestByteJmpCall)
 
 /* the select screen's own content, above SceneEvalFsm */
-FRONTIER_STUB(AmbientMonitorCluster)
 FRONTIER_STUB(ThrowAnimTriggerCluster)
+FRONTIER_STUB(GameNetSyncState)
+FRONTIER_STUB(AudioCmpCascadeDispatcher)
 FRONTIER_STUB(PendingMatch_DownloadPlayerChar)
 
 #endif /* MK4_NATIVE_FULL */

@@ -153,3 +153,6 @@ entries:
   0x426190: DispatcherChainRampStep_00426190
   0x4a9cc0: ArcadeMode_JoinScreen_004a9cc0
   0x4a9c00: ArcadeJoin_Blinker_004a9c00
+  0x49e490: CharSelect_IdleTimeout_0049e490
+  0x49e610: CharSelect_PickerP1_0049e610
+  0x49e700: CharSelect_PickerP2_0049e700
