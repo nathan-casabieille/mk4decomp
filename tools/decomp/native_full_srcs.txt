@@ -351,6 +351,9 @@ src/game/screen_arcade_ending.c
 src/game/round_intro_band.c
 src/game/phase3_round_end_band.c
 src/game/fight_frame_drivers.c
+src/game/text_object_band.c
+src/game/main_menu_screen.c
+src/engine/str_len.c
 src/game/draw_menu.c
 src/game/menu_sound_screen.c
 src/game/menu_gameplay_screen.c

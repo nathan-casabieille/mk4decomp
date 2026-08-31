@@ -292,6 +292,31 @@ void MK4_GameFrame(void)
                 *MK4_VA(unsigned int, 0x4d50b4u) |= 4u;
             SDL_Log("boot-match: FSM -> 6, loading screen scheduled");
         }
+        /* MK4_MAIN_MENU=<frame>: schedule the game's own MODE SELECT menu
+         * (ARCADE / TEAM / ENDURANCE / TOURNAMENT / PRACTICE / EXIT GAME) -
+         * the controller the attract sequencer would chain. Type 1 gets it
+         * pumped next frame; its own states load the menu background .geo
+         * pair and build the text objects. */
+        if (getenv("MK4_MAIN_MENU")) {
+            const char *at = getenv("MK4_MAIN_MENU");
+            /* the world root first: the text containers prepend to the
+             * AMBIENT group, and without the gsmOut3 world re-init that
+             * ambient is garbage and nothing lands in the render chain */
+            if (frame == 8) {
+                *MK4_VA(unsigned int, 0x543930u) = 1;
+                *MK4_VA(unsigned int, 0x543810u) = 1;   /* world re-init */
+                *MK4_VA(unsigned int, 0x543814u) = 1;   /* audio publish */
+                *MK4_VA(unsigned int, 0x4d50b4u) |= 4u;
+            }
+            if (frame == atoi(at)) {
+                extern void StoreTwoCall(int, int);
+                StoreTwoCall(0x4a2a80, 1);
+                *MK4_VA(unsigned int, 0x543800u) = 0xffffffffu;
+                SDL_Log("main-menu: controller scheduled at frame %d "
+                        "(spare chain 0x%x)", frame,
+                        *MK4_VA(unsigned int, 0x537f24u));
+            }
+        }
         /* Part 2 of what character select leaves behind: the two fighters
          * DOWNLOADED. The real select runs DownloadPlayerChar per player
          * (PendingMatch_DownloadPlayerChar's demo state does the same

@@ -219,6 +219,8 @@ extern int GameMusicFsm_00426da0();
 extern int SetupHelperCluster();
 extern int EffectTick_00427230();
 extern int Thunk_BootMod6487eClampAndChainMul10();
+extern int AllocSlotPushTripleGlobals();
+extern int MStackPop4Rewrite();
 extern int MStackPush2DirtyCall();
 extern int CallPauseClear3CallTriple();
 extern int DualTestDirtyToggle_004282c0();
@@ -402,6 +404,10 @@ extern int TwoCallPauseSetJmp2();
 extern int SetJmp_CharSelectFsmCluster_004561c0();
 extern int SetJmp_CharSelectFsmCluster_004561d0();
 extern int SetJmp_CharSelectFsmCluster_004561e0();
+extern int ScaledSearchSum();
+extern int StrLen();
+extern int StreamChainStringInstall();
+extern int Push70CallScaleArith();
 extern int ArgSarStoreJmp();
 extern int PendingMatch_00459510();
 extern int VMWait_00459890();
@@ -740,7 +746,14 @@ extern int InputPollFlagBitsHalf();
 extern int TestQueueGateState();
 extern int TripleCallByteCheck();
 extern int Helper_TickFrame_Misc();
+extern int GuardedSetupCallTailJmp();
+extern int PressStartBlinker_004a2090();
+extern int VoiceMixerTickDispatch();
+extern int VoiceTableInit();
 extern int Helper_AudioStub_2960();
+extern int ScaledAudioDualShuffle();
+extern int DualBitFlagAudioChain();
+extern int PendingMatch_004a2a80();
 extern int LoadGeoAssetsStateMachine();
 extern int Helper_AudioStub_4140();
 extern int DebugStub_NoOp_B();
@@ -1214,6 +1227,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x426fa0u, (void*)SetupHelperCluster},
     {0x427230u, (void*)EffectTick_00427230},
     {0x427460u, (void*)Thunk_BootMod6487eClampAndChainMul10},
+    {0x427470u, (void*)AllocSlotPushTripleGlobals},
+    {0x4274f0u, (void*)MStackPop4Rewrite},
     {0x427f90u, (void*)MStackPush2DirtyCall},
     {0x428030u, (void*)CallPauseClear3CallTriple},
     {0x4282c0u, (void*)DualTestDirtyToggle_004282c0},
@@ -1397,6 +1412,10 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4561c0u, (void*)SetJmp_CharSelectFsmCluster_004561c0},
     {0x4561d0u, (void*)SetJmp_CharSelectFsmCluster_004561d0},
     {0x4561e0u, (void*)SetJmp_CharSelectFsmCluster_004561e0},
+    {0x457830u, (void*)ScaledSearchSum},
+    {0x4578e0u, (void*)StrLen},
+    {0x457900u, (void*)StreamChainStringInstall},
+    {0x457ad0u, (void*)Push70CallScaleArith},
     {0x4594f0u, (void*)ArgSarStoreJmp},
     {0x459510u, (void*)PendingMatch_00459510},
     {0x459890u, (void*)VMWait_00459890},
@@ -1735,7 +1754,14 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4a1ba0u, (void*)TestQueueGateState},
     {0x4a1bf0u, (void*)TripleCallByteCheck},
     {0x4a1d50u, (void*)Helper_TickFrame_Misc},
+    {0x4a1fa0u, (void*)GuardedSetupCallTailJmp},
+    {0x4a2090u, (void*)PressStartBlinker_004a2090},
+    {0x4a27c0u, (void*)VoiceMixerTickDispatch},
+    {0x4a28d0u, (void*)VoiceTableInit},
     {0x4a2960u, (void*)Helper_AudioStub_2960},
+    {0x4a2970u, (void*)ScaledAudioDualShuffle},
+    {0x4a29d0u, (void*)DualBitFlagAudioChain},
+    {0x4a2a80u, (void*)PendingMatch_004a2a80},
     {0x4a38d0u, (void*)LoadGeoAssetsStateMachine},
     {0x4a4140u, (void*)Helper_AudioStub_4140},
     {0x4a4150u, (void*)DebugStub_NoOp_B},

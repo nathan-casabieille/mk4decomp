@@ -51,4 +51,11 @@ FRONTIER_STUB(EnduranceFsmCluster)
 FRONTIER_STUB(RoundEndFsm)
 FRONTIER_STUB(PendingMatch_0042d240)
 
+/* the main-menu screen's still-hollow leaves */
+FRONTIER_STUB(Config_RestoreGlobals)
+FRONTIER_STUB(GameMode_EnterScene)
+FRONTIER_STUB(InstallSelfStateMachine6)
+FRONTIER_STUB(FiveTableWalkInit)
+
+
 #endif /* MK4_NATIVE_FULL */

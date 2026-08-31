@@ -289,7 +289,28 @@ void MK4_NativeInputPublish(void)
         }
     }
     /* Only the pad byte: InputPollFlagBits reads bit 0 for player 1 and
-     * InputPollFlagBitsHalf bit 4 for player 2. The state byte at 0x4d50b4
-     * is left alone - the audio dispatchers read it for their own reasons. */
+     * InputPollFlagBitsHalf bit 4 for player 2. */
     *MK4_VA(unsigned char, 0x4d50b8u) = pad;
+    /* The DIRECTION word at 0x4d50b4, the original DirectInput layer's
+     * publish: bit 0 up, 1 down, 2 left, 3 right for player 1, the same
+     * in bits 8..11 for player 2 - the main menu's navigation reads bits
+     * 0x101 / 0x202. EDGE-triggered here: the menu moves once per press,
+     * matching how the original's per-frame device read behaves with its
+     * own repeat handling upstream. */
+    {
+        static unsigned int held;
+        unsigned int now = 0, b;
+        static const int dir_slot[4] = { 0, 1, 2, 3 };  /* up down left right */
+
+        for (player = 0; player < 2; player++)
+            for (b = 0; b < 4; b++) {
+                int vk = *MK4_VA(int, 0x543ab8u + dir_slot[b] * 8u + player * 4u);
+
+                if (vk != 0 && Input_GetAsyncKey(vk))
+                    now |= 1u << (b + player * 8);
+            }
+        *MK4_VA(unsigned int, 0x4d50b4u) =
+            (*MK4_VA(unsigned int, 0x4d50b4u) & ~0x0f0fu) | (now & ~held);
+        held = now;
+    }
 }
