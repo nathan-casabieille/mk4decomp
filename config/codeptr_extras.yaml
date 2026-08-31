@@ -147,3 +147,5 @@ entries:
   0x407560: MotionIntegrate_00407560   # packed 2nd entry of BootMod6487e's symbol
   0x413310: Phase4BoneGravity_00413310
 
+  0x4214a0: RoundStartFighterInit_004214a0
+  0x422200: StageEventRearm_00422200

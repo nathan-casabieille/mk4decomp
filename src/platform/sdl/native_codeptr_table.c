@@ -140,6 +140,7 @@ extern int ScaledStoreE0();
 extern int BootScheduledNodeTimerWalk();
 extern int NodeUnlink();
 extern int StackPopDispatchTagged();
+extern int ScenegraphWalk();
 extern int LoadShlDerefCallSkip();
 extern int CallSetPause();
 extern int ScaledNeg1SetPause();
@@ -154,6 +155,8 @@ extern int GameTick();
 extern int GuardedSeq_ZeroTriple_then_PendingMatch();
 extern int ScaledClearTripleCallJmp();
 extern int Screen_ArcadeEnding();
+extern int Phase3InstallSelfChain();
+extern int RoundStartFighterInit_004214a0();
 extern int MkIntroFsm();
 extern int Install3WayCountdownGame();
 extern int DecBoundCheckCallJmp();
@@ -161,6 +164,8 @@ extern int ZeroTriple();
 extern int Push71_Push48caa0();
 extern int ScaledInitOrSelfPtr_InstallSelfStackReset();
 extern int InstallSelfStackReset();
+extern int TwinMStackPushScaledChain();
+extern int StageEventRearm_00422200();
 extern int StateInitShuffle();
 extern int RoundReset();
 extern int TwoStateCopyDup();
@@ -210,6 +215,7 @@ extern int SetupHelperCluster();
 extern int EffectTick_00427230();
 extern int Thunk_BootMod6487eClampAndChainMul10();
 extern int MStackPush2DirtyCall();
+extern int CallPauseClear3CallTriple();
 extern int ScaledArrStore_GuardedSeq_CopyJmp_then_MStackPushDualJmp();
 extern int GuardedSeq_CopyJmp_then_MStackPushDualJmp();
 extern int MStackPushDualJmp();
@@ -292,6 +298,7 @@ extern int FiveFieldChainCopyTableWalk();
 extern int TripleScaledChainStore54();
 extern int TripleScaledChainStore60();
 extern int LoadStoreScaled58();
+extern int ScaledInitWithCounterAndType_004314f0();
 extern int DualChainSubCallSubLoad();
 extern int GuardedArithDualCallChain();
 extern int DiffMul10Loop();
@@ -569,6 +576,7 @@ extern int TableLookupCall_g_eventTbl_65();
 extern int OrDualStore_0048a190();
 extern int ZeroState();
 extern int DualBitGateInitCall();
+extern int AndStorePushCallZero();
 extern int Wrapper_ScaledChainPushCall_004ef980();
 extern int Wrapper_ScaledChainPushCall_004ef828();
 extern int Wrapper_ScaledChainPushCall_004ef948();
@@ -688,6 +696,7 @@ extern int ScaledAddDeref();
 extern int ScaledInit_GameModeHandlerCluster_g_scaledInit_00495590();
 extern int ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0();
 extern int GuardedSeq_MStackCall_then_CallSetPause_00497450();
+extern int SlideAttackEventCluster();
 extern int GuardedSeq_MStackCall_then_CallSetPause_0049a650();
 extern int GuardedSeq_MStackCall_then_CallSetPause_0049c340();
 extern int ScaledIndirectJmp_0049c850();
@@ -946,6 +955,7 @@ extern int CallZero2();
 extern int SixDoublePushCall();
 extern int TaggedSceneDispatch();
 extern int TableSearch();
+extern int PushArgPushNeg1Call();
 extern int QuadCallPhase2();
 extern int Helper_TitleAudioCleanup();
 extern int Thunk_FlushDrawQueue();
@@ -1117,6 +1127,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x41f570u, (void*)BootScheduledNodeTimerWalk},
     {0x41f710u, (void*)NodeUnlink},
     {0x41f780u, (void*)StackPopDispatchTagged},
+    {0x41f7d0u, (void*)ScenegraphWalk},
     {0x41f810u, (void*)LoadShlDerefCallSkip},
     {0x41f830u, (void*)CallSetPause},
     {0x41f840u, (void*)ScaledNeg1SetPause},
@@ -1131,6 +1142,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4200b0u, (void*)GuardedSeq_ZeroTriple_then_PendingMatch},
     {0x4202c0u, (void*)ScaledClearTripleCallJmp},
     {0x420300u, (void*)Screen_ArcadeEnding},
+    {0x421380u, (void*)Phase3InstallSelfChain},
+    {0x4214a0u, (void*)RoundStartFighterInit_004214a0},
     {0x4218b0u, (void*)MkIntroFsm},
     {0x421b00u, (void*)Install3WayCountdownGame},
     {0x421be0u, (void*)DecBoundCheckCallJmp},
@@ -1138,6 +1151,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x421c40u, (void*)Push71_Push48caa0},
     {0x421f00u, (void*)ScaledInitOrSelfPtr_InstallSelfStackReset},
     {0x421f40u, (void*)InstallSelfStackReset},
+    {0x422110u, (void*)TwinMStackPushScaledChain},
+    {0x422200u, (void*)StageEventRearm_00422200},
     {0x422380u, (void*)StateInitShuffle},
     {0x4223e0u, (void*)RoundReset},
     {0x4225f0u, (void*)TwoStateCopyDup},
@@ -1187,6 +1202,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x427230u, (void*)EffectTick_00427230},
     {0x427460u, (void*)Thunk_BootMod6487eClampAndChainMul10},
     {0x427f90u, (void*)MStackPush2DirtyCall},
+    {0x428030u, (void*)CallPauseClear3CallTriple},
     {0x428330u, (void*)ScaledArrStore_GuardedSeq_CopyJmp_then_MStackPushDualJmp},
     {0x428350u, (void*)GuardedSeq_CopyJmp_then_MStackPushDualJmp},
     {0x428370u, (void*)MStackPushDualJmp},
@@ -1269,6 +1285,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4313d0u, (void*)TripleScaledChainStore54},
     {0x431450u, (void*)TripleScaledChainStore60},
     {0x4314d0u, (void*)LoadStoreScaled58},
+    {0x4314f0u, (void*)ScaledInitWithCounterAndType_004314f0},
     {0x431c80u, (void*)DualChainSubCallSubLoad},
     {0x431e90u, (void*)GuardedArithDualCallChain},
     {0x432000u, (void*)DiffMul10Loop},
@@ -1546,6 +1563,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x48a190u, (void*)OrDualStore_0048a190},
     {0x48a1b0u, (void*)ZeroState},
     {0x48a1c0u, (void*)DualBitGateInitCall},
+    {0x48a220u, (void*)AndStorePushCallZero},
     {0x48a250u, (void*)Wrapper_ScaledChainPushCall_004ef980},
     {0x48a260u, (void*)Wrapper_ScaledChainPushCall_004ef828},
     {0x48a270u, (void*)Wrapper_ScaledChainPushCall_004ef948},
@@ -1665,6 +1683,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x495590u, (void*)ScaledInit_GameModeHandlerCluster_g_scaledInit_00495590},
     {0x4955b0u, (void*)ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0},
     {0x497450u, (void*)GuardedSeq_MStackCall_then_CallSetPause_00497450},
+    {0x498900u, (void*)SlideAttackEventCluster},
     {0x49a650u, (void*)GuardedSeq_MStackCall_then_CallSetPause_0049a650},
     {0x49c340u, (void*)GuardedSeq_MStackCall_then_CallSetPause_0049c340},
     {0x49c850u, (void*)ScaledIndirectJmp_0049c850},
@@ -1923,6 +1942,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4be630u, (void*)SixDoublePushCall},
     {0x4be690u, (void*)TaggedSceneDispatch},
     {0x4be760u, (void*)TableSearch},
+    {0x4be790u, (void*)PushArgPushNeg1Call},
     {0x4be800u, (void*)QuadCallPhase2},
     {0x4bea40u, (void*)Helper_TitleAudioCleanup},
     {0x4bf320u, (void*)Thunk_FlushDrawQueue},

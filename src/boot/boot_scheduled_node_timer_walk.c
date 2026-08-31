@@ -181,6 +181,14 @@ void BootScheduledNodeTimerWalk(void)
       if (((g_gameMode == 0) || (g_gameMode == *(int *)MK4_PTR((iVar2 + 0xd8)))) ||
          (*(int *)MK4_PTR((iVar2 + 0xe0)) == 0x11)) break;
 LAB_0041f6ef:
+#ifdef TARGET_SDL
+      { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+        int nx = *(int *)MK4_PTR((iVar2 + 0xe4));
+        if (getenv("MK4_TRACE_PUMP") && nx != 0 &&
+            !((unsigned)nx >= 0x53e368u && (unsigned)nx < 0x541d68u))
+            SDL_Log("PUMP bad link: node 0x%x +0xe4 -> 0x%x (cb 0x%x)", iVar2, nx,
+                    *(int *)MK4_PTR((iVar2 + 0xd8))); }
+#endif
       iVar2 = *(int *)MK4_PTR((iVar2 + 0xe4));
     }
     *(short *)MK4_PTR((iVar2 + 0xdc)) = *(short *)MK4_PTR((iVar2 + 0xdc)) + -1;

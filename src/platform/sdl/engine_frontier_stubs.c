@@ -47,4 +47,8 @@ FRONTIER_STUB(ContinueScreenFsm)
 FRONTIER_STUB(ChainInit3CallTailJmp)
 FRONTIER_STUB(EnduranceFsmCluster)
 
+/* the phase-3 band's two big deferred callees (939a2edcb ff.) */
+FRONTIER_STUB(RoundEndFsm)
+FRONTIER_STUB(PendingMatch_0042d240)
+
 #endif /* MK4_NATIVE_FULL */
