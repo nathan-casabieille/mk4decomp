@@ -278,8 +278,14 @@ void MK4_NativeInputPublish(void)
     unsigned int player, b;
     unsigned char pad = 0;
 
+    /* ACTION slots only - 4..12 (the kicks, punches, block, step in/out,
+     * run and start). Slots 0..3 are UP/DOWN/LEFT/RIGHT and must NOT set
+     * this byte: the game reads it as "a button is down", and
+     * InputPollFlagBitsHalf turns bit 4 straight into a CONFIRM. Including
+     * the directions made every arrow press in the main menu read as a
+     * select, which launched a mode handler and crashed. */
     for (player = 0; player < 2; player++) {
-        for (b = 0; b < 13; b++) {
+        for (b = 4; b < 13; b++) {
             int vk = *MK4_VA(int, 0x543ab8u + b * 8u + player * 4u);
 
             if (vk == 0 || !Input_GetAsyncKey(vk))
@@ -288,8 +294,8 @@ void MK4_NativeInputPublish(void)
             break;
         }
     }
-    /* Only the pad byte: InputPollFlagBits reads bit 0 for player 1 and
-     * InputPollFlagBitsHalf bit 4 for player 2. */
+    /* InputPollFlagBits reads bits 0/1 for player 1, InputPollFlagBitsHalf
+     * bits 4/5 for player 2. */
     *MK4_VA(unsigned char, 0x4d50b8u) = pad;
     /* The DIRECTION word at 0x4d50b4, the original DirectInput layer's
      * publish: bit 0 up, 1 down, 2 left, 3 right for player 1, the same
