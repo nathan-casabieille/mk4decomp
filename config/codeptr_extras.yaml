@@ -156,3 +156,5 @@ entries:
   0x49e490: CharSelect_IdleTimeout_0049e490
   0x49e610: CharSelect_PickerP1_0049e610
   0x49e700: CharSelect_PickerP2_0049e700
+  0x49f190: CharSelect_ConfirmP1_0049f190
+  0x49f1c0: CharSelect_ConfirmP2_0049f1c0

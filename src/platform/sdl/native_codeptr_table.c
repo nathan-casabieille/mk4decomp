@@ -762,6 +762,9 @@ extern int CharSelect_IdleTimeout_0049e490();
 extern int CharSelect_PickerP1_0049e610();
 extern int CharSelect_PickerP2_0049e700();
 extern int Wrapper_SaveCallRestore();
+extern int ThrowAnimTriggerCluster();
+extern int CharSelect_ConfirmP1_0049f190();
+extern int CharSelect_ConfirmP2_0049f1c0();
 extern int MStackDirtyArgsBit0();
 extern int Cmp2DirtySetOrClear_0049fb10();
 extern int Cmp2DirtySetOrClear_0049fb40();
@@ -1814,6 +1817,9 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x49e610u, (void*)CharSelect_PickerP1_0049e610},
     {0x49e700u, (void*)CharSelect_PickerP2_0049e700},
     {0x49eb10u, (void*)Wrapper_SaveCallRestore},
+    {0x49efa0u, (void*)ThrowAnimTriggerCluster},
+    {0x49f190u, (void*)CharSelect_ConfirmP1_0049f190},
+    {0x49f1c0u, (void*)CharSelect_ConfirmP2_0049f1c0},
     {0x49fa50u, (void*)MStackDirtyArgsBit0},
     {0x49fb10u, (void*)Cmp2DirtySetOrClear_0049fb10},
     {0x49fb40u, (void*)Cmp2DirtySetOrClear_0049fb40},

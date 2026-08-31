@@ -332,6 +332,13 @@ void SceneEvalFsm(void)
     unsigned int cmd = MK4_NODE_AT(unsigned int, g_baseSel, 0x84);
 
     MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
+#ifdef TARGET_SDL
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static unsigned int seen;
+      if (getenv("MK4_TRACE_CS") && !(seen & (1u << (cmd & 31)))) {
+          seen |= 1u << (cmd & 31);
+          SDL_Log("SEF first visit to cmd=%u", cmd); } }
+#endif
 
     switch (cmd) {
     case 1:                                      /* 0x49decd */
@@ -384,6 +391,17 @@ void SceneEvalFsm(void)
     if (g_framePauseFlag != 0) return;
     GuardedCmpDualToggle();
     if (g_framePauseFlag != 0) return;
+#ifdef TARGET_SDL
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int n;
+      if (getenv("MK4_TRACE_CS") && n < 4) { n++;
+          SDL_Log("CS p1=%u p2=%u idle=%u phase1=%u phase2=%u dl=%u tbl=%x",
+                  g_activeP1, g_activeP2, g_idleCountdown,
+                  *MK4_VA(unsigned int, 0x537f88u),
+                  *MK4_VA(unsigned int, 0x537e90u),
+                  *MK4_VA(unsigned int, 0x542004u),
+                  *MK4_VA(unsigned int, 0x541fc0u)); } }
+#endif
 
     if (g_idleCountdown == 0 || g_activeP1 == 2) goto ready;
     g_walkSlot6c = g_activeP2;

@@ -51,6 +51,14 @@ extern void DualPushSetCallDualPop(unsigned int tag);
 /* still hollow - the two cursor steps */
 extern void GameNetSyncState(void);
 extern void AudioCmpCascadeDispatcher(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
+extern void MStackBracket4_ListInsertZeroFill(void);
+extern void MStackPush3LinkedListWalk(void);
+extern void MStackPush4LLWalkPop4(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
+extern void RoundWinTransition(void);
+extern void GameStateTick(void);
+
 
 #define g_currentNodeIdx  (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
@@ -65,6 +73,11 @@ extern void AudioCmpCascadeDispatcher(void);
 #define g_selectIdle      (*(unsigned int *)MK4_VA(unsigned int, 0x5380e4u))
 #define g_phaseP1         (*(unsigned int *)MK4_VA(unsigned int, 0x537f88u))
 #define g_phaseP2         (*(unsigned int *)MK4_VA(unsigned int, 0x537e90u))
+#define g_xformEntityIdx  (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_fightGroupHead  (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_slot70          (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
+#define g_matrixStackTop  (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
+#define g_charSelectCam   (*(unsigned int *)MK4_VA(unsigned int, 0x535e6cu))
 
 #define IDLE_VA   0x49e490u
 #define PICK1_VA  0x49e610u
@@ -233,6 +246,107 @@ void CharSelect_PickerP2_0049e700(void)
     MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
     cs_picker(PICK2_VA, cmd, 0x16, 0x23e, 0x243, g_phaseP2, 0x49f1c0u,
               AudioCmpCascadeDispatcher);
+}
+
+/* 0x49efa0 - the select screen's SCENE: spawn the frame record 0x50c0bc,
+ * insert it, walk in the second record 0x50a0f0, park the result at the
+ * origin with kind 6, chain-prepend it, mark +0x34 bit 0x10000 and link the
+ * camera (0x535e6c) into its +0x3c after placing the camera at
+ * (0x10000, 0, 0xffff8000). All of it under an mstack save of
+ * currentNodeIdx / xformEntityIdx / fightGroupHead, and the spawn-dirty exit
+ * skips straight to the pops. RoundWinTransition, which puts the two
+ * fighters' portraits in, is still hollow. */
+void ThrowAnimTriggerCluster(void)
+{
+    unsigned int top, node, frame, cam;
+
+    top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)MK4_PTR(top * 4) = g_currentNodeIdx;
+    top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)MK4_PTR(top * 4) = g_xformEntityIdx;
+    top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)MK4_PTR(top * 4) = g_fightGroupHead;
+
+    g_xformEntityIdx = 0x50c0bcu >> 2;
+    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+    if (g_framePauseFlag != 0) return;           /* mstack leak, as original */
+    if ((g_stateBits8c & 4u) != 0) goto pops;
+
+    MStackBracket4_ListInsertZeroFill();
+    if (g_framePauseFlag != 0) return;
+    MStackPush3LinkedListWalk();
+    if (g_framePauseFlag != 0) return;
+
+    g_xformEntityIdx = 0x50a0f0u >> 2;
+    MStackPush4LLWalkPop4();
+    if (g_framePauseFlag != 0) return;
+
+    node = g_currentNodeIdx;
+    g_walkSlot6c = 0;
+    MK4_NODE_AT(unsigned int, node, 0x54) = 0;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x58) = g_walkSlot6c;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x5c) = g_walkSlot6c;
+    g_walkSlot6c = 6;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x30) = 6;
+    MStackCall_MStackPush2ChainPrepend_00406340();
+    if (g_framePauseFlag != 0) return;
+
+    frame = g_currentNodeIdx;
+    g_slot70 = 0x10000;
+    MK4_NODE_AT(unsigned int, frame, 0x34) |= 0x10000u;
+    g_pendingNodeType = g_currentNodeIdx;
+
+    cam = g_charSelectCam;
+    g_currentNodeIdx = cam;
+    MK4_NODE_AT(unsigned int, cam, 0x54) = 0x10000;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x58) = 0;
+    g_walkSlot6c = 0xffff8000u;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x5c) = 0xffff8000u;
+    MK4_NODE_AT(unsigned int, g_pendingNodeType, 0x3c) = g_currentNodeIdx;
+
+    RoundWinTransition();
+    if (g_framePauseFlag != 0) return;
+
+pops:
+    top = g_matrixStackTop;
+    g_fightGroupHead = *(unsigned int *)MK4_PTR(top * 4);
+    top -= 1;
+    g_matrixStackTop = top;
+    g_xformEntityIdx = *(unsigned int *)MK4_PTR(top * 4);
+    top -= 1;
+    g_matrixStackTop = top;
+    g_currentNodeIdx = *(unsigned int *)MK4_PTR(top * 4);
+    g_matrixStackTop = top - 1;
+}
+
+/* 0x49f190 / 0x49f1c0 - the two CONFIRM controllers, installed by the
+ * pickers once a player reaches phase 0x12. Each waits on its own "still
+ * settling" flag, then stamps which player it is into 0x535e48 and tails
+ * into GameStateTick - still hollow, and unreachable until the cursor steps
+ * exist to move a player to phase 0x12. */
+void CharSelect_ConfirmP1_0049f190(void)
+{
+    g_walkSlot6c = *MK4_VA(unsigned int, 0x541d88u);
+    if (*MK4_VA(unsigned int, 0x541d88u) != 0) {
+        CallSetPause();
+        return;
+    }
+    *MK4_VA(unsigned int, 0x535e48u) = 0;
+    GameStateTick();
+}
+
+void CharSelect_ConfirmP2_0049f1c0(void)
+{
+    g_walkSlot6c = *MK4_VA(unsigned int, 0x537ea8u);
+    if (*MK4_VA(unsigned int, 0x537ea8u) != 0) {
+        CallSetPause();
+        return;
+    }
+    *MK4_VA(unsigned int, 0x535e48u) = 1;
+    GameStateTick();
 }
 
 #endif /* NON_MATCHING */
