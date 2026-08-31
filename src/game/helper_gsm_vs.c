@@ -1,6 +1,179 @@
 /**
- * Auto-extracted from misc_matchesQQ.c during reorganization.
+ * The KEYBOARD options screen - 0x4b6900 (1820b). Fourth of the five mode
+ * screens and the first that is not a list of toggles: it is a live key
+ * remapper. The symbol name Helper_GSM_VS is the auto-namer's positional
+ * guess; GameStateMachine reaches it as state 24.
+ *
+ * Its table at 0x4f51b8 is PLAYER, then thirteen bindable actions, then
+ * RESET DEFAULTS and GO BACK:
+ *
+ *   30 PLAYER          toggles which of the two columns is being edited
+ *   31..43             UP DOWN LEFT RIGHT, HIGH/LOW PUNCH, HIGH/LOW KICK,
+ *                      BLOCK, STEP IN, STEP OUT, RUN, START
+ *   44 RESET DEFAULTS  restores this player's whole column from 0x4f46a0
+ *   3  GO BACK
+ *
+ * Selecting a bindable row moves the screen to state 0x1d, which polls every
+ * virtual key each frame until one is down and shows PRESS KEY! in the row's
+ * field meanwhile. Escape (nav bit 0x40) skips the scan and so binds key 0,
+ * which is how a binding is cleared - the label for key 0 is NONE!.
+ *
+ * The key map is thirteen actions by two players of dwords at 0x543ab8,
+ * action stride 8 and player stride 4, and the row ACTIONS are not in map
+ * order: the four punches and kicks are stored 4,5,6,7 but listed 6,7,4,5.
+ * kb_action_slot below is that permutation, and it is the same one all three
+ * of the screen's dispatch tables encode (0x4b6fb0 capture, 0x4b6f7c reset,
+ * 0x4b6fe4 label fill), which is what confirms it.
+ *
+ * Labels come from the 256-entry name table at 0x4f5398 that AppInit_Misc1
+ * fills in - see src/game/app_init_misc1.c.
+ *
+ * NATIVE-ONLY twin: the matching build keeps the naked transcription below.
  */
+#ifdef NON_MATCHING
+
+#include "portable/mem_model.h"
+
+extern int  Menu_FindNextSelectable(int cur, void *table);
+extern int  Menu_FindPrevSelectable(int cur, void *table);
+extern unsigned int Menu_PollNavInput(int joy_selects);
+extern int  DrawMenu(void *menu_items, int selection);
+extern int  Helper_Sprintf(char *buf, const char *fmt, ...);
+extern void Menu_FillColonField(unsigned int *slot, const char *value);
+extern void Input_RebindKeyToAction(int *slot, int vk);
+extern int  Input_GetAsyncKey(int vk);
+
+#define g_kbFlags     (*(unsigned char *)MK4_VA(unsigned char, 0xab4314u))
+#define g_kbSel       (*(unsigned int *)MK4_VA(unsigned int, 0xab4324u))
+#define g_kbPlayer    (*(unsigned int *)MK4_VA(unsigned int, 0xab432cu))
+#define g_kbCapturing (*(unsigned int *)MK4_VA(unsigned int, 0xab42e8u))
+#define g_kbState     (*(unsigned int *)MK4_VA(unsigned int, 0xab434cu))
+#define g_menuScratch ((char *)MK4_VA(char, 0xab41c8u))
+
+#define KB_MENU       MK4_VA(void, 0x4f51b8u)
+#define g_keyNames    ((unsigned int *)MK4_VA(unsigned int, 0x4f5398u))
+#define g_keyMap      ((unsigned int *)MK4_VA(unsigned int, 0x543ab8u))
+#define g_keyDefaults ((unsigned int *)MK4_VA(unsigned int, 0x4f46a0u))
+#define TXT_PRESS_KEY ((const char *)MK4_VA(char, 0x4f6158u))
+#define FMT_LD        ((const char *)MK4_VA(char, 0x4f6164u))
+
+typedef struct { unsigned int text; short action; short pad; } MenuRow;
+
+/* row action 31..43 -> index into the 13-action key map */
+static const unsigned char kb_action_slot[13] = {
+    0, 1, 2, 3, 6, 7, 4, 5, 8, 9, 10, 11, 12
+};
+
+/* -1 for a row that binds nothing */
+static int kb_slot_of(int action)
+{
+    return (action >= 31 && action <= 43) ? (int)kb_action_slot[action - 31] : -1;
+}
+
+static int *kb_cell(int slot)
+{
+    return (int *)&g_keyMap[slot * 2 + g_kbPlayer];
+}
+
+int Helper_GSM_VS(void)
+{
+    unsigned int nav, held;
+    MenuRow *table = (MenuRow *)KB_MENU;
+    MenuRow *r;
+    int slot;
+
+    if ((g_kbFlags & 1) == 0) {
+        g_kbFlags |= 1;
+        g_kbSel = (unsigned int)Menu_FindNextSelectable(0, KB_MENU);
+    }
+
+    if (g_kbState == 2) {
+        nav  = Menu_PollNavInput(1);
+        held = nav & 0x8000u;
+
+        if (!held && (nav & 1))
+            g_kbSel = (unsigned int)Menu_FindPrevSelectable((int)g_kbSel, KB_MENU);
+        if (!held && (nav & 2))
+            g_kbSel = (unsigned int)Menu_FindNextSelectable((int)g_kbSel, KB_MENU);
+        if (!held && (nav & 0x20))
+            g_kbState = 3;
+
+        switch (table[g_kbSel].action) {
+        case 30:                                  /* PLAYER */
+            if (!held && (nav & 0x1c))
+                g_kbPlayer = (g_kbPlayer == 0);
+            break;
+        case 44:                                  /* RESET DEFAULTS */
+            if (!held && (nav & 0x10)) {
+                for (r = table; r->text != 0; r++) {
+                    slot = kb_slot_of(r->action);
+                    if (slot >= 0)
+                        Input_RebindKeyToAction(
+                            kb_cell(slot),
+                            (int)g_keyDefaults[slot * 2 + g_kbPlayer]);
+                }
+            }
+            break;
+        case 3:                                   /* GO BACK */
+            if (!held && (nav & 0x10))
+                g_kbState = 3;
+            break;
+        default:
+            if (kb_slot_of(table[g_kbSel].action) >= 0 && !held && (nav & 0x10)) {
+                g_kbCapturing = (unsigned int)table[g_kbSel].action;
+                g_kbState = 0x1d;
+            }
+            break;
+        }
+    } else if (g_kbState == 0x1d) {               /* waiting for a key */
+        nav = Menu_PollNavInput(1);
+        if (!(nav & 0x8000u)) {
+            unsigned int vk = 0;
+
+            /* Escape skips the scan, so vk stays 0 and the binding clears */
+            if (!(nav & 0x40))
+                for (vk = 0; vk < 0x100; vk++)
+                    if (g_keyNames[vk] != 0 && Input_GetAsyncKey((int)vk))
+                        break;
+            if (vk < 0x100) {
+                slot = kb_slot_of(table[g_kbSel].action);
+                if (slot >= 0)
+                    Input_RebindKeyToAction(kb_cell(slot), (int)vk);
+                g_kbState = 2;
+            }
+        }
+    } else if (g_kbState == 0) {
+        g_kbState = 2;
+    } else if (g_kbState == 3) {
+        g_kbState = 0;
+    }
+
+    /* every frame: refresh the ": x" field of each row from the live map */
+    for (r = table; r->text != 0; r++) {
+        if (r->action == 30) {
+            Helper_Sprintf(g_menuScratch, FMT_LD, (long)(g_kbPlayer + 1));
+            Menu_FillColonField(&r->text, g_menuScratch);
+        } else {
+            slot = kb_slot_of(r->action);
+            if (slot >= 0) {
+                unsigned int name = g_keyNames[g_keyMap[slot * 2 + g_kbPlayer] & 0xff];
+
+                /* a VA of zero is not a host null under the arena, so it has
+                 * to be caught here rather than left to the string walk */
+                Menu_FillColonField(&r->text,
+                                    name ? (const char *)MK4_PTR(name) : "");
+            }
+        }
+    }
+    if (g_kbState == 0x1d)
+        Menu_FillColonField(&table[g_kbSel].text, TXT_PRESS_KEY);
+
+    DrawMenu(KB_MENU, (int)g_kbSel);
+    return (int)g_kbState;
+}
+
+#else   /* matching build: the original naked transcription */
+
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
@@ -1830,3 +2003,4 @@ __declspec(naked) void Helper_GSM_VS(void)
     }
 }
 
+#endif  /* NON_MATCHING */

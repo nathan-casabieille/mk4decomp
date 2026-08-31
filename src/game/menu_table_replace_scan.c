@@ -110,83 +110,52 @@ extern unsigned int g_fightAxisPosX;
 extern unsigned int g_fightAxisPosY;
 
 /*
- * Input_RebindKeyToAction - 176b menu helper: scans a 13-slot table
- *   pair starting at 0x00543ac0 (outer step 4, scans offsets -8..+0x58 step 8)
- *   and replaces any slot equal to arg2 with the saved [arg1] value, clearing
- *   the replacement value after use. Stores final value to [arg1] before
- *   returning. Early-out when arg2 == 0.
+ * Input_RebindKeyToAction(slot, vk) - 176b: bind a virtual key to one action,
+ * and keep the map free of duplicates.
+ *
+ * The key map is 13 actions x 2 players of dwords at 0x00543ab8, action stride
+ * 8, player stride 4, and `slot` points at one cell of it. The target cell is
+ * cleared, then the WHOLE map is scanned for cells already holding `vk`: the
+ * first one found inherits the target's previous key - so binding a key that
+ * is already taken SWAPS the two - and any further duplicate is cleared. The
+ * target then takes `vk`. A `vk` of zero just clears the cell, which is what
+ * Escape does in the KEYBOARD screen's capture state.
+ *
+ * The Ghidra lift of this walked the map with a host pointer and ended the
+ * loop on `(int)p < 0x543ac8` - a HOST pointer compared against a VA, which
+ * under the arena is not the same number at all. Indexing the map instead is
+ * what makes it portable; see helper_gsm_vs.c for its caller.
  */
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void Input_RebindKeyToAction(int *param_1,int param_2)
 
+#include "portable/mem_model.h"
+
+#define KEYMAP_ACTIONS 13
+#define g_keyMapCells  ((unsigned int *)MK4_VA(unsigned int, 0x00543ab8u))
+
+void Input_RebindKeyToAction(int *slot, int vk)
 {
-  int *piVar1;
-  int iVar2;
-  
-  iVar2 = *param_1;
-  *param_1 = 0;
-  if (param_2 != 0) {
-    piVar1 = &g_keyMap_btn1;
-    do {
-      if (piVar1[-2] == param_2) {
-        piVar1[-2] = iVar2;
-        iVar2 = 0;
-      }
-      if (*piVar1 == param_2) {
-        *piVar1 = iVar2;
-        iVar2 = 0;
-      }
-      if (piVar1[2] == param_2) {
-        piVar1[2] = iVar2;
-        iVar2 = 0;
-      }
-      if (piVar1[4] == param_2) {
-        piVar1[4] = iVar2;
-        iVar2 = 0;
-      }
-      if (piVar1[6] == param_2) {
-        piVar1[6] = iVar2;
-        iVar2 = 0;
-      }
-      if (piVar1[8] == param_2) {
-        piVar1[8] = iVar2;
-        iVar2 = 0;
-      }
-      if (piVar1[10] == param_2) {
-        piVar1[10] = iVar2;
-        iVar2 = 0;
-      }
-      if (piVar1[0xc] == param_2) {
-        piVar1[0xc] = iVar2;
-        iVar2 = 0;
-      }
-      if (piVar1[0xe] == param_2) {
-        piVar1[0xe] = iVar2;
-        iVar2 = 0;
-      }
-      if (piVar1[0x10] == param_2) {
-        piVar1[0x10] = iVar2;
-        iVar2 = 0;
-      }
-      if (piVar1[0x12] == param_2) {
-        piVar1[0x12] = iVar2;
-        iVar2 = 0;
-      }
-      if (piVar1[0x14] == param_2) {
-        piVar1[0x14] = iVar2;
-        iVar2 = 0;
-      }
-      if (piVar1[0x16] == param_2) {
-        piVar1[0x16] = iVar2;
-        iVar2 = 0;
-      }
-      piVar1 = piVar1 + 1;
-    } while ((int)piVar1 < 0x543ac8);
-    *param_1 = param_2;
-  }
-  return;
+    unsigned int *map = g_keyMapCells;
+    int carried = *slot;
+    int player, action;
+
+    *slot = 0;
+    if (vk == 0)
+        return;
+
+    for (player = 0; player < 2; player++)
+        for (action = 0; action < KEYMAP_ACTIONS; action++) {
+            unsigned int *cell = &map[action * 2 + player];
+
+            if (*cell == (unsigned int)vk) {
+                *cell = (unsigned int)carried;
+                carried = 0;
+            }
+        }
+
+    *slot = vk;
 }
+
 #else
 __declspec(naked) void Input_RebindKeyToAction(void)
 {

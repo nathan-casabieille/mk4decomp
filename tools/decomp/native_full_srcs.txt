@@ -343,6 +343,8 @@ src/engine/zero_three_slots.c
 src/game/dispatch_scaled_lea.c
 src/game/download_player.c
 src/game/app_init_misc1.c
+src/game/menu_table_replace_scan.c
+src/game/helper_gsm_vs.c
 src/game/draw_menu.c
 src/game/menu_sound_screen.c
 src/game/menu_gameplay_screen.c
