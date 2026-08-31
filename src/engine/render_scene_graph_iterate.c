@@ -124,6 +124,20 @@ void RenderSceneGraphIterate(void)
         return;
     }
     g_cj_0054205c   = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x34);
+#ifdef TARGET_SDL
+    /* MK4_TRACE_ENTRY: the walker's ENTRY node and the two fields its camera
+     * branch needs - +0x34 bit 0x80000 and +0x3c pointing at a camera node. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static unsigned n;
+      if (getenv("MK4_TRACE_ENTRY") && ++n % 200 == 0)
+          SDL_Log("ENTRY node=%x +34=%x (cam bit %d) +3c=%x  cams=%x/%x/%x",
+                  g_currentNodeIdx, g_cj_0054205c,
+                  (g_cj_0054205c & 0x80000) ? 1 : 0,
+                  MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x3c),
+                  *MK4_VA(unsigned int, 0x537f78u),
+                  *MK4_VA(unsigned int, 0x541de0u),
+                  *MK4_VA(unsigned int, 0x535e6cu)); }
+#endif
     g_cj_00542058   = g_currentNodeIdx;
     idx             = g_currentNodeIdx;
 

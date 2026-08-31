@@ -12,6 +12,7 @@
 #include "platform/pal.h"
 
 #include <SDL2/SDL.h>
+#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -67,10 +68,97 @@ void MK4_PalFramePresent(void)
     SDL_RenderPresent(s_ren);
 }
 
+/* GAMMA. The game HAS this setting - the GRAPHICS options screen steps
+ * 0x543a94 between 2 and 0x62 and calls Helper_RendererPostInit with it -
+ * and the original applies it through a Win32 gamma ramp, which is why the
+ * port left that a stub: SDL has no equivalent per-window ramp. Applying it
+ * in the final blit is this backend's version of the same knob.
+ *
+ * The scale is the game's own: 0x32 is neutral, 2 is darkest, 0x62 the
+ * brightest. MK4_GAMMA overrides it for a run.
+ *
+ * This BRIGHTENS a finished frame; it does not put light in a scene. The
+ * main menu is dim because its scene has no camera (see
+ * src/game/main_menu_screen.c), and gamma is how a player would compensate,
+ * not a fix for that. */
+static int s_gamma = 0x32;               /* the game's neutral value */
+static unsigned short s_gammaLut[0x8000];
+static int s_gammaLutFor = -1;
+
+void MK4_PalSetGamma(int g)
+{
+    if (g < 2) g = 2;
+    if (g > 0x62) g = 0x62;             /* the game's own range */
+    s_gamma = g;
+}
+
+/* The env override is a DIAGNOSTIC and is deliberately not clamped to the
+ * game's range: the main menu currently renders at 1/16 brightness because
+ * its scene has no camera, and no in-range gamma rescues a 1/31 signal.
+ * MK4_GAMMA above 0x62 is a way to LOOK at such a frame, not a setting the
+ * game would ever produce. */
+void MK4_PalSetGammaRaw(int g)
+{
+    if (g < 2) g = 2;
+    if (g > 2000) g = 2000;
+    s_gamma = g;
+}
+
+static void gamma_build(void)
+{
+    double e;
+    int v, ramp[32];
+    unsigned int t;
+
+    if (s_gammaLutFor == s_gamma)
+        return;
+    s_gammaLutFor = s_gamma;
+    /* 0x32 -> exponent 1.0 (identity); higher values lift the midtones */
+    e = 50.0 / (double)s_gamma;
+    for (v = 0; v < 32; v++) {
+        double n = pow((double)v / 31.0, e) * 31.0 + 0.5;
+        ramp[v] = (int)n;
+        if (ramp[v] > 31) ramp[v] = 31;
+        if (ramp[v] < 0) ramp[v] = 0;
+    }
+    for (t = 0; t < 0x8000u; t++)
+        s_gammaLut[t] = (unsigned short)(
+              (ramp[(t >> 10) & 0x1f] << 10)
+            | (ramp[(t >> 5) & 0x1f] << 5)
+            |  ramp[t & 0x1f]);
+}
+
+/* the presented look of one pixel, for the diagnostic PPM dump */
+unsigned short MK4_PalGammaMap(unsigned short px)
+{
+    if (s_gamma == 0x32)
+        return px;
+    gamma_build();
+    return s_gammaLut[px & 0x7fff];
+}
+
 void MK4_PalBlit555(const unsigned short *pixels, int w, int h)
 {
+    static unsigned short *conv;
+    static int conv_n;
+
     if (!pixels || w <= 0 || h <= 0)
         return;
+    if (s_gamma != 0x32) {
+        int n = w * h, i;
+
+        gamma_build();
+        if (conv_n < n) {
+            free(conv);
+            conv = (unsigned short *)malloc((size_t)n * 2);
+            conv_n = conv ? n : 0;
+        }
+        if (conv) {
+            for (i = 0; i < n; i++)
+                conv[i] = s_gammaLut[pixels[i] & 0x7fff];
+            pixels = conv;
+        }
+    }
     if (!s_fb || w != s_fb_w || h != s_fb_h) {
         if (s_fb)
             SDL_DestroyTexture(s_fb);

@@ -323,6 +323,13 @@ void MK4_NativeVideoInit(void)
         }
     }
 
+    /* MK4_GAMMA overrides the game's stored value for a run; otherwise the
+     * GRAPHICS screen's own setting drives it through Helper_RendererPostInit. */
+    { const char *g = getenv("MK4_GAMMA");
+      extern void MK4_PalSetGammaRaw(int);
+      if (g) { MK4_PalSetGammaRaw((int)strtol(g, NULL, 0));
+               SDL_Log("native video: gamma override %s (diagnostic; the "
+                       "game's own range is 2..0x62)", g); } }
     SDL_Log("native video: mode=%d %dx%d, fb@VA 0x%x, tables seeded "
             "(sin/div3/zsort/shading)", mode, s_w, s_h, MK4_FB_VA);
 }
@@ -540,6 +547,16 @@ int MK4_NativeDumpTexPage(int slot, const char *path)
     fclose(f);
     SDL_Log("atlas: page %d -> %s (%d non-zero texels)", slot, path, nz);
     return 1;
+}
+
+/* Helper_RendererPostInit(gamma): the GRAPHICS screen's GAMMA row calls this
+ * on every step. The original re-applies a Win32 gamma ramp; this backend
+ * applies the same value in its final blit. Previously a weak stub, which is
+ * why the game's own brightness control did nothing natively. */
+void Helper_RendererPostInit(int gamma)
+{
+    extern void MK4_PalSetGamma(int);
+    MK4_PalSetGamma(gamma);
 }
 
 /* --- present ------------------------------------------------------------- */
