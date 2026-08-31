@@ -53,11 +53,12 @@ extern int  TripleCallByteCheck(void);
 extern void *MK4_ResolveCode(unsigned int va);
 extern void Helper_AudioStub_2960(int pan);
 extern void SetJmp_Push16Call_004a1ad0(void);
+extern void TableWalkBoundedCmp(int kind);
+extern void AudioStateClearAndChainStep(void);
 /* still-hollow leaves, weak no-ops until converted */
 extern void Config_RestoreGlobals(void);
 extern void GameMode_EnterScene(void);
 extern void InstallSelfStateMachine6(void);
-extern void FiveTableWalkInit(void);
 extern void InstallSelfPackedF80(void);
 extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0(void);
 
@@ -84,6 +85,50 @@ extern void MStackPushComplexCallPop_MStackPush2ChainPrepend_004064b0(void);
 #define MENU_VA    0x4a2a80u
 
 static unsigned int mm_row(unsigned int i) { return MODE_TABLE + i * 0x1cu; }
+
+/* FiveTableWalkInit (0x403c90): the menu/title SCENE RESET - clear the
+ * five record kinds, then load the shared scene .geo at 0x506c20 TWICE
+ * (the second load is the original's, not a slip), reset the audio chain
+ * and the title node's transform. This carries the menu's CAMERA: with it
+ * hollow, CameraSetupAndCullFan never runs, nothing calls
+ * Color15BitPacker(0x50,0x50,0x50), every queue record ships a zero colour
+ * word, and the shade-0 CLUT page paints the whole screen black. That is
+ * the entire reason the main menu came up unreadable. */
+void FiveTableWalkInit(void)
+{
+    unsigned int node;
+
+    TableWalkBoundedCmp(2);
+    TableWalkBoundedCmp(3);
+    TableWalkBoundedCmp(4);
+    TableWalkBoundedCmp(5);
+    TableWalkBoundedCmp(7);
+    BootInitGuardedCallChain();
+    if (g_framePauseFlag != 0) return;
+
+    g_currentNodeIdx = 0x506c20u >> 2;
+    LoadGeoAsset_Default();
+    if (g_framePauseFlag != 0) return;
+    g_currentNodeIdx = 0x506c20u >> 2;
+    LoadGeoAsset_Default();
+    if (g_framePauseFlag != 0) return;
+
+    AudioStateClearAndChainStep();
+    if (g_framePauseFlag != 0) return;
+    g_walkSlot6c = 0;
+    CopyGlobal();
+    if (g_framePauseFlag != 0) return;
+
+    node = g_titleLogoNode;
+    g_currentNodeIdx = node;
+    MK4_NODE_AT(unsigned int, node, 0x60) = 0;
+    MK4_NODE_AT(unsigned int, node, 0x64) = 0;
+    MK4_NODE_AT(unsigned int, node, 0x68) = 0;
+    MK4_NODE_AT(unsigned int, node, 0x54) = 0;
+    MK4_NODE_AT(unsigned int, node, 0x58) = 0;
+    g_walkSlot6c = 0xfff88000u;
+    MK4_NODE_AT(unsigned int, node, 0x5c) = 0xfff88000u;
+}
 
 /* spawn a record instance and place it - the row-marker dragons beside the
  * six mode lines, registered in the array at 0x543750 */
@@ -295,7 +340,6 @@ void PendingMatch_004a2a80(void)
         };
         unsigned int i, restart;
 
-        extern void TableWalkBoundedCmp(int kind);
         TableWalkBoundedCmp(8);
         *MK4_VA(unsigned int, 0x542004u) = 0;
         *MK4_VA(unsigned int, 0x53a498u) = 0;

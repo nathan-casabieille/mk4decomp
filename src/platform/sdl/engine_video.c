@@ -515,6 +515,33 @@ void MK4_NativeSceneGeo(int frame)
     }
 }
 
+/* Dump one 256x256 texture page as an RGB PPM - the font atlas lives in
+ * page 0 and the menu art in page 15. Diagnostic only. */
+int MK4_NativeDumpTexPage(int slot, const char *path)
+{
+    unsigned int base = *(unsigned int *)MK4_VA(unsigned int, 0x00f85b34u);
+    FILE *f = fopen(path, "wb");
+    int x, y, nz = 0;
+
+    if (!f) return 0;
+    fprintf(f, "P6\n256 256\n255\n");
+    for (y = 0; y < 256; y++)
+        for (x = 0; x < 256; x++) {
+            unsigned int addr = base + ((unsigned)slot * 65536u
+                                        + (unsigned)y * 256u + (unsigned)x) * 2u;
+            unsigned short t = *(unsigned short *)MK4_VA(unsigned short, addr);
+            unsigned char rgb[3];
+            if (t) nz++;
+            rgb[0] = (unsigned char)(((t >> 10) & 0x1f) << 3);
+            rgb[1] = (unsigned char)(((t >> 5) & 0x1f) << 3);
+            rgb[2] = (unsigned char)((t & 0x1f) << 3);
+            fwrite(rgb, 1, 3, f);
+        }
+    fclose(f);
+    SDL_Log("atlas: page %d -> %s (%d non-zero texels)", slot, path, nz);
+    return 1;
+}
+
 /* --- present ------------------------------------------------------------- */
 void MK4_NativeVideoPresent(void)
 {

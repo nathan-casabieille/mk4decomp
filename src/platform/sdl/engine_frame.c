@@ -310,6 +310,7 @@ void MK4_GameFrame(void)
             }
             if (frame == atoi(at)) {
                 extern void StoreTwoCall(int, int);
+                *MK4_VA(unsigned int, 0x541e6cu) = 0;
                 StoreTwoCall(0x4a2a80, 1);
                 *MK4_VA(unsigned int, 0x543800u) = 0xffffffffu;
                 SDL_Log("main-menu: controller scheduled at frame %d "
@@ -380,10 +381,24 @@ void MK4_GameFrame(void)
             last0 = v0;
         }
     }
+    if (getenv("MK4_TRACE_CAMNODE") && (frame % 60) == 0)
+        SDL_Log("CAMNODE f%-4d boot=%x partInit=%x emitter=%x (0x535e6c=title node)",
+                frame, *MK4_VA(unsigned int, 0x537f78u),
+                *MK4_VA(unsigned int, 0x541de0u),
+                *MK4_VA(unsigned int, 0x535e6cu));
     /* MK4_TRACE_LIGHT: the render path's lighting scratch - light matrix,
      * vertex colour, the packed RGB scales, attenuation. All zero on a path
      * means no lit geometry reached the walker that frame; it is per-node
      * scratch, so seeding it from outside the walker does nothing. */
+    /* MK4_DUMP_ATLAS=<path>: write texture page 0 as a PPM once the scene
+     * is up - the font atlas the text glyphs sample. */
+    { const char *ap = getenv("MK4_DUMP_ATLAS");
+      static int done;
+      if (ap && !done && frame > 100) {
+          extern int MK4_NativeDumpTexPage(int slot, const char *path);
+          done = 1;
+          MK4_NativeDumpTexPage(0, ap);
+      } }
     if (getenv("MK4_TRACE_LIGHT") && (frame % 60) == 0)
         SDL_Log("LIGHT f%-4d mat=[%x %x %x | %x %x %x] col=%04x prev=%04x "
                 "scales=%02x %02x %02x %02x %02x %02x  atten=%x bias=%x",

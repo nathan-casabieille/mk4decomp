@@ -216,6 +216,19 @@ void FlushDrawQueue(void)
                 g_dispatchSave1369 = (unsigned char)s2;
             }
         }
+#ifdef TARGET_SDL
+        /* MK4_TRACE_C14: zero vs non-zero COLOUR WORD per record. That word picks
+         * the rasteriser - the colour word drives the CLUT page. */
+        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+          static unsigned c0, cn, t460_0, t460_n, n;
+          if (getenv("MK4_TRACE_C14")) {
+              unsigned short c = *(unsigned short *)(rec + 0x14);
+              if (c) cn++; else c0++;
+              if (typ == 0x460) { if (c) t460_n++; else t460_0++; }
+              if (++n % 4000 == 0)
+                  SDL_Log("C14 all: zero=%u nonzero=%u | typ0460: zero=%u nonzero=%u"
+                          "  shade=%x", c0, cn, t460_0, t460_n, g_dispatchSave1367); } }
+#endif
         /* L_fe4f dispatch */
         g_dispatchSave1403 = typ & 0xf;
         if ((typ >> 5) & 1) {
