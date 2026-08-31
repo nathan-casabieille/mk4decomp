@@ -152,6 +152,7 @@ extern int Set2FiveCallPauseJmp();
 extern int GameTick();
 extern int GuardedSeq_ZeroTriple_then_PendingMatch();
 extern int ScaledClearTripleCallJmp();
+extern int Screen_ArcadeEnding();
 extern int ZeroTriple();
 extern int Push71_Push48caa0();
 extern int ScaledInitOrSelfPtr_InstallSelfStackReset();
@@ -844,13 +845,23 @@ extern int StoreAtMinus8();
 extern int Mem_Free();
 extern int Mem_Malloc();
 extern int PackedListVisitor();
+extern int PaletteFillLineHybrid();
+extern int AppInit_Misc1();
 extern int Helper_MenuStub_62B0();
 extern int Menu_FindPrevSelectable();
 extern int Menu_FindNextSelectable();
 extern int GameStateMachine();
 extern int DrawMenu();
 extern int Helper_DrawMenu_PostRender();
+extern int Helper_GSM_VS();
 extern int Menu_PollNavInput();
+extern int Menu_FillColonField();
+extern int Input_RebindKeyToAction();
+extern int Helper_GSM_Tournament();
+extern int Input_RebindButtonToAction();
+extern int Helper_GSM_Practice();
+extern int Helper_GSM_Options();
+extern int Helper_GSM_Config();
 extern int Helper_GSM_HandleEvent();
 extern int Menu_HelpScreen();
 extern int Menu_GlideUnavailableDialog();
@@ -953,6 +964,7 @@ extern int TestCallIat();
 extern int ExitGame();
 extern int Thunk_ExitGame();
 extern int Win32_GetHInstance();
+extern int Helper_Sprintf();
 extern int FreeImpl();
 extern int Helper_FClose();
 extern int Crt_srand();
@@ -1111,6 +1123,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x41fd70u, (void*)GameTick},
     {0x4200b0u, (void*)GuardedSeq_ZeroTriple_then_PendingMatch},
     {0x4202c0u, (void*)ScaledClearTripleCallJmp},
+    {0x420300u, (void*)Screen_ArcadeEnding},
     {0x421c20u, (void*)ZeroTriple},
     {0x421c40u, (void*)Push71_Push48caa0},
     {0x421f00u, (void*)ScaledInitOrSelfPtr_InstallSelfStackReset},
@@ -1803,13 +1816,23 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4b5b10u, (void*)Mem_Free},
     {0x4b5bc0u, (void*)Mem_Malloc},
     {0x4b5c90u, (void*)PackedListVisitor},
+    {0x4b5ce0u, (void*)PaletteFillLineHybrid},
+    {0x4b6180u, (void*)AppInit_Misc1},
     {0x4b62b0u, (void*)Helper_MenuStub_62B0},
     {0x4b62c0u, (void*)Menu_FindPrevSelectable},
     {0x4b6300u, (void*)Menu_FindNextSelectable},
     {0x4b6340u, (void*)GameStateMachine},
     {0x4b65c0u, (void*)DrawMenu},
     {0x4b6880u, (void*)Helper_DrawMenu_PostRender},
+    {0x4b6900u, (void*)Helper_GSM_VS},
     {0x4b7020u, (void*)Menu_PollNavInput},
+    {0x4b7160u, (void*)Menu_FillColonField},
+    {0x4b71b0u, (void*)Input_RebindKeyToAction},
+    {0x4b7260u, (void*)Helper_GSM_Tournament},
+    {0x4b7a40u, (void*)Input_RebindButtonToAction},
+    {0x4b7b10u, (void*)Helper_GSM_Practice},
+    {0x4b7df0u, (void*)Helper_GSM_Options},
+    {0x4b81f0u, (void*)Helper_GSM_Config},
     {0x4b84d0u, (void*)Helper_GSM_HandleEvent},
     {0x4b8630u, (void*)Menu_HelpScreen},
     {0x4b8730u, (void*)Menu_GlideUnavailableDialog},
@@ -1912,6 +1935,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4c4870u, (void*)ExitGame},
     {0x4c48b0u, (void*)Thunk_ExitGame},
     {0x4c49a0u, (void*)Win32_GetHInstance},
+    {0x4c5580u, (void*)Helper_Sprintf},
     {0x4c55f0u, (void*)FreeImpl},
     {0x4c5800u, (void*)Helper_FClose},
     {0x4c6500u, (void*)Crt_srand},

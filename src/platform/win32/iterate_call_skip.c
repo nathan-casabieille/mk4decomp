@@ -2,6 +2,9 @@
  * Auto-split from misc_matchesQ.c
  */
 #include "engine/scenegraph.h"
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+#endif
 
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
@@ -29,7 +32,14 @@ extern unsigned int g_currentNodeIdx;
 extern int Helper_AudioStop(int);
 void IterateCallSkip(void) {
     int i = 0;
+    /* 0xf8fade is a VA (the audio-channel flag bytes, stride 0x1c); the
+     * lift's raw host pointer faulted the moment the match sequencer's
+     * teardown first reached this walk under the arena. */
+#ifdef MK4_ARENA
+    unsigned char *p = MK4_VA(unsigned char, 0x00f8fadeu);
+#else
     unsigned char *p = (unsigned char *)0x00f8fade;
+#endif
     do {
         if ((*p & 4) == 0) {
             Helper_AudioStop(i);

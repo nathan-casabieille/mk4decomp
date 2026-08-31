@@ -83,6 +83,9 @@ def twin_body(path, name):
     for m in re.finditer(r'#ifdef NON_MATCHING\b', s):
         j = s.find('\n#else', m.end())
         if j < 0:
+            # a NATIVE-ONLY twin has no #else arm - take up to its #endif
+            j = s.find('\n#endif', m.end())
+        if j < 0:
             continue
         block = s[m.end():j]
         nm = re.search(FNDEF % re.escape(name), block, re.M)

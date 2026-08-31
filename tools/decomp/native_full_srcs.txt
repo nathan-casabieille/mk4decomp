@@ -347,6 +347,7 @@ src/game/menu_table_replace_scan.c
 src/game/helper_gsm_vs.c
 src/game/helper_gsm_tournament.c
 src/game/nine_slot_replace.c
+src/game/screen_arcade_ending.c
 src/game/draw_menu.c
 src/game/menu_sound_screen.c
 src/game/menu_gameplay_screen.c
