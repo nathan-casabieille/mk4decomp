@@ -159,3 +159,4 @@ entries:
   0x49f190: CharSelect_ConfirmP1_0049f190
   0x49f1c0: CharSelect_ConfirmP2_0049f1c0
   0x4a0060: CharSelect_GridP1_004a0060
+  0x406af0: WalkCompareKind_00406af0

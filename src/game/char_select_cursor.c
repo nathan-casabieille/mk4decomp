@@ -169,6 +169,13 @@ void GameNetSyncState(void)
     g_walkSlot6c = 1;
     g_settlingP1 = 1;
     SetWalkCurCallPauseDirty(0x4a0060u, 0x15);
+#ifdef TARGET_SDL
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int n;
+      if (getenv("MK4_TRACE_GRID") && n < 4) { n++;
+          SDL_Log("GNS installed 0x4a0060: node=%x bits=%x slot74=%x pause=%u",
+                  g_currentNodeIdx, g_stateBits8c, g_slot74, g_framePauseFlag); } }
+#endif
     RoundWinTransition();
     if (g_framePauseFlag != 0) return;
     TripleStageRollback(0x22f);

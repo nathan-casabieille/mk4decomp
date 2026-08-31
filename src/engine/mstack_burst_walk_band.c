@@ -50,6 +50,23 @@ void MStackPush2LLWalkCompare(void);
 #define MSTACK_AT(i)       (*(unsigned int *)MK4_PTR((i) * 4u))
 #define WALK_LIST_BASE     (0x5420a0u >> 2)
 
+/* 0x406af0 - the walk's COMPARE, packed inside MStackPush2LLWalkCompare's
+ * own symbol and reached only as the callback Helper_TickAlt dispatches by
+ * VA (g_dispatchSave652 holds 0x406af0), so it needs a codeptr_extras entry
+ * or every walk silently matches nothing. It reports "this node's kind
+ * (+0x30) equals the tag in slot70" in dirty bit 0.
+ *
+ * Unresolved, this is what a missing tag search looks like from outside:
+ * SaveCallRestoreOrXor always returns "not found", ThrowFlowSetupCluster
+ * takes a zero group head, and DirtyDoubleDeref then indexes head[+0x1c]
+ * off the null node and faults - the character select's 900-frame SIGSEGV. */
+void WalkCompareKind_00406af0(void)
+{
+    g_xformDirtyFlags &= ~1u;
+    if (g_eventQueueCurMm == MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x30))
+        g_xformDirtyFlags |= 1u;
+}
+
 void MStackPush2LLWalkCompare(void)
 {
     unsigned int top, cursor, node, saved;

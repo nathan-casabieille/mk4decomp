@@ -62,6 +62,7 @@ extern int MStackPushZeroCallPop();
 extern int MStackCall_MStackPush2ChainLLInsert();
 extern int MStackPush2ChainLLInsert();
 extern int MStackPush2LLWalkCompare();
+extern int WalkCompareKind_00406af0();
 extern int ScaledLoadOrSetJmp();
 extern int MStackCall_MStackPush2ChainInsert_00406b50();
 extern int CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx();
@@ -1135,6 +1136,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x406740u, (void*)MStackCall_MStackPush2ChainLLInsert},
     {0x406790u, (void*)MStackPush2ChainLLInsert},
     {0x4069b0u, (void*)MStackPush2LLWalkCompare},
+    {0x406af0u, (void*)WalkCompareKind_00406af0},
     {0x406b20u, (void*)ScaledLoadOrSetJmp},
     {0x406b50u, (void*)MStackCall_MStackPush2ChainInsert_00406b50},
     {0x406ba0u, (void*)CopyJmp_GuardedChainPushSetCallPop_g_currentNodeIdx},

@@ -110,6 +110,23 @@ void SetOnePairJmp_004a0110(void);
 #define SHIFT_VA  0x4a0210u
 #define SUB3_VA   0x4a0870u
 
+#ifdef TARGET_SDL
+/* MK4_TRACE_GRID: a visit tally for the P1 grid chain, printed every 400
+ * visits of the top controller. "The screen draws but the cursor will not
+ * move" is a question about which link stops, and each of these is a
+ * separate link. */
+static unsigned mk4_grid_c[8];
+#define GRID_HIT(i) do { extern char *getenv(const char *); \
+    extern void SDL_Log(const char *, ...); \
+    if (getenv("MK4_TRACE_GRID")) { mk4_grid_c[i]++; \
+      if ((i) == 0 && (mk4_grid_c[0] % 400) == 0) \
+        SDL_Log("GRID top=%u setone=%u triple=%u remap=%u shift0=%u " \
+                "shift1=%u sub3=%u dual=%u  phase=%u char=%u dl=%u", \
+                mk4_grid_c[0],mk4_grid_c[1],mk4_grid_c[2],mk4_grid_c[3], \
+                mk4_grid_c[4],mk4_grid_c[5],mk4_grid_c[6],mk4_grid_c[7], \
+                g_phaseP1, g_charP1, g_dlMode); } } while (0)
+#endif
+
 /* 0x4a0d60 - phase*5 - 5 indexes the table at 0x541fc4 */
 void AudioVoiceSequencerCluster(void)
 {
@@ -135,6 +152,8 @@ void AudioStateRemap(void)
 {
     unsigned int v = g_slot78;
 
+    GRID_HIT(3);
+
     g_charP1 = v;
     if (g_gate541dd4 != 0
         && (*MK4_VA(unsigned char, 0x4d50a4u) & 0x20u) == 0
@@ -155,6 +174,7 @@ void AudioStateRemap(void)
 /* 0x4a0300 - where the phase advances, in two-player mode */
 void AudioInstall2BodyDualSetup(void)
 {
+    GRID_HIT(7);
     g_walkSlot6c = g_dlMode;
     if (g_dlMode != 0) {
         g_walkSlot6c = g_guardP1;
@@ -179,6 +199,7 @@ void AudioInstallSelf3StateWithSubcall(void)
 
     MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
 
+    GRID_HIT(6);
     if (cmd == 0) {                              /* 0x4a091e */
         unsigned int v = g_slot54;
 
@@ -239,6 +260,7 @@ void AudioInstallSelfShiftedChainInit(void)
 
     MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
 
+    GRID_HIT(cmd ? 5 : 4);
     if (cmd != 0) {
         g_walkSlot6c = g_gate541dd4;
         if (g_gate541dd4 == 0) {
@@ -274,6 +296,8 @@ void TripleTestInstallJmp_004a0130(void)
 {
     unsigned int v = g_slot54;
 
+    GRID_HIT(2);
+
     g_slot74 = v;
     g_slot78 = v;
     AudioVoiceSequencerCluster();
@@ -290,6 +314,7 @@ void TripleTestInstallJmp_004a0130(void)
 /* 0x4a0110 */
 void SetOnePairJmp_004a0110(void)
 {
+    GRID_HIT(1);
     g_walkSlot6c = 1;
     g_activeP1 = 1;
     TripleTestInstallJmp_004a0130();              /* jmp in the original */
@@ -356,6 +381,7 @@ void CharSelect_GridP1_004a0060(void)
     unsigned int cmd = MK4_NODE_AT(unsigned int, g_baseSel, 0x84);
 
     MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
+    GRID_HIT(0);
 
     if (cmd == 0) {
         g_slot54 = g_phaseP1;

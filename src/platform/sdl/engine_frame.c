@@ -425,6 +425,15 @@ void MK4_GameFrame(void)
          * chain cursor. A controller that re-queues its continuation on
          * every visit shows up here as a straight line upward, long before
          * it exhausts the 64 slots. */
+        if (getenv("MK4_TRACE_WALKLIST") && (frame % 200) == 0)
+            SDL_Log("f%-4d walklist=[%x %x %x %x %x %x %x %x] heads=[%x %x] cb=%x",
+                    frame,
+                    *MK4_VA(unsigned int, 0x5420a0u), *MK4_VA(unsigned int, 0x5420a4u),
+                    *MK4_VA(unsigned int, 0x5420a8u), *MK4_VA(unsigned int, 0x5420acu),
+                    *MK4_VA(unsigned int, 0x5420b0u), *MK4_VA(unsigned int, 0x5420b4u),
+                    *MK4_VA(unsigned int, 0x5420b8u), *MK4_VA(unsigned int, 0x5420bcu),
+                    *MK4_VA(unsigned int, 0x541e84u), *MK4_VA(unsigned int, 0x541e98u),
+                    *MK4_VA(unsigned int, 0x4d513cu));
         if (getenv("MK4_TRACE_NODES") && (frame % 100) == 0)
             SDL_Log("f%-4d nodes=%u queue=%u pad=[%x %x %x %x] gate=[%x %x] "
                     "dirs=%x act=%x", frame,
