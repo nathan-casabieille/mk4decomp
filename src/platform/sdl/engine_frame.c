@@ -426,26 +426,18 @@ void MK4_GameFrame(void)
          * every visit shows up here as a straight line upward, long before
          * it exhausts the 64 slots. */
         if (getenv("MK4_TRACE_NODES") && (frame % 100) == 0)
-            { unsigned int t = *MK4_VA(unsigned int, 0x52ab10u);
-              SDL_Log("f%-4d nodes=%u queue=%u phase1=%u title=%x rot=[%x %x %x] "
-                    "pos=[%x %x %x] v74=%x sc=[%x %x %x] cam=[%d %d %d] eye=[%d %d %d]", frame,
+            SDL_Log("f%-4d nodes=%u queue=%u pad=[%x %x %x %x] gate=[%x %x] "
+                    "dirs=%x act=%x", frame,
                     *MK4_VA(unsigned int, 0x541e64u),
                     *MK4_VA(unsigned int, 0x00f85b40u),
-                    *MK4_VA(unsigned int, 0x537f88u), t,
-                    t ? MK4_NODE_AT(unsigned int, t, 0x3c) : 0,
-                    t ? MK4_NODE_AT(unsigned int, t, 0x40) : 0,
-                    t ? MK4_NODE_AT(unsigned int, t, 0x44) : 0,
-                    t ? MK4_NODE_AT(unsigned int, t, 0x54) : 0,
-                    t ? MK4_NODE_AT(unsigned int, t, 0x58) : 0,
-                    t ? MK4_NODE_AT(unsigned int, t, 0x5c) : 0,
-                    t ? MK4_NODE_AT(unsigned int, t, 0x74) : 0,
-                    t ? MK4_NODE_AT(unsigned int, t, 0x60) : 0,
-                    t ? MK4_NODE_AT(unsigned int, t, 0x64) : 0,
-                    t ? MK4_NODE_AT(unsigned int, t, 0x68) : 0,
-                    *MK4_VA(int, 0xab4cd8u), *MK4_VA(int, 0xab4cdcu),
-                    *MK4_VA(int, 0xab4ce0u),
-                    *MK4_VA(int, 0xab4d18u), *MK4_VA(int, 0xab4d1cu),
-                    *MK4_VA(int, 0xab4d20u)); }
+                    *MK4_VA(unsigned int, 0x4d50a4u),
+                    *MK4_VA(unsigned int, 0x4d50a8u),
+                    *MK4_VA(unsigned int, 0x4d50acu),
+                    *MK4_VA(unsigned int, 0x4d50b0u),
+                    *MK4_VA(unsigned int, 0x4ffd7cu),
+                    *MK4_VA(unsigned int, 0x7af918u),
+                    *MK4_VA(unsigned int, 0x4d50b4u),
+                    (unsigned)*MK4_VA(unsigned char, 0x4d50b8u));
         if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
             SDL_Log("f%-3d queue=%u mode=%x tickInit=%x head738=%x head1e0=%x "
                     "head1e50=%x",

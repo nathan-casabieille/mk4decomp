@@ -83,11 +83,34 @@ void Input_TickPlayers(void)
   g_fightTableC0 = 0;
   g_fightTableC1 = 0;
   g_phaseThunkInst = 0;
+#ifdef TARGET_SDL
+  /* MK4_TRACE_INPUT: the four pad words the FIGHT and the character select
+   * read - 0x4d50a4 / a8 / ac / b0 - as opposed to the two the front-end
+   * menus read (0x4d50b4 directions, 0x4d50b8 "a button is down") that the
+   * SDL backend publishes itself. These four are filled here, from the key
+   * map at 0x543ab8 through the mask/target table at 0x4f4dc8: button b
+   * of player p ORs mask[b][p] into target[b][p], so P1's UP/DOWN/LEFT/RIGHT
+   * are bits 0..3 of 0x4d50a4 and P2's are bits 8..11. The post line only
+   * fires when something is actually down. */
+  { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+    static unsigned n;
+    if (getenv("MK4_TRACE_INPUT") && (++n % 100) == 0)
+        SDL_Log("INPUT tick=%u demo=%x res=%x", n,
+                g_demoModeFlag, g_gameStateResult); }
+#endif
   if ((g_demoModeFlag != 0) && (g_gameStateResult == 0)) {
     Input_PollPlayerKeyboard(0);
     Input_PollPlayerKeyboard(1);
     Input_PollPlayerJoystick(0);
     Input_PollPlayerJoystick(1);
+#ifdef TARGET_SDL
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static unsigned m;
+      if (getenv("MK4_TRACE_INPUT") && m < 20
+          && (g_fightTableC0 | g_fightTableC1 | g_fightTableC2) != 0) { m++;
+          SDL_Log("INPUT post a4=%x a8=%x b0=%x", g_fightTableC0,
+                  g_fightTableC1, g_fightTableC2); } }
+#endif
     if (g_dispatchSave1323 != 0) {
       if ((((g_fightTableC2 == 0) && (g_fightTableC0 == 0)) && (g_fightTableC1 == 0)) &&
          (g_phaseThunkInst == 0)) {
