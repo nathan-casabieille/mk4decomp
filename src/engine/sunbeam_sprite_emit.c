@@ -209,8 +209,11 @@ extern void Helper_DrawCursor(void *entry);
  * ONE) provides four points; each is projected and its screen Y decremented.
  * Four thin quads then go out, every one with flag 0x20 set in the record's
  * 0x2f - Helper_DrawCursor skips vertex 1 on that flag, so only v0 and v2
- * matter - chaining the points with a 4-pixel skew: (P0 -> P1,y+4),
- * (P3,y-4 -> P0), (P0 -> P3,x+4), (P1 -> P0,x-4).
+ * matter - four 4-pixel-thick edges of the RECTANGLE the four corners
+ * describe: TOP (P0 -> P1 with y+4), BOTTOM (P2 with y-4 -> P3), LEFT
+ * (P0 -> P2 with x+4) and RIGHT (P1 -> P3 with x-4). It is a FRAME, not a
+ * filled plate: this is the menu's selection highlight, and the row's text
+ * has to stay readable inside it.
  *
  * The record is a stack local, as in the original; the submit copies it. The
  * fields the original leaves as stack garbage (v1 at +4, +0xe/+0xf,
@@ -283,22 +286,22 @@ void SunbeamSpriteEmit(void)
     rec[5] = (unsigned short)(py[1] + 4);
     Helper_DrawCursor(rec);
 
-    rec[4] = rec[0];                               /* old x0, read pre-store */
-    rec[0] = (unsigned short)px[3];
-    rec[1] = (unsigned short)(py[3] - 4);
+    rec[0] = (unsigned short)px[2];                /* BOTTOM: P2 -> P3       */
+    rec[1] = (unsigned short)(py[2] - 4);
+    rec[4] = (unsigned short)px[3];
     rec[5] = (unsigned short)py[3];
     Helper_DrawCursor(rec);
 
-    rec[0] = (unsigned short)px[0];
+    rec[0] = (unsigned short)px[0];                /* LEFT:   P0 -> P2 + 4   */
     rec[1] = (unsigned short)py[0];
-    rec[4] = (unsigned short)(px[3] + 4);
-    rec[5] = (unsigned short)py[3];
+    rec[4] = (unsigned short)(px[2] + 4);
+    rec[5] = (unsigned short)py[2];
     Helper_DrawCursor(rec);
 
-    rec[4] = (unsigned short)(rec[0] - 4);         /* x0 - 4 */
-    rec[5] = rec[1];                               /* y0     */
-    rec[0] = (unsigned short)px[1];
+    rec[0] = (unsigned short)px[1];                /* RIGHT:  P1 -> P3 - 4   */
     rec[1] = (unsigned short)py[1];
+    rec[4] = (unsigned short)(px[3] - 4);
+    rec[5] = (unsigned short)py[3];
     Helper_DrawCursor(rec);
 }
 #else

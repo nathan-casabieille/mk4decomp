@@ -218,13 +218,42 @@ void MStackPush2ChainPrepend(void)
     g_chainInsertSlot = *MK4_NODE(unsigned int, g_matrixStackTop);
     g_matrixStackTop--;
 }
+/* @addr 0x00406530 (118b) - NATIVE ONLY; the matching build synthesizes it.
+ *
+ * The mode-select screen's state 3 calls this twice, once per title record,
+ * to hand the freshly placed node to the chain-prepend under a save of the
+ * relative head. It marks the node 0xc2 (visible + the two walk bits) and
+ * plants +0x5c = 0x10000. The pause exit skips the pop, as the original
+ * does. */
+void PushSetCallPop(void)
+{
+    unsigned int top, node;
+
+    top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    *(unsigned int *)MK4_PTR(top * 4) = g_xformEntityIdx;
+
+    node = g_currentNodeIdx;
+    MK4_NODE_AT(unsigned int, node, 0x34) |= 0xc2u;
+    g_walkCallback = 0x10000;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x5c) = 0x10000;
+
+    g_xformEntityIdx = g_bootChainState3;
+    MStackPush2ChainPrepend();
+    if (g_framePauseFlag != 0)
+        return;
+
+    top = g_matrixStackTop;
+    g_xformEntityIdx = *(unsigned int *)MK4_PTR(top * 4);
+    g_matrixStackTop = top - 1;
+}
 #else
 /* no matching-side C - the synthesizer provides 0x00409970; the empty branch
  * exists because the co-exec extractor recognises a twin only as an
  * ifdef/else pair. */
 #endif
 
-#ifndef NON_MATCHING   /* naked body - the native build has no caller for it yet */
+#ifndef NON_MATCHING   /* naked body - matched, kept for the synthesizer */
 void PushSetCallPop(void) {
     __asm {
         mov     eax, dword ptr [g_matrixStackTop]
