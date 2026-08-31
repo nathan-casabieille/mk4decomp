@@ -273,6 +273,12 @@ void ThrowAnimTriggerCluster(void)
     g_xformEntityIdx = 0x50c0bcu >> 2;
     DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
     if (g_framePauseFlag != 0) return;           /* mstack leak, as original */
+#ifdef TARGET_SDL
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      if (getenv("MK4_TRACE_TATC"))
+          SDL_Log("TATC spawn 0x50c0bc -> node=%x bits=%x", g_currentNodeIdx,
+                  g_stateBits8c); }
+#endif
     if ((g_stateBits8c & 4u) != 0) goto pops;
 
     MStackBracket4_ListInsertZeroFill();

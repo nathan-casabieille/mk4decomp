@@ -67,7 +67,7 @@ FRONTIER_STUB(Set5CallPauseTestByteJmpCall)
 FRONTIER_STUB(GameStateTick)
 FRONTIER_STUB(MStackDualPushSaveRestore)
 FRONTIER_STUB(BitSetByIndex)
-FRONTIER_STUB(AudioMStackPushHandlerPair)
+FRONTIER_STUB(DualPushCallBitDispatch)
 FRONTIER_STUB(AudioCmpCascadeDispatcher)
 FRONTIER_STUB(PendingMatch_DownloadPlayerChar)
 

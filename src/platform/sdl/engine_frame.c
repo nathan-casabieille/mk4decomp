@@ -421,6 +421,20 @@ void MK4_GameFrame(void)
          * backend publishes them, once per frame, before the logic runs. */
         { extern void MK4_NativeInputPublish(void); MK4_NativeInputPublish(); }
         { extern void MK4_NativeFakeKeyTick(void); MK4_NativeFakeKeyTick(); }
+        /* MK4_TRACE_NODES: the node allocator's live count and the spare
+         * chain cursor. A controller that re-queues its continuation on
+         * every visit shows up here as a straight line upward, long before
+         * it exhausts the 64 slots. */
+        if (getenv("MK4_TRACE_NODES") && (frame % 100) == 0)
+            SDL_Log("f%-4d nodes=%u queue=%u phase1=%u phase2=%u char1=%u "
+                    "guard=%u dd4=%u", frame,
+                    *MK4_VA(unsigned int, 0x541e64u),
+                    *MK4_VA(unsigned int, 0x00f85b40u),
+                    *MK4_VA(unsigned int, 0x537f88u),
+                    *MK4_VA(unsigned int, 0x537e90u),
+                    *MK4_VA(unsigned int, 0x537f48u),
+                    *MK4_VA(unsigned int, 0x53a1bcu),
+                    *MK4_VA(unsigned int, 0x541dd4u));
         if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
             SDL_Log("f%-3d queue=%u mode=%x tickInit=%x head738=%x head1e0=%x "
                     "head1e50=%x",

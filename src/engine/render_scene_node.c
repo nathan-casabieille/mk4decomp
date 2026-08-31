@@ -178,12 +178,24 @@ void RenderSceneNode(void)
     /* MK4_TRACE_VISIT: every node the graph walk REACHES, before any
      * culling. Compare against MK4_TRACE_GEO's emit list: equal counts
      * mean the graph really holds only what you see, a larger visit set
-     * means geometry is arriving and being rejected downstream. */
+     * means geometry is arriving and being rejected downstream. The line
+     * carries the node's kind (+0x30), its mesh descriptor (+0x24) and its
+     * position, because "visited but d24=0" and "visited with a descriptor
+     * that emits nothing" are different bugs. MK4_TRACE_VISIT_ALL lifts the
+     * round-phase gate, which is zero on every front-end screen. */
     { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
       static int n;
       if (getenv("MK4_TRACE_VISIT") && n < 20000
-          && *MK4_VA(unsigned int, 0x537f94u) != 0) { n++;
-        SDL_Log("VISIT node=%x flags=%x", node, g_currentNodeFlags); } }
+          && (*MK4_VA(unsigned int, 0x537f94u) != 0
+              || getenv("MK4_TRACE_VISIT_ALL"))) { n++;
+        SDL_Log("VISIT node=%x flags=%x k=%x d24=%x d18=%x pos=(%x,%x,%x)", node,
+                g_currentNodeFlags,
+                MK4_NODE_AT(unsigned int, node, 0x30),
+                MK4_NODE_AT(unsigned int, node, 0x24),
+                MK4_NODE_AT(unsigned int, node, 0x18),
+                MK4_NODE_AT(unsigned int, node, 0x54),
+                MK4_NODE_AT(unsigned int, node, 0x58),
+                MK4_NODE_AT(unsigned int, node, 0x5c)); } }
 #endif
 
     if ((g_currentNodeFlags & 0x2000) != 0) {

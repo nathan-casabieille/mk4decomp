@@ -13,6 +13,7 @@ extern int FiveTableWalkInit();
 extern int ZeroMultiGlobalsCmp();
 extern int MStackPackedInit();
 extern int SaveCallRestore();
+extern int SaveCallRestoreOrXor();
 extern int TripleStageRollback();
 extern int Mul10Tail();
 extern int DualPushSetCallDualPop();
@@ -225,6 +226,7 @@ extern int PvsMerge_MatchNode_00425fd0();
 extern int InstallSelfPackedF80();
 extern int DispatcherChainRampClamp();
 extern int DispatcherChainRampStep_00426190();
+extern int MStackPush2TableNot();
 extern int BootInitGuardedCallChain();
 extern int PushSetEventQueueCallStore();
 extern int GameMusicState4Way();
@@ -761,13 +763,29 @@ extern int AmbientMonitorCluster();
 extern int CharSelect_IdleTimeout_0049e490();
 extern int CharSelect_PickerP1_0049e610();
 extern int CharSelect_PickerP2_0049e700();
+extern int RoundWinTransition();
+extern int DualGuardStateMachine();
 extern int Wrapper_SaveCallRestore();
+extern int DualGuardStateMachine_SaveCallRestore();
+extern int DoubleIndirectFourWaySelect();
+extern int ThrowFlowSetupCluster();
 extern int ThrowAnimTriggerCluster();
 extern int CharSelect_ConfirmP1_0049f190();
 extern int CharSelect_ConfirmP2_0049f1c0();
+extern int Cmp3DirtyToggle();
 extern int MStackDirtyArgsBit0();
 extern int Cmp2DirtySetOrClear_0049fb10();
 extern int Cmp2DirtySetOrClear_0049fb40();
+extern int GameNetSyncState();
+extern int AudioMStackPushHandlerPair();
+extern int CharSelect_GridP1_004a0060();
+extern int SetOnePairJmp_004a0110();
+extern int TripleTestInstallJmp_004a0130();
+extern int AudioStateRemap();
+extern int AudioInstallSelfShiftedChainInit();
+extern int AudioInstall2BodyDualSetup();
+extern int AudioInstallSelf3StateWithSubcall();
+extern int AudioVoiceSequencerCluster();
 extern int SetJmp_Push16Call_004a1ac0();
 extern int SetJmp_Push16Call_004a1ad0();
 extern int InputPollFlagBits();
@@ -1068,6 +1086,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x404680u, (void*)ZeroMultiGlobalsCmp},
     {0x4049c0u, (void*)MStackPackedInit},
     {0x4049d0u, (void*)SaveCallRestore},
+    {0x404a00u, (void*)SaveCallRestoreOrXor},
     {0x404a50u, (void*)TripleStageRollback},
     {0x404af0u, (void*)Mul10Tail},
     {0x404b10u, (void*)DualPushSetCallDualPop},
@@ -1280,6 +1299,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x426000u, (void*)InstallSelfPackedF80},
     {0x4260d0u, (void*)DispatcherChainRampClamp},
     {0x426190u, (void*)DispatcherChainRampStep_00426190},
+    {0x426230u, (void*)MStackPush2TableNot},
     {0x4265d0u, (void*)BootInitGuardedCallChain},
     {0x426d30u, (void*)PushSetEventQueueCallStore},
     {0x426d90u, (void*)GameMusicState4Way},
@@ -1816,13 +1836,29 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x49e490u, (void*)CharSelect_IdleTimeout_0049e490},
     {0x49e610u, (void*)CharSelect_PickerP1_0049e610},
     {0x49e700u, (void*)CharSelect_PickerP2_0049e700},
+    {0x49e7e0u, (void*)RoundWinTransition},
+    {0x49ea30u, (void*)DualGuardStateMachine},
     {0x49eb10u, (void*)Wrapper_SaveCallRestore},
+    {0x49eb20u, (void*)DualGuardStateMachine_SaveCallRestore},
+    {0x49ec00u, (void*)DoubleIndirectFourWaySelect},
+    {0x49ed00u, (void*)ThrowFlowSetupCluster},
     {0x49efa0u, (void*)ThrowAnimTriggerCluster},
     {0x49f190u, (void*)CharSelect_ConfirmP1_0049f190},
     {0x49f1c0u, (void*)CharSelect_ConfirmP2_0049f1c0},
+    {0x49fa20u, (void*)Cmp3DirtyToggle},
     {0x49fa50u, (void*)MStackDirtyArgsBit0},
     {0x49fb10u, (void*)Cmp2DirtySetOrClear_0049fb10},
     {0x49fb40u, (void*)Cmp2DirtySetOrClear_0049fb40},
+    {0x49fb70u, (void*)GameNetSyncState},
+    {0x49ff30u, (void*)AudioMStackPushHandlerPair},
+    {0x4a0060u, (void*)CharSelect_GridP1_004a0060},
+    {0x4a0110u, (void*)SetOnePairJmp_004a0110},
+    {0x4a0130u, (void*)TripleTestInstallJmp_004a0130},
+    {0x4a0190u, (void*)AudioStateRemap},
+    {0x4a0210u, (void*)AudioInstallSelfShiftedChainInit},
+    {0x4a0300u, (void*)AudioInstall2BodyDualSetup},
+    {0x4a0870u, (void*)AudioInstallSelf3StateWithSubcall},
+    {0x4a0d60u, (void*)AudioVoiceSequencerCluster},
     {0x4a1ac0u, (void*)SetJmp_Push16Call_004a1ac0},
     {0x4a1ad0u, (void*)SetJmp_Push16Call_004a1ad0},
     {0x4a1b00u, (void*)InputPollFlagBits},
