@@ -59,6 +59,14 @@ static void MK4_StubTraceReport(void)
     }
 }
 
+/* the crash handler's copy of the atexit report - safe enough for a
+ * SIGSEGV path: reads static arrays and calls SDL_Log, same as the
+ * handler already does */
+void MK4_StubTraceReportNow(void)
+{
+    MK4_StubTraceReport();
+}
+
 void MK4_StubHit(const char *name)
 {
     int i;

@@ -158,6 +158,9 @@ static void mk4_fault(int sig, siginfo_t *si, void *uctx)
     if (pc && dladdr(pc, &info) && info.dli_sname)
         SDL_Log("  in %s + 0x%lx", info.dli_sname,
                 (unsigned long)((char *)pc - (char *)info.dli_saddr));
+    /* the stub histogram is the frontier work-list; a crash is exactly when
+     * it is wanted, and _exit skips the atexit that would print it */
+    { extern void MK4_StubTraceReportNow(void); MK4_StubTraceReportNow(); }
     _exit(139);
 }
 

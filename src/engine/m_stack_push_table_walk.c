@@ -186,6 +186,23 @@ void MStackPushTableWalk(void)
     want = g_walkCallback;
     g_pendingNodeType = want;
     cur = 0x543200u >> 2;
+#ifdef TARGET_SDL
+    /* MK4_TRACE_TBLWALK: which record kind each walk hunts. The scan is
+     * UNBOUNDED by design - the original assumes the registry holds the
+     * record - so a hunt for a kind no native registrar has entered yet
+     * walks into garbage and faults. The last line printed before a fault
+     * in this function names the missing registrar's record kind. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      if (getenv("MK4_TRACE_TBLWALK")) {
+          extern int dladdr(const void *, void *);
+          struct { const char *fname; void *fbase; const char *sname; void *saddr; } info;
+          void *ra = __builtin_return_address(0);
+          if (dladdr(ra, (void *)&info) && info.sname)
+              SDL_Log("tblwalk want=0x%x from %s", want, info.sname);
+          else
+              SDL_Log("tblwalk want=0x%x from %p", want, ra);
+      } }
+#endif
     rec = *MK4_NODE(unsigned int, cur);
     cur++;
     g_xformEntityIdx = rec;
