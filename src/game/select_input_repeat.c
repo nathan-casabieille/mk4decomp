@@ -328,6 +328,13 @@ fire:                                            /* 0x427a0e */
         a = g_slotIdx + 1;
         g_slotIdx = a;
         v = AT(g_xformEntityIdx + a);
+#ifdef TARGET_SDL
+        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+          static int n;
+          if (getenv("MK4_TRACE_REPEAT") && n < 12) { n++;
+              SDL_Log("REPEAT slot=%u idx=%u cb=%08x mask=%x pad=%x", g_slotNo,
+                      a, v, g_slot78, g_walkSlot6c); } }
+#endif
         g_slot74 = 0x11;
         g_pendingNodeType = v;
         AllocNode();
