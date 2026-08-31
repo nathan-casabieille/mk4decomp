@@ -225,6 +225,15 @@ LAB_0041f6ef:
     }
     if (*(int *)MK4_PTR((iVar2 + 0xd8)) != -1) goto LAB_0041f6ef;
     iVar1 = *(int *)MK4_PTR((iVar2 + 0xe4));
+    /* NOTE: this hands NodeUnlink the VA, and NodeUnlink wants a HOST
+     * pointer (it compares MK4_UNPTR(node) against the slot table), so the
+     * unlink silently does nothing here - the same defect that hung the
+     * arcade join screen through LoadShlDerefCallSkip, fixed there. It is
+     * deliberately NOT fixed here: with MK4_PTR(iVar2) the pump starts
+     * actually freeing nodes, and MK4_BOOT_MATCH drops from 307200 to 2759
+     * non-zero pixels. Something downstream still holds indices this walk
+     * would now release. Measured 2026-08-31; fix it with the freed-node
+     * owner, not on its own. */
     NodeUnlink(iVar2);
     iVar2 = iVar1;
   } while( true );

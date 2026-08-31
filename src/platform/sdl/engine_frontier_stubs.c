@@ -57,5 +57,11 @@ FRONTIER_STUB(Config_RestoreGlobals)
 FRONTIER_STUB(GameMode_EnterScene)
 FRONTIER_STUB(InstallSelfStateMachine6)
 
+/* the arcade join screen's four forward exits - the fighter-select band */
+FRONTIER_STUB(MatchStartCluster)
+
+/* the fighter-select band's own still-hollow leaves */
+FRONTIER_STUB(SceneEvalFsm)
+FRONTIER_STUB(Set5CallPauseTestByteJmpCall)
 
 #endif /* MK4_NATIVE_FULL */

@@ -29,10 +29,15 @@ extern unsigned int g_currentNodeIdx;
  *   add     esp, 4
  *   ret
  */
-extern void NodeUnlink(unsigned int);
+/* NodeUnlink takes a HOST pointer (see src/boot/node_unlink.c): it compares
+ * MK4_UNPTR(node) against the VAs in the slot table. Handing it the raw VA
+ * made every comparison miss, so it took the "not found" bare return, left
+ * +0xd8 set, and TripleStageRollback's dirty-bit loop never terminated -
+ * the arcade join screen hung the pump on the second confirm. */
+extern void NodeUnlink(void *);
 void LoadShlDerefCallSkip(void) {
     unsigned int p = g_pendingNodeType * 4;
     if (((ScenegraphNode *)MK4_PTR(p))->ptr_field) {
-        NodeUnlink(p);
+        NodeUnlink(MK4_PTR(p));
     }
 }

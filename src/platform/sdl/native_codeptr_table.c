@@ -12,6 +12,7 @@ extern int Phase3InstallSelf();
 extern int FiveTableWalkInit();
 extern int MStackPackedInit();
 extern int SaveCallRestore();
+extern int TripleStageRollback();
 extern int Mul10Tail();
 extern int ThreeChanPackClamp();
 extern int CopyThreeFields();
@@ -752,6 +753,9 @@ extern int InputPollFlagBits();
 extern int InputPollFlagBitsHalf();
 extern int TestQueueGateState();
 extern int TripleCallByteCheck();
+extern int RetZero_004a1c40();
+extern int MovsxAnd4Shr();
+extern int MovsxAnd20Shr5();
 extern int Helper_TickFrame_Misc();
 extern int AudioBindEntry();
 extern int DrainQueueCallEach();
@@ -776,6 +780,8 @@ extern int Screen_Loading();
 extern int Screen_Loading_Tick_004a42e0();
 extern int ZeroNDwords();
 extern int InstallChainInitTailJmp();
+extern int ArcadeJoin_Blinker_004a9c00();
+extern int ArcadeMode_JoinScreen_004a9cc0();
 extern int FixedDiv16();
 extern int DivBy();
 extern int DivLongPushCall();
@@ -1034,6 +1040,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x403c90u, (void*)FiveTableWalkInit},
     {0x4049c0u, (void*)MStackPackedInit},
     {0x4049d0u, (void*)SaveCallRestore},
+    {0x404a50u, (void*)TripleStageRollback},
     {0x404af0u, (void*)Mul10Tail},
     {0x404cc0u, (void*)ThreeChanPackClamp},
     {0x404df0u, (void*)CopyThreeFields},
@@ -1774,6 +1781,9 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4a1b50u, (void*)InputPollFlagBitsHalf},
     {0x4a1ba0u, (void*)TestQueueGateState},
     {0x4a1bf0u, (void*)TripleCallByteCheck},
+    {0x4a1c40u, (void*)RetZero_004a1c40},
+    {0x4a1ce0u, (void*)MovsxAnd4Shr},
+    {0x4a1cf0u, (void*)MovsxAnd20Shr5},
     {0x4a1d50u, (void*)Helper_TickFrame_Misc},
     {0x4a1e40u, (void*)AudioBindEntry},
     {0x4a1ec0u, (void*)DrainQueueCallEach},
@@ -1798,6 +1808,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4a42e0u, (void*)Screen_Loading_Tick_004a42e0},
     {0x4a5660u, (void*)ZeroNDwords},
     {0x4a7030u, (void*)InstallChainInitTailJmp},
+    {0x4a9c00u, (void*)ArcadeJoin_Blinker_004a9c00},
+    {0x4a9cc0u, (void*)ArcadeMode_JoinScreen_004a9cc0},
     {0x4ab2a0u, (void*)FixedDiv16},
     {0x4ab300u, (void*)DivBy},
     {0x4ab320u, (void*)DivLongPushCall},

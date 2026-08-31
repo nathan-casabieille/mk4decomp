@@ -151,3 +151,5 @@ entries:
   0x422200: StageEventRearm_00422200
   0x4a2090: PressStartBlinker_004a2090
   0x426190: DispatcherChainRampStep_00426190
+  0x4a9cc0: ArcadeMode_JoinScreen_004a9cc0
+  0x4a9c00: ArcadeJoin_Blinker_004a9c00

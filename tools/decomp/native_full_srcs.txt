@@ -356,6 +356,8 @@ src/game/main_menu_screen.c
 src/game/menu_scene_band.c
 src/game/config_snapshot_band.c
 src/game/menu_fade_band.c
+src/game/arcade_join_screen.c
+src/game/fighter_select_entry.c
 src/engine/str_len.c
 src/game/draw_menu.c
 src/game/menu_sound_screen.c
