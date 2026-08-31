@@ -150,3 +150,4 @@ entries:
   0x4214a0: RoundStartFighterInit_004214a0
   0x422200: StageEventRearm_00422200
   0x4a2090: PressStartBlinker_004a2090
+  0x426190: DispatcherChainRampStep_00426190
