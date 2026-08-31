@@ -1,4 +1,39 @@
 /**
+ * The loading screen: LoadGeoAssetsStateMachine (0x4a38d0) and the tick it
+ * hands the screen to, Screen_Loading_Tick_004a42e0.
+ *
+ * WHY THE NATIVE BOOT CHAIN STALLS HERE, measured 2026-08-31 with the two
+ * trace knobs below. An earlier note had it that the loader never completes.
+ * It does: MK4_TRACE_LOAD shows it walk 0 -> 1 -> 2 -> 3 -> 4 -> 5 and set
+ * g_gameMode to 0x4a42e0. The stall is one level further on.
+ *
+ * The tick then spins in its state 1 forever. Its states 0 and 1 only ever
+ * re-arm to state 1; the three ways out are the g_gsmOut1/2/3 work flags,
+ * which MK4_BOOT_MATCH raises once and which are consumed. Only STATE 2
+ * reads 0x54389c, the "assets ready" byte that gates the actual load
+ * (QuadCallPhase2), and the only thing in the image that sets it is
+ * State6Latch (0x48e240), reached from TripleEntryCountdownInstall
+ * (0x46a230) or SlotPhaseResetInstallChain (0x48e0e0) - the round/intro FSM
+ * that the port does not drive yet. So the loading screen is waiting on the
+ * SEQUENCER, exactly like character select.
+ *
+ * Two gates ruled out on the way, both of which look like the answer and
+ * are not:
+ *
+ *   g_logicStepFlag (0x54381c) short-circuits the tick to its signal path,
+ *   and only WndProc sets it - so it reads like a Win32 gap of the kind the
+ *   port keeps finding. It is not: it is menu command 0x73, and the signal
+ *   path calls GameStateMachine(3), which opens the PAUSE dialog. Forcing it
+ *   every frame does light the screen up (0 -> 20736 px) but what it draws
+ *   is PAUSED / CONTINUE MATCH, not progress.
+ *
+ *   g_audioStateMask50c0 (0x4d50c0) is the other route into that same signal
+ *   path, and it is zero natively where the image ships 0xffffffff. That is
+ *   not a seam bug either: GameTick(0) clears the whole 64-byte block at
+ *   0x4d50b4 on the first logic step, which nothing in .text writes back -
+ *   it is audio channel state, armed by the audio layer the port stubs.
+ *   The gate wants "armed but no longer active", i.e. a finished cue.
+ *
  * Auto-split from misc_matchesQQ.c
  */
 #include "engine/scenegraph.h"
@@ -225,6 +260,20 @@ void LoadGeoAssetsStateMachine(void)
     st = MK4_NODE_AT(unsigned int, g_baseSel, 0x84);
     MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
 
+#ifdef TARGET_SDL
+    /* MK4_TRACE_LOAD: the loader's state histogram. It DOES complete - it
+     * walks 0 -> 1 -> 2 -> 3 -> 4 -> 5 and hands the screen to the tick at
+     * 0x4a42e0 - so a stalled loading screen is the TICK's gate, not this. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static unsigned hits[8], n;
+      if (getenv("MK4_TRACE_LOAD")) {
+          hits[st < 8 ? st : 7]++;
+          if (++n % 60 == 0)
+              SDL_Log("LOAD states 0=%u 1=%u 2=%u 3=%u 4=%u 5=%u  tickW1=%u "
+                      "audio50b4=0x%x tickFlagF=%u",
+                      hits[0], hits[1], hits[2], hits[3], hits[4], hits[5],
+                      g_tickW1, g_audioStateDisp50b4, g_tickFlagF); } }
+#endif
     if (st > 4) goto st5;
     switch (st) {
     case 0:
@@ -393,6 +442,26 @@ void Screen_Loading_Tick_004a42e0(void)
     st = MK4_NODE_AT(unsigned int, g_baseSel, 0x84);
     MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
 
+#ifdef TARGET_SDL
+    /* MK4_TRACE_TICK: the tick's state histogram and every gate it reads.
+     * Spinning in state 1 with all of them zero is the native stall: state 2
+     * is the only state that checks 0x54389c ("assets ready"), and only
+     * State6Latch sets that - see the block comment at the top of this file. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static unsigned n, hits[8];
+      if (getenv("MK4_TRACE_TICK")) {
+          hits[st < 8 ? st : 7]++;
+          if (++n % 120 == 0)
+              SDL_Log("TICK st 0=%u 1=%u 2=%u 3+=%u | step=%u mask50c0=0x%x "
+                      "a53a408=%u a537e88=%u  54380c=%u stream=%u "
+                      "gsmActive=%u out1=%u out2=%u out3=%u",
+                      hits[0], hits[1], hits[2], hits[3]+hits[4]+hits[5]+hits[6]+hits[7],
+                      g_logicStepFlag, g_audioStateMask50c0,
+                      g_active_0053a408, g_active_00537e88,
+                      (unsigned)*MK4_VA(unsigned char, 0x54380cu),
+                      g_audioStreamState, g_gsmActiveFlag,
+                      g_gsmOut1, g_gsmOut2, g_gsmOut3); } }
+#endif
     if (st == 2) goto ready_check;
     if (st >= 3) goto do_load;
 
