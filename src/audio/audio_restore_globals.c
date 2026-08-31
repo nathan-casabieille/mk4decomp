@@ -168,64 +168,12 @@ extern unsigned int g_audioStateMachine1;
 extern void Config_SnapshotGlobals(void);
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-void Config_RestoreGlobals(void)
-
-{
-  int iVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
-  bool bVar4;
-  
-  if ((g_gsmFlag == 0) || (g_configInitGate == 0)) {
-    bVar4 = g_gsmFlag == 0;
-    g_gsmFlag = 1;
-    g_configInitGate = 1;
-    if (bVar4) {
-      Config_SnapshotGlobals();
-    }
-    g_voiceBankTickByte = g_audioRestoreCount;
-    puVar2 = &g_audioStateGlobals;
-    puVar3 = &g_audioRestoreBuf;
-    for (iVar1 = 0x3c; g_audioStateMachineVar5 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a2c)), iVar1 != 0; iVar1 = iVar1 + -1) {
-      *puVar3 = *puVar2;
-      puVar2 = puVar2 + 1;
-      puVar3 = puVar3 + 1;
-    }
-    puVar2 = &g_audioStateGlobalsSnap;
-    puVar3 = &g_audioSlotMarks;
-    for (iVar1 = 5; g_or = g_audioRestoreSlot2, g_audioStateMachine1 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a64)), iVar1 != 0;
-        iVar1 = iVar1 + -1) {
-      *puVar3 = *puVar2;
-      puVar2 = puVar2 + 1;
-      puVar3 = puVar3 + 1;
-    }
-    g_audioStateMachineVar6 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a28));
-    g_audioSavedGlobal4 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a30));
-    g_audioSavedGlobal5 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a34));
-    g_gtConfig4f = (*(unsigned int *)MK4_VA(unsigned int, 0x543a38));
-    g_audioStateWalk6 = g_audioRestoreByte3c;
-    g_audioStateWalk7 = g_audioRestoreByte3d;
-    g_audioStateByte730 = g_audioRestoreByte3e;
-    g_audioSavedGlobal0 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a40));
-    g_audioSavedGlobal1 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a44));
-    g_audioSavedGlobal2 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a48));
-    g_audioSavedGlobal3 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a4c));
-    g_dispatchSave1319 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a50));
-    g_dispatchSave1320 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a54));
-    g_dispatchSave1321 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a58));
-    g_dispatchSave1322 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a5c));
-    g_audioStateMachine0 = (*(unsigned int *)MK4_VA(unsigned int, 0x543a60));
-    *(undefined1 *)puVar3 = *(undefined1 *)puVar2;
-  }
-  g_bootGatedByte360c = (undefined1)g_menuPageTailByte;
-  g_audioRestoreByte10 = (undefined1)g_menuPageTailByte;
-  g_loaded = g_menuRestoreC;
-  g_audioStateMachineVar3 = g_menuRestoreB;
-  g_audioRestoreSlot3 = g_menuRestoreD;
-  g_dispatchSave813 = g_menuRestoreA;
-  return;
-}
+/* no matching-side C here: the native twin lives in
+ * src/game/config_snapshot_band.c, written against the disassembly and
+ * addressed through MK4_VA. The Ghidra lift that used to sit here took
+ * &g_audioStateGlobals as a HOST pointer, which the arena does not
+ * accept, and was never runtime-verified. The empty branch stays so the
+ * co-exec extractor still sees a twin pair. */
 #else
 __declspec(naked) void Config_RestoreGlobals(void)
 {
