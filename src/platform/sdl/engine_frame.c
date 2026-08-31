@@ -292,6 +292,61 @@ void MK4_GameFrame(void)
                 *MK4_VA(unsigned int, 0x4d50b4u) |= 4u;
             SDL_Log("boot-match: FSM -> 6, loading screen scheduled");
         }
+        /* Part 2 of what character select leaves behind: the two fighters
+         * DOWNLOADED. The real select runs DownloadPlayerChar per player
+         * (PendingMatch_DownloadPlayerChar's demo state does the same
+         * pair); MK4_BOOT_MATCH skipped it, and the match sequencer's
+         * MatchInitMonsterChain then hunted the record registry for
+         * fighters nobody had registered - the unbounded walk that
+         * faulted. Gated on the gameMode == -1 rendezvous so the publish
+         * in AudioInitSequence (char ids, costume ids, the stage load)
+         * has run first; driven per frame because the download streams
+         * assets and pauses. */
+        if (getenv("MK4_BOOT_MATCH")) {
+            static int dl_phase;
+            /* Straight after the frame-8 staging, BEFORE anything can
+             * reach match init: with MK4_ANIM_PACK the sequencer's entry
+             * fires within a few frames, and its record hunts fault on
+             * fighters nobody registered. The download reads the staged
+             * char ids directly and streams from FILESYS - it does not
+             * need the loader or the audio publish to have run. */
+            if (dl_phase == 0 && frame == 9)
+                dl_phase = 1;
+            if (dl_phase == 1) {
+                extern void DownloadPlayerChar(void);
+                /* frame-top drive, outside the pump: the pause flag holds
+                 * whatever the last yield left, so clear it - the pump
+                 * rebuilds it from its own dispatches below */
+                *MK4_VA(unsigned int, 0x541e6cu) = 0;
+                /* the publish AudioInitSequence would do: sources -> live
+                 * slots. DownloadPlayerChar reads the LIVE slots (0x537f48
+                 * and 0x5380e0) and its player comes from 0x542070. */
+                *MK4_VA(unsigned int, 0x537f48u) = *MK4_VA(unsigned int, 0x53a790u);
+                *MK4_VA(unsigned int, 0x5380e0u) = *MK4_VA(unsigned int, 0x537ea0u);
+                *MK4_VA(unsigned int, 0x53a178u) = *MK4_VA(unsigned int, 0x537edcu);
+                *MK4_VA(unsigned int, 0x53a250u) = *MK4_VA(unsigned int, 0x53a1ccu);
+                *MK4_VA(unsigned int, 0x541ec4u) = *MK4_VA(unsigned int, 0x541eccu);
+                *MK4_VA(unsigned int, 0x541ec8u) = *MK4_VA(unsigned int, 0x541ed0u);
+                *MK4_VA(unsigned int, 0x542054u) = 0x535cfcu >> 2;
+                *MK4_VA(unsigned char, 0x54371cu) = 1;
+                *MK4_VA(unsigned int, 0x542070u) = 0;
+                DownloadPlayerChar();
+                if (*MK4_VA(unsigned int, 0x541e6cu) == 0) {
+                    *MK4_VA(unsigned int, 0x542070u) = 1;
+                    DownloadPlayerChar();
+                    if (*MK4_VA(unsigned int, 0x541e6cu) == 0) {
+                        *MK4_VA(unsigned char, 0x54371cu) = 0;
+                        dl_phase = 2;
+                        SDL_Log("boot-match: both fighters downloaded at frame %d "
+                                "(P1 char %u node %x, P2 char %u node %x)", frame,
+                                *MK4_VA(unsigned int, 0x537f48u),
+                                *MK4_VA(unsigned int, 0x541ed4u),
+                                *MK4_VA(unsigned int, 0x5380e0u),
+                                *MK4_VA(unsigned int, 0x541ed8u));
+                    }
+                }
+            }
+        }
         if (getenv("MK4_TRACE_MSTACK") && (frame % 4) == 0)
             SDL_Log("f%-3d mstackTop=%08x nodeIdx=%08x", frame,
                     *MK4_VA(unsigned int, 0x4d57acu),
