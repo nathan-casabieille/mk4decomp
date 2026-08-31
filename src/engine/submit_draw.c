@@ -55,6 +55,28 @@ void Helper_DrawCursor(short *pe)
     unsigned char *dst;
     int i;
 
+#ifdef TARGET_SDL
+    /* MK4_TRACE_CLIP: how many entries the viewport envelope REJECTS, and a
+     * sample of the coordinates it rejected them on. "The emitters run
+     * 17000 times and the queue holds one record" is answered here: either
+     * the geometry never arrives, or it arrives off-screen. */
+    { extern char *getenv(const char *); extern void SDL_Log(const char *, ...);
+      static unsigned in, out, shown;
+      extern unsigned int g_mk4FrameNo; extern int atoi(const char *);
+      static int from = -1;
+      if (from < 0) { char *e = getenv("MK4_TRACE_CLIP_FROM"); from = e ? atoi(e) : 0; }
+      if (getenv("MK4_TRACE_CLIP") && (int)g_mk4FrameNo >= from) {
+          short *p = pe;
+          int ry = (p[1] < p[5]) ? p[1] : p[5], Ry = (p[1] > p[5]) ? p[1] : p[5];
+          int rx = (p[0] < p[4]) ? p[0] : p[4], Rx = (p[0] > p[4]) ? p[0] : p[4];
+          int keep = !(Ry < 0 || ry > 0x1e0 || Rx < 0 || rx > 0x280);
+          if (keep) in++; else out++;
+          if (!keep && shown < 12) { shown++;
+              SDL_Log("CLIP reject x=[%d..%d] y=[%d..%d] t=%04x",
+                      rx, Rx, ry, Ry, (unsigned)p[0xd]); }
+          if (((in + out) % 500) == 0)
+              SDL_Log("CLIP kept=%u rejected=%u", in, out); } }
+#endif
     if ((int)qsize >= 3000)
         return;
 

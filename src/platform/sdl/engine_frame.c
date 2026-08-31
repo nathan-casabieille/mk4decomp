@@ -426,15 +426,27 @@ void MK4_GameFrame(void)
          * every visit shows up here as a straight line upward, long before
          * it exhausts the 64 slots. */
         if (getenv("MK4_TRACE_NODES") && (frame % 100) == 0)
-            SDL_Log("f%-4d nodes=%u queue=%u phase1=%u phase2=%u char1=%u "
-                    "guard=%u dd4=%u", frame,
+            { unsigned int t = *MK4_VA(unsigned int, 0x52ab10u);
+              SDL_Log("f%-4d nodes=%u queue=%u phase1=%u title=%x rot=[%x %x %x] "
+                    "pos=[%x %x %x] v74=%x sc=[%x %x %x] mat=[%x %x %x %x %x]", frame,
                     *MK4_VA(unsigned int, 0x541e64u),
                     *MK4_VA(unsigned int, 0x00f85b40u),
-                    *MK4_VA(unsigned int, 0x537f88u),
-                    *MK4_VA(unsigned int, 0x537e90u),
-                    *MK4_VA(unsigned int, 0x537f48u),
-                    *MK4_VA(unsigned int, 0x53a1bcu),
-                    *MK4_VA(unsigned int, 0x541dd4u));
+                    *MK4_VA(unsigned int, 0x537f88u), t,
+                    t ? MK4_NODE_AT(unsigned int, t, 0x3c) : 0,
+                    t ? MK4_NODE_AT(unsigned int, t, 0x40) : 0,
+                    t ? MK4_NODE_AT(unsigned int, t, 0x44) : 0,
+                    t ? MK4_NODE_AT(unsigned int, t, 0x54) : 0,
+                    t ? MK4_NODE_AT(unsigned int, t, 0x58) : 0,
+                    t ? MK4_NODE_AT(unsigned int, t, 0x5c) : 0,
+                    t ? MK4_NODE_AT(unsigned int, t, 0x74) : 0,
+                    t ? MK4_NODE_AT(unsigned int, t, 0x60) : 0,
+                    t ? MK4_NODE_AT(unsigned int, t, 0x64) : 0,
+                    t ? MK4_NODE_AT(unsigned int, t, 0x68) : 0,
+                    *MK4_VA(unsigned int, 0xab4878u),
+                    *MK4_VA(unsigned int, 0xab487cu),
+                    *MK4_VA(unsigned int, 0xab4880u),
+                    *MK4_VA(unsigned int, 0xab4884u),
+                    *MK4_VA(unsigned int, 0xab4888u)); }
         if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
             SDL_Log("f%-3d queue=%u mode=%x tickInit=%x head738=%x head1e0=%x "
                     "head1e50=%x",

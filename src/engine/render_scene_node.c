@@ -198,6 +198,23 @@ void RenderSceneNode(void)
                 MK4_NODE_AT(unsigned int, node, 0x5c)); } }
 #endif
 
+#ifdef TARGET_SDL
+/* MK4_TRACE_PATH: a per-exit TALLY of the node walk. "Thousands of nodes
+ * visited, one draw record" says the loss is downstream of the walker but
+ * not WHERE; this counts every way out so the drop lands in one bucket.
+ * Printed every 600 visits. */
+static unsigned mk4_path_c[10], mk4_path_tick;
+#define MK4_PATH(i) do { extern char *getenv(const char *); \
+    extern void SDL_Log(const char *, ...); \
+    if (getenv("MK4_TRACE_PATH")) { mk4_path_c[i]++; \
+      if ((i) == 0 && (++mk4_path_tick % 600) == 0) \
+        SDL_Log("PATH visit=%u cull=%u bbox=%u cbNull=%u cbFFFF=%u " \
+                "nodesc=%u panel=%u nomesh=%u nocache=%u emit=%u", \
+                mk4_path_c[0],mk4_path_c[1],mk4_path_c[2],mk4_path_c[3], \
+                mk4_path_c[4],mk4_path_c[5],mk4_path_c[6],mk4_path_c[7], \
+                mk4_path_c[8],mk4_path_c[9]); } } while (0)
+#endif
+
     if ((g_currentNodeFlags & 0x2000) != 0) {
         ZBucketClampStore();
         if (g_framePauseFlag != 0)
@@ -255,7 +272,12 @@ void RenderSceneNode(void)
       extern int atoi(const char *);
       static int nm2, limm = -1;
       if (limm < 0) { char *e = getenv("MK4_TRACE_MAT"); limm = e ? atoi(e) : 0; }
-      if (nm2 < limm && *MK4_VA(unsigned int, 0x537f94u) != 0) { nm2++;
+      extern unsigned int g_mk4FrameNo;
+      static int mfrom = -1;
+      if (mfrom < 0) { char *e2 = getenv("MK4_TRACE_MAT_FROM"); mfrom = e2 ? atoi(e2) : 0; }
+      if (nm2 < limm && (int)g_mk4FrameNo >= mfrom
+          && (*MK4_VA(unsigned int, 0x537f94u) != 0
+              || getenv("MK4_TRACE_VISIT_ALL"))) { nm2++;
         short *M = (short *)MK4_VA(short, 0x7af990u);
         SDL_Log("MAT node=%x f=%x rot=[%d %d %d] m=[%d %d %d|%d %d %d|%d %d %d] loc=[%d %d %d] par=%x out=[%d %d %d]",
                 node, g_currentNodeFlags,
@@ -267,8 +289,8 @@ void RenderSceneNode(void)
                 (int)g_dispatchSave1501, (int)g_dispatchSave1502,
                 (int)g_dispatchSave1503); } }
 
-    if ((g_currentNodeFlags & 0xf00004) != 0)
-        goto cull;
+    MK4_PATH(0);
+    if ((g_currentNodeFlags & 0xf00004) != 0) { MK4_PATH(1); goto cull; }
 
     /* sar in the original - the transformed position is SIGNED (camera
      * space); a logical shift turns a negative coordinate into a huge
@@ -308,7 +330,7 @@ void RenderSceneNode(void)
             g_eventQueuePending = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 4);
             g_walkCallback = (g_eventQueuePending >> 0xc) & 0x7ffu;
             if (g_walkCallback != 0 && DirtyTestScaledCopy() != 0)
-                goto cull;
+                { MK4_PATH(2); goto cull; }
         }
     }
     g_currentNodeFlags &= 0xffffdfffu;
@@ -362,13 +384,13 @@ emit:
             ((void (*)(void))MK4_ResolveCode(g_walkCallback))();
             if (g_framePauseFlag != 0) { MK4_ALLOCA_FREE(12); return; }
             if (g_currentNodeIdx == 0) {
+                MK4_PATH(3);
                 g_dispatchSave1573 = 0;
                 g_xformDirtyFlags &= 0xfffffffeu;
                 MK4_ALLOCA_FREE(12);
                 return;
             }
-            if (g_currentNodeIdx == 0xffffffffu)
-                goto descend;
+            if (g_currentNodeIdx == 0xffffffffu) { MK4_PATH(4); goto descend; }
         }
         g_walkCallback = MK4_NODE_AT(unsigned int, g_eventQueuePending, 0);
         g_dualC = mat;
@@ -390,6 +412,7 @@ emit:
 
     g_dualD = MK4_NODE_AT(unsigned int, node, 0x24);
     if (g_dualD == 0) {
+        MK4_PATH(5);
         if ((g_cj_0054205c & 0x20000) != 0) {
             g_currentNodeIdx = node;
             BillboardChainRender();
@@ -398,6 +421,7 @@ emit:
         sub = MK4_NODE_AT(unsigned int, g_dualD, 4);
         g_eventQueuePending = sub;
         if (sub == 0) {
+            MK4_PATH(6);
             g_currentNodeIdx = node;
             MovesPanelEmit();
         } else {
@@ -418,8 +442,10 @@ emit:
                   if (getenv("MK4_TRACE_EMITBAD") && n < 8) { n++;
                       SDL_Log("EMITBAD node=%x desc=%x sub=%08x blk=%08x",
                               node, g_dualD, sub, (unsigned)blk); }
+                  MK4_PATH(7);
                   goto descend; } }
 #endif
+            if (*(int *)MK4_PTR(sub + 4) <= 0) MK4_PATH(7);
             if (*(int *)MK4_PTR(sub + 4) > 0) {
                 unsigned int recVA =
                     (unsigned int)(blk * 0x10 + 0xc + *(int *)MK4_PTR(sub + 4));
@@ -458,8 +484,7 @@ emit:
                         if (g_dualC == 0 || rebuild) {
                             g_currentNodeIdx = node;
                             VertexQuadBuilder(blk, rebuild);
-                            if (g_dualC == 0)
-                                goto descend;
+                            if (g_dualC == 0) { MK4_PATH(8); goto descend; }
                         }
                         kind = g_cj_0054205c;
                         /* += 4, not += 1: g_dualC is a raw VA here and the
@@ -508,6 +533,7 @@ emit:
                                         : (((g_dispatchSave1572 & 2) != 0) ? 3 : 4));
                               if (which == skip) goto descend;
                           } }
+                        MK4_PATH(9);
                         if ((g_dispatchSave1572 & 0x40) != 0) {
                             TristripBatchEmit2(recVA, g_walkCallback, width);
                         } else if ((g_cj_0054205c & 0x80000) != 0 &&
