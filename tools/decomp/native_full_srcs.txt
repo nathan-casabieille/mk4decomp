@@ -363,6 +363,7 @@ src/game/char_select_screen.c
 src/game/char_select_portraits.c
 src/game/char_select_cursor.c
 src/game/char_select_grid.c
+src/game/select_input_repeat.c
 src/engine/str_len.c
 src/game/draw_menu.c
 src/game/menu_sound_screen.c

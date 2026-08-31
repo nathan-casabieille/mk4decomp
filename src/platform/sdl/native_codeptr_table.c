@@ -17,6 +17,10 @@ extern int SaveCallRestoreOrXor();
 extern int TripleStageRollback();
 extern int Mul10Tail();
 extern int DualPushSetCallDualPop();
+extern int ScaledPushArg_00404b90();
+extern int ScaledDecPop_00404bd0();
+extern int ScaledPushArg_00404c00();
+extern int ScaledDecPop_00404c40();
 extern int SetWalkCurCallPauseDirty();
 extern int ThreeChanPackClamp();
 extern int CopyThreeFields();
@@ -229,6 +233,8 @@ extern int DispatcherChainRampClamp();
 extern int DispatcherChainRampStep_00426190();
 extern int MStackPush2TableNot();
 extern int BootInitGuardedCallChain();
+extern int Eleven404b90_404c00();
+extern int Ten404c40_404bd0();
 extern int PushSetEventQueueCallStore();
 extern int GameMusicState4Way();
 extern int GameMusicFsm_00426da0();
@@ -237,9 +243,12 @@ extern int EffectTick_00427230();
 extern int Thunk_BootMod6487eClampAndChainMul10();
 extern int AllocSlotPushTripleGlobals();
 extern int MStackPop4Rewrite();
+extern int SelectInputRepeat_00427780();
+extern int Push48PreSetTwoStores();
 extern int DualTestDirtyToggle_00427ea0();
 extern int MStackPush2DirtyCall();
 extern int CallPauseClear3CallTriple();
+extern int FourVecFillMStackBracket();
 extern int DualTestDirtyToggle_004282c0();
 extern int ScaledArrStore_GuardedSeq_CopyJmp_then_MStackPushDualJmp();
 extern int GuardedSeq_CopyJmp_then_MStackPushDualJmp();
@@ -1092,6 +1101,10 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x404a50u, (void*)TripleStageRollback},
     {0x404af0u, (void*)Mul10Tail},
     {0x404b10u, (void*)DualPushSetCallDualPop},
+    {0x404b90u, (void*)ScaledPushArg_00404b90},
+    {0x404bd0u, (void*)ScaledDecPop_00404bd0},
+    {0x404c00u, (void*)ScaledPushArg_00404c00},
+    {0x404c40u, (void*)ScaledDecPop_00404c40},
     {0x404c70u, (void*)SetWalkCurCallPauseDirty},
     {0x404cc0u, (void*)ThreeChanPackClamp},
     {0x404df0u, (void*)CopyThreeFields},
@@ -1304,6 +1317,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x426190u, (void*)DispatcherChainRampStep_00426190},
     {0x426230u, (void*)MStackPush2TableNot},
     {0x4265d0u, (void*)BootInitGuardedCallChain},
+    {0x4266d0u, (void*)Eleven404b90_404c00},
+    {0x426780u, (void*)Ten404c40_404bd0},
     {0x426d30u, (void*)PushSetEventQueueCallStore},
     {0x426d90u, (void*)GameMusicState4Way},
     {0x426da0u, (void*)GameMusicFsm_00426da0},
@@ -1312,9 +1327,12 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x427460u, (void*)Thunk_BootMod6487eClampAndChainMul10},
     {0x427470u, (void*)AllocSlotPushTripleGlobals},
     {0x4274f0u, (void*)MStackPop4Rewrite},
+    {0x427780u, (void*)SelectInputRepeat_00427780},
+    {0x427ad0u, (void*)Push48PreSetTwoStores},
     {0x427ea0u, (void*)DualTestDirtyToggle_00427ea0},
     {0x427f90u, (void*)MStackPush2DirtyCall},
     {0x428030u, (void*)CallPauseClear3CallTriple},
+    {0x428130u, (void*)FourVecFillMStackBracket},
     {0x4282c0u, (void*)DualTestDirtyToggle_004282c0},
     {0x428330u, (void*)ScaledArrStore_GuardedSeq_CopyJmp_then_MStackPushDualJmp},
     {0x428350u, (void*)GuardedSeq_CopyJmp_then_MStackPushDualJmp},

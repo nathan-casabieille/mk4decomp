@@ -442,6 +442,14 @@ void MK4_GameFrame(void)
             }
             SDL_Log("f%-4d chain elements total=%u", frame, tot);
         }
+        { extern char *getenv(const char *);
+          static unsigned int lastChar = 0xffffffffu;
+          if (getenv("MK4_TRACE_SEL")) {
+              unsigned int c = *MK4_VA(unsigned int, 0x537f48u);
+              if (c != lastChar) { lastChar = c;
+                  SDL_Log("SEL f%-4d char1=%u phase1=%u slot78=%x", frame, c,
+                          *MK4_VA(unsigned int, 0x537f88u),
+                          *MK4_VA(unsigned int, 0x542078u)); } } }
         if (getenv("MK4_TRACE_NODES") && (frame % 100) == 0)
             SDL_Log("f%-4d nodes=%u queue=%u pad=[%x %x %x %x] gate=[%x %x] "
                     "dirs=%x act=%x", frame,
