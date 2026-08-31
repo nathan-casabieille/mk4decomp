@@ -173,11 +173,26 @@ void MK4_NativeVideoInit(void)
 
     memset(MK4_VA(void, MK4_FB_VA), 0, (unsigned)(s_w * s_h * 2));
 
-    /* sine table: 4096 entries of sin * 2^28, indexed by BAM (0x1000 = 2 PI).
-     * The builders read each entry >> 16 and multiply >> 12, i.e. Q12. */
+    /* COSINE table - 4096 entries of cos * 2^28, indexed by BAM (0x1000 =
+     * 2 PI), rounded half up. Read AppInit_PostJoy at 0x4b5a30: it is `fcos`,
+     * not fsin, the scale is pow(2, 28) from the pair of doubles at 0x4d29d0
+     * / 0x4d29d8, the step is 2 PI / 4096 at 0x4d29e0, and the `fsub` of the
+     * -0.5 at 0x4d29e8 is the round-half-up.
+     *
+     * This was seeded with SIN for a long time, and the difference only shows
+     * on a screen that goes through the camera transform. Work
+     * BuildRotMatrix_OrderC through by hand for a ZERO angle triple: every
+     * element is a product of two table reads, so tab[0] must be 1.0 for the
+     * result to be the identity - mat[0] = (sz*sy)>>12, mat[4], mat[8] all
+     * need it. With sin, tab[0] = 0 and a zero-angle camera came out as a
+     * spurious 90 degree turn, [0 0 -4096 | 0 4096 0 | 4096 0 0], which is
+     * exactly what MK4_TRACE_MAT reported on the character select. With cos
+     * it is the identity, and a quarter turn about Y gives the clean
+     * [0 0 4096 | 0 4096 0 | -4096 0 0]. */
     for (k = 0; k < 4096u; k++) {
         double a = (double)k * 6.283185307179586 / 4096.0;
-        *(int *)MK4_VA(int, MK4_SIN_VA + k * 4) = (int)(sin(a) * 268435456.0);
+        *(int *)MK4_VA(int, MK4_SIN_VA + k * 4) =
+            (int)(cos(a) * 268435456.0 - (-0.5));
     }
     /* channel-average table: the original (BuildSortKeyLUT tail) fills
      * 0x300 entries even though three 5-bit channels sum to at most 93 */

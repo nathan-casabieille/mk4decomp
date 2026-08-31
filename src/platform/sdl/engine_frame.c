@@ -428,7 +428,7 @@ void MK4_GameFrame(void)
         if (getenv("MK4_TRACE_NODES") && (frame % 100) == 0)
             { unsigned int t = *MK4_VA(unsigned int, 0x52ab10u);
               SDL_Log("f%-4d nodes=%u queue=%u phase1=%u title=%x rot=[%x %x %x] "
-                    "pos=[%x %x %x] v74=%x sc=[%x %x %x] mat=[%x %x %x %x %x]", frame,
+                    "pos=[%x %x %x] v74=%x sc=[%x %x %x] cam=[%d %d %d] eye=[%d %d %d]", frame,
                     *MK4_VA(unsigned int, 0x541e64u),
                     *MK4_VA(unsigned int, 0x00f85b40u),
                     *MK4_VA(unsigned int, 0x537f88u), t,
@@ -442,11 +442,10 @@ void MK4_GameFrame(void)
                     t ? MK4_NODE_AT(unsigned int, t, 0x60) : 0,
                     t ? MK4_NODE_AT(unsigned int, t, 0x64) : 0,
                     t ? MK4_NODE_AT(unsigned int, t, 0x68) : 0,
-                    *MK4_VA(unsigned int, 0xab4878u),
-                    *MK4_VA(unsigned int, 0xab487cu),
-                    *MK4_VA(unsigned int, 0xab4880u),
-                    *MK4_VA(unsigned int, 0xab4884u),
-                    *MK4_VA(unsigned int, 0xab4888u)); }
+                    *MK4_VA(int, 0xab4cd8u), *MK4_VA(int, 0xab4cdcu),
+                    *MK4_VA(int, 0xab4ce0u),
+                    *MK4_VA(int, 0xab4d18u), *MK4_VA(int, 0xab4d1cu),
+                    *MK4_VA(int, 0xab4d20u)); }
         if (getenv("MK4_TRACE_SCENE") && (frame % 25) == 0)
             SDL_Log("f%-3d queue=%u mode=%x tickInit=%x head738=%x head1e0=%x "
                     "head1e50=%x",
