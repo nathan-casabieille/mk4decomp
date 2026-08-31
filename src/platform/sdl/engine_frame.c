@@ -434,6 +434,14 @@ void MK4_GameFrame(void)
                     *MK4_VA(unsigned int, 0x5420b8u), *MK4_VA(unsigned int, 0x5420bcu),
                     *MK4_VA(unsigned int, 0x541e84u), *MK4_VA(unsigned int, 0x541e98u),
                     *MK4_VA(unsigned int, 0x4d513cu));
+        if (getenv("MK4_TRACE_WALKLIST") && (frame % 200) == 0) {
+            unsigned int k, tot = 0;
+            for (k = 0; k < 8; k++) {
+                unsigned int h = *MK4_VA(unsigned int, 0x541e84u + k * 4u);
+                tot += h ? MK4_NODE_AT(unsigned int, h, 0xc) : 0;
+            }
+            SDL_Log("f%-4d chain elements total=%u", frame, tot);
+        }
         if (getenv("MK4_TRACE_NODES") && (frame % 100) == 0)
             SDL_Log("f%-4d nodes=%u queue=%u pad=[%x %x %x %x] gate=[%x %x] "
                     "dirs=%x act=%x", frame,

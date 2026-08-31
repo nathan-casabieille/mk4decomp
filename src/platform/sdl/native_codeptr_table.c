@@ -770,6 +770,7 @@ extern int Wrapper_SaveCallRestore();
 extern int DualGuardStateMachine_SaveCallRestore();
 extern int DoubleIndirectFourWaySelect();
 extern int ThrowFlowSetupCluster();
+extern int CharSelect_PortraitBlink_0049ee30();
 extern int ThrowAnimTriggerCluster();
 extern int CharSelect_ConfirmP1_0049f190();
 extern int CharSelect_ConfirmP2_0049f1c0();
@@ -1844,6 +1845,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x49eb20u, (void*)DualGuardStateMachine_SaveCallRestore},
     {0x49ec00u, (void*)DoubleIndirectFourWaySelect},
     {0x49ed00u, (void*)ThrowFlowSetupCluster},
+    {0x49ee30u, (void*)CharSelect_PortraitBlink_0049ee30},
     {0x49efa0u, (void*)ThrowAnimTriggerCluster},
     {0x49f190u, (void*)CharSelect_ConfirmP1_0049f190},
     {0x49f1c0u, (void*)CharSelect_ConfirmP2_0049f1c0},

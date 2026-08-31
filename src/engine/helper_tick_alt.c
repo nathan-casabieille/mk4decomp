@@ -37,6 +37,21 @@ extern void ZeroEightFields(void);
  * the converged form. */
 void Helper_TickAlt(void)
 {
+#ifdef TARGET_SDL
+    /* MK4_TRACE_TICKALT: calls and dispatched callbacks per frame. The tick
+     * walk is re-entrant - a node's callback can start another walk - so
+     * "the frame got slow" is a question about depth, not about node count. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      extern unsigned int g_mk4FrameNo;
+      static unsigned calls, lastFrame;
+      if (getenv("MK4_TRACE_TICKALT")) {
+          if (g_mk4FrameNo != lastFrame) {
+              if (calls > 400)
+                  SDL_Log("TICKALT f%u calls=%u", lastFrame, calls);
+              lastFrame = g_mk4FrameNo; calls = 0;
+          }
+          calls++; } }
+#endif
     unsigned int saved_cb = g_walkCallback;              /* edi: saved callback */
     unsigned int idx      = g_currentNodeIdx;
     unsigned int cur      = g_siblingTable[idx];         /* eax = node[idx].f0 */

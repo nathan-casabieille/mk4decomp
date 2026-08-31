@@ -48,6 +48,8 @@ extern void MStackCall_MStackPush2ChainInsert_004062a0(void);
 extern void DirtyDoubleDeref(void);
 extern void DualPushSetCallDualPop(unsigned int tag);
 extern void SetWalkCurCallPauseDirty(unsigned int callback, unsigned int tag);
+extern void CallSetPause(void);
+extern void DoubleIndirectFourWaySelect(void);
 
 #define g_currentNodeIdx  (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_xformEntityIdx  (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
@@ -55,6 +57,8 @@ extern void SetWalkCurCallPauseDirty(unsigned int callback, unsigned int tag);
 #define g_walkSlot6c      (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
 #define g_slot70          (*(unsigned int *)MK4_VA(unsigned int, 0x542070u))
 #define g_slot74          (*(unsigned int *)MK4_VA(unsigned int, 0x542074u))
+#define g_baseSel         (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
 #define g_stateBits8c     (*(unsigned int *)MK4_VA(unsigned int, 0x54208cu))
 #define g_framePauseFlag  (*(unsigned int *)MK4_VA(unsigned int, 0x541e6cu))
 #define g_matrixStackTop  (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
@@ -67,6 +71,7 @@ extern void SetWalkCurCallPauseDirty(unsigned int callback, unsigned int tag);
 #define g_selectSide      (*(unsigned int *)MK4_VA(unsigned int, 0x535e48u))
 
 #define ANIM_VA 0x49ee30u
+#define BLINK_VA ANIM_VA
 
 /* 0x404a00 - probe a tag; dirty bit 2 SET means the tag is NOT in the chain */
 void SaveCallRestoreOrXor(unsigned int tag)
@@ -320,6 +325,70 @@ void RoundWinTransition(void)
     g_matrixStackTop = top;
     g_currentNodeIdx = *(unsigned int *)MK4_PTR(top * 4);
     g_matrixStackTop = top - 1;
+}
+
+/* 0x49ee30 - the portrait BLINKER, packed inside ThrowFlowSetupCluster's
+ * symbol and installed by RoundWinTransition under tag 0x22f (P1) or 0x230
+ * (P2), so it is reached only by VA.
+ *
+ * Two states that flip g_fightGroupHead between 0 and 1 and, for each,
+ * pick a descriptor through DoubleIndirectFourWaySelect and write it into
+ * the node's child at +0x18, slot +0x24 - i.e. it alternates the selected
+ * portrait's mesh on a 4-tick beat, which is the flash under the cursor.
+ * Command 0 only starts it when the controller's own tag (+0xc) is 0x22f;
+ * the 0x230 instance falls straight into the second half. */
+void CharSelect_PortraitBlink_0049ee30(void)
+{
+    unsigned int cmd = MK4_NODE_AT(unsigned int, g_baseSel, 0x84);
+    unsigned int side, child;
+
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
+
+    if (cmd == 0) {
+        unsigned int tag = MK4_NODE_AT(unsigned int, g_baseSel, 0xc);
+
+        g_fightGroupHead = 0;
+        g_walkSlot6c = tag;
+        if (tag != 0x22f)
+            goto half_b;
+    } else {
+        g_fightGroupHead ^= 1u;
+        if (cmd == 1)
+            goto half_b;
+    }
+
+    /* 0x49ee92 */
+    SaveCallRestoreOrXor(7);
+    if ((g_stateBits8c & 4u) != 0) { CallSetPause(); return; }
+    side  = g_fightGroupHead;
+    child = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x18);
+    g_walkSlot6c = 0;
+    g_slot70 = side;
+    g_currentNodeIdx = child;
+    DoubleIndirectFourWaySelect();
+    if (g_framePauseFlag != 0) return;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x24) = g_xformEntityIdx;
+    MK4_NODE_AT(unsigned int, g_baseSel, 8) = BLINK_VA;
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 2;
+    g_pendingNodeType = 4;
+    g_framePauseFlag = 1;
+    return;
+
+half_b:                                          /* 0x49ef11 */
+    SaveCallRestoreOrXor(8);
+    if ((g_stateBits8c & 4u) != 0) { CallSetPause(); return; }
+    side  = g_fightGroupHead;
+    child = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x18);
+    g_walkSlot6c = 1;
+    g_slot70 = side;
+    g_currentNodeIdx = child;
+    DoubleIndirectFourWaySelect();
+    if (g_framePauseFlag != 0) return;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x24) = g_xformEntityIdx;
+    MK4_NODE_AT(unsigned int, g_baseSel, 8) = BLINK_VA;
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 1;
+    g_pendingNodeType = 4;
+    g_framePauseFlag = 1;
 }
 
 #endif /* NON_MATCHING */
