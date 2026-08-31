@@ -61,7 +61,11 @@ FRONTIER_STUB(InstallSelfStateMachine6)
 FRONTIER_STUB(MatchStartCluster)
 
 /* the fighter-select band's own still-hollow leaves */
-FRONTIER_STUB(SceneEvalFsm)
 FRONTIER_STUB(Set5CallPauseTestByteJmpCall)
+
+/* the select screen's own content, above SceneEvalFsm */
+FRONTIER_STUB(AmbientMonitorCluster)
+FRONTIER_STUB(ThrowAnimTriggerCluster)
+FRONTIER_STUB(PendingMatch_DownloadPlayerChar)
 
 #endif /* MK4_NATIVE_FULL */
