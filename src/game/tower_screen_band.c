@@ -67,6 +67,29 @@
  *     y 0x6666 on the result and prepend it. Dirty bit 2 after the first
  *     walk means "nothing there", and then it does none of that.
  *
+ *   CombatChainWalkExpand (0x00463870, 1026b) - the one that STACKS the
+ *     tower. Build the first cell from the record at 0x50cb3c, parent it to
+ *     the title logo node, then walk the opponent list at record[+0xc]: for
+ *     each entry, build a cell from 0x50cab0, install its sub-node against
+ *     the kind out of 0x5108dc, link it under the previous cell through
+ *     +0x40, and drop it 0x6978 further down in y. Each cell then unpacks
+ *     its FOUR texture slots out of the entry a byte at a time - index by
+ *     (v & 0xff) into the table at 0x542a08, shift down 8, four passes -
+ *     stamping 0x004baf40 and the slot number into the record at +0x28.
+ *     That 0x004baf40 IS called later - it is each cell's per-frame
+ *     billboard step, packed inside Helper_TickAlt's symbol, and it needs a
+ *     codeptr_extras entry like any other stored callback.
+ *   0x004baf40 - the cell billboard. Take the cell's slot number out of the
+ *     record at [+0x14], turn it into an angle - slot * 0x1921f, the same
+ *     per-cell step MkTowerScreenFsmCluster uses - add the node's own +0x64,
+ *     bias by 0x6487 or 0xc90 depending on the node's +0x54, wrap the result
+ *     into [0, 0x6487e), and if it lands in the front half (< 0x330cf) clear
+ *     the eight draw fields; otherwise park g_currentNodeIdx at -1 so the
+ *     walk skips the cell. The two magic-number divides in the original are
+ *     a plain modulo by 0x6487e and are written as one.
+ *   ZeroEightFields (0x004b8f20, 43b) - those eight fields, 0xab4d9c
+ *     through 0xab4db8.
+ *
  * STILL held back, and now for a MEASURED reason rather than a guess:
  * 0x00462df0 (the tower's settle beat) and AudioInstallSelfStatePush
  * (0x004aa8a0). Both transcribe cleanly and both carry the flow past the
@@ -111,6 +134,11 @@ extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
 extern void MStackBracket4_ListInsertZeroFill(void);
 extern void InstallSelfDispatch(void);
 extern void MStackCall_MStackPush2ChainPrepend_00406390(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
+extern void MStackPush3LinkedListWalk(void);
+extern void MStackPush4LLWalkPop4(void);
+extern void DirtyDoubleDeref(void);
+extern void ZeroEightFields(void);
 
 #define g_currentNodeIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_xformEntityIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
@@ -150,6 +178,8 @@ extern void MStackCall_MStackPush2ChainPrepend_00406390(void);
 #define g_proj4d5304       (*(unsigned int *)MK4_VA(unsigned int, 0x4d5304u))
 #define g_proj4d5308       (*(unsigned int *)MK4_VA(unsigned int, 0x4d5308u))
 #define g_proj4d530c       (*(unsigned int *)MK4_VA(unsigned int, 0x4d530cu))
+#define g_slot50           (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
+#define g_selectSide       (*(unsigned int *)MK4_VA(unsigned int, 0x535e48u))
 
 #define MSTACK_AT(i) (*(unsigned int *)MK4_PTR((i) * 4u))
 
@@ -466,6 +496,164 @@ void MkTowerScreenFsmCluster(void)
             return;
         g_stateBits8c ^= 4u;
     }
+}
+
+/* 0x004b8f20 (43b) */
+void ZeroEightFields(void)
+{
+    unsigned int k;
+
+    for (k = 0; k < 8; k++)
+        *MK4_VA(unsigned int, 0xab4d9cu + k * 4u) = 0;
+}
+
+/* 0x004baf40 - each tower cell's per-frame billboard step, packed inside
+ * Helper_TickAlt's symbol and reached only as a stored callback. */
+void TowerCellBillboard_004baf40(void)
+{
+    unsigned int rec = g_xformEntityIdx;
+    unsigned int node = g_slot58;
+    unsigned int span = *MK4_VA(unsigned int, 0x543550u);
+    unsigned int slot = MK4_NODE_AT(unsigned int, rec, 0x14);
+    int a;
+
+    *MK4_VA(unsigned int, 0xab4e60u) = span;
+    *MK4_VA(unsigned int, 0xab4e5cu) = (unsigned int)((int)span / 2);
+    *MK4_VA(unsigned int, 0xab4e64u) = 2;
+
+    a = (int)(MK4_NODE_AT(unsigned int, node, 0x64) + slot * 0x1921fu);
+    a += ((int)MK4_NODE_AT(unsigned int, node, 0x54) >= 0x10000) ? 0x6487 : 0xc90;
+
+    /* wrap into [0, 0x6487e) - the original spells both halves with a
+     * reciprocal multiply, and the second as a subtract loop */
+    if (a < 0)
+        a += (int)((unsigned int)(0x6487d - a) / 0x6487eu) * 0x6487e;
+    if (a >= 0x6487e)
+        a -= (int)((unsigned int)a / 0x6487eu) * 0x6487e;
+
+    if (a >= 0 && a < 0x330cf) {
+        if (*MK4_VA(unsigned int, 0xab4db8u) != 0)
+            ZeroEightFields();
+        return;
+    }
+    g_currentNodeIdx = 0xffffffffu;
+}
+
+/* 0x00463870 (1026b) - stack the tower */
+void CombatChainWalkExpand(void)
+{
+    unsigned int top, desc, node, sub, v;
+
+    desc = g_pendingNodeType;
+    g_slot50 = MK4_NODE_AT(unsigned int, desc, 0xc);   /* the opponent list */
+    g_slot7c = 0;
+    g_xformEntityIdx = 0x50cb3cu >> 2;
+    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+    if (g_framePauseFlag != 0) return;
+    if ((g_stateBits8c & 4u) != 0) return;
+
+    /* the first cell */
+    node = g_currentNodeIdx;
+    desc = g_pendingNodeType;
+    g_walkSlot6c = MK4_NODE_AT(unsigned int, desc, 4);
+    MK4_NODE_AT(unsigned int, node, 0x54) = g_walkSlot6c;
+    MK4_NODE_AT(unsigned int, node, 0x58) = g_slot7c;
+    g_slot70 = MK4_NODE_AT(unsigned int, desc, 8);
+    MK4_NODE_AT(unsigned int, node, 0x5c) = g_slot70;
+
+    top = g_matrixStackTop + 1; g_matrixStackTop = top;
+    MSTACK_AT(top) = g_pendingNodeType;
+    g_pendingNodeType = g_titleLogoNode;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x3c) = g_titleLogoNode;
+    top = g_matrixStackTop;
+    g_pendingNodeType = MSTACK_AT(top);
+    g_matrixStackTop = top - 1;
+    g_walkSlot6c = 0;
+    MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x40) = 0;
+    MStackCall_MStackPush2ChainPrepend_00406340();
+    if (g_framePauseFlag != 0) return;
+
+    g_fightGroupHead = g_currentNodeIdx;
+    g_slot7c = g_slot7c - 0x6978u;
+    v = *MK4_NODE(unsigned int, g_slot50);
+    g_slot50 = g_slot50 + 1u;
+    g_slot74 = v;
+
+    while (v != 0) {
+        g_xformEntityIdx = 0x50cab0u >> 2;
+        DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+        if (g_framePauseFlag != 0) return;
+        if ((g_stateBits8c & 4u) != 0) return;
+        MStackBracket4_ListInsertZeroFill();
+        if (g_framePauseFlag != 0) return;
+        MStackPush3LinkedListWalk();
+        if (g_framePauseFlag != 0) return;
+
+        top = g_matrixStackTop + 1; g_matrixStackTop = top;
+        MSTACK_AT(top) = g_currentNodeIdx;
+        top = g_matrixStackTop + 1; g_matrixStackTop = top;
+        MSTACK_AT(top) = g_pendingNodeType;
+
+        g_pendingNodeType = g_titleLogoNode;
+        MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x3c) = g_titleLogoNode;
+        g_xformEntityIdx = 0x5108dcu >> 2;
+        g_xformEntityIdx =
+            (unsigned int)((int)*MK4_NODE(unsigned int, 0x5108dcu >> 2) >> 2);
+        g_currentNodeIdx = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x18);
+        InstallSelfDispatch();
+        if (g_framePauseFlag != 0) return;
+        g_xformEntityIdx = 0x50a49cu >> 2;
+        MStackPush4LLWalkPop4();
+        if (g_framePauseFlag != 0) return;
+
+        top = g_matrixStackTop;
+        desc = MSTACK_AT(top);
+        top--; g_matrixStackTop = top;
+        g_pendingNodeType = desc;
+        node = MSTACK_AT(top);
+        top--; g_matrixStackTop = top;
+        g_currentNodeIdx = node;
+
+        g_walkSlot6c = MK4_NODE_AT(unsigned int, desc, 4);
+        MK4_NODE_AT(unsigned int, node, 0x54) = g_walkSlot6c;
+        MK4_NODE_AT(unsigned int, node, 0x58) = g_slot7c;
+        g_slot70 = MK4_NODE_AT(unsigned int, g_pendingNodeType, 8);
+        MK4_NODE_AT(unsigned int, node, 0x5c) = g_slot70;
+        MK4_NODE_AT(unsigned int, node, 0x40) = g_fightGroupHead;
+        MStackCall_MStackPush2ChainPrepend_00406340();
+        if (g_framePauseFlag != 0) return;
+
+        g_fightGroupHead = g_currentNodeIdx;
+        g_walkSlot6c = 1;
+        g_slot70 = 0xff;
+        g_slot54 = 0x542a08u >> 2;
+        for (;;) {                       /* four texture slots, a byte each */
+            unsigned int idx = g_slot74 & g_slot70;
+
+            g_selectSide = idx;
+            if (idx > 0x10u)
+                return;
+            g_slot78 = *MK4_NODE(unsigned int, g_slot54 + idx);
+            DirtyDoubleDeref();
+            if (g_framePauseFlag != 0) return;
+            MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x24) = g_slot78;
+            sub = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x28);
+            MK4_NODE_AT(unsigned int, sub, 0x10) = 0x004baf40u;
+            MK4_NODE_AT(unsigned int, sub, 0x14) = g_walkSlot6c;
+            g_slot74 = (unsigned int)((int)g_slot74 >> 8);
+            g_walkSlot6c = g_walkSlot6c + 1u;
+            if (g_walkSlot6c > 4u)
+                break;
+        }
+
+        g_slot7c = g_slot7c - 0x6978u;
+        v = *MK4_NODE(unsigned int, g_slot50);
+        g_slot50 = g_slot50 + 1u;
+        g_slot74 = v;
+    }
+
+    g_walkSlot6c = *MK4_NODE(unsigned int, g_pendingNodeType);
+    MK4_NODE_AT(unsigned int, g_fightGroupHead, 0x30) = g_walkSlot6c;
 }
 
 /* 0x00463c80 (412b) */

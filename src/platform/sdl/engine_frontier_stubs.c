@@ -21,7 +21,6 @@ extern void MK4_StubHit(const char *);
     __attribute__((weak)) void name(int a) { (void)a; MK4_StubHit(#name); }
 
 FRONTIER_STUB(RoundStartCluster_RemapWalkAndJmp)
-FRONTIER_STUB(CombatChainWalkExpand)
 FRONTIER_STUB(InstallSelfStateMachine_SwapOrPassSet)
 FRONTIER_STUB(InstallSelfBootInit)
 FRONTIER_STUB(AudioInstallSelfStatePush)

@@ -186,3 +186,4 @@ entries:
   0x462e60: VsResultLatch_00462e60           # packed in PendingMatch_SetWalkCurCallPauseDirty
   0x462ec0: VsPortraitFade_00462ec0          # packed in PendingMatch_SetWalkCurCallPauseDirty
   0x463220: PoseFnInstallCurrent_00463220    # packed sibling of PoseFnInstallDualCluster
+  0x4baf40: TowerCellBillboard_004baf40      # the tower cell billboard, packed in Helper_TickAlt

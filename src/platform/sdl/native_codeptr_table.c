@@ -299,6 +299,7 @@ extern int TwinLoopSlotFinder();
 extern int DispatchPair();
 extern int ScenePostInitSequencer();
 extern int TablePushAccumTailJmp();
+extern int Init4Globals();
 extern int SetJmp_Distance3DMul10Chain_0042d070();
 extern int SetJmp_Distance3DMul10Chain_0042d080();
 extern int Distance3DMul10Chain();
@@ -525,10 +526,13 @@ extern int MStackPush2ScaledChainLoop();
 extern int MStackChainOrBitLoop();
 extern int PlayerCharSelector();
 extern int DualPathDownloadChar();
+extern int CombatChainWalkExpand();
+extern int MStackChainPackedDispatch();
 extern int PackedTableWalkChainStore();
 extern int MStackPushSearchLoop();
 extern int MStackChainCountdownLoop();
 extern int BitShiftExtract();
+extern int SequencedInit3Call();
 extern int StoreCallPauseCmpDirty();
 extern int Cmp9DirtyToggle();
 extern int StageParticleEmitterInit();
@@ -1039,6 +1043,7 @@ extern int Menu_ColorDepthErrorDialog();
 extern int Menu_InsertCDDialog();
 extern int Helper_MenuStub_8EB0();
 extern int Helper_TickInit();
+extern int ZeroEightFields();
 extern int DispatchScaledLEA();
 extern int MStackBracket7_DispatchAndChain();
 extern int RegionFlushChain();
@@ -1056,6 +1061,7 @@ extern int DirtyBitTripleWriteOrCall();
 extern int DirtyTestScaledCopy();
 extern int RenderSceneNode();
 extern int Helper_TickAlt();
+extern int TowerCellBillboard_004baf40();
 extern int BillboardChainRender();
 extern int DrawMeshBlock();
 extern int TristripBatchEmit3Cap();
@@ -1438,6 +1444,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x429ac0u, (void*)DispatchPair},
     {0x429b70u, (void*)ScenePostInitSequencer},
     {0x429e30u, (void*)TablePushAccumTailJmp},
+    {0x42ae10u, (void*)Init4Globals},
     {0x42d070u, (void*)SetJmp_Distance3DMul10Chain_0042d070},
     {0x42d080u, (void*)SetJmp_Distance3DMul10Chain_0042d080},
     {0x42d090u, (void*)Distance3DMul10Chain},
@@ -1664,10 +1671,13 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4635a0u, (void*)MStackChainOrBitLoop},
     {0x4636d0u, (void*)PlayerCharSelector},
     {0x463810u, (void*)DualPathDownloadChar},
+    {0x463870u, (void*)CombatChainWalkExpand},
+    {0x463c80u, (void*)MStackChainPackedDispatch},
     {0x463e20u, (void*)PackedTableWalkChainStore},
     {0x463ed0u, (void*)MStackPushSearchLoop},
     {0x463fb0u, (void*)MStackChainCountdownLoop},
     {0x464090u, (void*)BitShiftExtract},
+    {0x464190u, (void*)SequencedInit3Call},
     {0x464240u, (void*)StoreCallPauseCmpDirty},
     {0x464320u, (void*)Cmp9DirtyToggle},
     {0x464350u, (void*)StageParticleEmitterInit},
@@ -2178,6 +2188,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4b8d70u, (void*)Menu_InsertCDDialog},
     {0x4b8eb0u, (void*)Helper_MenuStub_8EB0},
     {0x4b8ec0u, (void*)Helper_TickInit},
+    {0x4b8f20u, (void*)ZeroEightFields},
     {0x4b8f50u, (void*)DispatchScaledLEA},
     {0x4b8fa0u, (void*)MStackBracket7_DispatchAndChain},
     {0x4b9250u, (void*)RegionFlushChain},
@@ -2195,6 +2206,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4ba6c0u, (void*)DirtyTestScaledCopy},
     {0x4ba720u, (void*)RenderSceneNode},
     {0x4bae90u, (void*)Helper_TickAlt},
+    {0x4baf40u, (void*)TowerCellBillboard_004baf40},
     {0x4bb030u, (void*)BillboardChainRender},
     {0x4bb250u, (void*)DrawMeshBlock},
     {0x4bb680u, (void*)TristripBatchEmit3Cap},
