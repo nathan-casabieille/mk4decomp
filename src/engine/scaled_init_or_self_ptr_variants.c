@@ -29,7 +29,7 @@ void ScaledInitOrSelfPtr_NetEntityScanAndPunish(void) {
         NetEntityScanAndPunish();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_NetEntityScanAndPunish;
+    *(unsigned int *)(base + 8) = 0x00474b10u;   /* its OWN code VA - the C symbol here is the NATIVE address */
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
@@ -45,7 +45,7 @@ void ScaledInitOrSelfPtr_func_0041f780_z(void) {
         func_0041f780_z();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_func_0041f780_z;
+    *(unsigned int *)(base + 8) = 0x00489130u;   /* its OWN code VA - the C symbol here is the NATIVE address */
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
@@ -61,7 +61,7 @@ void ScaledInitOrSelfPtr_InstallSelfStackReset(void) {
         InstallSelfStackReset();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_InstallSelfStackReset;
+    *(unsigned int *)(base + 8) = 0x00421f00u;   /* its OWN code VA - the C symbol here is the NATIVE address */
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
@@ -77,7 +77,7 @@ void ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush(void) {
         CallPauseDirty1JmpDirty4StackPush_GuardedSeq_GuardedChainCmpDualBitXor_then_ScaledIncCmpJmp();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_CallPauseDirty1JmpDirty4StackPush;
+    *(unsigned int *)(base + 8) = 0x00428950u;   /* its OWN code VA - the C symbol here is the NATIVE address */
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
@@ -93,7 +93,7 @@ void ScaledInitOrSelfPtr_StackPopDispatchTagged(void) {
         StackPopDispatchTagged();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_StackPopDispatchTagged;
+    *(unsigned int *)(base + 8) = 0x00429680u;   /* its OWN code VA - the C symbol here is the NATIVE address */
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
@@ -109,7 +109,7 @@ void ScaledInitOrSelfPtr_DualSeqLoopDispatch(void) {
         DualSeqLoopDispatch();
         return;
     }
-    *(unsigned int *)(base + 8) = (unsigned int)ScaledInitOrSelfPtr_DualSeqLoopDispatch;
+    *(unsigned int *)(base + 8) = 0x00442d90u;   /* its OWN code VA - the C symbol here is the NATIVE address */
     ((ScenegraphNode *)base)->install_flag = 1;
     g_pendingNodeType = 1;
     g_framePauseFlag = 1;
