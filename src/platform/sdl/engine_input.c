@@ -309,6 +309,31 @@ void MK4_NativeInputPublish(void)
         static const int dir_slot[4] = { 0, 1, 2, 3 };  /* up down left right */
 
 #ifdef TARGET_SDL
+        /* MK4_ARROWS_P1=1: rebind PLAYER ONE's four directions to the arrow
+         * keys. The game's own default map gives P1 W A S Z and the ARROWS
+         * to player two - so on a one-player run the arrows are dead keys,
+         * which is a fair thing to trip over. This writes the four arrow
+         * VKs into P1's own direction slots at 0x543ab8, exactly the four
+         * dwords the game's OPTIONS > KEYBOARD screen edits, and everything
+         * downstream (Input_PollPlayerKeyboard, the 0x4d50a4 aggregate, the
+         * select's eight-slot repeater) runs unchanged.
+         *
+         * It REPLACES W A S Z rather than adding to them - the map holds one
+         * VK per slot per player, so there is nowhere to put a second. Off
+         * by default: no measured screen changes. */
+        { extern char *getenv(const char *);
+          static int armed;
+          if (!armed && getenv("MK4_ARROWS_P1")
+              && *MK4_VA(int, 0x543ab8u) != 0) {   /* wait for the defaults */
+              static const int arrows[4] = { 38, 40, 37, 39 };  /* up down left right */
+              int sl;
+              armed = 1;
+              for (sl = 0; sl < 4; sl++)
+                  *MK4_VA(int, 0x543ab8u + (unsigned)sl * 8u) = arrows[sl];
+              SDL_Log("input: MK4_ARROWS_P1 - player one's directions rebound "
+                      "to the arrow keys (W A S Z no longer steer)");
+          } }
+
         /* MK4_TRACE_BINDS: the game's own key map, once. The directions and
          * the action slots for both players, as ResetConfigToDefaults left
          * them - the answer to "which key moves the cursor". */
