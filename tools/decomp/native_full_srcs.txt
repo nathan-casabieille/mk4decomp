@@ -436,3 +436,4 @@ src/engine/bone_tick_leaves.c
 src/boot/root_flow_fsm.c
 src/game/select_confirm_band.c
 src/game/fighter_select_gate_band.c
+src/game/select_download_band.c

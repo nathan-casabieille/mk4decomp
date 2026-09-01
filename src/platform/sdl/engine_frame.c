@@ -506,6 +506,20 @@ void MK4_GameFrame(void)
               SDL_Log("select: idle counter forced to 1 at frame %d", frame);
           } }
 
+        /* MK4_TRACE_GLOBALS=<frame>:<va>,<va>,... - print a handful of arena
+         * dwords once, at that frame. For answering "which branch would this
+         * take" without having to convert the function first. */
+        { const char *spec = getenv("MK4_TRACE_GLOBALS");
+          if (spec) { const char *p2 = spec; int f = 0;
+            while (*p2 >= '0' && *p2 <= '9') f = f * 10 + (*p2++ - '0');
+            if (f == frame) { if (*p2 == ':') p2++;
+                while (*p2) { unsigned int va = 0;
+                    while ((*p2 >= '0' && *p2 <= '9') || (*p2 >= 'a' && *p2 <= 'f'))
+                        va = va * 16u + (unsigned)(*p2 <= '9' ? *p2 - '0' : *p2 - 'a' + 10), p2++;
+                    if (va) SDL_Log("GLOBAL %06x = %08x", va,
+                                    *MK4_VA(unsigned int, va));
+                    if (*p2 == ',') p2++; else break; } } } }
+
         /* MK4_TRACE_NODELIST=<frame>: walk the live controller list once and
          * print every node's tag, callback and resume word. The dispatch
          * tally only shows what RUNS; this shows what is installed but gated

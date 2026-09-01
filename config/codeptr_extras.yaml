@@ -177,3 +177,6 @@ entries:
   0x45d830: RoundEndLeafRelease_0045d830   # phase-table leaf, packed in RoundEndFsmCluster
   0x45d840: RoundEndLeafPhase3_0045d840    # phase-table leaf, packed in RoundEndFsmCluster
   0x45d860: RoundEndLeafRelease_0045d860   # phase-table leaf, packed in RoundEndFsmCluster
+  0x4626f0: VsChainAlternate_004626f0      # tag 0x254, packed in MkTowerScreenFsmCluster
+  0x462660: VsCountdown_00462660           # tag 0x257, packed in MkTowerScreenFsmCluster
+  0x463810: DualPathDownloadChar           # the select's download payload

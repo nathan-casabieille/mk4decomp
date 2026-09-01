@@ -506,6 +506,11 @@ extern int NotShrCmp1Store();
 extern int GuardedScaledChainJmpIndirect();
 extern int CallPauseScaledStoreCopyJmp();
 extern int NineEntryFlagDispatch();
+extern int PendingMatch_DownloadPlayerChar();
+extern int InstallSelfFullChainInit();
+extern int VsCountdown_00462660();
+extern int VsChainAlternate_004626f0();
+extern int DualPathDownloadChar();
 extern int MStackPushSearchLoop();
 extern int StageParticleEmitterInit();
 extern int FightCamMode1_00464560();
@@ -733,6 +738,8 @@ extern int IterLoad_g_scaledInit_00542048_then_DualScaledStoreZero();
 extern int DualScaledStoreZero();
 extern int ChainSetupBitToggle();
 extern int ScaledZero44();
+extern int IncCapped3e7();
+extern int Set5CallPauseTestByteJmpCall();
 extern int StateMachineInit();
 extern int MStackPushTableWalk();
 extern int PushSetCallTailJmp();
@@ -1619,6 +1626,11 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x460e40u, (void*)GuardedScaledChainJmpIndirect},
     {0x461220u, (void*)CallPauseScaledStoreCopyJmp},
     {0x461260u, (void*)NineEntryFlagDispatch},
+    {0x461ca0u, (void*)PendingMatch_DownloadPlayerChar},
+    {0x462470u, (void*)InstallSelfFullChainInit},
+    {0x462660u, (void*)VsCountdown_00462660},
+    {0x4626f0u, (void*)VsChainAlternate_004626f0},
+    {0x463810u, (void*)DualPathDownloadChar},
     {0x463ed0u, (void*)MStackPushSearchLoop},
     {0x464350u, (void*)StageParticleEmitterInit},
     {0x464560u, (void*)FightCamMode1_00464560},
@@ -1846,6 +1858,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x491080u, (void*)DualScaledStoreZero},
     {0x491290u, (void*)ChainSetupBitToggle},
     {0x491500u, (void*)ScaledZero44},
+    {0x491920u, (void*)IncCapped3e7},
+    {0x491950u, (void*)Set5CallPauseTestByteJmpCall},
     {0x493000u, (void*)StateMachineInit},
     {0x493a20u, (void*)MStackPushTableWalk},
     {0x493e40u, (void*)PushSetCallTailJmp},

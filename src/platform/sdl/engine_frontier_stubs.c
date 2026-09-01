@@ -21,6 +21,19 @@ extern void MK4_StubHit(const char *);
     __attribute__((weak)) void name(int a) { (void)a; MK4_StubHit(#name); }
 
 FRONTIER_STUB(RoundStartCluster_RemapWalkAndJmp)
+FRONTIER_STUB(CombatChainWalkExpand)
+FRONTIER_STUB(DirtyBitToggleDispatch)
+FRONTIER_STUB(InstallSelfStateMachine_SwapOrPassSet)
+FRONTIER_STUB(MStackChainCountdownLoop)
+FRONTIER_STUB(MStackChainPackedDispatch)
+FRONTIER_STUB(MStackPush2ScaledChainLoop)
+FRONTIER_STUB(MkTowerScreenFsmCluster)
+FRONTIER_STUB(PackedTableWalkChainStore)
+FRONTIER_STUB(PlayerCharSelector)
+FRONTIER_STUB(Push0_Push463220_Jmp)
+FRONTIER_STUB(SequencedInit3Call)
+FRONTIER_STUB(StoreCallPauseCmpDirty)
+FRONTIER_STUB(MStackChainOrBitLoop)
 FRONTIER_STUB(TableWalkPause)
 FRONTIER_STUB0(CmpDualStateMatch)
 FRONTIER_STUB(GuardedScaledLookupCallJmp)
@@ -67,6 +80,5 @@ FRONTIER_STUB(GameStateTick)
 FRONTIER_STUB(MStackDualPushSaveRestore)
 FRONTIER_STUB(BitSetByIndex)
 FRONTIER_STUB(AudioCmpCascadeDispatcher)
-FRONTIER_STUB(PendingMatch_DownloadPlayerChar)
 
 #endif /* MK4_NATIVE_FULL */
