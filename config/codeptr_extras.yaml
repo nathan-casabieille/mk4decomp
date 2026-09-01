@@ -180,3 +180,8 @@ entries:
   0x4626f0: VsChainAlternate_004626f0      # tag 0x254, packed in MkTowerScreenFsmCluster
   0x462660: VsCountdown_00462660           # tag 0x257, packed in MkTowerScreenFsmCluster
   0x463810: DualPathDownloadChar           # the select's download payload
+  0x462ac0: VsScreenController_00462ac0      # the VS controller, packed at PendingMatch_SetWalkCurCallPauseDirty+0x30
+  0x4628e0: VsPlayerGateP1_004628e0          # packed in TripleEntryWordChainInc5
+  0x462930: VsPlayerGateP2_00462930          # packed in TripleEntryWordChainInc5
+  0x462e60: VsResultLatch_00462e60           # packed in PendingMatch_SetWalkCurCallPauseDirty
+  0x462ec0: VsPortraitFade_00462ec0          # packed in PendingMatch_SetWalkCurCallPauseDirty

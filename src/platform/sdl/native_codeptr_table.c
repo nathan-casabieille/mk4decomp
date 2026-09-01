@@ -510,8 +510,15 @@ extern int PendingMatch_DownloadPlayerChar();
 extern int InstallSelfFullChainInit();
 extern int VsCountdown_00462660();
 extern int VsChainAlternate_004626f0();
+extern int VsPlayerGateP1_004628e0();
+extern int VsPlayerGateP2_00462930();
+extern int PendingMatch_SetWalkCurCallPauseDirty();
+extern int VsScreenController_00462ac0();
+extern int VsResultLatch_00462e60();
+extern int VsPortraitFade_00462ec0();
 extern int DualPathDownloadChar();
 extern int MStackPushSearchLoop();
+extern int Cmp9DirtyToggle();
 extern int StageParticleEmitterInit();
 extern int FightCamMode1_00464560();
 extern int FightCamMode2_004645e0();
@@ -1630,8 +1637,15 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x462470u, (void*)InstallSelfFullChainInit},
     {0x462660u, (void*)VsCountdown_00462660},
     {0x4626f0u, (void*)VsChainAlternate_004626f0},
+    {0x4628e0u, (void*)VsPlayerGateP1_004628e0},
+    {0x462930u, (void*)VsPlayerGateP2_00462930},
+    {0x462a90u, (void*)PendingMatch_SetWalkCurCallPauseDirty},
+    {0x462ac0u, (void*)VsScreenController_00462ac0},
+    {0x462e60u, (void*)VsResultLatch_00462e60},
+    {0x462ec0u, (void*)VsPortraitFade_00462ec0},
     {0x463810u, (void*)DualPathDownloadChar},
     {0x463ed0u, (void*)MStackPushSearchLoop},
+    {0x464320u, (void*)Cmp9DirtyToggle},
     {0x464350u, (void*)StageParticleEmitterInit},
     {0x464560u, (void*)FightCamMode1_00464560},
     {0x4645e0u, (void*)FightCamMode2_004645e0},
