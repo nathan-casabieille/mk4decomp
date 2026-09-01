@@ -49,6 +49,17 @@
  *     miss prepend a fresh 0x26d node. Dirty bit 2 reports "nothing there".
  *
 
+ *   SequencedInit3Call (0x00464190, 173b) - THE one that swaps the screen.
+ *     Re-enter the scene, reset the four projection globals, park the title
+ *     logo node at (0, -0x1e666, -0x40000) with a zero angle triple, and
+ *     load the .geo at 0x50b124 TWICE - the loader's own geometry-then-
+ *     texture shape. 0x50b124 is the TOWER's scene; the select's is
+ *     0x50b118 next door. With this hollow the tower never loaded and the
+ *     select never went away, so the camera flew at the portraits instead -
+ *     which is exactly what it looked like.
+ *   Init4Globals (0x0042ae10, 36b) - those four globals: 0x20000 into
+ *     0x4d5308 / 0x4d530c and 0x10000 into 0x4d5300 / 0x4d5304.
+ *
  * STILL held back, and now for a MEASURED reason rather than a guess:
  * 0x00462df0 (the tower's settle beat) and AudioInstallSelfStatePush
  * (0x004aa8a0). Both transcribe cleanly and both carry the flow past the
@@ -86,6 +97,9 @@ extern void DownloadPlayerChar(void);
 extern void Thunk_BootMod6487eClampAndChainMul10(void);
 extern void DispatcherComplex260_FramePauseScaledStore(void);
 extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
+extern void BootInitGuardedCallChain(void);
+extern void CopyGlobal(void);
+extern void LoadGeoAsset_Default(void);
 
 #define g_currentNodeIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_xformEntityIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
@@ -118,6 +132,13 @@ extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 #define g_chainBase541fb8  (*(unsigned int *)MK4_VA(unsigned int, 0x541fb8u))
 #define g_ladderState      (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
 #define g_pendingNodeType  (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_titleLogoNode2   (*(unsigned int *)MK4_VA(unsigned int, 0x52ab10u))
+#define g_vsResult53a734b  (*(unsigned int *)MK4_VA(unsigned int, 0x53a734u))
+#define g_wait53a350b      (*(unsigned int *)MK4_VA(unsigned int, 0x53a350u))
+#define g_proj4d5300       (*(unsigned int *)MK4_VA(unsigned int, 0x4d5300u))
+#define g_proj4d5304       (*(unsigned int *)MK4_VA(unsigned int, 0x4d5304u))
+#define g_proj4d5308       (*(unsigned int *)MK4_VA(unsigned int, 0x4d5308u))
+#define g_proj4d530c       (*(unsigned int *)MK4_VA(unsigned int, 0x4d530cu))
 
 #define MSTACK_AT(i) (*(unsigned int *)MK4_PTR((i) * 4u))
 
@@ -434,6 +455,49 @@ void MkTowerScreenFsmCluster(void)
             return;
         g_stateBits8c ^= 4u;
     }
+}
+
+/* 0x0042ae10 (36b) */
+void Init4Globals(void)
+{
+    g_proj4d5308 = 0x20000;
+    g_proj4d530c = 0x20000;
+    g_proj4d5300 = 0x10000;
+    g_walkSlot6c = 0x10000;
+    g_proj4d5304 = 0x10000;
+}
+
+/* 0x00464190 (173b) - the screen swap */
+void SequencedInit3Call(void)
+{
+    unsigned int logo;
+
+    BootInitGuardedCallChain();
+    if (g_framePauseFlag != 0) return;
+    Init4Globals();
+    if (g_framePauseFlag != 0) return;
+
+    logo = g_titleLogoNode2;
+    g_vsResult53a734b = 0;
+    g_currentNodeIdx = logo;
+    g_wait53a350b = 0;
+    MK4_NODE_AT(unsigned int, logo, 0x54) = 0;
+    MK4_NODE_AT(unsigned int, logo, 0x58) = 0xfffe199au;
+    MK4_NODE_AT(unsigned int, logo, 0x5c) = 0xfffc0000u;
+    g_walkSlot6c = 0;
+    MK4_NODE_AT(unsigned int, logo, 0x60) = 0;
+    MK4_NODE_AT(unsigned int, logo, 0x64) = 0;
+    MK4_NODE_AT(unsigned int, logo, 0x68) = 0;
+    g_walkSlot6c = 0;
+    CopyGlobal();
+    if (g_framePauseFlag != 0) return;
+
+    /* the TOWER scene, loaded twice - geometry pass then texture pass */
+    g_currentNodeIdx = 0x50b124u >> 2;
+    LoadGeoAsset_Default();
+    if (g_framePauseFlag != 0) return;
+    g_currentNodeIdx = 0x50b124u >> 2;
+    LoadGeoAsset_Default();
 }
 
 /* the tail both pose bodies share: chain state 1 against their OWN VA */
