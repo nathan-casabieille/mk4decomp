@@ -60,6 +60,13 @@
  *   Init4Globals (0x0042ae10, 36b) - those four globals: 0x20000 into
  *     0x4d5308 / 0x4d530c and 0x10000 into 0x4d5300 / 0x4d5304.
  *
+ *   MStackChainPackedDispatch (0x00463c80, 412b) - build the tower's own
+ *     node from the template at 0x50c97c: walk it, zero-fill a list slot,
+ *     install the sub-node at [+0x18] against the kind read out of
+ *     0x5108d0 (shifted down by two, signed), then stamp kind 0x250 and
+ *     y 0x6666 on the result and prepend it. Dirty bit 2 after the first
+ *     walk means "nothing there", and then it does none of that.
+ *
  * STILL held back, and now for a MEASURED reason rather than a guess:
  * 0x00462df0 (the tower's settle beat) and AudioInstallSelfStatePush
  * (0x004aa8a0). Both transcribe cleanly and both carry the flow past the
@@ -100,6 +107,10 @@ extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 extern void BootInitGuardedCallChain(void);
 extern void CopyGlobal(void);
 extern void LoadGeoAsset_Default(void);
+extern void DispatcherComplex260_MStackBracket1_TreeWalkRecursive2(void);
+extern void MStackBracket4_ListInsertZeroFill(void);
+extern void InstallSelfDispatch(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406390(void);
 
 #define g_currentNodeIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_xformEntityIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
@@ -455,6 +466,63 @@ void MkTowerScreenFsmCluster(void)
             return;
         g_stateBits8c ^= 4u;
     }
+}
+
+/* 0x00463c80 (412b) */
+void MStackChainPackedDispatch(void)
+{
+    unsigned int top, node;
+
+    top = g_matrixStackTop + 1; g_matrixStackTop = top;
+    MSTACK_AT(top) = g_currentNodeIdx;
+    top = g_matrixStackTop + 1; g_matrixStackTop = top;
+    MSTACK_AT(top) = g_xformEntityIdx;
+    top = g_matrixStackTop + 1; g_matrixStackTop = top;
+    MSTACK_AT(top) = g_fightGroupHead;
+
+    g_xformEntityIdx = 0x50c97cu >> 2;
+    DispatcherComplex260_MStackBracket1_TreeWalkRecursive2();
+    if (g_framePauseFlag != 0)
+        return;                       /* mstack left pushed, as in the original */
+
+    if ((g_stateBits8c & 4u) == 0) {
+        MStackBracket4_ListInsertZeroFill();
+        if (g_framePauseFlag != 0) return;
+
+        top = g_matrixStackTop + 1; g_matrixStackTop = top;
+        MSTACK_AT(top) = g_currentNodeIdx;
+        top = g_matrixStackTop + 1; g_matrixStackTop = top;
+        MSTACK_AT(top) = g_pendingNodeType;
+
+        node = g_currentNodeIdx;
+        g_xformEntityIdx = 0x5108d0u >> 2;
+        g_xformEntityIdx =
+            (unsigned int)((int)*MK4_NODE(unsigned int, 0x5108d0u >> 2) >> 2);
+        g_currentNodeIdx = MK4_NODE_AT(unsigned int, node, 0x18);
+        InstallSelfDispatch();
+        if (g_framePauseFlag != 0) return;
+
+        top = g_matrixStackTop;
+        g_pendingNodeType = MSTACK_AT(top);
+        top--; g_matrixStackTop = top;
+        node = MSTACK_AT(top);
+        top--; g_matrixStackTop = top;
+        g_currentNodeIdx = node;
+        g_walkSlot6c = 0x250;
+        MK4_NODE_AT(unsigned int, node, 0x30) = 0x250;
+        MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x58) = 0x6666;
+        MStackCall_MStackPush2ChainPrepend_00406390();
+        if (g_framePauseFlag != 0) return;
+        g_slot58 = g_currentNodeIdx;
+    }
+
+    top = g_matrixStackTop;
+    g_fightGroupHead = MSTACK_AT(top);
+    top--; g_matrixStackTop = top;
+    g_xformEntityIdx = MSTACK_AT(top);
+    top--; g_matrixStackTop = top;
+    g_currentNodeIdx = MSTACK_AT(top);
+    top--; g_matrixStackTop = top;
 }
 
 /* 0x0042ae10 (36b) */

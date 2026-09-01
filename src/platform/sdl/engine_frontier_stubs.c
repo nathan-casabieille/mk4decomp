@@ -23,7 +23,6 @@ extern void MK4_StubHit(const char *);
 FRONTIER_STUB(RoundStartCluster_RemapWalkAndJmp)
 FRONTIER_STUB(CombatChainWalkExpand)
 FRONTIER_STUB(InstallSelfStateMachine_SwapOrPassSet)
-FRONTIER_STUB(MStackChainPackedDispatch)
 FRONTIER_STUB(InstallSelfBootInit)
 FRONTIER_STUB(AudioInstallSelfStatePush)
 FRONTIER_STUB(TableWalkPause)
