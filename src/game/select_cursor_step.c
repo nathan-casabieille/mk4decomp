@@ -206,6 +206,13 @@ static void cursor_step(int down)
     g_currentNodeIdx = handler;
     ((void (*)(void))MK4_ResolveCode(handler))();
     if (g_framePauseFlag != 0) return;
+#ifdef TARGET_SDL
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int n;
+      if (getenv("MK4_TRACE_STEP") && n < 6) { n++;
+          SDL_Log("STEP side=%u entry=%x handler=%08x ok=%u idx=%u", g_selectSide,
+                  entry, handler, g_stateBits8c & 1u, AT(AT(g_xformEntityIdx))); } }
+#endif
     if ((g_stateBits8c & 1u) == 0) { CallSetPause(); return; }
 
     v = AT(g_xformEntityIdx);

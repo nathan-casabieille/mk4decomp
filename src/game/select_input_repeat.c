@@ -241,6 +241,16 @@ void SelectInputRepeat_00427780(void)
 
     g_slotNo = 7;
     g_slotIdx = 0xe;
+#ifdef TARGET_SDL
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int n; unsigned int k; char b[300]; int o = 0;
+      extern int SDL_snprintf(char *, unsigned long, const char *, ...);
+      if (getenv("MK4_TRACE_SLOTS") && n < 1) { n++;
+          for (k = 0; k < 16; k++)
+              o += SDL_snprintf(b + o, sizeof b - o, "%x ",
+                                AT(g_xformEntityIdx + 0xe - k));
+          SDL_Log("SLOTS (mask,cb) from slot7 down: %s", b); } }
+#endif
     g_slot78 = MK4_NODE_AT(unsigned int, g_xformEntityIdx, 0x38);
     MStackPush2TableNot();
     if (g_framePauseFlag != 0) return;
