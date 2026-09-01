@@ -31,6 +31,16 @@ extern unsigned int g_currentNodeIdx;
 void ScaledNeg1SetPause(void) {
     ScenegraphNode *node = (ScenegraphNode *)MK4_PTR((g_baseSel * 4));
     if (node->ptr_field != 0) {
+#ifdef TARGET_SDL
+        /* MK4_TRACE_RELEASE: which controller marks itself done. +0xd8 is
+         * the callback VA until this sets it to -1, and the node pump then
+         * unlinks it - so this line names the controller that is about to
+         * be freed. */
+        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+          static int n;
+          if (getenv("MK4_TRACE_RELEASE") && n < 20) { n++;
+              SDL_Log("RELEASE node=%x cb=%08x", g_baseSel, node->ptr_field); } }
+#endif
         node->ptr_field = 0xffffffff;
         g_framePauseFlag = 1;
     }

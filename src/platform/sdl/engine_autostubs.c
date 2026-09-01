@@ -194,6 +194,16 @@ __attribute__((weak)) int NodeUnlink(){MK4_StubHit("NodeUnlink");return 0;}
 __attribute__((weak)) int PackedListVisitor(){MK4_StubHit("PackedListVisitor");return 0;}
 __attribute__((weak)) int PendingMatch_CallPauseScaledStoreCopyJmp(){MK4_StubHit("PendingMatch_CallPauseScaledStoreCopyJmp");return 0;}
 __attribute__((weak)) int PendingMatch_LeaPlus22StoreSelf(){MK4_StubHit("PendingMatch_LeaPlus22StoreSelf");return 0;}
+__attribute__((weak)) int BootInitVec3PhaseInstall(){MK4_StubHit("BootInitVec3PhaseInstall");return 0;}
+__attribute__((weak)) int BootStateInitWithRecurseInstall(){MK4_StubHit("BootStateInitWithRecurseInstall");return 0;}
+__attribute__((weak)) int BootStateMachine4Way(){MK4_StubHit("BootStateMachine4Way");return 0;}
+__attribute__((weak)) int InstallSelfCounter(){MK4_StubHit("InstallSelfCounter");return 0;}
+__attribute__((weak)) int PendingMatch_Push16Call_00402540(){MK4_StubHit("PendingMatch_Push16Call_00402540");return 0;}
+__attribute__((weak)) int PhaseInstallSelf3Step(){MK4_StubHit("PhaseInstallSelf3Step");return 0;}
+__attribute__((weak)) int SceneFrameStepWithInputs(){MK4_StubHit("SceneFrameStepWithInputs");return 0;}
+__attribute__((weak)) int Screen_BestKombatants(){MK4_StubHit("Screen_BestKombatants");return 0;}
+__attribute__((weak)) int Screen_GreatestWarrior(){MK4_StubHit("Screen_GreatestWarrior");return 0;}
+__attribute__((weak)) int TitleDemoStateMachine(){MK4_StubHit("TitleDemoStateMachine");return 0;}
 __attribute__((weak)) int PendingMatch_MStackPush2RunCountdown_0044baa0(){MK4_StubHit("PendingMatch_MStackPush2RunCountdown_0044baa0");return 0;}
 __attribute__((weak)) int Phase3InstallTableCheck(){MK4_StubHit("Phase3InstallTableCheck");return 0;}
 __attribute__((weak)) int Phase4SevenPackedDispatch(){MK4_StubHit("Phase4SevenPackedDispatch");return 0;}

@@ -257,10 +257,24 @@ void MK4_GameFrame(void)
                 *MK4_VA(unsigned int, 0x53a1ccu) = 0;   /* dest record 2 */
                 *MK4_VA(unsigned int, 0x53a51cu) = ar ? (unsigned)atoi(ar) : 0;
             }
+            /* ONE flag at a time. The loading tick consumes exactly one of
+             * these per invocation and then releases its own node with
+             * CallSetPause; the next one needs a freshly scheduled tick,
+             * which the phase machine below queues once the previous flag
+             * reads back clear. Raising all three at frame 8 only ever
+             * worked because a released node was never unlinked AND the
+             * -1 screen tag below matches the -1 release marker at +0xd8,
+             * so the dead node kept passing the pump's gate. */
             *MK4_VA(unsigned int, 0x543810u) = 1;   /* world re-init */
-            *MK4_VA(unsigned int, 0x543814u) = 1;   /* audio re-init */
-            *MK4_VA(unsigned int, 0x543818u) = 1;   /* hand to the loader */
             *MK4_VA(unsigned int, 0x543930u) = 1;   /* g_gsmFlag gates cmd 2 */
+            /* g_gsmActiveFlag. The loading tick only re-enters Screen_Loading
+             * - which re-arms 0x543824 and resets the audio sources before
+             * each work flag - while this is set, and FSM state 6 is the only
+             * thing that sets it. MK4_BOOT_FSM is off by default here, so the
+             * harness sets it directly; without it the second scheduled tick
+             * runs against a screen that was never re-armed and the loader
+             * walks a stale record. */
+            *MK4_VA(unsigned int, 0xab4334u) = 1;
             /* MK4_BOOT_FSM=1 also sends FSM command 2 (state 0 -> 6, the
              * in-game pump). Off by default: state 6 sets g_gsmActiveFlag,
              * and that is exactly what makes TestQueueGateState refuse the
@@ -292,6 +306,37 @@ void MK4_GameFrame(void)
                 *MK4_VA(unsigned int, 0x4d50b4u) |= 4u;
             SDL_Log("boot-match: FSM -> 6, loading screen scheduled");
         }
+        /* MK4_BOOT_MATCH: schedule the loading tick again for each of the
+         * two remaining work flags, once the previous one has been consumed.
+         * out3 (world re-init) hands the world to the root game-flow FSM and
+         * dies; out2 (audio re-init) and out1 (hand to the match loader) each
+         * need their own invocation. */
+        if (getenv("MK4_BOOT_MATCH") && frame > 8) {
+            extern void StoreTwoCall(int, int);
+            static int lt_phase;
+            unsigned int *out3 = MK4_VA(unsigned int, 0x543810u);
+            unsigned int *out2 = MK4_VA(unsigned int, 0x543814u);
+            unsigned int *out1 = MK4_VA(unsigned int, 0x543818u);
+            if (lt_phase == 0 && *out3 == 0) {
+                *out2 = 1;
+                StoreTwoCall(0x4a42e0, 0x4000);
+                *MK4_VA(unsigned int, 0x543800u) = 0xffffffffu;
+                lt_phase = 1;
+                SDL_Log("boot-match: world re-init done, audio re-init queued "
+                        "at frame %d", frame);
+            } else if (lt_phase == 1 && *out2 == 0) {
+                *out1 = 1;
+                StoreTwoCall(0x4a42e0, 0x4000);
+                *MK4_VA(unsigned int, 0x543800u) = 0xffffffffu;
+                lt_phase = 2;
+                SDL_Log("boot-match: audio re-init done, loader hand-off "
+                        "queued at frame %d", frame);
+            } else if (lt_phase == 2 && *out1 == 0) {
+                lt_phase = 3;
+                SDL_Log("boot-match: loader hand-off taken at frame %d", frame);
+            }
+        }
+
         /* MK4_MAIN_MENU=<frame>: schedule the game's own MODE SELECT menu
          * (ARCADE / TEAM / ENDURANCE / TOURNAMENT / PRACTICE / EXIT GAME) -
          * the controller the attract sequencer would chain. Type 1 gets it

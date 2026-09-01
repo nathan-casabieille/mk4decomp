@@ -8,6 +8,7 @@ extern int ListInitLoop();
 extern int OnceCall();
 extern int Init0AndMax();
 extern int Anim_DecodeBitstream();
+extern int PendingMatch_LeaPlus22StoreSelf();
 extern int Phase3InstallSelf();
 extern int FiveTableWalkInit();
 extern int ZeroMultiGlobalsCmp();
@@ -1110,6 +1111,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x401340u, (void*)OnceCall},
     {0x401370u, (void*)Init0AndMax},
     {0x4013a0u, (void*)Anim_DecodeBitstream},
+    {0x401b70u, (void*)PendingMatch_LeaPlus22StoreSelf},
     {0x403170u, (void*)Phase3InstallSelf},
     {0x403c90u, (void*)FiveTableWalkInit},
     {0x404680u, (void*)ZeroMultiGlobalsCmp},

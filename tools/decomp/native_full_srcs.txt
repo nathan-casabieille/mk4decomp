@@ -433,3 +433,4 @@ src/boot/scaled_chain_or8.c
 src/engine/matchstart_band.c
 src/engine/phase4_bone_ticks.c
 src/engine/bone_tick_leaves.c
+src/boot/root_flow_fsm.c

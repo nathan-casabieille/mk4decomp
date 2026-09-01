@@ -308,6 +308,19 @@ void MK4_NativeInputPublish(void)
         unsigned int now = 0, b;
         static const int dir_slot[4] = { 0, 1, 2, 3 };  /* up down left right */
 
+#ifdef TARGET_SDL
+        /* MK4_TRACE_BINDS: the game's own key map, once. The directions and
+         * the action slots for both players, as ResetConfigToDefaults left
+         * them - the answer to "which key moves the cursor". */
+        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+          static int once;
+          if (!once && getenv("MK4_TRACE_BINDS")) { int sl, pl; once = 1;
+              for (pl = 0; pl < 2; pl++)
+                  for (sl = 0; sl < 13; sl++)
+                      SDL_Log("BIND p%d slot %2d vk %d", pl + 1, sl,
+                              *MK4_VA(int, 0x543ab8u + sl * 8u + pl * 4u)); } }
+#endif
+
         for (player = 0; player < 2; player++)
             for (b = 0; b < 4; b++) {
                 int vk = *MK4_VA(int, 0x543ab8u + dir_slot[b] * 8u + player * 4u);

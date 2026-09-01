@@ -205,6 +205,15 @@ LAB_0041f6ef:
       *(undefined4 *)MK4_PTR((iVar2 + 0xd8)) = MK4_NODE_AT(undefined4, g_baseSel, 8);
       g_framePauseFlag = 0;
       g_dispatchSave105 = *(undefined4 *)MK4_PTR((iVar2 + 0xd8));
+#ifdef TARGET_SDL
+      /* MK4_TRACE_DISPATCH: one line per controller the pump actually runs,
+       * so two builds can be diffed to see which callback stops firing. */
+      { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+        static unsigned int seq;
+        if (getenv("MK4_TRACE_DISPATCH"))
+            SDL_Log("DISP #%u node=%x cb=%08x", seq++, iVar2,
+                    *(unsigned int *)MK4_PTR(iVar2 + 0xd8)); }
+#endif
       /* Node +0xd8 holds a stored CODE VA, so it needs both seams: MK4_PTR to
        * read the slot out of the arena, and MK4_ResolveCode to turn the VA it
        * contains into the native function. */
@@ -225,16 +234,20 @@ LAB_0041f6ef:
     }
     if (*(int *)MK4_PTR((iVar2 + 0xd8)) != -1) goto LAB_0041f6ef;
     iVar1 = *(int *)MK4_PTR((iVar2 + 0xe4));
-    /* NOTE: this hands NodeUnlink the VA, and NodeUnlink wants a HOST
-     * pointer (it compares MK4_UNPTR(node) against the slot table), so the
-     * unlink silently does nothing here - the same defect that hung the
-     * arcade join screen through LoadShlDerefCallSkip, fixed there. It is
-     * deliberately NOT fixed here: with MK4_PTR(iVar2) the pump starts
-     * actually freeing nodes, and MK4_BOOT_MATCH drops from 307200 to 2759
-     * non-zero pixels. Something downstream still holds indices this walk
-     * would now release. Measured 2026-08-31; fix it with the freed-node
-     * owner, not on its own. */
-    NodeUnlink(iVar2);
+    /* NodeUnlink wants a HOST pointer - it compares MK4_UNPTR(node) against
+     * the slot table - so the VA form silently freed nothing and every node
+     * ScaledNeg1SetPause marked with -1 at +0xd8 stayed allocated. On the
+     * character select that is one leaked node per direction event: hold a
+     * key and the 64 slots fill, after which AllocateNode spins forever
+     * looking for a free one. `sample` on the hung process put every stack
+     * in AllocateNode under EventQueueDrainLoop.
+     *
+     * This was left as the VA form on 2026-08-31 because fixing it alone
+     * dropped MK4_BOOT_MATCH from 307200 to 2759 px. That regression was a
+     * symptom of the cosine table and the missing walk-compare predicate,
+     * both since fixed; with those in place the unlink is correct here too
+     * and the boot path is unchanged. */
+    NodeUnlink(MK4_PTR(iVar2));
     iVar2 = iVar1;
   } while( true );
 }
