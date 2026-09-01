@@ -169,14 +169,27 @@ void CharSelect_IdleTimeout_0049e490(void)
 
     g_walkSlot6c = 5;
     g_selectIdle = 5;
-    DualPushSetCallDualPop(0x23d);
-    if ((g_stateBits8c & 1u) != 0) { cs_rearm(IDLE_VA, 1, 0x3c); return; }
-    DualPushSetCallDualPop(0x23e);
-    if ((g_stateBits8c & 1u) != 0) { cs_rearm(IDLE_VA, 1, 0x3c); return; }
-    DualPushSetCallDualPop(0x242);
-    if ((g_stateBits8c & 1u) != 0) { cs_rearm(IDLE_VA, 1, 0x3c); return; }
-    DualPushSetCallDualPop(0x243);
-    if ((g_stateBits8c & 1u) != 0) { cs_rearm(IDLE_VA, 1, 0x3c); return; }
+#ifdef TARGET_SDL
+    /* MK4_TRACE_IDLE: which of the four "a player is still busy" probes
+     * blocks the pickers from being installed. All four clear is the only
+     * way 0x252 / 0x253 ever get created. */
+#define CS_PROBE(T) do { DualPushSetCallDualPop(T); \
+        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *); \
+          static unsigned n_##T; \
+          if (getenv("MK4_TRACE_IDLE") && n_##T < 4) { n_##T++; \
+              SDL_Log("IDLE probe %x -> dirty %u", T, g_stateBits8c & 1u); } } \
+        if ((g_stateBits8c & 1u) != 0) { cs_rearm(IDLE_VA, 1, 0x3c); return; } \
+    } while (0)
+#else
+#define CS_PROBE(T) do { DualPushSetCallDualPop(T); \
+        if ((g_stateBits8c & 1u) != 0) { cs_rearm(IDLE_VA, 1, 0x3c); return; } \
+    } while (0)
+#endif
+    CS_PROBE(0x23d);
+    CS_PROBE(0x23e);
+    CS_PROBE(0x242);
+    CS_PROBE(0x243);
+#undef CS_PROBE
 
     StoreTwoCall((int)PICK1_VA, 0x252);
     StoreTwoCall((int)PICK2_VA, 0x253);

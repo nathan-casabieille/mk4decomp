@@ -34,6 +34,7 @@ extern void MStackPushChainStepIndex(void);
 extern void MStackPush2ChainLLInsert(void);
 
 void MStackPush2LLWalkCompare(void);
+extern void ScaledLoadGuardedJmp(void);
 
 #define g_currentNodeIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_xformEntityIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
@@ -65,6 +66,53 @@ void WalkCompareKind_00406af0(void)
     g_xformDirtyFlags &= ~1u;
     if (g_eventQueueCurMm == MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x30))
         g_xformDirtyFlags |= 1u;
+}
+
+/* 0x00427ee0 (164b) - the sibling of MStackPush2DirtyCall below, and the
+ * other half of the "find one, then act on it" pair: bracket the mstack,
+ * run the same find-first walk, and UNLINK whatever it stopped on.
+ *
+ * It was a weak frontier no-op, which is what live-locks the character
+ * select's attract path. AudioInstallSelf3StateWithSubcall's beat is
+ * unlink-then-prepend: its tail calls this to take the entity out of the
+ * chain at 0x535df0, and its state 1 prepends it again at the head. With
+ * the unlink missing, the prepend runs on a node that is still linked, so
+ * the head's forward pointer ends up pointing at the head - and
+ * Helper_TickAlt, which walks that chain to a 0 terminator, never returns.
+ * MK4_TRACE_CYCLE names it; MK4_TRACE_SELFLINK names the call that made it.
+ *
+ * Dirty bit 2 is the usual scratch: set, then xored back out when the walk
+ * came back with a live node. */
+void DualPushCallBitDispatch(void)
+{
+    unsigned int top;
+
+    top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    MSTACK_AT(top) = g_walkCallback;
+    top = g_matrixStackTop + 1;
+    g_matrixStackTop = top;
+    MSTACK_AT(top) = g_currentNodeIdx;
+
+    MStackPush2LLWalkCompare();
+    if (g_framePauseFlag != 0)
+        return;                       /* the mstack is left pushed - as in the original */
+
+    g_xformDirtyFlags |= 4u;
+    if (g_currentNodeIdx != 0) {
+        g_xformDirtyFlags ^= 4u;
+        ScaledLoadGuardedJmp();
+        if (g_framePauseFlag != 0)
+            return;
+    }
+
+    top = g_matrixStackTop;
+    g_currentNodeIdx = MSTACK_AT(top);
+    top--;
+    g_matrixStackTop = top;
+    g_walkCallback = MSTACK_AT(top);
+    top--;
+    g_matrixStackTop = top;
 }
 
 void MStackPush2LLWalkCompare(void)
@@ -119,6 +167,16 @@ void MStackPush2LLWalkCompare(void)
     g_xformDirtyFlags |= 4u;
     if (node != 0)
         g_xformDirtyFlags ^= 4u;
+#ifdef TARGET_SDL
+    /* MK4_TRACE_WALKFIND: the key the search ran with and the node it landed
+     * on. Two calls with the same key must land on the same node - when they
+     * do not, the caller's unlink and its re-insert are looking at different
+     * entities and the chain self-links. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static unsigned n;
+      if (getenv("MK4_TRACE_WALKFIND") && n < 24) { n++;
+          SDL_Log("WALKFIND key=%x -> node=%x", g_walkCallback, node); } }
+#endif
 }
 
 /* Packed inside MStackPush2LLWalkCompare's symbols.yaml size, but a

@@ -60,9 +60,33 @@ void Helper_TickAlt(void)
 
     g_walkCallback = cur;
     if (cur != 0) {
+#ifdef TARGET_SDL
+        /* MK4_TRACE_CYCLE: the sibling walk is unbounded in the original,
+         * which is correct there because the chain is always acyclic. Under
+         * the port a mis-linked chain turns this into a live-lock inside one
+         * frame - the whole app stops with `sample` pointing here. With the
+         * env set, count the hops and dump the first ones when the walk runs
+         * past any plausible chain length. */
+        unsigned int trc_hops = 0, trc_first[8]; int trc_on;
+        { extern char *getenv(const char *); trc_on = getenv("MK4_TRACE_CYCLE") != 0; }
+#endif
         for (;;) {
             unsigned int walkIdx = stride + cur;         /* ecx = ebp + eax */
             unsigned int sib;
+#ifdef TARGET_SDL
+            if (trc_on) {
+                if (trc_hops < 8) trc_first[trc_hops] = cur;
+                if (++trc_hops > 4096u) {
+                    extern void SDL_Log(const char *, ...);
+                    SDL_Log("CYCLE idx=%x (VA %x) head=%x stride=%x cb=%x "
+                            "node0=%x node4=%x node8=%x",
+                            idx, idx * 4u, g_siblingTable[idx], stride, saved_cb,
+                            g_siblingTable[cur], g_siblingTable[cur + 1],
+                            g_siblingTable[cur + 2]);
+                    break;
+                }
+            }
+#endif
             g_currentNodeIdx = cur;                      /* eax */
             sib = g_siblingTable[walkIdx];               /* esi = node[walkIdx].f0 */
             g_currentNodeIdx = cur;                      /* eax (redundant store) */

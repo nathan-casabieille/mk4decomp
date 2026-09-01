@@ -218,6 +218,19 @@ LAB_0041f6ef:
        * read the slot out of the arena, and MK4_ResolveCode to turn the VA it
        * contains into the native function. */
       ((void (*)(void))MK4_ResolveCode(*(unsigned int *)MK4_PTR(iVar2 + 0xd8)))();
+#ifdef TARGET_SDL
+      /* MK4_TRACE_SELFLINK: the entity list headed at 0x535df0 must never
+       * contain a node whose next (+0) points at itself - Helper_TickAlt
+       * walks it to a 0 terminator and a self-link live-locks the frame.
+       * Checked right after every dispatch so the controller that created
+       * it is the one named. */
+      { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+        static int seen;
+        if (!seen && getenv("MK4_TRACE_SELFLINK")) {
+            unsigned int h = *(unsigned int *)MK4_VA(unsigned int, 0x535df0u);
+            if (h != 0 && *(unsigned int *)MK4_PTR(h * 4u) == h) { seen = 1;
+                SDL_Log("SELFLINK head=%x after cb=%08x", h, g_dispatchSave105); } } }
+#endif
       if ((*(int *)MK4_PTR((iVar2 + 0xd8)) != -1) && (*(int *)MK4_PTR((iVar2 + 0xd8)) != 0)) {
         *(undefined4 *)MK4_PTR((iVar2 + 0xd8)) = MK4_NODE_AT(undefined4, g_baseSel, 8);
         iVar1 = g_baseSel * 4;

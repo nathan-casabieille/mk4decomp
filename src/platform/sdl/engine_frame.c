@@ -495,6 +495,38 @@ void MK4_GameFrame(void)
                   SDL_Log("SEL f%-4d char1=%u phase1=%u slot78=%x", frame, c,
                           *MK4_VA(unsigned int, 0x537f88u),
                           *MK4_VA(unsigned int, 0x542078u)); } } }
+        /* MK4_SELECT_IDLE=<frame>: force the character select's idle counter
+         * (0x5380e4) to 1 at that frame, so the 20-beat / 60-tick attract
+         * timeout in CharSelect_IdleTimeout fires within one beat instead of
+         * 1200 frames. Nothing else changes - the controller still runs its
+         * own probes and its own install. */
+        { const char *at = getenv("MK4_SELECT_IDLE");
+          if (at && frame == atoi(at)) {
+              *MK4_VA(unsigned int, 0x5380e4u) = 1;
+              SDL_Log("select: idle counter forced to 1 at frame %d", frame);
+          } }
+
+        /* MK4_TRACE_NODELIST=<frame>: walk the live controller list once and
+         * print every node's tag, callback and resume word. The dispatch
+         * tally only shows what RUNS; this shows what is installed but gated
+         * out, which is what you need when a screen ignores a button. */
+        { const char *at = getenv("MK4_TRACE_NODELIST");
+          if (at && frame == atoi(at)) {
+              unsigned int n = *MK4_VA(unsigned int, 0x52ab3cu);
+              int guard = 0;
+              while (n != 0 && guard++ < 80) {
+                  SDL_Log("NODE %06x tag=%-5x cb=%08x d8=%08x wt=%-4x st=%x",
+                          n,
+                          *MK4_VA(unsigned int, n + 0xcu),
+                          *MK4_VA(unsigned int, n + 8u),
+                          *MK4_VA(unsigned int, n + 0xd8u),
+                          *MK4_VA(unsigned int, n + 0xe0u),
+                          *MK4_VA(unsigned int, n + 0x84u));
+                  n = *MK4_VA(unsigned int, n + 0xe4u);
+              }
+              SDL_Log("NODE list end (gameMode=%x)",
+                      *MK4_VA(unsigned int, 0x543800u));
+          } }
         if (getenv("MK4_TRACE_NODES") && (frame % 100) == 0)
             SDL_Log("f%-4d nodes=%u queue=%u pad=[%x %x %x %x] gate=[%x %x] "
                     "dirs=%x act=%x", frame,
