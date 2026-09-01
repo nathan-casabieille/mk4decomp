@@ -20,6 +20,7 @@ extern void MK4_StubHit(const char *);
 #define FRONTIER_STUB1(name) \
     __attribute__((weak)) void name(int a) { (void)a; MK4_StubHit(#name); }
 
+FRONTIER_STUB(RoundStartCluster_RemapWalkAndJmp)
 FRONTIER_STUB(TableWalkPause)
 FRONTIER_STUB0(CmpDualStateMatch)
 FRONTIER_STUB(GuardedScaledLookupCallJmp)
@@ -30,7 +31,6 @@ FRONTIER_STUB(Install3WayCountdownGame)
 FRONTIER_STUB(MkIntroFsm)
 FRONTIER_STUB(CallPauseEvtPushJmp)
 FRONTIER_STUB(AiWalkCounterDualCluster)
-FRONTIER_STUB(DualTestDirtyToggle_004282c0)
 FRONTIER_STUB(MStackPushSearchLoop)
 FRONTIER_STUB(GuardedChainDispatch)
 FRONTIER_STUB(DualCounterPhaseGateInstall)
@@ -61,7 +61,6 @@ FRONTIER_STUB(InstallSelfStateMachine6)
 FRONTIER_STUB(MatchStartCluster)
 
 /* the fighter-select band's own still-hollow leaves */
-FRONTIER_STUB(Set5CallPauseTestByteJmpCall)
 
 /* the select screen's own content, above SceneEvalFsm */
 FRONTIER_STUB(GameStateTick)

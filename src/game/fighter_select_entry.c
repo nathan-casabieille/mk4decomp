@@ -196,6 +196,15 @@ void InstallSelfDualBranchInit(void)
 
     MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
 
+#ifdef TARGET_SDL
+    /* MK4_TRACE_DUALBRANCH: every visit to the fighter-select entry and the
+     * fork it takes. This is where the flow parks once the character select
+     * has torn itself down. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static unsigned n;
+      if (getenv("MK4_TRACE_DUALBRANCH") && n < 20) { n++;
+          SDL_Log("DUALBR cmd=%u optVar3=%u", cmd, g_optionsVar3); } }
+#endif
     if (cmd != 0) {                              /* states 1 and 2 share one body */
         TableWalkBoundedCmp(5);
         BootInitGuardedCallChain();
