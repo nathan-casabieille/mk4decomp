@@ -266,7 +266,7 @@ void PendingMatch_DownloadPlayerChar(void)
     /* MK4_TRACE_DL: the select's download state machine, one line a visit. */
     { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
       static unsigned n;
-      if (getenv("MK4_TRACE_DL") && n < 24) { n++;
+      if (getenv("MK4_TRACE_DL") && n < 4000) { n++;
           SDL_Log("DL cmd=%u gate=%x ladder=%x p1=%u p2=%u", cmd,
                   g_dlGate54356c, g_ladderState, g_activeP1, g_activeP2); } }
 #endif

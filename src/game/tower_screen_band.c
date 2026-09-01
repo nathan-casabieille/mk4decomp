@@ -38,6 +38,25 @@
  *     Push0_Push463220_Jmp (0x00463070) - seed a node's transform block from
  *     all of the above and chain into PendingMatch_ThreeMul10Stores.
  *
+ *   MkTowerScreenFsmCluster (0x00462560, its own 240b in front of the two
+ *     packed controllers) - the tower's ROTATION pass: find the cell's node
+ *     and give every node in its +0x40 chain the same +0x64 angle,
+ *     0xfffe6de1 stepped by -0x1921f per cell already climbed.
+ *   StoreCallPauseCmpDirty (0x00464240, 60b) - dirty bit 0 = "the tower is
+ *     taller than the cell list is long", i.e. we are past the top.
+ *   DirtyBitToggleDispatch (0x00463390, 150b) - look the active player's
+ *     character up in the table at 0x542a08, run the scaled store, and on a
+ *     miss prepend a fresh 0x26d node. Dirty bit 2 reports "nothing there".
+ *
+
+ * NOT here, and deliberately: 0x00462df0 (the tower's settle beat) and
+ * AudioInstallSelfStatePush (0x004aa8a0). Both transcribe cleanly and both
+ * let the download FSM reach its state 7, and there the run faults on an
+ * ASLR-varying host address resolved as a code VA - the same class as
+ * a32225ffd but reached through a queued continuation rather than a node
+ * callback, so MK4_TRACE_BADCB does not see it. They go in once that is
+ * found.
+ *
  * ORDER MATTERS, and it cost a revert last time: the pose cluster CONSUMES
  * what these walkers produce, so landing it while they were still weak
  * no-ops made it deref a zero index. Producers first.
@@ -59,6 +78,9 @@ extern void MStackPush2LLWalkCompare(void);
 extern void MStackPushSearchLoop(void);
 extern void Push70CallScaleArith(void);
 extern void DownloadPlayerChar(void);
+extern void Thunk_BootMod6487eClampAndChainMul10(void);
+extern void DispatcherComplex260_FramePauseScaledStore(void);
+extern void MStackCall_MStackPush2ChainPrepend_00406340(void);
 
 #define g_currentNodeIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_xformEntityIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
@@ -90,6 +112,7 @@ extern void DownloadPlayerChar(void);
 #define g_chainBase541fb4  (*(unsigned int *)MK4_VA(unsigned int, 0x541fb4u))
 #define g_chainBase541fb8  (*(unsigned int *)MK4_VA(unsigned int, 0x541fb8u))
 #define g_ladderState      (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_pendingNodeType  (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
 
 #define MSTACK_AT(i) (*(unsigned int *)MK4_PTR((i) * 4u))
 
@@ -321,6 +344,91 @@ void MStackChainOrBitLoop(void)
 void MStackPush2ScaledChainLoop(void)
 {
     tower_chain_reparent(1);
+}
+
+/* 0x00464240 (60b) */
+void StoreCallPauseCmpDirty(void)
+{
+    g_slot70 = g_ladderState;
+    MStackPushSearchLoop();
+    if (g_framePauseFlag != 0)
+        return;
+    if (g_slot70 > g_walkSlot6c)             /* unsigned */
+        g_stateBits8c |= 1u;
+    else
+        g_stateBits8c &= ~1u;
+}
+
+/* 0x00463390 (150b) */
+void DirtyBitToggleDispatch(void)
+{
+    unsigned int id = (g_activeP1 == 1) ? g_charIdP1 : g_charIdP2;
+    unsigned int p;
+
+    g_walkSlot6c = id;
+    p = (0x542a08u >> 2) + id;
+    g_currentNodeIdx = p;
+    g_xformEntityIdx = *MK4_NODE(unsigned int, p);
+    DispatcherComplex260_FramePauseScaledStore();
+    if (g_framePauseFlag != 0)
+        return;
+    if ((g_stateBits8c & 4u) == 0) {
+        g_walkSlot6c = 0x26d;
+        MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x30) = 0x26d;
+        MStackCall_MStackPush2ChainPrepend_00406340();
+        if (g_framePauseFlag != 0)
+            return;
+    }
+    g_stateBits8c |= 4u;
+    if (g_currentNodeIdx != 0)
+        g_stateBits8c ^= 4u;
+}
+
+/* 0x00462560 (240b of its own) - the tower's rotation pass */
+void MkTowerScreenFsmCluster(void)
+{
+    unsigned int slot, entry, n, node;
+    unsigned int v;
+
+    slot = g_chainBase541fb4 + g_ladderIdx;
+    g_currentNodeIdx = slot;
+    n = *MK4_NODE(unsigned int, slot);
+    g_slot70 = n;
+    if (n == 0)
+        return;
+
+    g_walkSlot6c = g_ladderIdx << 2;
+    entry = (g_ladderIdx << 2) + g_chainBase541fb8;
+    g_pendingNodeType = entry;
+    g_walkSlot6c = *MK4_NODE(unsigned int, entry);
+    MStackPush2LLWalkCompare();
+    if (g_framePauseFlag != 0) return;
+    if ((g_stateBits8c & 4u) != 0) return;
+
+    n = n - 1u;
+    v = 0xfffe6de1u;
+    g_walkSlot6c = v;
+    g_slot70 = n;
+    if (n != 0) {
+        do {
+            v -= 0x1921fu;
+            n--;
+        } while (n != 0);
+        g_slot70 = n;                        /* zero by construction */
+        g_walkSlot6c = v;
+    }
+    Thunk_BootMod6487eClampAndChainMul10();
+    if (g_framePauseFlag != 0) return;
+
+    for (;;) {
+        MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x64) = g_walkSlot6c;
+        node = MK4_NODE_AT(unsigned int, g_currentNodeIdx, 0x40);
+        g_stateBits8c |= 4u;
+        g_currentNodeIdx = node;
+        if (node == 0)
+            return;
+        g_stateBits8c ^= 4u;
+    }
 }
 
 /* the tail both pose bodies share: chain state 1 against their OWN VA */

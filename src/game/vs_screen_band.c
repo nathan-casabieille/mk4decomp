@@ -130,7 +130,7 @@ void VsScreenController_00462ac0(void)
      * past the table on purpose - the default is where 0x537f28 gets set. */
     { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
       static unsigned n;
-      if (getenv("MK4_TRACE_VS") && n < 24) { n++;
+      if (getenv("MK4_TRACE_VS") && n < 4000) { n++;
           SDL_Log("VS cmd=%u phase=%u busy=%u", cmd, g_tickFlagF,
                   g_vsBusy537f74); } }
 #endif

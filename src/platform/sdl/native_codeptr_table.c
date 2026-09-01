@@ -2299,7 +2299,8 @@ void *MK4_ResolveCode(unsigned va) {
     { static unsigned seen[32]; static int n; int i;
       for (i = 0; i < n; i++) if (seen[i] == va) return (void*)MK4_CodeMissing;
       if (n < 32) { seen[n++] = va;
-        SDL_Log("unresolved code VA 0x%08x - target not linked natively", va); } }
+        SDL_Log("unresolved code VA 0x%08x - target not linked natively"
+                " (from %p)", va, __builtin_return_address(0)); } }
     return (void*)MK4_CodeMissing;
 }
 
