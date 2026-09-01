@@ -438,3 +438,4 @@ src/game/select_confirm_band.c
 src/game/fighter_select_gate_band.c
 src/game/select_download_band.c
 src/game/vs_screen_band.c
+src/game/tower_screen_band.c
