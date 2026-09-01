@@ -48,6 +48,8 @@ extern void *MK4_ResolveCode(unsigned int va);
 
 void IndirectStateDispatcher(void);
 void IndirectDispatch3Entry(void);
+void GameStateTick(void);
+void IndirectOpcodeDispatch3Entry(void);
 void LinkedListIndirectDirtyToggle(void);
 void SaveStateSnapshot(void);
 void MStackRestore27(void);
@@ -283,6 +285,157 @@ void SelectStepP2_0049f670(void)
     if (g_settlingP2 != 0) { CallSetPause(); return; }
     g_selectSide = 1;
     IndirectStateDispatcher();
+}
+
+/* The VERTICAL steppers. They cannot be the horizontal body with a stride of
+ * five, because the bottom row is only THREE cells wide - RANDOM / GROUP /
+ * HIDDEN at 0x10..0x12 against 1..5, 6..0xa and 0xb..0xf for the portrait
+ * rows - so the wrap carries its own arithmetic.
+ *
+ * 0x49f1f0 - UP:   1 and 5 jump to 0x10; 2, 3 and 4 add 0xe (into the short
+ *   row); 6..0xf subtract 5; 0x10..0x12 subtract 4 (back into the middle of
+ *   row three); anything else stops.
+ * 0x49f3a0 - DOWN: 0xb, 0xf and the whole short row stop; 1..0xa add 5;
+ *   0xc..0xe add 4.
+ *
+ * Both share the horizontal bodies' loop: ask LinkedListIndirectDirtyToggle
+ * whether the candidate is takeable, and if it is not, step again FROM the
+ * candidate. */
+void GameStateTick(void)                          /* 0x49f1f0 - UP */
+{
+    unsigned int entry, handler, v;
+
+    g_xformEntityIdx = g_selectTable;
+    entry = AT(g_selectTable + g_selectSide);
+    g_xformEntityIdx = entry;
+    handler = MK4_NODE_AT(unsigned int, entry, 4);
+    g_currentNodeIdx = handler;
+    ((void (*)(void))MK4_ResolveCode(handler))();
+    if (g_framePauseFlag != 0) return;
+    if ((g_stateBits8c & 1u) == 0) { CallSetPause(); return; }
+
+    v = AT(g_xformEntityIdx);
+    g_currentNodeIdx = v;
+    v = AT(v);
+    g_walkSlot6c = v;
+
+    for (;;) {
+        if (v == 1u || v == 5u) {
+            v = 0x10u;
+        } else if (v == 2u || v == 3u || v == 4u) {
+            v += 0xeu;
+            g_walkSlot6c = v;
+            LinkedListIndirectDirtyToggle();
+            if (g_framePauseFlag != 0) return;
+            if ((g_stateBits8c & 1u) != 0) { CallSetPause(); return; }
+            goto take;
+        } else if (v < 5u) {
+            CallSetPause(); return;
+        } else if (v <= 0xau || v <= 0xfu) {
+            v -= 5u;
+        } else if (v > 0x12u) {
+            CallSetPause(); return;
+        } else {
+            v -= 4u;
+        }
+        g_walkSlot6c = v;
+        LinkedListIndirectDirtyToggle();
+        if (g_framePauseFlag != 0) return;
+        if ((g_stateBits8c & 1u) == 0)
+            break;
+        v = g_walkSlot6c;
+    }
+
+take:
+    AT(g_currentNodeIdx) = g_walkSlot6c;
+    g_slot70 = g_selectSide;
+    RoundWinTransition();
+    if (g_framePauseFlag != 0) return;
+    g_walkSlot6c = MK4_NODE_AT(unsigned int, g_xformEntityIdx, 8);
+    GuardedScaledCall();
+    if (g_framePauseFlag != 0) return;
+    CallSetPause();
+}
+
+void IndirectOpcodeDispatch3Entry(void)           /* 0x49f3a0 - DOWN */
+{
+    unsigned int entry, handler, v;
+
+    g_xformEntityIdx = g_selectTable;
+    entry = AT(g_selectTable + g_selectSide);
+    g_xformEntityIdx = entry;
+    handler = MK4_NODE_AT(unsigned int, entry, 4);
+    g_currentNodeIdx = handler;
+    ((void (*)(void))MK4_ResolveCode(handler))();
+    if (g_framePauseFlag != 0) return;
+    if ((g_stateBits8c & 1u) == 0) { CallSetPause(); return; }
+
+    v = AT(g_xformEntityIdx);
+    g_currentNodeIdx = v;
+    v = AT(v);
+    g_walkSlot6c = v;
+
+    for (;;) {
+        if (v == 0xbu || v == 0x10u || v == 0x11u || v == 0x12u || v == 0xfu) {
+            CallSetPause(); return;
+        }
+        if (v <= 5u || v <= 0xau) {
+            v += 5u;
+        } else if (v > 0xfu) {
+            CallSetPause(); return;
+        } else {
+            v += 4u;
+        }
+        g_walkSlot6c = v;
+        LinkedListIndirectDirtyToggle();
+        if (g_framePauseFlag != 0) return;
+        if ((g_stateBits8c & 1u) == 0)
+            break;
+        v = g_walkSlot6c;
+        if (v == 0xbu) { CallSetPause(); return; }
+    }
+
+    AT(g_currentNodeIdx) = g_walkSlot6c;
+    g_slot70 = g_selectSide;
+    RoundWinTransition();
+    if (g_framePauseFlag != 0) return;
+    g_walkSlot6c = MK4_NODE_AT(unsigned int, g_xformEntityIdx, 8);
+    GuardedScaledCall();
+    if (g_framePauseFlag != 0) return;
+    CallSetPause();
+}
+
+/* 0x49f190 / 0x49f1c0 - the UP stubs; 0x49f340 / 0x49f370 - the DOWN stubs */
+void SelectStepUpP1_0049f190(void)
+{
+    g_walkSlot6c = g_settlingP1;
+    if (g_settlingP1 != 0) { CallSetPause(); return; }
+    g_selectSide = 0;
+    GameStateTick();
+}
+
+void SelectStepUpP2_0049f1c0(void)
+{
+    g_walkSlot6c = g_settlingP2;
+    if (g_settlingP2 != 0) { CallSetPause(); return; }
+    g_selectSide = 1;
+    GameStateTick();
+}
+
+void SelectStepDownP1_0049f340(void)
+{
+    g_walkSlot6c = g_settlingP1;
+    if (g_settlingP1 != 0) { CallSetPause(); return; }
+    g_selectSide = 0;
+    IndirectOpcodeDispatch3Entry();
+}
+
+void SelectStepDownP2_0049f370(void)
+{
+    g_walkSlot6c = g_settlingP2;
+    if (g_settlingP2 != 0) { CallSetPause(); return; }
+    g_selectSide = 1;
+    IndirectOpcodeDispatch3Entry();
 }
 
 #endif /* NON_MATCHING */

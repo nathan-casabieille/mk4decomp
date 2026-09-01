@@ -156,8 +156,8 @@ entries:
   0x49e490: CharSelect_IdleTimeout_0049e490
   0x49e610: CharSelect_PickerP1_0049e610
   0x49e700: CharSelect_PickerP2_0049e700
-  0x49f190: CharSelect_ConfirmP1_0049f190
-  0x49f1c0: CharSelect_ConfirmP2_0049f1c0
+  0x49f190: SelectStepUpP1_0049f190
+  0x49f1c0: SelectStepUpP2_0049f1c0
   0x4a0060: CharSelect_GridP1_004a0060
   0x406af0: WalkCompareKind_00406af0
   0x49ee30: CharSelect_PortraitBlink_0049ee30
@@ -170,3 +170,5 @@ entries:
   0x49f8f0: SelectCellBlocked_0049f8f0
   0x49f4d0: SelectStepLeftP1_0049f4d0
   0x49f500: SelectStepLeftP2_0049f500
+  0x49f340: SelectStepDownP1_0049f340
+  0x49f370: SelectStepDownP2_0049f370

@@ -328,31 +328,8 @@ pops:
     g_matrixStackTop = top - 1;
 }
 
-/* 0x49f190 / 0x49f1c0 - the two CONFIRM controllers, installed by the
- * pickers once a player reaches phase 0x12. Each waits on its own "still
- * settling" flag, then stamps which player it is into 0x535e48 and tails
- * into GameStateTick - still hollow, and unreachable until the cursor steps
- * exist to move a player to phase 0x12. */
-void CharSelect_ConfirmP1_0049f190(void)
-{
-    g_walkSlot6c = *MK4_VA(unsigned int, 0x541d88u);
-    if (*MK4_VA(unsigned int, 0x541d88u) != 0) {
-        CallSetPause();
-        return;
-    }
-    *MK4_VA(unsigned int, 0x535e48u) = 0;
-    GameStateTick();
-}
-
-void CharSelect_ConfirmP2_0049f1c0(void)
-{
-    g_walkSlot6c = *MK4_VA(unsigned int, 0x537ea8u);
-    if (*MK4_VA(unsigned int, 0x537ea8u) != 0) {
-        CallSetPause();
-        return;
-    }
-    *MK4_VA(unsigned int, 0x535e48u) = 1;
-    GameStateTick();
-}
+/* 0x49f190 / 0x49f1c0 turned out NOT to be confirm controllers: they are
+ * the character select's UP direction stubs, and they live in
+ * src/game/select_cursor_step.c with the rest of that family. */
 
 #endif /* NON_MATCHING */

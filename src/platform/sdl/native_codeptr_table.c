@@ -782,8 +782,12 @@ extern int DoubleIndirectFourWaySelect();
 extern int ThrowFlowSetupCluster();
 extern int CharSelect_PortraitBlink_0049ee30();
 extern int ThrowAnimTriggerCluster();
-extern int CharSelect_ConfirmP1_0049f190();
-extern int CharSelect_ConfirmP2_0049f1c0();
+extern int SelectStepUpP1_0049f190();
+extern int SelectStepUpP2_0049f1c0();
+extern int GameStateTick();
+extern int SelectStepDownP1_0049f340();
+extern int SelectStepDownP2_0049f370();
+extern int IndirectOpcodeDispatch3Entry();
 extern int SelectStepLeftP1_0049f4d0();
 extern int SelectStepLeftP2_0049f500();
 extern int IndirectDispatch3Entry();
@@ -1880,8 +1884,12 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x49ed00u, (void*)ThrowFlowSetupCluster},
     {0x49ee30u, (void*)CharSelect_PortraitBlink_0049ee30},
     {0x49efa0u, (void*)ThrowAnimTriggerCluster},
-    {0x49f190u, (void*)CharSelect_ConfirmP1_0049f190},
-    {0x49f1c0u, (void*)CharSelect_ConfirmP2_0049f1c0},
+    {0x49f190u, (void*)SelectStepUpP1_0049f190},
+    {0x49f1c0u, (void*)SelectStepUpP2_0049f1c0},
+    {0x49f1f0u, (void*)GameStateTick},
+    {0x49f340u, (void*)SelectStepDownP1_0049f340},
+    {0x49f370u, (void*)SelectStepDownP2_0049f370},
+    {0x49f3a0u, (void*)IndirectOpcodeDispatch3Entry},
     {0x49f4d0u, (void*)SelectStepLeftP1_0049f4d0},
     {0x49f500u, (void*)SelectStepLeftP2_0049f500},
     {0x49f530u, (void*)IndirectDispatch3Entry},
