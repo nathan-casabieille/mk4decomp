@@ -162,3 +162,11 @@ entries:
   0x406af0: WalkCompareKind_00406af0
   0x49ee30: CharSelect_PortraitBlink_0049ee30
   0x427780: SelectInputRepeat_00427780
+  0x49f640: SelectStepP1_0049f640
+  0x49f670: SelectStepP2_0049f670
+  0x49f870: SelectCellGuard_0049f870
+  0x49f8d0: SelectCellBlocked_0049f8d0
+  0x49f8e0: SelectCellBlocked_0049f8e0
+  0x49f8f0: SelectCellBlocked_0049f8f0
+  0x49f4d0: SelectStepLeftP1_0049f4d0
+  0x49f500: SelectStepLeftP2_0049f500

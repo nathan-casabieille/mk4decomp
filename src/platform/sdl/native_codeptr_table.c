@@ -613,6 +613,7 @@ extern int Push16Call();
 extern int TableLookupCall_g_eventTbl_50();
 extern int GatedWordPushCall();
 extern int TableLookupCall_g_eventTbl_112();
+extern int GuardedScaledCall();
 extern int TableLookupCall_g_eventTbl_65();
 extern int OrDualStore_0048a190();
 extern int ZeroState();
@@ -783,6 +784,17 @@ extern int CharSelect_PortraitBlink_0049ee30();
 extern int ThrowAnimTriggerCluster();
 extern int CharSelect_ConfirmP1_0049f190();
 extern int CharSelect_ConfirmP2_0049f1c0();
+extern int SelectStepLeftP1_0049f4d0();
+extern int SelectStepLeftP2_0049f500();
+extern int IndirectDispatch3Entry();
+extern int SelectStepP1_0049f640();
+extern int SelectStepP2_0049f670();
+extern int IndirectStateDispatcher();
+extern int LinkedListIndirectDirtyToggle();
+extern int SelectCellGuard_0049f870();
+extern int SelectCellBlocked_0049f8d0();
+extern int SelectCellBlocked_0049f8e0();
+extern int SelectCellBlocked_0049f8f0();
 extern int Cmp3DirtyToggle();
 extern int MStackDirtyArgsBit0();
 extern int Cmp2DirtySetOrClear_0049fb10();
@@ -853,6 +865,8 @@ extern int AudioMixerStep();
 extern int StoreDoubleNegPauseSubStore();
 extern int MStackPush8();
 extern int MStackPop8();
+extern int SaveStateSnapshot();
+extern int MStackRestore27();
 extern int SplitHi8Lo24();
 extern int ZeroThreeFields6c();
 extern int ZeroThreeSlots_004ac010();
@@ -1697,6 +1711,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x489f60u, (void*)TableLookupCall_g_eventTbl_50},
     {0x489f90u, (void*)GatedWordPushCall},
     {0x489ff0u, (void*)TableLookupCall_g_eventTbl_112},
+    {0x48a020u, (void*)GuardedScaledCall},
     {0x48a130u, (void*)TableLookupCall_g_eventTbl_65},
     {0x48a190u, (void*)OrDualStore_0048a190},
     {0x48a1b0u, (void*)ZeroState},
@@ -1867,6 +1882,17 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x49efa0u, (void*)ThrowAnimTriggerCluster},
     {0x49f190u, (void*)CharSelect_ConfirmP1_0049f190},
     {0x49f1c0u, (void*)CharSelect_ConfirmP2_0049f1c0},
+    {0x49f4d0u, (void*)SelectStepLeftP1_0049f4d0},
+    {0x49f500u, (void*)SelectStepLeftP2_0049f500},
+    {0x49f530u, (void*)IndirectDispatch3Entry},
+    {0x49f640u, (void*)SelectStepP1_0049f640},
+    {0x49f670u, (void*)SelectStepP2_0049f670},
+    {0x49f6a0u, (void*)IndirectStateDispatcher},
+    {0x49f7b0u, (void*)LinkedListIndirectDirtyToggle},
+    {0x49f870u, (void*)SelectCellGuard_0049f870},
+    {0x49f8d0u, (void*)SelectCellBlocked_0049f8d0},
+    {0x49f8e0u, (void*)SelectCellBlocked_0049f8e0},
+    {0x49f8f0u, (void*)SelectCellBlocked_0049f8f0},
     {0x49fa20u, (void*)Cmp3DirtyToggle},
     {0x49fa50u, (void*)MStackDirtyArgsBit0},
     {0x49fb10u, (void*)Cmp2DirtySetOrClear_0049fb10},
@@ -1937,6 +1963,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4ab750u, (void*)StoreDoubleNegPauseSubStore},
     {0x4ab790u, (void*)MStackPush8},
     {0x4ab860u, (void*)MStackPop8},
+    {0x4aba40u, (void*)SaveStateSnapshot},
+    {0x4abd50u, (void*)MStackRestore27},
     {0x4abfc0u, (void*)SplitHi8Lo24},
     {0x4abfe0u, (void*)ZeroThreeFields6c},
     {0x4ac010u, (void*)ZeroThreeSlots_004ac010},
