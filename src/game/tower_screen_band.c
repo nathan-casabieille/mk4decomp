@@ -49,13 +49,18 @@
  *     miss prepend a fresh 0x26d node. Dirty bit 2 reports "nothing there".
  *
 
- * NOT here, and deliberately: 0x00462df0 (the tower's settle beat) and
- * AudioInstallSelfStatePush (0x004aa8a0). Both transcribe cleanly and both
- * let the download FSM reach its state 7, and there the run faults on an
- * ASLR-varying host address resolved as a code VA - the same class as
- * a32225ffd but reached through a queued continuation rather than a node
- * callback, so MK4_TRACE_BADCB does not see it. They go in once that is
- * found.
+ * STILL held back, and now for a MEASURED reason rather than a guess:
+ * 0x00462df0 (the tower's settle beat) and AudioInstallSelfStatePush
+ * (0x004aa8a0). Both transcribe cleanly and both carry the flow past the
+ * download FSM's state 7 into Screen_ArcadeEnding - and there
+ * MatchInitMonsterChain hunts the record registry at 0x543200, which is
+ * EMPTY on this path. MStackPushTableWalk's scan is unbounded by design (the
+ * original assumes the record is there), so it walks off and faults. With
+ * them in: the confirm path survives 1 run in 4 and MK4_BOOT_MATCH drops
+ * from 10/10 to 3/4. MK4_TRACE_TBLWALK prints the registry head and the
+ * record kind each walk hunts; nothing in the binary writes 0x543200 as an
+ * immediate, so the registrar reaches it through a packed pointer and
+ * finding it is the next job.
  *
  * ORDER MATTERS, and it cost a revert last time: the pose cluster CONSUMES
  * what these walkers produce, so landing it while they were still weak
