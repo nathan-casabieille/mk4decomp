@@ -247,6 +247,7 @@ extern int MStackPop4Rewrite();
 extern int SelectInputRepeat_00427780();
 extern int Push48PreSetTwoStores();
 extern int DualTestDirtyToggle_00427ea0();
+extern int DualPushCallBitDispatch();
 extern int MStackPush2DirtyCall();
 extern int CallPauseClear3CallTriple();
 extern int FourVecFillMStackBracket();
@@ -481,6 +482,10 @@ extern int Thunk_StateInstall_0045d0b0();
 extern int Thunk_StateInstall_0045d450();
 extern int Thunk_StateInstall_0045d4c0();
 extern int Thunk_StateInstall_0045d560();
+extern int SelectConfirmGate_0045d5e0();
+extern int RoundEndLeafRelease_0045d830();
+extern int RoundEndLeafPhase3_0045d840();
+extern int RoundEndLeafRelease_0045d860();
 extern int Thunk_Thunk();
 extern int BitSavePushCallMergePop();
 extern int Thunk_Thunk_0049cbc0_0045e0f0();
@@ -800,6 +805,8 @@ extern int SelectCellGuard_0049f870();
 extern int SelectCellBlocked_0049f8d0();
 extern int SelectCellBlocked_0049f8e0();
 extern int SelectCellBlocked_0049f8f0();
+extern int DispatcherComplex115_Cmp3DirtyToggle_0049f900();
+extern int StateAdd5Capped();
 extern int Cmp3DirtyToggle();
 extern int MStackDirtyArgsBit0();
 extern int Cmp2DirtySetOrClear_0049fb10();
@@ -812,6 +819,9 @@ extern int TripleTestInstallJmp_004a0130();
 extern int AudioStateRemap();
 extern int AudioInstallSelfShiftedChainInit();
 extern int AudioInstall2BodyDualSetup();
+extern int AudioInitInstallSelfPeriodic();
+extern int SelectPeriodicGate_004a0680();
+extern int InstallSelfStride5();
 extern int AudioInstallSelf3StateWithSubcall();
 extern int AudioVoiceSequencerCluster();
 extern int SetJmp_Push16Call_004a1ac0();
@@ -1350,6 +1360,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x427780u, (void*)SelectInputRepeat_00427780},
     {0x427ad0u, (void*)Push48PreSetTwoStores},
     {0x427ea0u, (void*)DualTestDirtyToggle_00427ea0},
+    {0x427ee0u, (void*)DualPushCallBitDispatch},
     {0x427f90u, (void*)MStackPush2DirtyCall},
     {0x428030u, (void*)CallPauseClear3CallTriple},
     {0x428130u, (void*)FourVecFillMStackBracket},
@@ -1584,6 +1595,10 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x45d450u, (void*)Thunk_StateInstall_0045d450},
     {0x45d4c0u, (void*)Thunk_StateInstall_0045d4c0},
     {0x45d560u, (void*)Thunk_StateInstall_0045d560},
+    {0x45d5e0u, (void*)SelectConfirmGate_0045d5e0},
+    {0x45d830u, (void*)RoundEndLeafRelease_0045d830},
+    {0x45d840u, (void*)RoundEndLeafPhase3_0045d840},
+    {0x45d860u, (void*)RoundEndLeafRelease_0045d860},
     {0x45dae0u, (void*)Thunk_Thunk},
     {0x45dc60u, (void*)BitSavePushCallMergePop},
     {0x45e0f0u, (void*)Thunk_Thunk_0049cbc0_0045e0f0},
@@ -1903,6 +1918,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x49f8d0u, (void*)SelectCellBlocked_0049f8d0},
     {0x49f8e0u, (void*)SelectCellBlocked_0049f8e0},
     {0x49f8f0u, (void*)SelectCellBlocked_0049f8f0},
+    {0x49f900u, (void*)DispatcherComplex115_Cmp3DirtyToggle_0049f900},
+    {0x49fa00u, (void*)StateAdd5Capped},
     {0x49fa20u, (void*)Cmp3DirtyToggle},
     {0x49fa50u, (void*)MStackDirtyArgsBit0},
     {0x49fb10u, (void*)Cmp2DirtySetOrClear_0049fb10},
@@ -1915,6 +1932,9 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4a0190u, (void*)AudioStateRemap},
     {0x4a0210u, (void*)AudioInstallSelfShiftedChainInit},
     {0x4a0300u, (void*)AudioInstall2BodyDualSetup},
+    {0x4a0610u, (void*)AudioInitInstallSelfPeriodic},
+    {0x4a0680u, (void*)SelectPeriodicGate_004a0680},
+    {0x4a06f0u, (void*)InstallSelfStride5},
     {0x4a0870u, (void*)AudioInstallSelf3StateWithSubcall},
     {0x4a0d60u, (void*)AudioVoiceSequencerCluster},
     {0x4a1ac0u, (void*)SetJmp_Push16Call_004a1ac0},

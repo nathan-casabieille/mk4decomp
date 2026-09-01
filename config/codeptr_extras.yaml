@@ -172,3 +172,8 @@ entries:
   0x49f500: SelectStepLeftP2_0049f500
   0x49f340: SelectStepDownP1_0049f340
   0x49f370: SelectStepDownP2_0049f370
+  0x4a0680: SelectPeriodicGate_004a0680   # tag 0x250, packed at AudioInitInstallSelfPeriodic+0x70
+  0x45d5e0: SelectConfirmGate_0045d5e0     # work type 0x11, packed in PendingMatch_ZeroNDwords
+  0x45d830: RoundEndLeafRelease_0045d830   # phase-table leaf, packed in RoundEndFsmCluster
+  0x45d840: RoundEndLeafPhase3_0045d840    # phase-table leaf, packed in RoundEndFsmCluster
+  0x45d860: RoundEndLeafRelease_0045d860   # phase-table leaf, packed in RoundEndFsmCluster

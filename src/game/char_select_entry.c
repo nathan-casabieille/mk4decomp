@@ -258,6 +258,17 @@ void PhaseClampInstallSlot(void)
     head = g_fightGroupHead;
     z = (int)MK4_NODE_AT(unsigned int, head, 0x5c);
     g_walkSlot6c = (unsigned int)z;
+#ifdef TARGET_SDL
+    /* MK4_TRACE_ZOOM: the title node's z and its per-tick velocity. State 2
+     * waits for z to fall past -0x120000 and then reverses; state 3 waits
+     * for it to climb back to -0xb0000. A z that stops moving means nothing
+     * is integrating +0x74 into +0x5c for this node. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static unsigned n;
+      if (getenv("MK4_TRACE_ZOOM") && n < 30) { n++;
+          SDL_Log("ZOOM cmd=%u head=%x z=%d vel=%d", cmd, head, z,
+                  (int)MK4_NODE_AT(unsigned int, head, 0x74)); } }
+#endif
 
     if (cmd == 2) {                              /* 0x49e29f */
         if (z < (int)0xffee0000)
