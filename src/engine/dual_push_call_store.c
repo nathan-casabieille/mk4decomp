@@ -44,8 +44,16 @@ extern unsigned int g_dispatchSave98;
 #endif
 
 void DualPushCallStore(void) {
-    StoreTwoCall(&g_dispatchSave1138, 3);
+    /* Both arguments are CODE VAs - the original pushes 0x004234f0 and
+     * 0x00423570 as immediates - and StoreTwoCall stores the first raw into
+     * the node's callback slot. Spelling them as `&g_dispatchSave1138` was
+     * an alias_globals artefact: under MK4_ARENA that takes the HOST address
+     * of the alias, so the node ended up carrying an ASLR-varying pointer
+     * where a VA belongs and the pump reported "unresolved code VA" on a
+     * value that changed every run. MK4_TRACE_BADCB in the pump names the
+     * node; this was tag 2, work type 2. */
+    StoreTwoCall(0x004234f0, 3);
     g_dispatchSave99 = g_currentNodeIdx;
-    StoreTwoCall(&g_dispatchSave1139, 4);
+    StoreTwoCall(0x00423570, 4);
     g_dispatchSave98 = g_currentNodeIdx;
 }

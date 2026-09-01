@@ -206,6 +206,24 @@ LAB_0041f6ef:
       g_framePauseFlag = 0;
       g_dispatchSave105 = *(undefined4 *)MK4_PTR((iVar2 + 0xd8));
 #ifdef TARGET_SDL
+      /* MK4_TRACE_BADCB: a node whose callback is not a plausible code VA.
+       * Under the arena a host pointer written into a code slot shows up
+       * here as an ASLR-varying value, and MK4_ResolveCode then reports it
+       * as "not linked natively" with no way to tell WHICH node carried it.
+       * This names the node, its tag and its work type. */
+      { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+        static unsigned n;
+        unsigned int cb = *(unsigned int *)MK4_PTR(iVar2 + 0xd8);
+        if (getenv("MK4_TRACE_BADCB") && n < 12
+            && (cb < 0x401000u || cb >= 0x4d0000u)) { n++;
+            SDL_Log("BADCB node=%x cb=%08x tag=%x wt=%x st=%x plus8=%08x",
+                    iVar2, cb,
+                    *(unsigned int *)MK4_PTR(iVar2 + 0xc),
+                    *(unsigned int *)MK4_PTR(iVar2 + 0xe0),
+                    *(unsigned int *)MK4_PTR(iVar2 + 0x84),
+                    *(unsigned int *)MK4_PTR(iVar2 + 8)); } }
+#endif
+#ifdef TARGET_SDL
       /* MK4_TRACE_DISPATCH: one line per controller the pump actually runs,
        * so two builds can be diffed to see which callback stops firing. */
       { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
