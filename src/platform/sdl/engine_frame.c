@@ -401,9 +401,18 @@ void MK4_GameFrame(void)
                 *MK4_VA(unsigned int, 0x542054u) = 0x535cfcu >> 2;
                 *MK4_VA(unsigned char, 0x54371cu) = 1;
                 *MK4_VA(unsigned int, 0x542070u) = 0;
+                /* the WORK SLOT carries the character id into the download -
+                 * DualPathDownloadChar and PlayerCharSelector both set it
+                 * before the call, and Helper_DownloadSetup indexes its
+                 * table at 0x4f02d0 by (work slot * 8). Left as whatever the
+                 * previous frame happened to leave, that index walks out of
+                 * the arena and faults at a wild address, which is what made
+                 * this harness fail a run in three with no other symptom. */
+                *MK4_VA(unsigned int, 0x54206cu) = *MK4_VA(unsigned int, 0x537f48u);
                 DownloadPlayerChar();
                 if (*MK4_VA(unsigned int, 0x541e6cu) == 0) {
                     *MK4_VA(unsigned int, 0x542070u) = 1;
+                    *MK4_VA(unsigned int, 0x54206cu) = *MK4_VA(unsigned int, 0x5380e0u);
                     DownloadPlayerChar();
                     if (*MK4_VA(unsigned int, 0x541e6cu) == 0) {
                         *MK4_VA(unsigned char, 0x54371cu) = 0;
