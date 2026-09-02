@@ -139,6 +139,8 @@ extern void MStackPush3LinkedListWalk(void);
 extern void MStackPush4LLWalkPop4(void);
 extern void DirtyDoubleDeref(void);
 extern void ZeroEightFields(void);
+extern void TaggedSceneDispatch(unsigned int tag);
+extern void Cmp9DirtyToggle(void);
 
 #define g_currentNodeIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_xformEntityIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
@@ -496,6 +498,31 @@ void MkTowerScreenFsmCluster(void)
             return;
         g_stateBits8c ^= 4u;
     }
+}
+
+/* 0x00462df0 - the tower's settle beat, packed in
+ * PendingMatch_SetWalkCurCallPauseDirty. First visit re-arms on a 0x3c-tick
+ * beat; every later one asks whether the phase is still 9 and, if so, fires
+ * scene tag 0x4e27d8 before releasing. Held back twice on measurements that
+ * turned out to be clock-seed noise - re-landed with MK4_SEED pinned. */
+void TowerSettleBeat_00462df0(void)
+{
+    unsigned int cmd = MK4_NODE_AT(unsigned int, g_baseSel, 0x84);
+
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
+
+    if (cmd != 0) {
+        Cmp9DirtyToggle();
+        if (g_framePauseFlag != 0) return;
+        if ((g_stateBits8c & 1u) != 0)
+            TaggedSceneDispatch(*MK4_VA(unsigned short, 0x4e27d8u));
+        CallSetPause();                          /* tail-jmp in the original */
+        return;
+    }
+    MK4_NODE_AT(unsigned int, g_baseSel, 8) = 0x00462df0u;
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 1;
+    g_pendingNodeType = 0x3c;
+    g_framePauseFlag = 1;
 }
 
 /* 0x004b8f20 (43b) */
