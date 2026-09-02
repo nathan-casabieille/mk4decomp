@@ -237,6 +237,25 @@ LAB_0041f6ef:
        * contains into the native function. */
       ((void (*)(void))MK4_ResolveCode(*(unsigned int *)MK4_PTR(iVar2 + 0xd8)))();
 #ifdef TARGET_SDL
+      /* MK4_TRACE_BADIDX: a controller that LEAVES a packed index outside the
+       * arena. g_currentNodeIdx and g_xformEntityIdx are VA>>2, so anything
+       * outside [0x100000, 0x8e8000) is not addressable - and the walks that
+       * consume them (BootChainStreamWalkExtract, Helper_TickAlt) multiply by
+       * four and deref with no bound, so the process dies several frames
+       * later somewhere else entirely. This names the controller that left
+       * it, which is the part the backtrace cannot tell you. */
+      { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+        static unsigned n;
+        unsigned int cur = *(unsigned int *)MK4_VA(unsigned int, 0x542044u);
+        unsigned int ent = *(unsigned int *)MK4_VA(unsigned int, 0x542048u);
+        int badCur = (cur != 0 && (cur < 0x100000u || cur >= 0x8e8000u));
+        int badEnt = (ent != 0 && (ent < 0x100000u || ent >= 0x8e8000u));
+        if (getenv("MK4_TRACE_BADIDX") && n < 12 && (badCur || badEnt)) { n++;
+            SDL_Log("BADIDX after cb=%08x node=%x: currentNodeIdx=%08x%s "
+                    "xformEntityIdx=%08x%s", g_dispatchSave105, iVar2,
+                    cur, badCur ? " BAD" : "", ent, badEnt ? " BAD" : ""); } }
+#endif
+#ifdef TARGET_SDL
       /* MK4_TRACE_SELFLINK: the entity list headed at 0x535df0 must never
        * contain a node whose next (+0) points at itself - Helper_TickAlt
        * walks it to a 0 terminator and a self-link live-locks the frame.
