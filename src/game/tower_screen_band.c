@@ -500,6 +500,17 @@ void MkTowerScreenFsmCluster(void)
     }
 }
 
+/* NOT here: PushPopScaledInit343c (0x004aa940) and AudioInstallSelfStatePush
+ * (0x004aa8a0). Both transcribe cleanly and both do unblock the download
+ * FSM's state 7 - without them it cycles 0 -> 6 -> 0 forever. But once the
+ * FSM leaves state 7 the flow unwinds to the mode-select menu and the pump
+ * starts dispatching PACKED INDICES as code (0x14915c, 0x14917d, 0x14d79c
+ * and friends turn up as "unresolved code VA"), and the tower path goes from
+ * 4 of 4 at 246695 px to crashing on most runs. Measured with MK4_SEED
+ * pinned at 1, 2 and 3, so this one is not clock noise. The index-as-callback
+ * bug has to be found first.
+ */
+
 /* 0x00462df0 - the tower's settle beat, packed in
  * PendingMatch_SetWalkCurCallPauseDirty. First visit re-arms on a 0x3c-tick
  * beat; every later one asks whether the phase is still 9 and, if so, fires
