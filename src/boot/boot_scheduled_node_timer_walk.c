@@ -237,6 +237,21 @@ LAB_0041f6ef:
        * contains into the native function. */
       ((void (*)(void))MK4_ResolveCode(*(unsigned int *)MK4_PTR(iVar2 + 0xd8)))();
 #ifdef TARGET_SDL
+      /* MK4_TRACE_REGISTRY: the record registry's first slot at 0x543200 is
+       * a node handle; if a controller leaves a small integer there, the
+       * unbounded hunt in MStackPushTableWalk dereferences it and dies at
+       * arena + 4. Watch it across dispatches and name the writer. */
+      { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+        static unsigned int last = 0xffffffffu; static unsigned n;
+        unsigned int r0 = *(unsigned int *)MK4_VA(unsigned int, 0x543200u);
+        if (getenv("MK4_TRACE_REGISTRY") && r0 != last && n < 16) { n++;
+            SDL_Log("REGISTRY[0] %08x -> %08x after cb=%08x node=%x%s",
+                    last, r0, g_dispatchSave105, iVar2,
+                    (r0 != 0 && r0 < 0x100000u) ? "  <-- NOT A HANDLE" : "");
+            last = r0; }
+        else if (r0 != last) last = r0; }
+#endif
+#ifdef TARGET_SDL
       /* MK4_TRACE_BADIDX: a controller that LEAVES a packed index outside the
        * arena. g_currentNodeIdx and g_xformEntityIdx are VA>>2, so anything
        * outside [0x100000, 0x8e8000) is not addressable - and the walks that

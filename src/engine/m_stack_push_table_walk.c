@@ -228,7 +228,11 @@ void MStackPushTableWalk(void)
          * caller can survive, and names the missing kind when asked. */
         unsigned int guard = 0;
 
-        while (want != *MK4_NODE(unsigned int, rec)) {
+        /* `rec` is checked BEFORE the deref, not after: the first entry is
+         * read outside the loop, so a bad one faulted on the very first
+         * evaluation of the condition and the counter never got a turn. */
+        while (rec >= 0x100000u && rec < 0x8e8000u
+               && want != *MK4_NODE(unsigned int, rec)) {
             if (++guard > 256u) {
 #ifdef TARGET_SDL
                 { extern void SDL_Log(const char *, ...);
