@@ -213,11 +213,38 @@ void MStackPushTableWalk(void)
     cur++;
     g_xformEntityIdx = rec;
     g_currentNodeIdx = cur;
-    while (want != *MK4_NODE(unsigned int, rec)) {
-        rec = *MK4_NODE(unsigned int, cur);
-        cur++;
-        g_xformEntityIdx = rec;
-        g_currentNodeIdx = cur;
+    {
+        /* The original's scan has NO bound - it assumes the registry holds
+         * the record. Under the port a hunt for a kind no native registrar
+         * has entered yet runs off the end of the table, reads a small
+         * integer as a record handle and dereferences it: a packed index of
+         * 1 is VA 4, so the process dies at arena + 4, an address that looks
+         * wild and says nothing about where it came from. Three separate
+         * captures this session landed here.
+         *
+         * 256 is far past anything the registry holds (the live head is
+         * three entries), so the bound never fires on a hunt that would have
+         * succeeded - it only converts a guaranteed crash into a return the
+         * caller can survive, and names the missing kind when asked. */
+        unsigned int guard = 0;
+
+        while (want != *MK4_NODE(unsigned int, rec)) {
+            if (++guard > 256u) {
+#ifdef TARGET_SDL
+                { extern void SDL_Log(const char *, ...);
+                  extern char *getenv(const char *);
+                  static unsigned n;
+                  if (getenv("MK4_TRACE_TBLWALK") && n < 8) { n++;
+                      SDL_Log("tblwalk RAN OFF hunting kind 0x%x - no "
+                              "registrar has entered it", want); } }
+#endif
+                break;
+            }
+            rec = *MK4_NODE(unsigned int, cur);
+            cur++;
+            g_xformEntityIdx = rec;
+            g_currentNodeIdx = cur;
+        }
     }
 
     g_pendingNodeType = *MK4_NODE(unsigned int, g_matrixStackTop);
