@@ -118,6 +118,12 @@ extern unsigned int g_fightAxisPosY;
 /* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
 #ifdef MK4_ARENA
 #include "portable/mem_model.h"
+/* g_matrixStackTop is a REAL host symbol (src/data.c defines it), so a file
+ * that does not alias it here pushes and pops a word in __DATA while the 97
+ * files that DO alias it - including the boot helper that sets the packed
+ * base 0x14e05a, and RecordListIterMStack, this file's own caller - use the
+ * arena slot at 0x4d57ac. Two storages for one stack pointer. */
+#define g_matrixStackTop (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
 #define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
 #define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
 #define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))

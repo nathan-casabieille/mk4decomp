@@ -388,6 +388,14 @@ native-full:
 		-O2 -w $(NATIVE_PORTFLAGS) $(NATIVE_FULL_SRCS) $(SDL_LIBS) -o $(NATIVE_FULL_EXE)
 	@echo "native-full: linked $(NATIVE_FULL_EXE)  [$(words $(NATIVE_FULL_SRCS)) TUs: broad engine closure + weak stub frontier]"
 
+# split-globals-audit: catches a global that is reached BOTH through its
+# MK4_ARENA alias and through the plain extern (a real host symbol in __DATA).
+# Two storages for one game global; nothing warns, and the symptom surfaces
+# far from the cause. Reads object-file relocations, not grep - grep over-
+# reports this by ~80x because most matches are `#ifndef MK4_ARENA` externs.
+split-globals-audit: native-full
+	@build/venv/bin/python tools/decomp/audit_split_globals.py
+
 # native-arena-check: the same build with every arena deref range-checked
 # (MK4_ARENA_CHECK). A VA below the image base WRAPS - `(unsigned)(0-0x400000)`
 # is 0xffc00000 - so a null packed pointer does not fault at zero the way it

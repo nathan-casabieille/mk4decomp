@@ -5,8 +5,23 @@
 #include "game/tick.h"
 #include "portable/mem_model.h"
 
+#ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_baseSel;
 extern unsigned int g_currentNodeIdx;
+#endif
+
+/* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) ---
+ * Both globals this function touches were missing from here, so under the
+ * arena they bound to the HOST symbols in __DATA while the rest of the engine
+ * keeps them at 0x541dc4 and 0x54206c - 165 other files alias g_walkCallback.
+ * The write to g_bootInitSaveSlot went somewhere nobody reads, and the compare
+ * read a stale word, so the guarded call could never fire. */
+#ifdef MK4_ARENA
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_bootInitSaveSlot (*(unsigned int *)MK4_VA(unsigned int, 0x541dc4u))
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#endif
 
 /* @addr 0x00493ed0 (29b)
  *   mov     ecx, [g_walkCallback]
@@ -18,7 +33,9 @@ extern unsigned int g_currentNodeIdx;
  *   jmp     +4
  *   ret
  */
+#ifndef MK4_ARENA
 extern unsigned int g_bootInitSaveSlot;
+#endif
 extern void AnimEventUpdateCluster(void);
 extern unsigned int g_orphanTbl_004f1e20;
 void LoadCmpAddrJmp(void) {

@@ -122,6 +122,12 @@ extern unsigned int g_particleEmitterNode;
 /* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
 #ifdef MK4_ARENA
 #include "portable/mem_model.h"
+/* g_matrixStackTop is a REAL host symbol (src/data.c defines it), so a file
+ * that does not alias it here pushes and pops a word in __DATA while the 97
+ * files that DO alias it - including the boot helper that sets the packed
+ * base 0x14e05a, and RecordListIterMStack, this file's own caller - use the
+ * arena slot at 0x4d57ac. Two storages for one stack pointer. */
+#define g_matrixStackTop (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
 #define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
 #define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
 #define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
@@ -183,51 +189,79 @@ extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
  * set-call pass runs, the particle emitter is linked at +0x3c, and the
  * node is PREPENDED under the fight group's parent. The tail re-signals
  * not-found only when nothing was built. */
+
+#ifdef TARGET_SDL
+/* MK4_TRACE_MSTACK - finding who clears the matrix-stack top.
+ *
+ * g_matrixStackTop (0x4d57ac) is a PACKED index based at 0x538168, so a live
+ * value is 0x14e05a and never small. On the long tower path it intermittently
+ * reads 0 by the time MStackPushTableWalk pushes, and that push then writes
+ * through index 1 - arena + 4. The caller's own pushes just above succeed, so
+ * the clear happens inside this function.
+ *
+ * Sampled at four points rather than one: the first point that reports low is
+ * the statement that did it. getenv is cached in a static because calling it
+ * per sample perturbed the timing enough to hide the fault.
+ *
+ * The earlier version of this probe range-checked g_fightGroupHead for being
+ * OUTSIDE the packed band and could never fire: the handles that make this
+ * function's four stores land ON 0x4d57ac are 0x1355d4, 0x1355d6, 0x1355dc
+ * and 0x1355df, all comfortably INSIDE the band. An in-band handle is exactly
+ * what a stray-store bug looks like, so the check is now against the aliasing
+ * window, not the band. */
+static void SmiMstackSample(int point)
+{
+    extern void SDL_Log(const char *, ...);
+    extern char *getenv(const char *);
+    static int tr = -1;
+    static unsigned n;
+    static const char *where[4] = { "entry", "after MStackPushDispatchBitGate",
+                                    "after head+0x30 store", "before walk" };
+    unsigned int top, head;
+    if (tr < 0) tr = getenv("MK4_TRACE_MSTACK") != 0;
+    if (!tr || n >= 12) return;
+    top = (unsigned int)g_matrixStackTop;
+    head = (unsigned int)g_fightGroupHead;
+    /* a head anywhere in this window aliases 0x4d57ac through one of the
+     * four stores; report it even when the top still looks healthy */
+    if (head >= 0x1355d0u && head <= 0x1355e4u) { n++;
+        SDL_Log("SMI head 0x%06x ALIASES the mstack top (at %s)", head,
+                where[point]); }
+    if (top < 0x100000u) { n++;
+        if (point == 0) {
+            /* who called us matters more than the value: the top is already
+             * clear on entry, so the writer is upstream of this function */
+            extern int dladdr(const void *, void *);
+            struct { const char *fn; void *fb; const char *sn; void *sa; } di;
+            void *ra = __builtin_return_address(0);
+            if (dladdr(ra, (void *)&di) && di.sn)
+                SDL_Log("SMI mstack top low (%08x) at entry; head=%08x;"
+                        " called from %s", top, head, di.sn);
+            else
+                SDL_Log("SMI mstack top low (%08x) at entry; head=%08x;"
+                        " called from %p", top, head, ra);
+        } else
+            SDL_Log("SMI mstack top low (%08x) at %s; head=%08x", top,
+                    where[point], head); }
+}
+#define SMI_SAMPLE(p) SmiMstackSample(p)
+#else
+#define SMI_SAMPLE(p) ((void)0)
+#endif
+
 void StateMachineInit(void)
 {
+    SMI_SAMPLE(0);
     g_lit16_00542074 = g_walkCallback;
-#ifdef TARGET_SDL
-    /* MK4_TRACE_MSTACK: the matrix-stack top at 0x4d57ac is a PACKED index
-     * based at 0x538168 (packed 0x14e05a), so a live value is never small.
-     * A reading below the packed floor here means something in the chain
-     * cleared it, and the next push then writes through index 1 - which is
-     * arena + 4, the wild address the tower-path crash lands on. Print it
-     * on both sides of the gate call so the clearing side is named. */
-    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
-      static unsigned n;
-      if (getenv("MK4_TRACE_MSTACK") && (unsigned int)g_matrixStackTop < 0x100000u
-          && n < 6) { n++; SDL_Log("MSTACK low at SMI entry: %08x",
-                                   (unsigned int)g_matrixStackTop); } }
-#endif
     MStackPushDispatchBitGate();
-#ifdef TARGET_SDL
-    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
-      static unsigned n;
-      if (getenv("MK4_TRACE_MSTACK") && (unsigned int)g_matrixStackTop < 0x100000u
-          && n < 6) { n++; SDL_Log("MSTACK low AFTER MStackPushDispatchBitGate:"
-                                   " %08x", (unsigned int)g_matrixStackTop); } }
-#endif
+    SMI_SAMPLE(1);
     if (g_framePauseFlag != 0) return;
     if (g_xformDirtyFlags & 4u) return;
 
     g_walkCallback = g_lit16_00542074;
-#ifdef TARGET_SDL
-    /* This function stores through g_fightGroupHead FOUR times (+0x30, +0x54,
-     * +0x5c, +0x3c) with no validity check - the original assumes the head is
-     * a live node. A stale or garbage handle turns each of those into a stray
-     * write anywhere in the arena, and one of the addresses it can land on is
-     * the matrix-stack top at 0x4d57ac; clearing that makes the NEXT push go
-     * through index 1 and the process dies at arena + 4 with a backtrace that
-     * points at the push, not at the writer. Name the bad head instead. */
-    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
-      static unsigned n;
-      unsigned int h = (unsigned int)g_fightGroupHead;
-      if (getenv("MK4_TRACE_MSTACK") && (h < 0x100000u || h >= 0x8e8000u)
-          && n < 8) { n++;
-          SDL_Log("SMI head OUT OF BAND: %08x (would store at VA %08x)",
-                  h, (h << 2) + 0x30); } }
-#endif
     MK4_NODE_AT(unsigned int, g_fightGroupHead, 0x30) = g_lit16_00542074;
+    SMI_SAMPLE(2);
+    SMI_SAMPLE(3);
     MStackPushTableWalk();
     if (g_framePauseFlag != 0) return;
 

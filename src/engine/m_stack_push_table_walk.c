@@ -4,6 +4,82 @@
 #include "engine/scenegraph.h"
 #include "game/tick.h"
 
+/* The alias block belongs HERE, above the code. It used to sit near the
+ * bottom of the file, below MStackPushTableWalk, so every global it names
+ * was still declared - by engine/scenegraph.h - at the point the function
+ * used it, and bound to the HOST symbol instead of the arena slot. No
+ * warning: a shadowing #define that arrives too late just does nothing.
+ * g_matrixStackTop and g_currentNodeIdx were both hitting __DATA here while
+ * the other 97 files that alias g_matrixStackTop - RecordListIterMStack,
+ * this function's own caller, among them - used 0x4d57ac. That split stack
+ * pointer is the arena + 4 crash. */
+#ifdef MK4_ARENA
+#include "portable/mem_model.h"
+/* g_matrixStackTop is a REAL host symbol (src/data.c defines it), so a file
+ * that does not alias it here pushes and pops a word in __DATA while the 97
+ * files that DO alias it - including the boot helper that sets the packed
+ * base 0x14e05a, and RecordListIterMStack, this file's own caller - use the
+ * arena slot at 0x4d57ac. Two storages for one stack pointer. */
+#define g_matrixStackTop (*(unsigned int *)MK4_VA(unsigned int, 0x4d57acu))
+/* Three more that were never in this file's alias block at all, so they bound
+ * to the host symbols the engine headers declare. g_xformEntityIdx is the one
+ * that hurts: the record hunt below assigns it, and the anim pipeline
+ * dereferences it as a packed node index - reading a __DATA word the hunt
+ * never wrote leaves a small integer there, which is the arena + 0xc fault. */
+#define g_walkCallback (*(unsigned int *)MK4_VA(unsigned int, 0x54206cu))
+#define g_pendingNodeType (*(unsigned int *)MK4_VA(unsigned int, 0x54204cu))
+#define g_xformEntityIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
+#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
+#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
+#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
+#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
+#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
+#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
+#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
+#define g_bootInitSaveSlot (*(unsigned int *)MK4_VA(unsigned int, 0x541dc4u))
+#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
+#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
+#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
+#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
+#define g_counter_0053a51c (*(unsigned int *)MK4_VA(unsigned int, 0x53a51cu))
+#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
+#define g_dispatchSave1559 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d9cu))
+#define g_dispatchSave1560 (*(unsigned int *)MK4_VA(unsigned int, 0xab4da0u))
+#define g_dispatchSave1561 (*(unsigned int *)MK4_VA(unsigned int, 0xab4da4u))
+#define g_dispatchSave1562 (*(unsigned int *)MK4_VA(unsigned int, 0xab4da8u))
+#define g_dispatchSave1563 (*(unsigned int *)MK4_VA(unsigned int, 0xab4dacu))
+#define g_dispatchSave1564 (*(unsigned int *)MK4_VA(unsigned int, 0xab4db0u))
+#define g_dispatchSave1565 (*(unsigned int *)MK4_VA(unsigned int, 0xab4db4u))
+#define g_dispatchSave1566 (*(unsigned int *)MK4_VA(unsigned int, 0xab4db8u))
+#define g_dispatchState (*(unsigned int *)MK4_VA(unsigned int, 0x53a478u))
+#define g_distRefX (*(unsigned int *)MK4_VA(unsigned int, 0x52ab04u))
+#define g_distRefZ (*(unsigned int *)MK4_VA(unsigned int, 0x52ab08u))
+#define g_dlNalt1 (*(int *)MK4_VA(int, 0x537f48u))
+#define g_dlNalt2 (*(int *)MK4_VA(int, 0x5380e0u))
+#define g_dualB_00538038 (*(unsigned int *)MK4_VA(unsigned int, 0x538038u))
+#define g_dualB_0053803c (*(unsigned int *)MK4_VA(unsigned int, 0x53803cu))
+#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
+#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
+#define g_eventQueueSeed (*(unsigned int *)MK4_VA(unsigned int, 0x52ab10u))
+#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
+#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
+#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
+#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
+#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
+#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
+#define g_hitPhase (*(unsigned int *)MK4_VA(unsigned int, 0x537f30u))
+#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
+#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
+#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
+#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
+#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
+#define g_scaledArgChain (*(unsigned int *)MK4_VA(unsigned int, 0x541e68u))
+#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
+#define g_stateFlag (*(unsigned int *)MK4_VA(unsigned int, 0x537e98u))
+#define g_tickFlagF (*(unsigned int *)MK4_VA(unsigned int, 0x52aac4u))
+#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
+#endif
+
 #ifndef MK4_ARENA   /* aliased below for the relocated targets */
 extern unsigned int g_currentNodeIdx;
 extern unsigned int g_baseSel;
@@ -380,58 +456,6 @@ extern s32 g_dlNalt2;
 #endif
 
 /* --- MK4_ARENA: fixed-VA globals as arena aliases (alias_globals.py) --- */
-#ifdef MK4_ARENA
-#include "portable/mem_model.h"
-#define g_active_00537e88 (*(unsigned int *)MK4_VA(unsigned int, 0x537e88u))
-#define g_active_0053a408 (*(unsigned int *)MK4_VA(unsigned int, 0x53a408u))
-#define g_armedReloadA (*(unsigned int *)MK4_VA(unsigned int, 0x541fa4u))
-#define g_armedReloadB (*(unsigned int *)MK4_VA(unsigned int, 0x541fa8u))
-#define g_audioBankSel (*(unsigned int *)MK4_VA(unsigned int, 0x537f94u))
-#define g_audioBoundNode (*(unsigned int *)MK4_VA(unsigned int, 0x5437f0u))
-#define g_baseSel (*(unsigned int *)MK4_VA(unsigned int, 0x542060u))
-#define g_bootInitSaveSlot (*(unsigned int *)MK4_VA(unsigned int, 0x541dc4u))
-#define g_chainAccumCur (*(unsigned int *)MK4_VA(unsigned int, 0x542078u))
-#define g_cj_00542054 (*(unsigned int *)MK4_VA(unsigned int, 0x542054u))
-#define g_cj_00542058 (*(unsigned int *)MK4_VA(unsigned int, 0x542058u))
-#define g_cj_0054205c (*(unsigned int *)MK4_VA(unsigned int, 0x54205cu))
-#define g_counter_0053a51c (*(unsigned int *)MK4_VA(unsigned int, 0x53a51cu))
-#define g_currentNodeIdx (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
-#define g_dispatchSave1559 (*(unsigned int *)MK4_VA(unsigned int, 0xab4d9cu))
-#define g_dispatchSave1560 (*(unsigned int *)MK4_VA(unsigned int, 0xab4da0u))
-#define g_dispatchSave1561 (*(unsigned int *)MK4_VA(unsigned int, 0xab4da4u))
-#define g_dispatchSave1562 (*(unsigned int *)MK4_VA(unsigned int, 0xab4da8u))
-#define g_dispatchSave1563 (*(unsigned int *)MK4_VA(unsigned int, 0xab4dacu))
-#define g_dispatchSave1564 (*(unsigned int *)MK4_VA(unsigned int, 0xab4db0u))
-#define g_dispatchSave1565 (*(unsigned int *)MK4_VA(unsigned int, 0xab4db4u))
-#define g_dispatchSave1566 (*(unsigned int *)MK4_VA(unsigned int, 0xab4db8u))
-#define g_dispatchState (*(unsigned int *)MK4_VA(unsigned int, 0x53a478u))
-#define g_distRefX (*(unsigned int *)MK4_VA(unsigned int, 0x52ab04u))
-#define g_distRefZ (*(unsigned int *)MK4_VA(unsigned int, 0x52ab08u))
-#define g_dlNalt1 (*(int *)MK4_VA(int, 0x537f48u))
-#define g_dlNalt2 (*(int *)MK4_VA(int, 0x5380e0u))
-#define g_dualB_00538038 (*(unsigned int *)MK4_VA(unsigned int, 0x538038u))
-#define g_dualB_0053803c (*(unsigned int *)MK4_VA(unsigned int, 0x53803cu))
-#define g_dualBitGate (*(unsigned int *)MK4_VA(unsigned int, 0x53a7b0u))
-#define g_eventArmReload (*(unsigned int *)MK4_VA(unsigned int, 0x53a770u))
-#define g_eventQueueSeed (*(unsigned int *)MK4_VA(unsigned int, 0x52ab10u))
-#define g_fightAxisNegX (*(unsigned int *)MK4_VA(unsigned int, 0x535e70u))
-#define g_fightAxisNegY (*(unsigned int *)MK4_VA(unsigned int, 0x535e74u))
-#define g_fightAxisPosX (*(unsigned int *)MK4_VA(unsigned int, 0x535e78u))
-#define g_fightAxisPosY (*(unsigned int *)MK4_VA(unsigned int, 0x535e7cu))
-#define g_fightStateProgress (*(unsigned int *)MK4_VA(unsigned int, 0x535ddcu))
-#define g_gameCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a718u))
-#define g_hitPhase (*(unsigned int *)MK4_VA(unsigned int, 0x537f30u))
-#define g_installOwnerNode (*(unsigned int *)MK4_VA(unsigned int, 0x535cf8u))
-#define g_lastGatedTick (*(unsigned int *)MK4_VA(unsigned int, 0x54358cu))
-#define g_lastGatedValue (*(unsigned int *)MK4_VA(unsigned int, 0x543598u))
-#define g_rangeBase (*(unsigned int *)MK4_VA(unsigned int, 0x53a46cu))
-#define g_rangeSqLimit (*(unsigned int *)MK4_VA(unsigned int, 0x53a180u))
-#define g_scaledArgChain (*(unsigned int *)MK4_VA(unsigned int, 0x541e68u))
-#define g_stateCountdown (*(unsigned int *)MK4_VA(unsigned int, 0x53a3c0u))
-#define g_stateFlag (*(unsigned int *)MK4_VA(unsigned int, 0x537e98u))
-#define g_tickFlagF (*(unsigned int *)MK4_VA(unsigned int, 0x52aac4u))
-#define g_xformScratch94 (*(unsigned int *)MK4_VA(unsigned int, 0x542094u))
-#endif
 
 extern unsigned int g_dataArr_00535cfc;
 extern unsigned int g_dataArr_0053a1d0;

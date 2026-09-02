@@ -175,6 +175,25 @@ next:
     if ((flags & 0x100u) == 0)
         goto no_entity;
 
+#ifdef TARGET_SDL
+    /* The OTHER unguarded deref in this function, and the one the surviving
+     * tower-path crash lands on: an lldb capture faults at arena + 0xc, which
+     * is exactly this expression with g_xformEntityIdx == 3. Unlike `bone`
+     * above this is REPORT-ONLY - no skip, even when the env var is set.
+     * Skipping would convert the fault into a silent wrong-value read and
+     * lose the only evidence of whoever leaves a small integer in the entity
+     * slot; MStackPushTableWalk assigns it from the record hunt, but with
+     * MK4_TRACE_TBLWALK the hunt never reported running off, so the writer is
+     * still unidentified. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int tr = -1; static unsigned n;
+      if (tr < 0) tr = getenv("MK4_TRACE_BADIDX") != 0;
+      if (tr && n < 8 && ((unsigned int)g_xformEntityIdx < 0x100000u
+                          || (unsigned int)g_xformEntityIdx >= 0x8e8000u)) { n++;
+          SDL_Log("BADIDX entity slot = %08x (about to deref VA %08x)",
+                  (unsigned int)g_xformEntityIdx,
+                  (unsigned int)g_xformEntityIdx * 4u); } }
+#endif
     g_walkCallback = *(unsigned int *)MK4_PTR(g_xformEntityIdx * 4u);
 #ifdef TARGET_SDL
     { static int n;
