@@ -237,6 +237,21 @@ LAB_0041f6ef:
        * contains into the native function. */
       ((void (*)(void))MK4_ResolveCode(*(unsigned int *)MK4_PTR(iVar2 + 0xd8)))();
 #ifdef TARGET_SDL
+      /* MK4_TRACE_MSTACK: the matrix-stack pointer at 0x4d57ac is a packed
+       * node index, so its live value is around 0x150000. A controller that
+       * leaves it below the packed floor has cleared it, and the NEXT mstack
+       * push then writes through index 0 or 1 - which is arena + 4, the wild
+       * address three separate crash captures landed on. Naming the callback
+       * that cleared it turns that crash into a one-line report. */
+      { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+        static unsigned n; static int armed;
+        unsigned int top = (unsigned int)g_matrixStackTop;
+        /* 0 is the legitimate value before the stack is set up at boot, so
+         * arm on the first sane reading and only report a fall AFTER that. */
+        if (top >= 0x100000u) armed = 1;
+        if (armed && getenv("MK4_TRACE_MSTACK") && top < 0x100000u && n < 8) { n++;
+            SDL_Log("MSTACK CLEARED to %08x by cb=%08x node=%x", top,
+                    *(unsigned int *)MK4_PTR(iVar2 + 0xd8), iVar2); } }
       /* MK4_TRACE_REGISTRY: the record registry's first slot at 0x543200 is
        * a node handle; if a controller leaves a small integer there, the
        * unbounded hunt in MStackPushTableWalk dereferences it and dies at

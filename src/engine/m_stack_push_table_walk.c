@@ -178,6 +178,13 @@ void MStackPushTableWalk(void)
 {
     unsigned int want, cur, rec;
 
+    /* THE FAULT SITE. g_matrixStackTop (0x4d57ac) is a PACKED index based at
+     * 0x538168, so a live value is around 0x14e05a and never small. On the
+     * long tower path it intermittently reads 0 here, and this push then
+     * writes through index 1 - arena + 4. The clear happens between the
+     * caller's own pushes and this call and has not been pinned down yet;
+     * MK4_TRACE_MSTACK brackets the candidates. Left unguarded on purpose:
+     * a bound here would hide the corruption rather than find its writer. */
     g_matrixStackTop++;
     *MK4_NODE(unsigned int, g_matrixStackTop) = g_currentNodeIdx;
     g_matrixStackTop++;
@@ -218,9 +225,15 @@ void MStackPushTableWalk(void)
          * the record. Under the port a hunt for a kind no native registrar
          * has entered yet runs off the end of the table, reads a small
          * integer as a record handle and dereferences it: a packed index of
-         * 1 is VA 4, so the process dies at arena + 4, an address that looks
-         * wild and says nothing about where it came from. Three separate
-         * captures this session landed here.
+         * 1 is VA 4, so the process would die at arena + 4.
+         *
+         * That is NOT what the arena + 4 crashes on the tower path turned
+         * out to be, though - correcting the earlier note here. Disassembly
+         * at the faulting pc puts every one of those captures on the ENTRY
+         * PUSH at the top of this function, not on the hunt: g_matrixStackTop
+         * read 0, so `*MK4_NODE(..., ++top)` wrote through index 1. The bound
+         * below is still a correct guard for an unbounded scan, it just never
+         * was the thing that was firing.
          *
          * 256 is far past anything the registry holds (the live head is
          * three entries), so the bound never fires on a hunt that would have

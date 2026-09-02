@@ -186,11 +186,47 @@ extern void MStackCall_MStackPush2ChainPrepend_004062f0(void);
 void StateMachineInit(void)
 {
     g_lit16_00542074 = g_walkCallback;
+#ifdef TARGET_SDL
+    /* MK4_TRACE_MSTACK: the matrix-stack top at 0x4d57ac is a PACKED index
+     * based at 0x538168 (packed 0x14e05a), so a live value is never small.
+     * A reading below the packed floor here means something in the chain
+     * cleared it, and the next push then writes through index 1 - which is
+     * arena + 4, the wild address the tower-path crash lands on. Print it
+     * on both sides of the gate call so the clearing side is named. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static unsigned n;
+      if (getenv("MK4_TRACE_MSTACK") && (unsigned int)g_matrixStackTop < 0x100000u
+          && n < 6) { n++; SDL_Log("MSTACK low at SMI entry: %08x",
+                                   (unsigned int)g_matrixStackTop); } }
+#endif
     MStackPushDispatchBitGate();
+#ifdef TARGET_SDL
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static unsigned n;
+      if (getenv("MK4_TRACE_MSTACK") && (unsigned int)g_matrixStackTop < 0x100000u
+          && n < 6) { n++; SDL_Log("MSTACK low AFTER MStackPushDispatchBitGate:"
+                                   " %08x", (unsigned int)g_matrixStackTop); } }
+#endif
     if (g_framePauseFlag != 0) return;
     if (g_xformDirtyFlags & 4u) return;
 
     g_walkCallback = g_lit16_00542074;
+#ifdef TARGET_SDL
+    /* This function stores through g_fightGroupHead FOUR times (+0x30, +0x54,
+     * +0x5c, +0x3c) with no validity check - the original assumes the head is
+     * a live node. A stale or garbage handle turns each of those into a stray
+     * write anywhere in the arena, and one of the addresses it can land on is
+     * the matrix-stack top at 0x4d57ac; clearing that makes the NEXT push go
+     * through index 1 and the process dies at arena + 4 with a backtrace that
+     * points at the push, not at the writer. Name the bad head instead. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static unsigned n;
+      unsigned int h = (unsigned int)g_fightGroupHead;
+      if (getenv("MK4_TRACE_MSTACK") && (h < 0x100000u || h >= 0x8e8000u)
+          && n < 8) { n++;
+          SDL_Log("SMI head OUT OF BAND: %08x (would store at VA %08x)",
+                  h, (h << 2) + 0x30); } }
+#endif
     MK4_NODE_AT(unsigned int, g_fightGroupHead, 0x30) = g_lit16_00542074;
     MStackPushTableWalk();
     if (g_framePauseFlag != 0) return;
