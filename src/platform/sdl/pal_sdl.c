@@ -29,6 +29,17 @@ int MK4_PalInit(const mk4_pal_config *cfg)
     int h = cfg && cfg->height ? cfg->height : 480;
     Uint32 flags = SDL_WINDOW_SHOWN | (cfg && cfg->fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
 
+    /* MK4_HEADLESS=1: run with SDL's dummy video and audio drivers - no
+     * window opens and no audio device is claimed. The game still renders
+     * into its OWN framebuffer at VA 0x1000000, which is where MK4_DUMP_PPM
+     * reads from, so a headless run produces a BYTE-IDENTICAL dump; verified
+     * against a windowed run of the same seed. Meant for batch runs, which
+     * otherwise steal focus from whoever is at the keyboard. */
+    { extern char *getenv(const char *);
+      if (getenv("MK4_HEADLESS")) {
+          SDL_setenv("SDL_VIDEODRIVER", "dummy", 1);
+          SDL_setenv("SDL_AUDIODRIVER", "dummy", 1);
+      } }
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0)
         return -1;
     s_win = SDL_CreateWindow(cfg && cfg->title ? cfg->title : "Mortal Kombat 4",
