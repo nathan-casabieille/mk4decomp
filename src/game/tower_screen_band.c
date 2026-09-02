@@ -531,32 +531,39 @@ void MkTowerScreenFsmCluster(void)
  * what state 3 polls. Measured: 0x53a734 is 1 by frame 1600 and 0x537f28 is 1
  * by frame 2000.
  *
- * WHAT THE TOWER DOES WITH INPUT, measured. The screen is not deaf: state 2
- * installs the select-screen input repeater (0x427780, tag 0x262) alongside
- * the countdown, and pressing a direction during the tower window does reach
- * it - two callbacks appear in the dispatch trace that are absent without a
- * press, Thunk_StateInstall_0045ca80 (which installs the descriptor at
- * 0x4e8bc0) and TripleEntryWordPushChain (0x462780). An arena diff at frame
- * 1100 between a press run and a no-press run shows 112 differing dwords in
- * the globals band, including a shifted table at 0x52ad00..0x52ae60.
+ * THE TOWER SELECT IS INTERACTIVE - left and right rotate the carousel.
  *
- * It is NOT a carousel rotation, though, and the tempting reading here is
- * wrong. Pressing LEFT and pressing RIGHT produce byte-identical arenas, so
- * nothing in that change is direction-dependent - it is the cost of any press
- * at all (the repeater allocating its event node, and the sound that follows).
- * The ladder cursor 0x541fb0 reads 0 with and without the press; the two
- * writers of it in TripleEntryWordPushChain are a save/restore pair around a
- * chain walk, not a move. Pixel counts cannot settle this either way: the
- * tower items have equal silhouettes, so a real rotation would keep the same
- * count, which is why the arena diff is the measurement that matters.
+ * Correcting the previous note here, which said it was not. That note was
+ * measured with the wrong key. P1's directions live at 0x543ab8 and read
+ * W / Z / A / S - up, down, left, RIGHT - so right is S (0x53), not D. The
+ * earlier left-vs-right test pressed A against D, and D is bound to nothing,
+ * which is why the two arenas came back identical.
  *
- * So the direction handling is the piece that is missing. The repeater takes
- * the callback it installs on a press from the controller node's own table
- * (see src/game/select_input_repeat.c - `xformEntityIdx[+0x535e48+1]`), and
- * state 2 installs the repeater with StoreTwoCall(0x00427780, 0x262) and
- * nothing else. Finding what populates that node's +0x38 mask table and its
- * callback table for THIS screen is the next step; the character select's
- * equivalent is the model to compare against.
+ * Done with A against S, the same comparison is decisive: 43 differing dwords,
+ * 40 of them in the globals band, and the table at 0x52ad00..0x52ae60 holds
+ * the SAME set of values at DIFFERENT offsets for the two directions - it has
+ * rotated opposite ways. The rendered frames differ too (frame 1100, seed 1).
+ *
+ * The wiring behind it was there all along, on both screens. Each installs
+ * the repeater with g_fightGroupHead pointing at its own (mask, callback)
+ * table: the character select uses 0x4f29c0, the tower 0x4ea518. The tower's
+ * table maps mask 4 (left) to 0x462780 and mask 8 (right) to 0x462830, with
+ * 0x400 and 0x800 the same pair for player two, and the four button masks
+ * 1 / 2 / 0x100 / 0x200 all pointing at 0x49cbc0.
+ *
+ * What is still missing is the CONFIRM, not the cursor. Those four button
+ * masks share one target, and state 0 only leaves for the fight when bit 0 of
+ * 0x54208c is set - which StoreCallPauseCmpDirty computes from
+ * `g_ladderState > <count MStackPushSearchLoop leaves in 0x54206c>`, a
+ * ladder-progress compare. Nothing observed so far turns a button press on
+ * this screen into a selection, and that is the next thread.
+ *
+ * A measurement note, since this cost a wrong conclusion: pixel counts cannot
+ * referee this screen. The carousel items have equal silhouettes, so a
+ * rotation can leave the count unchanged, and the count moves on its own -
+ * 244151, 244240 and 245357 px all turn up on an untouched tower. Compare
+ * whole arenas, and compare the two DIRECTIONS against each other rather than
+ * against no-press, after checking in 0x543ab8 that both keys are bound.
  *
  * The tower gate is therefore a frame-1000 snapshot, and it takes TWO values:
  * the screen has a two-phase animation whose phase depends on the seed, so
