@@ -74,7 +74,18 @@ void AppInit(HWND hwnd)
     g_appInitFlag1 = 0;
     g_appInitFlag2 = 0;
     if (AppInit_Probe()) {
-        Crt_srand(timeGetTime());
+        /* MK4_SEED=<n>: seed the RNG from the environment instead of the
+         * wall clock, so a run is REPRODUCIBLE. The original seeds from
+         * timeGetTime, and two lines below the seed decides which of two
+         * init paths the app takes - so every launch is a different run, and
+         * on this port some of those paths reach code that is not converted
+         * yet and fault. That is what made MK4_BOOT_MATCH read 10/10 one
+         * hour and 0/8 the next on identical binaries, and what invalidated
+         * a string of A/B measurements in the process. Off by default: the
+         * clock still seeds it unless the variable is set. */
+        { extern char *getenv(const char *); extern int atoi(const char *);
+          const char *seed = getenv("MK4_SEED");
+          Crt_srand(seed ? atoi(seed) : (int)timeGetTime()); }
         if (Crt_rand() & 3) {
             g_appInitFlag1 = 1;
         } else {

@@ -73,7 +73,13 @@ int main(int argc, char **argv)
                     "(engine code will fault on seam access; "
                     "run 'make arena-blob')", arena);
         else
-            SDL_Log("arena: %u bytes from '%s'", g_mk4ArenaSize, arena);
+            /* the BASE matters, not just the size: the arena is a plain
+             * malloc, so ASLR moves it every run, and any code that folds a
+             * host pointer into 32 bits behaves differently depending on
+             * where it landed. Logging it makes "this run failed" and "the
+             * arena was here" correlatable. */
+            SDL_Log("arena: %u bytes from '%s' at %p", g_mk4ArenaSize, arena,
+                    (void *)g_mk4Arena);
     }
 
 #ifdef MK4_NATIVE_FULL

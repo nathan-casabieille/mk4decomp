@@ -152,6 +152,22 @@ next:
     if (bone == 0)
         goto no_entity;
 
+#ifdef TARGET_SDL
+    /* MK4_TRACE_BADIDX: `bone` is a packed VA>>2 and this deref is unbounded,
+     * so a small one - an index of 1 is VA 4 - faults at arena + 4 rather
+     * than at zero, which reads as a wild address and hides where it came
+     * from. Two lldb captures of the MK4_BOOT_MATCH drift landed exactly
+     * here. Report and skip instead of dereferencing. */
+    if (bone < 0x100000u || bone >= 0x8e8000u) {
+        extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+        static unsigned n;
+        if (getenv("MK4_TRACE_BADIDX") && n < 8) { n++;
+            SDL_Log("BADIDX xtract bone=%08x cursor=%08x end=%08x entity=%08x",
+                    bone, cursor, end, g_xformEntityIdx); }
+        if (getenv("MK4_TRACE_BADIDX"))
+            goto advance_entity;
+    }
+#endif
     flags = NODE_W(bone, 0x20);
     g_walkCallback = flags;
     g_pendingNodeType = bone + 0xfu;
