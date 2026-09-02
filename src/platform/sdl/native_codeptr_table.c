@@ -896,6 +896,8 @@ extern int ZeroNDwords();
 extern int InstallChainInitTailJmp();
 extern int ArcadeJoin_Blinker_004a9c00();
 extern int ArcadeMode_JoinScreen_004a9cc0();
+extern int AudioInstallSelfStatePush();
+extern int PushPopScaledInit343c();
 extern int FixedDiv16();
 extern int DivBy();
 extern int DivLongPushCall();
@@ -2042,6 +2044,8 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4a7030u, (void*)InstallChainInitTailJmp},
     {0x4a9c00u, (void*)ArcadeJoin_Blinker_004a9c00},
     {0x4a9cc0u, (void*)ArcadeMode_JoinScreen_004a9cc0},
+    {0x4aa8a0u, (void*)AudioInstallSelfStatePush},
+    {0x4aa940u, (void*)PushPopScaledInit343c},
     {0x4ab2a0u, (void*)FixedDiv16},
     {0x4ab300u, (void*)DivBy},
     {0x4ab320u, (void*)DivLongPushCall},

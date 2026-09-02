@@ -141,6 +141,8 @@ extern void DirtyDoubleDeref(void);
 extern void ZeroEightFields(void);
 extern void TaggedSceneDispatch(unsigned int tag);
 extern void Cmp9DirtyToggle(void);
+extern void MStackPush2ChainLLInsert(void);
+extern void GuardedSetupCallTailJmp(unsigned int a, unsigned int b);
 
 #define g_currentNodeIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542044u))
 #define g_xformEntityIdx   (*(unsigned int *)MK4_VA(unsigned int, 0x542048u))
@@ -182,6 +184,9 @@ extern void Cmp9DirtyToggle(void);
 #define g_proj4d530c       (*(unsigned int *)MK4_VA(unsigned int, 0x4d530cu))
 #define g_slot50           (*(unsigned int *)MK4_VA(unsigned int, 0x542050u))
 #define g_selectSide       (*(unsigned int *)MK4_VA(unsigned int, 0x535e48u))
+#define g_gameMode         (*(unsigned int *)MK4_VA(unsigned int, 0x543800u))
+#define g_worldSlot43c     (*(unsigned int *)MK4_VA(unsigned int, 0x54343cu))
+#define g_slot543550       (*(unsigned int *)MK4_VA(unsigned int, 0x543550u))
 
 #define MSTACK_AT(i) (*(unsigned int *)MK4_PTR((i) * 4u))
 
@@ -500,26 +505,63 @@ void MkTowerScreenFsmCluster(void)
     }
 }
 
-/* NOT here: PushPopScaledInit343c (0x004aa940) and AudioInstallSelfStatePush
- * (0x004aa8a0). Both transcribe cleanly and both do unblock the download
- * FSM's state 7 - without them it cycles 0 -> 6 -> 0 forever.
+/* PushPopScaledInit343c (0x004aa940) and AudioInstallSelfStatePush
+ * (0x004aa8a0) are HERE now, and the record on them needs correcting twice
+ * over. Every earlier note blamed them for crashes and for the pump
+ * dispatching packed indices as code; that was the split-storage globals in
+ * MStackPushTableWalk and the MK4_ANIM_PACK gate around Anim_LoadPackFile,
+ * both fixed. Then they were held back a second time for "taking the flow off
+ * the tower to the mode-select menu", on the assumption that staying on the
+ * tower was the correct behaviour. It is not. The download FSM's own trace
+ * settles it: 0 -> 2 -> 3 (1239 visits, the tower held) and then 0 -> 6 -> 0
+ * -> 6 forever. State 6 chains to state 7 through AudioInstallSelfStatePush,
+ * so with that a hollow stub the continuation is simply lost and the machine
+ * falls back to state 0, which re-enters state 6. The screen that looked like
+ * a passing tower was a machine deadlocked between two states.
  *
- * They no longer crash. Every earlier note here blamed them for crashes and
- * for the pump dispatching packed indices as code; that was wrong. Those were
- * the split-storage globals in MStackPushTableWalk and the MK4_ANIM_PACK gate
- * around Anim_LoadPackFile, both fixed since. On the stable base the two
- * functions run clean on all of seeds 1-8.
+ * State 7 is past the state table on purpose and takes the shared exit at
+ * 0x00462433: ScenegraphWalk, BootInitGuardedCallChain, then
+ * StackPopDispatchTagged - it tears the tower down and RELEASES the
+ * controller to its parent, which is what returns the flow to the mode-select
+ * menu. That is the attract-mode timeout, not a wrong turn.
  *
- * What they actually do is deterministic: the flow renders the tower, holds
- * it to about frame 1700, then unwinds to the mode-select menu - 207241 px on
- * 8 of 8 seeds, with or without a START press on the tower screen. That reads
- * like the attract-mode timeout, and it may well be correct, but the tower's
- * own confirm is not wired yet so there is nothing to compare it against. Two
- * reasons they stay out until it is: there is no evidence the timeout is
- * right, and the tower gate would drop from 246695 px on 8 of 8 seeds to a
- * frame-1100 snapshot that varies between 244151 and 245357 by seed. Wiring
- * the tower's confirm is what unblocks the question.
+ * The tower's exit was already fully wired: VsCountdown_00462660 counts
+ * 15 x 6 x 10 ticks, installs VsScreenController_00462ac0, which installs
+ * VsResultLatch_00462e60, which sets 0x53a734 after a 10-tick beat, which is
+ * what state 3 polls. Measured: 0x53a734 is 1 by frame 1600 and 0x537f28 is 1
+ * by frame 2000.
+ *
+ * The tower gate is therefore a frame-1000 snapshot, and it takes TWO values:
+ * the screen has a two-phase animation whose phase depends on the seed, so
+ * 244151 and 245357 px both mean "the tower rendered". The old single number
+ * of 246695 px was the frozen frame.
  */
+void PushPopScaledInit343c(void)
+{
+    unsigned int top = g_matrixStackTop + 1;
+    g_matrixStackTop = top; MSTACK_AT(top) = g_currentNodeIdx;
+    g_currentNodeIdx = g_worldSlot43c;
+    MStackPush2ChainLLInsert();
+    g_worldSlot43c = 0;
+    top = g_matrixStackTop; g_currentNodeIdx = MSTACK_AT(top);
+    g_matrixStackTop = top - 1;
+}
+void AudioInstallSelfStatePush(void)
+{
+    unsigned int cmd = MK4_NODE_AT(unsigned int, g_baseSel, 0x84);
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
+    if (cmd != 0) { g_gameMode = 0; StackPopDispatchTagged(); return; }
+    if (g_worldSlot43c != 0) { StackPopDispatchTagged(); return; }
+    PushPopScaledInit343c();
+    GuardedSetupCallTailJmp(0x004d2250u, 0x640000u);
+    g_worldSlot43c = g_currentNodeIdx;
+    g_slot543550 = 0x100;
+    g_gameMode = 0x004aa8a0u;
+    MK4_NODE_AT(unsigned int, g_baseSel, 8) = 0x004aa8a0u;
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 1;
+    g_pendingNodeType = 4;
+    g_framePauseFlag = 1;
+}
 
 /* 0x00462df0 - the tower's settle beat, packed in
  * PendingMatch_SetWalkCurCallPauseDirty. First visit re-arms on a 0x3c-tick
