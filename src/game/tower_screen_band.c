@@ -502,13 +502,23 @@ void MkTowerScreenFsmCluster(void)
 
 /* NOT here: PushPopScaledInit343c (0x004aa940) and AudioInstallSelfStatePush
  * (0x004aa8a0). Both transcribe cleanly and both do unblock the download
- * FSM's state 7 - without them it cycles 0 -> 6 -> 0 forever. But once the
- * FSM leaves state 7 the flow unwinds to the mode-select menu and the pump
- * starts dispatching PACKED INDICES as code (0x14915c, 0x14917d, 0x14d79c
- * and friends turn up as "unresolved code VA"), and the tower path goes from
- * 4 of 4 at 246695 px to crashing on most runs. Measured with MK4_SEED
- * pinned at 1, 2 and 3, so this one is not clock noise. The index-as-callback
- * bug has to be found first.
+ * FSM's state 7 - without them it cycles 0 -> 6 -> 0 forever.
+ *
+ * They no longer crash. Every earlier note here blamed them for crashes and
+ * for the pump dispatching packed indices as code; that was wrong. Those were
+ * the split-storage globals in MStackPushTableWalk and the MK4_ANIM_PACK gate
+ * around Anim_LoadPackFile, both fixed since. On the stable base the two
+ * functions run clean on all of seeds 1-8.
+ *
+ * What they actually do is deterministic: the flow renders the tower, holds
+ * it to about frame 1700, then unwinds to the mode-select menu - 207241 px on
+ * 8 of 8 seeds, with or without a START press on the tower screen. That reads
+ * like the attract-mode timeout, and it may well be correct, but the tower's
+ * own confirm is not wired yet so there is nothing to compare it against. Two
+ * reasons they stay out until it is: there is no evidence the timeout is
+ * right, and the tower gate would drop from 246695 px on 8 of 8 seeds to a
+ * frame-1100 snapshot that varies between 244151 and 245357 by seed. Wiring
+ * the tower's confirm is what unblocks the question.
  */
 
 /* 0x00462df0 - the tower's settle beat, packed in
