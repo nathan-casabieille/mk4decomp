@@ -331,10 +331,38 @@ void LoadGeoAssetsStateMachine(void)
      * Up for one, down for the other. Faking the same Enter the harness fakes,
      * MK4_NativeFakeKeyPress(0x0d, 2), does not move it.
      *
-     * So the real flow must satisfy state 3 through the direction word, and
-     * the open question is what writes 0x4d50b4 during a load - nothing in
-     * this phase does today. */
+     * The direction word is NOT the way out, correcting that guess. Re-read
+     * the state: the `(v & 0xc) || (v & 0xc00)` path toggles the probe to the
+     * other player, links the finished group and ends in `goto group` - it
+     * re-enters state 3. ONLY TripleCallByteCheck exits to state 4.
+     *
+     * That gate has three openings: TestQueueGateState (the Enter skip,
+     * refused while g_gsmActiveFlag is up), InputPollFlagBits (player one's
+     * pad) and InputPollFlagBitsHalf (player two's). InputPollFlagBits
+     * returns 1 on `pad & 1`, and an action press DOES set that pad - with U
+     * pressed at frame 2400, 0x4d50b8 reads 1 at frames 2400 AND 2401.
+     *
+     * And yet MK4_TRACE_GATE3, which prints whenever state 3 runs with a
+     * non-zero pad byte, never fires once in a 4200-frame run. The loader and
+     * the input publisher disagree about when that byte is set: the publish
+     * at engine_frame.c assigns 0x4d50b8 fresh every frame, so a two-frame
+     * fake press is only visible inside the window the publisher and GameTick
+     * share. Working out that intra-frame ordering is the next step - the
+     * write is not missing, the reader is looking at the wrong moment. */
     case 3:
+#ifdef TARGET_SDL
+    /* MK4_TRACE_GATE3: state 3's exit test, evaluated. The pad byte at
+     * 0x4d50b8 reads 1 for two frames after an action press and
+     * InputPollFlagBits returns 1 on `a & 1`, so TripleCallByteCheck should
+     * open - print what it actually returns alongside the raw inputs. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int tr = -1; static unsigned n;
+      if (tr < 0) tr = getenv("MK4_TRACE_GATE3") != 0;
+      if (tr && n < 12) { unsigned char pad = *MK4_VA(unsigned char, 0x4d50b8u);
+          if (pad != 0) { n++;
+              SDL_Log("GATE3 pad=%02x dir=%08x -> TripleCallByteCheck=%d",
+                      pad, g_audioStateDisp50b4, TripleCallByteCheck()); } } }
+#endif
         if (TripleCallByteCheck() != 0) {
             SetJmp_Push16Call_004a1ad0();
             goto rearm4;
