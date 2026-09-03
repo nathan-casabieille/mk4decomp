@@ -122,33 +122,55 @@ static void root_state4(void)
     root_chain(5, PhaseInstallSelf3Step);
 }
 
-/* WHERE THIS FSM ACTUALLY GETS TO, measured 2026-09-02.
+/* WHERE THIS FSM GETS TO, and why that is correct - measured 2026-09-02.
  *
- * Across a full front-end run - mode select, character select, the tower, and
- * the tower's timeout - MK4_TRACE_ROOT shows this machine running states 0, 1
- * and 2 exactly once each and then never again. That is not a stall. State 2
- * chains to state 3 THROUGH the menu controller PendingMatch_004a2a80, so the
- * root parks until the menu releases, and the menu never does: the harness
- * force-drives past it. Everything the front-end has been doing since - the
- * select, the download FSM, the tower - runs on a branch installed UNDERNEATH
- * a root still waiting on the menu.
+ * Across a full front-end run - mode select, character select, tower, timeout
+ * - MK4_TRACE_ROOT shows this machine running states 0, 1 and 2 once each and
+ * then never again. State 2 chains to state 3 THROUGH the menu controller
+ * PendingMatch_004a2a80, so the root parks until the menu releases.
  *
- * That is why the tower's state-7 release lands back on the mode-select menu
- * rather than in a match. The release pops the tagged continuation and the
- * menu, still parked as state 2's chain target, simply resumes. Nothing is
- * broken there; the flow is returning to exactly where the root left it.
+ * It parks for the whole run, and that is CORRECT - correcting the earlier
+ * note here, which blamed the harness for driving past the menu. The menu
+ * does not release when you pick a mode. Its state 4 (INPUT) reads the chosen
+ * row's HANDLER from `mm_row(sel) - 8`, stores it in g_modeHandler (0x543574)
+ * and chains to state 5; states 5/6/7 (LAUNCH) then CALL that handler through
+ * MK4_ResolveCode. Only the default/back-out path calls
+ * StackPopDispatchTagged. So a mode runs UNDERNEATH a parked menu underneath a
+ * parked root, by design, and the root reaching state 3 - the live frame,
+ * SceneFrameStepWithInputs(0, 1) - is what happens when the player backs OUT
+ * of the menu, not when they enter a mode.
  *
- * Root state 3 is the live frame - QuadCallPhase2(0x16, ...) then
- * SceneFrameStepWithInputs(0, 1) - so the route to an actual match runs
- * through the menu RELEASING, not through anything on the tower screen.
+ * What is wrong is that the menu never steps aside. Its state sequence over
+ * one run is 0 0 3 4x107 5 0 3 4x696: it reaches LAUNCH once, calls the ARCADE
+ * handler (g_modeHandler reads 0x4a9cc0, the real one), and then REBUILDS and
+ * goes back to taking input for the remaining 696 visits while the select and
+ * the tower are on screen. The mechanism that should have hidden it is the
+ * pump's gameMode filter, and gameMode (0x543800) reads 0 at frames 400, 1000
+ * and 2000 - ungated, so everything runs.
  *
- * Second measurement, worth knowing before trusting any front-end trace: this
- * FSM is not dispatched at all without MK4_MAIN_MENU. That flag sets gameMode
- * (0x543800) to -1, and it is the gameMode filter that lets the root node
- * through the pump. On a plain boot MK4_TRACE_ROOT prints nothing whatsoever.
- * So the front-end work so far has been running with the harness holding
- * gameMode open, which is a scaffold, not the game's own condition - see the
- * lesson in feedback_port_scaffold_env_gates.
+ * The only code that writes gameMode anywhere in the arcade handler's range is
+ * AudioInstallSelfStatePush (0x4aa8a0), landed in a5b1c8f9f: its fresh path
+ * sets gameMode to its own VA, which narrows the pump to its own nodes, and
+ * its re-entry path clears it back to 0 and releases. So the window in which
+ * the arcade flow owns the world is exactly the gap between those two visits,
+ * and today that window closes long before the tower is done. That gap is the
+ * thing to measure next.
+ *
+ * Separately: this FSM is not dispatched at all without MK4_MAIN_MENU, which
+ * sets gameMode to -1 at frame 40 - on a plain boot MK4_TRACE_ROOT prints
+ * nothing at all. And that -1 lasts exactly ONE frame: gameMode reads
+ * 0xffffffff at frame 40 and 0 at frame 41, so whatever the root's first
+ * states run clears it immediately, and the pump has been ungated ever since.
+ * Nothing in the port writes 0 there except AudioInstallSelfStatePush, which
+ * has not run that early, so the writer is still in a naked function.
+ *
+ * A warning for whoever looks: do NOT hunt that write by scanning the image
+ * for `c7 05 00 38 54 00 00 00 00 00`. That pattern has a false positive at
+ * file+0x1f47a which is really the middle of a `mov [edx*4+0x48], ecx` run in
+ * the 0x41f460 helper cluster - the bytes straddle two instructions. Only six
+ * of the eight "hits" that search reports are real writes, and every one of
+ * those writes -1 or a controller VA, never 0. Disassemble each candidate
+ * before believing it.
  */
 void PendingMatch_LeaPlus22StoreSelf(void)
 {
