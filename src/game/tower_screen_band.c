@@ -551,12 +551,35 @@ void MkTowerScreenFsmCluster(void)
  * 0x400 and 0x800 the same pair for player two, and the four button masks
  * 1 / 2 / 0x100 / 0x200 all pointing at 0x49cbc0.
  *
- * What is still missing is the CONFIRM, not the cursor. Those four button
- * masks share one target, and state 0 only leaves for the fight when bit 0 of
- * 0x54208c is set - which StoreCallPauseCmpDirty computes from
- * `g_ladderState > <count MStackPushSearchLoop leaves in 0x54206c>`, a
- * ladder-progress compare. Nothing observed so far turns a button press on
- * this screen into a selection, and that is the next thread.
+ * WHAT START DOES, and what state 4 actually is.
+ *
+ * The tower's table carries DIRECTION masks only - 1/2 (up/down) both point
+ * at 0x49cbc0, which is a bare `jmp ScaledNeg1SetPause`, an explicit no-op -
+ * so no button can reach the screen through the repeater. START is handled
+ * somewhere else, and it is not inert: isolated against another BOUND key
+ * (START against UP, so both arms are a real press) it moves 16373 dwords,
+ * allocates seven buffers around 0x8fcb18, flips the active-controller slot
+ * 0x535d14 from the repeater 0x427780 to the countdown 0x462660, and - the
+ * interesting one - writes 2 into 0x537f10.
+ *
+ * 0x537f10 is exactly the slot the tower reads. g_chainBase541fb4 holds
+ * 0x14dfc4, which is VA 0x537f10, and MkTowerScreenFsmCluster opens with
+ * `slot = g_chainBase541fb4 + g_ladderIdx; if (*slot == 0) return;`. So the
+ * selection IS being recorded. What consumes it is the open question: the
+ * flow still times out to the mode-select menu at 207241 px whether START was
+ * pressed or not, differing only in the intermediate frame.
+ *
+ * And state 4 is NOT the fight - correcting the guess in the note this
+ * replaces. State 0 reaches it only when bit 0 of 0x54208c is set, which
+ * StoreCallPauseCmpDirty computes as `g_ladderState > <the count
+ * MStackPushSearchLoop leaves in 0x54206c>`. Read off the live arena: the
+ * ladder list head is at VA 0x4ea5b0 and holds SEVEN entries, the seven tower
+ * levels, and g_ladderState is 1. So the test is `1 > 7` - it is the
+ * ladder-COMPLETE check, and state 4 is the arcade ending. (Which is why
+ * Screen_ArcadeEnding turned up in the crash backtraces earlier.) State 0's
+ * body always chains to state 6 regardless, so the download FSM never starts
+ * a match from this screen at all; whatever does must sit above it, in the
+ * root flow FSM that the state-7 release returns to.
  *
  * A measurement note, since this cost a wrong conclusion: pixel counts cannot
  * referee this screen. The carousel items have equal silhouettes, so a
