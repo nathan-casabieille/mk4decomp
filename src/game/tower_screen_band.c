@@ -551,6 +551,19 @@ void MkTowerScreenFsmCluster(void)
  * 0x400 and 0x800 the same pair for player two, and the four button masks
  * 1 / 2 / 0x100 / 0x200 all pointing at 0x49cbc0.
  *
+ * WHAT CONSUMES THE SELECTION: BitShiftExtract (0x464090), reached from
+ * PlayerCharSelector (0x4636d0) at its first instruction, which state 0's
+ * tower body already calls. It reads the ladder list entry for the current
+ * level, `[entry + 0xc] + (g_ladderState - 1)`, takes the packed dword there,
+ * and shifts it right by `counter * 8` where counter is the value at
+ * `g_chainBase541fb4 + g_ladderIdx` - VA 0x537f10, the very slot START sets.
+ * Two ids a byte apart come out into g_costumeId and g_costumeMirror. So the
+ * tower selection is a BYTE INDEX into the level's packed opponent record:
+ * picking a tower picks who you fight, and that path is already wired.
+ *
+ * The reason the flow still ends at the menu is one level up and has nothing
+ * to do with this screen - see the note at the top of src/boot/root_flow_fsm.c.
+ *
  * WHAT START DOES, and what state 4 actually is.
  *
  * The tower's table carries DIRECTION masks only - 1/2 (up/down) both point

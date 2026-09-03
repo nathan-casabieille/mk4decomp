@@ -122,6 +122,34 @@ static void root_state4(void)
     root_chain(5, PhaseInstallSelf3Step);
 }
 
+/* WHERE THIS FSM ACTUALLY GETS TO, measured 2026-09-02.
+ *
+ * Across a full front-end run - mode select, character select, the tower, and
+ * the tower's timeout - MK4_TRACE_ROOT shows this machine running states 0, 1
+ * and 2 exactly once each and then never again. That is not a stall. State 2
+ * chains to state 3 THROUGH the menu controller PendingMatch_004a2a80, so the
+ * root parks until the menu releases, and the menu never does: the harness
+ * force-drives past it. Everything the front-end has been doing since - the
+ * select, the download FSM, the tower - runs on a branch installed UNDERNEATH
+ * a root still waiting on the menu.
+ *
+ * That is why the tower's state-7 release lands back on the mode-select menu
+ * rather than in a match. The release pops the tagged continuation and the
+ * menu, still parked as state 2's chain target, simply resumes. Nothing is
+ * broken there; the flow is returning to exactly where the root left it.
+ *
+ * Root state 3 is the live frame - QuadCallPhase2(0x16, ...) then
+ * SceneFrameStepWithInputs(0, 1) - so the route to an actual match runs
+ * through the menu RELEASING, not through anything on the tower screen.
+ *
+ * Second measurement, worth knowing before trusting any front-end trace: this
+ * FSM is not dispatched at all without MK4_MAIN_MENU. That flag sets gameMode
+ * (0x543800) to -1, and it is the gameMode filter that lets the root node
+ * through the pump. On a plain boot MK4_TRACE_ROOT prints nothing whatsoever.
+ * So the front-end work so far has been running with the harness holding
+ * gameMode open, which is a scaffold, not the game's own condition - see the
+ * lesson in feedback_port_scaffold_env_gates.
+ */
 void PendingMatch_LeaPlus22StoreSelf(void)
 {
     unsigned int st;
@@ -138,7 +166,7 @@ void PendingMatch_LeaPlus22StoreSelf(void)
         /* MK4_TRACE_ROOT: the state the game-flow master runs each frame. */
         { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
           static unsigned n;
-          if (getenv("MK4_TRACE_ROOT") && n < 60) { n++;
+          if (getenv("MK4_TRACE_ROOT") && n < 400) { n++;
               SDL_Log("ROOT st=%u pause=%u", st, g_framePauseFlag); } }
 #endif
 
