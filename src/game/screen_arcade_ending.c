@@ -80,6 +80,26 @@
  * between those two calls, and THAT is the remaining gap - a dozen
  * instructions wide, in one function, rather than anywhere in the front end.
  *
+ * WHY STATE 5 NEVER ARRIVES - the pump's dispatch rule. Reading the node loop
+ * in boot_scheduled_node_timer_walk.c: a node is dispatched only when its
+ * 16-bit timer at +0xdc, decremented once per pass, falls below 1. At that
+ * moment the pump copies the node's +8 into +0xd8 and calls it. So a
+ * controller's re-arm - "+8 = me, g_pendingNodeType = my delay" - is a
+ * REQUEST for a later visit, and anything that writes +8 on the same node
+ * before that timer expires silently replaces it.
+ *
+ * That is what happens to the round countdown. It re-arms +8 = 0x421b00 on
+ * node 0x14f8da = VA 0x53e368, and 0x421b00 is dispatched ZERO times across a
+ * full run. 0x53e368 is the shared ROOT SCREEN slot: eight distinct callbacks
+ * run on it in one run - 0x461ca0, 0x4a2a80, 0x49dea0, 0x4a9cc0, 0x432110,
+ * 0x49e1c0, this sequencer, 0x426000 - and only nine nodes exist in total,
+ * because AllocateNode takes the first slot whose +0xd8 is zero and a
+ * released root controller frees slot 0 straight back into that scan.
+ *
+ * So the node-collision diagnosis in 1226c0eb7 was right about the COUNTDOWN.
+ * eba657364 corrected it for the loading TICK, which really does get a node
+ * of its own, and I over-generalised that correction to the whole chain.
+ *
  * OLDER NOTE, kept for the node-sharing detail it establishes:
  * With the round countdown's own probe fixed to report its first visits (it
  * only printed every 40th, so a controller that runs once and stops was
