@@ -243,6 +243,22 @@ LAB_0041f6ef:
        * contains into the native function. */
       ((void (*)(void))MK4_ResolveCode(*(unsigned int *)MK4_PTR(iVar2 + 0xd8)))();
 #ifdef TARGET_SDL
+      /* MK4_TRACE_SLOT0: node 0x53e368 is the shared root screen slot - eight
+       * different controllers run on it in one front-end pass. A controller
+       * that re-arms it (+8 = self) only gets its visit if nothing else
+       * writes +8 before the node's +0xdc timer expires, so a lost re-arm is
+       * invisible unless the slot's +8 is watched. Report every change, with
+       * the callback that had just run. */
+      { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+        static int tr = -1; static unsigned int last; static unsigned n;
+        unsigned int plus8;
+        if (tr < 0) tr = getenv("MK4_TRACE_SLOT0") != 0;
+        plus8 = *(unsigned int *)MK4_VA(unsigned int, 0x53e368u + 8u);
+        if (tr && plus8 != last && n < 300) { n++;
+            SDL_Log("SLOT0 +8 %08x -> %08x after cb=%08x (timer=%d)", last,
+                    plus8, *(unsigned int *)MK4_PTR(iVar2 + 0xd8),
+                    (int)*(short *)MK4_VA(short, 0x53e368u + 0xdcu)); }
+        last = plus8; }
       /* MK4_TRACE_GAMEMODE: the pump's filter at 0x543800 decides which
        * controllers run at all - 0 means "no filter", so everything
        * installed anywhere is dispatched, the mode-select menu included,

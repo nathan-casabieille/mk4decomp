@@ -80,6 +80,30 @@
  * between those two calls, and THAT is the remaining gap - a dozen
  * instructions wide, in one function, rather than anywhere in the front end.
  *
+ * AND WHY IT STILL DOES NOT ARRIVE ONCE THE LOADING CHAIN RUNS. With the
+ * three front-end diagnostics driving the loading screen through all three of
+ * its arms, MK4_TRACE_SLOT0 shows the root slot's +8 changing 17 times in a
+ * 4200-frame run, and the LAST of those is this sequencer re-arming the
+ * countdown: `+8 004203000 -> 00421b00 ... (timer=0)`. That re-arm survives to
+ * the end of the run - nothing overwrites it - and 0x421b00 is still
+ * dispatched zero times.
+ *
+ * The node is gated out, not overwritten. By then gameMode reads 0x4a38d0:
+ * LoadGeoAssetsStateMachine has claimed the world through the tick's arm 3,
+ * and the pump's gate is
+ *
+ *     gameMode == 0 || gameMode == node+0xd8 || node+0xe0 == 0x11
+ *
+ * The root slot's +0xd8 is 0x420300 and its work type is 0x1000, so it
+ * matches none of the three and the pump walks past it. At the end of a
+ * 4200-frame run the pump is dispatching exactly one node, 0x53e9c0 with
+ * cb=0x4a38d0, 2084 times - the geo loader spinning and never finishing.
+ *
+ * So the chain now stops one step further along than it used to, and in a
+ * different place: not a lost re-arm, but a world claimed by a loader that
+ * does not complete. Why LoadGeoAssetsStateMachine never finishes is the next
+ * question, and it is a fresh one.
+ *
  * WHY STATE 5 NEVER ARRIVES - the pump's dispatch rule. Reading the node loop
  * in boot_scheduled_node_timer_walk.c: a node is dispatched only when its
  * 16-bit timer at +0xdc, decremented once per pass, falls below 1. At that
