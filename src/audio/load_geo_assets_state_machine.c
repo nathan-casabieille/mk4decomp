@@ -360,11 +360,20 @@ void LoadGeoAssetsStateMachine(void)
      * files that use the name without aliasing are all OUTSIDE the native
      * build and split-globals-audit passes.
      *
-     * So something inside MainLoopStep, between the publish and this read,
-     * zeroes the arena byte. The obvious candidate is the game's own input
-     * poller re-publishing from an empty device state and overwriting what
-     * the harness staged - which would mean the pad has to be staged from
-     * inside the frame, not before it. That is the next thing to check. */
+     * Bracketed, the clear is inside GameLogicStep. MK4_TRACE_PAD reports the
+     * byte still UP at MainLoopStep's entry on frames 2400-2411, and the same
+     * probe in the node pump never sees it non-zero at all - so it dies
+     * between those two points. BeginFrame is renderer dispatch only, and
+     * Input_TickPlayers, bracketed either side, never changes it (it may not
+     * even run - GameLogicStep gates it on GameStateMachine(0) returning 0).
+     * That leaves GameStateMachine(0) itself, XformChainAdvance, or the two
+     * audio calls.
+     *
+     * Worth knowing before hunting it: the ORIGINAL never writes 0x4d50b8 in
+     * any direct encoding. A sweep of the image for every mov/or/and form,
+     * byte and dword, finds ZERO write-form references - the game only reads
+     * this aggregate, and the native publisher is its only writer. So the
+     * clear is indirect: a computed address, or a block wipe covering it. */
     case 3:
 #ifdef TARGET_SDL
     /* MK4_TRACE_GATE3: state 3's exit test, evaluated. The pad byte at

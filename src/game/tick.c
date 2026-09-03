@@ -29,7 +29,25 @@ void GameLogicStep(void)
     ++g_frameCounter;
     g_gameStateResult = GameStateMachine(0);
     if (g_gameStateResult == 0) {
+#ifdef TARGET_SDL
+        /* MK4_TRACE_PAD: bracket Input_TickPlayers. The native publisher
+         * stages 0x4d50b8 before the frame and it is still up at
+         * MainLoopStep's entry, but the node pump never sees it - so print
+         * either side of the game's own input tick. */
+        { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+          extern unsigned int g_mk4FrameNo;
+          static int tr = -1; static unsigned n;
+          unsigned char before, after;
+          if (tr < 0) tr = getenv("MK4_TRACE_PAD") != 0;
+          before = *MK4_VA(unsigned char, 0x4d50b8u);
+          Input_TickPlayers();
+          after = *MK4_VA(unsigned char, 0x4d50b8u);
+          if (tr && before != after && n < 12) { n++;
+              SDL_Log("PAD f=%u Input_TickPlayers %02x -> %02x", g_mk4FrameNo,
+                      before, after); } }
+#else
         Input_TickPlayers();
+#endif
     }
     Audio_UpdateChannels();
     Audio_TimerTick();

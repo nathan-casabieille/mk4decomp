@@ -30,6 +30,18 @@ void MainLoopStep(void)
     int counter;
     int sleep_ms;
 
+#ifdef TARGET_SDL
+    /* MK4_TRACE_PAD: bracket the input aggregate. It reads 1 in
+     * engine_frame.c after the publish and 0 by the time the node pump runs,
+     * on the same frame - this says which side of MainLoopStep loses it. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      extern unsigned int g_mk4FrameNo;
+      static int tr = -1; static unsigned n;
+      if (tr < 0) tr = getenv("MK4_TRACE_PAD") != 0;
+      if (tr && n < 20) { unsigned char pad = *MK4_VA(unsigned char, 0x4d50b8u);
+          if (pad != 0) { n++;
+              SDL_Log("PAD f=%u MainLoopStep entry pad=%02x", g_mk4FrameNo, pad); } } }
+#endif
     if (!(g_appFlags & 1)) {
         g_appFlags |= 1;
         g_lastFrameTime = QueryMicroTimer();

@@ -243,6 +243,22 @@ LAB_0041f6ef:
        * contains into the native function. */
       ((void (*)(void))MK4_ResolveCode(*(unsigned int *)MK4_PTR(iVar2 + 0xd8)))();
 #ifdef TARGET_SDL
+      /* MK4_TRACE_PAD: the input aggregate at 0x4d50b8. The ORIGINAL never
+       * writes it in any direct encoding - a full sweep of the image finds
+       * zero write-form references - so the game only reads it and the native
+       * publisher is its only writer. Yet it reads 1 in engine_frame.c and 0
+       * in the loader on the SAME frame, so something between them clears it
+       * indirectly. Report every change with the callback that had just run. */
+      { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+        static int tr = -1; static unsigned char last; static unsigned n;
+        unsigned char pad;
+        if (tr < 0) tr = getenv("MK4_TRACE_PAD") != 0;
+        pad = *(unsigned char *)MK4_VA(unsigned char, 0x4d50b8u);
+        if (tr && pad != last && n < 30) { n++;
+            extern unsigned int g_mk4FrameNo;
+            SDL_Log("PAD f=%u %02x -> %02x after cb=%08x node=%x", g_mk4FrameNo,
+                    last, pad, *(unsigned int *)MK4_PTR(iVar2 + 0xd8), iVar2); }
+        last = pad; }
       /* MK4_TRACE_SLOT0: node 0x53e368 is the shared root screen slot - eight
        * different controllers run on it in one front-end pass. A controller
        * that re-arms it (+8 = self) only gets its visit if nothing else
