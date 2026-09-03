@@ -1,3 +1,4 @@
+unsigned int g_mk4FrameNo;
 /**
  * SDL2 native entry point + main loop (TARGET=sdl).
  *

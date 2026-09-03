@@ -474,6 +474,10 @@ void MK4_GameFrame(void)
          * original's DirectInput layer, not by MK4's own code - so the
          * backend publishes them, once per frame, before the logic runs. */
         { extern void MK4_NativeInputPublish(void); MK4_NativeInputPublish(); }
+        /* the frame number, exported so probes deep in the engine can say
+         * WHEN they ran - "this never saw the input" and "this never ran
+         * while the input was up" look identical without it */
+        { extern unsigned int g_mk4FrameNo; g_mk4FrameNo = (unsigned int)frame; }
         { extern void MK4_NativeFakeKeyTick(void); MK4_NativeFakeKeyTick(); }
         /* MK4_TRACE_NODES: the node allocator's live count and the spare
          * chain cursor. A controller that re-queues its continuation on

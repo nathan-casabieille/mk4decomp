@@ -342,13 +342,29 @@ void LoadGeoAssetsStateMachine(void)
      * returns 1 on `pad & 1`, and an action press DOES set that pad - with U
      * pressed at frame 2400, 0x4d50b8 reads 1 at frames 2400 AND 2401.
      *
-     * And yet MK4_TRACE_GATE3, which prints whenever state 3 runs with a
-     * non-zero pad byte, never fires once in a 4200-frame run. The loader and
-     * the input publisher disagree about when that byte is set: the publish
-     * at engine_frame.c assigns 0x4d50b8 fresh every frame, so a two-frame
-     * fake press is only visible inside the window the publisher and GameTick
-     * share. Working out that intra-frame ordering is the next step - the
-     * write is not missing, the reader is looking at the wrong moment. */
+     * And yet MK4_TRACE_GATE3 never sees a non-zero pad in 4200 frames. With
+     * the frame number exported (g_mk4FrameNo, set in engine_frame.c right
+     * after the input publish) the contradiction is exact rather than
+     * suspected:
+     *
+     *   frame 2448, sampled in engine_frame.c   0x4d50b8 = 1
+     *   frame 2448, read here inside MainLoopStep  0x4d50b8 = 0
+     *
+     * Same byte, same frame, both through MK4_VA. The loader is running
+     * inside the press window - the key script fires at 2400..2458 and this
+     * probe reports f=2448 - so it is not a case of missing the window.
+     *
+     * It is NOT split storage either. src/data.c does define
+     * g_audioStateMask50b8 as a host symbol while input_poll_flag_bits.c
+     * aliases it to the arena, which looks like the usual trap, but the four
+     * files that use the name without aliasing are all OUTSIDE the native
+     * build and split-globals-audit passes.
+     *
+     * So something inside MainLoopStep, between the publish and this read,
+     * zeroes the arena byte. The obvious candidate is the game's own input
+     * poller re-publishing from an empty device state and overwriting what
+     * the harness staged - which would mean the pad has to be staged from
+     * inside the frame, not before it. That is the next thing to check. */
     case 3:
 #ifdef TARGET_SDL
     /* MK4_TRACE_GATE3: state 3's exit test, evaluated. The pad byte at
@@ -359,9 +375,12 @@ void LoadGeoAssetsStateMachine(void)
       static int tr = -1; static unsigned n;
       if (tr < 0) tr = getenv("MK4_TRACE_GATE3") != 0;
       if (tr && n < 12) { unsigned char pad = *MK4_VA(unsigned char, 0x4d50b8u);
-          if (pad != 0) { n++;
-              SDL_Log("GATE3 pad=%02x dir=%08x -> TripleCallByteCheck=%d",
-                      pad, g_audioStateDisp50b4, TripleCallByteCheck()); } } }
+          static unsigned visits;
+          if (pad != 0 || ++visits % 300 == 0) { n++;
+              { extern unsigned int g_mk4FrameNo;
+                SDL_Log("GATE3 f=%u pad=%02x dir=%08x -> TripleCallByteCheck=%d",
+                        g_mk4FrameNo, pad, g_audioStateDisp50b4,
+                        TripleCallByteCheck()); } } } }
 #endif
         if (TripleCallByteCheck() != 0) {
             SetJmp_Push16Call_004a1ad0();
