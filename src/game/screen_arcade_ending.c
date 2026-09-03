@@ -15,6 +15,32 @@
  * weak stub it consumed its command and advanced nothing, so the whole boot
  * chain idled at its entry state forever.
  *
+ * WHERE IT STALLS TODAY (measured 2026-09-03). MK4_TRACE_SAE over a full
+ * front-end run - menu, character select, tower, timeout - shows this
+ * sequencer running states 0, 2, 3 and 4 exactly once each, between frames
+ * 800 and 1200 as the tower comes up, and then nothing. It never reaches
+ * state 5.
+ *
+ * That matters more than it looks, because state 4 is where the match is
+ * actually requested: it ends with StoreTwoCall(0x4a42e0, 0x4000), the
+ * loading tick - the identical call MK4_BOOT_MATCH makes by hand to put a
+ * fight on screen. So the front end DOES get as far as asking for the match.
+ * The request is then dropped: neither this sequencer nor the loading tick
+ * appears in the node list at frames 1150 or 1300, where only the four tower
+ * controllers are live, and MK4_TRACE_GAMEMODE never sees Screen_Loading
+ * claim the world (which it would, at 0x4a4438, the moment it ran).
+ *
+ * The stall is the state-4 to state-5 hand-off. sae_arm_round() ends with
+ * sae_chain(5) followed by Install3WayCountdownGame() and a pause, so state 5
+ * only arrives when that sub-controller's chain unwinds. Install3WayCountdown-
+ * Game is NOT the hollow one - it is converted in game/round_intro_band.c,
+ * that file is in the native build, and MK4_TRACE_STUBS records no stub hit
+ * for it - so the break is somewhere under it, in what it installs or what
+ * that in turn waits on.
+ *
+ * This is the single link between the front end and a playable match, and it
+ * is now narrowed to one hand-off rather than a direction.
+ *
  * Control-flow conventions, shared with the other sequencer twins
  * (round_setup_states.c, load_geo_assets_state_machine.c):
  *
