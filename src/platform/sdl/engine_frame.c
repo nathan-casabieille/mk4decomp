@@ -1053,6 +1053,24 @@ void MK4_GameFrame(void)
                       GameStateMachine(2));
               SDL_Log("frontend-gsm: gsmActiveFlag now %08x",
                       *MK4_VA(unsigned int, 0xab4334u)); } }
+        /* MK4_FRONTEND_TICK=<frame>: queue a SECOND loading tick. The tick at
+         * 0x4a42e0 is a one-shot - it clears its own command word and never
+         * re-arms +8 - and it services exactly ONE work flag per visit: the
+         * world re-init at 0x543810 first (that arm ends at 0x4a4494 with a
+         * ret, so it can never fall through to the audio arm), then the audio
+         * publish at 0x543814 on a LATER tick. Nothing in the front-end flow
+         * schedules that later tick; SAE's state 4 installs only the first.
+         * This is the experiment that tests whether a second one is all that
+         * is missing to reach AudioInitSequence. Diagnostic only. */
+        { const char *at = getenv("MK4_FRONTEND_TICK");
+          if (at && frame == atoi(at)) {
+              extern void StoreTwoCall(int, int);
+              StoreTwoCall(0x4a42e0, 0x4000);
+              SDL_Log("frontend-tick: second loading tick queued at frame %d"
+                      " (worldFlag=%08x audioFlag=%08x gsm=%08x)", frame,
+                      *MK4_VA(unsigned int, 0x543810u),
+                      *MK4_VA(unsigned int, 0x543814u),
+                      *MK4_VA(unsigned int, 0xab4334u)); } }
         if (getenv("MK4_BOOT_MATCH")) {
             const char *at = getenv("MK4_BOOT_FIGHT");
             if (at && frame == atoi(at)) {
