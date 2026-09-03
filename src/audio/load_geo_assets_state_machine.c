@@ -310,6 +310,30 @@ void LoadGeoAssetsStateMachine(void)
         g_tickW1 = 0x100;
         goto arm3;
 
+    /* WHERE THE FRONT-END PATH STOPS (measured 2026-09-03). Driven from the
+     * front end rather than MK4_BOOT_MATCH, this loader walks 0 once, 1 ten
+     * times, 2 thirteen times, and then SPINS IN STATE 3 - 2016 visits in a
+     * 4200-frame run - never reaching 4 or 5.
+     *
+     * State 3 has exactly two exits and neither fires. TripleCallByteCheck,
+     * the press-start gate, stays 0; and g_audioStateDisp50b4 (0x4d50b4, the
+     * direction word - bits 2/3 are P1 left/right, 10/11 are P2's) reads 0x0
+     * at every sample, so the `(v & 0xc) || (v & 0xc00)` player-toggle path is
+     * never taken either. Pressing left, right, start or Enter through
+     * MK4_KEYS changes nothing.
+     *
+     * The press gate is worse than merely shut, it is CONTRADICTORY with what
+     * got us here. Our own boot-match harness records that g_gsmActiveFlag is
+     * "exactly what makes TestQueueGateState refuse the Enter key - the
+     * loading screen's only working skip". But g_gsmActiveFlag is also what
+     * the loading tick requires before it will re-enter Screen_Loading at all
+     * (0x4a442b), which is how this loader gets installed in the first place.
+     * Up for one, down for the other. Faking the same Enter the harness fakes,
+     * MK4_NativeFakeKeyPress(0x0d, 2), does not move it.
+     *
+     * So the real flow must satisfy state 3 through the direction word, and
+     * the open question is what writes 0x4d50b4 during a load - nothing in
+     * this phase does today. */
     case 3:
         if (TripleCallByteCheck() != 0) {
             SetJmp_Push16Call_004a1ad0();

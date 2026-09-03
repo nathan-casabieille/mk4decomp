@@ -1071,6 +1071,16 @@ void MK4_GameFrame(void)
          * one work flag. MK4_MAIN_MENU raises 0x543810 and 0x543814 directly
          * at frame 8 and never 0x543818, which is why the chain has always
          * stopped. Diagnostic only. */
+        /* MK4_FRONTEND_PRESS=<frame>: the loading screen's press-start gate,
+         * answered the way MK4_BOOT_PRESS does it. TripleCallByteCheck reads
+         * an aggregate that MK4_KEYS does not feed - pressing Enter through
+         * the normal key script leaves the loader's state 3 spinning - so use
+         * the same fake-press entry point. Diagnostic only. */
+        { const char *at = getenv("MK4_FRONTEND_PRESS");
+          if (at && frame == atoi(at)) {
+              extern void MK4_NativeFakeKeyPress(int, int);
+              MK4_NativeFakeKeyPress(0x0d, 2);
+              SDL_Log("frontend-press: Enter faked at frame %d", frame); } }
         { const char *at = getenv("MK4_FRONTEND_WORK");
           if (at && frame == atoi(at)) {
               /* the dirty flags alone do nothing here - publishing them into
