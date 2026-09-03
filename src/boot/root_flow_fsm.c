@@ -148,38 +148,40 @@ static void root_state4(void)
  * select tears it down, which is why the screens look right - but it is
  * still live and still reading the pad.
  *
- * The gameMode filter is NOT what should have hidden it, correcting the
- * earlier note here twice over. First, gameMode = -1 is a deliberate
- * ONE-FRAME SENTINEL: game_tick.c consumes it (`if (g_gameMode == -1)
- * g_gameMode = 0;`) and says so in its own header comment, so MK4_MAIN_MENU's
- * -1 at frame 40 reading 0 at frame 41 is correct behaviour, not a lost
- * write, and there is no missing writer in a naked function to hunt.
+ * gameMode IS the mode-long gate, and the loading screen is what uses it.
+ * Correcting the note this replaces, which called the filter a dead end on
+ * the strength of seeing only AudioInstallSelfStatePush's one-beat handshake.
+ * Disassembling every write to 0x543800 in the image gives seven, all real:
  *
- * Second, gameMode IS claimed, just not for long. MK4_TRACE_GAMEMODE over a
- * full run reports exactly four transitions:
+ *   0x42007a  mov [0x543800], 0           the -1 sentinel reset (GameTick)
+ *   0x4a3c23  mov [0x543800], 0x4a42e0    LoadGeoAssetsStateMachine claims
+ *   0x4a4237  mov [0x543800], -1          Screen_Loading
+ *   0x4a4438  mov [0x543800], 0x4a42e0    Screen_Loading claims
+ *   0x4a44d0  mov [0x543800], 0x4a38d0    hands the world to the geo loader
+ *   0x4aa8c0  mov [0x543800], ecx         AudioInstallSelfStatePush
+ *   0x4aa90b  mov [0x543800], eax         AudioInstallSelfStatePush
  *
- *     0        -> 004aa8a0  after cb=00461ca0   (the download FSM)
- *     004aa8a0 -> 0         after cb=004aa8a0   (AudioInstallSelfStatePush)
- *     0        -> ffffffff  after cb=ffffffff   (a release-me node)
- *     ffffffff -> 0         after cb=004200b0   (GameTick's sentinel reset)
+ * So Screen_Loading (tick 0x4a42e0) and LoadGeoAssetsStateMachine (0x4a38d0)
+ * hold the world for as long as a load runs, handing it back and forth
+ * between themselves. That IS the mode-long gate. We never observe it because
+ * the loading screen never runs in this flow - and it is exactly what
+ * MK4_BOOT_MATCH installs by hand, StoreTwoCall(0x4a42e0, 0x4000), to get a
+ * fight on screen. So the missing link between the front end and a match is
+ * whatever should install that controller once a tower is confirmed.
  *
- * AudioInstallSelfStatePush claims the world on its fresh path and gives it
- * back on its very next visit - a one-beat handshake, not a mode-long gate,
- * and the transcription matches the original's bytes so it is not a port
- * defect either. Whatever keeps the menu from eating input during a mode is
- * some other mechanism; the gameMode filter is a dead end for it.
+ * The -1 remains a deliberate ONE-FRAME SENTINEL: game_tick.c does
+ * `if (g_gameMode == -1) g_gameMode = 0;` and its header says so, so
+ * MK4_MAIN_MENU's -1 at frame 40 reading 0 at frame 41 is correct.
  *
- * Separately: this FSM is not dispatched at all without MK4_MAIN_MENU - on a
- * plain boot MK4_TRACE_ROOT prints nothing whatsoever. That flag's gameMode
- * write is what admits the root node, for the single frame the sentinel lives.
+ * FILE OFFSET TO VA IN MK4.EXE IS +0x400C00, NOT +0x400000. Getting that
+ * wrong is what produced the "these are all false positives" claim in the
+ * commit before this one: every candidate got disassembled 0xC00 bytes early,
+ * landed mid-instruction in unrelated code, and the conclusion came out
+ * inverted. Check the mapping against a known find_ref anchor before trusting
+ * any offset arithmetic on the image.
  *
- * A trap for whoever looks here: do NOT hunt gameMode writes by scanning the
- * image for `c7 05 00 38 54 00 ...`. That search reports eight hits and every
- * one checked has been a false positive whose bytes straddle two instructions
- * - file+0x1f47a is the middle of a `mov [edx*4+0x48], ecx` run in the
- * 0x41f460 cluster, and two more land inside stores to 0x5437fc, a different
- * global entirely. Use MK4_TRACE_GAMEMODE, which names the callback that had
- * just run, or disassemble every candidate before believing it.
+ * This FSM is also not dispatched at all without MK4_MAIN_MENU - on a plain
+ * boot MK4_TRACE_ROOT prints nothing whatsoever.
  */
 void PendingMatch_LeaPlus22StoreSelf(void)
 {
