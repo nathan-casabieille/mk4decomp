@@ -48,13 +48,31 @@
  * download FSM. So the countdown parks its continuation on a node the
  * download FSM then takes back, and the state-5 resume goes with it.
  *
- * That points at g_baseSel rather than at any of these controllers being
- * wrong. This sequencer is reached by ScaledClearTripleCallJmp tail-jmping
- * into it every frame - a direct call, not a node dispatch - so it runs with
- * whatever node the pump happens to be dispatching, which during the tower is
- * the download FSM's. Everything it installs on "its" node lands on someone
- * else's. Whether the original gives the sequencer a node of its own, and
- * what installs it, is the question to answer next.
+ * WHY IT IS ON THE WRONG NODE: there are TWO ways into this sequencer and the
+ * flow takes the wrong one. Nothing in the image installs 0x420300 itself -
+ * zero references outside its own body - so it is always entered through the
+ * trampoline ScaledClearTripleCallJmp (0x4202c0), and that has two callers:
+ *
+ *   AudioInitSequence, at 0x4a422a, does `push 0x1000; push 0x4202c0; call
+ *     StoreTwoCall` - it INSTALLS the trampoline as a controller with its own
+ *     node - and then sets gameMode to -1 and clears 0x54206c and 0x52aac4.
+ *     This is the path that gives the sequencer a node to own. It is
+ *     converted, correctly, in src/audio/audio_init_sequence.c.
+ *
+ *   TwoStageAudioInit (0x4a6180) ends with a plain tail-jmp to the same
+ *     trampoline - a direct call on whatever node is current. Also converted
+ *     correctly, in src/audio/two_stage_audio_init.c.
+ *
+ * Measured: neither 0x4202c0 nor InstallSelfDualBranchInit (0x4201a0, the
+ * other direct caller) is EVER dispatched in a full front-end run, so
+ * AudioInitSequence's install never happens. The sequencer only ever arrives
+ * through TwoStageAudioInit's tail-jmp, on the download FSM's node, which is
+ * why its state-5 continuation is discarded when that FSM takes the node
+ * back.
+ *
+ * So neither twin is at fault - both match the original. The question is why
+ * the flow reaches TwoStageAudioInit and never AudioInitSequence, and that is
+ * the next thing to chase.
  *
  * (0x45c290, installed by state 3 as a tag-0x1d side controller, IS hollow -
  * it shows up as an unresolved code VA - but it is not in this chain and does
