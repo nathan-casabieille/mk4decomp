@@ -1038,6 +1038,21 @@ void MK4_GameFrame(void)
                     *MK4_VA(unsigned int, 0x542060u) ?
                         *(unsigned int *)MK4_PTR(*MK4_VA(unsigned int, 0x542060u) * 4u + 0x84u) : 0);
         }
+        /* MK4_FRONTEND_GSM=<frame>: send the game-state machine command 2
+         * (state 0 -> 6) from the NORMAL front-end flow, not the boot-match
+         * harness. State 6 is the only thing that sets g_gsmActiveFlag
+         * (0xab4334), and Screen_Loading only takes the branch that calls
+         * AudioInitSequence - the one that would give the match sequencer a
+         * node - while that flag is set. In the front-end flow it reads 0 at
+         * frame 2000, so this is the experiment that tests whether the flag
+         * is the whole gap. Diagnostic only. */
+        { const char *at = getenv("MK4_FRONTEND_GSM");
+          if (at && frame == atoi(at)) {
+              extern int GameStateMachine(int);
+              SDL_Log("frontend-gsm: command 2 at frame %d -> %d", frame,
+                      GameStateMachine(2));
+              SDL_Log("frontend-gsm: gsmActiveFlag now %08x",
+                      *MK4_VA(unsigned int, 0xab4334u)); } }
         if (getenv("MK4_BOOT_MATCH")) {
             const char *at = getenv("MK4_BOOT_FIGHT");
             if (at && frame == atoi(at)) {
