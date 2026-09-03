@@ -42,6 +42,20 @@ void StoreTwoCall(unsigned int handler_va, unsigned int worktype)
     g_eventQueueWorkType = worktype;
     g_pendingNodeType = handler_va;
     AllocateNode(handler_va);
+#ifdef TARGET_SDL
+    /* MK4_TRACE_INSTALL: every controller installation, with the node the
+     * allocator handed back. A controller that is installed but never
+     * dispatched is indistinguishable from one that was never installed at
+     * all until you can see this line. AllocateNode reports the slot it took
+     * in g_currentNodeIdx - NOT g_baseSel, which is merely the node the pump
+     * is dispatching right now and names the INSTALLER, not the installee. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static int tr = -1; static unsigned n;
+      if (tr < 0) tr = getenv("MK4_TRACE_INSTALL") != 0;
+      if (tr && n < 200) { n++;
+          SDL_Log("INSTALL cb=%08x wt=%x -> node=%x (by node=%x)",
+                  handler_va, worktype, g_currentNodeIdx, g_baseSel); } }
+#endif
 }
 #else
 /* no matching-side C - the synthesizer provides 0x0049cb40; the empty branch

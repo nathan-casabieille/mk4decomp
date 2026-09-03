@@ -17,9 +17,15 @@
  *
  * WHERE IT STALLS TODAY (measured 2026-09-03). MK4_TRACE_SAE over a full
  * front-end run - menu, character select, tower, timeout - shows this
- * sequencer running states 0, 2, 3 and 4 exactly once each, between frames
- * 800 and 1200 as the tower comes up, and then nothing. It never reaches
- * state 5.
+ * sequencer running states 0, 2, 3 and 4 exactly once each and then nothing.
+ * It never reaches state 5.
+ *
+ * It runs between frames 1600 and 2000, AFTER the tower times out - not
+ * between 800 and 1200 as an earlier note here said. A run capped at 1200 or
+ * 1400 frames shows no SAE activity at all, which is how that first bisect
+ * went wrong and how a later MK4_TRACE_INSTALL run at 1400 frames appeared to
+ * show state 4 never executing its install. Cap any measurement of this
+ * sequencer at 2000 frames or more.
  *
  * That matters more than it looks, because state 4 is where the match is
  * actually requested: it ends with StoreTwoCall(0x4a42e0, 0x4000), the
@@ -38,7 +44,26 @@
  * for it - so the break is somewhere under it, in what it installs or what
  * that in turn waits on.
  *
- * NARROWED FURTHER: the two machines are fighting over ONE controller node.
+ * THE LOADING TICK IS NOT STARVED OF A NODE - correcting the note that stood
+ * here. With MK4_TRACE_INSTALL reporting the allocator's own result,
+ * StoreTwoCall(0x4a42e0, 0x4000) is seen to give the loading tick its OWN
+ * fresh node, packed 0x14fa70 = VA 0x53e9c0, installed by the download FSM's
+ * node 0x14f8da that this sequencer was guesting on. The earlier claim that
+ * the download FSM reclaims it came from printing g_baseSel, which is the
+ * node the pump is dispatching - the INSTALLER - and not AllocateNode's
+ * result, which it reports in g_currentNodeIdx.
+ *
+ * That node is reached, too: MK4_TRACE_GAMEMODE catches a dispatch on
+ * node=53e9c0 whose callback slot reads 0xffffffff afterwards - the
+ * release-me marker - with gameMode going to -1 in the same dispatch, which
+ * is what AudioInitSequence (reached only from Screen_Loading+0x1e3) writes.
+ * So the loading screen does run, once.
+ *
+ * What still never happens is the install that would give THIS sequencer a
+ * node: across a full run there are 19 controller installs and not one of
+ * them is StoreTwoCall(0x4202c0, 0x1000). That is the remaining gap.
+ *
+ * OLDER NOTE, kept for the node-sharing detail it establishes:
  * With the round countdown's own probe fixed to report its first visits (it
  * only printed every 40th, so a controller that runs once and stops was
  * invisible), Install3WayCountdownGame is seen to run EXACTLY ONCE - visit 1,
