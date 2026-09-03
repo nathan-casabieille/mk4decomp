@@ -38,8 +38,27 @@
  * for it - so the break is somewhere under it, in what it installs or what
  * that in turn waits on.
  *
- * This is the single link between the front end and a playable match, and it
- * is now narrowed to one hand-off rather than a direction.
+ * NARROWED FURTHER: the two machines are fighting over ONE controller node.
+ * With the round countdown's own probe fixed to report its first visits (it
+ * only printed every 40th, so a controller that runs once and stops was
+ * invisible), Install3WayCountdownGame is seen to run EXACTLY ONCE - visit 1,
+ * cmd 0 - and it re-arms node 0x14f8da, whose +0xd8 reads 0x420300, this
+ * sequencer. Packed 0x14f8da is VA 0x53e368, and that is the very node the
+ * node list shows at frames 1150 and 1300 carrying cb=0x461ca0: the tower's
+ * download FSM. So the countdown parks its continuation on a node the
+ * download FSM then takes back, and the state-5 resume goes with it.
+ *
+ * That points at g_baseSel rather than at any of these controllers being
+ * wrong. This sequencer is reached by ScaledClearTripleCallJmp tail-jmping
+ * into it every frame - a direct call, not a node dispatch - so it runs with
+ * whatever node the pump happens to be dispatching, which during the tower is
+ * the download FSM's. Everything it installs on "its" node lands on someone
+ * else's. Whether the original gives the sequencer a node of its own, and
+ * what installs it, is the question to answer next.
+ *
+ * (0x45c290, installed by state 3 as a tag-0x1d side controller, IS hollow -
+ * it shows up as an unresolved code VA - but it is not in this chain and does
+ * not explain the stall.)
  *
  * Control-flow conventions, shared with the other sequencer twins
  * (round_setup_states.c, load_geo_assets_state_machine.c):

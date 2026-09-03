@@ -130,9 +130,14 @@ void Install3WayCountdownGame(void)
 #ifdef TARGET_SDL
     { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
       static unsigned n;
-      if (getenv("MK4_TRACE_RIB") && ++n % 40 == 0)
-          SDL_Log("countdown visit %u cmd=%u slot80=%u timer=%u walk6c=0x%x phase=%u",
-                  n, cmd, g_slot80, g_roundCountdown, g_walkSlot6c, g_roundPhase); }
+      /* the first few visits matter as much as the periodic ones - a
+       * controller that runs once and stops was invisible at %40 */
+      if (getenv("MK4_TRACE_RIB") && (++n <= 3 || n % 40 == 0))
+          SDL_Log("countdown visit %u cmd=%u slot80=%u timer=%u walk6c=0x%x phase=%u"
+                  " node=%x cb=%08x q=%x",
+                  n, cmd, g_slot80, g_roundCountdown, g_walkSlot6c, g_roundPhase,
+                  g_baseSel, MK4_NODE_AT(unsigned int, g_baseSel, 0xd8),
+                  MK4_NODE_AT(unsigned int, g_baseSel, 4)); }
 #endif
 
     if (cmd == 0) {
