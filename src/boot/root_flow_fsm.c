@@ -140,37 +140,46 @@ static void root_state4(void)
  * SceneFrameStepWithInputs(0, 1) - is what happens when the player backs OUT
  * of the menu, not when they enter a mode.
  *
- * What is wrong is that the menu never steps aside. Its state sequence over
- * one run is 0 0 3 4x107 5 0 3 4x696: it reaches LAUNCH once, calls the ARCADE
- * handler (g_modeHandler reads 0x4a9cc0, the real one), and then REBUILDS and
- * goes back to taking input for the remaining 696 visits while the select and
- * the tower are on screen. The mechanism that should have hidden it is the
- * pump's gameMode filter, and gameMode (0x543800) reads 0 at frames 400, 1000
- * and 2000 - ungated, so everything runs.
+ * The menu also does not step aside: its sequence over one run is
+ * 0 0 3 4x107 5 0 3 4x696 - LAUNCH once, calling the real ARCADE handler
+ * (g_modeHandler reads 0x4a9cc0), then it rebuilds and goes back to taking
+ * input for the remaining 696 visits while the select and the tower are up.
+ * It does not DRAW during those visits - state 3 built the text and the
+ * select tears it down, which is why the screens look right - but it is
+ * still live and still reading the pad.
  *
- * The only code that writes gameMode anywhere in the arcade handler's range is
- * AudioInstallSelfStatePush (0x4aa8a0), landed in a5b1c8f9f: its fresh path
- * sets gameMode to its own VA, which narrows the pump to its own nodes, and
- * its re-entry path clears it back to 0 and releases. So the window in which
- * the arcade flow owns the world is exactly the gap between those two visits,
- * and today that window closes long before the tower is done. That gap is the
- * thing to measure next.
+ * The gameMode filter is NOT what should have hidden it, correcting the
+ * earlier note here twice over. First, gameMode = -1 is a deliberate
+ * ONE-FRAME SENTINEL: game_tick.c consumes it (`if (g_gameMode == -1)
+ * g_gameMode = 0;`) and says so in its own header comment, so MK4_MAIN_MENU's
+ * -1 at frame 40 reading 0 at frame 41 is correct behaviour, not a lost
+ * write, and there is no missing writer in a naked function to hunt.
  *
- * Separately: this FSM is not dispatched at all without MK4_MAIN_MENU, which
- * sets gameMode to -1 at frame 40 - on a plain boot MK4_TRACE_ROOT prints
- * nothing at all. And that -1 lasts exactly ONE frame: gameMode reads
- * 0xffffffff at frame 40 and 0 at frame 41, so whatever the root's first
- * states run clears it immediately, and the pump has been ungated ever since.
- * Nothing in the port writes 0 there except AudioInstallSelfStatePush, which
- * has not run that early, so the writer is still in a naked function.
+ * Second, gameMode IS claimed, just not for long. MK4_TRACE_GAMEMODE over a
+ * full run reports exactly four transitions:
  *
- * A warning for whoever looks: do NOT hunt that write by scanning the image
- * for `c7 05 00 38 54 00 00 00 00 00`. That pattern has a false positive at
- * file+0x1f47a which is really the middle of a `mov [edx*4+0x48], ecx` run in
- * the 0x41f460 helper cluster - the bytes straddle two instructions. Only six
- * of the eight "hits" that search reports are real writes, and every one of
- * those writes -1 or a controller VA, never 0. Disassemble each candidate
- * before believing it.
+ *     0        -> 004aa8a0  after cb=00461ca0   (the download FSM)
+ *     004aa8a0 -> 0         after cb=004aa8a0   (AudioInstallSelfStatePush)
+ *     0        -> ffffffff  after cb=ffffffff   (a release-me node)
+ *     ffffffff -> 0         after cb=004200b0   (GameTick's sentinel reset)
+ *
+ * AudioInstallSelfStatePush claims the world on its fresh path and gives it
+ * back on its very next visit - a one-beat handshake, not a mode-long gate,
+ * and the transcription matches the original's bytes so it is not a port
+ * defect either. Whatever keeps the menu from eating input during a mode is
+ * some other mechanism; the gameMode filter is a dead end for it.
+ *
+ * Separately: this FSM is not dispatched at all without MK4_MAIN_MENU - on a
+ * plain boot MK4_TRACE_ROOT prints nothing whatsoever. That flag's gameMode
+ * write is what admits the root node, for the single frame the sentinel lives.
+ *
+ * A trap for whoever looks here: do NOT hunt gameMode writes by scanning the
+ * image for `c7 05 00 38 54 00 ...`. That search reports eight hits and every
+ * one checked has been a false positive whose bytes straddle two instructions
+ * - file+0x1f47a is the middle of a `mov [edx*4+0x48], ecx` run in the
+ * 0x41f460 cluster, and two more land inside stores to 0x5437fc, a different
+ * global entirely. Use MK4_TRACE_GAMEMODE, which names the callback that had
+ * just run, or disassemble every candidate before believing it.
  */
 void PendingMatch_LeaPlus22StoreSelf(void)
 {

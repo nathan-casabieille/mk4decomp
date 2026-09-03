@@ -243,6 +243,24 @@ LAB_0041f6ef:
        * contains into the native function. */
       ((void (*)(void))MK4_ResolveCode(*(unsigned int *)MK4_PTR(iVar2 + 0xd8)))();
 #ifdef TARGET_SDL
+      /* MK4_TRACE_GAMEMODE: the pump's filter at 0x543800 decides which
+       * controllers run at all - 0 means "no filter", so everything
+       * installed anywhere is dispatched, the mode-select menu included,
+       * even while the select and the tower are on screen. It is set to a
+       * controller VA (or -1) when a mode takes over the world, and it goes
+       * back to 0 one frame after MK4_MAIN_MENU sets it. Report the
+       * transition and name the callback that had just run, which is the
+       * only practical way to find the writer: scanning the image for the
+       * store gives false positives that straddle instruction boundaries. */
+      { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+        static int tr = -1; static unsigned int last; static unsigned n;
+        unsigned int gm;
+        if (tr < 0) tr = getenv("MK4_TRACE_GAMEMODE") != 0;
+        gm = g_gameMode;
+        if (tr && gm != last && n < 24) { n++;
+            SDL_Log("GAMEMODE %08x -> %08x after cb=%08x node=%x", last, gm,
+                    *(unsigned int *)MK4_PTR(iVar2 + 0xd8), iVar2); }
+        last = gm; }
       /* MK4_TRACE_MSTACK: the matrix-stack pointer at 0x4d57ac is a packed
        * node index, so its live value is around 0x150000. A controller that
        * leaves it below the packed floor has cleared it, and the NEXT mstack
