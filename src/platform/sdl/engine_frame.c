@@ -1062,8 +1062,39 @@ void MK4_GameFrame(void)
          * schedules that later tick; SAE's state 4 installs only the first.
          * This is the experiment that tests whether a second one is all that
          * is missing to reach AudioInitSequence. Diagnostic only. */
-        { const char *at = getenv("MK4_FRONTEND_TICK");
+        /* MK4_FRONTEND_WORK=<frame>: raise g_gsmDirty1/2/3 (0xab4374/78/7c),
+         * the three flags GameStateMachine's title state publishes into the
+         * loading tick's work flags g_gsmOut1/2/3 (0x543818/814/810). Arm 3,
+         * the g_gsmOut1 one, is the only arm of the tick that RE-ARMS it
+         * (+8 = 0x4a42e0, cmd = 2) before chaining to the geo loader - so it
+         * is the arm that makes the tick self-schedule instead of dying after
+         * one work flag. MK4_MAIN_MENU raises 0x543810 and 0x543814 directly
+         * at frame 8 and never 0x543818, which is why the chain has always
+         * stopped. Diagnostic only. */
+        { const char *at = getenv("MK4_FRONTEND_WORK");
           if (at && frame == atoi(at)) {
+              /* the dirty flags alone do nothing here - publishing them into
+               * the work flags needs GameStateMachine's title state, which
+               * this flow never runs - so raise g_gsmOut1 directly too, which
+               * is what the tick actually reads at 0x4a44c2 */
+              *MK4_VA(unsigned int, 0xab4374u) = 1;
+              *MK4_VA(unsigned int, 0xab4378u) = 1;
+              *MK4_VA(unsigned int, 0xab437cu) = 1;
+              *MK4_VA(unsigned int, 0x543818u) = 1;
+              SDL_Log("frontend-work: gsmDirty1/2/3 + gsmOut1 raised at frame %d",
+                      frame); } }
+        { const char *at = getenv("MK4_FRONTEND_TICK");
+          /* comma-separated frames: the tick services ONE work flag per
+           * visit in priority order (world 0x543810, then audio 0x543814,
+           * then 0x543818), so reaching a later arm needs one queued tick per
+           * arm ahead of it. */
+          int want = 0;
+          if (at) { const char *q = at;
+              while (*q) { int f = 0;
+                  while (*q >= '0' && *q <= '9') f = f * 10 + (*q++ - '0');
+                  if (f == frame) want = 1;
+                  if (*q == ',') q++; else break; } }
+          if (want) {
               extern void StoreTwoCall(int, int);
               StoreTwoCall(0x4a42e0, 0x4000);
               SDL_Log("frontend-tick: second loading tick queued at frame %d"
