@@ -53,15 +53,32 @@
  * node the pump is dispatching - the INSTALLER - and not AllocateNode's
  * result, which it reports in g_currentNodeIdx.
  *
- * That node is reached, too: MK4_TRACE_GAMEMODE catches a dispatch on
- * node=53e9c0 whose callback slot reads 0xffffffff afterwards - the
- * release-me marker - with gameMode going to -1 in the same dispatch, which
- * is what AudioInitSequence (reached only from Screen_Loading+0x1e3) writes.
- * So the loading screen does run, once.
+ * That node is reached, too, and the loading screen does run once. But the
+ * gameMode -1 seen in that dispatch is NOT AudioInitSequence's, correcting
+ * the note this replaces: a probe on AudioInitSequence's install site never
+ * fires at all. The -1 comes from a SECOND site, 0x4a4287, that an earlier
+ * scan missed because it only checked three instruction encodings. A full
+ * sweep of every write form gives nine references to 0x543800, two more than
+ * the seven previously listed.
  *
- * What still never happens is the install that would give THIS sequencer a
- * node: across a full run there are 19 controller installs and not one of
- * them is StoreTwoCall(0x4202c0, 0x1000). That is the remaining gap.
+ * 0x4a4287 sits in a small function at 0x4a4260 that is the real "start the
+ * game flow" install:
+ *
+ *     g_pendingNodeType    = 0x4200b0        the handler
+ *     g_eventQueueWorkType = 0x1000
+ *     call AllocNode                         NOT StoreTwoCall - which is why
+ *     ...                                    MK4_TRACE_INSTALL never saw it
+ *     gameMode = -1 ; 0x54206c = 2 ; 0x52aac4 = 2 ; jmp Push16Call
+ *
+ * and 0x4200b0 is GuardedSeq_ZeroTriple_then_PendingMatch, which tail-jmps
+ * into the ROOT FLOW FSM. So this is what gives the root its node, and
+ * MK4_MAIN_MENU's gameMode poke is a hand-made stand-in for it.
+ *
+ * Screen_Loading drives both halves, in order: +0x1b6 calls 0x4a4260 (the
+ * root install, observed happening) and +0x1e3 calls AudioInitSequence (the
+ * sequencer's trampoline install, never reached). So the loading screen stops
+ * between those two calls, and THAT is the remaining gap - a dozen
+ * instructions wide, in one function, rather than anywhere in the front end.
  *
  * OLDER NOTE, kept for the node-sharing detail it establishes:
  * With the round countdown's own probe fixed to report its first visits (it

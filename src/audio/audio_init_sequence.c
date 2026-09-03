@@ -232,6 +232,17 @@ void AudioInitSequence(void)
     TestCmpZeroFour();
     if (g_framePauseFlag != 0) return;
 
+#ifdef TARGET_SDL
+    /* MK4_TRACE_AIS: this is the ONLY place that installs the match
+     * sequencer's trampoline with a node of its own, and the gameMode = -1
+     * two lines down is observed happening in a full front-end run while the
+     * install is NOT - MK4_TRACE_INSTALL sees 19 installs and none of them
+     * 0x4202c0. Both statements cannot be true, so print on the way past. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      static unsigned n;
+      if (getenv("MK4_TRACE_AIS") && n < 8) { n++;
+          SDL_Log("AIS reached the trampoline install (visit %u)", n); } }
+#endif
     StoreTwoCall(0x4202c0u, 0x1000u);
     *MK4_VA(unsigned int, 0x543800u) = 0xffffffffu;
     g_walkCallback = 0;
