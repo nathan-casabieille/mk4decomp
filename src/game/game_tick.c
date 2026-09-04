@@ -41,6 +41,31 @@
 /*
  * @addr 0x0041fd70
  */
+#ifdef TARGET_SDL
+/* MK4_TRACE_PAD: bracketed from GameLogicStep, the input aggregate 0x4d50b8
+ * is cleared inside THIS function - it reads 1 on entry and 0 on return. The
+ * original never writes that byte directly, so a consumer here is reading it
+ * through a computed address or wiping a block that covers it. Bracket the
+ * per-frame helpers to say which. */
+static unsigned char gt_pad(void) { return *MK4_VA(unsigned char, 0x4d50b8u); }
+static void gt_mark(const char *where, unsigned char before)
+{
+    extern void SDL_Log(const char *, ...);
+    extern char *getenv(const char *);
+    extern unsigned int g_mk4FrameNo;
+    static int tr = -1; static unsigned n;
+    unsigned char after = gt_pad();
+    if (tr < 0) tr = getenv("MK4_TRACE_PAD") != 0;
+    if (tr && before != after && n < 16) { n++;
+        SDL_Log("PAD f=%u GameTick/%s %02x -> %02x", g_mk4FrameNo, where,
+                before, after); }
+}
+#define GT_BRACKET(where, call) \
+    do { unsigned char b_ = gt_pad(); call; gt_mark(where, b_); } while (0)
+#else
+#define GT_BRACKET(where, call) do { call; } while (0)
+#endif
+
 void GameTick(s32 param)
 {
     u32 p;
@@ -71,16 +96,16 @@ void GameTick(s32 param)
     }
 
     if (g_gameMode == 0) {
-        FightFrameStep();
+        GT_BRACKET("FightFrameStep", FightFrameStep());
         if (g_framePauseFlag != 0) return;
         ++g_gtFightTickCounter;
-        DispatchEventQueue();
+        GT_BRACKET("DispatchEventQueue", DispatchEventQueue());
         if (g_framePauseFlag != 0) return;
     }
 
-    Helper_TickFrame_Misc();
+    GT_BRACKET("Helper_TickFrame_Misc", Helper_TickFrame_Misc());
     if (g_framePauseFlag != 0) return;
-    Helper_TickFrame_PostFight();
+    GT_BRACKET("Helper_TickFrame_PostFight", Helper_TickFrame_PostFight());
     if (g_framePauseFlag != 0) return;
 
     if (g_gameMode == 0) {

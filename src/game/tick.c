@@ -24,10 +24,34 @@
 /*
  * @addr 0x004b26d0
  */
+#ifdef TARGET_SDL
+/* MK4_TRACE_PAD: the input aggregate 0x4d50b8 is up at MainLoopStep's entry
+ * and gone by the time the node pump runs, so the clear is inside this
+ * function. The original never writes that byte in any direct encoding, so
+ * it goes indirectly - a computed address or a block wipe - and only a
+ * bracket around each call can say which one. */
+static unsigned char pad_now(void) { return *MK4_VA(unsigned char, 0x4d50b8u); }
+static void pad_mark(const char *where, unsigned char before)
+{
+    extern void SDL_Log(const char *, ...);
+    extern char *getenv(const char *);
+    extern unsigned int g_mk4FrameNo;
+    static int tr = -1; static unsigned n;
+    unsigned char after = pad_now();
+    if (tr < 0) tr = getenv("MK4_TRACE_PAD") != 0;
+    if (tr && before != after && n < 16) { n++;
+        SDL_Log("PAD f=%u %s %02x -> %02x", g_mk4FrameNo, where, before, after); }
+}
+#define PAD_BRACKET(where, call) \
+    do { unsigned char b_ = pad_now(); call; pad_mark(where, b_); } while (0)
+#else
+#define PAD_BRACKET(where, call) do { call; } while (0)
+#endif
+
 void GameLogicStep(void)
 {
     ++g_frameCounter;
-    g_gameStateResult = GameStateMachine(0);
+    PAD_BRACKET("GameStateMachine(0)", g_gameStateResult = GameStateMachine(0));
     if (g_gameStateResult == 0) {
 #ifdef TARGET_SDL
         /* MK4_TRACE_PAD: bracket Input_TickPlayers. The native publisher
@@ -49,13 +73,13 @@ void GameLogicStep(void)
         Input_TickPlayers();
 #endif
     }
-    Audio_UpdateChannels();
-    Audio_TimerTick();
+    PAD_BRACKET("Audio_UpdateChannels", Audio_UpdateChannels());
+    PAD_BRACKET("Audio_TimerTick", Audio_TimerTick());
     if (Renderer_GetMode() == 4 && g_mode4PauseGate == 0) {
         GameStateMachine(8);
     } else {
-        XformChainAdvance();
-        GameTick(0);
+        PAD_BRACKET("XformChainAdvance", XformChainAdvance());
+        PAD_BRACKET("GameTick", GameTick(0));
     }
     g_logicStepFlag = 0;
 }

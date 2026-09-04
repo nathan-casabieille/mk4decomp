@@ -1080,6 +1080,20 @@ void MK4_GameFrame(void)
          * an aggregate that MK4_KEYS does not feed - pressing Enter through
          * the normal key script leaves the loader's state 3 spinning - so use
          * the same fake-press entry point. Diagnostic only. */
+        /* MK4_FRONTEND_SRC=<frame>: stage a press at the SOURCE word instead
+         * of the derived aggregate. Helper_TickFrame_Misc recomputes
+         * 0x4d50b8 every frame as `~*0x543370 & ~*0x4d50c8` (triplet 2 of the
+         * table at 0x4f2fd4) and 0x4d50b4 the same way from 0x54336c - so
+         * whatever the native publisher writes into the derived words is
+         * wiped before the node pump runs. The sources are ACTIVE LOW, so a
+         * press is a bit going CLEAR for one frame. Diagnostic only. */
+        { const char *at = getenv("MK4_FRONTEND_SRC");
+          if (at && frame == atoi(at)) {
+              *MK4_VA(unsigned int, 0x543370u) &= ~1u;
+              SDL_Log("frontend-src: 0x543370 bit0 cleared at frame %d (src=%08x)",
+                      frame, *MK4_VA(unsigned int, 0x543370u)); }
+          if (at && frame == atoi(at) + 1)
+              *MK4_VA(unsigned int, 0x543370u) |= 1u; }
         { const char *at = getenv("MK4_FRONTEND_PRESS");
           if (at && frame == atoi(at)) {
               extern void MK4_NativeFakeKeyPress(int, int);
