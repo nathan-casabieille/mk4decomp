@@ -297,6 +297,19 @@ void MK4_NativeInputPublish(void)
     /* InputPollFlagBits reads bits 0/1 for player 1, InputPollFlagBitsHalf
      * bits 4/5 for player 2. */
     *MK4_VA(unsigned char, 0x4d50b8u) = pad;
+    /* ...and the SOURCE the game derives that byte from. Helper_TickFrame_Misc,
+     * called from GameTick, walks the triplet table at 0x4f2fd4 and recomputes
+     * `*[0] = ~*[-1] & ~*[1]` every frame; triplet 2 reads 0x543370 and writes
+     * 0x4d50b8, so the level byte above survives only until GameTick and every
+     * consumer after that - the loading screen's press-start gate among them -
+     * sees zero. The source is ACTIVE LOW, and the derivation turns a bit
+     * going clear into a one-frame press edge, so hold it at all-ones and
+     * clear the bits that are down. Writing both keeps the consumers that read
+     * before GameTick working exactly as they did. */
+    { unsigned int src = 0xffffffffu;
+      if (pad & 0x01u) src &= ~0x01u;
+      if (pad & 0x10u) src &= ~0x10u;
+      *MK4_VA(unsigned int, 0x543370u) = src; }
     /* The DIRECTION word at 0x4d50b4, the original DirectInput layer's
      * publish: bit 0 up, 1 down, 2 left, 3 right for player 1, the same
      * in bits 8..11 for player 2 - the main menu's navigation reads bits
