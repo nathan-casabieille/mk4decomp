@@ -385,7 +385,7 @@ void LoadGeoAssetsStateMachine(void)
       if (tr < 0) tr = getenv("MK4_TRACE_GATE3") != 0;
       if (tr && n < 12) { unsigned char pad = *MK4_VA(unsigned char, 0x4d50b8u);
           static unsigned visits;
-          if (pad != 0 || ++visits % 300 == 0) { n++;
+          if (pad != 0 || g_audioStateDisp50b4 != 0 || ++visits % 300 == 0) { n++;
               { extern unsigned int g_mk4FrameNo;
                 SDL_Log("GATE3 f=%u pad=%02x dir=%08x -> TripleCallByteCheck=%d",
                         g_mk4FrameNo, pad, g_audioStateDisp50b4,

@@ -369,5 +369,11 @@ void MK4_NativeInputPublish(void)
         *MK4_VA(unsigned int, 0x4d50b4u) =
             (*MK4_VA(unsigned int, 0x4d50b4u) & ~0x0f0fu) | (now & ~held);
         held = now;
+        /* ...and the SOURCE, triplet 1 of the table at 0x4f2fd4: the game
+         * derives 0x4d50b4 as `~*0x54336c & ~*0x4d50c4` inside GameTick, so
+         * the write above survives only until then. Unlike the derived form
+         * this one is a LEVEL - active low, all-ones with the held bits
+         * cleared - because the edge is exactly what the derivation adds. */
+        *MK4_VA(unsigned int, 0x54336cu) = ~now;
     }
 }
