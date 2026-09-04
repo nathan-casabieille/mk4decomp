@@ -1100,8 +1100,14 @@ void MK4_GameFrame(void)
          *
          *   MK4_MAIN_MENU=40 MK4_SELECT_IDLE=420
          *   MK4_KEYS=150:85,300:85,540:49,580:49,2400:85,2600:85
-         *   MK4_FRONTEND_GSM=1750 MK4_FRONTEND_WORK=100
-         *   MK4_FRONTEND_TICK=2050,2150,2250 MK4_FRONTEND_FIGHT=3000
+         *   MK4_FRONTEND_GSM=1750 MK4_FRONTEND_TICK=2050,2150,2250
+         *   MK4_FRONTEND_FIGHT=3000
+         *
+         * THREE variables, not four - ablation says MK4_FRONTEND_WORK is not
+         * needed: dropping it gives the identical 157664 px. Dropping either
+         * of the other two does break it (no GSM produces no frame at all, no
+         * TICK lands on a different screen at 222435 px), so the set is
+         * minimal as it stands.
          *
          * gives mode select -> character select -> tower -> loading screen ->
          * a live 3D scene with both fighters spawned (P1 and P2 node handles
@@ -1110,10 +1116,11 @@ void MK4_GameFrame(void)
          *
          * Each one stands in for a piece the flow cannot yet do on its own,
          * and each is documented at its own block: GSM sets g_gsmActiveFlag
-         * that only FSM state 6 sets; WORK raises the loading tick's work
-         * flags; TICK queues one tick per work arm because the tick is a
-         * one-shot; FIGHT schedules the match init that Phase3InstallSelf
-         * would. They are diagnostics, not fixes - the point of having them
+         * that only FSM state 6 sets; TICK queues one tick per work arm
+         * because the tick is a one-shot; FIGHT schedules the match init that
+         * Phase3InstallSelf would. (WORK, which raises the tick's work flags
+         * by hand, turns out to be redundant - MK4_MAIN_MENU's frame-8 writes
+         * to 0x543810 and 0x543814 already cover what this path needs.) They are diagnostics, not fixes - the point of having them
          * is that what remains is now five named gaps rather than a screen
          * that stops.
          * ------------------------------------------------------------------ */
