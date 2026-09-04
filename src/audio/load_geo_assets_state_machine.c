@@ -317,6 +317,18 @@ void LoadGeoAssetsStateMachine(void)
      * instead of spinning past 2000. The note below describes the state
      * before that fix and is kept for the mechanism it records.
      *
+     * WHERE IT STOPS NOW: the assets-ready byte is never set. The tick's
+     * cmd-2 path at 0x4a4536 opens with `cmp byte [0x54389c], bl; je
+     * 0x4a4395` - it only re-arms itself for cmd 3 when that byte is up, and
+     * it reads 0 at frame 3500. Exactly one instruction in the image sets it,
+     * 0x48e2b2 inside State6Latch (0x48e240), and only behind
+     * `cmp [0x54206c], 0x258; jl` - a progress threshold of 600. State6Latch
+     * is in the codeptr table and is dispatched ZERO times in a full run. It
+     * has no dword references anywhere in the image, so nothing installs it as
+     * a controller; it is reached by relative calls from 0x46a262 and
+     * 0x48e1ed. Finding which of those should run, and why neither does, is
+     * the next step.
+     *
      * The chain now stops one step later, and somewhere else. gameMode's last
      * transition is `004a38d0 -> 004a42e0` - the geo loader HANDS THE WORLD
      * BACK to the loading tick, which it never did while it was spinning - but
