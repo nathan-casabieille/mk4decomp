@@ -56,6 +56,25 @@ void MainLoopStep(void)
     g_inLoopStep    = 1;
 
     counter = 0;
+#ifdef TARGET_SDL
+    /* MK4_FIXED_STEP=1: run exactly ONE GameLogicStep per frame.
+     *
+     * The catch-up loop below calls GameLogicStep up to three extra times
+     * depending on QueryMicroTimer, i.e. on wall-clock and machine load, so
+     * two headless runs of the same command execute a different number of
+     * logic steps and can end on different frames. That is the whole source
+     * of the fight scene settling on 157664 px or 155512 px at random, and it
+     * silently invalidates any A/B done by diffing frames - the difference
+     * between those two states is 14052 px, which is larger than most effects
+     * worth measuring.
+     *
+     * Off by default: skipping the catch-up changes how fast the game runs,
+     * which is a behaviour change, not a fix. On for measurement. */
+    { extern char *getenv(const char *);
+      static int fixed = -1;
+      if (fixed < 0) fixed = getenv("MK4_FIXED_STEP") != 0;
+      if (fixed) { g_lastFrameTime = QueryMicroTimer(); goto after_catchup; } }
+#endif
     while (1) {
         delta = (int)QueryMicroTimer() - (int)g_lastFrameTime;
         if (delta < 0x4e20) {
@@ -70,6 +89,10 @@ void MainLoopStep(void)
         }
     }
 
+#ifdef TARGET_SDL
+after_catchup:
+    delta = 0;
+#endif
     sleep_ms = -1 - (delta - 16667) / 1000;
     g_inLoopStep = 0;
 
