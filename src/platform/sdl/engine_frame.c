@@ -1114,6 +1114,29 @@ void MK4_GameFrame(void)
          * non-zero at 0x538158 / 0x53815c), 157664 px on seeds 1, 2 and 3 and
          * changing frame to frame.
          *
+         * WHAT THE SCENE ACTUALLY CONTAINS: the stage, not a fight. Measured
+         * under MK4_FIXED_STEP=1, clearing player two's node handle leaves the
+         * frame BYTE-IDENTICAL, and LEFT vs RIGHT leaves it byte-identical -
+         * the fighters are not drawn and the scene ignores input.
+         *
+         * The reason is one field. Comparing player one's node (0x524a98,
+         * handle 0x1492a6) between this path and the boot-match path that DOES
+         * render a character:
+         *
+         *     field            front end     boot match
+         *     +0x24 anim       00000000      00140002
+         *     +0x2c framedata  00000000      0058c3e6
+         *     +0x3c parent     001490f9      001490f9    same
+         *     +0x54 posX       fffeb334      fffeb334    same
+         *
+         * So the fighters are spawned, parented and positioned identically -
+         * and their animation record is never attached. BootMStackBracket3-
+         * SubdispatchPair opens with `anim = NODE_W(group, 0x24); if (anim ==
+         * 0) goto pops;`, so the whole pose pipeline bails on the first line.
+         * Whatever binds +0x24 - the per-player DownloadPlayerChar the
+         * boot-match staging does by hand, most likely - is the next thing to
+         * find on this path.
+         *
          * Each one stands in for a piece the flow cannot yet do on its own,
          * and each is documented at its own block: GSM sets g_gsmActiveFlag
          * that only FSM state 6 sets; TICK queues one tick per work arm
