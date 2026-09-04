@@ -1094,6 +1094,41 @@ void MK4_GameFrame(void)
                       frame, *MK4_VA(unsigned int, 0x543370u)); }
           if (at && frame == atoi(at) + 1)
               *MK4_VA(unsigned int, 0x543370u) |= 1u; }
+        /* ---- FRONT END TO A FIGHT, end to end ----------------------------
+         * The five MK4_FRONTEND_* variables below drive the game's own screens
+         * from the mode select all the way into a live match. Recipe:
+         *
+         *   MK4_MAIN_MENU=40 MK4_SELECT_IDLE=420
+         *   MK4_KEYS=150:85,300:85,540:49,580:49,2400:85,2600:85
+         *   MK4_FRONTEND_GSM=1750 MK4_FRONTEND_WORK=100
+         *   MK4_FRONTEND_TICK=2050,2150,2250 MK4_FRONTEND_FIGHT=3000
+         *
+         * gives mode select -> character select -> tower -> loading screen ->
+         * a live 3D scene with both fighters spawned (P1 and P2 node handles
+         * non-zero at 0x538158 / 0x53815c), 157664 px on seeds 1, 2 and 3 and
+         * changing frame to frame.
+         *
+         * Each one stands in for a piece the flow cannot yet do on its own,
+         * and each is documented at its own block: GSM sets g_gsmActiveFlag
+         * that only FSM state 6 sets; WORK raises the loading tick's work
+         * flags; TICK queues one tick per work arm because the tick is a
+         * one-shot; FIGHT schedules the match init that Phase3InstallSelf
+         * would. They are diagnostics, not fixes - the point of having them
+         * is that what remains is now five named gaps rather than a screen
+         * that stops.
+         * ------------------------------------------------------------------ */
+        /* MK4_FRONTEND_FIGHT=<frame>: schedule the match init from the
+         * NORMAL front-end flow. This is the same StoreTwoCall(0x4228b0,
+         * 0x11) MK4_BOOT_FIGHT makes, and work type 0x11 is what matters -
+         * the pump's gate passes any node whose +0xe0 is 0x11 regardless of
+         * gameMode, so this reaches the pump even while the loading tick
+         * still owns the world at 0x4a42e0. Diagnostic only. */
+        { const char *at = getenv("MK4_FRONTEND_FIGHT");
+          if (at && frame == atoi(at)) {
+              extern void StoreTwoCall(int, int);
+              StoreTwoCall(0x4228b0, 0x11);
+              *MK4_VA(unsigned int, 0x543800u) = 0xffffffffu;
+              SDL_Log("frontend-fight: match init scheduled at frame %d", frame); } }
         { const char *at = getenv("MK4_FRONTEND_PRESS");
           if (at && frame == atoi(at)) {
               extern void MK4_NativeFakeKeyPress(int, int);
