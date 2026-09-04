@@ -323,11 +323,23 @@ void LoadGeoAssetsStateMachine(void)
      * it reads 0 at frame 3500. Exactly one instruction in the image sets it,
      * 0x48e2b2 inside State6Latch (0x48e240), and only behind
      * `cmp [0x54206c], 0x258; jl` - a progress threshold of 600. State6Latch
-     * is in the codeptr table and is dispatched ZERO times in a full run. It
-     * has no dword references anywhere in the image, so nothing installs it as
-     * a controller; it is reached by relative calls from 0x46a262 and
-     * 0x48e1ed. Finding which of those should run, and why neither does, is
-     * the next step.
+     * is in the codeptr table and is dispatched ZERO times in a full run. Its
+     * two callers are relative: 0x48e1ed, and 0x46a262 which is the command-0
+     * path of RoundCountdownEnter_0046a240.
+     *
+     * RoundCountdownEnter is ALSO in the codeptr table and ALSO dispatched
+     * zero times, and it has no relative callers at all - it is referenced
+     * from a data table, entry 0 of a dense run of controller VAs at
+     * 0x4ebfd8 (0x46a240, 0x46a4d0, 0x467d40, 0x467e60, 0x467ed0, 0x467d30,
+     * 0x46e720, ...), which has the shape of a state-handler table. So the
+     * assets-ready byte waits on a handler that some state machine is
+     * supposed to select and never does.
+     *
+     * NOTE ON FINDING THAT TABLE: the +0x400C00 file-offset rule is a .text
+     * anchor and does NOT hold in data. Byte-searching the EXE put this table
+     * at 0x4ea9d8, which is 0x1600 wrong and reads as unrelated numbers.
+     * build/arena.bin is indexed by VA directly, so searching THAT is the
+     * reliable way to find a data reference.
      *
      * The chain now stops one step later, and somewhere else. gameMode's last
      * transition is `004a38d0 -> 004a42e0` - the geo loader HANDS THE WORLD
