@@ -310,6 +310,23 @@ void LoadGeoAssetsStateMachine(void)
         g_tickW1 = 0x100;
         goto arm3;
 
+    /* UPDATE after the input fix (7a6a7a600, 2f9b60244). With the publisher
+     * staging the SOURCE words the game derives its aggregates from, this
+     * loader COMPLETES on a real key press: states 4 and 5 run (13 and 12
+     * visits) where they had never run at all, and state 3 stops at ~250
+     * instead of spinning past 2000. The note below describes the state
+     * before that fix and is kept for the mechanism it records.
+     *
+     * The chain now stops one step later, and somewhere else. gameMode's last
+     * transition is `004a38d0 -> 004a42e0` - the geo loader HANDS THE WORLD
+     * BACK to the loading tick, which it never did while it was spinning - but
+     * it stops there rather than returning to 0. So the match sequencer's node
+     * (+0xd8 = 0x420300, work type 0x1000) is still gated out of the pump, and
+     * it still cycles 0-2-3-4 without reaching state 5. Queuing further ticks
+     * after the load completes does not move it.
+     *
+     */
+
     /* WHERE THE FRONT-END PATH STOPS (measured 2026-09-03). Driven from the
      * front end rather than MK4_BOOT_MATCH, this loader walks 0 once, 1 ten
      * times, 2 thirteen times, and then SPINS IN STATE 3 - 2016 visits in a
