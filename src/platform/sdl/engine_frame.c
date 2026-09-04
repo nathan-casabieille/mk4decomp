@@ -1133,9 +1133,20 @@ void MK4_GameFrame(void)
          * and their animation record is never attached. BootMStackBracket3-
          * SubdispatchPair opens with `anim = NODE_W(group, 0x24); if (anim ==
          * 0) goto pops;`, so the whole pose pipeline bails on the first line.
-         * Whatever binds +0x24 - the per-player DownloadPlayerChar the
-         * boot-match staging does by hand, most likely - is the next thing to
-         * find on this path.
+         * The per-player DownloadPlayerChar is NOT what binds it, which was
+         * the obvious guess. MK4_FRONTEND_DL runs the identical publish-then-
+         * download pair the boot-match staging runs at frame 9 - source slots
+         * to live slots, clear the pause flag, DownloadPlayerChar twice - and
+         * it completes cleanly (pause 0) at frame 2900, 3100 or 3400, before
+         * or after the match init. In every case +0x24 and +0x2c stay zero and
+         * the frame stays byte-identical at 158608 px.
+         *
+         * So the binder is something else on the boot-match path. Worth noting
+         * for whoever picks it up: the pose pipeline reads +0x24 off
+         * g_fightGroupHead, not off the player node, and the two happen to
+         * coincide on the boot-match path - so the next step is to find what
+         * g_fightGroupHead points at here versus there, rather than to keep
+         * poking the player nodes.
          *
          * Each one stands in for a piece the flow cannot yet do on its own,
          * and each is documented at its own block: GSM sets g_gsmActiveFlag
@@ -1168,6 +1179,27 @@ void MK4_GameFrame(void)
          * and diffing THAT first. Without it, both this probe and a
          * left-vs-right input test produce byte-identical "evidence" of an
          * effect that is not there. */
+        /* MK4_FRONTEND_DL=<frame>: download the two fighters the way the
+         * boot-match staging does. On the front-end path the fighters are
+         * spawned, parented and positioned but their +0x24 anim record is
+         * never attached, so the pose pipeline bails on its first line. This
+         * is the same publish-then-download pair MK4_BOOT_MATCH runs at frame
+         * 9: source slots to live slots, clear the pause flag, then
+         * DownloadPlayerChar per player. Diagnostic only. */
+        { const char *at = getenv("MK4_FRONTEND_DL");
+          if (at && frame == atoi(at)) {
+              extern void DownloadPlayerChar(void);
+              *MK4_VA(unsigned int, 0x541e6cu) = 0;
+              *MK4_VA(unsigned int, 0x537f48u) = *MK4_VA(unsigned int, 0x53a790u);
+              *MK4_VA(unsigned int, 0x5380e0u) = *MK4_VA(unsigned int, 0x537ea0u);
+              *MK4_VA(unsigned int, 0x53a178u) = *MK4_VA(unsigned int, 0x537edcu);
+              *MK4_VA(unsigned int, 0x53a250u) = *MK4_VA(unsigned int, 0x53a1ccu);
+              *MK4_VA(unsigned int, 0x541ec4u) = *MK4_VA(unsigned int, 0x541eccu);
+              *MK4_VA(unsigned int, 0x541ec8u) = *MK4_VA(unsigned int, 0x541ed0u);
+              DownloadPlayerChar();
+              if (*MK4_VA(unsigned int, 0x541e6cu) == 0) DownloadPlayerChar();
+              SDL_Log("frontend-dl: fighters downloaded at frame %d (pause=%u)",
+                      frame, *MK4_VA(unsigned int, 0x541e6cu)); } }
         { const char *at = getenv("MK4_FRONTEND_NOP2");
           if (at && frame == atoi(at)) {
               *MK4_VA(unsigned int, 0x53815cu) = 0;
