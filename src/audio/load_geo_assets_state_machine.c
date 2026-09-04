@@ -328,12 +328,20 @@ void LoadGeoAssetsStateMachine(void)
      * path of RoundCountdownEnter_0046a240.
      *
      * RoundCountdownEnter is ALSO in the codeptr table and ALSO dispatched
-     * zero times, and it has no relative callers at all - it is referenced
-     * from a data table, entry 0 of a dense run of controller VAs at
-     * 0x4ebfd8 (0x46a240, 0x46a4d0, 0x467d40, 0x467e60, 0x467ed0, 0x467d30,
-     * 0x46e720, ...), which has the shape of a state-handler table. So the
-     * assets-ready byte waits on a handler that some state machine is
-     * supposed to select and never does.
+     * zero times, and it has no relative callers at all - its only reference
+     * is a data word at 0x4ebfd8. That is entry 0 of a SIX-ENTRY handler
+     * table, one of three laid consecutively at stride 0x18:
+     *
+     *     0x4ebfd8   A   0x46a240 RoundCountdownEnter, 0x46a4d0, 0x467d40,
+     *                    0x467e60, 0x467ed0, 0x467d30
+     *     0x4ebff0   B   selected by `mov eax, 0x4ebff0` at 0x45f834
+     *     0x4ec008   C   selected by `mov eax, 0x4ec008` at 0x4712dc
+     *
+     * Tables B and C are each loaded as a base by exactly one instruction.
+     * Nothing anywhere loads A: no `mov reg, 0x4ebfd8`, no `[reg*4 + disp]`
+     * into that range, no pointer to it in the arena. So the assets-ready
+     * byte waits on entry 0 of the handler table for a mode this flow never
+     * selects, and the question is which mode picks base A.
      *
      * NOTE ON FINDING THAT TABLE: the +0x400C00 file-offset rule is a .text
      * anchor and does NOT hold in data. Byte-searching the EXE put this table
