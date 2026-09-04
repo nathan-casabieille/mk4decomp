@@ -1130,6 +1130,13 @@ void MK4_GameFrame(void)
          * the pump's gate passes any node whose +0xe0 is 0x11 regardless of
          * gameMode, so this reaches the pump even while the loading tick
          * still owns the world at 0x4a42e0. Diagnostic only. */
+        /* MK4_FRONTEND_NOP2=<frame>: clear player two's node handle, to test
+         * whether the fighters are actually DRAWN in the scene or merely
+         * spawned. If the frame changes, the renderer is walking them. */
+        { const char *at = getenv("MK4_FRONTEND_NOP2");
+          if (at && frame == atoi(at)) {
+              *MK4_VA(unsigned int, 0x53815cu) = 0;
+              SDL_Log("frontend-nop2: P2 node handle cleared at frame %d", frame); } }
         { const char *at = getenv("MK4_FRONTEND_FIGHT");
           if (at && frame == atoi(at)) {
               extern void StoreTwoCall(int, int);
