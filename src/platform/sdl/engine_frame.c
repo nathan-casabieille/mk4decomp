@@ -1133,6 +1133,23 @@ void MK4_GameFrame(void)
          * and their animation record is never attached. BootMStackBracket3-
          * SubdispatchPair opens with `anim = NODE_W(group, 0x24); if (anim ==
          * 0) goto pops;`, so the whole pose pipeline bails on the first line.
+         * CORRECTION: the pose pipeline is NOT bailing, and the field diff
+         * above was read off the wrong nodes. MK4_TRACE_POSE prints
+         * g_fightGroupHead and its +0x24 from inside
+         * BootMStackBracket3SubdispatchPair - the only place that scratch
+         * global can be read meaningfully - and on THIS path it reports
+         * `group=14915c anim=00140002` and `group=14917d anim=00140002`,
+         * both non-zero. The nodes it walks are 0x14915c and 0x14917d, not
+         * the 0x1492a6 / 0x1492c7 the player globals hold, so +0x24 being
+         * zero at 0x524a98 never meant what c4bdc030c said it did.
+         *
+         * What is actually true is a timing statement: the pipeline runs 440
+         * times between frames 1932 and 3001 - through the character select
+         * and the tower - and then stops. Only TWO visits happen after the
+         * match init at frame 3000. So the fight scene has no pose activity
+         * at all; the select's models are torn down and the fight's are never
+         * established. That is why nothing character-shaped is in the frame.
+         *
          * The per-player DownloadPlayerChar is NOT what binds it, which was
          * the obvious guess. MK4_FRONTEND_DL runs the identical publish-then-
          * download pair the boot-match staging runs at frame 9 - source slots

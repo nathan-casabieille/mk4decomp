@@ -291,6 +291,20 @@ void BootMStackBracket3SubdispatchPair(void)
     group = g_fightGroupHead;
     anim = NODE_W(group, 0x24);
     g_walkCallback = anim;
+#ifdef TARGET_SDL
+    /* MK4_TRACE_POSE: the first line of the pose pipeline, where it decides
+     * whether there is anything to animate. g_fightGroupHead is per-dispatch
+     * scratch, so it can only be read HERE - sampling it from the frame loop
+     * gives 0xa2 on every path and means nothing. Print the group and the
+     * anim record it carries, so the front-end path can be compared against
+     * the boot-match one at the moment that matters. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      extern unsigned int g_mk4FrameNo;
+      static int tr = -1; static unsigned n;
+      if (tr < 0) tr = getenv("MK4_TRACE_POSE") != 0;
+      if (tr && ++n % 200 == 1) {
+          SDL_Log("POSE f=%u group=%x anim=%08x", g_mk4FrameNo, group, anim); } }
+#endif
     if (anim == 0)
         goto pops;
 
