@@ -303,7 +303,15 @@ void BootMStackBracket3SubdispatchPair(void)
       static int tr = -1; static unsigned n;
       if (tr < 0) tr = getenv("MK4_TRACE_POSE") != 0;
       if (tr && ++n % 200 == 1) {
-          SDL_Log("POSE f=%u group=%x anim=%08x", g_mk4FrameNo, group, anim); } }
+          extern int dladdr(const void *, void *);
+          struct { const char *fn; void *fb; const char *sn; void *sa; } di;
+          void *ra = __builtin_return_address(0);
+          if (dladdr(ra, (void *)&di) && di.sn)
+              SDL_Log("POSE f=%u group=%x anim=%08x from %s", g_mk4FrameNo,
+                      group, anim, di.sn);
+          else
+              SDL_Log("POSE f=%u group=%x anim=%08x from %p", g_mk4FrameNo,
+                      group, anim, ra); } }
 #endif
     if (anim == 0)
         goto pops;

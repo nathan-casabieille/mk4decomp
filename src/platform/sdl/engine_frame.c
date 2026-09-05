@@ -1146,9 +1146,15 @@ void MK4_GameFrame(void)
          * What is actually true is a timing statement: the pipeline runs 440
          * times between frames 1932 and 3001 - through the character select
          * and the tower - and then stops. Only TWO visits happen after the
-         * match init at frame 3000. So the fight scene has no pose activity
-         * at all; the select's models are torn down and the fight's are never
-         * established. That is why nothing character-shaped is in the frame.
+         * match init at frame 3000.
+         *
+         * That stop is NOT specific to this path. The boot-match path, driven
+         * from the same caller (GuardedChainCmpDualBitXor on both), poses 334
+         * times over frames 13..165 and also stops - it just gets 133 visits
+         * after its own fight init at frame 120 where this path gets 2. So
+         * both paths lose the fighters at the match, and this one loses them
+         * sooner. The fight scene's character posing is an already-open area
+         * rather than something the front-end route breaks.
          *
          * The per-player DownloadPlayerChar is NOT what binds it, which was
          * the obvious guess. MK4_FRONTEND_DL runs the identical publish-then-
