@@ -1169,7 +1169,21 @@ void MK4_GameFrame(void)
          * this path starts its fight at 3000 with an animation that began at
          * 1932 and finished long before, which is why it gets 2. Nothing is
          * decaying - the missing piece is whatever should give the fighters a
-         * looping idle or a fresh animation at match start.
+         * fresh animation at match start, and that is now named.
+         *
+         * GuardedPackedSlotInit (0x428760, src/engine/matchstart_band.c) is
+         * the ONE function that hands a fighter group a new animation and
+         * restarts its frame counter: `NODE_W(group, 0x24) = anim;
+         * NODE_W(group, 0x28) = 0;`. It is converted, and it is called ZERO
+         * times on both paths.
+         *
+         * Its caller is InstallSelfDualPathInit (0x49a2f0, in
+         * src/engine/run_block_fsm_cluster.c), which is still
+         * __declspec(naked) with no NON_MATCHING twin anywhere in that file,
+         * is absent from the codeptr table, and is dispatched zero times. So
+         * the whole route from a match starting to a fighter being animated
+         * runs through one unconverted function. Converting it is the next
+         * concrete piece of work on this, rather than more probing.
          *
          * The per-player DownloadPlayerChar is NOT what binds it, which was
          * the obvious guess. MK4_FRONTEND_DL runs the identical publish-then-

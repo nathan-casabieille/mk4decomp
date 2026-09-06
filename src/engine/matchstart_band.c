@@ -129,6 +129,19 @@ void GuardedPackedSlotInit(int slotVA)
     NODE_W(g_fightGroupHead, 0x24) = anim;
     g_walkCallback = 0;
     NODE_W(g_fightGroupHead, 0x28) = 0;
+#ifdef TARGET_SDL
+    /* MK4_TRACE_POSE: this is the one place that hands a fighter group a NEW
+     * animation and RESTARTS its frame counter. Posing stops on both paths
+     * because the current clip plays out and clamps (see anim_frame_advance);
+     * if this never runs, nothing ever restarts one. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      extern unsigned int g_mk4FrameNo;
+      static int tr = -1; static unsigned n;
+      if (tr < 0) tr = getenv("MK4_TRACE_POSE") != 0;
+      if (tr && n < 12) { n++;
+          SDL_Log("ANIMSET f=%u group=%x anim=%08x (frame counter reset)",
+                  g_mk4FrameNo, g_fightGroupHead, anim); } }
+#endif
 }
 
 void InstallSelf3WayChainCmp(void)
