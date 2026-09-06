@@ -20,6 +20,7 @@ extern void MK4_StubHit(const char *);
 #define FRONTIER_STUB1(name) \
     __attribute__((weak)) void name(int a) { (void)a; MK4_StubHit(#name); }
 
+FRONTIER_STUB(RunBlockFsmCluster)
 FRONTIER_STUB(RoundStartCluster_RemapWalkAndJmp)
 FRONTIER_STUB(InstallSelfStateMachine_SwapOrPassSet)
 FRONTIER_STUB(InstallSelfBootInit)

@@ -776,6 +776,7 @@ extern int ScaledInit_GameModeHandlerCluster_g_scaledInit_00495590();
 extern int ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0();
 extern int GuardedSeq_MStackCall_then_CallSetPause_00497450();
 extern int SlideAttackEventCluster();
+extern int InstallSelfDualPathInit();
 extern int GuardedSeq_MStackCall_then_CallSetPause_0049a650();
 extern int GuardedSeq_MStackCall_then_CallSetPause_0049c340();
 extern int ScaledIndirectJmp_0049c850();
@@ -1924,6 +1925,7 @@ static const struct { unsigned va; void *fn; } g_codePtrTable[] = {
     {0x4955b0u, (void*)ScaledInit_GameModeHandlerCluster_g_scaledInit_004955b0},
     {0x497450u, (void*)GuardedSeq_MStackCall_then_CallSetPause_00497450},
     {0x498900u, (void*)SlideAttackEventCluster},
+    {0x49a2f0u, (void*)InstallSelfDualPathInit},
     {0x49a650u, (void*)GuardedSeq_MStackCall_then_CallSetPause_0049a650},
     {0x49c340u, (void*)GuardedSeq_MStackCall_then_CallSetPause_0049c340},
     {0x49c850u, (void*)ScaledIndirectJmp_0049c850},

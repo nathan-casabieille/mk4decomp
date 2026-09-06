@@ -120,48 +120,69 @@ extern unsigned int g_fightAxisPosY;
  *     calls CondPickDualStore; if !pause: RunBlockFsmCluster; if !pause:
  *     push 0x00543318, GuardedPackedSlotInit; if !pause: tail-jmp InstallSelfStoreTwoCall; ret.
  */
-extern void ArgSarStoreJmp(void);
+extern void ArgSarStoreJmp(unsigned int va);
 extern void CondPickDualStore(void);
-extern void GuardedPackedSlotInit(void);
+extern void GuardedPackedSlotInit(int slotVA);
 extern void InstallSelfStoreTwoCall(void);
 extern void RunBlockFsmCluster(void);
 extern void ScaledClearJmp_InstallSelf3WayChainCmp(void);
 
 #ifdef NON_MATCHING
-/* Ghidra-decompiled twin - behavior not yet runtime-verified */
-int InstallSelfDualPathInit(void)
-
+/* NATIVE twin, hand-written from the disassembly at 0x0049a2f0.
+ *
+ * The Ghidra lift this replaces could not be linked: it carried four separate
+ * arena traps at once - `g_baseSel * 4` used as a raw host pointer for the
+ * node stores, `&(*(unsigned int *)MK4_VA(...))` passed where the callee wants
+ * a VA (a host address, ASLR-varying, not 0x49a580), and the native function
+ * pointer InstallSelfDualPathInit written straight into the node's +8 code
+ * slot instead of the VA the pump resolves.
+ *
+ * Why it matters: this is the only caller of GuardedPackedSlotInit, which is
+ * the only function that gives a fighter group a new animation and resets its
+ * frame counter (+0x24 / +0x28). With this dead, a match's fighters keep
+ * whatever clip they were already playing, it runs to its end, and
+ * GuardedChainCmpDualBitXor clamps and stops posing them.
+ *
+ * state != 0 - the init path: install 0x49a580 at work type 0x47, then
+ *   ArgSarStoreJmp over 0x4f2770, and return.
+ * state == 0 - run the block FSM, take the slot at 0x54331c, then chain
+ *   state 1 back into self and hand the frame to
+ *   ScaledClearJmp_InstallSelf3WayChainCmp.
+ */
+void InstallSelfDualPathInit(void)
 {
-  int iVar1;
-  int iVar2;
-  
-  iVar1 = g_baseSel * 4;
-  iVar2 = MK4_NODE_AT(int, g_baseSel, 0x84);
-  *(undefined4 *)(iVar1 + 0x84) = 0;
-  if (iVar2 != 0) {
-    StoreTwoCall(&(*(unsigned int *)MK4_VA(unsigned int, 0x49a580)),0x47);
-    ArgSarStoreJmp(&(*(unsigned int *)MK4_VA(unsigned int, 0x4f2770)));
-    return g_framePauseFlag;
-  }
-  RunBlockFsmCluster();
-  iVar2 = g_framePauseFlag;
-  if (g_framePauseFlag == 0) {
-    GuardedPackedSlotInit(&(*(unsigned int *)MK4_VA(unsigned int, 0x54331c)));
-    iVar2 = g_framePauseFlag;
-    if (g_framePauseFlag == 0) {
-      g_eventQueueChild = 4;
-      *(code **)(iVar1 + 8) = InstallSelfDualPathInit;
-      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 1;
-      (g_currentNodeIdx) = *(int *)(iVar1 + 4);
-      *MK4_NODE(undefined4, (g_currentNodeIdx)) = 0x149a2f0;
-      (g_currentNodeIdx) = (g_currentNodeIdx) + 1;
-      *(int *)(iVar1 + 4) = (g_currentNodeIdx);
-      MK4_NODE_AT(undefined4, g_baseSel, 0x84) = 0;
-      iVar2 = ScaledClearJmp_InstallSelf3WayChainCmp();
-      g_framePauseFlag = 1;
+    unsigned int cmd = MK4_NODE_AT(unsigned int, g_baseSel, 0x84);
+    unsigned int q;
+
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
+
+    if (cmd != 0) {
+        StoreTwoCall(0x0049a580, 0x47);
+        ArgSarStoreJmp(0x004f2770u);
+        return;
     }
-  }
-  return iVar2;
+
+    RunBlockFsmCluster();
+    if (g_framePauseFlag != 0)
+        return;
+    GuardedPackedSlotInit(0x0054331c);
+    if (g_framePauseFlag != 0)
+        return;
+
+    g_eventQueueChild = 4;
+    /* chain(1, ScaledClearJmp_InstallSelf3WayChainCmp): park state 1 on this
+     * node, queue the tagged continuation 0x49a2f0 + (1 << 24) on the spare
+     * chain at +4, clear the command word, then hand over and pause. */
+    MK4_NODE_AT(unsigned int, g_baseSel, 8) = 0x0049a2f0u;
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 1;
+    q = MK4_NODE_AT(unsigned int, g_baseSel, 4);
+    g_currentNodeIdx = q;
+    *MK4_NODE(unsigned int, q) = 0x0149a2f0u;
+    g_currentNodeIdx = q + 1u;
+    MK4_NODE_AT(unsigned int, g_baseSel, 4) = q + 1u;
+    MK4_NODE_AT(unsigned int, g_baseSel, 0x84) = 0;
+    ScaledClearJmp_InstallSelf3WayChainCmp();
+    g_framePauseFlag = 1;
 }
 #else
 __declspec(naked) void InstallSelfDualPathInit(void) {
