@@ -38,6 +38,22 @@ void GuardedChainCmpDualBitXor(void)
     if (anim == 0)
         return;
 
+#ifdef TARGET_SDL
+    /* MK4_TRACE_POSE: the clamp that ends posing. The pose pipeline is only
+     * called while the group's frame counter (+0x28) is BELOW the animation's
+     * length (anim+4); once it reaches the end this branch clamps it and
+     * nothing is posed again. That, not a bail inside the pipeline, is why
+     * posing decays after a match init on both paths. */
+    { extern void SDL_Log(const char *, ...); extern char *getenv(const char *);
+      extern unsigned int g_mk4FrameNo;
+      static int tr = -1; static unsigned n;
+      if (tr < 0) tr = getenv("MK4_TRACE_POSE") != 0;
+      if (tr && ++n % 200 == 1)
+          SDL_Log("ANIM f=%u group=%x frame=%d len=%d %s", g_mk4FrameNo, group,
+                  (int)frame, (int)MK4_NODE_AT(unsigned int, anim, 4),
+                  ((int)frame >= (int)MK4_NODE_AT(unsigned int, anim, 4))
+                      ? "CLAMPED" : "posing"); }
+#endif
     if ((int)frame >= (int)MK4_NODE_AT(unsigned int, anim, 4)) {
         anim = MK4_NODE_AT(unsigned int, group, 0x24);
         g_currentNodeIdx = anim;

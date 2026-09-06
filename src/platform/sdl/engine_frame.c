@@ -1153,8 +1153,23 @@ void MK4_GameFrame(void)
          * times over frames 13..165 and also stops - it just gets 133 visits
          * after its own fight init at frame 120 where this path gets 2. So
          * both paths lose the fighters at the match, and this one loses them
-         * sooner. The fight scene's character posing is an already-open area
-         * rather than something the front-end route breaks.
+         * sooner.
+         *
+         * And the reason is neither path's fault. GuardedChainCmpDualBitXor
+         * only calls the pose pipeline while the group's frame counter (+0x28)
+         * is BELOW the animation's length (anim+4); at the end it clamps the
+         * counter and stops posing. MK4_TRACE_POSE shows the counter climbing
+         * 0 -> 150 on the boot-match path, reaching 106 by frame 119, so it
+         * hits its 150-frame length around frame 163 - exactly where posing
+         * was measured to stop, at 165.
+         *
+         * So the animation simply PLAYS OUT and freezes on its last frame.
+         * Boot-match starts its fight at 120 while that animation still has
+         * about 44 frames left, which is the 133 visits it gets afterwards;
+         * this path starts its fight at 3000 with an animation that began at
+         * 1932 and finished long before, which is why it gets 2. Nothing is
+         * decaying - the missing piece is whatever should give the fighters a
+         * looping idle or a fresh animation at match start.
          *
          * The per-player DownloadPlayerChar is NOT what binds it, which was
          * the obvious guess. MK4_FRONTEND_DL runs the identical publish-then-
