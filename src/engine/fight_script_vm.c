@@ -166,6 +166,39 @@ static void vm_unknown_op(unsigned int op, unsigned int target)
 /* ---- op 1 (0x459a40): repeat = operand -> group+0x28, fetch anim ->
  * group+0x24, install self, ScaledLoadJmp_00428d20, pause. Re-entry with
  * a pump command resumes the VM. ---- */
+
+#ifdef TARGET_SDL
+/* MK4_TRACE_VMANIM: the fight-script VM is one of the few things in the build
+ * that assigns a fighter group's animation record (+0x24). The matchstart
+ * cluster that also does it is unreachable - closed and circular, with no
+ * static or runtime reference - so if fighters are ever animated at a match it
+ * is through here.
+ *
+ * Measured, and it is: on the BOOT-MATCH path site 5 fires at frame 121, one
+ * frame after that path's match init at 120, for the real fighter nodes -
+ * `group=1492a6 anim=00140002` and `group=1492c7 anim=00140008`. That is what
+ * puts a non-zero +0x24 on the fighters there.
+ *
+ * On the FRONT-END path the same site fires only for the character select's
+ * groups, 0x14915c and 0x14917d at frames 1932 and 2151, and never for the
+ * fight's groups after its match init at 3000 - with or without a per-player
+ * download first. So the VM runs on both paths and simply never picks up the
+ * fight's groups on the front-end one. Why is the open question, and it is a
+ * far smaller one than the matchstart cluster, which turned out to be dead
+ * code. */
+static void vm_anim_mark(int site, unsigned int grp, unsigned int anim)
+{
+    extern void SDL_Log(const char *, ...);
+    extern char *getenv(const char *);
+    extern unsigned int g_mk4FrameNo;
+    static int tr = -1; static unsigned n;
+    if (tr < 0) tr = getenv("MK4_TRACE_VMANIM") != 0;
+    if (tr && n < 12) { n++;
+        SDL_Log("VMANIM f=%u site=%d group=%x anim=%08x", g_mk4FrameNo, site,
+                grp, anim); }
+}
+#endif
+
 void VMOp_Resume_00459a40(void)
 {
     unsigned int cam = g_baseSel;
@@ -183,6 +216,9 @@ void VMOp_Resume_00459a40(void)
     ScaledIterStep_0045c020();
     if (g_framePauseFlag != 0) return;
     NODE_W(g_groupHead, 0x24) = g_walkCallback;
+#ifdef TARGET_SDL
+    vm_anim_mark(1, g_groupHead, g_walkCallback);
+#endif
 
     vm_install_wait(0x459a40u, 0x1000000u);
     ScaledLoadJmp_00428d20();
@@ -204,6 +240,9 @@ void VMOp_Resume_00459b20(void)
     ScaledIterStep_0045c020();
     if (g_framePauseFlag != 0) return;
     NODE_W(g_groupHead, 0x24) = g_walkCallback;
+#ifdef TARGET_SDL
+    vm_anim_mark(2, g_groupHead, g_walkCallback);
+#endif
 
     vm_install_wait(0x459b20u, 0x1000000u);
     ScaledChainJmp_00429470();
@@ -280,6 +319,9 @@ void VMOp_Resume_00459d30(void)
     ScaledIterStep_0045c020();
     if (g_framePauseFlag != 0) return;
     NODE_W(g_groupHead, 0x24) = g_walkCallback;
+#ifdef TARGET_SDL
+    vm_anim_mark(3, g_groupHead, g_walkCallback);
+#endif
     if (operand != 0) {
         g_slot80 = g_eventQueueCur;
         vm_install_wait(0x459d30u, 0x2000000u);
@@ -311,6 +353,9 @@ void VMOp_Resume_00459ea0(void)
     ScaledIterStep_0045c020();
     if (g_framePauseFlag != 0) return;
     NODE_W(g_groupHead, 0x24) = g_walkCallback;
+#ifdef TARGET_SDL
+    vm_anim_mark(4, g_groupHead, g_walkCallback);
+#endif
 
     vm_install_wait(0x459ea0u, 0x1000000u);
     EsiInstallDecCallChain_StackPopDispatchTagged_004294a0();
@@ -419,6 +464,9 @@ static void vm_pause_test_prefix(void)      /* 0x45bfe0 */
     ScaledIterStep_0045c020();
     if (g_framePauseFlag != 0) return;
     NODE_W(g_groupHead, 0x24) = g_walkCallback;
+#ifdef TARGET_SDL
+    vm_anim_mark(5, g_groupHead, g_walkCallback);
+#endif
 }
 
 /* the shared "cmd resumes the VM" gate; returns 1 when the caller should
