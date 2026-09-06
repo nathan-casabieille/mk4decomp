@@ -143,6 +143,25 @@ extern void ScaledClearJmp_InstallSelf3WayChainCmp(void);
  * whatever clip they were already playing, it runs to its end, and
  * GuardedChainCmpDualBitXor clamps and stops posing them.
  *
+ * WHY IT STILL DOES NOT RUN. This function sits in a CLOSED CIRCULAR
+ * cluster of four that only call each other:
+ *
+ *     ClampNegPair (0x49a170)
+ *       -> EsiInstallQuadCallBitDispatch (0x49a050)
+ *         -> RunBlockFsmCluster (0x499c80)
+ *           -> InstallSelfDualPathInit (0x49a2f0)
+ *             -> ClampNegPair
+ *
+ * None of the four has a data reference anywhere in the arena, and none has a
+ * relative call or jmp from outside the cluster - checked for both e8 and e9.
+ * So nothing static enters it: no table holds one of these VAs, and no code
+ * outside calls in. Whatever installs the cluster must build its VA at
+ * runtime, or the cluster is dead on both paths for a reason further up.
+ *
+ * That is why converting this function changed nothing observable: a working
+ * body and a codeptr entry are necessary, and the entry point is the part that
+ * is missing.
+ *
  * state != 0 - the init path: install 0x49a580 at work type 0x47, then
  *   ArgSarStoreJmp over 0x4f2770, and return.
  * state == 0 - run the block FSM, take the slot at 0x54331c, then chain
